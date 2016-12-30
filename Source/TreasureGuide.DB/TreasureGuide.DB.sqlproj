@@ -58,7 +58,6 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo" />
-    <Folder Include="const" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\AspNetRoles.sql" />
@@ -67,10 +66,7 @@
     <Build Include="dbo\AspNetUserRoles.sql" />
     <Build Include="dbo\AspNetUsers.sql" />
     <Build Include="dbo\Units.sql" />
-    <Build Include="const\Types.sql" />
-    <Build Include="const\_const.sql" />
     <Build Include="dbo\UnitClasses.sql" />
-    <Build Include="const\Classes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />

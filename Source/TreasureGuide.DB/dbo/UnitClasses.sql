@@ -4,5 +4,5 @@
     [Class] NVARCHAR(100) NOT NULL,
     CONSTRAINT [PK_dbo.UnitClasses] PRIMARY KEY CLUSTERED ([UnitId] ASC, [Class] ASC),
     CONSTRAINT [FK_dbo.UnitClasses_dbo.Units] FOREIGN KEY([UnitId]) REFERENCES [dbo].[Units] ([Id]),
-    CONSTRAINT [FK_dbo.UnitClasses_const.Classes] FOREIGN KEY([Class]) REFERENCES [const].[Classes] ([Name])
+    CONSTRAINT [CHK_dbo.UnitClasses_Class] CHECK ([Class] in (N'Shooter',N'Fighter',N'Striker',N'Slasher',N'Cerebral',N'Driven',N'Free Spirit',N'Powerhouse'))
 )
