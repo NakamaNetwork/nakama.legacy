@@ -13,10 +13,10 @@ namespace TreasureGuide.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class tcdbEntities : DbContext
+    public partial class TreasureEntities : DbContext
     {
-        public tcdbEntities()
-            : base("name=tcdbEntities")
+        public TreasureEntities()
+            : base("name=TreasureEntities")
         {
         }
     
