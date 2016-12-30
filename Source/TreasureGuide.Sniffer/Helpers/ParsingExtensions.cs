@@ -1,4 +1,5 @@
 ﻿using System;
+using TreasureGuide.Entities;
 
 namespace TreasureGuide.Sniffer.Helpers
 {
@@ -38,6 +39,26 @@ namespace TreasureGuide.Sniffer.Helpers
         {
             Decimal value;
             if (Decimal.TryParse(input, out value))
+            {
+                return value;
+            }
+            return null;
+        }
+
+        public static UnitTypeEnum? ToUnitType(this string input)
+        {
+            UnitTypeEnum value;
+            if (UnitTypeEnum.TryParse(input, out value))
+            {
+                return value;
+            }
+            return null;
+        }
+
+        public static UnitClassEnum? ToUnitClass(this string input)
+        {
+            UnitClassEnum value;
+            if (UnitClassEnum.TryParse(input, out value))
             {
                 return value;
             }

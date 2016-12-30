@@ -62,7 +62,7 @@
             <PropertyRef Name="Class" />
           </Key>
           <Property Name="UnitId" Type="int" Nullable="false" />
-          <Property Name="Class" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Class" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Units">
           <Key>
@@ -70,7 +70,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" />
-          <Property Name="Type" Type="nvarchar" MaxLength="8" />
+          <Property Name="Type" Type="tinyint" />
           <Property Name="Stars" Type="tinyint" />
           <Property Name="Cost" Type="tinyint" />
           <Property Name="Combo" Type="tinyint" />
@@ -225,15 +225,6 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
         </EntityType>
-        <EntityType Name="UnitClass">
-          <Key>
-            <PropertyRef Name="UnitId" />
-            <PropertyRef Name="Class" />
-          </Key>
-          <Property Name="UnitId" Type="Int32" Nullable="false" />
-          <Property Name="Class" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="UnitClass" ToRole="Unit" />
-        </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -282,7 +273,6 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRole" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="UnitClasses" EntityType="Self.UnitClass" />
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
@@ -295,19 +285,29 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <EntitySet Name="UnitClasses" EntityType="tcdbModel.UnitClass" />
           <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
           <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units">
             <End Role="Unit" EntitySet="Units" />
             <End Role="UnitClass" EntitySet="UnitClasses" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="UnitClass">
+          <Key>
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="Class" />
+          </Key>
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="Class" Type="tcdbModel.UnitClassEnum" Nullable="false" />
+          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="UnitClass" ToRole="Unit" />
+        </EntityType>
         <EntityType Name="Unit">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="tcdbModel.UnitTypeEnum" />
           <Property Name="Stars" Type="Byte" />
           <Property Name="Cost" Type="Byte" />
           <Property Name="Combo" Type="Byte" />
@@ -335,6 +335,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="UnitClassEnum" UnderlyingType="Byte">
+          <Member Name="Shooter" />
+          <Member Name="Fighter" />
+          <Member Name="Striker" />
+          <Member Name="Slasher" />
+          <Member Name="Cerebral" />
+          <Member Name="Driven" />
+          <Member Name="Powerhouse" />
+          <Member Name="Evolver" />
+          <Member Name="Booster" />
+        </EnumType>
+        <EnumType Name="UnitTypeEnum" UnderlyingType="Byte">
+          <Member Name="STR" />
+          <Member Name="DEX" />
+          <Member Name="QCK" />
+          <Member Name="INT" />
+          <Member Name="PSY" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -397,8 +415,8 @@
           <EntitySetMapping Name="UnitClasses">
             <EntityTypeMapping TypeName="tcdbModel.UnitClass">
               <MappingFragment StoreEntitySet="UnitClasses">
-                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

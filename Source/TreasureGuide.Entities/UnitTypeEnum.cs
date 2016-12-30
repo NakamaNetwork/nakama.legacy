@@ -10,13 +10,13 @@
 namespace TreasureGuide.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UnitClass
+    public enum UnitTypeEnum : byte
     {
-        public int UnitId { get; set; }
-        public UnitClassEnum Class { get; set; }
-    
-        public virtual Unit Unit { get; set; }
+        STR = 0,
+        DEX = 1,
+        QCK = 2,
+        INT = 3,
+        PSY = 4
     }
 }

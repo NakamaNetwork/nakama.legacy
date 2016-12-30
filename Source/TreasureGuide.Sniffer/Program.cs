@@ -24,7 +24,9 @@ namespace TreasureGuide.Sniffer
 
         private static void AssureContextOpen(TreasureEntities context)
         {
+            Debug.WriteLine("Checking if database is accessible.");
             context.Units.Count();
+            Debug.WriteLine("Success!");
         }
 
         private static void RunParsers(TreasureEntities context)

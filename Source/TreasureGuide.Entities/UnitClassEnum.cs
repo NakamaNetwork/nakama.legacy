@@ -10,13 +10,17 @@
 namespace TreasureGuide.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UnitClass
+    public enum UnitClassEnum : byte
     {
-        public int UnitId { get; set; }
-        public UnitClassEnum Class { get; set; }
-    
-        public virtual Unit Unit { get; set; }
+        Shooter = 0,
+        Fighter = 1,
+        Striker = 2,
+        Slasher = 3,
+        Cerebral = 4,
+        Driven = 5,
+        Powerhouse = 6,
+        Evolver = 7,
+        Booster = 8
     }
 }

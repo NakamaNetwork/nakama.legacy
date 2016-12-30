@@ -10,11 +10,11 @@
         <EntityTypeShape EntityType="tcdbModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="tcdbModel.AspNetUserRole" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="tcdbModel.AspNetUser" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="tcdbModel.UnitClass" Width="1.5" PointX="8" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" ManuallyRouted="false" />
         <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="tcdbModel.UnitClass" Width="1.5" PointX="7.625" PointY="2.375" />
+        <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="5.375" PointY="1" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units" />
       </Diagram>
     </edmx:Diagrams>
