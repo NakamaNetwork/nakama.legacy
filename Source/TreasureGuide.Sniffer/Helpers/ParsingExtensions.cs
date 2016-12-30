@@ -33,5 +33,15 @@ namespace TreasureGuide.Sniffer.Helpers
             }
             return null;
         }
+
+        public static Decimal? ToDecimal(this string input)
+        {
+            Decimal value;
+            if (Decimal.TryParse(input, out value))
+            {
+                return value;
+            }
+            return null;
+        }
     }
 }

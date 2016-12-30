@@ -35,7 +35,7 @@ namespace TreasureGuide.Entities
         public Nullable<short> MaxHP { get; set; }
         public Nullable<short> MaxATK { get; set; }
         public Nullable<short> MaxRCV { get; set; }
-        public Nullable<int> GrowthRate { get; set; }
+        public Nullable<decimal> GrowthRate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnitClass> UnitClasses { get; set; }

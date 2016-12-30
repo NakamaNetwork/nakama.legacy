@@ -15,7 +15,7 @@
     [MaxHP] SMALLINT NULL, 
     [MaxATK] SMALLINT NULL, 
     [MaxRCV] SMALLINT NULL, 
-    [GrowthRate] INT NULL,
+    [GrowthRate] DECIMAL(2, 1) NULL,
     CONSTRAINT [PK_dbo.Units] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [CHK_dbo.Units_Type] CHECK ([Type] in (N'STR',N'DEX',N'QCK',N'INT',N'PSY'))
 )

@@ -19,33 +19,38 @@ namespace TreasureGuide.Sniffer.Parsers
         protected override IEnumerable<ParsedUnitModel> ConvertData(string trimmed)
         {
             var arrays = JsonConvert.DeserializeObject<object[][]>(trimmed);
-            var models = arrays.Select((line, index) => new ParsedUnitModel
+            var models = arrays.Select((line, index) =>
             {
-                Unit = new Unit
+                var id = index + 1;
+                var classData = line[2]?.ToString();
+                return new ParsedUnitModel
                 {
-                    Id = index,
-                    Name = line[0] as string,
-                    Type = line[1] as string,
-                    // Classes parsed later
-                    Stars = (line[3]?.ToString())?.ToByte(),
-                    Cost = (line[4]?.ToString())?.ToByte(),
-                    Combo = (line[5]?.ToString())?.ToByte(),
-                    Sockets = (line[6]?.ToString())?.ToByte(),
-                    MaxLevel = (line[7]?.ToString())?.ToByte(),
-                    EXPtoMax = (line[8]?.ToString())?.ToInt16(),
-                    MinHP = (line[9]?.ToString()).ToInt16(),
-                    MinATK = (line[10]?.ToString()).ToInt16(),
-                    MinRCV = (line[11]?.ToString()).ToInt16(),
-                    MaxHP = (line[12]?.ToString()).ToInt16(),
-                    MaxATK = (line[13]?.ToString()).ToInt16(),
-                    MaxRCV = (line[14]?.ToString()).ToInt16(),
-                    GrowthRate = (line[15]?.ToString()).ToInt32(),
-                },
-                UnitClasses = (line[2] as object[] ?? new [] { line[2]?.ToString() }).Select(typeLine => new UnitClass
-                {
-                    UnitId = index,
-                    Class = typeLine.ToString()
-                })
+                    Unit = new Unit
+                    {
+                        Id = id,
+                        Name = line[0] as string,
+                        Type = line[1] as string,
+                        // Classes parsed later
+                        Stars = (line[3]?.ToString())?.ToByte(),
+                        Cost = (line[4]?.ToString())?.ToByte(),
+                        Combo = (line[5]?.ToString())?.ToByte(),
+                        Sockets = (line[6]?.ToString())?.ToByte(),
+                        MaxLevel = (line[7]?.ToString())?.ToByte(),
+                        EXPtoMax = (line[8]?.ToString())?.ToInt32(),
+                        MinHP = (line[9]?.ToString()).ToInt16(),
+                        MinATK = (line[10]?.ToString()).ToInt16(),
+                        MinRCV = (line[11]?.ToString()).ToInt16(),
+                        MaxHP = (line[12]?.ToString()).ToInt16(),
+                        MaxATK = (line[13]?.ToString()).ToInt16(),
+                        MaxRCV = (line[14]?.ToString()).ToInt16(),
+                        GrowthRate = (line[15]?.ToString()).ToDecimal(),
+                    },
+                    UnitClasses = (classData.Contains("[") ? JsonConvert.DeserializeObject<string[]>(classData) : new[] { classData }).Select(typeLine => new UnitClass
+                    {
+                        UnitId = id,
+                        Class = typeLine
+                    })
+                };
             });
             return models;
         }

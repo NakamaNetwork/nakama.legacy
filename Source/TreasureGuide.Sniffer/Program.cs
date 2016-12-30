@@ -44,6 +44,7 @@ namespace TreasureGuide.Sniffer
                     {
                         Debug.WriteLine($"Running {name}.");
                         await parser.Execute();
+                        Debug.WriteLine($"{name} Succeeded!");
                     }
                     catch (Exception e)
                     {

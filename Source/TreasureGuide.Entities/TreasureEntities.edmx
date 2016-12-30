@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="tcdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="tcdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -70,7 +70,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" />
-          <Property Name="Type" Type="nvarchar" MaxLength="100" />
+          <Property Name="Type" Type="nvarchar" MaxLength="8" />
           <Property Name="Stars" Type="tinyint" />
           <Property Name="Cost" Type="tinyint" />
           <Property Name="Combo" Type="tinyint" />
@@ -83,7 +83,7 @@
           <Property Name="MaxHP" Type="smallint" />
           <Property Name="MaxATK" Type="smallint" />
           <Property Name="MaxRCV" Type="smallint" />
-          <Property Name="GrowthRate" Type="int" />
+          <Property Name="GrowthRate" Type="decimal" Precision="2" Scale="1" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -164,8 +164,7 @@
             <End Role="UnitClasses" EntitySet="UnitClasses" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="tcdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -233,29 +232,7 @@
           </Key>
           <Property Name="UnitId" Type="Int32" Nullable="false" />
           <Property Name="Class" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Unit" Relationship="Self.FK_dbo_UnitClasses_dbo_Units" FromRole="UnitClasses" ToRole="Units" />
-        </EntityType>
-        <EntityType Name="Unit">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Stars" Type="Byte" />
-          <Property Name="Cost" Type="Byte" />
-          <Property Name="Combo" Type="Byte" />
-          <Property Name="Sockets" Type="Byte" />
-          <Property Name="MaxLevel" Type="Byte" />
-          <Property Name="EXPtoMax" Type="Int32" />
-          <Property Name="MinHP" Type="Int16" />
-          <Property Name="MinATK" Type="Int16" />
-          <Property Name="MinRCV" Type="Int16" />
-          <Property Name="MaxHP" Type="Int16" />
-          <Property Name="MaxATK" Type="Int16" />
-          <Property Name="MaxRCV" Type="Int16" />
-          <Property Name="GrowthRate" Type="Int32" />
-          <NavigationProperty Name="UnitClasses" Relationship="Self.FK_dbo_UnitClasses_dbo_Units" FromRole="Units" ToRole="UnitClasses" />
+          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="UnitClass" ToRole="Unit" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="1">
@@ -299,18 +276,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_UnitClasses_dbo_Units">
-          <End Role="Units" Type="Self.Unit" Multiplicity="1" />
-          <End Role="UnitClasses" Type="Self.UnitClass" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Units">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UnitClasses">
-              <PropertyRef Name="UnitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="TreasureEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -318,7 +283,6 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRole" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="UnitClasses" EntityType="Self.UnitClass" />
-          <EntitySet Name="Units" EntityType="Self.Unit" />
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
@@ -331,11 +295,46 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="Self.FK_dbo_UnitClasses_dbo_Units">
-            <End Role="Units" EntitySet="Units" />
-            <End Role="UnitClasses" EntitySet="UnitClasses" />
+          <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
+          <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitClass" EntitySet="UnitClasses" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Stars" Type="Byte" />
+          <Property Name="Cost" Type="Byte" />
+          <Property Name="Combo" Type="Byte" />
+          <Property Name="Sockets" Type="Byte" />
+          <Property Name="MaxLevel" Type="Byte" />
+          <Property Name="EXPtoMax" Type="Int32" />
+          <Property Name="MinHP" Type="Int16" />
+          <Property Name="MinATK" Type="Int16" />
+          <Property Name="MinRCV" Type="Int16" />
+          <Property Name="MaxHP" Type="Int16" />
+          <Property Name="MaxATK" Type="Int16" />
+          <Property Name="MaxRCV" Type="Int16" />
+          <Property Name="GrowthRate" Type="Decimal" Precision="2" Scale="1" />
+          <NavigationProperty Name="UnitClasses" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="Unit" ToRole="UnitClass" />
+        </EntityType>
+        <Association Name="FK_dbo_UnitClasses_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="tcdbModel.UnitClass" Role="UnitClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitClass">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -406,22 +405,22 @@
           <EntitySetMapping Name="Units">
             <EntityTypeMapping TypeName="tcdbModel.Unit">
               <MappingFragment StoreEntitySet="Units">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Stars" ColumnName="Stars" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-                <ScalarProperty Name="Combo" ColumnName="Combo" />
-                <ScalarProperty Name="Sockets" ColumnName="Sockets" />
-                <ScalarProperty Name="MaxLevel" ColumnName="MaxLevel" />
-                <ScalarProperty Name="EXPtoMax" ColumnName="EXPtoMax" />
-                <ScalarProperty Name="MinHP" ColumnName="MinHP" />
-                <ScalarProperty Name="MinATK" ColumnName="MinATK" />
-                <ScalarProperty Name="MinRCV" ColumnName="MinRCV" />
-                <ScalarProperty Name="MaxHP" ColumnName="MaxHP" />
-                <ScalarProperty Name="MaxATK" ColumnName="MaxATK" />
-                <ScalarProperty Name="MaxRCV" ColumnName="MaxRCV" />
                 <ScalarProperty Name="GrowthRate" ColumnName="GrowthRate" />
+                <ScalarProperty Name="MaxRCV" ColumnName="MaxRCV" />
+                <ScalarProperty Name="MaxATK" ColumnName="MaxATK" />
+                <ScalarProperty Name="MaxHP" ColumnName="MaxHP" />
+                <ScalarProperty Name="MinRCV" ColumnName="MinRCV" />
+                <ScalarProperty Name="MinATK" ColumnName="MinATK" />
+                <ScalarProperty Name="MinHP" ColumnName="MinHP" />
+                <ScalarProperty Name="EXPtoMax" ColumnName="EXPtoMax" />
+                <ScalarProperty Name="MaxLevel" ColumnName="MaxLevel" />
+                <ScalarProperty Name="Sockets" ColumnName="Sockets" />
+                <ScalarProperty Name="Combo" ColumnName="Combo" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Stars" ColumnName="Stars" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
