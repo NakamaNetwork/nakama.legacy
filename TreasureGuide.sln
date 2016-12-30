@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Web", "Source\TreasureGuide.Web\TreasureGuide.Web.csproj", "{D2CB5FB9-F691-4F7F-B0FB-730975D70674}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Web.Test", "Source\TreasureGuide.Web.Test\TreasureGuide.Web.Test.csproj", "{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2CB5FB9-F691-4F7F-B0FB-730975D70674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2CB5FB9-F691-4F7F-B0FB-730975D70674}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2CB5FB9-F691-4F7F-B0FB-730975D70674}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2CB5FB9-F691-4F7F-B0FB-730975D70674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
