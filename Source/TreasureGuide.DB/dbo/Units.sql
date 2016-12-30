@@ -2,7 +2,7 @@
 (
     [Id] INT NOT NULL, 
     [Name] NVARCHAR(500) NULL, 
-    [Type] NVARCHAR(100) NULL, 
+    [Type] NVARCHAR(8) NULL, 
     [Stars] TINYINT NULL, 
     [Cost] TINYINT NULL, 
     [Combo] TINYINT NULL, 

@@ -11,6 +11,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TreasureGuide.DB", "Source\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Entities", "Source\TreasureGuide.Entities\TreasureGuide.Entities.csproj", "{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Sniffer", "Source\TreasureGuide.Sniffer\TreasureGuide.Sniffer.csproj", "{4F12E99A-BB46-406F-9AFB-65192FB587E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{D7EDB441-E679-412B-924C-303463A61847}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7EDB441-E679-412B-924C-303463A61847}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7EDB441-E679-412B-924C-303463A61847}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F12E99A-BB46-406F-9AFB-65192FB587E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F12E99A-BB46-406F-9AFB-65192FB587E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F12E99A-BB46-406F-9AFB-65192FB587E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F12E99A-BB46-406F-9AFB-65192FB587E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
