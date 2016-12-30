@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Web", "Source
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Web.Test", "Source\TreasureGuide.Web.Test\TreasureGuide.Web.Test.csproj", "{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TreasureGuide.DB", "TreasureGuide.DB\TreasureGuide.DB.sqlproj", "{D7EDB441-E679-412B-924C-303463A61847}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B137088-0B1F-4C20-B927-3B1F0FDA9D6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7EDB441-E679-412B-924C-303463A61847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7EDB441-E679-412B-924C-303463A61847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7EDB441-E679-412B-924C-303463A61847}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D7EDB441-E679-412B-924C-303463A61847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7EDB441-E679-412B-924C-303463A61847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7EDB441-E679-412B-924C-303463A61847}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
