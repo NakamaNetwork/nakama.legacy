@@ -39,5 +39,6 @@ namespace TreasureGuide.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnitClass> UnitClasses { get; set; }
+        public virtual UnitFlags UnitFlags { get; set; }
     }
 }

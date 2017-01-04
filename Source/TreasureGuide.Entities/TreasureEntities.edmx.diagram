@@ -16,6 +16,8 @@
         <EntityTypeShape EntityType="tcdbModel.UnitClass" Width="1.5" PointX="7.625" PointY="2.375" />
         <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="5.375" PointY="1" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units" />
+        <EntityTypeShape EntityType="tcdbModel.UnitFlags" Width="1.5" PointX="7.625" PointY="5" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

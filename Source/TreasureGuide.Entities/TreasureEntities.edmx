@@ -64,6 +64,18 @@
           <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="Class" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="UnitFlags">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="Global" Type="bit" Nullable="false" />
+          <Property Name="RR" Type="bit" Nullable="false" />
+          <Property Name="ERR" Type="bit" Nullable="false" />
+          <Property Name="LRR" Type="bit" Nullable="false" />
+          <Property Name="Promo" Type="bit" Nullable="false" />
+          <Property Name="Shop" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Units">
           <Key>
             <PropertyRef Name="Id" />
@@ -139,6 +151,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_UnitFlags_dbo_Units">
+          <End Role="Units" Type="Self.Units" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UnitFlags" Type="Self.UnitFlags" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitFlags">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="tcdbModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -146,6 +172,7 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitClasses" EntityType="Self.UnitClasses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitFlags" EntityType="Self.UnitFlags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -162,6 +189,10 @@
           <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="Self.FK_dbo_UnitClasses_dbo_Units">
             <End Role="Units" EntitySet="Units" />
             <End Role="UnitClasses" EntitySet="UnitClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UnitFlags_dbo_Units" Association="Self.FK_dbo_UnitFlags_dbo_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="UnitFlags" EntitySet="UnitFlags" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -291,6 +322,11 @@
             <End Role="Unit" EntitySet="Units" />
             <End Role="UnitClass" EntitySet="UnitClasses" />
           </AssociationSet>
+          <EntitySet Name="UnitFlags" EntityType="tcdbModel.UnitFlags" />
+          <AssociationSet Name="FK_dbo_UnitFlags_dbo_Units" Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitFlag" EntitySet="UnitFlags" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UnitClass">
           <Key>
@@ -322,6 +358,7 @@
           <Property Name="MaxRCV" Type="Int16" />
           <Property Name="GrowthRate" Type="Decimal" Precision="2" Scale="1" />
           <NavigationProperty Name="UnitClasses" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="Unit" ToRole="UnitClass" />
+          <NavigationProperty Name="UnitFlags" Relationship="tcdbModel.FK_dbo_UnitFlags_dbo_Units" FromRole="Unit" ToRole="UnitFlag" />
         </EntityType>
         <Association Name="FK_dbo_UnitClasses_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
@@ -353,6 +390,33 @@
           <Member Name="INT" />
           <Member Name="PSY" />
         </EnumType>
+        <EntityType Name="UnitFlags">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="Global" Type="Boolean" Nullable="false" />
+          <Property Name="RR" Type="Boolean" Nullable="false" />
+          <Property Name="ERR" Type="Boolean" Nullable="false" />
+          <Property Name="LRR" Type="Boolean" Nullable="false" />
+          <Property Name="Promo" Type="Boolean" Nullable="false" />
+          <Property Name="Shop" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitFlags_dbo_Units" FromRole="UnitFlag" ToRole="Unit" />
+        </EntityType>
+        <Association Name="FK_dbo_UnitFlags_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.UnitFlags" Role="UnitFlag" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitFlag">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -439,6 +503,19 @@
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitFlags">
+            <EntityTypeMapping TypeName="tcdbModel.UnitFlags">
+              <MappingFragment StoreEntitySet="UnitFlags">
+                <ScalarProperty Name="Shop" ColumnName="Shop" />
+                <ScalarProperty Name="Promo" ColumnName="Promo" />
+                <ScalarProperty Name="LRR" ColumnName="LRR" />
+                <ScalarProperty Name="ERR" ColumnName="ERR" />
+                <ScalarProperty Name="RR" ColumnName="RR" />
+                <ScalarProperty Name="Global" ColumnName="Global" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

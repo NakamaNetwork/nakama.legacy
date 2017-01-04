@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using TreasureGuide.Entities;
 
 namespace TreasureGuide.Sniffer.Helpers
@@ -63,6 +65,16 @@ namespace TreasureGuide.Sniffer.Helpers
                 return value;
             }
             return null;
+        }
+
+        public static TValue GetSafe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue fallback = default(TValue))
+        {
+            TValue value;
+            if (dictionary.TryGetValue(key, out value))
+            {
+                return value;
+            }
+            return fallback;
         }
     }
 }

@@ -31,9 +31,10 @@ namespace TreasureGuide.Sniffer
 
         private static void RunParsers(TreasureEntities context)
         {
-            var parsers = new[]
+            var parsers = new ITreasureParser[]
             {
              new UnitParser(context),
+             new UnitFlagParser(context)
             };
             ParsersRunning = parsers.Count();
 

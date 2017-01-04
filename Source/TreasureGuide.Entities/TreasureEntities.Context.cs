@@ -32,5 +32,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<UnitClass> UnitClasses { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<UnitFlags> UnitFlags { get; set; }
     }
 }
