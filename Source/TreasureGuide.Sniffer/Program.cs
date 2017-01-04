@@ -38,11 +38,11 @@ namespace TreasureGuide.Sniffer
             };
             ParsersRunning = parsers.Count();
 
-            foreach (var parser in parsers)
+            Task.Run(async () =>
             {
-                var name = parser.GetType().Name;
-                Task.Run(async () =>
+                foreach (var parser in parsers)
                 {
+                    var name = parser.GetType().Name;
                     try
                     {
                         Debug.WriteLine($"Running {name}.");
@@ -58,8 +58,8 @@ namespace TreasureGuide.Sniffer
                         ParsersRunning--;
                         Debug.WriteLine($"{ParsersRunning} Parser(s) Remain");
                     }
-                });
-            }
+                }
+            });
         }
     }
 }
