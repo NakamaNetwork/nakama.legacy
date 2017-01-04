@@ -67,6 +67,8 @@
     <Build Include="dbo\AspNetUsers.sql" />
     <Build Include="dbo\Units.sql" />
     <Build Include="dbo\UnitClasses.sql" />
+    <Build Include="dbo\Stages.sql" />
+    <Build Include="dbo\StageDifficulties.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />
