@@ -52,6 +52,7 @@ namespace TreasureGuide.Sniffer
                     catch (Exception e)
                     {
                         Debug.WriteLine($"{name} Failed!");
+                        Debug.WriteLine(e);
                     }
                     finally
                     {

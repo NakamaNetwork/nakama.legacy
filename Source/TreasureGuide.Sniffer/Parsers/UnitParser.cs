@@ -58,11 +58,12 @@ namespace TreasureGuide.Sniffer.Parsers
             return models;
         }
 
-        protected async override Task Save(IEnumerable<ParsedUnitModel> units)
+        protected override async Task Save(IEnumerable<ParsedUnitModel> units)
         {
+            Context.UnitClasses.RemoveRange(Context.UnitClasses);
             foreach (var unit in units)
             {
-                Context.Units.Add(unit.Unit);
+                Context.Units.Attach(unit.Unit);
                 foreach (var unitClass in unit.UnitClasses)
                 {
                     Context.UnitClasses.Add(unitClass);
