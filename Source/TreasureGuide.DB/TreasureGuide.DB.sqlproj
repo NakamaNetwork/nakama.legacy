@@ -69,6 +69,7 @@
     <Build Include="dbo\UnitClasses.sql" />
     <Build Include="dbo\Stages.sql" />
     <Build Include="dbo\StageDifficulties.sql" />
+    <Build Include="dbo\UnitFlags.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />
