@@ -25,11 +25,6 @@ namespace TreasureGuide.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<UnitClass> UnitClasses { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UnitFlags> UnitFlags { get; set; }
@@ -38,5 +33,9 @@ namespace TreasureGuide.Entities
         public virtual DbSet<StageLevel> StageLevels { get; set; }
         public virtual DbSet<StageUnitAttackPattern> StageUnitAttackPatterns { get; set; }
         public virtual DbSet<StageUnit> StageUnits { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
     }
 }

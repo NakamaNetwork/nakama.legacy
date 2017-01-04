@@ -5,14 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="15b9edd1340940f481faacdd9b6411bb" Name="Diagram1" ZoomLevel="55">
-        <EntityTypeShape EntityType="tcdbModel.AspNetRole" Width="1.5" PointX="1.5" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="tcdbModel.AspNetUserClaim" Width="1.5" PointX="3.875" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="tcdbModel.AspNetUserLogin" Width="1.5" PointX="3.875" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="tcdbModel.AspNetUserRole" Width="1.5" PointX="3.75" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="tcdbModel.AspNetUser" Width="1.5" PointX="1.625" PointY="11.375" IsExpanded="true" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" ManuallyRouted="false" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="tcdbModel.UnitClass" Width="1.5" PointX="8.875" PointY="6" />
         <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="8.875" PointY="0.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units" />
@@ -28,6 +20,13 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_StageUnits_dbo_StageLevels" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageUnits_dbo_Units" />
+        <EntityTypeShape EntityType="tcdbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="10.5" />
+        <EntityTypeShape EntityType="tcdbModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="9" />
+        <EntityTypeShape EntityType="tcdbModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="11.75" />
+        <EntityTypeShape EntityType="tcdbModel.AspNetUser" Width="1.5" PointX="3" PointY="9.375" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers" />
+        <AssociationConnector Association="tcdbModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
