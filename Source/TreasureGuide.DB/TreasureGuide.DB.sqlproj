@@ -70,6 +70,9 @@
     <Build Include="dbo\Stages.sql" />
     <Build Include="dbo\StageDifficulties.sql" />
     <Build Include="dbo\UnitFlags.sql" />
+    <Build Include="dbo\StageLevels.sql" />
+    <Build Include="dbo\StageUnits.sql" />
+    <Build Include="dbo\StageUnitAttackPatterns.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />

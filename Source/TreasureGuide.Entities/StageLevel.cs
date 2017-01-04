@@ -12,22 +12,21 @@ namespace TreasureGuide.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class StageDifficulty
+    public partial class StageLevel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public StageDifficulty()
+        public StageLevel()
         {
-            this.StageLevels = new HashSet<StageLevel>();
+            this.StageUnits = new HashSet<StageUnit>();
         }
     
         public int Id { get; set; }
-        public int StageId { get; set; }
-        public string Name { get; set; }
-        public byte Stamina { get; set; }
-        public bool Global { get; set; }
+        public int StageDifficultyId { get; set; }
+        public byte Number { get; set; }
+        public bool Secret { get; set; }
     
-        public virtual Stage Stage { get; set; }
+        public virtual StageDifficulty StageDifficulty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StageLevel> StageLevels { get; set; }
+        public virtual ICollection<StageUnit> StageUnits { get; set; }
     }
 }
