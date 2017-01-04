@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Sniffer.Helpers;
 
 namespace TreasureGuide.Sniffer.Parsers
@@ -58,16 +59,14 @@ namespace TreasureGuide.Sniffer.Parsers
             return models;
         }
 
-        protected override async Task Save(IEnumerable<ParsedUnitModel> units)
+        protected override async Task Save(IEnumerable<ParsedUnitModel> items)
         {
-            Context.UnitClasses.RemoveRange(Context.UnitClasses);
-            foreach (var unit in units)
+            Context.Units.Clear();
+            Context.UnitClasses.Clear();
+            foreach (var unit in items)
             {
-                Context.Units.Attach(unit.Unit);
-                foreach (var unitClass in unit.UnitClasses)
-                {
-                    Context.UnitClasses.Add(unitClass);
-                }
+                Context.Units.Add(unit.Unit);
+                Context.UnitClasses.AddRange(unit.UnitClasses);
             }
             await Context.SaveChangesAsync();
         }

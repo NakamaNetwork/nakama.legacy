@@ -56,6 +56,25 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="StageDifficulties">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Stamina" Type="tinyint" Nullable="false" />
+          <Property Name="Global" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
+          <Property Name="Global" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="UnitClasses">
           <Key>
             <PropertyRef Name="UnitId" />
@@ -139,6 +158,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_StageDifficulties_dbo_Stages">
+          <End Role="Stages" Type="Self.Stages" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StageDifficulties" Type="Self.StageDifficulties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StageDifficulties">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_UnitClasses_dbo_Units">
           <End Role="Units" Type="Self.Units" Multiplicity="1" />
           <End Role="UnitClasses" Type="Self.UnitClasses" Multiplicity="*" />
@@ -171,6 +204,8 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StageDifficulties" EntityType="Self.StageDifficulties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitClasses" EntityType="Self.UnitClasses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitFlags" EntityType="Self.UnitFlags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
@@ -185,6 +220,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StageDifficulties_dbo_Stages" Association="Self.FK_dbo_StageDifficulties_dbo_Stages">
+            <End Role="Stages" EntitySet="Stages" />
+            <End Role="StageDifficulties" EntitySet="StageDifficulties" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="Self.FK_dbo_UnitClasses_dbo_Units">
             <End Role="Units" EntitySet="Units" />
@@ -327,6 +366,12 @@
             <End Role="Unit" EntitySet="Units" />
             <End Role="UnitFlag" EntitySet="UnitFlags" />
           </AssociationSet>
+          <EntitySet Name="StageDifficulties" EntityType="tcdbModel.StageDifficulty" />
+          <EntitySet Name="Stages" EntityType="tcdbModel.Stage" />
+          <AssociationSet Name="FK_dbo_StageDifficulties_dbo_Stages" Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages">
+            <End Role="Stage" EntitySet="Stages" />
+            <End Role="StageDifficulty" EntitySet="StageDifficulties" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UnitClass">
           <Key>
@@ -417,6 +462,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StageDifficulty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Stamina" Type="Byte" Nullable="false" />
+          <Property Name="Global" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" FromRole="StageDifficulty" ToRole="Stage" />
+        </EntityType>
+        <EntityType Name="Stage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="tcdbModel.StageType" Nullable="false" />
+          <Property Name="Global" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StageDifficulties" Relationship="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" FromRole="Stage" ToRole="StageDifficulty" />
+        </EntityType>
+        <Association Name="FK_dbo_StageDifficulties_dbo_Stages">
+          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.StageDifficulty" Role="StageDifficulty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StageDifficulty">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="StageType" UnderlyingType="Byte">
+          <Member Name="Story" />
+          <Member Name="Fortnight" />
+          <Member Name="Weekly" />
+          <Member Name="Raid" />
+          <Member Name="Coliseum" />
+          <Member Name="Special" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -516,6 +604,27 @@
                 <ScalarProperty Name="RR" ColumnName="RR" />
                 <ScalarProperty Name="Global" ColumnName="Global" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StageDifficulties">
+            <EntityTypeMapping TypeName="tcdbModel.StageDifficulty">
+              <MappingFragment StoreEntitySet="StageDifficulties">
+                <ScalarProperty Name="Global" ColumnName="Global" />
+                <ScalarProperty Name="Stamina" ColumnName="Stamina" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stages">
+            <EntityTypeMapping TypeName="tcdbModel.Stage">
+              <MappingFragment StoreEntitySet="Stages">
+                <ScalarProperty Name="Global" ColumnName="Global" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

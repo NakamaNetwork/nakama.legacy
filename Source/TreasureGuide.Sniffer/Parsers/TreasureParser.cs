@@ -29,7 +29,7 @@ namespace TreasureGuide.Sniffer.Parsers
             await Save(data);
         }
 
-        protected abstract Task Save(T data);
+        protected abstract Task Save(T items);
 
         private async Task<T> GetData()
         {
@@ -53,7 +53,7 @@ namespace TreasureGuide.Sniffer.Parsers
             }
         }
 
-        private string TrimData(string input)
+        protected virtual string TrimData(string input)
         {
             var start = input.IndexOf('=') + 1;
             var end = input.LastIndexOf(';');

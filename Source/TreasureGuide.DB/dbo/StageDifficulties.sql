@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[StageDifficulties]
 (
-	[Id] INT NOT NULL,
+	[Id] INT NOT NULL IDENTITY(1,1),
 	[StageId] INT NOT NULL,
     [Name] NVARCHAR(500) NULL,
 	[Stamina] TINYINT NOT NULL,

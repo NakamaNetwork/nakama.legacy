@@ -47,6 +47,16 @@ namespace TreasureGuide.Sniffer.Helpers
             return null;
         }
 
+        public static Boolean? ToBoolean(this string input)
+        {
+            Boolean value;
+            if (Boolean.TryParse(input, out value))
+            {
+                return value;
+            }
+            return null;
+        }
+
         public static UnitTypeEnum? ToUnitType(this string input)
         {
             UnitTypeEnum value;

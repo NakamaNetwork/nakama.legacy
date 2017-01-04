@@ -31,9 +31,9 @@ namespace TreasureGuide.Sniffer.Parsers
             return results;
         }
 
-        protected override async Task Save(IEnumerable<UnitFlags> data)
+        protected override async Task Save(IEnumerable<UnitFlags> items)
         {
-            foreach (var datum in data)
+            foreach (var datum in items)
             {
                 Context.UnitFlags.Attach(datum);
             }

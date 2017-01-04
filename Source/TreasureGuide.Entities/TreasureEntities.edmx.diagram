@@ -18,6 +18,9 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.UnitFlags" Width="1.5" PointX="7.625" PointY="5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units" />
+        <EntityTypeShape EntityType="tcdbModel.StageDifficulty" Width="1.5" PointX="7.625" PointY="8.875" />
+        <EntityTypeShape EntityType="tcdbModel.Stage" Width="1.5" PointX="5.375" PointY="9" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
