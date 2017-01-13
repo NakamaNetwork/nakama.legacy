@@ -12,25 +12,24 @@ namespace TreasureGuide.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class StageDifficulty
+    public partial class Team
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public StageDifficulty()
+        public Team()
         {
-            this.StageLevels = new HashSet<StageLevel>();
-            this.Teams = new HashSet<Team>();
+            this.TeamUnits = new HashSet<TeamUnit>();
         }
     
         public int Id { get; set; }
-        public int StageId { get; set; }
-        public string Name { get; set; }
-        public byte Stamina { get; set; }
-        public bool Global { get; set; }
+        public int StageDifficultyId { get; set; }
+        public string SubmittedById { get; set; }
+        public string Description { get; set; }
+        public string Credits { get; set; }
     
-        public virtual Stage Stage { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual StageDifficulty StageDifficulty { get; set; }
+        public virtual TeamSocket TeamSocket { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StageLevel> StageLevels { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
     }
 }

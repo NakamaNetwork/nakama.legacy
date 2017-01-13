@@ -22,7 +22,7 @@ namespace TreasureGuide.Entities
     
         public int Id { get; set; }
         public int StageDifficultyId { get; set; }
-        public byte Number { get; set; }
+        public Nullable<byte> Number { get; set; }
         public bool Secret { get; set; }
     
         public virtual StageDifficulty StageDifficulty { get; set; }

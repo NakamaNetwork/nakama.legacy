@@ -10,18 +10,14 @@
 namespace TreasureGuide.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UnitFlags
+    public enum UnitFlagTypes : byte
     {
-        public int UnitId { get; set; }
-        public bool Global { get; set; }
-        public bool RR { get; set; }
-        public bool ERR { get; set; }
-        public bool LRR { get; set; }
-        public bool Promo { get; set; }
-        public bool Shop { get; set; }
-    
-        public virtual Unit Unit { get; set; }
+        Global = 0,
+        RareRecruit = 1,
+        RareRecruitExclusive = 2,
+        RareRecruitLimited = 3,
+        Promotional = 4,
+        Shop = 5
     }
 }

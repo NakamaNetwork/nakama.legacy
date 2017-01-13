@@ -5,28 +5,37 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="15b9edd1340940f481faacdd9b6411bb" Name="Diagram1" ZoomLevel="55">
-        <EntityTypeShape EntityType="tcdbModel.UnitClass" Width="1.5" PointX="8.875" PointY="6" />
-        <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="8.875" PointY="0.5" />
+        <EntityTypeShape EntityType="tcdbModel.UnitClass" Width="1.5" PointX="15.5" PointY="11.875" />
+        <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="13.25" PointY="8.625" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units" />
-        <EntityTypeShape EntityType="tcdbModel.UnitFlags" Width="1.5" PointX="11.625" PointY="3.5" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units" />
-        <EntityTypeShape EntityType="tcdbModel.StageDifficulty" Width="1.5" PointX="1.5" PointY="1" />
-        <EntityTypeShape EntityType="tcdbModel.Stage" Width="1.5" PointX="1.25" PointY="4.375" />
+        <EntityTypeShape EntityType="tcdbModel.StageDifficulty" Width="1.5" PointX="9.25" PointY="2.75" />
+        <EntityTypeShape EntityType="tcdbModel.Stage" Width="1.5" PointX="6.875" PointY="3.25" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" />
-        <EntityTypeShape EntityType="tcdbModel.StageLevel" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="tcdbModel.StageUnitAttackPattern" Width="1.5" PointX="6.25" PointY="5.875" />
-        <EntityTypeShape EntityType="tcdbModel.StageUnit" Width="1.5" PointX="6.25" PointY="0.5" />
+        <EntityTypeShape EntityType="tcdbModel.StageLevel" Width="1.5" PointX="9.25" PointY="5.75" />
+        <EntityTypeShape EntityType="tcdbModel.StageUnitAttackPattern" Width="1.5" PointX="6.625" PointY="8.625" />
+        <EntityTypeShape EntityType="tcdbModel.StageUnit" Width="1.5" PointX="9.25" PointY="8.625" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageLevels_dbo_StageDifficulties" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageUnits_dbo_StageLevels" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageUnits_dbo_Units" />
-        <EntityTypeShape EntityType="tcdbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="10.5" />
-        <EntityTypeShape EntityType="tcdbModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="9" />
-        <EntityTypeShape EntityType="tcdbModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="11.75" />
-        <EntityTypeShape EntityType="tcdbModel.AspNetUser" Width="1.5" PointX="3" PointY="9.375" />
+        <EntityTypeShape EntityType="tcdbModel.AspNetRole" Width="1.5" PointX="0.5" PointY="2.25" />
+        <EntityTypeShape EntityType="tcdbModel.AspNetUserClaim" Width="1.5" PointX="4.625" PointY="6.375" />
+        <EntityTypeShape EntityType="tcdbModel.AspNetUserLogin" Width="1.5" PointX="1.625" PointY="5.375" />
+        <EntityTypeShape EntityType="tcdbModel.AspNetUser" Width="1.5" PointX="4.5" PointY="0.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers" />
         <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers" />
-        <AssociationConnector Association="tcdbModel.AspNetUserRoles" />
+        <AssociationConnector Association="tcdbModel.AspNetUserRoles" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="tcdbModel.Team" Width="1.5" PointX="13.25" PointY="1.375" />
+        <EntityTypeShape EntityType="tcdbModel.TeamSocket" Width="1.5" PointX="15.625" PointY="1.875" />
+        <EntityTypeShape EntityType="tcdbModel.TeamUnit" Width="1.5" PointX="13.25" PointY="4.75" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_AspNetUsers" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_StageDifficulties" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units" />
+        <EntityTypeShape EntityType="tcdbModel.UnitFlag" Width="1.5" PointX="15.5" PointY="9.25" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

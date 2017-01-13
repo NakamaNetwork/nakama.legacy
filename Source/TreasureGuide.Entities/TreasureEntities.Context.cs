@@ -27,7 +27,6 @@ namespace TreasureGuide.Entities
     
         public virtual DbSet<UnitClass> UnitClasses { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
-        public virtual DbSet<UnitFlags> UnitFlags { get; set; }
         public virtual DbSet<StageDifficulty> StageDifficulties { get; set; }
         public virtual DbSet<Stage> Stages { get; set; }
         public virtual DbSet<StageLevel> StageLevels { get; set; }
@@ -37,5 +36,9 @@ namespace TreasureGuide.Entities
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Team> Teams { get; set; }
+        public virtual DbSet<TeamSocket> TeamSockets { get; set; }
+        public virtual DbSet<TeamUnit> TeamUnits { get; set; }
+        public virtual DbSet<UnitFlag> UnitFlags { get; set; }
     }
 }

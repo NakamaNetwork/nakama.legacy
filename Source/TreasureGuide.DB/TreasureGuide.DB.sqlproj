@@ -58,21 +58,24 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo" />
+    <Folder Include="dbo\Stages" />
+    <Folder Include="dbo\Units" />
+    <Folder Include="dbo\Accounts" />
+    <Folder Include="dbo\Teams" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\AspNetRoles.sql" />
-    <Build Include="dbo\AspNetUserClaims.sql" />
-    <Build Include="dbo\AspNetUserLogins.sql" />
-    <Build Include="dbo\AspNetUserRoles.sql" />
-    <Build Include="dbo\AspNetUsers.sql" />
-    <Build Include="dbo\Units.sql" />
-    <Build Include="dbo\UnitClasses.sql" />
-    <Build Include="dbo\Stages.sql" />
-    <Build Include="dbo\StageDifficulties.sql" />
-    <Build Include="dbo\UnitFlags.sql" />
-    <Build Include="dbo\StageLevels.sql" />
-    <Build Include="dbo\StageUnits.sql" />
-    <Build Include="dbo\StageUnitAttackPatterns.sql" />
+    <Build Include="dbo\Stages\StageDifficulties.sql" />
+    <Build Include="dbo\Stages\StageLevels.sql" />
+    <Build Include="dbo\Stages\Stages.sql" />
+    <Build Include="dbo\Stages\StageUnitAttackPatterns.sql" />
+    <Build Include="dbo\Stages\StageUnits.sql" />
+    <Build Include="dbo\Units\Units.sql" />
+    <Build Include="dbo\Units\UnitClasses.sql" />
+    <Build Include="dbo\Units\UnitFlags.sql" />
+    <Build Include="dbo\Accounts\AspNetRoles.sql" />
+    <Build Include="dbo\Teams\Teams.sql" />
+    <Build Include="dbo\Teams\TeamUnits.sql" />
+    <Build Include="dbo\Teams\TeamSockets.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />
@@ -82,5 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="RefData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Accounts\AspNetUserClaims.sql" />
+    <Build Include="dbo\Accounts\AspNetUserLogins.sql" />
+    <Build Include="dbo\Accounts\AspNetUserRoles.sql" />
+    <Build Include="dbo\Accounts\AspNetUsers.sql" />
   </ItemGroup>
 </Project>
