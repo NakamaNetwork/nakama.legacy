@@ -13,10 +13,11 @@ namespace TreasureGuide.Entities
     
     public enum UnitType : byte
     {
-        STR = 0,
-        DEX = 1,
-        QCK = 2,
-        INT = 3,
-        PSY = 4
+        Unknown = 0,
+        STR = 1,
+        DEX = 2,
+        QCK = 3,
+        INT = 4,
+        PSY = 5
     }
 }

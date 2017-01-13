@@ -13,11 +13,13 @@ namespace TreasureGuide.Entities
     
     public enum StageType : byte
     {
-        Story = 0,
-        Fortnight = 1,
-        Weekly = 2,
-        Raid = 3,
-        Coliseum = 4,
-        Special = 5
+        Unknown = 0,
+        Story = 1,
+        Fortnight = 2,
+        Weekly = 3,
+        Raid = 4,
+        Coliseum = 5,
+        Special = 6,
+        TrainingForest = 7
     }
 }

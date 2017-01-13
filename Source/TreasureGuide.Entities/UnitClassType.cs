@@ -13,14 +13,15 @@ namespace TreasureGuide.Entities
     
     public enum UnitClassType : byte
     {
-        Shooter = 0,
-        Fighter = 1,
-        Striker = 2,
-        Slasher = 3,
-        Cerebral = 4,
-        Driven = 5,
-        Powerhouse = 6,
-        Evolver = 7,
-        Booster = 8
+        Unknown = 0,
+        Shooter = 1,
+        Fighter = 2,
+        Striker = 3,
+        Slasher = 4,
+        Cerebral = 5,
+        Driven = 6,
+        Powerhouse = 7,
+        Evolver = 8,
+        Booster = 9
     }
 }
