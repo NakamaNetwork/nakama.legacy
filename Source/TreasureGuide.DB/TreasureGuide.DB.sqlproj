@@ -76,6 +76,7 @@
     <Build Include="dbo\Teams\Teams.sql" />
     <Build Include="dbo\Teams\TeamUnits.sql" />
     <Build Include="dbo\Teams\TeamSockets.sql" />
+    <Build Include="dbo\Teams\TeamVotes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />
