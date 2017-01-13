@@ -509,10 +509,6 @@
         <EntityContainer Name="TreasureEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="UnitClasses" EntityType="tcdbModel.UnitClass" />
           <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
-          <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="UnitClass" EntitySet="UnitClasses" />
-          </AssociationSet>
           <EntitySet Name="StageDifficulties" EntityType="tcdbModel.StageDifficulty" />
           <EntitySet Name="Stages" EntityType="tcdbModel.Stage" />
           <AssociationSet Name="FK_dbo_StageDifficulties_dbo_Stages" Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages">
@@ -587,6 +583,10 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamVote" EntitySet="TeamVotes" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitClass" EntitySet="UnitClasses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UnitClass">
           <Key>
@@ -617,23 +617,11 @@
           <Property Name="MaxATK" Type="Int16" />
           <Property Name="MaxRCV" Type="Int16" />
           <Property Name="GrowthRate" Type="Decimal" Precision="2" Scale="1" />
-          <NavigationProperty Name="UnitClasses" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="Unit" ToRole="UnitClass" />
           <NavigationProperty Name="StageUnits" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_Units" FromRole="Unit" ToRole="StageUnit" />
           <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="Unit" ToRole="TeamUnit" />
           <NavigationProperty Name="UnitFlags" Relationship="tcdbModel.FK_dbo_UnitFlags_dbo_Units" FromRole="Unit" ToRole="UnitFlag" />
+          <NavigationProperty Name="UnitClasses" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="Unit" ToRole="UnitClass" />
         </EntityType>
-        <Association Name="FK_dbo_UnitClasses_dbo_Units">
-          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
-          <End Type="tcdbModel.UnitClass" Role="UnitClass" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UnitClass">
-              <PropertyRef Name="UnitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EnumType Name="UnitClassType" UnderlyingType="Byte">
           <Member Name="Unknown" />
           <Member Name="Shooter" />
@@ -1047,6 +1035,18 @@
             </Principal>
             <Dependent Role="TeamVote">
               <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UnitClasses_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="tcdbModel.UnitClass" Role="UnitClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitClass">
+              <PropertyRef Name="UnitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

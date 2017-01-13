@@ -24,34 +24,35 @@ namespace TreasureGuide.Sniffer.Parsers
             {
                 var id = index + 1;
                 var classData = line[2]?.ToString();
+                var unit = new Unit
+                {
+                    Id = id,
+                    Name = line[0] as string,
+                    Type = (line[1] as string)?.ToUnitType(),
+                    // Classes parsed later
+                    Stars = (line[3]?.ToString())?.ToByte(),
+                    Cost = (line[4]?.ToString())?.ToByte(),
+                    Combo = (line[5]?.ToString())?.ToByte(),
+                    Sockets = (line[6]?.ToString())?.ToByte(),
+                    MaxLevel = (line[7]?.ToString())?.ToByte(),
+                    EXPtoMax = (line[8]?.ToString())?.ToInt32(),
+                    MinHP = (line[9]?.ToString()).ToInt16(),
+                    MinATK = (line[10]?.ToString()).ToInt16(),
+                    MinRCV = (line[11]?.ToString()).ToInt16(),
+                    MaxHP = (line[12]?.ToString()).ToInt16(),
+                    MaxATK = (line[13]?.ToString()).ToInt16(),
+                    MaxRCV = (line[14]?.ToString()).ToInt16(),
+                    GrowthRate = (line[15]?.ToString()).ToDecimal(),
+                };
                 return new ParsedUnitModel
                 {
-                    Unit = new Unit
-                    {
-                        Id = id,
-                        Name = line[0] as string,
-                        Type = (line[1] as string)?.ToUnitType(),
-                        // Classes parsed later
-                        Stars = (line[3]?.ToString())?.ToByte(),
-                        Cost = (line[4]?.ToString())?.ToByte(),
-                        Combo = (line[5]?.ToString())?.ToByte(),
-                        Sockets = (line[6]?.ToString())?.ToByte(),
-                        MaxLevel = (line[7]?.ToString())?.ToByte(),
-                        EXPtoMax = (line[8]?.ToString())?.ToInt32(),
-                        MinHP = (line[9]?.ToString()).ToInt16(),
-                        MinATK = (line[10]?.ToString()).ToInt16(),
-                        MinRCV = (line[11]?.ToString()).ToInt16(),
-                        MaxHP = (line[12]?.ToString()).ToInt16(),
-                        MaxATK = (line[13]?.ToString()).ToInt16(),
-                        MaxRCV = (line[14]?.ToString()).ToInt16(),
-                        GrowthRate = (line[15]?.ToString()).ToDecimal(),
-                    },
+                    Unit = unit,
                     UnitClasses = (classData.Contains("[") ? JsonConvert.DeserializeObject<string[]>(classData) : new[] { classData })
                         .Select(type => type?.ToUnitClass())
                         .Where(x => x.HasValue)
                         .Select(type => new UnitClass
                         {
-                            UnitId = id,
+                            Unit = unit,
                             Class = type.Value
                         })
                 };

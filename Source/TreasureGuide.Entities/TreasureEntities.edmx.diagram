@@ -5,9 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="15b9edd1340940f481faacdd9b6411bb" Name="Diagram1" ZoomLevel="55">
-        <EntityTypeShape EntityType="tcdbModel.UnitClass" Width="1.5" PointX="15.5" PointY="11.875" />
+        <EntityTypeShape EntityType="tcdbModel.UnitClass" Width="1.5" PointX="15.5" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="13.25" PointY="8.625" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.StageDifficulty" Width="1.5" PointX="9.25" PointY="2.75" />
         <EntityTypeShape EntityType="tcdbModel.Stage" Width="1.5" PointX="6.875" PointY="3.25" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" />
@@ -38,6 +37,7 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
