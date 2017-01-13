@@ -60,7 +60,6 @@
     <Compile Include="Helpers\ParsingExtensions.cs" />
     <Compile Include="Parsers\TreasureParser.cs" />
     <Compile Include="Parsers\UnitFlagParser.cs" />
-    <Compile Include="Parsers\StageParser.cs" />
     <Compile Include="Parsers\UnitParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -34,8 +34,7 @@ namespace TreasureGuide.Sniffer
             var parsers = new ITreasureParser[]
             {
                 new UnitParser(context),
-                new UnitFlagParser(context),
-                new StageParser(context),
+                new UnitFlagParser(context)
             };
             ParsersRunning = parsers.Count();
 
@@ -60,6 +59,7 @@ namespace TreasureGuide.Sniffer
                         ParsersRunning--;
                         Debug.WriteLine($"{ParsersRunning} Parser(s) Remain");
                     }
+                    GC.Collect();
                 }
             });
         }

@@ -13,11 +13,12 @@ namespace TreasureGuide.Entities
     
     public enum UnitFlagTypes : byte
     {
-        Global = 0,
-        RareRecruit = 1,
-        RareRecruitExclusive = 2,
-        RareRecruitLimited = 3,
-        Promotional = 4,
-        Shop = 5
+        Unknown = 0,
+        Global = 1,
+        RareRecruit = 2,
+        RareRecruitExclusive = 3,
+        RareRecruitLimited = 4,
+        Promotional = 5,
+        Shop = 6
     }
 }

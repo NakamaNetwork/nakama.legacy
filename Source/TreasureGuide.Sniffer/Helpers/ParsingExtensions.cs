@@ -57,20 +57,20 @@ namespace TreasureGuide.Sniffer.Helpers
             return null;
         }
 
-        public static UnitTypeEnum? ToUnitType(this string input)
+        public static UnitType? ToUnitType(this string input)
         {
-            UnitTypeEnum value;
-            if (UnitTypeEnum.TryParse(input, out value))
+            UnitType value;
+            if (UnitType.TryParse(input, out value))
             {
                 return value;
             }
             return null;
         }
 
-        public static UnitClassEnum? ToUnitClass(this string input)
+        public static UnitClassType? ToUnitClass(this string input)
         {
-            UnitClassEnum value;
-            if (UnitClassEnum.TryParse(input, out value))
+            UnitClassType value;
+            if (UnitClassType.TryParse(input, out value))
             {
                 return value;
             }

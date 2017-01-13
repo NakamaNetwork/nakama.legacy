@@ -25,7 +25,7 @@ namespace TreasureGuide.Entities
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<UnitTypeEnum> Type { get; set; }
+        public Nullable<UnitType> Type { get; set; }
         public Nullable<byte> Stars { get; set; }
         public Nullable<byte> Cost { get; set; }
         public Nullable<byte> Combo { get; set; }

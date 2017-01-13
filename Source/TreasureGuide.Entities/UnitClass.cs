@@ -15,7 +15,7 @@ namespace TreasureGuide.Entities
     public partial class UnitClass
     {
         public int UnitId { get; set; }
-        public UnitClassEnum Class { get; set; }
+        public UnitClassType Class { get; set; }
     
         public virtual Unit Unit { get; set; }
     }

@@ -116,7 +116,7 @@
     <Compile Include="UnitClass.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="UnitClassEnum.cs">
+    <Compile Include="UnitClassType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitFlag.cs">
@@ -125,7 +125,7 @@
     <Compile Include="UnitFlagTypes.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="UnitTypeEnum.cs">
+    <Compile Include="UnitType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>

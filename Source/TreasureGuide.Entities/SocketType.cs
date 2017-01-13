@@ -13,15 +13,16 @@ namespace TreasureGuide.Entities
     
     public enum SocketType : byte
     {
-        DamageReduction = 0,
-        ChargeSpecials = 1,
-        BindResistance = 2,
-        DespairResistance = 3,
-        AutoHeal = 4,
-        RCVBoost = 5,
-        SlotRateBoost = 6,
-        PoisonResistance = 7,
-        MapDamageResistance = 8,
-        Resilience = 9
+        Unknown = 0,
+        DamageReduction = 1,
+        ChargeSpecials = 2,
+        BindResistance = 3,
+        DespairResistance = 4,
+        AutoHeal = 5,
+        RCVBoost = 6,
+        SlotRateBoost = 7,
+        PoisonResistance = 8,
+        MapDamageResistance = 9,
+        Resilience = 10
     }
 }

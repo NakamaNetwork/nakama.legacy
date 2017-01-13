@@ -11,7 +11,7 @@ namespace TreasureGuide.Entities
 {
     using System;
     
-    public enum UnitClassEnum : byte
+    public enum UnitClassType : byte
     {
         Shooter = 0,
         Fighter = 1,

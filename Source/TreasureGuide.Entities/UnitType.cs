@@ -11,7 +11,7 @@ namespace TreasureGuide.Entities
 {
     using System;
     
-    public enum UnitTypeEnum : byte
+    public enum UnitType : byte
     {
         STR = 0,
         DEX = 1,

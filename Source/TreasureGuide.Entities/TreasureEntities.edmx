@@ -562,7 +562,7 @@
             <PropertyRef Name="Class" />
           </Key>
           <Property Name="UnitId" Type="Int32" Nullable="false" />
-          <Property Name="Class" Type="tcdbModel.UnitClassEnum" Nullable="false" />
+          <Property Name="Class" Type="tcdbModel.UnitClassType" Nullable="false" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="UnitClass" ToRole="Unit" />
         </EntityType>
         <EntityType Name="Unit">
@@ -571,7 +571,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="tcdbModel.UnitTypeEnum" />
+          <Property Name="Type" Type="tcdbModel.UnitType" />
           <Property Name="Stars" Type="Byte" />
           <Property Name="Cost" Type="Byte" />
           <Property Name="Combo" Type="Byte" />
@@ -602,7 +602,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EnumType Name="UnitClassEnum" UnderlyingType="Byte">
+        <EnumType Name="UnitClassType" UnderlyingType="Byte">
           <Member Name="Shooter" />
           <Member Name="Fighter" />
           <Member Name="Striker" />
@@ -613,7 +613,7 @@
           <Member Name="Evolver" />
           <Member Name="Booster" />
         </EnumType>
-        <EnumType Name="UnitTypeEnum" UnderlyingType="Byte">
+        <EnumType Name="UnitType" UnderlyingType="Byte">
           <Member Name="STR" />
           <Member Name="DEX" />
           <Member Name="QCK" />
@@ -969,6 +969,7 @@
           </ReferentialConstraint>
         </Association>
         <EnumType Name="UnitFlagTypes" UnderlyingType="Byte">
+          <Member Name="Unknown" />
           <Member Name="Global" />
           <Member Name="RareRecruit" />
           <Member Name="RareRecruitExclusive" />
@@ -977,6 +978,7 @@
           <Member Name="Shop" />
         </EnumType>
         <EnumType Name="SocketType" UnderlyingType="Byte">
+          <Member Name="Unknown" />
           <Member Name="DamageReduction" />
           <Member Name="ChargeSpecials" />
           <Member Name="BindResistance" />
