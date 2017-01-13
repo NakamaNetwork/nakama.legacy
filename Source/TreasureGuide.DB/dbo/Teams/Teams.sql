@@ -6,6 +6,6 @@
     [Description] NVARCHAR(1000) NULL,
     [Credits] [nvarchar](250) NULL,
     CONSTRAINT [PK_dbo.Teams] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK.dbo_Teams_dbo.AspNetUsers] FOREIGN KEY([SubmittedById]) REFERENCES [dbo].[AspNetusers]([Id]),
+    CONSTRAINT [FK.dbo_Teams_dbo.AspNetUsers] FOREIGN KEY([SubmittedById]) REFERENCES [dbo].[AspNetUsers]([Id]),
     CONSTRAINT [FK_dbo.Teams_dbo.StageDifficulties] FOREIGN KEY([StageDifficultyId]) REFERENCES [dbo].[StageDifficulties]([Id]) ON DELETE CASCADE
 )
