@@ -12,14 +12,11 @@ namespace TreasureGuide.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class TeamUnit
+    public partial class TeamVote
     {
         public int TeamId { get; set; }
-        public int UnitId { get; set; }
-        public Nullable<byte> Position { get; set; }
-        public Nullable<bool> SpecialLevel { get; set; }
+        public string UserHash { get; set; }
     
-        public virtual Unit Unit { get; set; }
         public virtual Team Team { get; set; }
     }
 }

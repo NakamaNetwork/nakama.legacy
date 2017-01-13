@@ -136,6 +136,14 @@
           <Property Name="Position" Type="tinyint" />
           <Property Name="SpecialLevel" Type="bit" />
         </EntityType>
+        <EntityType Name="TeamVotes">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="UserHash" />
+          </Key>
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="UserHash" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
         <EntityType Name="UnitClasses">
           <Key>
             <PropertyRef Name="UnitId" />
@@ -367,6 +375,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_TeamVotes_dbo_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamVotes" Type="Self.TeamVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVotes">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_UnitClasses_dbo_Units">
           <End Role="Units" Type="Self.Units" Multiplicity="1" />
           <End Role="UnitClasses" Type="Self.UnitClasses" Multiplicity="*" />
@@ -407,6 +429,7 @@
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamSockets" EntityType="Self.TeamSockets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamUnits" EntityType="Self.TeamUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitClasses" EntityType="Self.UnitClasses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitFlags" EntityType="Self.UnitFlags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
@@ -465,6 +488,10 @@
           <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="Self.FK_dbo_TeamUnits_dbo_Units">
             <End Role="Units" EntitySet="Units" />
             <End Role="TeamUnits" EntitySet="TeamUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamVotes_dbo_Teams" Association="Self.FK_dbo_TeamVotes_dbo_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamVotes" EntitySet="TeamVotes" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="Self.FK_dbo_UnitClasses_dbo_Units">
             <End Role="Units" EntitySet="Units" />
@@ -527,9 +554,19 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Teams" EntityType="tcdbModel.Team" />
           <EntitySet Name="TeamSockets" EntityType="tcdbModel.TeamSocket" />
           <EntitySet Name="TeamUnits" EntityType="tcdbModel.TeamUnit" />
+          <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="TeamUnit" EntitySet="TeamUnits" />
+          </AssociationSet>
+          <EntitySet Name="UnitFlags" EntityType="tcdbModel.UnitFlag" />
+          <AssociationSet Name="FK_dbo_UnitFlags_dbo_Units" Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitFlag" EntitySet="UnitFlags" />
+          </AssociationSet>
+          <EntitySet Name="Teams" EntityType="tcdbModel.Team" />
+          <EntitySet Name="TeamVotes" EntityType="tcdbModel.TeamVote" />
           <AssociationSet Name="FK_dbo_Teams_dbo_AspNetUsers" Association="tcdbModel.FK_dbo_Teams_dbo_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Team" EntitySet="Teams" />
@@ -546,14 +583,9 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamUnit" EntitySet="TeamUnits" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="TeamUnit" EntitySet="TeamUnits" />
-          </AssociationSet>
-          <EntitySet Name="UnitFlags" EntityType="tcdbModel.UnitFlag" />
-          <AssociationSet Name="FK_dbo_UnitFlags_dbo_Units" Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="UnitFlag" EntitySet="UnitFlags" />
+          <AssociationSet Name="FK_dbo_TeamVotes_dbo_Teams" Association="tcdbModel.FK_dbo_TeamVotes_dbo_Teams">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamVote" EntitySet="TeamVotes" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UnitClass">
@@ -842,20 +874,6 @@
           <End Type="tcdbModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="tcdbModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityType Name="Team">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageDifficultyId" Type="Int32" Nullable="false" />
-          <Property Name="SubmittedById" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Credits" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="tcdbModel.FK_dbo_Teams_dbo_AspNetUsers" FromRole="Team" ToRole="AspNetUser" />
-          <NavigationProperty Name="StageDifficulty" Relationship="tcdbModel.FK_dbo_Teams_dbo_StageDifficulties" FromRole="Team" ToRole="StageDifficulty" />
-          <NavigationProperty Name="TeamSocket" Relationship="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" FromRole="Team" ToRole="TeamSocket" />
-          <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
-        </EntityType>
         <EntityType Name="TeamSocket">
           <Key>
             <PropertyRef Name="TeamId" />
@@ -874,63 +892,9 @@
           <Property Name="UnitId" Type="Int32" Nullable="false" />
           <Property Name="Position" Type="Byte" />
           <Property Name="SpecialLevel" Type="Boolean" />
-          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="TeamUnit" ToRole="Team" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="TeamUnit" ToRole="Unit" />
+          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="TeamUnit" ToRole="Team" />
         </EntityType>
-        <Association Name="FK_dbo_Teams_dbo_AspNetUsers">
-          <End Type="tcdbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Team">
-              <PropertyRef Name="SubmittedById" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Teams_dbo_StageDifficulties">
-          <End Type="tcdbModel.StageDifficulty" Role="StageDifficulty" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StageDifficulty">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Team">
-              <PropertyRef Name="StageDifficultyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_TeamSockets_dbo_Teams">
-          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.TeamSocket" Role="TeamSocket" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Team">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TeamSocket">
-              <PropertyRef Name="TeamId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_TeamUnits_dbo_Teams">
-          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.TeamUnit" Role="TeamUnit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Team">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TeamUnit">
-              <PropertyRef Name="TeamId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_TeamUnits_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -990,6 +954,98 @@
           <Member Name="MapDamageResistance" />
           <Member Name="Resilience" />
         </EnumType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageDifficultyId" Type="Int32" Nullable="false" />
+          <Property Name="SubmittedById" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Credits" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="tcdbModel.FK_dbo_Teams_dbo_AspNetUsers" FromRole="Team" ToRole="AspNetUser" />
+          <NavigationProperty Name="StageDifficulty" Relationship="tcdbModel.FK_dbo_Teams_dbo_StageDifficulties" FromRole="Team" ToRole="StageDifficulty" />
+          <NavigationProperty Name="TeamSocket" Relationship="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" FromRole="Team" ToRole="TeamSocket" />
+          <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
+          <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="Team" ToRole="TeamVote" />
+        </EntityType>
+        <EntityType Name="TeamVote">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="UserHash" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="UserHash" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="TeamVote" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_dbo_Teams_dbo_AspNetUsers">
+          <End Type="tcdbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="SubmittedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Teams_dbo_StageDifficulties">
+          <End Type="tcdbModel.StageDifficulty" Role="StageDifficulty" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StageDifficulty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="StageDifficultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamSockets_dbo_Teams">
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamSocket" Role="TeamSocket" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamSocket">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamUnits_dbo_Teams">
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamUnit" Role="TeamUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamUnit">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamVotes_dbo_Teams">
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamVote" Role="TeamVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVote">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1136,17 +1192,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Teams">
-            <EntityTypeMapping TypeName="tcdbModel.Team">
-              <MappingFragment StoreEntitySet="Teams">
-                <ScalarProperty Name="Credits" ColumnName="Credits" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SubmittedById" ColumnName="SubmittedById" />
-                <ScalarProperty Name="StageDifficultyId" ColumnName="StageDifficultyId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TeamSockets">
             <EntityTypeMapping TypeName="tcdbModel.TeamSocket">
               <MappingFragment StoreEntitySet="TeamSockets">
@@ -1171,6 +1216,25 @@
               <MappingFragment StoreEntitySet="UnitFlags">
                 <ScalarProperty Name="FlagType" ColumnName="FlagType" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="tcdbModel.Team">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="Credits" ColumnName="Credits" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SubmittedById" ColumnName="SubmittedById" />
+                <ScalarProperty Name="StageDifficultyId" ColumnName="StageDifficultyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamVotes">
+            <EntityTypeMapping TypeName="tcdbModel.TeamVote">
+              <MappingFragment StoreEntitySet="TeamVotes">
+                <ScalarProperty Name="UserHash" ColumnName="UserHash" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

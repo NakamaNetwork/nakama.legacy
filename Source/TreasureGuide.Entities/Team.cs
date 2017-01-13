@@ -18,6 +18,7 @@ namespace TreasureGuide.Entities
         public Team()
         {
             this.TeamUnits = new HashSet<TeamUnit>();
+            this.TeamVotes = new HashSet<TeamVote>();
         }
     
         public int Id { get; set; }
@@ -31,5 +32,7 @@ namespace TreasureGuide.Entities
         public virtual TeamSocket TeamSocket { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamVote> TeamVotes { get; set; }
     }
 }
