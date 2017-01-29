@@ -13,7 +13,7 @@ namespace TreasureGuide.Web.Controllers
     public class StageController : ApiController
     {
         private readonly TreasureEntities _entities;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public StageController(IMapper mapper, TreasureEntities entities)
         {

@@ -233,6 +233,7 @@
     <Compile Include="Controllers\GuideController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StageController.cs" />
+    <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Extensions\EntitiesExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -243,6 +244,7 @@
     <Compile Include="Models\Stages\SaveDifficultyModel.cs" />
     <Compile Include="Models\Stages\SaveStageModel.cs" />
     <Compile Include="Models\Stages\StageBrowserModels.cs" />
+    <Compile Include="Models\Units\UnitModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
