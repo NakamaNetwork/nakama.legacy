@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using TreasureGuide.Entities;
-using TreasureGuide.Web.Models.Stages;
 using TreasureGuide.Web.Models.Units;
 
 namespace TreasureGuide.Web.Controllers
