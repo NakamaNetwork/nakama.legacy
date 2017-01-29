@@ -2,6 +2,7 @@
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
+using AutoMapper;
 using TreasureGuide.Entities;
 
 namespace TreasureGuide.Web
@@ -18,7 +19,8 @@ namespace TreasureGuide.Web
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             builder.RegisterType<TreasureEntities>().InstancePerRequest();
-            
+            builder.RegisterInstance(MapperConfig.Create()).As<IMapper>().SingleInstance();
+
             Container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
         }

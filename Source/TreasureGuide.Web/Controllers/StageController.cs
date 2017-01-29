@@ -3,7 +3,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AutoMapper;
 using TreasureGuide.Entities;
+using TreasureGuide.Web.Extensions;
 using TreasureGuide.Web.Models.Stages;
 
 namespace TreasureGuide.Web.Controllers
@@ -11,9 +13,11 @@ namespace TreasureGuide.Web.Controllers
     public class StageController : ApiController
     {
         private readonly TreasureEntities _entities;
+        private IMapper _mapper;
 
-        public StageController(TreasureEntities entities)
+        public StageController(IMapper mapper, TreasureEntities entities)
         {
+            _mapper = mapper;
             _entities = entities;
         }
 
@@ -31,6 +35,14 @@ namespace TreasureGuide.Web.Controllers
             }
             var converted = await CreateBrowserModel(results);
             return Ok(converted);
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> SaveStage(SaveStageModel model)
+        {
+            var result = await _entities.Stages.Import(model, _mapper, x => x.Id == model.Id);
+            await _entities.SaveChangesAsync();
+            return Ok();
         }
 
         private async Task<IEnumerable<StageTypeModel>> CreateBrowserModel(IQueryable<Stage> results)
