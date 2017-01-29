@@ -49,7 +49,7 @@ namespace TreasureGuide.Web.Controllers
                 Flags = x.UnitFlags.Select(y => y.FlagType),
                 LeadTeams = x.TeamUnits.Count(y => y.Position <= 2),
                 OnTeams = x.TeamUnits.Count()
-            }).ToListAsync();
+            }).OrderBy(x => x.Id).ToListAsync();
             return output;
         }
     }

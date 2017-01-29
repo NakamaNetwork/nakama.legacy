@@ -60,7 +60,7 @@ namespace TreasureGuide.Web.Controllers
             {
                 Id = (int)x.Key,
                 Name = x.Key.ToString(),
-                Stages = x.Select(y => new StageStubModel
+                Stages = x.OrderBy(y => y.Name).Select(y => new StageStubModel
                 {
                     Id = y.Id,
                     Name = y.Name,
@@ -72,9 +72,9 @@ namespace TreasureGuide.Web.Controllers
                         Stamina = z.Stamina,
                         Global = z.Global,
                         Teams = z.Teams.Count
-                    })
+                    }).OrderBy(z => z.Stamina).ThenBy(z => z.Name)
                 })
-            }).ToListAsync();
+            }).OrderBy(x => x.Name).ThenBy(x => x.Id).ToListAsync();
             return output;
         }
     }

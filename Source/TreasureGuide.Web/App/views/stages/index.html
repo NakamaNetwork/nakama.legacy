@@ -1,0 +1,33 @@
+﻿<section>
+    <h2 data-bind="text:displayName"></h2>
+    <div class="panel-group" data-bind="foreach: Stages">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title" data-bind="text: Name"></h4>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Stage</th>
+                        <th>Global</th>
+                        <th colspan="100">Difficulties</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: Stages">
+                    <tr>
+                        <td data-bind="text: Name"></td>
+                        <td><i class="fa fa-globe" data-bind="visible: Global"></i></td>
+                        <!-- ko foreach: Difficulties -->
+                        <td style="white-space: nowrap">
+                            <a data-bind="attr: { href: '#stages/' + Id }">
+                                <span data-bind="text: Name"></span>
+                                (<span data-bind="text: Stamina"></span>)
+                            </a>
+                        </td>
+                        <!-- /ko -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

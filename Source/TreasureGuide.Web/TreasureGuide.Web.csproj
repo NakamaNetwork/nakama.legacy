@@ -252,15 +252,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\main.js" />
+    <Content Include="App\services\stageService.js" />
     <Content Include="App\services\queryService.js" />
     <Content Include="App\services\guideService.js" />
     <Content Include="App\viewmodels\flickr.js" />
-    <Content Include="App\viewmodels\guides\index.js" />
+    <Content Include="App\viewmodels\stages\index.js" />
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\viewmodels\welcome.js" />
     <Content Include="App\views\detail.html" />
     <Content Include="App\views\flickr.html" />
-    <Content Include="App\views\guides\index.html" />
+    <Content Include="App\views\stages\index.html" />
     <Content Include="App\views\shell.html" />
     <Content Include="App\views\welcome.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />

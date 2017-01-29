@@ -9,7 +9,7 @@
             return headers;
         },
         query: function (endpoint, data, headers, func) {
-            headers = headers || self.buildSecurityHeaders();
+            headers = headers || this.buildSecurityHeaders();
             data = data || {};
             return func(endpoint, data, headers);
         },
@@ -22,7 +22,7 @@
         post: function (endpoint, data, headers) {
             return this.query(endpoint, data, headers, http.post);
         },
-        delete: function (endpoint, data, headers) {
+        del: function (endpoint, data, headers) {
             return this.query(endpoint, data, headers, http.delete);
         }
     };
