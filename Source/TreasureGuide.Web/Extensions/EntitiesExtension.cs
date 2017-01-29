@@ -8,7 +8,8 @@ namespace TreasureGuide.Web.Extensions
 {
     public static class EntitiesExtension
     {
-        public static async Task<TEntity> Import<TEntity, TSaved>(this DbSet<TEntity> entities, TSaved saved, IMapper mapper, Expression<Func<TEntity, bool>> findFunc) where TEntity : class
+        public static async Task<TEntity> Import<TEntity, TSaved>(this DbSet<TEntity> entities, TSaved saved, IMapper mapper, Expression<Func<TEntity, bool>> findFunc)
+            where TEntity : class
         {
             TEntity result;
             var existing = await entities.SingleOrDefaultAsync(findFunc);

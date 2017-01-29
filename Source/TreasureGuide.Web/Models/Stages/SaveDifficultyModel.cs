@@ -3,17 +3,20 @@ using TreasureGuide.Entities;
 
 namespace TreasureGuide.Web.Models.Stages
 {
-    public class SaveStageModel
+    public class SaveDifficultyModel
     {
         public int Id { get; set; }
+        public int StageId { get; set; }
         public string Name { get; set; }
-        public StageType Type { get; set; }
+        public int Stamina { get; set; }
         public bool Global { get; set; }
 
         public static void Map(IMapperConfigurationExpression map)
         {
-            map.CreateMap<SaveStageModel, Stage>()
-                .Ignore(x => x.StageDifficulties);
+            map.CreateMap<SaveDifficultyModel, StageDifficulty>()
+                .Ignore(x => x.Stage)
+                .Ignore(x => x.Teams)
+                .Ignore(x => x.StageLevels);
         }
     }
 }

@@ -12,14 +12,15 @@ namespace TreasureGuide.Web
         {
             var config = new MapperConfiguration(map =>
             {
-                map.CreateMap<SaveStageModel, Stage>().Ignore(x => x.StageDifficulties);
+                SaveStageModel.Map(map);
+                SaveDifficultyModel.Map(map);
             });
 
             config.AssertConfigurationIsValid();
             return config.CreateMapper();
         }
 
-        private static IMappingExpression<TSource, TDestination> Ignore<TSource, TDestination>(this IMappingExpression<TSource, TDestination> map, Expression<Func<TDestination, object>> selector)
+        public static IMappingExpression<TSource, TDestination> Ignore<TSource, TDestination>(this IMappingExpression<TSource, TDestination> map, Expression<Func<TDestination, object>> selector)
         {
             map.ForMember(selector, config => config.Ignore());
             return map;

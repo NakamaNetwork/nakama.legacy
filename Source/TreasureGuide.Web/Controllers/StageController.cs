@@ -45,6 +45,14 @@ namespace TreasureGuide.Web.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public async Task<IHttpActionResult> SaveDifficulty(SaveDifficultyModel model)
+        {
+            var result = await _entities.Stages.Import(model, _mapper, x => x.Id == model.Id);
+            await _entities.SaveChangesAsync();
+            return Ok();
+        }
+
         private async Task<IEnumerable<StageTypeModel>> CreateBrowserModel(IQueryable<Stage> results)
         {
             var grouped = results.GroupBy(x => x.Type);

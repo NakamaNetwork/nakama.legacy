@@ -240,6 +240,7 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Stages\SaveDifficultyModel.cs" />
     <Compile Include="Models\Stages\SaveStageModel.cs" />
     <Compile Include="Models\Stages\StageBrowserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
