@@ -32,8 +32,8 @@ namespace TreasureGuide.Entities
         public Nullable<byte> Interval { get; set; }
     
         public virtual StageLevel StageLevel { get; set; }
+        public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StageUnitAttackPattern> StageUnitAttackPatterns { get; set; }
-        public virtual Unit Unit { get; set; }
     }
 }

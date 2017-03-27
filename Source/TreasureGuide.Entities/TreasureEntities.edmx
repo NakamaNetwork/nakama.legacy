@@ -113,7 +113,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageDifficultyId" Type="int" Nullable="false" />
           <Property Name="SubmittedById" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="1000" />
           <Property Name="Credits" Type="nvarchar" MaxLength="250" />
@@ -125,6 +124,14 @@
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="SocketType" Type="tinyint" Nullable="false" />
           <Property Name="Level" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamStages">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="StageDifficultyId" />
+          </Key>
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="StageDifficultyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamUnits">
           <Key>
@@ -319,20 +326,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Teams_dbo_StageDifficulties">
-          <End Role="StageDifficulties" Type="Self.StageDifficulties" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StageDifficulties">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Teams">
-              <PropertyRef Name="StageDifficultyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_TeamSockets_dbo_Teams">
           <End Role="Teams" Type="Self.Teams" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -343,6 +336,34 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="TeamSockets">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamStages_dbo_StageDifficulties">
+          <End Role="StageDifficulties" Type="Self.StageDifficulties" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamStages" Type="Self.TeamStages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StageDifficulties">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamStages">
+              <PropertyRef Name="StageDifficultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamStages_dbo_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamStages" Type="Self.TeamStages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamStages">
               <PropertyRef Name="TeamId" />
             </Dependent>
           </ReferentialConstraint>
@@ -428,6 +449,7 @@
           <EntitySet Name="StageUnits" EntityType="Self.StageUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamSockets" EntityType="Self.TeamSockets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamStages" EntityType="Self.TeamStages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamUnits" EntityType="Self.TeamUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitClasses" EntityType="Self.UnitClasses" Schema="dbo" store:Type="Tables" />
@@ -473,13 +495,17 @@
             <End Role="Units" EntitySet="Units" />
             <End Role="StageUnits" EntitySet="StageUnits" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Teams_dbo_StageDifficulties" Association="Self.FK_dbo_Teams_dbo_StageDifficulties">
-            <End Role="StageDifficulties" EntitySet="StageDifficulties" />
-            <End Role="Teams" EntitySet="Teams" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_TeamSockets_dbo_Teams" Association="Self.FK_dbo_TeamSockets_dbo_Teams">
             <End Role="Teams" EntitySet="Teams" />
             <End Role="TeamSockets" EntitySet="TeamSockets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamStages_dbo_StageDifficulties" Association="Self.FK_dbo_TeamStages_dbo_StageDifficulties">
+            <End Role="StageDifficulties" EntitySet="StageDifficulties" />
+            <End Role="TeamStages" EntitySet="TeamStages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamStages_dbo_Teams" Association="Self.FK_dbo_TeamStages_dbo_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamStages" EntitySet="TeamStages" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_TeamUnits_dbo_Teams" Association="Self.FK_dbo_TeamUnits_dbo_Teams">
             <End Role="Teams" EntitySet="Teams" />
@@ -509,26 +535,12 @@
         <EntityContainer Name="TreasureEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="UnitClasses" EntityType="tcdbModel.UnitClass" />
           <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
-          <EntitySet Name="StageDifficulties" EntityType="tcdbModel.StageDifficulty" />
           <EntitySet Name="Stages" EntityType="tcdbModel.Stage" />
-          <AssociationSet Name="FK_dbo_StageDifficulties_dbo_Stages" Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages">
-            <End Role="Stage" EntitySet="Stages" />
-            <End Role="StageDifficulty" EntitySet="StageDifficulties" />
-          </AssociationSet>
           <EntitySet Name="StageLevels" EntityType="tcdbModel.StageLevel" />
-          <EntitySet Name="StageUnitAttackPatterns" EntityType="tcdbModel.StageUnitAttackPattern" />
           <EntitySet Name="StageUnits" EntityType="tcdbModel.StageUnit" />
-          <AssociationSet Name="FK_dbo_StageLevels_dbo_StageDifficulties" Association="tcdbModel.FK_dbo_StageLevels_dbo_StageDifficulties">
-            <End Role="StageDifficulty" EntitySet="StageDifficulties" />
-            <End Role="StageLevel" EntitySet="StageLevels" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_StageUnits_dbo_StageLevels" Association="tcdbModel.FK_dbo_StageUnits_dbo_StageLevels">
             <End Role="StageLevel" EntitySet="StageLevels" />
             <End Role="StageUnit" EntitySet="StageUnits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" Association="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits">
-            <End Role="StageUnit" EntitySet="StageUnits" />
-            <End Role="StageUnitAttackPattern" EntitySet="StageUnitAttackPatterns" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_StageUnits_dbo_Units" Association="tcdbModel.FK_dbo_StageUnits_dbo_Units">
             <End Role="Unit" EntitySet="Units" />
@@ -561,15 +573,24 @@
             <End Role="Unit" EntitySet="Units" />
             <End Role="UnitFlag" EntitySet="UnitFlags" />
           </AssociationSet>
-          <EntitySet Name="Teams" EntityType="tcdbModel.Team" />
           <EntitySet Name="TeamVotes" EntityType="tcdbModel.TeamVote" />
+          <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitClass" EntitySet="UnitClasses" />
+          </AssociationSet>
+          <EntitySet Name="StageDifficulties" EntityType="tcdbModel.StageDifficulty" />
+          <EntitySet Name="Teams" EntityType="tcdbModel.Team" />
           <AssociationSet Name="FK_dbo_Teams_dbo_AspNetUsers" Association="tcdbModel.FK_dbo_Teams_dbo_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Team" EntitySet="Teams" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Teams_dbo_StageDifficulties" Association="tcdbModel.FK_dbo_Teams_dbo_StageDifficulties">
+          <AssociationSet Name="FK_dbo_StageDifficulties_dbo_Stages" Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages">
+            <End Role="Stage" EntitySet="Stages" />
             <End Role="StageDifficulty" EntitySet="StageDifficulties" />
-            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StageLevels_dbo_StageDifficulties" Association="tcdbModel.FK_dbo_StageLevels_dbo_StageDifficulties">
+            <End Role="StageDifficulty" EntitySet="StageDifficulties" />
+            <End Role="StageLevel" EntitySet="StageLevels" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_TeamSockets_dbo_Teams" Association="tcdbModel.FK_dbo_TeamSockets_dbo_Teams">
             <End Role="Team" EntitySet="Teams" />
@@ -583,9 +604,14 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamVote" EntitySet="TeamVotes" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="UnitClass" EntitySet="UnitClasses" />
+          <AssociationSet Name="TeamStages" Association="tcdbModel.TeamStages">
+            <End Role="StageDifficulty" EntitySet="StageDifficulties" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <EntitySet Name="StageUnitAttackPatterns" EntityType="tcdbModel.StageUnitAttackPattern" />
+          <AssociationSet Name="FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" Association="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits">
+            <End Role="StageUnit" EntitySet="StageUnits" />
+            <End Role="StageUnitAttackPattern" EntitySet="StageUnitAttackPatterns" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UnitClass">
@@ -642,19 +668,6 @@
           <Member Name="INT" />
           <Member Name="PSY" />
         </EnumType>
-        <EntityType Name="StageDifficulty">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="StageId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Stamina" Type="Byte" Nullable="false" />
-          <Property Name="Global" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" FromRole="StageDifficulty" ToRole="Stage" />
-          <NavigationProperty Name="StageLevels" Relationship="tcdbModel.FK_dbo_StageLevels_dbo_StageDifficulties" FromRole="StageDifficulty" ToRole="StageLevel" />
-          <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_StageDifficulties" FromRole="StageDifficulty" ToRole="Team" />
-        </EntityType>
         <EntityType Name="Stage">
           <Key>
             <PropertyRef Name="Id" />
@@ -665,20 +678,6 @@
           <Property Name="Global" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="StageDifficulties" Relationship="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" FromRole="Stage" ToRole="StageDifficulty" />
         </EntityType>
-        <Association Name="FK_dbo_StageDifficulties_dbo_Stages">
-          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.StageDifficulty" Role="StageDifficulty" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stage">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StageDifficulty">
-              <PropertyRef Name="StageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EnumType Name="StageType" UnderlyingType="Byte">
           <Member Name="Unknown" />
           <Member Name="Story" />
@@ -697,18 +696,8 @@
           <Property Name="StageDifficultyId" Type="Int32" Nullable="false" />
           <Property Name="Number" Type="Byte" />
           <Property Name="Secret" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="StageDifficulty" Relationship="tcdbModel.FK_dbo_StageLevels_dbo_StageDifficulties" FromRole="StageLevel" ToRole="StageDifficulty" />
           <NavigationProperty Name="StageUnits" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_StageLevels" FromRole="StageLevel" ToRole="StageUnit" />
-        </EntityType>
-        <EntityType Name="StageUnitAttackPattern">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageUnitId" Type="Int32" Nullable="false" />
-          <Property Name="Condition" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="StageUnit" Relationship="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" FromRole="StageUnitAttackPattern" ToRole="StageUnit" />
+          <NavigationProperty Name="StageDifficulty" Relationship="tcdbModel.FK_dbo_StageLevels_dbo_StageDifficulties" FromRole="StageLevel" ToRole="StageDifficulty" />
         </EntityType>
         <EntityType Name="StageUnit">
           <Key>
@@ -725,23 +714,9 @@
           <Property Name="MaxCD" Type="Byte" />
           <Property Name="Interval" Type="Byte" />
           <NavigationProperty Name="StageLevel" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_StageLevels" FromRole="StageUnit" ToRole="StageLevel" />
-          <NavigationProperty Name="StageUnitAttackPatterns" Relationship="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" FromRole="StageUnit" ToRole="StageUnitAttackPattern" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_Units" FromRole="StageUnit" ToRole="Unit" />
+          <NavigationProperty Name="StageUnitAttackPatterns" Relationship="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" FromRole="StageUnit" ToRole="StageUnitAttackPattern" />
         </EntityType>
-        <Association Name="FK_dbo_StageLevels_dbo_StageDifficulties">
-          <End Type="tcdbModel.StageDifficulty" Role="StageDifficulty" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.StageLevel" Role="StageLevel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StageDifficulty">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StageLevel">
-              <PropertyRef Name="StageDifficultyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_StageUnits_dbo_StageLevels">
           <End Type="tcdbModel.StageLevel" Role="StageLevel" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -753,20 +728,6 @@
             </Principal>
             <Dependent Role="StageUnit">
               <PropertyRef Name="StageLevelId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_StageUnitAttackPatterns_dbo_StageUnits">
-          <End Type="tcdbModel.StageUnit" Role="StageUnit" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.StageUnitAttackPattern" Role="StageUnitAttackPattern" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StageUnit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StageUnitAttackPattern">
-              <PropertyRef Name="StageUnitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -946,21 +907,6 @@
           <Member Name="MapDamageResistance" />
           <Member Name="Resilience" />
         </EnumType>
-        <EntityType Name="Team">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageDifficultyId" Type="Int32" Nullable="false" />
-          <Property Name="SubmittedById" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Credits" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="tcdbModel.FK_dbo_Teams_dbo_AspNetUsers" FromRole="Team" ToRole="AspNetUser" />
-          <NavigationProperty Name="StageDifficulty" Relationship="tcdbModel.FK_dbo_Teams_dbo_StageDifficulties" FromRole="Team" ToRole="StageDifficulty" />
-          <NavigationProperty Name="TeamSocket" Relationship="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" FromRole="Team" ToRole="TeamSocket" />
-          <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
-          <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="Team" ToRole="TeamVote" />
-        </EntityType>
         <EntityType Name="TeamVote">
           <Key>
             <PropertyRef Name="TeamId" />
@@ -969,6 +915,45 @@
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <Property Name="UserHash" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="TeamVote" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_dbo_UnitClasses_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="tcdbModel.UnitClass" Role="UnitClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitClass">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StageDifficulty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Stamina" Type="Byte" Nullable="false" />
+          <Property Name="Global" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" FromRole="StageDifficulty" ToRole="Stage" />
+          <NavigationProperty Name="StageLevels" Relationship="tcdbModel.FK_dbo_StageLevels_dbo_StageDifficulties" FromRole="StageDifficulty" ToRole="StageLevel" />
+          <NavigationProperty Name="Teams" Relationship="tcdbModel.TeamStages" FromRole="StageDifficulty" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubmittedById" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Credits" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="tcdbModel.FK_dbo_Teams_dbo_AspNetUsers" FromRole="Team" ToRole="AspNetUser" />
+          <NavigationProperty Name="TeamSocket" Relationship="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" FromRole="Team" ToRole="TeamSocket" />
+          <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
+          <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="Team" ToRole="TeamVote" />
+          <NavigationProperty Name="StageDifficulties" Relationship="tcdbModel.TeamStages" FromRole="Team" ToRole="StageDifficulty" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_AspNetUsers">
           <End Type="tcdbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -982,16 +967,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Teams_dbo_StageDifficulties">
+        <Association Name="FK_dbo_StageDifficulties_dbo_Stages">
+          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.StageDifficulty" Role="StageDifficulty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StageDifficulty">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StageLevels_dbo_StageDifficulties">
           <End Type="tcdbModel.StageDifficulty" Role="StageDifficulty" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <End Type="tcdbModel.StageLevel" Role="StageLevel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StageDifficulty">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Team">
+            <Dependent Role="StageLevel">
               <PropertyRef Name="StageDifficultyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1038,15 +1037,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_UnitClasses_dbo_Units">
-          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
-          <End Type="tcdbModel.UnitClass" Role="UnitClass" Multiplicity="*" />
+        <Association Name="TeamStages">
+          <End Type="tcdbModel.StageDifficulty" Role="StageDifficulty" Multiplicity="*" />
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+        </Association>
+        <EntityType Name="StageUnitAttackPattern">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageUnitId" Type="Int32" Nullable="false" />
+          <Property Name="Condition" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StageUnit" Relationship="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" FromRole="StageUnitAttackPattern" ToRole="StageUnit" />
+        </EntityType>
+        <Association Name="FK_dbo_StageUnitAttackPatterns_dbo_StageUnits">
+          <End Type="tcdbModel.StageUnit" Role="StageUnit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.StageUnitAttackPattern" Role="StageUnitAttackPattern" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Unit">
+            <Principal Role="StageUnit">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UnitClass">
-              <PropertyRef Name="UnitId" />
+            <Dependent Role="StageUnitAttackPattern">
+              <PropertyRef Name="StageUnitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1086,17 +1101,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StageDifficulties">
-            <EntityTypeMapping TypeName="tcdbModel.StageDifficulty">
-              <MappingFragment StoreEntitySet="StageDifficulties">
-                <ScalarProperty Name="Global" ColumnName="Global" />
-                <ScalarProperty Name="Stamina" ColumnName="Stamina" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Stages">
             <EntityTypeMapping TypeName="tcdbModel.Stage">
               <MappingFragment StoreEntitySet="Stages">
@@ -1113,16 +1117,6 @@
                 <ScalarProperty Name="Secret" ColumnName="Secret" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="StageDifficultyId" ColumnName="StageDifficultyId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StageUnitAttackPatterns">
-            <EntityTypeMapping TypeName="tcdbModel.StageUnitAttackPattern">
-              <MappingFragment StoreEntitySet="StageUnitAttackPatterns">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Condition" ColumnName="Condition" />
-                <ScalarProperty Name="StageUnitId" ColumnName="StageUnitId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1223,22 +1217,50 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TeamVotes">
+            <EntityTypeMapping TypeName="tcdbModel.TeamVote">
+              <MappingFragment StoreEntitySet="TeamVotes">
+                <ScalarProperty Name="UserHash" ColumnName="UserHash" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StageDifficulties">
+            <EntityTypeMapping TypeName="tcdbModel.StageDifficulty">
+              <MappingFragment StoreEntitySet="StageDifficulties">
+                <ScalarProperty Name="Global" ColumnName="Global" />
+                <ScalarProperty Name="Stamina" ColumnName="Stamina" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="tcdbModel.Team">
               <MappingFragment StoreEntitySet="Teams">
                 <ScalarProperty Name="Credits" ColumnName="Credits" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="SubmittedById" ColumnName="SubmittedById" />
-                <ScalarProperty Name="StageDifficultyId" ColumnName="StageDifficultyId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TeamVotes">
-            <EntityTypeMapping TypeName="tcdbModel.TeamVote">
-              <MappingFragment StoreEntitySet="TeamVotes">
-                <ScalarProperty Name="UserHash" ColumnName="UserHash" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <AssociationSetMapping Name="TeamStages" TypeName="tcdbModel.TeamStages" StoreEntitySet="TeamStages">
+            <EndProperty Name="Team">
+              <ScalarProperty Name="Id" ColumnName="TeamId" />
+            </EndProperty>
+            <EndProperty Name="StageDifficulty">
+              <ScalarProperty Name="Id" ColumnName="StageDifficultyId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="StageUnitAttackPatterns">
+            <EntityTypeMapping TypeName="tcdbModel.StageUnitAttackPattern">
+              <MappingFragment StoreEntitySet="StageUnitAttackPatterns">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="StageUnitId" ColumnName="StageUnitId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -25,8 +25,8 @@ namespace TreasureGuide.Entities
         public Nullable<byte> Number { get; set; }
         public bool Secret { get; set; }
     
-        public virtual StageDifficulty StageDifficulty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StageUnit> StageUnits { get; set; }
+        public virtual StageDifficulty StageDifficulty { get; set; }
     }
 }
