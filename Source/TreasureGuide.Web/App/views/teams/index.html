@@ -1,0 +1,29 @@
+﻿<section>
+    <h2 data-bind="text:displayName"></h2>
+    <a class="btn btn-xl btn-success" href="/#teams/edit"><i class="fa fa-fw fa-plus"></i> Create New Team</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Global</th>
+                <th>Team</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: Teams">
+            <tr>
+                <td><i class="fa fa-globe" data-bind="visible: Global"></i></td>
+                <td data-bind="foreach: Units">
+                    <span data-bind="text: $data"></span>
+                </td>
+                <td><span data-bind="text: Description"></span></td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-sm btn-primary"><i class="fa fa-fw fa-pencil"></i> Edit</a>
+                        <a class="btn btn-sm btn-danger"><i class="fa fa-fw fa-times"></i> Delete</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

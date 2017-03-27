@@ -261,7 +261,10 @@
     <Content Include="App\services\queryService.js" />
     <Content Include="App\services\guideService.js" />
     <Content Include="App\viewmodels\flickr.js" />
-    <Content Include="App\viewmodels\shared\teambuilder.js" />
+    <Content Include="App\modals\unitPicker.js" />
+    <Content Include="App\modals\unitPicker.html" />
+    <Content Include="App\widgets\socketPicker\viewmodel.js" />
+    <Content Include="App\widgets\teamBuilder\viewmodel.js" />
     <Content Include="App\viewmodels\stages\index.js" />
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\viewmodels\teams\edit.js" />
@@ -269,6 +272,9 @@
     <Content Include="App\viewmodels\welcome.js" />
     <Content Include="App\views\detail.html" />
     <Content Include="App\views\flickr.html" />
+    <Content Include="App\widgets\socketPicker\view.html" />
+    <Content Include="App\widgets\teamBuilder\view.html" />
+    <Content Include="App\views\teams\edit.html" />
     <Content Include="App\views\stages\index.html" />
     <Content Include="App\views\shell.html" />
     <Content Include="App\views\teams\index.html" />
@@ -372,6 +378,7 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\viewmodels\shared\" />
     <Folder Include="App\views\shared\" />
     <Folder Include="App_Data\" />
   </ItemGroup>

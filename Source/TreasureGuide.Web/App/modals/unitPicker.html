@@ -1,0 +1,59 @@
+﻿<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="pull-right">
+                <button type="button" class="close" data-bind="click: cancel">&times;</button>
+            </div>
+            <h3 data-bind="text: displayName"></h3>
+        </div>
+        <div class="modal-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Global</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Class 1</th>
+                        <th>Class 2</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: Units">
+                    <tr>
+                        <td>
+                            <span data-bind="text: Id"></span>
+                        </td>
+                        <td>
+                            <i class="fa fa-globe" data-bind="visible: Global"></i>
+                        </td>
+                        <td>
+                            <span data-bind="text: Name"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: Type"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: Class1"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: Class2"></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-success" data-bind="click: $parent.select($data.Id)">
+                                <i class="fa fa-fw fa-check"></i> Select
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="pull-right">
+                <button class="btn btn-default" data-bind="click: cancel">
+                    <i class="fa fa-fw fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

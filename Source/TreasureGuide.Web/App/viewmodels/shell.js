@@ -9,7 +9,9 @@
         activate: function () {
             router.map([
                 { route: '', title:'Welcome', moduleId: 'viewmodels/welcome', nav: true },
-                { route: 'stages', title: 'Stages', moduleId: 'viewmodels/stages/index', nav: true }
+                { route: 'stages', title: 'Stages', moduleId: 'viewmodels/stages/index', nav: true },
+                { route: 'teams', title: 'Teams', moduleId: 'viewmodels/teams/index', nav: true },
+                { route: 'teams/edit(/:id)', title: 'Edit Team', moduleId: 'viewmodels/teams/edit', nav: false }
             ]).buildNavigationModel();
             
             return router.activate();

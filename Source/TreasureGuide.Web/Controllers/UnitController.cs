@@ -38,7 +38,7 @@ namespace TreasureGuide.Web.Controllers
 
         private async Task<IEnumerable<UnitStubModel>> CreateBrowserModel(IQueryable<Unit> results)
         {
-            var output = await results.Select(x => new UnitStubModel
+            var output = (await results.Select(x => new
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -49,7 +49,19 @@ namespace TreasureGuide.Web.Controllers
                 Flags = x.UnitFlags.Select(y => y.FlagType),
                 LeadTeams = x.TeamUnits.Count(y => y.Position <= 2),
                 OnTeams = x.TeamUnits.Count()
-            }).OrderBy(x => x.Id).ToListAsync();
+            }).OrderBy(x => x.Id).ToListAsync()).Select(x => new UnitStubModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Stars = x.Stars,
+                Type = x.Type,
+                Sockets = x.Sockets,
+                Class1 = x.Classes.FirstOrDefault(),
+                Class2 = x.Classes.Skip(1).FirstOrDefault(),
+                Global = x.Flags.Contains(UnitFlagTypes.Global),
+                LeadTeams = x.LeadTeams,
+                OnTeams = x.OnTeams
+            });
             return output;
         }
     }

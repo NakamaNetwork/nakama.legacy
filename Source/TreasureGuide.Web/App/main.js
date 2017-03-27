@@ -4,7 +4,7 @@
         'durandal': '../Scripts/durandal',
         'plugins': '../Scripts/durandal/plugins',
         'transitions': '../Scripts/durandal/transitions',
-        'bootstrap':'../Scripts/bootstrap'
+        'bootstrap': '../Scripts/bootstrap'
     }
 });
 
@@ -20,10 +20,11 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap'],
 
     app.configurePlugins({
         router: true,
-        dialog: true
+        dialog: true,
+        widget: true
     });
 
-    app.start().then(function() {
+    app.start().then(function () {
         //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
         //Look for partial views in a 'views' folder in the root.
         viewLocator.useConvention();
