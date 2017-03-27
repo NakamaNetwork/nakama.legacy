@@ -18,6 +18,7 @@ namespace TreasureGuide.Entities
         public int UnitId { get; set; }
         public Nullable<byte> Position { get; set; }
         public Nullable<bool> SpecialLevel { get; set; }
+        public bool Sub { get; set; }
     
         public virtual Unit Unit { get; set; }
         public virtual Team Team { get; set; }

@@ -232,6 +232,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GuideController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\StageController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Extensions\EntitiesExtension.cs" />
@@ -244,6 +245,8 @@
     <Compile Include="Models\Stages\SaveDifficultyModel.cs" />
     <Compile Include="Models\Stages\SaveStageModel.cs" />
     <Compile Include="Models\Stages\StageBrowserModels.cs" />
+    <Compile Include="Models\Teams\SaveTeamModel.cs" />
+    <Compile Include="Models\Teams\TeamBrowserModel.cs" />
     <Compile Include="Models\Units\UnitModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -252,17 +255,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\main.js" />
+    <Content Include="App\services\teamService.js" />
+    <Content Include="App\services\unitService.js" />
     <Content Include="App\services\stageService.js" />
     <Content Include="App\services\queryService.js" />
     <Content Include="App\services\guideService.js" />
     <Content Include="App\viewmodels\flickr.js" />
+    <Content Include="App\viewmodels\shared\teambuilder.js" />
     <Content Include="App\viewmodels\stages\index.js" />
     <Content Include="App\viewmodels\shell.js" />
+    <Content Include="App\viewmodels\teams\edit.js" />
+    <Content Include="App\viewmodels\teams\index.js" />
     <Content Include="App\viewmodels\welcome.js" />
     <Content Include="App\views\detail.html" />
     <Content Include="App\views\flickr.html" />
     <Content Include="App\views\stages\index.html" />
     <Content Include="App\views\shell.html" />
+    <Content Include="App\views\teams\index.html" />
     <Content Include="App\views\welcome.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -363,6 +372,7 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\views\shared\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

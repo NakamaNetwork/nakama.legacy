@@ -20,7 +20,6 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers" />
         <AssociationConnector Association="tcdbModel.AspNetUserRoles" ManuallyRouted="false" >
         </AssociationConnector>
-        <EntityTypeShape EntityType="tcdbModel.TeamSocket" Width="1.5" PointX="15.5" PointY="2.375" />
         <EntityTypeShape EntityType="tcdbModel.TeamUnit" Width="1.5" PointX="13.25" PointY="4.75" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.UnitFlag" Width="1.5" PointX="15.5" PointY="9.25" />
@@ -32,12 +31,13 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_AspNetUsers" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageLevels_dbo_StageDifficulties" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.TeamStages" />
         <EntityTypeShape EntityType="tcdbModel.StageUnitAttackPattern" Width="1.5" PointX="6.5" PointY="10.625" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" />
+        <EntityTypeShape EntityType="tcdbModel.TeamSocket" Width="1.5" PointX="15.5" PointY="2.75" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

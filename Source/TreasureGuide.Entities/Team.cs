@@ -20,6 +20,7 @@ namespace TreasureGuide.Entities
             this.TeamUnits = new HashSet<TeamUnit>();
             this.TeamVotes = new HashSet<TeamVote>();
             this.StageDifficulties = new HashSet<StageDifficulty>();
+            this.TeamSockets = new HashSet<TeamSocket>();
         }
     
         public int Id { get; set; }
@@ -28,12 +29,13 @@ namespace TreasureGuide.Entities
         public string Credits { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual TeamSocket TeamSocket { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamVote> TeamVotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StageDifficulty> StageDifficulties { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamSocket> TeamSockets { get; set; }
     }
 }
