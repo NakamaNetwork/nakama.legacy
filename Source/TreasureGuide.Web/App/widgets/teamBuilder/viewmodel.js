@@ -2,16 +2,21 @@
     return {
         displayName: 'Team Builder',
         Units: ko.observableArray([]),
-        activate: function (units, enemy) {
+        activate: function (model) {
             var self = this;
-            console.log(units);
-            self.Units = units;
+            var units = model.units;
+            if (units) {
+                self.Units = units;
+            }
             return;
         },
         addUnit: function () {
-            console.debug('Adding unit');
+            var self = this;
             unitPicker.show().then(function (result) {
-                console.debug("Picked " + result);
+                self.Units.push({
+                    Id: result,
+                    Position: 0
+                });
             });
         }
     };

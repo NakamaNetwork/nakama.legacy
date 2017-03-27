@@ -263,6 +263,8 @@
     <Content Include="App\viewmodels\flickr.js" />
     <Content Include="App\modals\unitPicker.js" />
     <Content Include="App\modals\unitPicker.html" />
+    <Content Include="App\widgets\miniUnit\view.html" />
+    <Content Include="App\widgets\miniUnit\viewmodel.js" />
     <Content Include="App\widgets\socketPicker\viewmodel.js" />
     <Content Include="App\widgets\teamBuilder\viewmodel.js" />
     <Content Include="App\viewmodels\stages\index.js" />

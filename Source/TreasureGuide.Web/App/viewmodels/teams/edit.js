@@ -14,6 +14,7 @@
             self.TeamModel.Id(id || 0);
             if (id) {
                 return teamService.get(id).then(function (result) {
+                    result = ko.utils.arrayFirst(result);
                     self.TeamModel.Description(result.Description);
                     self.TeamModel.Credits(result.Credits);
                     self.TeamModel.Units(result.Units);

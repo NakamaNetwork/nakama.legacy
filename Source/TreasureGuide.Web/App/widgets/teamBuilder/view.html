@@ -1,25 +1,6 @@
 ﻿<section>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Position</th>
-                <th>Id</th>
-                <th>Unit</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: Units">
-            <tr>
-                <td>
-                    <span data-bind="text: Position"></span>
-                </td>
-                <td>
-                    <span data-bind="text: Id"></span>
-                </td>
-                <td>
-                    <span data-bind="text: Name"></span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- ko foreach: Units -->
+    <div data-bind="widget: { kind: 'miniUnit', id: Id }"></div>
+    <!-- /ko -->
     <button class="btn btn-primary" data-bind="click: addUnit"><i class="fa fa-fw fa-plus"></i> Add Unit</button>
 </section>

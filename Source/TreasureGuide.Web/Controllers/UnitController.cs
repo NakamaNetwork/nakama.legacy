@@ -26,7 +26,7 @@ namespace TreasureGuide.Web.Controllers
             var results = _entities.Units.AsQueryable();
             if (id.HasValue)
             {
-                results = results.Where(x => x.Id == null);
+                results = results.Where(x => x.Id == id);
                 if (!results.Any())
                 {
                     return NotFound();
