@@ -4,20 +4,17 @@
             <div class="pull-right">
                 <button type="button" class="close" data-bind="click: cancel">&times;</button>
             </div>
-            <h3 data-bind="text: displayName"></h3>
+            <h3 data-bind="text: DisplayName"></h3>
         </div>
-        <table class="table">
-            <tbody data-bind="foreach: Rows">
-                <tr data-bind="foreach: $data">
-                    <td>
-                        <div data-bind="widget: { kind: 'miniUnit', id: Id, size: 'sm' }"></div>
-                        <button class="btn btn-success" data-bind="click: $root.select($data.Id)">
-                            <i class="fa fa-fw fa-check"></i> Select
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="modal-body" data-bind="foreach: Rows">
+            <div class="row" data-bind="foreach: $data">
+                <div class="col-sm-2">
+                    <button class="btn btn-success" data-bind="click: $root.select($data.Id)">
+                        <div data-bind="widget: { kind: 'miniUnit', id: Id, size: 'md' }"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
         <div class="modal-footer">
             <div class="pull-right">
                 <button class="btn btn-default" data-bind="click: cancel">

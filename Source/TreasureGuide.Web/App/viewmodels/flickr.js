@@ -5,7 +5,7 @@
     //See the "welcome" module for an example of function export.
 
     return {
-        displayName: 'Flickr',
+        DisplayName: 'Flickr',
         images: ko.observableArray([]),
         activate: function () {
             //the router's activator calls this function and waits for it to complete before proceeding

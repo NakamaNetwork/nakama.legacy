@@ -1,10 +1,10 @@
 ﻿define(['durandal/app', 'knockout', 'services/unitService', 'modals/unitPicker'], function (app, ko, unitService, unitPicker) {
     return {
-        displayName: 'Team Builder',
+        DisplayName: 'Team Builder',
         Units: ko.observableArray([]),
         activate: function (model) {
             var self = this;
-            var units = model.units;
+            var units = model.Units;
             if (units) {
                 self.Units = units;
             }
@@ -13,10 +13,12 @@
         addUnit: function () {
             var self = this;
             unitPicker.show().then(function (result) {
-                self.Units.push({
-                    Id: result,
-                    Position: 0
-                });
+                if (result) {
+                    self.Units.push({
+                        Id: result,
+                        Position: 0
+                    });
+                }
             });
         }
     };

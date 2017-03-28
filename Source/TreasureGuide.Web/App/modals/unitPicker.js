@@ -1,16 +1,16 @@
-﻿define(['plugins/dialog', 'knockout', 'services/unitService'], function (dialog, ko, unitService) {
+﻿define(['plugins/dialog', 'durandal/app', 'knockout', 'services/unitService'], function (dialog, app, ko, unitService) {
     var UnitPickerDialog = function () {
         var self = this;
 
         self.Rows = ko.computed(function () {
             var rows = [];
-            var units = ko.unwrap(self.Units);
+            var units = ko.unwrap(unitService.Units);
             while (units.length) {
-                rows.push(units.splice(0, 10));
+                rows.push(units.splice(0, 6));
             }
-            return rows;
+            return rows.splice(0, 2);
         });
-        self.displayName = 'Pick a Unit';
+        self.DisplayName = 'Pick a Unit';
         self.Result = ko.observable();
         self.select = function (id) {
             return function () {
@@ -29,14 +29,8 @@
     };
 
     UnitPickerDialog.show = function () {
-        return dialog.show(new UnitPickerDialog());
+        return app.showDialog(new UnitPickerDialog());
     };
-
-    UnitPickerDialog.prototype.Units = ko.observable([]);
-
-    unitService.get().then(function (results) {
-        UnitPickerDialog.prototype.Units(results);
-    });
 
     return UnitPickerDialog;
 });

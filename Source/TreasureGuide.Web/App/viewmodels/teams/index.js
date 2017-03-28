@@ -1,6 +1,6 @@
 ﻿define(['durandal/app', 'knockout', 'services/teamService'], function (app, ko, teamService) {
     return {
-        displayName: 'Teams',
+        DisplayName: 'Teams',
         Teams: ko.observableArray([]),
         activate: function () {
             var self = this;

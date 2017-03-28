@@ -1,6 +1,6 @@
 ﻿define(['durandal/app', 'knockout', 'services/stageService', 'services/unitService', 'services/teamService'], function (app, ko, stageService, unitService, teamService) {
     return {
-        displayName: 'Team Editor',
+        DisplayName: 'Team Editor',
         TeamModel: {
             Id: ko.observable(0),
             Description: ko.observable(''),
