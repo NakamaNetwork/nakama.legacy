@@ -1,17 +1,14 @@
-﻿"use strict"
-
-define(['durandal/system', 'services/queryService'], function (system, queryService) {
+﻿define(['durandal/system', 'services/queryService'], function (system, queryService) {
     var item = {
-        Timestamp: Math.random(),
+        Timestamp: new Date(),
         Units: ko.observableArray([]),
         get: function (id) {
             var self = this;
             var units = ko.unwrap(self.Units);
             if (id) {
-                var unit = ko.utils.arrayFirst(units,
-                    function (unit) {
-                        return unit.Id === id;
-                    });
+                var unit = ko.utils.arrayFirst(units, function (unit) {
+                    return unit.Id === id;
+                });
                 return system.defer(function (deferred) {
                     return deferred.resolve(unit);
                 });
@@ -26,8 +23,8 @@ define(['durandal/system', 'services/queryService'], function (system, queryServ
         activate: function () {
             var self = this;
             self.query().then(function (result) {
-                    self.Units(result);
-                });
+                self.Units(result);
+            });
         }
     }
     item.activate();
