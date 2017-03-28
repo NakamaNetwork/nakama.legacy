@@ -291,6 +291,16 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\ie10mobile.css" />
     <Content Include="Content\images\icon.png" />
+    <Content Include="Content\images\icons\booster.png" />
+    <Content Include="Content\images\icons\cerebral.png" />
+    <Content Include="Content\images\icons\driven.png" />
+    <Content Include="Content\images\icons\evolver.png" />
+    <Content Include="Content\images\icons\fighter.png" />
+    <Content Include="Content\images\icons\free_spirit.png" />
+    <Content Include="Content\images\icons\powerhouse.png" />
+    <Content Include="Content\images\icons\shooter.png" />
+    <Content Include="Content\images\icons\slasher.png" />
+    <Content Include="Content\images\icons\striker.png" />
     <Content Include="Content\images\ios-startup-image-landscape.png" />
     <Content Include="Content\images\ios-startup-image-portrait.png" />
     <Content Include="Content\starterkit.css" />
@@ -370,7 +380,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
