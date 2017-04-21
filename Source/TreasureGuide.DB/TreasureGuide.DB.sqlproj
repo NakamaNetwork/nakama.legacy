@@ -73,7 +73,6 @@
     <Build Include="dbo\Units\Units.sql" />
     <Build Include="dbo\Units\UnitClasses.sql" />
     <Build Include="dbo\Units\UnitFlags.sql" />
-    <Build Include="dbo\Accounts\AspNetRoles.sql" />
     <Build Include="dbo\Teams\Teams.sql" />
     <Build Include="dbo\Teams\TeamUnits.sql" />
     <Build Include="dbo\Teams\TeamSockets.sql" />
@@ -81,6 +80,13 @@
     <Build Include="dbo\Teams\TeamStages.sql" />
     <None Include="PostDeploy\StageData.sql" />
     <None Include="PostDeploy\CharacterData.sql" />
+    <Build Include="dbo\Accounts\AspNetRoleClaims.sql" />
+    <Build Include="dbo\Accounts\AspNetRoles.sql" />
+    <Build Include="dbo\Accounts\AspNetUserClaims.sql" />
+    <Build Include="dbo\Accounts\AspNetUserLogins.sql" />
+    <Build Include="dbo\Accounts\AspNetUserRoles.sql" />
+    <Build Include="dbo\Accounts\AspNetUsers.sql" />
+    <Build Include="dbo\Accounts\AspNetUserTokens.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />
@@ -88,11 +94,5 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TreasureGuide.DB.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
-    <Build Include="dbo\Accounts\AspNetUserClaims.sql" />
-    <Build Include="dbo\Accounts\AspNetUserLogins.sql" />
-    <Build Include="dbo\Accounts\AspNetUserRoles.sql" />
-    <Build Include="dbo\Accounts\AspNetUsers.sql" />
   </ItemGroup>
 </Project>
