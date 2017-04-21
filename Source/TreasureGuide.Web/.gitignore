@@ -4,3 +4,7 @@ node_modules
 
 wwwroot/**/*.js
 wwwroot/**/*.js.map
+src/**/*.js
+src/**/*.js.map
+test/**/*.js
+test/**/*.js.map
