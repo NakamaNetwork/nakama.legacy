@@ -1,0 +1,6 @@
+node_modules
+.idea
+.DS_STORE
+
+wwwroot/**/*.js
+wwwroot/**/*.js.map
