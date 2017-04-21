@@ -62,6 +62,7 @@
     <Folder Include="dbo\Units" />
     <Folder Include="dbo\Accounts" />
     <Folder Include="dbo\Teams" />
+    <Folder Include="PostDeploy" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stages\StageDifficulties.sql" />
@@ -78,15 +79,15 @@
     <Build Include="dbo\Teams\TeamSockets.sql" />
     <Build Include="dbo\Teams\TeamVotes.sql" />
     <Build Include="dbo\Teams\TeamStages.sql" />
+    <None Include="PostDeploy\StageData.sql" />
+    <None Include="PostDeploy\CharacterData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />
+    <PostDeploy Include="PostDeploy.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TreasureGuide.DB.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="RefData.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Accounts\AspNetUserClaims.sql" />
