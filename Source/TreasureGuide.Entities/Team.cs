@@ -17,24 +17,25 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Team()
         {
-            this.TeamUnits = new HashSet<TeamUnit>();
             this.TeamVotes = new HashSet<TeamVote>();
             this.StageDifficulties = new HashSet<StageDifficulty>();
             this.TeamSockets = new HashSet<TeamSocket>();
+            this.TeamUnits = new HashSet<TeamUnit>();
         }
     
         public int Id { get; set; }
         public string SubmittedById { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public string Credits { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamVote> TeamVotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StageDifficulty> StageDifficulties { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamSocket> TeamSockets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
     }
 }

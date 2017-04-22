@@ -30,12 +30,12 @@ namespace TreasureGuide.Entities
         public virtual DbSet<Stage> Stages { get; set; }
         public virtual DbSet<StageLevel> StageLevels { get; set; }
         public virtual DbSet<StageUnit> StageUnits { get; set; }
-        public virtual DbSet<TeamUnit> TeamUnits { get; set; }
         public virtual DbSet<UnitFlag> UnitFlags { get; set; }
         public virtual DbSet<TeamVote> TeamVotes { get; set; }
         public virtual DbSet<StageDifficulty> StageDifficulties { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<StageUnitAttackPattern> StageUnitAttackPatterns { get; set; }
         public virtual DbSet<TeamSocket> TeamSockets { get; set; }
+        public virtual DbSet<TeamUnit> TeamUnits { get; set; }
     }
 }

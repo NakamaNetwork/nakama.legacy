@@ -11,7 +11,7 @@ namespace TreasureGuide.Entities
 {
     using System;
     
-    public enum UnitFlagTypes : byte
+    public enum UnitFlagType : byte
     {
         Unknown = 0,
         Global = 1,

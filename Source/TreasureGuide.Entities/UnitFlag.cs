@@ -15,7 +15,7 @@ namespace TreasureGuide.Entities
     public partial class UnitFlag
     {
         public int UnitId { get; set; }
-        public UnitFlagTypes FlagType { get; set; }
+        public UnitFlagType FlagType { get; set; }
     
         public virtual Unit Unit { get; set; }
     }
