@@ -33,23 +33,23 @@ namespace TreasureGuide.Sniffer.Parsers
             return results;
         }
 
-        private UnitFlagTypes? GetFlagType(string value)
+        private UnitFlagType? GetFlagType(string value)
         {
             switch (value.ToLower())
             {
                 case "global":
-                    return UnitFlagTypes.Global;
+                    return UnitFlagType.Global;
                 case "rr":
-                    return UnitFlagTypes.RareRecruit;
+                    return UnitFlagType.RareRecruit;
                 case "rro":
-                    return UnitFlagTypes.RareRecruitExclusive;
+                    return UnitFlagType.RareRecruitExclusive;
                 case "rrl":
-                    return UnitFlagTypes.RareRecruitLimited;
+                    return UnitFlagType.RareRecruitLimited;
                 case "promo":
                 case "special":
-                    return UnitFlagTypes.Promotional;
+                    return UnitFlagType.Promotional;
                 case "shop":
-                    return UnitFlagTypes.Shop;
+                    return UnitFlagType.Shop;
                 default:
                     return null;
             }
