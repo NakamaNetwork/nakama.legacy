@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44366/",
-      "sslPort": 44366
+      "applicationUrl": "http://localhost:56564/",
+      "sslPort": 56565
     }
   },
   "profiles": {
@@ -18,10 +18,10 @@
     "TreasureGuide.Web": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:56563/"
     }
   }
 }
