@@ -30,10 +30,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<Stage> Stages { get; set; }
         public virtual DbSet<StageLevel> StageLevels { get; set; }
         public virtual DbSet<StageUnit> StageUnits { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<TeamUnit> TeamUnits { get; set; }
         public virtual DbSet<UnitFlag> UnitFlags { get; set; }
         public virtual DbSet<TeamVote> TeamVotes { get; set; }
