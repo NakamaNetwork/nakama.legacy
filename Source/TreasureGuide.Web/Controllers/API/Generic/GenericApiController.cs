@@ -3,6 +3,7 @@ using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
+    [Route("api/[controller]")]
     public abstract class GenericApiController<TKey, TEntity, TStubModel, TDetailModel, TEditorModel> : Controller
         where TKey : struct
         where TEntity : IIdItem<TKey>
