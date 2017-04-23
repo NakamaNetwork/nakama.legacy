@@ -14,12 +14,12 @@ gulp.task('watch', shell.task(['au run --watch']));
 gulp.task('test', shell.task(['au test']));
 
 console.log('--- NOTICE ---'
-   + '\n'
-   + 'If these tasks fail due to an error "Error: spawn au build --env dev ENOENT", go to "Tools > Options > Projects and Solutions > External Web Tools" '
-   + 'and move your $(PATH) entry above the $(VSINSTALLDIR) entries.'
-   + '\n\n'
-   + 'Visual Studio comes bundled with an old version of node which does not support the spawning of the aurelia build task.'
-   + '\n\n'
-   + 'See: https://blogs.msdn.microsoft.com/webdev/2015/03/19/customize-external-web-tools-in-visual-studio-2015/ for more details.'
-   + '\n'
-   + '--------------');
+    + '\n'
+    + 'If these tasks fail due to an error "Error: spawn au build --env dev ENOENT", go to "Tools > Options > Projects and Solutions > External Web Tools" '
+    + 'and move your $(PATH) entry above the $(VSINSTALLDIR) entries.'
+    + '\n\n'
+    + 'Visual Studio comes bundled with an old version of node which does not support the spawning of the aurelia build task.'
+    + '\n\n'
+    + 'See: https://blogs.msdn.microsoft.com/webdev/2015/03/19/customize-external-web-tools-in-visual-studio-2015/ for more details.'
+    + '\n'
+    + '--------------');
