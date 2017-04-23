@@ -36,6 +36,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-shell": "^0.6.3",
+    "gulp-download": "^0.0.1",
     "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-tslint": "^5.0.0",
     "gulp-typescript": "^3.1.4",
