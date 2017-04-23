@@ -1,3 +1,14 @@
 <template>
-    <h1>${message}</h1>
+    <div>
+        <ul>
+            <li repeat.for="nav of router.navigation">
+                <a href.bind="nav.href" class="${row.isActive ? 'active' : ''}">
+                    ${nav.title}
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <router-view></router-view>
+    </div>
 </template>
