@@ -1,14 +1,38 @@
 <template>
-    <div>
-        <ul>
-            <li repeat.for="nav of router.navigation">
-                <a href.bind="nav.href" class="${row.isActive ? 'active' : ''}">
-                    ${nav.title}
+    <nav>
+        <div class="nav-wrapper">
+            <div class="container">
+                <a href="#" class="brand-logo">
+                    ${router.title}
                 </a>
-            </li>
-        </ul>
-    </div>
-    <div>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}">
+                        <a href.bind="nav.href">
+                            ${nav.title}
+                        </a>
+                    </li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}">
+                        <a href.bind="nav.href">
+                            ${nav.title}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
         <router-view></router-view>
     </div>
+    <footer class="page-footer">
+        <div class="footer-copyright">
+            <div class="container">
+                &copy; 2017 RoboCafaz
+                <a class="grey-text text-lighten-4 right" href="https://github.com/RoboCafaz/TreasureGuide">
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+    </footer>
 </template>
