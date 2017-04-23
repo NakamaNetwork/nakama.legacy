@@ -36,14 +36,6 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         #region StubEndpoints
         [HttpGet]
-        [ActionName("")]
-        [Route("{id?}")]
-        public IActionResult ActionStub(TKey? id = null)
-        {
-            return Stub(id);
-        }
-
-        [HttpGet]
         [ActionName("Stub")]
         [Route("{id}/[action]")]
         public IActionResult ActionIdStub(TKey? id = null)
@@ -61,14 +53,6 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         #endregion
 
         #region DetailEndpoints
-        [HttpGet]
-        [ActionName("")]
-        [Route("{id?}")]
-        public IActionResult ActionDetail(TKey? id = null)
-        {
-            return Detail(id);
-        }
-
         [HttpGet]
         [ActionName("Detail")]
         [Route("{id}/[action]")]
@@ -88,14 +72,6 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         #region EditorEndpoints
         [HttpGet]
-        [ActionName("")]
-        [Route("{id?}")]
-        public IActionResult ActionEditor(TKey? id = null)
-        {
-            return Editor(id);
-        }
-
-        [HttpGet]
         [ActionName("Editor")]
         [Route("{id}/[action]")]
         public IActionResult ActionIdEditor(TKey? id = null)
@@ -113,7 +89,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         #endregion
 
         #region PostEndpoints
-        [HttpGet]
+        [HttpPost]
         [ActionName("")]
         [Route("{id?}")]
         public IActionResult ActionPost(TEditorModel model, TKey? id = null)
@@ -121,7 +97,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return Post(model, id);
         }
 
-        [HttpGet]
+        [HttpPost]
         [ActionName("Post")]
         [Route("{id}/[action]")]
         public IActionResult ActionIdPost(TEditorModel model, TKey? id = null)
@@ -129,7 +105,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return Post(model, id);
         }
 
-        [HttpGet]
+        [HttpPost]
         [ActionName("Post")]
         [Route("[action]/{id?}")]
         public IActionResult ActionPostId(TEditorModel model, TKey? id = null)
@@ -139,7 +115,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         #endregion
 
         #region PutEndpoints
-        [HttpGet]
+        [HttpPut]
         [ActionName("")]
         [Route("{id?}")]
         public IActionResult ActionPut(TEditorModel model, TKey? id = null)
@@ -147,7 +123,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return Put(model, id);
         }
 
-        [HttpGet]
+        [HttpPut]
         [ActionName("Put")]
         [Route("{id}/[action]")]
         public IActionResult ActionIdPut(TEditorModel model, TKey? id = null)
@@ -155,7 +131,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return Put(model, id);
         }
 
-        [HttpGet]
+        [HttpPut]
         [ActionName("Put")]
         [Route("[action]/{id?}")]
         public IActionResult ActionPutId(TEditorModel model, TKey? id = null)

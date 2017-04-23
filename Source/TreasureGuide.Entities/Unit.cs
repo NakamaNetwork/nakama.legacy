@@ -18,14 +18,14 @@ namespace TreasureGuide.Entities
         public Unit()
         {
             this.StageUnits = new HashSet<StageUnit>();
-            this.UnitFlags = new HashSet<UnitFlag>();
-            this.UnitClasses = new HashSet<UnitClass>();
             this.TeamUnits = new HashSet<TeamUnit>();
+            this.UnitClasses = new HashSet<UnitClass>();
+            this.UnitFlags = new HashSet<UnitFlag>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<UnitType> Type { get; set; }
+        public UnitType Type { get; set; }
         public Nullable<byte> Stars { get; set; }
         public Nullable<byte> Cost { get; set; }
         public Nullable<byte> Combo { get; set; }
@@ -43,10 +43,10 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StageUnit> StageUnits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UnitFlag> UnitFlags { get; set; }
+        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnitClass> UnitClasses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
+        public virtual ICollection<UnitFlag> UnitFlags { get; set; }
     }
 }

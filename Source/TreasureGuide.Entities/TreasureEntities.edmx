@@ -125,7 +125,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" />
-          <Property Name="Type" Type="tinyint" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="Stars" Type="tinyint" />
           <Property Name="Cost" Type="tinyint" />
           <Property Name="Combo" Type="tinyint" />
@@ -392,8 +392,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="tcdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TreasureEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="UnitClasses" EntityType="tcdbModel.UnitClass" />
-          <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
           <EntitySet Name="Stages" EntityType="tcdbModel.Stage" />
           <EntitySet Name="StageLevels" EntityType="tcdbModel.StageLevel" />
           <EntitySet Name="StageUnits" EntityType="tcdbModel.StageUnit" />
@@ -401,20 +399,7 @@
             <End Role="StageLevel" EntitySet="StageLevels" />
             <End Role="StageUnit" EntitySet="StageUnits" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_StageUnits_dbo_Units" Association="tcdbModel.FK_dbo_StageUnits_dbo_Units">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="StageUnit" EntitySet="StageUnits" />
-          </AssociationSet>
-          <EntitySet Name="UnitFlags" EntityType="tcdbModel.UnitFlag" />
-          <AssociationSet Name="FK_dbo_UnitFlags_dbo_Units" Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="UnitFlag" EntitySet="UnitFlags" />
-          </AssociationSet>
           <EntitySet Name="TeamVotes" EntityType="tcdbModel.TeamVote" />
-          <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="UnitClass" EntitySet="UnitClasses" />
-          </AssociationSet>
           <EntitySet Name="StageDifficulties" EntityType="tcdbModel.StageDifficulty" />
           <EntitySet Name="Teams" EntityType="tcdbModel.Team" />
           <AssociationSet Name="FK_dbo_StageDifficulties_dbo_Stages" Association="tcdbModel.FK_dbo_StageDifficulties_dbo_Stages">
@@ -448,45 +433,26 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamUnit" EntitySet="TeamUnits" />
           </AssociationSet>
+          <EntitySet Name="UnitClasses" EntityType="tcdbModel.UnitClass" />
+          <EntitySet Name="UnitFlags" EntityType="tcdbModel.UnitFlag" />
+          <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
+          <AssociationSet Name="FK_dbo_StageUnits_dbo_Units" Association="tcdbModel.FK_dbo_StageUnits_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="StageUnit" EntitySet="StageUnits" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units">
             <End Role="Unit" EntitySet="Units" />
             <End Role="TeamUnit" EntitySet="TeamUnits" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_UnitClasses_dbo_Units" Association="tcdbModel.FK_dbo_UnitClasses_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitClass" EntitySet="UnitClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UnitFlags_dbo_Units" Association="tcdbModel.FK_dbo_UnitFlags_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitFlag" EntitySet="UnitFlags" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="UnitClass">
-          <Key>
-            <PropertyRef Name="UnitId" />
-            <PropertyRef Name="Class" />
-          </Key>
-          <Property Name="UnitId" Type="Int32" Nullable="false" />
-          <Property Name="Class" Type="tcdbModel.UnitClassType" Nullable="false" />
-          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="UnitClass" ToRole="Unit" />
-        </EntityType>
-        <EntityType Name="Unit">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="tcdbModel.UnitType" />
-          <Property Name="Stars" Type="Byte" />
-          <Property Name="Cost" Type="Byte" />
-          <Property Name="Combo" Type="Byte" />
-          <Property Name="Sockets" Type="Byte" />
-          <Property Name="MaxLevel" Type="Byte" />
-          <Property Name="EXPtoMax" Type="Int32" />
-          <Property Name="MinHP" Type="Int16" />
-          <Property Name="MinATK" Type="Int16" />
-          <Property Name="MinRCV" Type="Int16" />
-          <Property Name="MaxHP" Type="Int16" />
-          <Property Name="MaxATK" Type="Int16" />
-          <Property Name="MaxRCV" Type="Int16" />
-          <Property Name="GrowthRate" Type="Decimal" Precision="2" Scale="1" />
-          <NavigationProperty Name="StageUnits" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_Units" FromRole="Unit" ToRole="StageUnit" />
-          <NavigationProperty Name="UnitFlags" Relationship="tcdbModel.FK_dbo_UnitFlags_dbo_Units" FromRole="Unit" ToRole="UnitFlag" />
-          <NavigationProperty Name="UnitClasses" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="Unit" ToRole="UnitClass" />
-          <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="Unit" ToRole="TeamUnit" />
-        </EntityType>
         <EnumType Name="UnitClassType" UnderlyingType="Byte">
           <Member Name="Unknown" />
           <Member Name="Shooter" />
@@ -553,8 +519,8 @@
           <Property Name="MaxCD" Type="Byte" />
           <Property Name="Interval" Type="Byte" />
           <NavigationProperty Name="StageLevel" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_StageLevels" FromRole="StageUnit" ToRole="StageLevel" />
-          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_Units" FromRole="StageUnit" ToRole="Unit" />
           <NavigationProperty Name="StageUnitAttackPatterns" Relationship="tcdbModel.FK_dbo_StageUnitAttackPatterns_dbo_StageUnits" FromRole="StageUnit" ToRole="StageUnitAttackPattern" />
+          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_Units" FromRole="StageUnit" ToRole="Unit" />
         </EntityType>
         <Association Name="FK_dbo_StageUnits_dbo_StageLevels">
           <End Type="tcdbModel.StageLevel" Role="StageLevel" Multiplicity="1">
@@ -567,43 +533,6 @@
             </Principal>
             <Dependent Role="StageUnit">
               <PropertyRef Name="StageLevelId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_StageUnits_dbo_Units">
-          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.StageUnit" Role="StageUnit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StageUnit">
-              <PropertyRef Name="UnitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="UnitFlag">
-          <Key>
-            <PropertyRef Name="UnitId" />
-            <PropertyRef Name="FlagType" />
-          </Key>
-          <Property Name="UnitId" Type="Int32" Nullable="false" />
-          <Property Name="FlagType" Type="tcdbModel.UnitFlagType" Nullable="false" />
-          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitFlags_dbo_Units" FromRole="UnitFlag" ToRole="Unit" />
-        </EntityType>
-        <Association Name="FK_dbo_UnitFlags_dbo_Units">
-          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.UnitFlag" Role="UnitFlag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UnitFlag">
-              <PropertyRef Name="UnitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -638,18 +567,6 @@
           <Property Name="UserHash" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="TeamVote" ToRole="Team" />
         </EntityType>
-        <Association Name="FK_dbo_UnitClasses_dbo_Units">
-          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
-          <End Type="tcdbModel.UnitClass" Role="UnitClass" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UnitClass">
-              <PropertyRef Name="UnitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="StageDifficulty">
           <Key>
             <PropertyRef Name="Id" />
@@ -798,6 +715,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UnitClass">
+          <Key>
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="Class" />
+          </Key>
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="Class" Type="tcdbModel.UnitClassType" Nullable="false" />
+          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="UnitClass" ToRole="Unit" />
+        </EntityType>
+        <EntityType Name="UnitFlag">
+          <Key>
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="FlagType" />
+          </Key>
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="FlagType" Type="tcdbModel.UnitFlagType" Nullable="false" />
+          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitFlags_dbo_Units" FromRole="UnitFlag" ToRole="Unit" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="tcdbModel.UnitType" Nullable="false" />
+          <Property Name="Stars" Type="Byte" />
+          <Property Name="Cost" Type="Byte" />
+          <Property Name="Combo" Type="Byte" />
+          <Property Name="Sockets" Type="Byte" />
+          <Property Name="MaxLevel" Type="Byte" />
+          <Property Name="EXPtoMax" Type="Int32" />
+          <Property Name="MinHP" Type="Int16" />
+          <Property Name="MinATK" Type="Int16" />
+          <Property Name="MinRCV" Type="Int16" />
+          <Property Name="MaxHP" Type="Int16" />
+          <Property Name="MaxATK" Type="Int16" />
+          <Property Name="MaxRCV" Type="Int16" />
+          <Property Name="GrowthRate" Type="Decimal" Precision="2" Scale="1" />
+          <NavigationProperty Name="StageUnits" Relationship="tcdbModel.FK_dbo_StageUnits_dbo_Units" FromRole="Unit" ToRole="StageUnit" />
+          <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="Unit" ToRole="TeamUnit" />
+          <NavigationProperty Name="UnitClasses" Relationship="tcdbModel.FK_dbo_UnitClasses_dbo_Units" FromRole="Unit" ToRole="UnitClass" />
+          <NavigationProperty Name="UnitFlags" Relationship="tcdbModel.FK_dbo_UnitFlags_dbo_Units" FromRole="Unit" ToRole="UnitFlag" />
+        </EntityType>
+        <Association Name="FK_dbo_StageUnits_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.StageUnit" Role="StageUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StageUnit">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_TeamUnits_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -812,42 +786,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_UnitClasses_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="tcdbModel.UnitClass" Role="UnitClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitClass">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UnitFlags_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.UnitFlag" Role="UnitFlag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitFlag">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="tcdbModelStoreContainer" CdmEntityContainer="TreasureEntities">
-          <EntitySetMapping Name="UnitClasses">
-            <EntityTypeMapping TypeName="tcdbModel.UnitClass">
-              <MappingFragment StoreEntitySet="UnitClasses">
-                <ScalarProperty Name="Class" ColumnName="Class" />
-                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Units">
-            <EntityTypeMapping TypeName="tcdbModel.Unit">
-              <MappingFragment StoreEntitySet="Units">
-                <ScalarProperty Name="GrowthRate" ColumnName="GrowthRate" />
-                <ScalarProperty Name="MaxRCV" ColumnName="MaxRCV" />
-                <ScalarProperty Name="MaxATK" ColumnName="MaxATK" />
-                <ScalarProperty Name="MaxHP" ColumnName="MaxHP" />
-                <ScalarProperty Name="MinRCV" ColumnName="MinRCV" />
-                <ScalarProperty Name="MinATK" ColumnName="MinATK" />
-                <ScalarProperty Name="MinHP" ColumnName="MinHP" />
-                <ScalarProperty Name="EXPtoMax" ColumnName="EXPtoMax" />
-                <ScalarProperty Name="MaxLevel" ColumnName="MaxLevel" />
-                <ScalarProperty Name="Sockets" ColumnName="Sockets" />
-                <ScalarProperty Name="Combo" ColumnName="Combo" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-                <ScalarProperty Name="Stars" ColumnName="Stars" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Stages">
             <EntityTypeMapping TypeName="tcdbModel.Stage">
               <MappingFragment StoreEntitySet="Stages">
@@ -881,14 +851,6 @@
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="StageLevelId" ColumnName="StageLevelId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UnitFlags">
-            <EntityTypeMapping TypeName="tcdbModel.UnitFlag">
-              <MappingFragment StoreEntitySet="UnitFlags">
-                <ScalarProperty Name="FlagType" ColumnName="FlagType" />
-                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -957,6 +919,44 @@
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitClasses">
+            <EntityTypeMapping TypeName="tcdbModel.UnitClass">
+              <MappingFragment StoreEntitySet="UnitClasses">
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitFlags">
+            <EntityTypeMapping TypeName="tcdbModel.UnitFlag">
+              <MappingFragment StoreEntitySet="UnitFlags">
+                <ScalarProperty Name="FlagType" ColumnName="FlagType" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="tcdbModel.Unit">
+              <MappingFragment StoreEntitySet="Units">
+                <ScalarProperty Name="GrowthRate" ColumnName="GrowthRate" />
+                <ScalarProperty Name="MaxRCV" ColumnName="MaxRCV" />
+                <ScalarProperty Name="MaxATK" ColumnName="MaxATK" />
+                <ScalarProperty Name="MaxHP" ColumnName="MaxHP" />
+                <ScalarProperty Name="MinRCV" ColumnName="MinRCV" />
+                <ScalarProperty Name="MinATK" ColumnName="MinATK" />
+                <ScalarProperty Name="MinHP" ColumnName="MinHP" />
+                <ScalarProperty Name="EXPtoMax" ColumnName="EXPtoMax" />
+                <ScalarProperty Name="MaxLevel" ColumnName="MaxLevel" />
+                <ScalarProperty Name="Sockets" ColumnName="Sockets" />
+                <ScalarProperty Name="Combo" ColumnName="Combo" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Stars" ColumnName="Stars" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConstructor.cs" />
     <Compile Include="Helpers\ContextExtensions.cs" />
     <Compile Include="InterfaceDefinitions.cs" />
     <Compile Include="Interfaces\IIdItem.cs" />

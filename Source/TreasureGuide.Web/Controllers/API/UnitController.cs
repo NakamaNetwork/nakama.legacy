@@ -1,13 +1,13 @@
-﻿using TreasureGuide.Entities;
+﻿using AutoMapper;
+using TreasureGuide.Entities;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.UnitModels;
-using TreasureGuide.Web.Services.API.Generic;
 
 namespace TreasureGuide.Web.Controllers.API
 {
-    public class UnitController : EntityApiController<int, Unit, UnitStubModel, UnitDetailModel, UnitDetailModel>
+    public class UnitController : EntityApiController<int, Unit, UnitStubModel, UnitDetailModel, UnitEditorModel>
     {
-        public UnitController(IDataService<int, Unit> dataService) : base(dataService)
+        public UnitController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
         {
         }
     }

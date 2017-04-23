@@ -2,7 +2,7 @@
 (
     [Id] INT NOT NULL, 
     [Name] NVARCHAR(500) NULL, 
-    [Type] TINYINT NULL, 
+    [Type] TINYINT NOT NULL CONSTRAINT [DF_dbo.Units_Type] DEFAULT 0, 
     [Stars] TINYINT NULL, 
     [Cost] TINYINT NULL, 
     [Combo] TINYINT NULL, 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Interfaces;
@@ -14,10 +16,12 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         where TEditorModel : IIdItem<TKey?>
     {
         protected readonly TreasureEntities DbContext;
+        protected readonly IMapper AutoMapper;
 
-        public EntityApiController(TreasureEntities dbContext)
+        public EntityApiController(TreasureEntities dbContext, IMapper autoMapper)
         {
             DbContext = dbContext;
+            AutoMapper = autoMapper;
         }
 
         protected override IActionResult Get<TModel>(TKey? id = null)
@@ -121,22 +125,22 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual IQueryable<TModel> Project<TModel>(IQueryable<TEntity> entities)
         {
-            return entities.Cast<TModel>();
+            return entities.ProjectTo<TModel>(AutoMapper.ConfigurationProvider);
+        }
+
+        protected virtual TEntity Create(TEditorModel model)
+        {
+            return AutoMapper.Map<TEntity>(model);
+        }
+
+        protected virtual TEntity Update(TEditorModel model, TEntity entity)
+        {
+            return AutoMapper.Map(model, entity);
         }
 
         protected virtual IQueryable<TEntity> Filter(IQueryable<TEntity> entities)
         {
             return entities;
-        }
-
-        protected virtual TEntity Create(TEditorModel model)
-        {
-            return model as TEntity;
-        }
-
-        protected virtual TEntity Update(TEditorModel model, TEntity entity)
-        {
-            return model as TEntity;
         }
 
         private TEditorModel PreProcess(TEditorModel model)

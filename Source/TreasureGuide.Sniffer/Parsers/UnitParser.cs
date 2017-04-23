@@ -28,7 +28,7 @@ namespace TreasureGuide.Sniffer.Parsers
                 {
                     Id = id,
                     Name = line[0] as string,
-                    Type = (line[1] as string)?.ToUnitType(),
+                    Type = (line[1] as string).ToUnitType(),
                     // Classes parsed later
                     Stars = (line[3]?.ToString())?.ToByte(),
                     Cost = (line[4]?.ToString())?.ToByte(),
@@ -48,12 +48,12 @@ namespace TreasureGuide.Sniffer.Parsers
                 {
                     Unit = unit,
                     UnitClasses = (classData.Contains("[") ? JsonConvert.DeserializeObject<string[]>(classData) : new[] { classData })
-                        .Select(type => type?.ToUnitClass())
-                        .Where(x => x.HasValue)
+                        .Select(type => type.ToUnitClass())
+                        .Where(x => x != UnitClassType.Unknown)
                         .Select(type => new UnitClass
                         {
                             Unit = unit,
-                            Class = type.Value
+                            Class = type
                         })
                 };
             });

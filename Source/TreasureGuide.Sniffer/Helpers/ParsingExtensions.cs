@@ -57,24 +57,24 @@ namespace TreasureGuide.Sniffer.Helpers
             return null;
         }
 
-        public static UnitType? ToUnitType(this string input)
+        public static UnitType ToUnitType(this string input)
         {
             UnitType value;
             if (UnitType.TryParse(input, out value))
             {
                 return value;
             }
-            return null;
+            return UnitType.Unknown;
         }
 
-        public static UnitClassType? ToUnitClass(this string input)
+        public static UnitClassType ToUnitClass(this string input)
         {
             UnitClassType value;
             if (UnitClassType.TryParse(input, out value))
             {
                 return value;
             }
-            return null;
+            return UnitClassType.Unknown;
         }
 
         public static TValue GetSafe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue fallback = default(TValue))
