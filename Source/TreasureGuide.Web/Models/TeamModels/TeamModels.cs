@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.TeamModels
 {
@@ -20,7 +21,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
     }
 
-    public class TeamEditorModel
+    public class TeamEditorModel : IIdItem<int?>
     {
         public int? Id { get; set; }
         public string Name { get; set; }

@@ -1,6 +1,11 @@
 ﻿<template>
     <h1>${title}</h1>
     <div>
+        <button click.delegate="edit()">
+            Create Team
+        </button>
+    </div>
+    <div>
         <table>
             <thead>
                 <tr>
@@ -11,10 +16,7 @@
                         Name
                     </th>
                     <th>
-                        Type
-                    </th>
-                    <th>
-                        Classes
+                        Units
                     </th>
                     <th>
                         Actions
@@ -22,18 +24,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr repeat.for="unit of units">
+                <tr repeat.for="team of teams">
                     <td>
-                        ${unit.id}
+                        ${team.id}
                     </td>
                     <td>
-                        ${unit.name}
+                        ${team.name}
                     </td>
                     <td>
-                        ${unit.type}
-                    </td>
-                    <td>
-                        ${unit.unitClasses}
+                        ${team.units}
                     </td>
                     <td></td>
                 </tr>

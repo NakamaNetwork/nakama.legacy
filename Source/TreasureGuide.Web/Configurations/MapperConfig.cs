@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using TreasureGuide.Entities;
+using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Models.UnitModels;
 
 namespace TreasureGuide.Web.Configurations
@@ -13,12 +14,21 @@ namespace TreasureGuide.Web.Configurations
         {
             var config = new MapperConfiguration(mapper =>
             {
-                var mapping = mapper.CreateControllerMapping<Unit, UnitDetailModel, UnitStubModel, UnitEditorModel>();
-                mapping.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.UnitFlags.Any(z => z.FlagType == UnitFlagType.Global)));
-                mapping.StubMapping.ForMember(x => x.UnitClasses, o => o.MapFrom(y => y.UnitClasses.Select(z => z.Class)));
+                var unit = mapper.CreateControllerMapping<Unit, UnitDetailModel, UnitStubModel, UnitEditorModel>();
+                unit.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.UnitFlags.Any(z => z.FlagType == UnitFlagType.Global)));
+                unit.StubMapping.ForMember(x => x.UnitClasses, o => o.MapFrom(y => y.UnitClasses.Select(z => z.Class)));
 
-                mapping.DetailMapping.ForMember(x => x.UnitFlags, o => o.MapFrom(y => y.UnitFlags.Select(z => z.FlagType)));
-                mapping.DetailMapping.ForMember(x => x.UnitClasses, o => o.MapFrom(y => y.UnitClasses.Select(z => z.Class)));
+                unit.DetailMapping.ForMember(x => x.UnitFlags, o => o.MapFrom(y => y.UnitFlags.Select(z => z.FlagType)));
+                unit.DetailMapping.ForMember(x => x.UnitClasses, o => o.MapFrom(y => y.UnitClasses.Select(z => z.Class)));
+
+                var teamUnit = mapper.CreateControllerMapping<TeamUnit, TeamUnitDetailModel, TeamUnitStubModel, TeamUnitEditorModel>();
+                var teamSocket = mapper.CreateControllerMapping<TeamSocket, TeamSocketDetailModel, TeamSocketStubModel, TeamSocketEditorModel>();
+
+                var team = mapper.CreateControllerMapping<Team, TeamDetailModel, TeamStubModel, TeamEditorModel>();
+                team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedById));
+                team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
+                team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedById));
+                team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();
