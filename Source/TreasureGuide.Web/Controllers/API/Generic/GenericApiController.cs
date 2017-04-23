@@ -179,11 +179,19 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual IActionResult Detail(TKey? id = null)
         {
+            if (!id.HasValue)
+            {
+                return BadRequest("Must specify an Id.");
+            }
             return Get<TDetailModel>(id);
         }
 
         protected virtual IActionResult Editor(TKey? id = null)
         {
+            if (!id.HasValue)
+            {
+                return BadRequest("Must specify an Id.");
+            }
             return Get<TEditorModel>(id);
         }
 
