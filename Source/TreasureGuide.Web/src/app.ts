@@ -12,7 +12,9 @@ export class App {
         config.map([
             { route: ['', '/', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
             { route: 'error', name: 'error', moduleId: 'views/error', nav: false },
-            { route: 'notfound', name: 'notfound', moduleId: 'views/notfound', nav: false }
+            { route: 'notfound', name: 'notfound', moduleId: 'views/notfound', nav: false },
+            // Units
+            { route: ['', '/units'], name: 'units', title: 'Units', moduleId: 'views/units/index', nav: true },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }

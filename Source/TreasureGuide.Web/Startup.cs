@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TreasureGuide.Web.Configurations;
-using TreasureGuide.Web.Data;
-using TreasureGuide.Web.Models;
-using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web
 {
@@ -49,7 +44,6 @@ namespace TreasureGuide.Web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
             }
             else
             {

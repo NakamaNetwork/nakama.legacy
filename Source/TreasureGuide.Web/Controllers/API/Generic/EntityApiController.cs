@@ -118,6 +118,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<object> Remove(TEntity single)
         {
+            throw new NotImplementedException();
             DbContext.Set<TEntity>().Remove(single);
             await DbContext.SaveChangesAsync();
             return true;
