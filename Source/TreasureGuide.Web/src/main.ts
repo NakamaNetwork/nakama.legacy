@@ -14,7 +14,9 @@ export function configure(aurelia: Aurelia) {
         aurelia.use.plugin('aurelia-testing');
     }
 
-    aurelia.use.plugin('aurelia-fetch-client');
+    aurelia.use.plugin('aurelia-fetch-client')
+        .plugin('aurelia-materialize-bridge', b => b.useAll())
+        .globalResources(['materialize-css/css/materialize.css']);
 
     aurelia.start().then(() => aurelia.setRoot());
 }
