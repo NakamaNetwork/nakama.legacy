@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
-    public abstract class GenericRestfulApiController<TKey, TEditorModel> : Controller
+    public abstract class GenericApiController<TKey, TEntity, TStubModel, TDetailModel, TEditorModel> : Controller
         where TKey : struct
+        where TEntity : IIdItem<TKey>
+        where TEditorModel : IIdItem<TKey?>
     {
         #region GetEndpoints
         [HttpGet]
@@ -28,6 +31,84 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         public IActionResult ActionGetId(TKey? id = null)
         {
             return Get(id);
+        }
+        #endregion
+
+        #region StubEndpoints
+        [HttpGet]
+        [ActionName("")]
+        [Route("{id?}")]
+        public IActionResult ActionStub(TKey? id = null)
+        {
+            return Stub(id);
+        }
+
+        [HttpGet]
+        [ActionName("Stub")]
+        [Route("{id}/[action]")]
+        public IActionResult ActionIdStub(TKey? id = null)
+        {
+            return Stub(id);
+        }
+
+        [HttpGet]
+        [ActionName("Stub")]
+        [Route("[action]/{id?}")]
+        public IActionResult ActionStubId(TKey? id = null)
+        {
+            return Stub(id);
+        }
+        #endregion
+
+        #region DetailEndpoints
+        [HttpGet]
+        [ActionName("")]
+        [Route("{id?}")]
+        public IActionResult ActionDetail(TKey? id = null)
+        {
+            return Detail(id);
+        }
+
+        [HttpGet]
+        [ActionName("Detail")]
+        [Route("{id}/[action]")]
+        public IActionResult ActionIdDetail(TKey? id = null)
+        {
+            return Detail(id);
+        }
+
+        [HttpGet]
+        [ActionName("Detail")]
+        [Route("[action]/{id?}")]
+        public IActionResult ActionDetailId(TKey? id = null)
+        {
+            return Detail(id);
+        }
+        #endregion
+
+        #region EditorEndpoints
+        [HttpGet]
+        [ActionName("")]
+        [Route("{id?}")]
+        public IActionResult ActionEditor(TKey? id = null)
+        {
+            return Editor(id);
+        }
+
+        [HttpGet]
+        [ActionName("Editor")]
+        [Route("{id}/[action]")]
+        public IActionResult ActionIdEditor(TKey? id = null)
+        {
+            return Editor(id);
+        }
+
+        [HttpGet]
+        [ActionName("Editor")]
+        [Route("[action]/{id?}")]
+        public IActionResult ActionEditorId(TKey? id = null)
+        {
+            return Editor(id);
         }
         #endregion
 
@@ -109,14 +190,33 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         }
         #endregion
 
-        protected abstract IActionResult Get(TKey? id = null);
-        protected abstract IActionResult Post(TEditorModel model, TKey? id = null);
+        protected virtual IActionResult Get(TKey? id = null)
+        {
+            return Stub(id);
+        }
+
+        protected virtual IActionResult Stub(TKey? id = null)
+        {
+            return Get<TStubModel>(id);
+        }
+
+        protected virtual IActionResult Detail(TKey? id = null)
+        {
+            return Get<TDetailModel>(id);
+        }
+
+        protected virtual IActionResult Editor(TKey? id = null)
+        {
+            return Get<TEditorModel>(id);
+        }
 
         protected virtual IActionResult Put(TEditorModel model, TKey? id = null)
         {
             return Post(model, id);
         }
 
+        protected abstract IActionResult Get<TModel>(TKey? id = null);
+        protected abstract IActionResult Post(TEditorModel model, TKey? id = null);
         protected abstract IActionResult Delete(TKey? id = null);
     }
 }
