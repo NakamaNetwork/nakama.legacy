@@ -1,7 +1,8 @@
 ﻿<template>
     <h1>${title}</h1>
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red" route-href="route: teamCreate">
+        <a md-button="floating: true; large: true" md-tooltip="position: left; text: Create New Team;"
+           md-waves="color: light; circle: true;" route-href="route: teamCreate">
             <i class="large material-icons">add</i>
         </a>
     </div>
@@ -35,7 +36,7 @@
                         ${team.units}
                     </td>
                     <td>
-                        <a class="waves-effect waves-light btn" route-href="route: teamEdit; params.bind: {id: team.id}">
+                        <a md-button md-waves route-href="route: teamEdit; params.bind: {id: team.id}">
                             <i class="material-icons left">mode_edit</i>
                             Edit
                         </a>

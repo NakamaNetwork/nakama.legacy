@@ -1,39 +1,44 @@
 <template>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <nav>
-        <div class="nav-wrapper">
-            <div class="container">
-                <a href="#" class="brand-logo">
-                    ${router.title}
-                </a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}">
-                        <a href.bind="nav.href">
-                            ${nav.title}
-                        </a>
-                    </li>
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}">
-                        <a href.bind="nav.href">
-                            ${nav.title}
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <md-navbar>
+        <div class="container">
+            <a route-href="route: home" class="brand-logo">
+                ${router.title}
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}">
+                    <a href.bind="nav.href">
+                        ${nav.title}
+                    </a>
+                </li>
+            </ul>
         </div>
-    </nav>
+        <a href="#" md-sidenav-collapse="ref.bind: sideNav;" class="button-collapse">
+            <i class="material-icons">menu</i>
+        </a>
+        <md-sidenav view-model.ref="sideNav">
+            <ul>
+                <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}">
+                    <a href.bind="nav.href">
+                        ${nav.title}
+                    </a>
+                </li>
+            </ul>
+        </md-sidenav>
+    </md-navbar>
     <div class="container">
         <router-view></router-view>
     </div>
-    <footer class="page-footer">
-        <div class="footer-copyright">
-            <div class="container">
-                &copy; 2017 RoboCafaz
-                <a class="grey-text text-lighten-4 right" href="https://github.com/RoboCafaz/TreasureGuide">
-                    View on GitHub
-                </a>
+    <div>
+        <footer md-footer>
+            <div class="footer-copyright">
+                <div class="container">
+                    &copy; 2017 RoboCafaz
+                    <a class="grey-text text-lighten-4 right" href="https://github.com/RoboCafaz/TreasureGuide">
+                        View on GitHub
+                    </a>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 </template>
