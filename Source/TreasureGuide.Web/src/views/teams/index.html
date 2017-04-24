@@ -1,12 +1,12 @@
 ﻿<template>
     <h1>${title}</h1>
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red" route-href="route: teamEdit">
+        <a class="btn-floating btn-large red" route-href="route: teamCreate">
             <i class="large material-icons">add</i>
         </a>
     </div>
     <div>
-        <table>
+        <table class="striped">
             <thead>
                 <tr>
                     <th>
@@ -34,7 +34,12 @@
                     <td>
                         ${team.units}
                     </td>
-                    <td></td>
+                    <td>
+                        <a class="waves-effect waves-light btn" route-href="route: teamEdit; params.bind: {id: team.id}">
+                            <i class="material-icons left">mode_edit</i>
+                            Edit
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>
