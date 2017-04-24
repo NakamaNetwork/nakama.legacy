@@ -12,7 +12,7 @@ main {
     height: 112px;
     width: 112px;
     padding: 0;
-    margin: 0 10px;
+    margin: 10px;
     line-height: 0;
 
     img {
@@ -20,5 +20,12 @@ main {
         height: 100%;
         padding: 0;
         margin: 0;
+    }
+}
+
+team-display {
+    .row {
+        margin: 0;
+        padding: 0;
     }
 }

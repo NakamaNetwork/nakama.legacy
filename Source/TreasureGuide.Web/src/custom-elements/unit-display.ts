@@ -2,8 +2,8 @@
 import { autoinject } from 'aurelia-dependency-injection';
 import { UnitQueryService } from '../services/query/unit-query-service';
 
-@customElement('unit-display')
 @autoinject
+@customElement('unit-display')
 export class UnitDisplay {
     private element: Element;
     private unitQueryService: UnitQueryService;
@@ -25,10 +25,17 @@ export class UnitDisplay {
             return null;
         });
     };
-
+    
     @computedFrom('unitId')
     get imageUrl() {
-        var id = ("0000" + this.unitId).slice(-4);
-        return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
+        return this.unitQueryService.getPortrait(this.unitId);
+    }
+
+    unitClicked() {
+        if (this.editable) {
+            console.log("Clicked editable unit");
+        } else {
+            console.log("Clicked uneditable unit.");
+        }
     }
 }

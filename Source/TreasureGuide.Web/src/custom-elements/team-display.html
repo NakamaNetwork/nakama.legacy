@@ -1,16 +1,15 @@
 ﻿<template>
-    <div class="row">
-        <div class="row center-align">
-            <unit-display unitId.bind="teamSlots[0]" editable.bind="editable"></unit-display>
-            <unit-display unitId.bind="teamSlots[1]" editable.bind="editable"></unit-display>
-        </div>
-        <div class="row center-align">
-            <unit-display unitId.bind="teamSlots[2]" editable.bind="editable"></unit-display>
-            <unit-display unitId.bind="teamSlots[3]" editable.bind="editable"></unit-display>
-        </div>
-        <div class="row center-align">
-            <unit-display unitId.bind="teamSlots[4]" editable.bind="editable"></unit-display>
-            <unit-display unitId.bind="teamSlots[5]" editable.bind="editable"></unit-display>
-        </div>
+    <div class="row center-align">
+        <unit-display unitId.bind="teamSlots[0]" editable.bind="editable"></unit-display>
+        <unit-display unitId.bind="teamSlots[1]" editable.bind="editable"></unit-display>
     </div>
+    <div class="row center-align">
+        <unit-display unitId.bind="teamSlots[2]" editable.bind="editable"></unit-display>
+        <unit-display unitId.bind="teamSlots[3]" editable.bind="editable"></unit-display>
+    </div>
+    <div class="row center-align">
+        <unit-display unitId.bind="teamSlots[4]" editable.bind="editable"></unit-display>
+        <unit-display unitId.bind="teamSlots[5]" editable.bind="editable"></unit-display>
+    </div>
+    <unit-picker></unit-picker>
 </template>
