@@ -14,9 +14,13 @@ export function configure(aurelia: Aurelia) {
         aurelia.use.plugin('aurelia-testing');
     }
 
-    aurelia.use.plugin('aurelia-fetch-client')
+    aurelia.use
+        .plugin('aurelia-fetch-client')
         .plugin('aurelia-materialize-bridge', b => b.useAll())
+        // Custom Elements
+        .feature('./custom-elements')
         .globalResources([
+            // CSS
             'materialize-css/css/materialize.css',
             './css/site.css'
         ]);

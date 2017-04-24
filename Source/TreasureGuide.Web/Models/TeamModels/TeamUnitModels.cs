@@ -4,12 +4,12 @@ namespace TreasureGuide.Web.Models.TeamModels
 {
     public class TeamUnitStubModel
     {
-        public UnitStubModel Unit { get; set; }
+        public int UnitId { get; set; }
     }
 
     public class TeamUnitDetailModel
     {
-        public UnitDetailModel Unit { get; set; }
+        public int UnitId { get; set; }
         public byte? Position { get; set; }
         public byte? SpecialLevel { get; set; }
         public bool Sub { get; set; }

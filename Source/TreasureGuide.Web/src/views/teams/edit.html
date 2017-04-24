@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="row">
-                <team-picker team.bind="teamUnits"></team-picker>
+                <team-display team.bind="teamUnits" editable.bind="true"></team-display>
             </div>
             <div class="row">
                 <socket-picker sockets.bind="teamSockets"></socket-picker>
@@ -33,7 +33,7 @@
         <div class="row">
             <button md-button="large: true" md-waves click.delegate="submit()">
                 Submit
-                <i class="large material-icons right">send</i>
+                <i class="material-icons right large">send</i>
             </button>
         </div>
     </div>
