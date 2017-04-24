@@ -16,6 +16,7 @@ export class App {
             // Units
             { route: 'units', name: 'units', title: 'Units', moduleId: 'views/units/index', nav: true },
             { route: 'teams', name: 'teams', title: 'Teams', moduleId: 'views/teams/index', nav: true },
+            { route: ['teams/:id/edit', 'teams/create'], name: 'teamEdit', title: 'Edit Team', moduleId: 'views/teams/edit', nav: false },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }

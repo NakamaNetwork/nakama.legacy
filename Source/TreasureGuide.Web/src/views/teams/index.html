@@ -1,9 +1,9 @@
 ﻿<template>
     <h1>${title}</h1>
-    <div>
-        <button click.delegate="edit()">
-            Create Team
-        </button>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red" route-href="route: teamEdit">
+            <i class="large material-icons">add</i>
+        </a>
     </div>
     <div>
         <table>
