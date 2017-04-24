@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
@@ -13,25 +14,25 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpGet]
         [ActionName("")]
         [Route("{id?}")]
-        public IActionResult ActionGet(TKey? id = null)
+        public async Task<IActionResult> ActionGet(TKey? id = null)
         {
-            return Get(id);
+            return await Get(id);
         }
 
         [HttpGet]
         [ActionName("Get")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdGet(TKey? id = null)
+        public async Task<IActionResult> ActionIdGet(TKey? id = null)
         {
-            return Get(id);
+            return await Get(id);
         }
 
         [HttpGet]
         [ActionName("Get")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionGetId(TKey? id = null)
+        public async Task<IActionResult> ActionGetId(TKey? id = null)
         {
-            return Get(id);
+            return await Get(id);
         }
         #endregion
 
@@ -39,17 +40,17 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpGet]
         [ActionName("Stub")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdStub(TKey? id = null)
+        public async Task<IActionResult> ActionIdStub(TKey? id = null)
         {
-            return Stub(id);
+            return await Stub(id);
         }
 
         [HttpGet]
         [ActionName("Stub")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionStubId(TKey? id = null)
+        public async Task<IActionResult> ActionStubId(TKey? id = null)
         {
-            return Stub(id);
+            return await Stub(id);
         }
         #endregion
 
@@ -57,17 +58,17 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpGet]
         [ActionName("Detail")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdDetail(TKey? id = null)
+        public async Task<IActionResult> ActionIdDetail(TKey? id = null)
         {
-            return Detail(id);
+            return await Detail(id);
         }
 
         [HttpGet]
         [ActionName("Detail")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionDetailId(TKey? id = null)
+        public async Task<IActionResult> ActionDetailId(TKey? id = null)
         {
-            return Detail(id);
+            return await Detail(id);
         }
         #endregion
 
@@ -75,17 +76,17 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpGet]
         [ActionName("Editor")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdEditor(TKey? id = null)
+        public async Task<IActionResult> ActionIdEditor(TKey? id = null)
         {
-            return Editor(id);
+            return await Editor(id);
         }
 
         [HttpGet]
         [ActionName("Editor")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionEditorId(TKey? id = null)
+        public async Task<IActionResult> ActionEditorId(TKey? id = null)
         {
-            return Editor(id);
+            return await Editor(id);
         }
         #endregion
 
@@ -93,25 +94,25 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpPost]
         [ActionName("")]
         [Route("{id?}")]
-        public IActionResult ActionPost([FromBody]TEditorModel model, TKey? id = null)
+        public async Task<IActionResult> ActionPost([FromBody]TEditorModel model, TKey? id = null)
         {
-            return Post(model, id);
+            return await Post(model, id);
         }
 
         [HttpPost]
         [ActionName("Post")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdPost([FromBody]TEditorModel model, TKey? id = null)
+        public async Task<IActionResult> ActionIdPost([FromBody]TEditorModel model, TKey? id = null)
         {
-            return Post(model, id);
+            return await Post(model, id);
         }
 
         [HttpPost]
         [ActionName("Post")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionPostId([FromBody]TEditorModel model, TKey? id = null)
+        public async Task<IActionResult> ActionPostId([FromBody]TEditorModel model, TKey? id = null)
         {
-            return Post(model, id);
+            return await Post(model, id);
         }
         #endregion
 
@@ -119,25 +120,25 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpPut]
         [ActionName("")]
         [Route("{id?}")]
-        public IActionResult ActionPut([FromBody]TEditorModel model, TKey? id = null)
+        public async Task<IActionResult> ActionPut([FromBody]TEditorModel model, TKey? id = null)
         {
-            return Put(model, id);
+            return await Put(model, id);
         }
 
         [HttpPut]
         [ActionName("Put")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdPut([FromBody]TEditorModel model, TKey? id = null)
+        public async Task<IActionResult> ActionIdPut([FromBody]TEditorModel model, TKey? id = null)
         {
-            return Put(model, id);
+            return await Put(model, id);
         }
 
         [HttpPut]
         [ActionName("Put")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionPutId([FromBody]TEditorModel model, TKey? id = null)
+        public async Task<IActionResult> ActionPutId([FromBody]TEditorModel model, TKey? id = null)
         {
-            return Put(model, id);
+            return await Put(model, id);
         }
         #endregion
 
@@ -145,63 +146,63 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpDelete]
         [ActionName("")]
         [Route("{id?}")]
-        public IActionResult ActionDelete(TKey? id = null)
+        public async Task<IActionResult> ActionDelete(TKey? id = null)
         {
-            return Delete(id);
+            return await Delete(id);
         }
 
         [HttpDelete]
         [ActionName("Delete")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdDelete(TKey? id = null)
+        public async Task<IActionResult> ActionIdDelete(TKey? id = null)
         {
-            return Delete(id);
+            return await Delete(id);
         }
 
         [HttpDelete]
         [ActionName("Delete")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionDeleteId(TKey? id = null)
+        public async Task<IActionResult> ActionDeleteId(TKey? id = null)
         {
-            return Delete(id);
+            return await Delete(id);
         }
         #endregion
 
-        protected virtual IActionResult Get(TKey? id = null)
+        protected virtual async Task<IActionResult> Get(TKey? id = null)
         {
-            return Stub(id);
+            return await Stub(id);
         }
 
-        protected virtual IActionResult Stub(TKey? id = null)
+        protected virtual async Task<IActionResult> Stub(TKey? id = null)
         {
-            return Get<TStubModel>(id);
+            return await Get<TStubModel>(id);
         }
 
-        protected virtual IActionResult Detail(TKey? id = null)
-        {
-            if (!id.HasValue)
-            {
-                return BadRequest("Must specify an Id.");
-            }
-            return Get<TDetailModel>(id);
-        }
-
-        protected virtual IActionResult Editor(TKey? id = null)
+        protected virtual async Task<IActionResult> Detail(TKey? id = null)
         {
             if (!id.HasValue)
             {
                 return BadRequest("Must specify an Id.");
             }
-            return Get<TEditorModel>(id);
+            return await Get<TDetailModel>(id);
         }
 
-        protected virtual IActionResult Put(TEditorModel model, TKey? id = null)
+        protected virtual async Task<IActionResult> Editor(TKey? id = null)
         {
-            return Post(model, id);
+            if (!id.HasValue)
+            {
+                return BadRequest("Must specify an Id.");
+            }
+            return await Get<TEditorModel>(id);
         }
 
-        protected abstract IActionResult Get<TModel>(TKey? id = null);
-        protected abstract IActionResult Post(TEditorModel model, TKey? id = null);
-        protected abstract IActionResult Delete(TKey? id = null);
+        protected virtual async Task<IActionResult> Put(TEditorModel model, TKey? id = null)
+        {
+            return await Post(model, id);
+        }
+
+        protected abstract Task<IActionResult> Get<TModel>(TKey? id = null);
+        protected abstract Task<IActionResult> Post(TEditorModel model, TKey? id = null);
+        protected abstract Task<IActionResult> Delete(TKey? id = null);
     }
 }

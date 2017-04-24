@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,41 +25,38 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             AutoMapper = autoMapper;
         }
 
-        protected override IActionResult Get<TModel>(TKey? id = null)
+        protected override async Task<IActionResult> Get<TModel>(TKey? id = null)
         {
-            return Do(() => PerformGet<TModel>(id));
+            var result = await PerformGet<TModel>(id);
+            return result as IActionResult ?? Ok(result); ;
         }
 
-        protected override IActionResult Post(TEditorModel model, TKey? id = null)
+        protected override async Task<IActionResult> Post(TEditorModel model, TKey? id = null)
         {
-            return Do(() => PerformPost(model, id));
+            var result = await PerformPost(model, id);
+            return result as IActionResult ?? Ok(result); ;
         }
 
-        protected override IActionResult Delete(TKey? id = null)
+        protected override async Task<IActionResult> Delete(TKey? id = null)
         {
-            return Do(() => PerformDelete(id));
+            var result = await PerformDelete(id);
+            return result as IActionResult ?? Ok(result); ;
         }
 
-        protected virtual IActionResult Do(Func<object> function)
-        {
-            var result = function.Invoke();
-            return (result as IActionResult) ?? Ok(result);
-        }
-
-        protected virtual object PerformGet<TModel>(TKey? id = null)
+        protected virtual async Task<object> PerformGet<TModel>(TKey? id = null)
         {
             var entities = FetchEntities(id);
             var transformed = typeof(TModel) == typeof(TEntity) ? entities.Cast<TModel>() : Project<TModel>(entities);
             if (id.HasValue)
             {
-                var single = transformed.SingleOrDefault();
+                var single = await transformed.SingleOrDefaultAsync();
                 if (single != null)
                 {
                     return single;
                 }
                 return NotFound(id);
             }
-            return transformed;
+            return await transformed.ToListAsync();
         }
 
         protected virtual IQueryable<TEntity> FetchEntities(TKey? id = null)
@@ -72,7 +70,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return queryable;
         }
 
-        protected virtual object PerformPost(TEditorModel model, TKey? id = null)
+        protected virtual async Task<object> PerformPost(TEditorModel model, TKey? id = null)
         {
             id = id ?? model.Id;
             if (id.HasValue)
@@ -81,19 +79,19 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 var single = entities.SingleOrDefault();
                 if (single != null)
                 {
-                    return CreateOrUpdate(model, single);
+                    return await CreateOrUpdate(model, single);
                 }
             }
-            return CreateOrUpdate(model);
+            return await CreateOrUpdate(model);
         }
 
-        protected virtual object PerformDelete(TKey? id)
+        protected virtual async Task<object> PerformDelete(TKey? id)
         {
             if (id.HasValue)
             {
                 var entities = FetchEntities(id);
                 var target = entities.SingleOrDefault();
-                return Remove(target);
+                return await Remove(target);
             }
             return BadRequest("No item specified.");
         }
@@ -144,12 +142,12 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return entities;
         }
 
-        private TEditorModel PreProcess(TEditorModel model)
+        protected virtual TEditorModel PreProcess(TEditorModel model)
         {
             return model;
         }
 
-        private TEntity PostProcess(TEntity entity)
+        protected virtual TEntity PostProcess(TEntity entity)
         {
             return entity;
         }
