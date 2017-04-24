@@ -93,7 +93,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpPost]
         [ActionName("")]
         [Route("{id?}")]
-        public IActionResult ActionPost(TEditorModel model, TKey? id = null)
+        public IActionResult ActionPost([FromBody]TEditorModel model, TKey? id = null)
         {
             return Post(model, id);
         }
@@ -101,7 +101,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpPost]
         [ActionName("Post")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdPost(TEditorModel model, TKey? id = null)
+        public IActionResult ActionIdPost([FromBody]TEditorModel model, TKey? id = null)
         {
             return Post(model, id);
         }
@@ -109,7 +109,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpPost]
         [ActionName("Post")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionPostId(TEditorModel model, TKey? id = null)
+        public IActionResult ActionPostId([FromBody]TEditorModel model, TKey? id = null)
         {
             return Post(model, id);
         }
@@ -119,7 +119,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpPut]
         [ActionName("")]
         [Route("{id?}")]
-        public IActionResult ActionPut(TEditorModel model, TKey? id = null)
+        public IActionResult ActionPut([FromBody]TEditorModel model, TKey? id = null)
         {
             return Put(model, id);
         }
@@ -127,7 +127,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpPut]
         [ActionName("Put")]
         [Route("{id}/[action]")]
-        public IActionResult ActionIdPut(TEditorModel model, TKey? id = null)
+        public IActionResult ActionIdPut([FromBody]TEditorModel model, TKey? id = null)
         {
             return Put(model, id);
         }
@@ -135,7 +135,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [HttpPut]
         [ActionName("Put")]
         [Route("[action]/{id?}")]
-        public IActionResult ActionPutId(TEditorModel model, TKey? id = null)
+        public IActionResult ActionPutId([FromBody]TEditorModel model, TKey? id = null)
         {
             return Put(model, id);
         }

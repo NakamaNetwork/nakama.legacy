@@ -74,6 +74,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual object PerformPost(TEditorModel model, TKey? id = null)
         {
+            id = id ?? model.Id;
             if (id.HasValue)
             {
                 var entities = FetchEntities(id);
@@ -82,9 +83,8 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 {
                     return CreateOrUpdate(model, single);
                 }
-                return NotFound(id);
             }
-            return BadRequest("No item specified.");
+            return CreateOrUpdate(model);
         }
 
         protected virtual object PerformDelete(TKey? id)
@@ -98,7 +98,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return BadRequest("No item specified.");
         }
 
-        protected virtual async Task<object> CreateOrUpdate(TEditorModel model, TEntity entity)
+        protected virtual async Task<object> CreateOrUpdate(TEditorModel model, TEntity entity = null)
         {
             model = PreProcess(model);
             var newItem = entity == null;
