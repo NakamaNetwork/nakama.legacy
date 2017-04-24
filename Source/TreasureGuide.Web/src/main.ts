@@ -16,7 +16,10 @@ export function configure(aurelia: Aurelia) {
 
     aurelia.use.plugin('aurelia-fetch-client')
         .plugin('aurelia-materialize-bridge', b => b.useAll())
-        .globalResources(['materialize-css/css/materialize.css']);
+        .globalResources([
+            'materialize-css/css/materialize.css',
+            './css/site.css'
+        ]);
 
     aurelia.start().then(() => aurelia.setRoot());
 }
