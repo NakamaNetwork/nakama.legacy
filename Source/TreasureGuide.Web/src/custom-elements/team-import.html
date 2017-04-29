@@ -1,0 +1,26 @@
+﻿<template>
+    <div class="modal-content">
+        <form>
+            <div class="row">
+                <p>
+                    Import your team from <strong><a href="http://optc-db.github.io/damage/#/" target="_blank">optc-db</a></strong>!
+                    Simply click the green "Export URL" button at the bottom of the page and paste the code into this form.
+                </p>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">tag_faces</i>
+                    <input type="text" id="input" class="validate" value.bind="input" />
+                    <label for="input">Link</label>
+                </div>
+            </div>
+            <div class="row">
+                <team-display team.bind="import"></team-display>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a click.delegate="submit()" md-button="flat: true;" md-waves="color: accent;" class="modal-action modal-close">Accept</a>
+        <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action modal-close">Cancel</a>
+    </div>
+</template>

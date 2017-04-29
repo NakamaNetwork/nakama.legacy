@@ -1,15 +1,21 @@
 ﻿<template>
     <div class="row center-align">
-        <unit-display unitId.bind="teamSlots[0]" editable.bind="editable"></unit-display>
-        <unit-display unitId.bind="teamSlots[1]" editable.bind="editable"></unit-display>
+        <unit-display unit-id.bind="teamSlots[0]" editable.bind="editable"></unit-display>
+        <unit-display unit-id.bind="teamSlots[1]" editable.bind="editable"></unit-display>
     </div>
     <div class="row center-align">
-        <unit-display unitId.bind="teamSlots[2]" editable.bind="editable"></unit-display>
-        <unit-display unitId.bind="teamSlots[3]" editable.bind="editable"></unit-display>
+        <unit-display unit-id.bind="teamSlots[2]" editable.bind="editable"></unit-display>
+        <unit-display unit-id.bind="teamSlots[3]" editable.bind="editable"></unit-display>
     </div>
     <div class="row center-align">
-        <unit-display unitId.bind="teamSlots[4]" editable.bind="editable"></unit-display>
-        <unit-display unitId.bind="teamSlots[5]" editable.bind="editable"></unit-display>
+        <unit-display unit-id.bind="teamSlots[4]" editable.bind="editable"></unit-display>
+        <unit-display unit-id.bind="teamSlots[5]" editable.bind="editable"></unit-display>
     </div>
-    <unit-picker></unit-picker>
+    <div class="row center-align" if.bind="editable">
+        <button md-button md-waves click.delegate="openImport()">
+            <i class="material-icons left">input</i>
+            Import from OPTC-DB
+        </button>
+        <team-import md-modal md-modal.ref="importDialog"></team-import>
+    </div>
 </template>

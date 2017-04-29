@@ -5,6 +5,8 @@ import { autoinject } from 'aurelia-dependency-injection';
 @autoinject
 export class TeamDisplay {
     private element: Element;
+
+    importDialog;
     @bindable @observable team: any[];
     @bindable editable = false;
 
@@ -13,13 +15,22 @@ export class TeamDisplay {
     }
 
     @computedFrom('team')
-    get viewModel() {
-        var teamSlots = [];
-        for (var i = 1; i < 6; i++) {
-            teamSlots.push(this.getSlot(i));
-        }
-        return teamSlots;
+    get teamSlots() {
+        var slots = this.team.filter(x => {
+            return !x.sub;
+        }).sort((a, b) => {
+            return a.position - b.position;
+        }).map(x => {
+            return x.position || x;
+        });
+        return slots;
     }
+
+    openImport() {
+        if (this.editable) {
+            this.importDialog.open();
+        }
+    };
 
     private getSlot(id: number) {
         return this.team.filter(unit => {

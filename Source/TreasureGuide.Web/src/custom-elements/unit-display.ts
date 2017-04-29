@@ -28,7 +28,7 @@ export class UnitDisplay {
     
     @computedFrom('unitId')
     get imageUrl() {
-        return this.unitQueryService.getPortrait(this.unitId);
+        return this.unitQueryService.getIcon(this.unitId);
     }
 
     unitClicked() {
