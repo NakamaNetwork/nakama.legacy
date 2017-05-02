@@ -15,10 +15,6 @@
     </div>
     <div class="center-align" if.bind="editable">
         <div class="row"></div>
-        <button md-button md-waves click.delegate="openImport()">
-            <i class="material-icons left">input</i>
-            Import from OPTC-DB
-        </button>
-        <team-import md-modal md-modal.ref="importDialog"></team-import>
+        <team-import accepted.two-way="import"></team-import>
     </div>
 </template>

@@ -1,4 +1,4 @@
-﻿import { bindable, observable, computedFrom, customElement } from 'aurelia-framework';
+﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
 
 @customElement('team-display')
@@ -7,8 +7,9 @@ export class TeamDisplay {
     private element: Element;
 
     importDialog;
-    @bindable @observable team: any[];
+    @bindable team: any[] = [];
     @bindable editable = false;
+    @bindable({ changeHandler: 'imported' }) import;
 
     constructor(element: Element) {
         this.element = element;
@@ -16,14 +17,23 @@ export class TeamDisplay {
 
     @computedFrom('team')
     get teamSlots() {
-        var slots = this.team.filter(x => {
-            return !x.sub;
-        }).sort((a, b) => {
-            return a.position - b.position;
-        }).map(x => {
-            return x.position || x;
-        });
+        var slots;
+        if (this.team) {
+            slots = this.team.filter(x => {
+                return !x.sub;
+            }).sort((a, b) => {
+                return a.position - b.position;
+            }).map(x => {
+                return x.position || x;
+            });
+        } else {
+            slots = new Array(6);
+        }
         return slots;
+    }
+
+    imported(newValue, oldVAlue) {
+        this.team = newValue;
     }
 
     openImport() {

@@ -1,4 +1,4 @@
-﻿import { bindable, observable, computedFrom, customElement } from 'aurelia-framework';
+﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
 import { UnitQueryService } from '../services/query/unit-query-service';
 
@@ -8,7 +8,7 @@ export class UnitDisplay {
     private element: Element;
     private unitQueryService: UnitQueryService;
     @bindable right = false;
-    @bindable @observable unitId = 0;
+    @bindable unitId = 0;
     @bindable editable = false;
 
     constructor(unitQueryService: UnitQueryService, element: Element) {

@@ -1,4 +1,4 @@
-﻿import { bindable, observable, computedFrom, customElement } from 'aurelia-framework';
+﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
 import { CalcParser } from '../tools/calc-parser';
 
@@ -8,7 +8,9 @@ export class TeamImportView {
     private element: Element;
     private calcParser: CalcParser;
 
-    @bindable @observable input = '';
+    modal = null;
+    @bindable input = '';
+    @bindable accepted;
 
     constructor(element: Element, calcParser: CalcParser) {
         this.element = element;
@@ -18,5 +20,18 @@ export class TeamImportView {
     @computedFrom('input')
     get import() {
         return this.calcParser.parse(this.input);
+    }
+
+    open() {
+        return this.modal.open();
+    }
+
+    submit() {
+        this.accepted = this.import;
+        return this.modal.close();
+    }
+
+    cancel() {
+        return this.modal.close();
     }
 }
