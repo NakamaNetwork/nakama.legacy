@@ -1,0 +1,20 @@
+﻿<template>
+    <div class="team-display">
+        <div class="row center-align">
+            <unit-display unit-id.bind="teamSlots[0]" editable.bind="editable"></unit-display>
+            <unit-display unit-id.bind="teamSlots[1]" editable.bind="editable"></unit-display>
+        </div>
+        <div class="row center-align">
+            <unit-display unit-id.bind="teamSlots[2]" editable.bind="editable"></unit-display>
+            <unit-display unit-id.bind="teamSlots[3]" editable.bind="editable"></unit-display>
+        </div>
+        <div class="row center-align">
+            <unit-display unit-id.bind="teamSlots[4]" editable.bind="editable"></unit-display>
+            <unit-display unit-id.bind="teamSlots[5]" editable.bind="editable"></unit-display>
+        </div>
+    </div>
+    <div class="center-align" if.bind="editable">
+        <div class="row"></div>
+        <team-import accepted.two-way="import"></team-import>
+    </div>
+</template>

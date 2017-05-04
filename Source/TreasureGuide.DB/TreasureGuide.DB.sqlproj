@@ -91,6 +91,7 @@
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />
     <PostDeploy Include="PostDeploy.sql" />
+    <None Include="PostDeploy\AuthData.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TreasureGuide.DB.refactorlog" />

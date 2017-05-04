@@ -1,0 +1,10 @@
+﻿<template>
+    <div class="row center-align" if.bind="unit">
+        <img src.bind="getPortrait(unit.id)" class="z-depth-2" />
+    </div>
+    <div class="row center-align">
+        <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" md-waves click.delegate="unitClicked(unit)">
+            <img src.bind="getIcon(unit.id)">
+        </button>
+    </div>
+</template>

@@ -25,14 +25,16 @@ gulp.task('_materialize-amd', shell.task(['node_modules\\.bin\\r.js.cmd -o rbuil
 gulp.task('build-dev', shell.task(['au build --env dev']));
 gulp.task('build-prod', shell.task(['au build --env prod']));
 gulp.task('build-stage', shell.task(['au build --env stage']));
-gulp.task('watch', shell.task(['au run --watch']));
+gulp.task('run', shell.task(['au run']));
+gulp.task('run watch', shell.task(['au run --watch']));
 gulp.task('test', shell.task(['au test']));
+gulp.task('test watch', shell.task(['au test --watch']));
 gulp.task('prepare-project', gulp.series('_get-rbuild', '_get-materialize-css', '_materialize-amd'));
 
 
 console.log('--- NOTICE ---'
     + '\n'
-    + 'If these tasks fail due to an error "Error: spawn au build --env dev ENOENT", go to "Tools > Options > Projects and Solutions > External Web Tools" '
+    + 'If these tasks fail due to an error "Error: spawn au build --env dev ENOENT", go to "Tools > Options > Web Package Management > Projects and Solutions > External Web Tools" '
     + 'and move your $(PATH) entry above the $(VSINSTALLDIR) entries.'
     + '\n\n'
     + 'Visual Studio comes bundled with an old version of node which does not support the spawning of the aurelia build task.'

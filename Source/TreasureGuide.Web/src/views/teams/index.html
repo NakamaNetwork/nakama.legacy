@@ -1,12 +1,13 @@
 ﻿<template>
     <h1>${title}</h1>
-    <div>
-        <button click.delegate="edit()">
-            Create Team
-        </button>
+    <div class="fixed-action-btn">
+        <a md-button="floating: true; large: true" md-tooltip="position: left; text: Create New Team;"
+           md-waves="color: light; circle: true;" route-href="route: teamCreate">
+            <i class="material-icons large">add</i>
+        </a>
     </div>
-    <div>
-        <table>
+    <div class="row">
+        <table class="striped">
             <thead>
                 <tr>
                     <th>
@@ -34,7 +35,12 @@
                     <td>
                         ${team.units}
                     </td>
-                    <td></td>
+                    <td>
+                        <a md-button md-waves route-href="route: teamEdit; params.bind: {id: team.id}">
+                            <i class="material-icons left">mode_edit</i>
+                            Edit
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>

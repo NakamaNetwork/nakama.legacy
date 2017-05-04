@@ -1,0 +1,32 @@
+﻿<template>
+    <button md-button md-waves click.delegate="open()">
+        <i class="material-icons left">input</i>
+        Import from OPTC-DB
+    </button>
+    <div md-modal md-modal.ref="modal">
+        <div class="modal-content">
+            <form>
+                <div class="row">
+                    <p>
+                        Import your team from <a href="http://optc-db.github.io/damage/#/" target="_blank">optc-db</a>!
+                        Simply click the green "Export URL" button at the bottom of the page and paste the code into this form.
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">tag_faces</i>
+                        <input type="text" id="input" class="validate" value.bind="input" />
+                        <label for="input">Link</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <team-display team.bind="import"></team-display>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a click.delegate="submit()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Accept</a>
+            <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
+        </div>
+    </div>
+</template>
