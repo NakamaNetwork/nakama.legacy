@@ -10,10 +10,10 @@
                 </div>
             </div>
             <div class="row">
-                <team-display team.bind="teamUnits" editable.bind="true"></team-display>
+                <team-display team.two-way="teamUnits" editable.bind="true"></team-display>
             </div>
             <div class="row">
-                <socket-picker sockets.bind="teamSockets"></socket-picker>
+                <socket-picker sockets.two-way="teamSockets"></socket-picker>
             </div>
             <div class="row">
                 <div class="input-field col s12">

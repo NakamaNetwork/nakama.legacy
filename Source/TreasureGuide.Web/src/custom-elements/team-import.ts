@@ -19,7 +19,8 @@ export class TeamImportView {
 
     @computedFrom('input')
     get import() {
-        return this.calcParser.parse(this.input);
+        var ids = this.calcParser.parse(this.input);
+        return this.calcParser.convert(ids);
     }
 
     open() {

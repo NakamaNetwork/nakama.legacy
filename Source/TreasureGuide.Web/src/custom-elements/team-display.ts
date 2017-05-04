@@ -24,7 +24,7 @@ export class TeamDisplay {
             }).sort((a, b) => {
                 return a.position - b.position;
             }).map(x => {
-                return x.position || x;
+                return x.unitId;
             });
         } else {
             slots = new Array(6);
