@@ -16,7 +16,7 @@
             <md-input md-type="number" md-label="Stamina" md-value.bind="stamina"></md-input>
         </div>
         <div class="row">
-            <md-input md-type="number" md-label="Parent" md-value.bind="parentId"></md-input>
+            <stage-picker stage-id.two-way="parentId"></stage-picker>
         </div>
         <div class="row">
             <button md-button="large: true" md-waves click.delegate="submit()">
