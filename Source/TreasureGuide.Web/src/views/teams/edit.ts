@@ -14,6 +14,7 @@ export class TeamEditPage {
     team = {
         name: '',
         description: '',
+        guide: '',
         credits: '',
         teamUnits: [],
         teamSockets: []
@@ -30,6 +31,7 @@ export class TeamEditPage {
         var id = params.id;
         if (id) {
             this.teamQueryService.editor(id).then(result => {
+                this.title = 'Edit Stage';
                 this.team = result;
                 this.inputUpdate.update();
             }).catch(error => {

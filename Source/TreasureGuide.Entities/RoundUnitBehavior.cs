@@ -12,13 +12,13 @@ namespace TreasureGuide.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class StageUnitAttackPattern
+    public partial class RoundUnitBehavior
     {
         public int Id { get; set; }
-        public int StageUnitId { get; set; }
+        public int RoundUnitId { get; set; }
         public string Condition { get; set; }
         public string Description { get; set; }
     
-        public virtual StageUnit StageUnit { get; set; }
+        public virtual RoundUnit RoundUnit { get; set; }
     }
 }

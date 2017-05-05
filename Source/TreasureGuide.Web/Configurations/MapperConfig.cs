@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using TreasureGuide.Entities;
+using TreasureGuide.Web.Models.StageModels;
 using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Models.UnitModels;
 
@@ -29,6 +30,9 @@ namespace TreasureGuide.Web.Configurations
                 team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
                 team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedById));
                 team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
+
+                var stage = mapper.CreateControllerMapping<Stage, StageDetailModel, StageStubModel, StageEditorModel>();
+                stage.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Sniffer", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreasureGuide.Web", "Source\TreasureGuide.Web\TreasureGuide.Web.csproj", "{A753C845-B465-4EEA-90D0-A0C38E098324}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Web.Test", "Source\TreasureGuide.Web.Test\TreasureGuide.Web.Test.csproj", "{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
