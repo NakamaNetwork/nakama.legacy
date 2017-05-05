@@ -1,0 +1,48 @@
+﻿<template>
+    <h1>${title}</h1>
+    <div class="fixed-action-btn">
+        <a md-button="floating: true; large: true" md-tooltip="position: left; text: Create New Team;"
+           md-waves="color: light; circle: true;" route-href="route: stageCreate">
+            <i class="material-icons large">add</i>
+        </a>
+    </div>
+    <div class="row">
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Units
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="stage of stages">
+                    <td>
+                        ${team.id}
+                    </td>
+                    <td>
+                        ${team.name}
+                    </td>
+                    <td>
+                        ${team.units}
+                    </td>
+                    <td>
+                        <a md-button md-waves route-href="route: stageEdit; params.bind: {id: stage.id}">
+                            <i class="material-icons left">mode_edit</i>
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>

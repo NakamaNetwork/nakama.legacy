@@ -1,0 +1,48 @@
+﻿<template>
+    <h1>${title}</h1>
+    <div class="row">
+        <form class="col s12" with.bind="stage">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">label_outline</i>
+                    <input type="text" id="stage_name" class="validate" value.bind="name" />
+                    <label for="stage_name">Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">language</i>
+                    <input type="checkbox" id="stage_global" class="validate" checked.bind="global" />
+                    <label for="stage_global">Global</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">directions_walk</i>
+                    <input type="number" id="stage_stamina" class="validate" value.bind="stamina" />
+                    <label for="stage_stamina">Stamina</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">rss_feed</i>
+                    <input type="number" id="stage_type" class="validate" value.bind="type" />
+                    <label for="stage_type">Type</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">folder</i>
+                    <input type="number" id="stage_parent" class="validate" value.bind="parentId" />
+                    <label for="stage_parent">Parent</label>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <button md-button="large: true" md-waves click.delegate="submit()">
+                Submit
+                <i class="material-icons right large">send</i>
+            </button>
+        </div>
+    </div>
+</template>
