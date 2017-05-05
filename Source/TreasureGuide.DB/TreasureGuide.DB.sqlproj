@@ -65,11 +65,9 @@
     <Folder Include="PostDeploy" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Stages\StageDifficulties.sql" />
-    <Build Include="dbo\Stages\StageLevels.sql" />
     <Build Include="dbo\Stages\Stages.sql" />
-    <Build Include="dbo\Stages\StageUnitAttackPatterns.sql" />
-    <Build Include="dbo\Stages\StageUnits.sql" />
+    <Build Include="dbo\Stages\RoundUnitBehavior.sql" />
+    <Build Include="dbo\Stages\RoundUnits.sql" />
     <Build Include="dbo\Units\Units.sql" />
     <Build Include="dbo\Units\UnitClasses.sql" />
     <Build Include="dbo\Units\UnitFlags.sql" />
@@ -77,7 +75,6 @@
     <Build Include="dbo\Teams\TeamUnits.sql" />
     <Build Include="dbo\Teams\TeamSockets.sql" />
     <Build Include="dbo\Teams\TeamVotes.sql" />
-    <Build Include="dbo\Teams\TeamStages.sql" />
     <None Include="PostDeploy\StageData.sql" />
     <None Include="PostDeploy\CharacterData.sql" />
     <Build Include="dbo\Accounts\AspNetRoleClaims.sql" />
@@ -87,6 +84,7 @@
     <Build Include="dbo\Accounts\AspNetUserRoles.sql" />
     <Build Include="dbo\Accounts\AspNetUsers.sql" />
     <Build Include="dbo\Accounts\AspNetUserTokens.sql" />
+    <Build Include="dbo\Stages\Rounds.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TreasureGuide.DB.publish.xml" />

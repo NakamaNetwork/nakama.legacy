@@ -59,22 +59,7 @@
     <Compile Include="SocketType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Stage.cs">
-      <DependentUpon>TreasureEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StageDifficulty.cs">
-      <DependentUpon>TreasureEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StageLevel.cs">
-      <DependentUpon>TreasureEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="StageType.cs">
-      <DependentUpon>TreasureEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StageUnit.cs">
-      <DependentUpon>TreasureEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StageUnitAttackPattern.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Team.cs">

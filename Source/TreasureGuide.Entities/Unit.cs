@@ -17,10 +17,10 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Unit()
         {
-            this.StageUnits = new HashSet<StageUnit>();
             this.TeamUnits = new HashSet<TeamUnit>();
             this.UnitClasses = new HashSet<UnitClass>();
             this.UnitFlags = new HashSet<UnitFlag>();
+            this.RoundUnits = new HashSet<RoundUnit>();
         }
     
         public int Id { get; set; }
@@ -41,12 +41,12 @@ namespace TreasureGuide.Entities
         public Nullable<decimal> GrowthRate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StageUnit> StageUnits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnitClass> UnitClasses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnitFlag> UnitFlags { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoundUnit> RoundUnits { get; set; }
     }
 }
