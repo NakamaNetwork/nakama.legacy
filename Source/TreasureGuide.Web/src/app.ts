@@ -13,8 +13,6 @@ export class App {
             { route: ['', '/', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
             { route: 'error', name: 'error', moduleId: 'views/error', nav: false },
             { route: 'notfound', name: 'notfound', moduleId: 'views/notfound', nav: false },
-            // Units
-            { route: 'units', name: 'units', title: 'Units', moduleId: 'views/units/index', nav: true },
             // Stages
             { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
             { route: 'stages/create', name: 'stageCreate', title: 'Create Stage', moduleId: 'views/stages/edit', nav: false },
