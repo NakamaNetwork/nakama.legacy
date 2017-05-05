@@ -14,6 +14,7 @@ export class TeamEditPage {
     team = {
         name: '',
         description: '',
+        guide: '',
         credits: '',
         teamUnits: [],
         teamSockets: []

@@ -4,11 +4,11 @@ import { StageQueryService } from '../../services/query/stage-query-service';
 @autoinject
 export class StageIndexPage {
     title = 'Stages';
-    teams = [];
+    stages = [];
 
     constructor(stageQueryService: StageQueryService) {
         stageQueryService.stub().then(results => {
-            this.teams = results;
+            this.stages = results;
         });
     }
 }

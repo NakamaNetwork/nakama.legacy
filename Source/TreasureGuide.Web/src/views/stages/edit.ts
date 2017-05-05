@@ -2,6 +2,7 @@
 import { Router } from 'aurelia-router';
 import { StageQueryService } from '../../services/query/stage-query-service';
 import { MdToastService, MdInputUpdateService } from 'aurelia-materialize-bridge';
+import { StageType } from '../../models/stage-type';
 
 @autoinject
 export class StageEditPage {
@@ -18,6 +19,7 @@ export class StageEditPage {
         type: null,
         parentId: null
     };
+    stageTypes = StageType.all;
 
     constructor(stageQueryService: StageQueryService, router: Router, toast: MdToastService, inputUpdate: MdInputUpdateService) {
         this.stageQueryService = stageQueryService;

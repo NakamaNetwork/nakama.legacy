@@ -8,7 +8,7 @@ namespace TreasureGuide.Web.Models.StageModels
     public class StageStubModel : IIdItem<int>
     {
         public int Id { get; set; }
-        public int? Stamina { get; set; }
+        public byte? Stamina { get; set; }
         public string Name { get; set; }
         public bool Global { get; set; }
         public StageType Type { get; set; }
@@ -19,7 +19,7 @@ namespace TreasureGuide.Web.Models.StageModels
     public class StageDetailModel : IIdItem<int>
     {
         public int Id { get; set; }
-        public int? Stamina { get; set; }
+        public byte? Stamina { get; set; }
         public string Name { get; set; }
         public bool Global { get; set; }
         public StageType Type { get; set; }
@@ -31,7 +31,7 @@ namespace TreasureGuide.Web.Models.StageModels
     public class StageEditorModel : IIdItem<int?>
     {
         public int? Id { get; set; }
-        public int? Stamina { get; set; }
+        public byte? Stamina { get; set; }
         public string Name { get; set; }
         public bool Global { get; set; }
         public StageType Type { get; set; }

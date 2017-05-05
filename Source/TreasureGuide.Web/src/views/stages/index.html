@@ -1,7 +1,7 @@
 ﻿<template>
     <h1>${title}</h1>
     <div class="fixed-action-btn">
-        <a md-button="floating: true; large: true" md-tooltip="position: left; text: Create New Team;"
+        <a md-button="floating: true; large: true" md-tooltip="position: left; text: Create New Stage;"
            md-waves="color: light; circle: true;" route-href="route: stageCreate">
             <i class="material-icons large">add</i>
         </a>
@@ -27,13 +27,13 @@
             <tbody>
                 <tr repeat.for="stage of stages">
                     <td>
-                        ${team.id}
+                        ${stage.id}
                     </td>
                     <td>
-                        ${team.name}
+                        ${stage.name}
                     </td>
                     <td>
-                        ${team.units}
+                        <i class="material-icons">${stage.global ? 'language' : ''}</i>
                     </td>
                     <td>
                         <a md-button md-waves route-href="route: stageEdit; params.bind: {id: stage.id}">
