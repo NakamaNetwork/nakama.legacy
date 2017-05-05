@@ -17,6 +17,7 @@ namespace TreasureGuide.Web.Models.TeamModels
     public class TeamDetailModel : TeamStubModel
     {
         public string Description { get; set; }
+        public string Guide { get; set; }
         public string Credits { get; set; }
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
     }
@@ -27,6 +28,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string Name { get; set; }
         public string Description { get; set; }
         public string Credits { get; set; }
+        public string Guide { get; set; }
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
         public IEnumerable<TeamUnitEditorModel> TeamUnits { get; set; }
     }

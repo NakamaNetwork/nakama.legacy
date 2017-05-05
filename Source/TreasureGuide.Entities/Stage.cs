@@ -19,13 +19,13 @@ namespace TreasureGuide.Entities
         {
             this.Rounds = new HashSet<Round>();
             this.Teams = new HashSet<Team>();
-            this.Stages1 = new HashSet<Stage>();
+            this.ChildStages = new HashSet<Stage>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<byte> Stamina { get; set; }
-        public byte Type { get; set; }
+        public StageType Type { get; set; }
         public bool Global { get; set; }
         public Nullable<int> ParentId { get; set; }
     
@@ -34,7 +34,7 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Teams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Stage> Stages1 { get; set; }
-        public virtual Stage Stage1 { get; set; }
+        public virtual ICollection<Stage> ChildStages { get; set; }
+        public virtual Stage ParentStage { get; set; }
     }
 }

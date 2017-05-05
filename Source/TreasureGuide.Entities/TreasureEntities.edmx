@@ -685,13 +685,13 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Stamina" Type="Byte" />
-          <Property Name="Type" Type="Byte" Nullable="false" />
+          <Property Name="Type" Type="tcdbModel.StageType" Nullable="false" />
           <Property Name="Global" Type="Boolean" Nullable="false" />
           <Property Name="ParentId" Type="Int32" />
           <NavigationProperty Name="Rounds" Relationship="tcdbModel.FK_dbo_Rounds_dbo_Stages" FromRole="Stage" ToRole="Round" />
           <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Stage" ToRole="Team" />
-          <NavigationProperty Name="Stages1" Relationship="tcdbModel.FK_dbo_Stages_dbo_Stages" FromRole="Stage" ToRole="Stage1" />
-          <NavigationProperty Name="Stage1" Relationship="tcdbModel.FK_dbo_Stages_dbo_Stages" FromRole="Stage1" ToRole="Stage" />
+          <NavigationProperty Name="ChildStages" Relationship="tcdbModel.FK_dbo_Stages_dbo_Stages" FromRole="Stage" ToRole="Stage1" />
+          <NavigationProperty Name="ParentStage" Relationship="tcdbModel.FK_dbo_Stages_dbo_Stages" FromRole="Stage1" ToRole="Stage" />
         </EntityType>
         <Association Name="FK_dbo_Rounds_dbo_Stages">
           <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
