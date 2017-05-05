@@ -15,12 +15,16 @@ export class App {
             { route: 'notfound', name: 'notfound', moduleId: 'views/notfound', nav: false },
             // Units
             { route: 'units', name: 'units', title: 'Units', moduleId: 'views/units/index', nav: true },
+            // Stages
             { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
             { route: 'stages/create', name: 'stageCreate', title: 'Create Stage', moduleId: 'views/stages/edit', nav: false },
             { route: 'stages/:id/edit', name: 'stageEdit', title: 'Edit Stage', moduleId: 'views/stages/edit', nav: false },
+            // Teams
             { route: 'teams', name: 'teams', title: 'Teams', moduleId: 'views/teams/index', nav: true },
             { route: 'teams/create', name: 'teamCreate', title: 'Create Team', moduleId: 'views/teams/edit', nav: false },
             { route: 'teams/:id/edit', name: 'teamEdit', title: 'Edit Team', moduleId: 'views/teams/edit', nav: false },
+            // Admin
+            { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }

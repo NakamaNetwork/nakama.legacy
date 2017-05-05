@@ -33,7 +33,7 @@
                         ${team.name}
                     </td>
                     <td>
-                        ${team.units}
+                        <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
                     </td>
                     <td>
                         <a md-button md-waves route-href="route: teamEdit; params.bind: {id: team.id}">
