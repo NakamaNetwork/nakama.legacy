@@ -2,7 +2,7 @@
 {
     public class TeamSearchModel
     {
-        public string Team { get; set; }
+        public string Term { get; set; }
         public int? LeaderId { get; set; }
         public int? StageId { get; set; }
 

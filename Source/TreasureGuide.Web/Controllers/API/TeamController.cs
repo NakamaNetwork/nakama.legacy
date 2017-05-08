@@ -35,12 +35,12 @@ namespace TreasureGuide.Web.Controllers.API
             var teams = DbContext.Teams.AsQueryable();
 
             teams = SearchStage(teams, model.StageId);
-            teams = SearchTerm(teams, model.Team);
+            teams = SearchTerm(teams, model.Term);
             teams = SearchLead(teams, model.LeaderId);
             teams = SearchGlobal(teams, model.Global);
             teams = SearchBox(teams, model.MyBox);
 
-            teams = teams.OrderBy(x => x.TeamVotes.Count).Skip(model.PageSize * model.Page).Take(model.Page);
+            teams = teams.OrderByDescending(x => x.Id).Skip(model.PageSize * model.Page).Take(model.PageSize);
             var output = teams.ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider);
             return await output.ToListAsync();
         }

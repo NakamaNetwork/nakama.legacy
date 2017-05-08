@@ -33,9 +33,9 @@ export class UnitDisplay {
 
     unitClicked() {
         if (this.editable) {
-            console.log("Clicked editable unit");
+            console.log('Clicked editable unit');
         } else {
-            console.log("Clicked uneditable unit.");
+            console.log('Clicked uneditable unit.');
         }
     }
 }
