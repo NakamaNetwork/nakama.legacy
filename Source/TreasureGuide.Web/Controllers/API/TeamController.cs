@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.TeamModels;
 
 namespace TreasureGuide.Web.Controllers.API
 {
-    public class TeamController : EntityApiController<int, Team, TeamStubModel, TeamDetailModel, TeamEditorModel>
+    public class TeamController : SearchableApiController<int, Team, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
         private const int MAX_DEPTH = 10;
 
@@ -26,23 +21,14 @@ namespace TreasureGuide.Web.Controllers.API
             return base.PostProcess(entity);
         }
 
-        [HttpGet]
-        [ActionName("Search")]
-        [Route("[action]")]
-        public async Task<IEnumerable<TeamStubModel>> Search(TeamSearchModel model)
+        protected override IQueryable<Team> PerformSearch(IQueryable<Team> results, TeamSearchModel model)
         {
-            model = model ?? new TeamSearchModel();
-            var teams = DbContext.Teams.AsQueryable();
-
-            teams = SearchStage(teams, model.StageId);
-            teams = SearchTerm(teams, model.Term);
-            teams = SearchLead(teams, model.LeaderId);
-            teams = SearchGlobal(teams, model.Global);
-            teams = SearchBox(teams, model.MyBox);
-
-            teams = teams.OrderByDescending(x => x.Id).Skip(model.PageSize * model.Page).Take(model.PageSize);
-            var output = teams.ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider);
-            return await output.ToListAsync();
+            results = SearchStage(results, model.StageId);
+            results = SearchTerm(results, model.Term);
+            results = SearchLead(results, model.LeaderId);
+            results = SearchGlobal(results, model.Global);
+            results = SearchBox(results, model.MyBox);
+            return results;
         }
 
         private IQueryable<Team> SearchTerm(IQueryable<Team> teams, string term)
