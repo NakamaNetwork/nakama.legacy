@@ -14,6 +14,8 @@ namespace TreasureGuide.Web.Controllers.API
 {
     public class TeamController : EntityApiController<int, Team, TeamStubModel, TeamDetailModel, TeamEditorModel>
     {
+        private const int MAX_DEPTH = 10;
+
         public TeamController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
         {
         }
@@ -32,9 +34,9 @@ namespace TreasureGuide.Web.Controllers.API
             model = model ?? new TeamSearchModel();
             var teams = DbContext.Teams.AsQueryable();
 
+            teams = SearchStage(teams, model.StageId);
             teams = SearchTerm(teams, model.Team);
-            teams = SearchStage(teams, model.Stage);
-            teams = SearchLead(teams, model.Leader);
+            teams = SearchLead(teams, model.LeaderId);
             teams = SearchGlobal(teams, model.Global);
             teams = SearchBox(teams, model.MyBox);
 
@@ -47,25 +49,33 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (!String.IsNullOrEmpty(term))
             {
-
+                teams = teams.Where(x => x.Name.Contains(term));
             }
             return teams;
         }
 
-        private IQueryable<Team> SearchStage(IQueryable<Team> teams, string stage)
+        private IQueryable<Team> SearchStage(IQueryable<Team> teams, int? stageId)
         {
-            if (!String.IsNullOrEmpty(stage))
+            if (stageId.HasValue)
             {
-
+                var stages = DbContext.Stages.Where(x => x.Id == stageId);
+                var depth = 0;
+                var teamIds = Enumerable.Empty<int>();
+                while (stages.Any() && depth < MAX_DEPTH)
+                {
+                    teamIds = teamIds.Concat(stages.Select(x => x.Id));
+                    stages = stages.SelectMany(x => x.ChildStages);
+                }
+                teams = teams.Join(teamIds, x => x.Id, y => y, (x, y) => x);
             }
             return teams;
         }
 
-        private IQueryable<Team> SearchLead(IQueryable<Team> teams, string leader)
+        private IQueryable<Team> SearchLead(IQueryable<Team> teams, int? leaderId)
         {
-            if (!String.IsNullOrEmpty(leader))
+            if (leaderId.HasValue)
             {
-
+                teams = teams.Where(x => x.TeamUnits.Any(y => y.UnitId == leaderId && y.Position < 2));
             }
             return teams;
         }
@@ -74,7 +84,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (global)
             {
-
+                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.UnitFlags.Any(z => z.FlagType == UnitFlagType.Global)));
             }
             return teams;
         }

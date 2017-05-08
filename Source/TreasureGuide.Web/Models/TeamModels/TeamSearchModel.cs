@@ -3,8 +3,8 @@
     public class TeamSearchModel
     {
         public string Team { get; set; }
-        public string Leader { get; set; }
-        public string Stage { get; set; }
+        public int? LeaderId { get; set; }
+        public int? StageId { get; set; }
 
         public bool MyBox { get; set; }
         public bool Global { get; set; }
