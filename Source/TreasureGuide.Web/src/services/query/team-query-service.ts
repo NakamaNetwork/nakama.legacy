@@ -1,4 +1,5 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
+﻿import { computedFrom } from 'aurelia-framework';
+import { autoinject } from 'aurelia-dependency-injection';
 import { GenericApiQueryService } from './generic/generic-api-query-service';
 import { HttpEngine } from '../../tools/http-engine';
 
@@ -15,11 +16,18 @@ export class TeamQueryService extends GenericApiQueryService {
 }
 
 export class TeamSearchModel {
-    team?: string;
+    term?: string;
     leaderId?: number;
     stageId?: number;
     myBox?: boolean = false;
     global?: boolean = false;
-    page?: number = 0;
+    page?: number = 1;
     pageSize?: number = 25;
+
+    @computedFrom('term', 'leaderId', 'stageId', 'myBox', 'global', 'page', 'pageSize')
+    get payload() {
+        var text = JSON.stringify(this);
+        var output = JSON.parse(text);
+        return output;
+    }
 };

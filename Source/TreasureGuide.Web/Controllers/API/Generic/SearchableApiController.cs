@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -26,11 +27,12 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         public async Task<SearchResult<TStubModel>> Search(TSearchModel model)
         {
             model = model ?? new TSearchModel();
+            model.PageSize = Math.Min(100, Math.Max(10, model.PageSize));
             var entities = FetchEntities();
             entities = PerformSearch(entities, model).AsQueryable();
-            var pageCount = await entities.CountAsync() / model.PageSize;
+            var pageCount = (int)Math.Ceiling(await entities.CountAsync() / (double)model.PageSize);
             entities = OrderSearchResults(entities);
-            entities = entities.Skip(model.PageSize * model.Page).Take(model.PageSize);
+            entities = entities.Skip(model.PageSize * (model.Page - 1)).Take(model.PageSize);
             var output = entities.ProjectTo<TStubModel>(AutoMapper.ConfigurationProvider);
             var results = await output.ToListAsync();
             return new SearchResult<TStubModel>

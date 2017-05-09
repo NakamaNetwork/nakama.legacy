@@ -7,7 +7,7 @@ import { UnitQueryService } from '../services/query/unit-query-service';
 export class UnitDisplay {
     private element: Element;
     private unitQueryService: UnitQueryService;
-    @bindable right = false;
+
     @bindable unitId = 0;
     @bindable editable = false;
 

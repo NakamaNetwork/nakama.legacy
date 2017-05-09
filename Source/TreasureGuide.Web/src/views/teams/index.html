@@ -6,39 +6,32 @@
             <i class="material-icons large">add</i>
         </a>
     </div>
-    <form with.bind="searchModel">
-        <div class="row">
-            <div class="col s3">
-                <md-input md-label="Term" md-type="text" md-value.bind="term"></md-input>
+    <div class="row">
+        <form with.bind="searchModel">
+            <div class="col m6">
+                <div class="row">
+                    <md-input md-label="Term" md-type="text" md-value.two-way="term"></md-input>
+                </div>
+                <div class="row">
+                    <div class="col m6">
+                        <md-checkbox md-checked.two-way="global">Global</md-checkbox>
+                    </div>
+                    <div class="col m6">
+                        <md-checkbox md-checked.two-way="myBox">In my Box</md-checkbox>
+                    </div>
+                </div>
             </div>
-            <div class="col s3">
-                <md-input md-label="Leader" md-type="number" md-value.bind="leaderId"></md-input>
+            <div class="col m3">
+                <unit-display unit-id.two-way="leaderId" editable="true"></unit-display>
             </div>
-            <div class="col s3">
-                <md-input md-label="Stage" md-type="number" md-value.bind="stageId"></md-input>
+            <div class="col m3">
+                <md-input md-label="Stage" md-type="number" md-value.two-way="stageId"></md-input>
             </div>
-            <div class="col s3">
-                <md-checkbox md-checked.bind="global">Global</md-checkbox>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s3">
-                <md-checkbox md-checked.bind="myBox">In my Box</md-checkbox>
-            </div>
-            <div class="col s3">
-                <md-input md-label="Page" md-type="number" md-value.bind="page"></md-input>
-            </div>
-            <div class="col s3">
-                <md-input md-label="Page Size" md-type="number" md-value.bind="pageSize"></md-input>
-            </div>
-            <div class="col s3">
-                <button md-button md-waves click.delegate="search()">
-                    <i class="material-icons left">search</i>
-                    Search
-                </button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    <div class="row center">
+        <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
+    </div>
     <div class="row">
         <table class="striped">
             <thead>
@@ -77,5 +70,8 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="row center">
+        <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
     </div>
 </template>
