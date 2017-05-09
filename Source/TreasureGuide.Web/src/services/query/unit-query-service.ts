@@ -10,7 +10,7 @@ export class UnitQueryService extends GenericApiQueryService {
 
     getIcon(unitId: number) {
         if (unitId) {
-            var id = ('0000' + unitId).slice(-4);
+            var id = ('0000' + unitId).slice(-4).replace(/(057[54])/, '0$1');
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
         }
         return null;
@@ -18,7 +18,7 @@ export class UnitQueryService extends GenericApiQueryService {
 
     getPortrait(unitId: number) {
         if (unitId) {
-            var id = ('0000' + unitId).slice(-4);
+            var id = ('0000' + unitId).slice(-4).replace(/(057[54])/, '0$1');
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/c' + id + '.png';
         }
         return null;
