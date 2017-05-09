@@ -7,9 +7,6 @@
             <h3>Select a Unit</h3>
         </ux-dialog-header>
         <ux-dialog-body>
-            <div class="row center-align" if.bind="unit">
-                <img src.bind="getPortrait(unit.id)" class="z-depth-2" />
-            </div>
             <div class="row">
                 <form with.bind="searchModel">
                     <div class="col m6">
@@ -37,7 +34,7 @@
             <div class="row center">
                 <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
             </div>
-            <div class="row center-align">
+            <div class="row">
                 <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" md-waves click.delegate="unitClicked(unit)">
                     <img src.bind="getIcon(unit.id)">
                 </button>

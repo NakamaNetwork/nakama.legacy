@@ -37,7 +37,7 @@ export class UnitDisplay {
 
     unitClicked() {
         if (this.editable) {
-            this.dialogService.open({ viewModel: UnitPicker, lock: true }).whenClosed(result => {
+            this.dialogService.open({ viewModel: UnitPicker, model: { unitId: this.unitId }, lock: true }).whenClosed(result => {
                 if (!result.wasCancelled) {
                     this.unitId = result.output;
                 }

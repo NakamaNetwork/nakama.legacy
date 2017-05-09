@@ -27,6 +27,10 @@ export class UnitPicker {
         this.search(this.searchModel.payload);
     }
 
+    activate(viewModel) {
+        this.unitId = viewModel.unitId;
+    }
+
     onPageChanged(e) {
         this.searchModel.page = e.detail;
     }
@@ -48,16 +52,9 @@ export class UnitPicker {
         this.controller.cancel();
     };
 
-    attached() {
-        if (this.unitId) {
-            this.unitQueryService.stub(this.unitId).then(result => {
-                this.unit = result;
-            });
-        }
-    }
-
     unitClicked(unit) {
         this.unit = unit;
+        this.submit();
     }
 
     getIcon(id: number) {
