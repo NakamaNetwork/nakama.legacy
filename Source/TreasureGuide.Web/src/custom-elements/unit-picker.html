@@ -35,7 +35,7 @@
                 <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
             </div>
             <div class="row">
-                <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" md-waves click.delegate="unitClicked(unit)">
+                <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" size="medium" md-waves click.delegate="unitClicked(unit)">
                     <img src.bind="getIcon(unit.id)">
                 </button>
             </div>
