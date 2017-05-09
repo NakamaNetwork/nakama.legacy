@@ -1,44 +1,45 @@
 ﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
+import { DialogService } from 'aurelia-dialog';
+import { TeamImportView } from './team-import';
 
 @customElement('team-display')
 @autoinject
 export class TeamDisplay {
     private element: Element;
+    private dialogService: DialogService;
 
-    importDialog;
     @bindable team: any[] = [];
     @bindable editable = false;
-    @bindable({ changeHandler: 'imported' }) import;
 
-    constructor(element: Element) {
+    constructor(element: Element, dialogService: DialogService) {
         this.element = element;
+        this.dialogService = dialogService;
     }
 
     @computedFrom('team')
     get teamSlots() {
-        var slots;
+        var slots = new Array(6);
         if (this.team) {
-            slots = this.team.filter(x => {
+            this.team.filter(x => {
                 return !x.sub;
             }).sort((a, b) => {
                 return a.position - b.position;
-            }).map(x => {
-                return x.unitId || x;
+            }).forEach((x, i) => {
+                var id = x.unitId || x;
+                slots.splice(i, 1, id);
             });
-        } else {
-            slots = new Array(6);
         }
         return slots;
     }
 
-    imported(newValue, oldVAlue) {
-        this.team = newValue;
-    }
-
     openImport() {
         if (this.editable) {
-            this.importDialog.open();
+            this.dialogService.open({ viewModel: TeamImportView, lock: true }).whenClosed(result => {
+                if (!result.wasCancelled) {
+                    this.team = result.output;
+                }
+            });
         }
     };
 

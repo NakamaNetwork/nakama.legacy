@@ -1,19 +1,17 @@
-﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
+﻿import { computedFrom } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
 import { CalcParser } from '../tools/calc-parser';
+import { DialogController } from 'aurelia-dialog';
 
-@customElement('team-import')
 @autoinject
 export class TeamImportView {
-    private element: Element;
+    private controller: DialogController;
     private calcParser: CalcParser;
+    
+    input = '';
 
-    modal = null;
-    @bindable input = '';
-    @bindable accepted;
-
-    constructor(element: Element, calcParser: CalcParser) {
-        this.element = element;
+    constructor(calcParser: CalcParser, controller: DialogController) {
+        this.controller = controller;
         this.calcParser = calcParser;
     }
 
@@ -23,16 +21,11 @@ export class TeamImportView {
         return this.calcParser.convert(ids);
     }
 
-    open() {
-        return this.modal.open();
-    }
-
     submit() {
-        this.accepted = this.import;
-        return this.modal.close();
-    }
+        this.controller.ok(this.import);
+    };
 
     cancel() {
-        return this.modal.close();
-    }
+        this.controller.cancel();
+    };
 }

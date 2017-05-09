@@ -1,10 +1,24 @@
 ﻿<template>
-    <div class="row center-align" if.bind="unit">
-        <img src.bind="getPortrait(unit.id)" class="z-depth-2" />
-    </div>
-    <div class="row center-align">
-        <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" md-waves click.delegate="unitClicked(unit)">
-            <img src.bind="getIcon(unit.id)">
-        </button>
-    </div>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="right">
+                <a click.delegate="cancel()" md-button="flat: true;" class="modal-action">X</a>
+            </div>
+            <h3>Import Team</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <div class="row center-align" if.bind="unit">
+                <img src.bind="getPortrait(unit.id)" class="z-depth-2"/>
+            </div>
+            <div class="row center-align">
+                <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" md-waves click.delegate="unitClicked(unit)">
+                    <img src.bind="getIcon(unit.id)">
+                </button>
+            </div>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
+            <a click.delegate="submit()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Accept</a>
+        </ux-dialog-footer>
+    </ux-dialog>
 </template>
