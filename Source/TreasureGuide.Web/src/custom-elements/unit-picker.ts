@@ -1,7 +1,8 @@
 ﻿import { bindable } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
-import { UnitQueryService } from '../services/query/unit-query-service';
+import { UnitQueryService, UnitSearchModel } from '../services/query/unit-query-service';
 import { DialogController } from 'aurelia-dialog';
+import { BindingEngine } from 'aurelia-binding';
 
 @autoinject
 export class UnitPicker {
@@ -11,14 +12,32 @@ export class UnitPicker {
 
     unit;
     units: any[];
+    pages = 0;
 
-    constructor(unitQueryService: UnitQueryService, controller: DialogController) {
+    searchModel = new UnitSearchModel();
+
+    constructor(unitQueryService: UnitQueryService, controller: DialogController, bindingEngine: BindingEngine) {
         this.controller = controller;
         this.controller.settings.centerHorizontalOnly = true;
         this.unitQueryService = unitQueryService;
-        unitQueryService.stub().then(result => {
-            this.units = result;
+
+        bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+            this.search(n);
         });
+        this.search(this.searchModel.payload);
+    }
+
+    onPageChanged(e) {
+        this.searchModel.page = e.detail;
+    }
+
+    search(payload) {
+        if (this.unitQueryService) {
+            this.unitQueryService.search(this.searchModel).then(x => {
+                this.units = x.results;
+                this.pages = x.totalPages;
+            });
+        }
     }
 
     submit() {

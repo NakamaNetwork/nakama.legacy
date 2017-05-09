@@ -1,5 +1,4 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
-import { HttpEngine } from '../../../tools/http-engine';
+﻿import { HttpEngine } from '../../../tools/http-engine';
 
 export abstract class GenericApiQueryService {
     protected http: HttpEngine;

@@ -8,8 +8,7 @@ namespace TreasureGuide.Web.Models.UnitModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public UnitType Type { get; set; }
+        
         public IEnumerable<UnitClassType> UnitClasses { get; set; }
     }
 

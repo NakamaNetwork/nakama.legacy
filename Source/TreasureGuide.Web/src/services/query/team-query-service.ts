@@ -1,17 +1,12 @@
 ﻿import { computedFrom } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
-import { GenericApiQueryService } from './generic/generic-api-query-service';
 import { HttpEngine } from '../../tools/http-engine';
+import {SearchableQueryService} from './generic/searchable-query-service';
 
 @autoinject
-export class TeamQueryService extends GenericApiQueryService {
+export class TeamQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
         super('team', http);
-    }
-
-    search(model: TeamSearchModel) {
-        var endpoint = this.http.buildEndpoint('api/team/search', model);
-        return this.http.get(endpoint);
     }
 }
 

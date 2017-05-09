@@ -79,7 +79,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (myBox)
             {
-
+                throw new System.NotImplementedException();
             }
             return teams;
         }

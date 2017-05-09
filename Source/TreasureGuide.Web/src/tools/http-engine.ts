@@ -9,7 +9,7 @@ export class HttpEngine {
         this.http = http;
     }
 
-    buildEndpoint(endpoint: string, params: any) {
+    parameterize(endpoint: string, params: any) {
         var first = true;
         for (var property in params) {
             if (params.hasOwnProperty(property)) {
