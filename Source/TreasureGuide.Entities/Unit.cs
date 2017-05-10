@@ -18,14 +18,13 @@ namespace TreasureGuide.Entities
         public Unit()
         {
             this.TeamUnits = new HashSet<TeamUnit>();
-            this.UnitClasses = new HashSet<UnitClass>();
-            this.UnitFlags = new HashSet<UnitFlag>();
             this.RoundUnits = new HashSet<RoundUnit>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
         public UnitType Type { get; set; }
+        public UnitClass Class { get; set; }
         public Nullable<byte> Stars { get; set; }
         public Nullable<byte> Cost { get; set; }
         public Nullable<byte> Combo { get; set; }
@@ -39,13 +38,10 @@ namespace TreasureGuide.Entities
         public Nullable<short> MaxATK { get; set; }
         public Nullable<short> MaxRCV { get; set; }
         public Nullable<decimal> GrowthRate { get; set; }
+        public Nullable<UnitFlag> Flags { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UnitClass> UnitClasses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UnitFlag> UnitFlags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoundUnit> RoundUnits { get; set; }
     }

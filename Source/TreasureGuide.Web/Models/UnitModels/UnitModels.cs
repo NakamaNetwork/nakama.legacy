@@ -9,7 +9,7 @@ namespace TreasureGuide.Web.Models.UnitModels
         public int Id { get; set; }
         public string Name { get; set; }
         
-        public IEnumerable<UnitClassType> UnitClasses { get; set; }
+        public IEnumerable<UnitClass> UnitClasses { get; set; }
     }
 
     public class UnitStubModel : UnitModel
@@ -19,7 +19,7 @@ namespace TreasureGuide.Web.Models.UnitModels
 
     public class UnitDetailModel : UnitModel
     {
-        public IEnumerable<UnitFlagType> UnitFlags { get; set; }
+        public IEnumerable<UnitFlag> UnitFlags { get; set; }
     }
 
     public class UnitEditorModel : IIdItem<int?>

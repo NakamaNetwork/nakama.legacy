@@ -9,7 +9,7 @@ using TreasureGuide.Sniffer.Helpers;
 
 namespace TreasureGuide.Sniffer.Parsers
 {
-    public class UnitParser : TreasureParser<IEnumerable<ParsedUnitModel>>
+    public class UnitParser : TreasureParser<IEnumerable<Unit>>
     {
         private const string OptcDbUnitData = "https://raw.githubusercontent.com/optc-db/optc-db.github.io/master/common/data/units.js";
 
@@ -17,18 +17,21 @@ namespace TreasureGuide.Sniffer.Parsers
         {
         }
 
-        protected override IEnumerable<ParsedUnitModel> ConvertData(string trimmed)
+        protected override IEnumerable<Unit> ConvertData(string trimmed)
         {
             var arrays = JsonConvert.DeserializeObject<object[][]>(trimmed);
             var models = arrays.Select((line, index) =>
             {
                 var id = index + 1;
                 var classData = line[2]?.ToString();
+                var parsedClasses = (classData.Contains("[") ? JsonConvert.DeserializeObject<string[]>(classData) : new[] { classData }).Select(type => type.ToUnitClass()).Where(x => x != UnitClass.Unknown);
+                var unitClass = parsedClasses.Aggregate(UnitClass.Unknown, (current, parsed) => current | parsed);
                 var unit = new Unit
                 {
                     Id = id,
                     Name = line[0] as string,
                     Type = (line[1] as string).ToUnitType(),
+                    Class = unitClass,
                     // Classes parsed later
                     Stars = (line[3]?.ToString())?.ToByte(),
                     Cost = (line[4]?.ToString())?.ToByte(),
@@ -44,38 +47,19 @@ namespace TreasureGuide.Sniffer.Parsers
                     MaxRCV = (line[14]?.ToString()).ToInt16(),
                     GrowthRate = (line[15]?.ToString()).ToDecimal(),
                 };
-                return new ParsedUnitModel
-                {
-                    Unit = unit,
-                    UnitClasses = (classData.Contains("[") ? JsonConvert.DeserializeObject<string[]>(classData) : new[] { classData })
-                        .Select(type => type.ToUnitClass())
-                        .Where(x => x != UnitClassType.Unknown)
-                        .Select(type => new UnitClass
-                        {
-                            Unit = unit,
-                            Class = type
-                        })
-                };
+                return unit;
             });
             return models;
         }
 
-        protected override async Task Save(IEnumerable<ParsedUnitModel> items)
+        protected override async Task Save(IEnumerable<Unit> units)
         {
             Context.Units.Clear();
-            Context.UnitClasses.Clear();
-            foreach (var unit in items)
+            foreach (var unit in units)
             {
-                Context.Units.Add(unit.Unit);
-                Context.UnitClasses.AddRange(unit.UnitClasses);
+                Context.Units.Add(unit);
             }
             await Context.SaveChangesAsync();
         }
-    }
-
-    public class ParsedUnitModel
-    {
-        public Unit Unit { get; set; }
-        public IEnumerable<UnitClass> UnitClasses { get; set; }
     }
 }

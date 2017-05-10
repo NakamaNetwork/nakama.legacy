@@ -2,7 +2,8 @@
 (
     [Id] INT NOT NULL, 
     [Name] NVARCHAR(500) NULL, 
-    [Type] TINYINT NOT NULL CONSTRAINT [DF_dbo.Units_Type] DEFAULT 0, 
+    [Type] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Type] DEFAULT 0, 
+    [Class] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Class] DEFAULT 0, 
     [Stars] TINYINT NULL, 
     [Cost] TINYINT NULL, 
     [Combo] TINYINT NULL, 
@@ -16,5 +17,6 @@
     [MaxATK] SMALLINT NULL, 
     [MaxRCV] SMALLINT NULL, 
     [GrowthRate] DECIMAL(2, 1) NULL,
+    [Flags] SMALLINT NULL,
     CONSTRAINT [PK_dbo.Units] PRIMARY KEY CLUSTERED ([Id] ASC)
 )

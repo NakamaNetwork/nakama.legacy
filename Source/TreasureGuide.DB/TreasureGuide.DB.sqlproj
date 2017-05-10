@@ -69,8 +69,6 @@
     <Build Include="dbo\Stages\RoundUnitBehavior.sql" />
     <Build Include="dbo\Stages\RoundUnits.sql" />
     <Build Include="dbo\Units\Units.sql" />
-    <Build Include="dbo\Units\UnitClasses.sql" />
-    <Build Include="dbo\Units\UnitFlags.sql" />
     <Build Include="dbo\Teams\Teams.sql" />
     <Build Include="dbo\Teams\TeamUnits.sql" />
     <Build Include="dbo\Teams\TeamSockets.sql" />

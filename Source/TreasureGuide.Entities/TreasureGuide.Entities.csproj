@@ -107,13 +107,7 @@
     <Compile Include="UnitClass.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="UnitClassType.cs">
-      <DependentUpon>TreasureEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="UnitFlag.cs">
-      <DependentUpon>TreasureEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UnitFlagType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitType.cs">

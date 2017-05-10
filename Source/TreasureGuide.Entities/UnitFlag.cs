@@ -10,13 +10,16 @@
 namespace TreasureGuide.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UnitFlag
+    [Flags]
+    public enum UnitFlag : short
     {
-        public int UnitId { get; set; }
-        public UnitFlagType FlagType { get; set; }
-    
-        public virtual Unit Unit { get; set; }
+        Unknown = 0,
+        Global = 1,
+        RareRecruit = 2,
+        RareRecruitExclusive = 4,
+        RareRecruitLimited = 8,
+        Promotional = 16,
+        Shop = 32
     }
 }

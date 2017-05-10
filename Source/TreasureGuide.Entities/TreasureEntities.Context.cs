@@ -29,8 +29,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamSocket> TeamSockets { get; set; }
         public virtual DbSet<TeamUnit> TeamUnits { get; set; }
-        public virtual DbSet<UnitClass> UnitClasses { get; set; }
-        public virtual DbSet<UnitFlag> UnitFlags { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<Round> Rounds { get; set; }
         public virtual DbSet<RoundUnitBehavior> RoundUnitBehaviors { get; set; }

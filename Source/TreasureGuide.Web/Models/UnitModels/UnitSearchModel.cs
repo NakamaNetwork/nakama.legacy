@@ -6,7 +6,7 @@ namespace TreasureGuide.Web.Models.UnitModels
     public class UnitSearchModel : SearchModel
     {
         public string Term { get; set; }
-        public IEnumerable<UnitClassType> Classes { get; set; }
+        public IEnumerable<UnitClass> Classes { get; set; }
         public IEnumerable<UnitType> Types { get; set; }
         public bool ForceTypes { get; set; }
 

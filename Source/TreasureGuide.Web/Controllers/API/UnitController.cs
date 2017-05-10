@@ -47,7 +47,7 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
-        private IQueryable<Unit> SearchClasses(IQueryable<Unit> results, IEnumerable<UnitClassType> classes, bool force)
+        private IQueryable<Unit> SearchClasses(IQueryable<Unit> results, IEnumerable<UnitClass> classes, bool force)
         {
             if (classes?.Any() ?? false)
             {
