@@ -1,10 +1,51 @@
 ﻿<template>
-    <div class="row center-align" if.bind="unit">
-        <img src.bind="getPortrait(unit.id)" class="z-depth-2" />
-    </div>
-    <div class="row center-align">
-        <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" md-waves click.delegate="unitClicked(unit)">
-            <img src.bind="getIcon(unit.id)">
-        </button>
-    </div>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="right">
+                <a click.delegate="cancel()" md-button="flat: true;" class="modal-action">X</a>
+            </div>
+            <h3>Select a Unit</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <div class="row">
+                <form with.bind="searchModel">
+                    <div class="col m6">
+                        <div class="row">
+                            <md-input md-label="Term" md-type="text" md-value.two-way="term"></md-input>
+                        </div>
+                        <div class="row">
+                            <div class="col m6">
+                                <md-checkbox md-checked.two-way="global">Global</md-checkbox>
+                            </div>
+                            <div class="col m6">
+                                <md-checkbox md-checked.two-way="myBox">In my Box</md-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col m3">
+                        <md-input md-label="Class" md-type="number" md-value.two-way="classes"></md-input>
+                    </div>
+                    <div class="col m3">
+                        <md-input md-label="Type" md-type="number" md-value.two-way="types"></md-input>
+                        <md-checkbox md-checked.two-way="forceTypes">Force</md-checkbox>
+                    </div>
+                </form>
+            </div>
+            <div class="row center">
+                <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
+            </div>
+            <div class="row">
+                <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" size="medium" md-waves click.delegate="unitClicked(unit)">
+                    <img src.bind="getIcon(unit.id)">
+                </button>
+            </div>
+            <div class="row center">
+                <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
+            </div>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
+            <a click.delegate="submit()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Accept</a>
+        </ux-dialog-footer>
+    </ux-dialog>
 </template>

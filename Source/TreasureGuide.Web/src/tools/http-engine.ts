@@ -9,6 +9,23 @@ export class HttpEngine {
         this.http = http;
     }
 
+    parameterize(endpoint: string, params: any) {
+        var first = true;
+        for (var property in params) {
+            if (params.hasOwnProperty(property)) {
+                var value = params[property];
+                if (typeof(value) !== 'function' && value !== undefined && value !== null) {
+                    endpoint += first ? '?' : '&';
+                    endpoint += encodeURIComponent(property);
+                    endpoint += '=';
+                    endpoint += encodeURIComponent(value);
+                    first = false;
+                }
+            }
+        }
+        return endpoint;
+    }
+
     buildSecurityHeaders(accessToken?: string): Headers {
         var headers = new Headers();
         accessToken = accessToken || localStorage['access_token'];

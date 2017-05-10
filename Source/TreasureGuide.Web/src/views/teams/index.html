@@ -7,6 +7,32 @@
         </a>
     </div>
     <div class="row">
+        <form with.bind="searchModel">
+            <div class="col m6">
+                <div class="row">
+                    <md-input md-label="Term" md-type="text" md-value.two-way="term"></md-input>
+                </div>
+                <div class="row">
+                    <div class="col m6">
+                        <md-checkbox md-checked.two-way="global">Global</md-checkbox>
+                    </div>
+                    <div class="col m6">
+                        <md-checkbox md-checked.two-way="myBox">In my Box</md-checkbox>
+                    </div>
+                </div>
+            </div>
+            <div class="col m3">
+                <unit-display unit-id.two-way="leaderId" editable="true"></unit-display>
+            </div>
+            <div class="col m3">
+                <md-input md-label="Stage" md-type="number" md-value.two-way="stageId"></md-input>
+            </div>
+        </form>
+    </div>
+    <div class="row center">
+        <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
+    </div>
+    <div class="row">
         <table class="striped">
             <thead>
                 <tr>
@@ -33,7 +59,7 @@
                         ${team.name}
                     </td>
                     <td>
-                        ${team.units}
+                        <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
                     </td>
                     <td>
                         <a md-button md-waves route-href="route: teamEdit; params.bind: {id: team.id}">
@@ -44,5 +70,8 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="row center">
+        <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
     </div>
 </template>

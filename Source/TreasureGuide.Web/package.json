@@ -10,6 +10,7 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.1",
     "aurelia-bootstrapper": "^2.1.0",
+    "aurelia-dialog": "^1.0.0-rc.1.0.3",
     "aurelia-fetch-client": "^1.1.2",
     "aurelia-materialize-bridge": "^0.27.0",
     "aurelia-validation": "^1.0.0",

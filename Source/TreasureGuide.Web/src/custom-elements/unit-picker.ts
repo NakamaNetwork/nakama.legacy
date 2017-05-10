@@ -1,35 +1,60 @@
-﻿import { bindable, customElement } from 'aurelia-framework';
+﻿import { bindable } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
-import { UnitQueryService } from '../services/query/unit-query-service';
+import { UnitQueryService, UnitSearchModel } from '../services/query/unit-query-service';
+import { DialogController } from 'aurelia-dialog';
+import { BindingEngine } from 'aurelia-binding';
 
 @autoinject
-@customElement('unit-picker')
 export class UnitPicker {
-    private element: Element;
+    private controller: DialogController;
     private unitQueryService: UnitQueryService;
     @bindable unitId = 0;
 
-    unit = {};
+    unit;
     units: any[];
+    pages = 0;
 
-    constructor(unitQueryService: UnitQueryService, element: Element) {
+    searchModel = new UnitSearchModel();
+
+    constructor(unitQueryService: UnitQueryService, controller: DialogController, bindingEngine: BindingEngine) {
+        this.controller = controller;
+        this.controller.settings.centerHorizontalOnly = true;
         this.unitQueryService = unitQueryService;
-        this.element = element;
-        unitQueryService.stub().then(result => {
-            this.units = result;
+
+        bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+            this.search(n);
         });
+        this.search(this.searchModel.payload);
     }
 
-    attached() {
-        if (this.unitId) {
-            this.unitQueryService.stub(this.unitId).then(result => {
-                this.unit = result;
+    activate(viewModel) {
+        this.unitId = viewModel.unitId;
+    }
+
+    onPageChanged(e) {
+        this.searchModel.page = e.detail;
+    }
+
+    search(payload) {
+        if (this.unitQueryService) {
+            this.unitQueryService.search(this.searchModel).then(x => {
+                this.units = x.results;
+                this.pages = x.totalPages;
             });
         }
     }
 
+    submit() {
+        this.controller.ok(this.unit.id);
+    };
+
+    cancel() {
+        this.controller.cancel();
+    };
+
     unitClicked(unit) {
         this.unit = unit;
+        this.submit();
     }
 
     getIcon(id: number) {

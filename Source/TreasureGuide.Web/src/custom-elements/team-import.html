@@ -1,10 +1,12 @@
 ﻿<template>
-    <button md-button md-waves click.delegate="open()">
-        <i class="material-icons left">input</i>
-        Import from OPTC-DB
-    </button>
-    <div md-modal md-modal.ref="modal">
-        <div class="modal-content">
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="right">
+                <a click.delegate="cancel()" md-button="flat: true;" class="modal-action">X</a>
+            </div>
+            <h3>Pick a Unit</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
             <form>
                 <div class="row">
                     <p>
@@ -19,14 +21,14 @@
                         <label for="input">Link</label>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row center">
                     <team-display team.bind="import"></team-display>
                 </div>
             </form>
-        </div>
-        <div class="modal-footer">
-            <a click.delegate="submit()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Accept</a>
+        </ux-dialog-body>
+        <ux-dialog-footer>
             <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
-        </div>
-    </div>
+            <a click.delegate="submit()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Accept</a>
+        </ux-dialog-footer>
+    </ux-dialog>
 </template>

@@ -1,19 +1,23 @@
 ﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
 import { UnitQueryService } from '../services/query/unit-query-service';
+import { DialogService } from 'aurelia-dialog';
+import { UnitPicker } from './unit-picker';
 
 @autoinject
 @customElement('unit-display')
 export class UnitDisplay {
     private element: Element;
     private unitQueryService: UnitQueryService;
-    @bindable right = false;
+    private dialogService: DialogService;
+
     @bindable unitId = 0;
     @bindable editable = false;
 
-    constructor(unitQueryService: UnitQueryService, element: Element) {
+    constructor(unitQueryService: UnitQueryService, dialogService: DialogService, element: Element) {
         this.unitQueryService = unitQueryService;
         this.element = element;
+        this.dialogService = dialogService;
     }
 
     @computedFrom('unitId')
@@ -25,7 +29,7 @@ export class UnitDisplay {
             return null;
         });
     };
-    
+
     @computedFrom('unitId')
     get imageUrl() {
         return this.unitQueryService.getIcon(this.unitId);
@@ -33,9 +37,11 @@ export class UnitDisplay {
 
     unitClicked() {
         if (this.editable) {
-            console.log("Clicked editable unit");
-        } else {
-            console.log("Clicked uneditable unit.");
+            this.dialogService.open({ viewModel: UnitPicker, model: { unitId: this.unitId }, lock: true }).whenClosed(result => {
+                if (!result.wasCancelled) {
+                    this.unitId = result.output;
+                }
+            });
         }
     }
 }

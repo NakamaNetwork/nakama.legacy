@@ -1,6 +1,6 @@
 ﻿import { autoinject } from 'aurelia-dependency-injection';
-import { GenericApiQueryService } from './generic/generic-api-query-service';
 import { HttpEngine } from '../../tools/http-engine';
+import { GenericApiQueryService } from './generic/generic-query-service';
 
 @autoinject
 export class StageQueryService extends GenericApiQueryService {

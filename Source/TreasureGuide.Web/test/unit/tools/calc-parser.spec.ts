@@ -65,7 +65,7 @@ describe('calc parser', () => {
             check_parsed(results, expected);
         });
 
-    it("makes extra units subs",
+    it('makes extra units subs',
         () => {
             var results = parser.convert([12, 23, 34, 45, 56, 67, 12, 54, 32]);
             var expected = [
