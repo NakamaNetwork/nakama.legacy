@@ -37,22 +37,20 @@
             <div class="row center" if.bind="pages > 1">
                 <md-pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
             </div>
-            <div class="row" if.bind="units.length > 0">
+            <div class="row center" if.bind="units.length > 0">
                 <p>${((searchModel.page - 1) * searchModel.pageSize) +1} - ${((searchModel.page - 1) * searchModel.pageSize) + units.length} of ${resultCount}</p>
-                <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" size="medium" md-waves click.delegate="unitClicked(unit)">
-                    <img src.bind="getIcon(unit.id)">
-                </button>
+                <div class="unit-collection">
+                    <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" md-waves click.delegate="unitClicked(unit)">
+                        <img src.bind="getIcon(unit.id)">
+                    </button>
+                </div>
             </div>
             <div class="row center" if.bind="!units || units.length == 0">
                 <h3>Search yielded no results!</h3>
             </div>
-            <div class="row center" if.bind="pages > 1">
-                <md-pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
-            </div>
         </ux-dialog-body>
         <ux-dialog-footer>
             <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
-            <a click.delegate="submit()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Accept</a>
         </ux-dialog-footer>
     </ux-dialog>
 </template>

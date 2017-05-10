@@ -16,15 +16,49 @@ body {
     }
 }
 
+$tiny-unit-size: 32px;
+$tiny-unit-margin: 1px;
+
+$small-unit-size: 48px;
+$small-unit-margin: 2px;
+
+$medium-unit-size: 64px;
+$medium-unit-margin: 3px;
+
+$large-unit-size: 96px;
+$large-unit-margin: 4px;
+
+$huge-unit-size: 112px;
+$huge-unit-margin: 5px;
+
+$default-unit-size: $huge-unit-size;
+$default-unit-margin: $huge-unit-margin;
+
+.unit-collection {
+    .unit-button {
+        @media #{$medium-and-down} {
+            height: $small-unit-size;
+            width: $small-unit-size;
+            margin: $small-unit-margin;
+        }
+
+        @media #{$large-and-up} {
+            height: $medium-unit-size;
+            width: $medium-unit-size;
+            margin: $medium-unit-margin;
+        }
+    }
+}
+
 main {
     flex: 1 0 auto;
 }
 
 .unit-button {
-    height: 112px;
-    width: 112px;
+    height: $default-unit-size;
+    width: $default-unit-size;
+    margin: $default-unit-margin;
     padding: 0;
-    margin: 5px;
     line-height: 0;
 
     img {
@@ -36,37 +70,37 @@ main {
 
     &[size="tiny"],
     [size="tiny"] & {
-        height: 24px;
-        width: 24px;
-        margin: 1px;
+        height: $tiny-unit-size;
+        width: $tiny-unit-size;
+        margin: $tiny-unit-margin;
     }
 
     &[size="small"],
     [size="small"] & {
-        height: 42px;
-        width: 42px;
-        margin: 2px;
+        height: $small-unit-size;
+        width: $small-unit-size;
+        margin: $small-unit-margin;
     }
 
     &[size="medium"],
     [size="medium"] & {
-        height: 64px;
-        width: 64px;
-        margin: 3px;
+        height: $medium-unit-size;
+        width: $medium-unit-size;
+        margin: $medium-unit-margin;
     }
 
     &[size="large"],
     [size="large"] & {
-        height: 96px;
-        width: 96px;
-        margin: 4px;
+        height: $large-unit-size;
+        width: $large-unit-size;
+        margin: $large-unit-margin;
     }
 
     &[size="huge"],
     [size="huge"] & {
-        height: 112px;
-        width: 112px;
-        margin: 5px;
+        height: $huge-unit-size;
+        width: $huge-unit-size;
+        margin: $huge-unit-margin;
     }
 }
 

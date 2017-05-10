@@ -78,7 +78,4 @@
     <div class="row center" if.bind="!teams || teams.length == 0">
         <h3>Search yielded no results!</h3>
     </div>
-    <div class="row center" if.bind="pages > 1">
-        <md-pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
-    </div>
 </template>
