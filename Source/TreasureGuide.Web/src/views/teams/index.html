@@ -32,10 +32,10 @@
             </div>
         </form>
     </div>
-    <div class="row center">
+    <div class="row center" if.bind="pages > 1">
         <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
     </div>
-    <div class="row">
+    <div class="row" if.bind="teams.length > 0">
         <table class="striped">
             <thead>
                 <tr>
@@ -74,7 +74,10 @@
             </tbody>
         </table>
     </div>
-    <div class="row center">
+    <div class="row center" if.bind="!teams || teams.length == 0">
+        <h3>Search yielded no results!</h3>
+    </div>
+    <div class="row center" if.bind="pages > 1">
         <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
     </div>
 </template>
