@@ -28,7 +28,7 @@
         "id": "sass",
         "displayName": "Sass",
         "fileExtension": ".scss",
-        "source": "src/**/*.scss"
+        "source": [ "src/**/*.scss", "!src/**/_*.scss" ]
     },
     "editor": {
         "id": "visualstudio",
@@ -163,9 +163,6 @@
                         "main": "js/materialize.amd",
                         "deps": [
                             "jquery"
-                        ],
-                        "resources": [
-                            "css/materialize.css"
                         ],
                         "exports": "Materialize"
                     },

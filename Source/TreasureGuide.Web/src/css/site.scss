@@ -1,4 +1,8 @@
-﻿body {
+﻿@import "../../node_modules/materialize-css/sass/components/_color.scss";
+@import "../../node_modules/materialize-css/sass/components/_variables.scss";
+@import "./materialize/_custom-variables.scss";
+
+body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -67,5 +71,40 @@ team-display {
             content: "";
             display: block;
         }
+    }
+}
+
+ux-dialog-overlay.active {
+    background-color: black;
+    opacity: 0.5;
+}
+
+ux-dialog-container {
+    & > div > div {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+
+        @media #{$medium-and-up} {
+            width: 95%;
+            max-width: 95%;
+            min-width: 95%;
+        }
+
+        @media #{$large-and-up} {
+            width: 70%;
+            max-width: 70%;
+            min-width: 70%;
+        }
+
+        @media #{$extra-large-and-up} {
+            width: 60%;
+            max-width: 60%;
+            min-width: 60%;
+        }
+    }
+
+    ux-dialog {
+        width: 100%;
     }
 }

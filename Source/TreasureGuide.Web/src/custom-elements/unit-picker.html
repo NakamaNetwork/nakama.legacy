@@ -34,15 +34,18 @@
                     </div>
                 </form>
             </div>
-            <div class="row center">
+            <div class="row center" if.bind="pages > 1">
                 <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
             </div>
-            <div class="row">
+            <div class="row" if.bind="units.length > 0">
                 <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" size="medium" md-waves click.delegate="unitClicked(unit)">
                     <img src.bind="getIcon(unit.id)">
                 </button>
             </div>
-            <div class="row center">
+            <div class="row center" if.bind="!units || units.length == 0">
+                <h3>Search yielded no results!</h3>
+            </div>
+            <div class="row center" if.bind="pages > 1">
                 <md-pagination md-pages.bind="pages" md-active-page.bind="search.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
             </div>
         </ux-dialog-body>
