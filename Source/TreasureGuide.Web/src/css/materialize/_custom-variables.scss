@@ -1,0 +1,12 @@
+@import "../../../node_modules/materialize-css/sass/components/_color.scss";
+
+$roboto-font-path: "../../fonts/roboto/" !default;
+
+$primary-color: color("deep-orange", "lighten-1") !default;
+$primary-color-light: lighten($primary-color, 15%) !default;
+$primary-color-dark: darken($primary-color, 15%) !default;
+
+$secondary-color: color("indigo", "base") !default;
+$success-color: color("light-green", "base") !default;
+$error-color: color("red", "base") !default;
+$link-color: color("teal", "darken-1") !default;
