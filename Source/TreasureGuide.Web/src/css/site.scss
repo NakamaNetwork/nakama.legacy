@@ -122,17 +122,13 @@ ux-dialog-overlay.active {
 }
 
 ux-dialog-container {
-    & > div > div {
-        width: 100%;
-        max-width: 100%;
-        min-width: 100%;
-
-        @media #{$medium-and-up} {
-            width: 95%;
-            max-width: 95%;
-            min-width: 95%;
+    & > div{
+        @media #{$medium-and-down}{
+            padding: 2px;
         }
+    }
 
+    & > div > div {
         @media #{$large-and-up} {
             width: 70%;
             max-width: 70%;
