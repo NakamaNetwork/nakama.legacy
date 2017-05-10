@@ -30,7 +30,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             model.PageSize = Math.Min(100, Math.Max(10, model.PageSize));
             var entities = FetchEntities();
             entities = PerformSearch(entities, model).AsQueryable();
-            var pageCount = (int)Math.Ceiling(await entities.CountAsync() / (double)model.PageSize);
+            var resultCount = await entities.CountAsync();
             entities = OrderSearchResults(entities);
             entities = entities.Skip(model.PageSize * (model.Page - 1)).Take(model.PageSize);
             var output = entities.ProjectTo<TStubModel>(AutoMapper.ConfigurationProvider);
@@ -38,7 +38,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return new SearchResult<TStubModel>
             {
                 Results = results,
-                TotalPages = pageCount
+                TotalResults = resultCount
             };
         }
 

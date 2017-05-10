@@ -10,7 +10,7 @@ namespace TreasureGuide.Web.Models
 
     public class SearchResult<TType>
     {
-        public int TotalPages { get; set; }
+        public int TotalResults { get; set; }
         public IEnumerable<TType> Results { get; set; }
     }
 }

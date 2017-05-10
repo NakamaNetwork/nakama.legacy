@@ -12,6 +12,8 @@ export class UnitPicker {
 
     unit;
     units: any[];
+
+    resultCount = 0;
     pages = 0;
 
     searchModel = new UnitSearchModel();
@@ -37,9 +39,10 @@ export class UnitPicker {
 
     search(payload) {
         if (this.unitQueryService) {
-            this.unitQueryService.search(this.searchModel).then(x => {
+            this.unitQueryService.search(payload).then(x => {
                 this.units = x.results;
-                this.pages = x.totalPages;
+                this.resultCount = x.totalResults;
+                this.pages = Math.ceil(x.totalResults / payload.pageSize);
             });
         }
     }

@@ -8,6 +8,14 @@ body {
     flex-direction: column;
 }
 
+.pagination {
+    li {
+        a {
+            padding: 0 5px;
+        }
+    }
+}
+
 main {
     flex: 1 0 auto;
 }

@@ -7,6 +7,8 @@ export class TeamIndexPage {
     teamQueryService: TeamQueryService;
     title = 'Teams';
     teams = [];
+
+    resultCount = 0;
     pages = 0;
 
     searchModel = new TeamSearchModel();
@@ -25,9 +27,10 @@ export class TeamIndexPage {
 
     search(payload) {
         if (this.teamQueryService) {
-            this.teamQueryService.search(this.searchModel).then(x => {
+            this.teamQueryService.search(payload).then(x => {
                 this.teams = x.results;
-                this.pages = x.totalPages;
+                this.resultCount = x.totalResults;
+                this.pages = Math.ceil(x.totalResults / payload.pageSize);
             });
         }
     }

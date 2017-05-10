@@ -90,7 +90,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (freeToPlay)
             {
-                results = results.Where(x => x.TeamUnits.All(y => y.Sub || y.UnitId == leaderId || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))));
+                results = results.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.UnitId == leaderId || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))));
             }
             return results;
         }
