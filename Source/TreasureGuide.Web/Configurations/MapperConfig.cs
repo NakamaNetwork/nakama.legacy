@@ -16,21 +16,16 @@ namespace TreasureGuide.Web.Configurations
             var config = new MapperConfiguration(mapper =>
             {
                 var unit = mapper.CreateControllerMapping<Unit, UnitDetailModel, UnitStubModel, UnitEditorModel>();
-                unit.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.UnitFlags.Any(z => z.FlagType == UnitFlagType.Global)));
-                unit.StubMapping.ForMember(x => x.UnitClasses, o => o.MapFrom(y => y.UnitClasses.Select(z => z.Class)));
-
-                unit.DetailMapping.ForMember(x => x.UnitFlags, o => o.MapFrom(y => y.UnitFlags.Select(z => z.FlagType)));
-                unit.DetailMapping.ForMember(x => x.UnitClasses, o => o.MapFrom(y => y.UnitClasses.Select(z => z.Class)));
 
                 var teamUnit = mapper.CreateControllerMapping<TeamUnit, TeamUnitDetailModel, TeamUnitStubModel, TeamUnitEditorModel>();
                 var teamSocket = mapper.CreateControllerMapping<TeamSocket, TeamSocketDetailModel, TeamSocketStubModel, TeamSocketEditorModel>();
 
                 var team = mapper.CreateControllerMapping<Team, TeamDetailModel, TeamStubModel, TeamEditorModel>();
-                team.DetailMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.UnitFlags.Any(f => f.FlagType == UnitFlagType.Global))));
+                team.DetailMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
                 team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedById));
                 team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
 
-                team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.UnitFlags.Any(f => f.FlagType == UnitFlagType.Global))));
+                team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
                 team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedById));
                 team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
                 team.StubMapping.ForMember(x => x.TeamUnits, o => o.MapFrom(y => y.TeamUnits.Where(z => !z.Sub && z.Position.HasValue).OrderBy(z => z.Position).Select(z => z.UnitId)));

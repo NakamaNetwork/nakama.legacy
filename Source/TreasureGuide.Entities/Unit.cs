@@ -17,8 +17,8 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Unit()
         {
-            this.TeamUnits = new HashSet<TeamUnit>();
             this.RoundUnits = new HashSet<RoundUnit>();
+            this.TeamUnits = new HashSet<TeamUnit>();
         }
     
         public int Id { get; set; }
@@ -38,11 +38,11 @@ namespace TreasureGuide.Entities
         public Nullable<short> MaxATK { get; set; }
         public Nullable<short> MaxRCV { get; set; }
         public Nullable<decimal> GrowthRate { get; set; }
-        public Nullable<UnitFlag> Flags { get; set; }
+        public UnitFlag Flags { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoundUnit> RoundUnits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
     }
 }

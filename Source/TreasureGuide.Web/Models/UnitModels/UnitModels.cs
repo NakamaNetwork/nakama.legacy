@@ -9,17 +9,17 @@ namespace TreasureGuide.Web.Models.UnitModels
         public int Id { get; set; }
         public string Name { get; set; }
         
-        public IEnumerable<UnitClass> UnitClasses { get; set; }
+        public UnitClass Class { get; set; }
+        public UnitType Type { get; set; }
+        public UnitFlag Flags { get; set; }
     }
 
     public class UnitStubModel : UnitModel
     {
-        public bool Global { get; set; }
     }
 
     public class UnitDetailModel : UnitModel
     {
-        public IEnumerable<UnitFlag> UnitFlags { get; set; }
     }
 
     public class UnitEditorModel : IIdItem<int?>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.UnitModels;
 
@@ -21,12 +22,22 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchClasses(results, model.Classes, model.ForceTypes);
             results = SearchGlobal(results, model.Global);
             results = SearchBox(results, model.MyBox);
+            results = SearchFreeToPlay(results, model.FreeToPlay);
             return results;
         }
 
         protected override IQueryable<Unit> OrderSearchResults(IQueryable<Unit> results)
         {
             return results.OrderBy(x => x.Id);
+        }
+
+        private IQueryable<Unit> SearchFreeToPlay(IQueryable<Unit> results, bool freeToPlay)
+        {
+            if (freeToPlay)
+            {
+                results = results.Where(x => !EnumerableHelper.PayToPlay.Any(y => x.Flags.HasFlag(y)));
+            }
+            return results;
         }
 
         private IQueryable<Unit> SearchBox(IQueryable<Unit> results, bool myBox)
@@ -42,7 +53,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (global)
             {
-                results = results.Where(x => x.UnitFlags.Any(y => y.FlagType == UnitFlagType.Global));
+                results = results.Where(x => x.Flags.HasFlag(UnitFlag.Global));
             }
             return results;
         }
@@ -53,11 +64,11 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 if (force)
                 {
-                    results = results.Where(x => x.UnitClasses.All(y => classes.Contains(y.Class)));
+                    results = results.Where(x => classes.All(y => x.Class.HasFlag(y)));
                 }
                 else
                 {
-                    results = results.Where(x => x.UnitClasses.Any(y => classes.Contains(y.Class)));
+                    results = results.Where(x => classes.Any(y => x.Class.HasFlag(y)));
                 }
             }
             return results;

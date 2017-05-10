@@ -33,10 +33,11 @@ export class UnitSearchModel {
     forceTypes?: boolean = false;
     myBox?: boolean = false;
     global?: boolean = false;
+    freeToPlay?: boolean = false;
     page?: number = 1;
     pageSize?: number = 25;
 
-    @computedFrom('term', 'classes', 'types', 'forceTypes', 'myBox', 'global', 'page', 'pageSize')
+    @computedFrom('term', 'classes', 'types', 'forceTypes', 'myBox', 'freeToPlay', 'global', 'page', 'pageSize')
     get payload() {
         var text = JSON.stringify(this);
         var output = JSON.parse(text);

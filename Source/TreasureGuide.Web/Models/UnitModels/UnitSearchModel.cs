@@ -9,6 +9,7 @@ namespace TreasureGuide.Web.Models.UnitModels
         public IEnumerable<UnitClass> Classes { get; set; }
         public IEnumerable<UnitType> Types { get; set; }
         public bool ForceTypes { get; set; }
+        public bool FreeToPlay { get; set; }
 
         public bool Global { get; set; }
         public bool MyBox { get; set; }

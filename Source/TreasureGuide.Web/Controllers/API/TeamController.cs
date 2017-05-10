@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.TeamModels;
 
@@ -28,6 +29,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchLead(results, model.LeaderId);
             results = SearchGlobal(results, model.Global);
             results = SearchBox(results, model.MyBox);
+            results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
             return results;
         }
 
@@ -70,7 +72,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (global)
             {
-                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.UnitFlags.Any(z => z.FlagType == UnitFlagType.Global)));
+                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.Flags.HasFlag(UnitFlag.Global)));
             }
             return teams;
         }
@@ -82,6 +84,15 @@ namespace TreasureGuide.Web.Controllers.API
                 throw new System.NotImplementedException();
             }
             return teams;
+        }
+
+        private IQueryable<Team> SearchFreeToPlay(IQueryable<Team> results, bool freeToPlay, int? leaderId)
+        {
+            if (freeToPlay)
+            {
+                results = results.Where(x => x.TeamUnits.All(y => y.Sub || y.UnitId == leaderId || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))));
+            }
+            return results;
         }
     }
 }

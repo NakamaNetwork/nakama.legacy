@@ -17,6 +17,6 @@
     [MaxATK] SMALLINT NULL, 
     [MaxRCV] SMALLINT NULL, 
     [GrowthRate] DECIMAL(2, 1) NULL,
-    [Flags] SMALLINT NULL,
+    [Flags] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Flags] DEFAULT 0, 
     CONSTRAINT [PK_dbo.Units] PRIMARY KEY CLUSTERED ([Id] ASC)
 )

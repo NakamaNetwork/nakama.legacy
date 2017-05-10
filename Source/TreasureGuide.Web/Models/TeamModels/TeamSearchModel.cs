@@ -8,5 +8,6 @@
 
         public bool MyBox { get; set; }
         public bool Global { get; set; }
+        public bool FreeToPlay { get; set; }
     }
 }

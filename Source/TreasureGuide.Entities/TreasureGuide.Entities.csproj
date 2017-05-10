@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="EntityConstructor.cs" />
     <Compile Include="Helpers\ContextExtensions.cs" />
+    <Compile Include="Helpers\EnumerableHelper.cs" />
     <Compile Include="InterfaceDefinitions.cs" />
     <Compile Include="Interfaces\IIdItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
