@@ -66,7 +66,30 @@ namespace TreasureGuide.Sniffer.Helpers
             return UnitType.Unknown;
         }
 
-        public static UnitFlag? ToFlagType(this string value)
+        public static StageType ToStageType(this string value)
+        {
+            switch (value.ToLower())
+            {
+                case "story island":
+                    return StageType.Story;
+                case "weekly island":
+                    return StageType.Weekly;
+                case "fortnight":
+                    return StageType.Fortnight;
+                case "raid":
+                    return StageType.Raid;
+                case "special":
+                    return StageType.Special;
+                case "coliseum":
+                    return StageType.Coliseum;
+                case "forest":
+                    return StageType.TrainingForest;
+                default:
+                    return StageType.Unknown;
+            }
+        }
+
+        public static UnitFlag ToFlagType(this string value)
         {
             switch (value.ToLower())
             {

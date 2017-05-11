@@ -21,9 +21,7 @@ namespace TreasureGuide.Sniffer.Parsers
         {
             var converted = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, bool>>>(trimmed);
             var results = converted.SelectMany(x => x.Value.Where(y => y.Value)
-            .Select(y => y.Key.ToFlagType())
-            .Where(y => y.HasValue)
-            .Select(y => Tuple.Create(x.Key, y.Value)))
+            .Select(y => Tuple.Create(x.Key, y.Key.ToFlagType())))
             .GroupBy(x => x.Item1, x => x.Item2)
             .Select(x => new UnitFlagModel
             {

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Helpers\NumberFormatter.cs" />
     <Compile Include="Helpers\ParsingExtensions.cs" />
+    <Compile Include="Parsers\StageParser.cs" />
     <Compile Include="Parsers\TreasureParser.cs" />
     <Compile Include="Parsers\UnitFlagParser.cs" />
     <Compile Include="Parsers\UnitParser.cs" />

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Stages]
 (
-    [Id] INT NOT NULL IDENTITY(1,1),
+    [Id] INT NOT NULL,
     [Name] NVARCHAR(500) NULL,
     [Stamina] TINYINT NULL,
     [Type] TINYINT NOT NULL CONSTRAINT [DF_dbo.Stages_Type] DEFAULT 0,
