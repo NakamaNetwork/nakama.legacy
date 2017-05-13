@@ -1,30 +1,76 @@
-﻿import { bindable, customElement } from 'aurelia-framework';
+﻿import { bindable } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
-import { StageQueryService } from '../services/query/stage-query-service';
+import { StageQueryService, StageSearchModel } from '../services/query/stage-query-service';
+import { DialogController } from 'aurelia-dialog';
+import { BindingEngine } from 'aurelia-binding';
 
 @autoinject
-@customElement('stage-picker')
 export class StagePicker {
-    private element: Element;
+    private controller: DialogController;
     private stageQueryService: StageQueryService;
-    @bindable unitId = 0;
+    @bindable stageId = 0;
 
-    stage = {};
+    stage;
     stages: any[];
 
-    constructor(stageQueryService: StageQueryService, element: Element) {
+    resultCount = 0;
+    pages = 0;
+
+    searchModel = new StageSearchModel();
+
+    constructor(stageQueryService: StageQueryService, controller: DialogController, bindingEngine: BindingEngine) {
+        this.controller = controller;
+        this.controller.settings.centerHorizontalOnly = true;
         this.stageQueryService = stageQueryService;
-        this.element = element;
-        stageQueryService.stub().then(result => {
-            this.stages = result;
+
+        bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+            this.search(n);
         });
+        this.search(this.searchModel.payload);
     }
 
-    attached() {
-        if (this.unitId) {
-            this.stageQueryService.stub(this.unitId).then(result => {
-                this.stage = result;
+    activate(viewModel) {
+        this.stageId = viewModel.stageId;
+    }
+
+    onPageChanged(e) {
+        this.searchModel.page = e.detail;
+    }
+
+    search(payload) {
+        if (this.stageQueryService) {
+            this.stageQueryService.search(payload).then(x => {
+                this.stages = x.results;
+                this.resultCount = x.totalResults;
+                this.pages = Math.ceil(x.totalResults / payload.pageSize);
             });
         }
+    }
+
+    submit() {
+        this.controller.ok(this.stage.id);
+    };
+
+    cancel() {
+        this.controller.cancel();
+    };
+
+    clicked(stage) {
+        this.stage = stage;
+        this.submit();
+    }
+
+    getIcon(id: number) {
+        if (id) {
+            return this.stageQueryService.getIcon(id);
+        }
+        return null;
+    }
+
+    getPortrait(id: number) {
+        if (id) {
+            return this.stageQueryService.getPortrait(id);
+        }
+        return null;
     }
 }

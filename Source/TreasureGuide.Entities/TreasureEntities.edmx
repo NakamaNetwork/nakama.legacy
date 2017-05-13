@@ -55,7 +55,6 @@
           <Property Name="Stamina" Type="tinyint" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="Global" Type="bit" Nullable="false" />
-          <Property Name="ParentId" Type="int" />
         </EntityType>
         <EntityType Name="Teams">
           <Key>
@@ -201,18 +200,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Stages_dbo_Stages">
-          <End Role="Stages" Type="Self.Stages" Multiplicity="0..1" />
-          <End Role="Stages1" Type="Self.Stages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stages">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Stages1">
-              <PropertyRef Name="ParentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_TeamSockets_dbo_Teams">
           <End Role="Teams" Type="Self.Teams" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -304,10 +291,6 @@
             <End Role="Units" EntitySet="Units" />
             <End Role="RoundUnits" EntitySet="RoundUnits" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Stages_dbo_Stages" Association="Self.FK_dbo_Stages_dbo_Stages">
-            <End Role="Stages" EntitySet="Stages" />
-            <End Role="Stages1" EntitySet="Stages" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_TeamSockets_dbo_Teams" Association="Self.FK_dbo_TeamSockets_dbo_Teams">
             <End Role="Teams" EntitySet="Teams" />
             <End Role="TeamSockets" EntitySet="TeamSockets" />
@@ -349,11 +332,6 @@
           <EntitySet Name="Rounds" EntityType="tcdbModel.Round" />
           <EntitySet Name="RoundUnitBehaviors" EntityType="tcdbModel.RoundUnitBehavior" />
           <EntitySet Name="RoundUnits" EntityType="tcdbModel.RoundUnit" />
-          <EntitySet Name="Stages" EntityType="tcdbModel.Stage" />
-          <AssociationSet Name="FK_dbo_Rounds_dbo_Stages" Association="tcdbModel.FK_dbo_Rounds_dbo_Stages">
-            <End Role="Stage" EntitySet="Stages" />
-            <End Role="Round" EntitySet="Rounds" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_RoundUnits_dbo_Stages" Association="tcdbModel.FK_dbo_RoundUnits_dbo_Stages">
             <End Role="Round" EntitySet="Rounds" />
             <End Role="RoundUnit" EntitySet="RoundUnits" />
@@ -361,14 +339,6 @@
           <AssociationSet Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits" Association="tcdbModel.FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
             <End Role="RoundUnit" EntitySet="RoundUnits" />
             <End Role="RoundUnitBehavior" EntitySet="RoundUnitBehaviors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Teams_dbo_Stages" Association="tcdbModel.FK_dbo_Teams_dbo_Stages">
-            <End Role="Stage" EntitySet="Stages" />
-            <End Role="Team" EntitySet="Teams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Stages_dbo_Stages" Association="tcdbModel.FK_dbo_Stages_dbo_Stages">
-            <End Role="Stage" EntitySet="Stages" />
-            <End Role="Stage1" EntitySet="Stages" />
           </AssociationSet>
           <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
           <AssociationSet Name="FK_dbo_RoundUnits_dbo_Units" Association="tcdbModel.FK_dbo_RoundUnits_dbo_Units">
@@ -382,6 +352,15 @@
           <EntitySet Name="Ships" EntityType="tcdbModel.Ship" />
           <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="tcdbModel.FK_dbo_Teams_dbo_Ships">
             <End Role="Ship" EntitySet="Ships" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <EntitySet Name="Stages" EntityType="tcdbModel.Stage" />
+          <AssociationSet Name="FK_dbo_Rounds_dbo_Stages" Association="tcdbModel.FK_dbo_Rounds_dbo_Stages">
+            <End Role="Stage" EntitySet="Stages" />
+            <End Role="Round" EntitySet="Rounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Teams_dbo_Stages" Association="tcdbModel.FK_dbo_Teams_dbo_Stages">
+            <End Role="Stage" EntitySet="Stages" />
             <End Role="Team" EntitySet="Teams" />
           </AssociationSet>
         </EntityContainer>
@@ -461,9 +440,9 @@
           <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
           <Property Name="Guide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StageId" Type="Int32" />
-          <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Team" ToRole="Stage" />
           <Property Name="ShipId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ship" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Team" ToRole="Ship" />
+          <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Team" ToRole="Stage" />
         </EntityType>
         <Association Name="FK_dbo_TeamVotes_dbo_Teams">
           <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
@@ -537,8 +516,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StageId" Type="Int32" Nullable="false" />
           <Property Name="Number" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Rounds_dbo_Stages" FromRole="Round" ToRole="Stage" />
           <NavigationProperty Name="RoundUnits" Relationship="tcdbModel.FK_dbo_RoundUnits_dbo_Stages" FromRole="Round" ToRole="RoundUnit" />
+          <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Rounds_dbo_Stages" FromRole="Round" ToRole="Stage" />
         </EntityType>
         <EntityType Name="RoundUnitBehavior">
           <Key>
@@ -569,35 +548,6 @@
           <NavigationProperty Name="RoundUnitBehaviors" Relationship="tcdbModel.FK_dbo_RoundUnitBehavior_dbo_RoundUnits" FromRole="RoundUnit" ToRole="RoundUnitBehavior" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_RoundUnits_dbo_Units" FromRole="RoundUnit" ToRole="Unit" />
         </EntityType>
-        <EntityType Name="Stage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Stamina" Type="Byte" />
-          <Property Name="Type" Type="tcdbModel.StageType" Nullable="false" />
-          <Property Name="Global" Type="Boolean" Nullable="false" />
-          <Property Name="ParentId" Type="Int32" />
-          <NavigationProperty Name="Rounds" Relationship="tcdbModel.FK_dbo_Rounds_dbo_Stages" FromRole="Stage" ToRole="Round" />
-          <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Stage" ToRole="Team" />
-          <NavigationProperty Name="ChildStages" Relationship="tcdbModel.FK_dbo_Stages_dbo_Stages" FromRole="Stage" ToRole="Stage1" />
-          <NavigationProperty Name="ParentStage" Relationship="tcdbModel.FK_dbo_Stages_dbo_Stages" FromRole="Stage1" ToRole="Stage" />
-        </EntityType>
-        <Association Name="FK_dbo_Rounds_dbo_Stages">
-          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.Round" Role="Round" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stage">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Round">
-              <PropertyRef Name="StageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_RoundUnits_dbo_Stages">
           <End Type="tcdbModel.Round" Role="Round" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -623,30 +573,6 @@
             </Principal>
             <Dependent Role="RoundUnitBehavior">
               <PropertyRef Name="RoundUnitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Teams_dbo_Stages">
-          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="0..1" />
-          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stage">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Team">
-              <PropertyRef Name="StageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Stages_dbo_Stages">
-          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="0..1" />
-          <End Type="tcdbModel.Stage" Role="Stage1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stage">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Stage1">
-              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -721,6 +647,44 @@
             </Principal>
             <Dependent Role="Team">
               <PropertyRef Name="ShipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Stage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Stamina" Type="Byte" />
+          <Property Name="Type" Type="tcdbModel.StageType" Nullable="false" />
+          <Property Name="Global" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Rounds" Relationship="tcdbModel.FK_dbo_Rounds_dbo_Stages" FromRole="Stage" ToRole="Round" />
+          <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Stage" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_dbo_Rounds_dbo_Stages">
+          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.Round" Role="Round" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Round">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Teams_dbo_Stages">
+          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="0..1" />
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="StageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -808,18 +772,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Stages">
-            <EntityTypeMapping TypeName="tcdbModel.Stage">
-              <MappingFragment StoreEntitySet="Stages">
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="Global" ColumnName="Global" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Stamina" ColumnName="Stamina" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Units">
             <EntityTypeMapping TypeName="tcdbModel.Unit">
               <MappingFragment StoreEntitySet="Units">
@@ -848,6 +800,17 @@
             <EntityTypeMapping TypeName="tcdbModel.Ship">
               <MappingFragment StoreEntitySet="Ships">
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stages">
+            <EntityTypeMapping TypeName="tcdbModel.Stage">
+              <MappingFragment StoreEntitySet="Stages">
+                <ScalarProperty Name="Global" ColumnName="Global" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Stamina" ColumnName="Stamina" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

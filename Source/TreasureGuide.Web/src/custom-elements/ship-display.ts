@@ -15,8 +15,8 @@ export class ShipDisplay {
     @bindable editable = false;
     ship;
 
-    constructor(unitQueryService: ShipQueryService, dialogService: DialogService, element: Element) {
-        this.shipQueryService = unitQueryService;
+    constructor(shipQueryService: ShipQueryService, dialogService: DialogService, element: Element) {
+        this.shipQueryService = shipQueryService;
         this.element = element;
         this.dialogService = dialogService;
     }

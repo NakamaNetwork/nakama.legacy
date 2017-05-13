@@ -10,8 +10,6 @@ namespace TreasureGuide.Web.Controllers.API
 {
     public class TeamController : SearchableApiController<int, Team, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
-        private const int MAX_DEPTH = 10;
-
         public TeamController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
         {
         }
@@ -28,8 +26,8 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchTerm(results, model.Term);
             results = SearchLead(results, model.LeaderId);
             results = SearchGlobal(results, model.Global);
-            results = SearchBox(results, model.MyBox);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
+            results = SearchBox(results, model.MyBox);
             return results;
         }
 
@@ -46,15 +44,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (stageId.HasValue)
             {
-                var stages = DbContext.Stages.Where(x => x.Id == stageId);
-                var depth = 0;
-                var teamIds = Enumerable.Empty<int>();
-                while (stages.Any() && depth < MAX_DEPTH)
-                {
-                    teamIds = teamIds.Concat(stages.Select(x => x.Id));
-                    stages = stages.SelectMany(x => x.ChildStages);
-                }
-                teams = teams.Join(teamIds, x => x.Id, y => y, (x, y) => x);
+                teams = teams.Where(x => x.StageId == stageId);
             }
             return teams;
         }

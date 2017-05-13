@@ -23,8 +23,7 @@ namespace TreasureGuide.Web.Models.StageModels
         public string Name { get; set; }
         public bool Global { get; set; }
         public StageType Type { get; set; }
-
-        public StageStubModel ParentStage { get; set; }
+        
         public IEnumerable<TeamStubModel> Teams { get; set; }
     }
 
@@ -35,7 +34,5 @@ namespace TreasureGuide.Web.Models.StageModels
         public string Name { get; set; }
         public bool Global { get; set; }
         public StageType Type { get; set; }
-
-        public int? ParentId { get; set; }
     }
 }
