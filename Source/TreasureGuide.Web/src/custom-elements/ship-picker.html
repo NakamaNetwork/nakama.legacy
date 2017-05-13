@@ -9,10 +9,12 @@
         <ux-dialog-body>
             <div class="row center" if.bind="ships.length > 0">
                 <div class="ship-collection">
-                    <button repeat.for="ship of ships" class="orange" md-button="large: true" md-waves click.delegate="clicked(ship)">
-                        <i class="material-icons left">directions_boat</i>
-                        ${ship.name}
-                    </button>
+                    <div repeat.for="ship of ships" class="row">
+                        <button class="orange" md-button md-waves click.delegate="clicked(ship)">
+                            <i class="material-icons left">input</i>
+                            ${ship.name}
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="row center" if.bind="!ships || ships.length == 0">
