@@ -24,8 +24,8 @@ namespace TreasureGuide.Entities
         public int StageId { get; set; }
         public byte Number { get; set; }
     
-        public virtual Stage Stage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoundUnit> RoundUnits { get; set; }
+        public virtual Stage Stage { get; set; }
     }
 }

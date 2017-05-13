@@ -36,4 +36,5 @@ export class TeamEditorModel {
     teamUnits = new Array(6);
     teamSockets = [];
     shipId = 1;
+    stageId?: number;
 };

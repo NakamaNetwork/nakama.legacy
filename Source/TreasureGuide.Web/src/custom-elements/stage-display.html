@@ -1,0 +1,6 @@
+﻿<template>
+    <button class="secondary" md-button="large: true" md-waves click.delegate="clicked()">
+        <i class="material-icons left">${stageId ? 'turned_in' : 'turned_in_not'}</i>
+    </button>
+    ${stage.name || "Stage"}
+</template>

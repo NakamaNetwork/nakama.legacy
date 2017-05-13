@@ -50,6 +50,8 @@ namespace TreasureGuide.Web.Models.TeamModels
         [StringLength(10000)]
         public string Guide { get; set; }
         public int ShipId { get; set; }
+        public int? StageId { get; set; }
+
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
         public IEnumerable<TeamUnitEditorModel> TeamUnits { get; set; }
     }

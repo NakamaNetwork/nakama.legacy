@@ -9,6 +9,9 @@
                       md-value.bind="name & validate"></md-input>
         </div>
         <div class="row">
+            <stage-display editable="true" stage-id.two-way="stageId"></stage-display>
+        </div>
+        <div class="row">
             <team-display team.two-way="teamUnits"
                           ship.two-way="shipId"
                           editable.bind="true"></team-display>
