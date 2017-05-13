@@ -1,4 +1,5 @@
-﻿using TreasureGuide.Entities.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.ShipModels
 {
@@ -16,7 +17,5 @@ namespace TreasureGuide.Web.Models.ShipModels
     public class ShipEditorModel : IIdItem<int?>
     {
         public int? Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
     }
 }

@@ -108,21 +108,23 @@ team-display {
     overflow: hidden;
     white-space: nowrap;
 
+    &[in-line] {
+        ship-display {
+            display: none;
+        }
+    }
+
     &:not([in-line]) {
         unit-display:nth-of-type(2n):after {
             content: "";
             display: block;
         }
-    }
 
-    ship-display:after {
-        content: "";
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    &[in-line] {
-        visibility: hidden;
+        ship-display:after {
+            content: "";
+            display: block;
+            margin-bottom: 5px;
+        }
     }
 }
 

@@ -27,3 +27,13 @@ export class TeamSearchModel {
         return output;
     }
 };
+
+export class TeamEditorModel {
+    name = '';
+    description = '';
+    guide = '';
+    credits = '';
+    teamUnits = new Array(6);
+    teamSockets = [];
+    shipId = 1;
+};

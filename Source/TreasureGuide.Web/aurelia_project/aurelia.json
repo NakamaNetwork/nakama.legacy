@@ -28,7 +28,10 @@
         "id": "sass",
         "displayName": "Sass",
         "fileExtension": ".scss",
-        "source": [ "src/**/*.scss", "!src/**/_*.scss" ]
+        "source": [
+            "src/**/*.scss",
+            "!src/**/_*.scss"
+        ]
     },
     "editor": {
         "id": "visualstudio",
@@ -148,8 +151,9 @@
                     },
                     {
                         "name": "aurelia-validation",
+                        "main": "aurelia-validation",
                         "path": "../node_modules/aurelia-validation/dist/amd",
-                        "main": "aurelia-validation"
+                        "resources": []
                     }
                 ]
             },

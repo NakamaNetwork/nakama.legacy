@@ -1,26 +1,44 @@
 ﻿<template>
+    <md-colors></md-colors>
     <h1>${title}</h1>
     <div class="center" with.bind="team">
         <div class="row">
-            <md-input md-type="text" md-label="Name" md-value.bind="name"></md-input>
+            <md-input md-type="text"
+                      md-label="Name"
+                      md-char-counter="length: 250"
+                      md-value.bind="name & validate"></md-input>
         </div>
         <div class="row">
-            <team-display team.two-way="teamUnits" ship.two-way="shipId" editable.bind="true"></team-display>
+            <team-display team.two-way="teamUnits"
+                          ship.two-way="shipId"
+                          editable.bind="true"></team-display>
         </div>
         <div class="row">
             <socket-picker sockets.two-way="teamSockets"></socket-picker>
         </div>
         <div class="row">
-            <md-input md-text-area="true" md-label="Description" md-value.bind="description"></md-input>
+            <md-input md-text-area="true"
+                      md-label="Description"
+                      md-validate="true"
+                      md-char-counter="length: 1000"
+                      md-value.bind="description & validate"></md-input>
         </div>
         <div class="row">
-            <md-input md-text-area="true" md-label="Guide" md-value.bind="guide"></md-input>
+            <md-input md-text-area="true"
+                      md-label="Guide"
+                      md-char-counter="length: 10000"
+                      md-value.bind="guide & validate"></md-input>
         </div>
         <div class="row">
-            <md-input md-text-area="true" md-label="Credits" md-value.bind="credits"></md-input>
+            <md-input md-text-area="true"
+                      md-label="Credits"
+                      md-char-counter="length: 250"
+                      md-value.bind="credits & validate"></md-input>
         </div>
-        <div class="row">
-            <button md-button="large: true" md-waves click.delegate="submit()">
+        <div class="row right">
+            <button md-button="large: true"
+                    md-waves
+                    click.delegate="submit()">
                 Submit
                 <i class="material-icons right large">send</i>
             </button>

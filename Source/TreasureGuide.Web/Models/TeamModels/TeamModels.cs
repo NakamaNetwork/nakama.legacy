@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.TeamModels
@@ -36,9 +37,17 @@ namespace TreasureGuide.Web.Models.TeamModels
     public class TeamEditorModel : IIdItem<int?>
     {
         public int? Id { get; set; }
+
+        [StringLength(250, MinimumLength = 250)]
         public string Name { get; set; }
+
+        [StringLength(1000)]
         public string Description { get; set; }
+
+        [StringLength(250)]
         public string Credits { get; set; }
+
+        [StringLength(10000)]
         public string Guide { get; set; }
         public int ShipId { get; set; }
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
