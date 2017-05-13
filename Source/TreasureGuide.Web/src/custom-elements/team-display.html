@@ -1,5 +1,6 @@
 ﻿<template>
     <unit-display repeat.for="unit of teamSlots" unit-id.bind="unit" editable.bind="editable"></unit-display>
+    Ship: ${ship}
     <button if.bind="editable" md-button md-waves click.delegate="openImport()">
         <i class="material-icons left">input</i>
         Import from OPTC-DB

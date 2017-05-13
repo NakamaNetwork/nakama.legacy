@@ -10,6 +10,7 @@ export class TeamDisplay {
     private dialogService: DialogService;
 
     @bindable team: any[] = [];
+    @bindable ship: number = 0;
     @bindable editable = false;
 
     constructor(element: Element, dialogService: DialogService) {
@@ -37,7 +38,8 @@ export class TeamDisplay {
         if (this.editable) {
             this.dialogService.open({ viewModel: TeamImportView, lock: true }).whenClosed(result => {
                 if (!result.wasCancelled) {
-                    this.team = result.output;
+                    this.team = result.output.team;
+                    this.ship = result.output.ship;
                 }
             });
         }

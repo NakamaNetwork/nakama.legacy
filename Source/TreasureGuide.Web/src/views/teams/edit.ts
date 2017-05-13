@@ -17,7 +17,8 @@ export class TeamEditPage {
         guide: '',
         credits: '',
         teamUnits: [],
-        teamSockets: []
+        teamSockets: [],
+        shipId: 1
     };
 
     constructor(teamQueryService: TeamQueryService, router: Router, toast: MdToastService, inputUpdate: MdInputUpdateService) {
