@@ -34,5 +34,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<RoundUnit> RoundUnits { get; set; }
         public virtual DbSet<Stage> Stages { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<Ship> Ships { get; set; }
     }
 }

@@ -83,6 +83,8 @@
     <Build Include="dbo\Accounts\AspNetUsers.sql" />
     <Build Include="dbo\Accounts\AspNetUserTokens.sql" />
     <Build Include="dbo\Stages\Rounds.sql" />
+    <Build Include="dbo\Units\Ships.sql" />
+    <None Include="PostDeploy\ShipData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

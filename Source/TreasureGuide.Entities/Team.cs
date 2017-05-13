@@ -29,6 +29,7 @@ namespace TreasureGuide.Entities
         public string Credits { get; set; }
         public string Guide { get; set; }
         public Nullable<int> StageId { get; set; }
+        public int ShipId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamVote> TeamVotes { get; set; }
@@ -37,5 +38,6 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
         public virtual Stage Stage { get; set; }
+        public virtual Ship Ship { get; set; }
     }
 }

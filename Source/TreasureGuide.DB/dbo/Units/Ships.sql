@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Ships]
+(
+    [Id] INT NOT NULL,
+    [Name] NVARCHAR(500) NULL,
+    CONSTRAINT [PK_dbo.Ships] PRIMARY KEY CLUSTERED ([Id] ASC)
+)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TreasureGuide.Entities;
@@ -14,6 +15,10 @@ namespace TreasureGuide.Sniffer.Parsers
 
     public abstract class TreasureParser<T> : ITreasureParser
     {
+        protected static readonly Regex FunctionRegex = new Regex("function(.|\r|\n)+?}");
+        protected static readonly Regex SingleCommentRegex = new Regex("//(.+)");
+        protected static readonly Regex MultiCommentRegex = new Regex("/\\*(.|\\r|\\n)+?\\*/");
+
         protected readonly string Endpoint;
         protected readonly TreasureEntities Context;
 
@@ -34,7 +39,8 @@ namespace TreasureGuide.Sniffer.Parsers
         private async Task<T> GetData()
         {
             var stringData = await PerformRequest();
-            var trimmed = TrimData(stringData);
+            var cleaned = CleanData(stringData);
+            var trimmed = TrimData(cleaned);
             var converted = ConvertData(trimmed);
             return converted;
         }
@@ -51,6 +57,14 @@ namespace TreasureGuide.Sniffer.Parsers
                     return await streamReader.ReadToEndAsync();
                 }
             }
+        }
+
+        protected virtual string CleanData(string input)
+        {
+            input = FunctionRegex.Replace(input, "\"function\"");
+            input = MultiCommentRegex.Replace(input, "");
+            input = SingleCommentRegex.Replace(input, "");
+            return input;
         }
 
         protected virtual string TrimData(string input)

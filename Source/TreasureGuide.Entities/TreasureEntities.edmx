@@ -38,11 +38,18 @@
           <Property Name="MaxCD" Type="tinyint" />
           <Property Name="Interval" Type="tinyint" />
         </EntityType>
+        <EntityType Name="Ships">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="Stages">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" />
           <Property Name="Stamina" Type="tinyint" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
@@ -60,6 +67,7 @@
           <Property Name="Guide" Type="nvarchar(max)" />
           <Property Name="Credits" Type="nvarchar" MaxLength="250" />
           <Property Name="StageId" Type="int" />
+          <Property Name="ShipId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamSockets">
           <Key>
@@ -112,6 +120,18 @@
           <Property Name="GrowthRate" Type="decimal" Precision="2" Scale="1" />
           <Property Name="Flags" Type="smallint" Nullable="false" />
         </EntityType>
+        <Association Name="FK_dbo_Teams_dbo_Ships">
+          <End Role="Ships" Type="Self.Ships" Multiplicity="1" />
+          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ships">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teams">
+              <PropertyRef Name="ShipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Teams_dbo_Stages">
           <End Role="Stages" Type="Self.Stages" Multiplicity="0..1" />
           <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
@@ -252,12 +272,17 @@
           <EntitySet Name="Rounds" EntityType="Self.Rounds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoundUnitBehavior" EntityType="Self.RoundUnitBehavior" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoundUnits" EntityType="Self.RoundUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamSockets" EntityType="Self.TeamSockets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamUnits" EntityType="Self.TeamUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="Self.FK_dbo_Teams_dbo_Ships">
+            <End Role="Ships" EntitySet="Ships" />
+            <End Role="Teams" EntitySet="Teams" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Teams_dbo_Stages" Association="Self.FK_dbo_Teams_dbo_Stages">
             <End Role="Stages" EntitySet="Stages" />
             <End Role="Teams" EntitySet="Teams" />
@@ -353,6 +378,11 @@
             <End Role="Unit" EntitySet="Units" />
             <End Role="TeamUnit" EntitySet="TeamUnits" />
           </AssociationSet>
+          <EntitySet Name="Ships" EntityType="tcdbModel.Ship" />
+          <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="tcdbModel.FK_dbo_Teams_dbo_Ships">
+            <End Role="Ship" EntitySet="Ships" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
         </EntityContainer>
         <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
           <Member Name="Unknown" Value="0" />
@@ -431,6 +461,8 @@
           <Property Name="Guide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StageId" Type="Int32" />
           <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Team" ToRole="Stage" />
+          <Property Name="ShipId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ship" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Team" ToRole="Ship" />
         </EntityType>
         <Association Name="FK_dbo_TeamVotes_dbo_Teams">
           <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
@@ -670,6 +702,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Ship">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Ship" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_dbo_Teams_dbo_Ships">
+          <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ship">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="ShipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -687,6 +739,7 @@
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="tcdbModel.Team">
               <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="ShipId" ColumnName="ShipId" />
                 <ScalarProperty Name="StageId" ColumnName="StageId" />
                 <ScalarProperty Name="Guide" ColumnName="Guide" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -784,6 +837,14 @@
                 <ScalarProperty Name="Stars" ColumnName="Stars" />
                 <ScalarProperty Name="Class" ColumnName="Class" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ships">
+            <EntityTypeMapping TypeName="tcdbModel.Ship">
+              <MappingFragment StoreEntitySet="Ships">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

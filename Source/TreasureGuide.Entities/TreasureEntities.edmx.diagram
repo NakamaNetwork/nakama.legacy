@@ -6,24 +6,26 @@
     <edmx:Diagrams>
       <Diagram DiagramId="15b9edd1340940f481faacdd9b6411bb" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="tcdbModel.TeamVote" Width="1.5" PointX="9.5" PointY="3.25" />
-        <EntityTypeShape EntityType="tcdbModel.Team" Width="1.5" PointX="7.125" PointY="0.5" />
+        <EntityTypeShape EntityType="tcdbModel.Team" Width="1.5" PointX="7.25" PointY="0.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" />
         <EntityTypeShape EntityType="tcdbModel.TeamSocket" Width="1.5" PointX="9.5" PointY="0.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" />
-        <EntityTypeShape EntityType="tcdbModel.TeamUnit" Width="1.5" PointX="4.75" PointY="0.5" />
+        <EntityTypeShape EntityType="tcdbModel.TeamUnit" Width="1.5" PointX="5" PointY="0.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" />
-        <EntityTypeShape EntityType="tcdbModel.Round" Width="1.5" PointX="2.5" PointY="6.25" />
+        <EntityTypeShape EntityType="tcdbModel.Round" Width="1.5" PointX="2.75" PointY="6.25" />
         <EntityTypeShape EntityType="tcdbModel.RoundUnitBehavior" Width="1.5" PointX="0.5" PointY="8.25" />
         <EntityTypeShape EntityType="tcdbModel.RoundUnit" Width="1.5" PointX="0.5" PointY="3.625" />
-        <EntityTypeShape EntityType="tcdbModel.Stage" Width="1.5" PointX="7.125" PointY="5.25" />
+        <EntityTypeShape EntityType="tcdbModel.Stage" Width="1.5" PointX="7.25" PointY="5.25" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Rounds_dbo_Stages" />
         <AssociationConnector Association="tcdbModel.FK_dbo_RoundUnits_dbo_Stages" />
         <AssociationConnector Association="tcdbModel.FK_dbo_RoundUnitBehavior_dbo_RoundUnits" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Stages" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Stages_dbo_Stages" />
-        <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="2.5" PointY="0.5" />
+        <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="2.75" PointY="0.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_RoundUnits_dbo_Units" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units" />
+        <EntityTypeShape EntityType="tcdbModel.Ship" Width="1.5" PointX="5" PointY="3.5" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Ships" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
