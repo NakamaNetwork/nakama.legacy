@@ -8,5 +8,7 @@ namespace TreasureGuide.Entities
 
     public partial class Stage : IIdItem<int> { }
 
+    public partial class Ship : IIdItem<int> { }
+
     public partial class Round : IIdItem<int> { }
 }

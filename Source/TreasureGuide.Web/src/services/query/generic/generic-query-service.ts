@@ -35,7 +35,7 @@ export abstract class GenericApiQueryService {
 
     protected buildAddress(endpoint: string, id?): string {
         var address = 'api/' + this.controller;
-        if (id) {
+        if (id !== null && id !== undefined) {
             address += '/' + id;
         }
         if (endpoint) {

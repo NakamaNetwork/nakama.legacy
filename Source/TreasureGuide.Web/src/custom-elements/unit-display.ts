@@ -35,7 +35,7 @@ export class UnitDisplay {
         return this.unitQueryService.getIcon(this.unitId);
     }
 
-    unitClicked() {
+    clicked() {
         if (this.editable) {
             this.dialogService.open({ viewModel: UnitPicker, model: { unitId: this.unitId }, lock: true }).whenClosed(result => {
                 if (!result.wasCancelled) {

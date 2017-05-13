@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
 using TreasureGuide.Entities;
+using TreasureGuide.Web.Models.ShipModels;
 using TreasureGuide.Web.Models.StageModels;
 using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Models.UnitModels;
@@ -15,6 +14,7 @@ namespace TreasureGuide.Web.Configurations
         {
             var config = new MapperConfiguration(mapper =>
             {
+                var ship = mapper.CreateControllerMapping<Ship, ShipDetailModel, ShipStubModel, ShipEditorModel>();
                 var unit = mapper.CreateControllerMapping<Unit, UnitDetailModel, UnitStubModel, UnitEditorModel>();
 
                 var teamUnit = mapper.CreateControllerMapping<TeamUnit, TeamUnitDetailModel, TeamUnitStubModel, TeamUnitEditorModel>();

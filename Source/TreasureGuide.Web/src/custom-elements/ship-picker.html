@@ -1,0 +1,26 @@
+﻿<template>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="right">
+                <a click.delegate="cancel()" md-button="flat: true;" class="modal-action">X</a>
+            </div>
+            <h3>Select a Ship</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <div class="row center" if.bind="ships.length > 0">
+                <div class="ship-collection">
+                    <button repeat.for="ship of ships" class="orange" md-button="large: true" md-waves click.delegate="clicked(ship)">
+                        <i class="material-icons left">directions_boat</i>
+                        ${ship.name}
+                    </button>
+                </div>
+            </div>
+            <div class="row center" if.bind="!ships || ships.length == 0">
+                <h3>Search yielded no results!</h3>
+            </div>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
+        </ux-dialog-footer>
+    </ux-dialog>
+</template>

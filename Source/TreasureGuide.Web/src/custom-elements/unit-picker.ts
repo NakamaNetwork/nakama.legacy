@@ -55,7 +55,7 @@ export class UnitPicker {
         this.controller.cancel();
     };
 
-    unitClicked(unit) {
+    clicked(unit) {
         this.unit = unit;
         this.submit();
     }
