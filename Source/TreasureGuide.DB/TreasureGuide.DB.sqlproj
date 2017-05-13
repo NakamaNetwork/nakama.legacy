@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{d7edb441-e679-412b-924c-303463a61847}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -85,9 +85,10 @@
     <Build Include="dbo\Stages\Rounds.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TreasureGuide.DB.publish.xml" />
+    <None Include="publish.local.xml" />
     <PostDeploy Include="PostDeploy.sql" />
     <None Include="PostDeploy\AuthData.sql" />
+    <None Include="publish.staging.xml" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TreasureGuide.DB.refactorlog" />

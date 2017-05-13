@@ -1,3 +1,6 @@
+#Publish Profiles
+publish.*.xml
+
 #Database Crap
 *.jfm
 
