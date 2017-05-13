@@ -26,7 +26,8 @@ namespace TreasureGuide.Sniffer.Parsers
                 var ship = new Ship
                 {
                     Id = id,
-                    Name = line["name"].ToString()
+                    Name = line["name"].ToString(),
+                    Description = line["description"].ToString()
                 };
                 return ship;
             });

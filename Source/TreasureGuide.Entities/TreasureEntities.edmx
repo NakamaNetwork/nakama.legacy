@@ -44,6 +44,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Stages">
           <Key>
@@ -709,6 +710,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Ship" ToRole="Team" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
@@ -845,6 +847,7 @@
           <EntitySetMapping Name="Ships">
             <EntityTypeMapping TypeName="tcdbModel.Ship">
               <MappingFragment StoreEntitySet="Ships">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
