@@ -114,6 +114,16 @@ team-display {
             display: block;
         }
     }
+
+    ship-display:after {
+        content: "";
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    &[in-line] {
+        visibility: hidden;
+    }
 }
 
 ux-dialog-overlay.active {
@@ -122,8 +132,8 @@ ux-dialog-overlay.active {
 }
 
 ux-dialog-container {
-    & > div{
-        @media #{$medium-and-down}{
+    & > div {
+        @media #{$medium-and-down} {
             padding: 2px;
         }
     }
