@@ -85,10 +85,10 @@
     <Build Include="dbo\Stages\Rounds.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="publish.local.xml" />
+    <None Include="_local.publish.xml" />
     <PostDeploy Include="PostDeploy.sql" />
     <None Include="PostDeploy\AuthData.sql" />
-    <None Include="publish.staging.xml" />
+    <None Include="_staging.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TreasureGuide.DB.refactorlog" />
