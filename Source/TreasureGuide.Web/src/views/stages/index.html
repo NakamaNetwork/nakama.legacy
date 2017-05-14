@@ -36,6 +36,10 @@
                         <i class="material-icons">${stage.global ? 'language' : ''}</i>
                     </td>
                     <td>
+                        <a md-button md-waves route-href="route: stageDetails; params.bind: {id: team.id}">
+                            <i class="material-icons left">visibility</i>
+                            Details
+                        </a>
                         <a md-button md-waves route-href="route: stageEdit; params.bind: {id: stage.id}">
                             <i class="material-icons left">mode_edit</i>
                             Edit

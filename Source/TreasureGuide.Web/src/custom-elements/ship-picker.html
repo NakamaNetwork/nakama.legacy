@@ -7,14 +7,12 @@
             <h3>Select a Ship</h3>
         </ux-dialog-header>
         <ux-dialog-body>
-            <div class="row center" if.bind="ships.length > 0">
-                <div class="ship-collection">
-                    <div repeat.for="ship of ships" class="row">
-                        <button class="orange" md-button md-waves click.delegate="clicked(ship)">
-                            <i class="material-icons left">input</i>
-                            ${ship.name}
-                        </button>
-                    </div>
+            <div class="row" if.bind="ships.length > 0">
+                <div class="collection">
+                    <a href repeat.for="ship of ships" click.delegate="clicked(ship.id)" class="${'collection-item ' + (shipId === ship.id ? 'active' : '')}">
+                        <i class="circle material-icons primary-text left">directions_boat</i>
+                        <span class="title">${ship.name}</span>
+                    </a>
                 </div>
             </div>
             <div class="row center" if.bind="!ships || ships.length == 0">

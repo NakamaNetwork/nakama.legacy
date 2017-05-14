@@ -1,7 +1,7 @@
 ﻿<template>
     <md-colors></md-colors>
     <h1>${title}</h1>
-    <div class="center" with.bind="team">
+    <div with.bind="team">
         <div class="row">
             <md-input md-type="text"
                       md-label="Name"
@@ -11,12 +11,12 @@
         <div class="row">
             <stage-display editable="true" stage-id.two-way="stageId"></stage-display>
         </div>
-        <div class="row">
+        <div class="row center">
             <team-display team.two-way="teamUnits"
                           ship.two-way="shipId"
                           editable.bind="true"></team-display>
         </div>
-        <div class="row">
+        <div class="row center">
             <socket-picker sockets.two-way="teamSockets"></socket-picker>
         </div>
         <div class="row">

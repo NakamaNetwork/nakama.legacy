@@ -48,15 +48,15 @@ export class UnitPicker {
     }
 
     submit() {
-        this.controller.ok(this.unit.id);
+        this.controller.ok(this.unitId);
     };
 
     cancel() {
         this.controller.cancel();
     };
 
-    clicked(unit) {
-        this.unit = unit;
+    clicked(unitId) {
+        this.unitId = unitId;
         this.submit();
     }
 

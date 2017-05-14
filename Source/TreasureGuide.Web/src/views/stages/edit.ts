@@ -44,7 +44,7 @@ export class StageEditPage {
     submit() {
         this.stageQueryService.save(this.stage).then(results => {
             this.toast.show('Successfully saved ' + this.stage.name + ' to server!', 2000);
-            this.router.navigateToRoute('stageEdit', { id: results });
+            this.router.navigateToRoute('stageDetails', { id: results });
         }).catch(results => {
             console.error(results);
         });
