@@ -8,6 +8,10 @@ body {
     flex-direction: column;
 }
 
+i {
+    vertical-align: middle;
+}
+
 .pagination {
     li {
         a {
@@ -60,6 +64,15 @@ $default-unit-margin: $huge-unit-margin;
             width: $medium-unit-size;
             margin: $medium-unit-margin;
         }
+    }
+}
+
+.actions {
+    text-align: center;
+
+    .btn,
+    .btn-floating {
+        margin: 2px;
     }
 }
 

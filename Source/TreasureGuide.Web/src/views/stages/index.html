@@ -7,17 +7,23 @@
         </a>
     </div>
     <div class="row">
-        <table class="striped">
+        <table class="striped responsive-table">
             <thead>
                 <tr>
                     <th>
                         Id
                     </th>
                     <th>
+                        Global
+                    </th>
+                    <th>
                         Name
                     </th>
                     <th>
-                        Units
+                        Type
+                    </th>
+                    <th>
+                        Teams
                     </th>
                     <th>
                         Actions
@@ -30,19 +36,23 @@
                         ${stage.id}
                     </td>
                     <td>
-                        ${stage.name}
-                    </td>
-                    <td>
                         <i class="material-icons">${stage.global ? 'language' : ''}</i>
                     </td>
                     <td>
-                        <a md-button md-waves route-href="route: stageDetails; params.bind: {id: team.id}">
+                        ${stage.name}
+                    </td>
+                    <td>
+                        ${stage.type}
+                    </td>
+                    <td>
+                        ${stage.teamCount}
+                    </td>
+                    <td class="actions">
+                        <a md-button="floating: true" md-waves route-href="route: stageDetails; params.bind: {id: stage.id}">
                             <i class="material-icons left">visibility</i>
-                            Details
                         </a>
-                        <a md-button md-waves route-href="route: stageEdit; params.bind: {id: stage.id}">
+                        <a md-button="floating: true" md-waves route-href="route: stageEdit; params.bind: {id: stage.id}">
                             <i class="material-icons left">mode_edit</i>
-                            Edit
                         </a>
                     </td>
                 </tr>

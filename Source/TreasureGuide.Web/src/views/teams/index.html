@@ -37,7 +37,7 @@
     </div>
     <div class="row" if.bind="teams.length > 0">
         <p>${((searchModel.page - 1) * searchModel.pageSize) + 1} - ${((searchModel.page - 1) * searchModel.pageSize) + teams.length} of ${resultCount}</p>
-        <table class="striped">
+        <table class="striped responsive-table">
             <thead>
                 <tr>
                     <th>
@@ -71,14 +71,12 @@
                     <td>
                         <stage-display stage-id.bind="team.stageId"></stage-display>
                     </td>
-                    <td>
-                        <a md-button md-waves route-href="route: teamDetails; params.bind: {id: team.id}">
+                    <td class="actions">
+                        <a md-button="floating: true" md-waves route-href="route: teamDetails; params.bind: {id: team.id}">
                             <i class="material-icons left">visibility</i>
-                            Details
                         </a>
-                        <a md-button md-waves route-href="route: teamEdit; params.bind: {id: team.id}">
+                        <a md-button="floating: true" md-waves route-href="route: teamEdit; params.bind: {id: team.id}">
                             <i class="material-icons left">mode_edit</i>
-                            Edit
                         </a>
                     </td>
                 </tr>

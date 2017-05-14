@@ -1,10 +1,10 @@
 ﻿<template>
     <button if.bind="editable" md-button="large: true" md-waves click.delegate="clicked()">
-        <i class="material-icons left">${stageId ? 'turned_in' : 'turned_in_not'}</i>
+        <i class="material-icons">${stageId ? 'turned_in' : 'turned_in_not'}</i>
         ${stageId ? stage.name : 'Select Stage'}
     </button>
     <span if.bind="!editable">
-        <i class="material-icons left">${stage ? 'turned_in' : 'turned_in_not'}</i>
+        <i class="material-icons">${stage ? 'turned_in' : 'turned_in_not'}</i>
         ${stageId ? stage.name : 'Any Stage'}
     </span>
 </template>
