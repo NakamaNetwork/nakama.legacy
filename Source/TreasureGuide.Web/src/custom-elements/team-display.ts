@@ -24,6 +24,12 @@ export class TeamDisplay {
             return !x.sub;
         }).sort((a, b) => {
             return a.position - b.position;
+        }).map(x => {
+            if (x.unitId !== undefined) {
+                return x;
+            } else {
+                return { unitId: x };
+            }
         });
     }
 
