@@ -72,6 +72,10 @@
                         <stage-display stage-id.bind="team.stageId"></stage-display>
                     </td>
                     <td>
+                        <a md-button md-waves route-href="route: teamDetails; params.bind: {id: team.id}">
+                            <i class="material-icons left">visibility</i>
+                            Details
+                        </a>
                         <a md-button md-waves route-href="route: teamEdit; params.bind: {id: team.id}">
                             <i class="material-icons left">mode_edit</i>
                             Edit

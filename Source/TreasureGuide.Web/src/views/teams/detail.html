@@ -1,0 +1,29 @@
+﻿<template>
+    <md-colors></md-colors>
+    <h1>${title}</h1>
+    <div with.bind="team">
+        <div class="row">
+            <p>${name}</p>
+        </div>
+        <div class="row">
+            <stage-display stage-id.bind="stageId"></stage-display>
+        </div>
+        <div class="row center">
+            <team-display team.bind="teamUnits"
+                           ship.bind="shipId">
+            </team-display>
+        </div>
+        <div class="row">
+            <socket-picker sockets.two-way="teamSockets"></socket-picker>
+        </div>
+        <div class="row">
+            <p>${description}</p>
+        </div>
+        <div class="row">
+            <p>${credits}</p>
+        </div>
+        <div class="row">
+            <p>${guide}</p>
+        </div>
+    </div>
+</template>

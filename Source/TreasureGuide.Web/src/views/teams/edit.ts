@@ -50,7 +50,7 @@ export class TeamEditPage {
             if (x.valid) {
                 this.teamQueryService.save(this.team).then(results => {
                     this.toast.show('Successfully saved ' + this.team.name + ' to server!', 5000);
-                    this.router.navigateToRoute('teamEdit', { id: results });
+                    this.router.navigateToRoute('teamDetails', { id: results });
                 }).catch(results => {
                     console.error(results);
                 });
