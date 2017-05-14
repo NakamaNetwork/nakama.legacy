@@ -13,6 +13,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public int Score { get; set; }
         public bool Global { get; set; }
         public int ShipId { get; set; }
+        public int? StageId { get; set; }
 
         public IEnumerable<int> TeamUnits { get; set; }
     }
@@ -29,6 +30,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string Credits { get; set; }
         public bool Global { get; set; }
         public int ShipId { get; set; }
+        public int? StageId { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
