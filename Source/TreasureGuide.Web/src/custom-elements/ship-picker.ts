@@ -30,15 +30,15 @@ export class ShipPicker {
     }
 
     submit() {
-        this.controller.ok(this.ship.id);
+        this.controller.ok(this.shipId);
     };
 
     cancel() {
         this.controller.cancel();
     };
 
-    clicked(ship) {
-        this.ship = ship;
+    clicked(shipId) {
+        this.shipId = shipId;
         this.submit();
     }
 

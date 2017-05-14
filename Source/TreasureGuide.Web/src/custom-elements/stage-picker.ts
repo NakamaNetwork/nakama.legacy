@@ -48,15 +48,15 @@ export class StagePicker {
     }
 
     submit() {
-        this.controller.ok(this.stage.id);
+        this.controller.ok(this.stageId);
     };
 
     cancel() {
         this.controller.cancel();
     };
 
-    clicked(stage) {
-        this.stage = stage;
+    clicked(stageId) {
+        this.stageId = stageId;
         this.submit();
     }
 

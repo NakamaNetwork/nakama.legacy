@@ -9,7 +9,7 @@
         <ux-dialog-body>
             <div class="row" if.bind="ships.length > 0">
                 <div class="collection">
-                    <a href repeat.for="ship of ships" click.delegate="clicked(ship)" class="${'collection-item ' + (shipId === ship.id ? 'active' : '')}">
+                    <a href repeat.for="ship of ships" click.delegate="clicked(ship.id)" class="${'collection-item ' + (shipId === ship.id ? 'active' : '')}">
                         <i class="circle material-icons primary-text left">directions_boat</i>
                         <span class="title">${ship.name}</span>
                     </a>
