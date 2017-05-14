@@ -35,9 +35,9 @@ namespace TreasureGuide.Entities
         public virtual ICollection<TeamVote> TeamVotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamSocket> TeamSockets { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
         public virtual Ship Ship { get; set; }
         public virtual Stage Stage { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
     }
 }

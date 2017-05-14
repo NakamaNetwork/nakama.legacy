@@ -16,7 +16,7 @@ namespace TreasureGuide.Entities
     {
         public int TeamId { get; set; }
         public int UnitId { get; set; }
-        public Nullable<byte> Position { get; set; }
+        public byte Position { get; set; }
         public Nullable<byte> SpecialLevel { get; set; }
         public bool Sub { get; set; }
     
