@@ -7,7 +7,7 @@ import { ShipQueryService } from '../services/query/ship-query-service';
 export class ShipPicker {
     private controller: DialogController;
     private shipQueryService: ShipQueryService;
-    @bindable unitId = 0;
+    @bindable shipId = 0;
 
     ship;
     ships: any[];
@@ -26,7 +26,7 @@ export class ShipPicker {
     }
 
     activate(viewModel) {
-        this.unitId = viewModel.unitId;
+        this.shipId = viewModel.shipId;
     }
 
     submit() {

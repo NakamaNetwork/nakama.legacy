@@ -23,15 +23,15 @@
             <div class="row center" if.bind="pages > 1">
                 <md-pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
             </div>
-            <div class="row center" if.bind="stages.length > 0">
-                <p>${((searchModel.page - 1) * searchModel.pageSize) +1} - ${((searchModel.page - 1) * searchModel.pageSize) + stages.length} of ${resultCount}</p>
-                <div class="stage-collection">
-                    <div class="col md-6" repeat.for="stage of stages">
-                        <button class="grey stage-button" md-button="large: true" md-waves click.delegate="clicked(stage)">
-                            <i class="material-icons">turned_in</i>
-                        </button>
-                        ${stage.name}
-                    </div>
+            <div class="row" if.bind="stages.length > 0">
+                <div class="center">
+                    <p>${((searchModel.page - 1) * searchModel.pageSize) +1} - ${((searchModel.page - 1) * searchModel.pageSize) + stages.length} of ${resultCount}</p>
+                </div>
+                <div class="collection">
+                    <a href repeat.for="stage of stages" click.delegate="clicked(stage)" class="${'collection-item ' + (stageId === stage.id ? 'active' : '')}">
+                        <i class="circle material-icons primary-text left">turned_in</i>
+                        <span class="title">${stage.name}</span>
+                    </a>
                 </div>
             </div>
             <div class="row center" if.bind="!stages || stages.length == 0">
