@@ -6,7 +6,7 @@ import { SearchableQueryService } from './generic/searchable-query-service';
 @autoinject
 export class StageQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
-        super('stage', http);
+        super('stage', http, true);
     }
 }
 

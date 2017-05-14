@@ -6,7 +6,7 @@ import { SearchableQueryService } from './generic/searchable-query-service';
 @autoinject
 export class UnitQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
-        super('unit', http);
+        super('unit', http, true);
     }
 
     getIcon(unitId: number) {

@@ -5,7 +5,7 @@ import { GenericApiQueryService } from './generic/generic-query-service';
 @autoinject
 export class ShipQueryService extends GenericApiQueryService {
     constructor(http: HttpEngine) {
-        super('ship', http);
+        super('ship', http, true);
     }
 
     getIcon(unitId: number) {

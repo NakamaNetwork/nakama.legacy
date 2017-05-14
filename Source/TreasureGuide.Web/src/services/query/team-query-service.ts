@@ -6,7 +6,7 @@ import { SearchableQueryService } from './generic/searchable-query-service';
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
-        super('team', http);
+        super('team', http, false);
     }
 }
 

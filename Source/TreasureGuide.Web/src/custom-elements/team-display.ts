@@ -20,18 +20,11 @@ export class TeamDisplay {
 
     @computedFrom('team')
     get teamSlots() {
-        var slots = new Array(6);
-        if (this.team) {
-            this.team.filter(x => {
-                return !x.sub;
-            }).sort((a, b) => {
-                return a.position - b.position;
-            }).forEach((x, i) => {
-                var id = x.unitId || x;
-                slots.splice(i, 1, id);
-            });
-        }
-        return slots;
+        return this.team.filter(x => {
+            return !x.sub;
+        }).sort((a, b) => {
+            return a.position - b.position;
+        });
     }
 
     openImport() {

@@ -2,8 +2,8 @@
 import { HttpEngine } from '../../../tools/http-engine';
 
 export class SearchableQueryService extends GenericApiQueryService {
-    constructor(controller: string, http: HttpEngine) {
-        super(controller, http);
+    constructor(controller: string, http: HttpEngine, cached?: boolean) {
+        super(controller, http, cached);
     }
 
     getIcon(unitId: number) {
