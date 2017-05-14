@@ -13,7 +13,7 @@ namespace TreasureGuide.Web.Controllers.API
         public TeamController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
         {
         }
-
+        
         protected override Team PostProcess(Team entity)
         {
             entity.SubmittedById = "Anonymous";

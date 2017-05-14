@@ -10,7 +10,7 @@ namespace TreasureGuide.Web.Models.TeamModels
     public class TeamUnitDetailModel
     {
         public int UnitId { get; set; }
-        public byte? Position { get; set; }
+        public byte Position { get; set; }
         public byte? SpecialLevel { get; set; }
         public bool Sub { get; set; }
     }
@@ -18,7 +18,7 @@ namespace TreasureGuide.Web.Models.TeamModels
     public class TeamUnitEditorModel
     {
         public int UnitId { get; set; }
-        public byte? Position { get; set; }
+        public byte Position { get; set; }
         public byte? SpecialLevel { get; set; }
         public bool Sub { get; set; }
     }

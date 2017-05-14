@@ -82,10 +82,11 @@
           <Key>
             <PropertyRef Name="TeamId" />
             <PropertyRef Name="UnitId" />
+            <PropertyRef Name="Position" />
           </Key>
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="UnitId" Type="int" Nullable="false" />
-          <Property Name="Position" Type="tinyint" />
+          <Property Name="Position" Type="tinyint" Nullable="false" />
           <Property Name="SpecialLevel" Type="tinyint" />
           <Property Name="Sub" Type="bit" Nullable="false" />
         </EntityType>
@@ -324,11 +325,6 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamSocket" EntitySet="TeamSockets" />
           </AssociationSet>
-          <EntitySet Name="TeamUnits" EntityType="tcdbModel.TeamUnit" />
-          <AssociationSet Name="FK_dbo_TeamUnits_dbo_Teams" Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams">
-            <End Role="Team" EntitySet="Teams" />
-            <End Role="TeamUnit" EntitySet="TeamUnits" />
-          </AssociationSet>
           <EntitySet Name="Rounds" EntityType="tcdbModel.Round" />
           <EntitySet Name="RoundUnitBehaviors" EntityType="tcdbModel.RoundUnitBehavior" />
           <EntitySet Name="RoundUnits" EntityType="tcdbModel.RoundUnit" />
@@ -345,10 +341,6 @@
             <End Role="Unit" EntitySet="Units" />
             <End Role="RoundUnit" EntitySet="RoundUnits" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="TeamUnit" EntitySet="TeamUnits" />
-          </AssociationSet>
           <EntitySet Name="Ships" EntityType="tcdbModel.Ship" />
           <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="tcdbModel.FK_dbo_Teams_dbo_Ships">
             <End Role="Ship" EntitySet="Ships" />
@@ -362,6 +354,15 @@
           <AssociationSet Name="FK_dbo_Teams_dbo_Stages" Association="tcdbModel.FK_dbo_Teams_dbo_Stages">
             <End Role="Stage" EntitySet="Stages" />
             <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <EntitySet Name="TeamUnits" EntityType="tcdbModel.TeamUnit" />
+          <AssociationSet Name="FK_dbo_TeamUnits_dbo_Teams" Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamUnit" EntitySet="TeamUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="TeamUnit" EntitySet="TeamUnits" />
           </AssociationSet>
         </EntityContainer>
         <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
@@ -437,12 +438,12 @@
           <Property Name="Credits" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="Team" ToRole="TeamVote" />
           <NavigationProperty Name="TeamSockets" Relationship="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" FromRole="Team" ToRole="TeamSocket" />
-          <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
           <Property Name="Guide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StageId" Type="Int32" />
           <Property Name="ShipId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ship" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Team" ToRole="Ship" />
           <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Team" ToRole="Stage" />
+          <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
         </EntityType>
         <Association Name="FK_dbo_TeamVotes_dbo_Teams">
           <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
@@ -478,33 +479,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="TeamSocket">
-              <PropertyRef Name="TeamId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TeamUnit">
-          <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="UnitId" />
-          </Key>
-          <Property Name="TeamId" Type="Int32" Nullable="false" />
-          <Property Name="UnitId" Type="Int32" Nullable="false" />
-          <Property Name="Position" Type="Byte" />
-          <Property Name="SpecialLevel" Type="Byte" />
-          <Property Name="Sub" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="TeamUnit" ToRole="Team" />
-          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="TeamUnit" ToRole="Unit" />
-        </EntityType>
-        <Association Name="FK_dbo_TeamUnits_dbo_Teams">
-          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.TeamUnit" Role="TeamUnit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Team">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TeamUnit">
               <PropertyRef Name="TeamId" />
             </Dependent>
           </ReferentialConstraint>
@@ -615,20 +589,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_TeamUnits_dbo_Units">
-          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.TeamUnit" Role="TeamUnit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TeamUnit">
-              <PropertyRef Name="UnitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Ship">
           <Key>
             <PropertyRef Name="Id" />
@@ -688,6 +648,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TeamUnit">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="Position" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="Position" Type="Byte" Nullable="false" />
+          <Property Name="SpecialLevel" Type="Byte" />
+          <Property Name="Sub" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="TeamUnit" ToRole="Team" />
+          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="TeamUnit" ToRole="Unit" />
+        </EntityType>
+        <Association Name="FK_dbo_TeamUnits_dbo_Teams">
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamUnit" Role="TeamUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamUnit">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamUnits_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamUnit" Role="TeamUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamUnit">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -721,17 +723,6 @@
               <MappingFragment StoreEntitySet="TeamSockets">
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="SocketType" ColumnName="SocketType" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TeamUnits">
-            <EntityTypeMapping TypeName="tcdbModel.TeamUnit">
-              <MappingFragment StoreEntitySet="TeamUnits">
-                <ScalarProperty Name="Sub" ColumnName="Sub" />
-                <ScalarProperty Name="SpecialLevel" ColumnName="SpecialLevel" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -813,6 +804,17 @@
                 <ScalarProperty Name="Stamina" ColumnName="Stamina" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamUnits">
+            <EntityTypeMapping TypeName="tcdbModel.TeamUnit">
+              <MappingFragment StoreEntitySet="TeamUnits">
+                <ScalarProperty Name="Sub" ColumnName="Sub" />
+                <ScalarProperty Name="SpecialLevel" ColumnName="SpecialLevel" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
