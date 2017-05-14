@@ -2,15 +2,19 @@
     <h1>${title}</h1>
     <form with.bind="stage">
         <div class="row">
+            <h2>Name</h2>
             <p>${name}</p>
         </div>
         <div class="row">
+            <h2>Global</h2>
             <i if.bind="global">language</i>
         </div>
         <div class="row">
-            <p>${type.name}</p>
+            <h2>Type</h2>
+            <p>${type}</p>
         </div>
         <div class="row">
+            <h2>Stamina</h2>
             <p>${stamina}</p>
         </div>
     </form>
