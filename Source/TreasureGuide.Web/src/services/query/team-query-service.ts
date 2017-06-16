@@ -1,4 +1,4 @@
-﻿import { computedFrom } from 'aurelia-framework';
+﻿import { bindable, computedFrom } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
@@ -38,8 +38,14 @@ export class TeamEditorModel {
     description = '';
     guide = '';
     credits = '';
-    teamUnits = new Array(6);
+    teamUnits = [];
     teamSockets = [];
     shipId = 1;
     stageId?: number;
+
+    constructor() {
+        for (var i = 0; i < 6; i++) {
+            this.teamUnits.push({ unitId: 0, position: i });
+        }
+    }
 };
