@@ -12,11 +12,17 @@ export class TeamIndexPage {
     pages = 0;
 
     searchModel = new TeamSearchModel();
+    searchTimer;
 
     constructor(teamQueryService: TeamQueryService, bindingEngine: BindingEngine) {
         this.teamQueryService = teamQueryService;
         bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-            this.search(n);
+            if (this.searchTimer) {
+                clearTimeout(this.searchTimer);
+            }
+            this.searchTimer = setTimeout(() => {
+                this.search(n);
+            }, 500);
         });
         this.search(this.searchModel.payload);
     }
