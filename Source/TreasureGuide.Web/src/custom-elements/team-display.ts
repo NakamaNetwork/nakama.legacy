@@ -20,6 +20,9 @@ export class TeamDisplay {
 
     @computedFrom('team')
     get teamSlots() {
+        if (!this.team) {
+            this.team = [];
+        }
         var mainUnits = this.team.filter(x => {
             return !x.sub;
         });

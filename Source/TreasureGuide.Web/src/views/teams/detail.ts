@@ -8,7 +8,7 @@ export class TeamDetailPage {
     private router: Router;
 
     title = 'Team Details';
-    team;
+    team = [];
 
     constructor(teamQueryService: TeamQueryService, router: Router) {
         this.teamQueryService = teamQueryService;
