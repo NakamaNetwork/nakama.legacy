@@ -1,10 +1,10 @@
 {
   "name": "nakama",
-  "description": "Treasure Cruise team database.",
+  "description": "Treasure Cruise Team Database.",
   "version": "0.1.0",
   "repository": {
-    "type": "???",
-    "url": "???"
+    "type": "git",
+    "url": "https://github.com/RoboCafaz/TreasureGuide"
   },
   "license": "MIT",
   "dependencies": {
