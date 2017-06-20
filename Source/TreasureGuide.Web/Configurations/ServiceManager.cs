@@ -30,10 +30,12 @@ namespace TreasureGuide.Web.Configurations
             services.AddScoped<TreasureEntities>(x => new TreasureEntities(configuration.GetConnectionString("TreasureEntities")));
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ISmsSender, SmsSender>();
+            services.AddTransient<IThrottleService, ThrottleService>();
 
             services.AddSingleton<IMapper>(x => MapperConfig.Create());
+            services.AddMemoryCache();
         }
     }
 }

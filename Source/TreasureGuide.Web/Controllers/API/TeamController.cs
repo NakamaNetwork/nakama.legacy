@@ -1,23 +1,42 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.TeamModels;
+using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
 {
     public class TeamController : SearchableApiController<int, Team, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
-        public TeamController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
+        private readonly IThrottleService _throttleService;
+
+        public TeamController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttleService) : base(dbContext, autoMapper)
         {
+            _throttleService = throttleService;
         }
         
         protected override Team PostProcess(Team entity)
         {
             entity.SubmittedById = "Anonymous";
             return base.PostProcess(entity);
+        }
+
+        protected override async Task<object> PerformPost(TeamEditorModel model, int? id = null)
+        {
+            if (_throttleService.CanAccess(Request))
+            {
+                return await base.PerformPost(model, id);
+            }
+            else
+            {
+                return StatusCode((int) HttpStatusCode.Conflict, "Slow down, please.");
+            }
         }
 
         protected override IQueryable<Team> PerformSearch(IQueryable<Team> results, TeamSearchModel model)
