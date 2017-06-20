@@ -15,7 +15,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public int ShipId { get; set; }
         public int? StageId { get; set; }
 
-        public IEnumerable<int> TeamUnits { get; set; }
+        public IEnumerable<TeamUnitStubModel> TeamUnits { get; set; }
     }
 
     public class TeamDetailModel : IIdItem<int>

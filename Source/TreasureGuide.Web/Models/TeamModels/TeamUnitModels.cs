@@ -5,6 +5,7 @@ namespace TreasureGuide.Web.Models.TeamModels
     public class TeamUnitStubModel
     {
         public int UnitId { get; set; }
+        public byte Position { get; set; }
     }
 
     public class TeamUnitDetailModel

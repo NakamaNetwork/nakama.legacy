@@ -20,17 +20,21 @@ export class TeamDisplay {
 
     @computedFrom('team')
     get teamSlots() {
-        return this.team.filter(x => {
+        var mainUnits = this.team.filter(x => {
             return !x.sub;
-        }).sort((a, b) => {
-            return a.position - b.position;
-        }).map(x => {
-            if (x.unitId !== undefined) {
-                return x;
-            } else {
-                return { unitId: x };
-            }
         });
+        var slots = [];
+        for (var i = 0; i < 6; i++) {
+            var unit = mainUnits.find(x => {
+                return x.position === i;
+            });
+            if (!unit) {
+                unit = { unitId: 0, position: i };
+                this.team.push(unit);
+            }
+            slots.push(unit);
+        }
+        return slots;
     }
 
     openImport() {

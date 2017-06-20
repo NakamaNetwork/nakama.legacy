@@ -59,18 +59,4 @@ export class StagePicker {
         this.stageId = stageId;
         this.submit();
     }
-
-    getIcon(id: number) {
-        if (id) {
-            return this.stageQueryService.getIcon(id);
-        }
-        return null;
-    }
-
-    getPortrait(id: number) {
-        if (id) {
-            return this.stageQueryService.getPortrait(id);
-        }
-        return null;
-    }
 }

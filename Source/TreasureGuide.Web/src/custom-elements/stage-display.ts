@@ -28,12 +28,7 @@ export class StageDisplay {
             console.error(error);
         });
     };
-
-    @computedFrom('stageId')
-    get imageUrl() {
-        return this.stageQueryService.getIcon(this.stageId);
-    }
-
+    
     clicked() {
         if (this.editable) {
             this.dialogService.open({ viewModel: StagePicker, model: { stageId: this.stageId }, lock: true }).whenClosed(result => {

@@ -44,8 +44,5 @@ export class TeamEditorModel {
     stageId?: number;
 
     constructor() {
-        for (var i = 0; i < 6; i++) {
-            this.teamUnits.push({ unitId: 0, position: i });
-        }
     }
 };
