@@ -6,7 +6,7 @@ export class App {
 
     configureRouter(config: RouterConfiguration, router: Router): void {
         this.router = router;
-        config.title = 'Nakama';
+        config.title = 'NakamaDB';
         //config.addPipelineStep('authorize', AuthorizeStep);
         config.map([
             { route: ['', '/', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
