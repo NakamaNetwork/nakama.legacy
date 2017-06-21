@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,11 @@ namespace TreasureGuide.Web.Configurations
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc().AddJsonOptions(json =>
+            services.AddMvc(options =>
+            {
+                options.SslPort = 44387;
+                options.Filters.Add(new RequireHttpsAttribute());
+            }).AddJsonOptions(json =>
             {
                 json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
