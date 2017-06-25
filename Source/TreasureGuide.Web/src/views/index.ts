@@ -1,3 +1,3 @@
 ﻿export class HomePage {
-    message = 'Shukko da!';
+    title = 'Shukko da!';
 }

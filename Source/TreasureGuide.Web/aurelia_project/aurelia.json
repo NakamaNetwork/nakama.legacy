@@ -29,8 +29,7 @@
         "displayName": "Sass",
         "fileExtension": ".scss",
         "source": [
-            "src/**/*.scss",
-            "!src/**/_*.scss"
+            "src/**/site.scss"
         ]
     },
     "editor": {

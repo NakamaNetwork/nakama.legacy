@@ -23,7 +23,6 @@ export function configure(aurelia: Aurelia) {
         .feature('./custom-elements')
         .globalResources([
             // CSS
-            'css/materialize/custom-materialize.css',
             './css/site.css'
         ]);
 
