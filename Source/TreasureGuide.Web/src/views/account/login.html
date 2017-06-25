@@ -1,0 +1,13 @@
+﻿<template>
+    <h1>${title}</h1>
+    <div class="flow-text">
+        <p>${message}</p>
+    </div>
+    <div class="row">
+        <div class="col m4" repeat.for="provider of providers">
+            <a md-button="large: true;" md-waves class="fill-width" click.trigger="login(provider.authenticationScheme)">
+                ${provider.displayName}
+            </a>
+        </div>
+    </div>
+</template>

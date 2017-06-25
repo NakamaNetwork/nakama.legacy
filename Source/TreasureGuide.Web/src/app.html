@@ -24,6 +24,18 @@
                         </a>
                     </li>
                 </ul>
+                <ul>
+                    <li if.bind="accountService.isLoggedIn">
+                        <a route-href="route: login">
+                            Login
+                        </a>
+                    </li>
+                    <li if.bind="!accountService.isLoggedIn">
+                        <a route-href="route: account">
+                            ${accountService.userInfo.name}
+                        </a>
+                    </li>
+                </ul>
             </md-sidenav>
         </md-navbar>
     </header>

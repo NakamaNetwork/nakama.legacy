@@ -1,8 +1,16 @@
+import { autoinject } from 'aurelia-framework';
 import { RouterConfiguration, Router } from 'aurelia-router';
+import {AccountService} from './services/account-service';
 
+@autoinject
 export class App {
-    router: Router;
-    message = 'Shukko da!';
+    public router: Router;
+    public message = 'Shukko da!';
+    public accountService: AccountService;
+
+    constructor(accountService: AccountService) {
+        this.accountService = accountService;
+    }
 
     configureRouter(config: RouterConfiguration, router: Router): void {
         this.router = router;
@@ -24,6 +32,10 @@ export class App {
             { route: 'teams/:id/details', name: 'teamDetails', title: 'Team Details', moduleId: 'views/teams/detail', nav: false },
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true },
+            // Account
+            { route: 'account', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: true },
+            { route: 'login', name: 'login', title: 'Login', moduleId: 'views/account/login', nav: true },
+            { route: 'register', name: 'register', title: 'Register', moduleId: 'views/account/register', nav: false },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }
