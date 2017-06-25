@@ -18,4 +18,10 @@ export class LoginPage {
             this.providers = providers;
         });
     }
+
+    login(provider) {
+        this.accountQueryService.login(provider).then(result => {
+            console.log(result);
+        });
+    }
 }

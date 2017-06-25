@@ -14,4 +14,8 @@ export class AccountQueryService {
     getExternalLoginProviders() {
         return this.http.get('/account/GetExternalLoginProviders');
     }
+
+    login(provider) {
+        return this.http.post('/account/externalLogin', { provider: provider, returnUrl: '/' });
+    }
 }

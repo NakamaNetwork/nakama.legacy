@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TreasureGuide.Web.Models;
+using TreasureGuide.Web.Models.AccountModels;
 using TreasureGuide.Web.Models.AccountViewModels;
 
 namespace TreasureGuide.Web.Controllers
@@ -41,12 +42,12 @@ namespace TreasureGuide.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        public IActionResult ExternalLogin(ExternalLoginModel model)
         {
             // Request a redirect to the external login provider.
-            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { ReturnUrl = returnUrl });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return Challenge(properties, provider);
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { ReturnUrl = model.ReturnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(model.Provider, redirectUrl);
+            return Challenge(properties, model.Provider);
         }
 
         [HttpGet]
