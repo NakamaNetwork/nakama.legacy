@@ -42,8 +42,13 @@ namespace TreasureGuide.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult ExternalLogin(ExternalLoginModel model)
+        public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
+            var model = new ExternalLoginModel
+            {
+                Provider = provider,
+                ReturnUrl = returnUrl
+            };
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { ReturnUrl = model.ReturnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(model.Provider, redirectUrl);

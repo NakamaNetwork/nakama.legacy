@@ -8,6 +8,7 @@ export class LoginPage {
 
     title = 'Login';
     message = 'Select a login provider to authenticate with.';
+    returnUrl = '/';
 
     constructor(accountQueryService: AccountQueryService) {
         this.accountQueryService = accountQueryService;
@@ -16,12 +17,6 @@ export class LoginPage {
     activate() {
         this.accountQueryService.getExternalLoginProviders().then(providers => {
             this.providers = providers;
-        });
-    }
-
-    login(provider) {
-        this.accountQueryService.login(provider).then(result => {
-            console.log(result);
         });
     }
 }

@@ -5,9 +5,15 @@
     </div>
     <div class="row">
         <div class="col m4" repeat.for="provider of providers">
-            <a md-button="large: true;" md-waves class="fill-width" click.trigger="login(provider.authenticationScheme)">
-                ${provider.displayName}
-            </a>
+            <form action="/Account/ExternalLogin" method="post" class="form-horizontal">
+                <input type="hidden" name="returnUrl" value="${returnUrl}" />
+                <input type="hidden" name="provider" value="${provider.authenticationScheme}" />
+                <button class="btn btn-large fill-width" type="submit" name="action"
+                        md-waves title="Login using ${provider.displayName}">
+                    ${provider.displayName}
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
         </div>
     </div>
 </template>
