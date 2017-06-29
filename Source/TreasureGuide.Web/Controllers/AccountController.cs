@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountModels;
-using TreasureGuide.Web.Models.AccountViewModels;
 
 namespace TreasureGuide.Web.Controllers
 {
@@ -77,18 +75,18 @@ namespace TreasureGuide.Web.Controllers
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                return Ok("Register");
+                return LocalRedirect("/");
             }
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
-                return Ok(returnUrl);
+                return LocalRedirect("/");
             }
             if (result.IsLockedOut)
             {
-                return Unauthorized();
+                return LocalRedirect("/#/error");
             }
             else
             {
@@ -98,7 +96,7 @@ namespace TreasureGuide.Web.Controllers
                     {"emailAddress", info.Principal.FindFirstValue(ClaimTypes.Email)},
                     {"userName", info.Principal.FindFirstValue(ClaimTypes.Name)}
                 };
-                return Redirect(HttpHelper.CreateQuerystring(collection, "/#/account/register"));
+                return LocalRedirect(HttpHelper.CreateQuerystring(collection, "/#/account/register"));
             }
         }
 
