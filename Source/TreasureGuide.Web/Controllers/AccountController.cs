@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountModels;
 using TreasureGuide.Web.Models.AccountViewModels;
@@ -38,6 +41,14 @@ namespace TreasureGuide.Web.Controllers
                 x.AuthenticationScheme
             }).ToList();
             return Ok(results);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> AccessDenied()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [HttpPost]
@@ -81,12 +92,39 @@ namespace TreasureGuide.Web.Controllers
             }
             else
             {
-                // If the user does not have an account, then ask the user to create an account.
-                ViewData["ReturnUrl"] = returnUrl;
-                ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                var model = new ExternalLoginConfirmationViewModel { Email = email };
-                return Ok(model);
+                var collection = new Dictionary<string, string>
+                {
+                    {"loginProvider",info.LoginProvider },
+                    {"emailAddress", info.Principal.FindFirstValue(ClaimTypes.Email)},
+                    {"userName", info.Principal.FindFirstValue(ClaimTypes.Name)}
+                };
+                return Redirect(HttpHelper.CreateQuerystring(collection, "/#/account/register"));
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody]RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailAddress };
+                var result = await _userManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return Ok("Successfully registered!");
+                }
+                AddErrors(result);
+            }
+            return BadRequest(ModelState);
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
             }
         }
     }

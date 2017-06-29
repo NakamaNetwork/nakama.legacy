@@ -1,7 +1,5 @@
-﻿import { computedFrom } from 'aurelia-framework';
-import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject } from 'aurelia-dependency-injection';
 import { HttpEngine } from '../../tools/http-engine';
-import { SearchableQueryService } from './generic/searchable-query-service';
 
 @autoinject
 export class AccountQueryService {
@@ -15,7 +13,11 @@ export class AccountQueryService {
         return this.http.get('/account/GetExternalLoginProviders');
     }
 
-    login(provider) {
-        return this.http.post('/account/externalLogin', { provider: provider, returnUrl: '/' });
+    login(provider: string, returnUrl?: string) {
+        return this.http.post('/account/externalLogin', { provider: provider, returnUrl: returnUrl || '/' });
+    }
+
+    register(userName: string, emailAddress: string) {
+        return this.http.post('/account/register', { userName: userName, emailAddress: emailAddress });
     }
 }

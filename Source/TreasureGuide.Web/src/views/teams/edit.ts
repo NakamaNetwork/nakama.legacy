@@ -63,8 +63,6 @@ export class TeamEditPage {
     }
 }
 
-
-
 ValidationRules
     .ensure((x: TeamEditorModel) => x.name)
     .required()

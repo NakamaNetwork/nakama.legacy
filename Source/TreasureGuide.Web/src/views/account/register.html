@@ -1,0 +1,30 @@
+﻿<template>
+    <h1>${title}</h1>
+    <div class="flow-text">
+        <p>You're creating an account via ${loginProvider}!</p>
+    </div>
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <md-input md-label="User Name"
+                          md-validate="true"
+                          md-char-counter="length: 256"
+                          md-value.bind="userName & validate"></md-input>
+            </div>
+            <div class="row">
+                <md-input md-label="Email"
+                          md-validate="true"
+                          md-char-counter="length: 256"
+                          md-value.bind="emailAddress & validate"></md-input>
+            </div>
+            <div class="row right">
+                <button md-button="large: true"
+                        md-waves
+                        click.delegate="submit()">
+                    Submit
+                    <i class="material-icons right large">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+</template>

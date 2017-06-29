@@ -15,8 +15,8 @@ export class LoginPage {
     }
 
     activate() {
-        this.accountQueryService.getExternalLoginProviders().then(providers => {
-            this.providers = providers;
+        this.accountQueryService.getExternalLoginProviders().then(results => {
+            this.providers = results;
         });
     }
 }

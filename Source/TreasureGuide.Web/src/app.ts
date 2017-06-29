@@ -1,6 +1,6 @@
 import { autoinject } from 'aurelia-framework';
 import { RouterConfiguration, Router } from 'aurelia-router';
-import {AccountService} from './services/account-service';
+import { AccountService } from './services/account-service';
 
 @autoinject
 export class App {
@@ -18,8 +18,8 @@ export class App {
         //config.addPipelineStep('authorize', AuthorizeStep);
         config.map([
             { route: ['', '/', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
-            { route: 'error', name: 'error', moduleId: 'views/error', nav: false },
-            { route: 'notfound', name: 'notfound', moduleId: 'views/notfound', nav: false },
+            { route: 'error', name: 'error', title: 'Error', moduleId: 'views/error', nav: false },
+            { route: 'notfound', name: 'notfound', title: 'Not Found', moduleId: 'views/notfound', nav: false },
             // Stages
             { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
             { route: 'stages/create', name: 'stageCreate', title: 'Create Stage', moduleId: 'views/stages/edit', nav: false },
@@ -34,8 +34,8 @@ export class App {
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true },
             // Account
             { route: 'account', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: true },
-            { route: 'login', name: 'login', title: 'Login', moduleId: 'views/account/login', nav: true },
-            { route: 'register', name: 'register', title: 'Register', moduleId: 'views/account/register', nav: false },
+            { route: 'account/login', name: 'login', title: 'Login', moduleId: 'views/account/login', nav: true },
+            { route: 'account/register', name: 'register', title: 'Register', moduleId: 'views/account/register', nav: false }
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }
