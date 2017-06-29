@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -7,32 +8,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountModels;
 
 namespace TreasureGuide.Web.Controllers
 {
-    [Authorize]
+    [Authorize("Bearer")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly JwtIssuerOptions _jwtOptions;
         private readonly string _externalCookieScheme;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<IdentityCookieOptions> identityCookieOptions)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<IdentityCookieOptions> identityCookieOptions, IOptions<JwtIssuerOptions> jwtOptions)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _jwtOptions = jwtOptions.Value;
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult GetExternalLoginProviders()
+        public async Task<IActionResult> GetExternalLoginProviders()
         {
+            await _signInManager.SignOutAsync();
+            await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
             var loginProviders = _signInManager.GetExternalAuthenticationSchemes();
             var results = loginProviders.Select(x => new
             {
@@ -82,7 +87,7 @@ namespace TreasureGuide.Web.Controllers
             var parameters = new[]
             {
                 new KeyValuePair<string, string>( "returnUrl", returnUrl),
-                new KeyValuePair<string, string>( "token", externalLoginInfo.GetAccessToken())
+                new KeyValuePair<string, string>( "token", GenerateToken())
             };
 
             // Sign in the user with this external login provider if the user already has a login.
@@ -128,6 +133,24 @@ namespace TreasureGuide.Web.Controllers
             };
             return Ok(userModel);
         }
+
+        private string GenerateToken()
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            var identity = User.Identity as ClaimsIdentity;
+
+            var securityToken = handler.CreateToken(new SecurityTokenDescriptor
+            {
+                Issuer = _jwtOptions.Issuer,
+                Audience = _jwtOptions.Audience,
+                SigningCredentials = _jwtOptions.SigningCredentials,
+                Subject = identity,
+                Expires = DateTime.Now.Add(_jwtOptions.ValidFor)
+            });
+            return handler.WriteToken(securityToken);
+        }
+
 
         private void AddErrors(IdentityResult result)
         {

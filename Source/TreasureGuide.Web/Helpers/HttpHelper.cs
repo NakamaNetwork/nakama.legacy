@@ -25,10 +25,5 @@ namespace TreasureGuide.Web.Helpers
         {
             return String.Join("; ", modelState.Select(x => String.Join(": ", x.Key, String.Join(", ", x.Value.Errors.Select(y => y.ErrorMessage)))));
         }
-
-        public static string GetAccessToken(this ExternalLoginInfo info)
-        {
-            return info.AuthenticationTokens.SingleOrDefault(x => x.Name == "access_token")?.Value;
-        }
     }
 }
