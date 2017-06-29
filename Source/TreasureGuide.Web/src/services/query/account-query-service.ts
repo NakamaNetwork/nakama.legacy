@@ -20,4 +20,8 @@ export class AccountQueryService {
     register(userName: string, emailAddress: string) {
         return this.http.post('/account/register', { userName: userName, emailAddress: emailAddress });
     }
+
+    getUserInfo() {
+        return this.http.get('/account/userinfo');
+    }
 }

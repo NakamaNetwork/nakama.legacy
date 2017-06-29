@@ -1,17 +1,24 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
-import { HttpEngine } from '../tools/http-engine';
+﻿import { autoinject, computedFrom } from 'aurelia-framework';
+import { AccountQueryService } from './query/account-query-service';
 
 @autoinject
 export class AccountService {
-    private http: HttpEngine;
+    private accountQueryService: AccountQueryService;
 
     public userInfo: UserInfoModel;
 
-    constructor(http: HttpEngine) {
-        this.http = http;
+    constructor(accountQueryService: AccountQueryService) {
+        this.accountQueryService = accountQueryService;
+        this.accountQueryService.getUserInfo().then(result => {
+            this.userInfo = result;
+        });
     }
 
-    get isLoggedIn() {
+    @computedFrom('userInfo')
+    get isLoggedIn(): boolean {
+        if (this.userInfo) {
+            return true;
+        }
         return false;
     }
 }

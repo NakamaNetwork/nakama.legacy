@@ -72,56 +72,43 @@ namespace TreasureGuide.Web.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, remoteError);
             }
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-            if (info == null)
+            var externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
+            if (externalLoginInfo == null)
             {
                 return LocalRedirect("/");
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
-            if (result.Succeeded)
+            var loginResult = await _signInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider, externalLoginInfo.ProviderKey, isPersistent: false);
+            if (loginResult.Succeeded)
             {
                 return LocalRedirect("/");
             }
-            if (result.IsLockedOut)
+            if (loginResult.IsLockedOut)
             {
                 return LocalRedirect("/#/error");
             }
             else
             {
-                var collection = new Dictionary<string, string>
+                var email = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email);
+                if (ModelState.IsValid)
                 {
-                    {"loginProvider",info.LoginProvider },
-                    {"emailAddress", info.Principal.FindFirstValue(ClaimTypes.Email)},
-                    {"userName", info.Principal.FindFirstValue(ClaimTypes.Name)}
-                };
-                return LocalRedirect(HttpHelper.CreateQuerystring(collection, "/#/account/register"));
-            }
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody]RegisterModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailAddress };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    var info = await _signInManager.GetExternalLoginInfoAsync();
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
+                    var user = new ApplicationUser { UserName = email, Email = email };
+                    var registerResult = await _userManager.CreateAsync(user);
+                    if (registerResult.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return UserInfo();
+                        registerResult = await _userManager.AddLoginAsync(user, externalLoginInfo);
+                        if (registerResult.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect("/");
+                        }
                     }
+                    AddErrors(registerResult);
                 }
-                AddErrors(result);
+                return LocalRedirect("/#/error");
             }
-            return BadRequest(ModelState);
         }
 
         [HttpGet]
