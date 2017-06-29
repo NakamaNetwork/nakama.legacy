@@ -59,7 +59,8 @@ namespace TreasureGuide.Web
             app.UseGoogleAuthentication(new GoogleOptions()
             {
                 ClientId = Configuration["Authentication:Google:ClientId"],
-                ClientSecret = Configuration["Authentication:Google:ClientSecret"]
+                ClientSecret = Configuration["Authentication:Google:ClientSecret"],
+                SaveTokens = true
             });
 
             app.UseMvc(routes =>

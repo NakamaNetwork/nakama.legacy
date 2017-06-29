@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
@@ -75,18 +76,24 @@ namespace TreasureGuide.Web.Controllers
             var externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
             if (externalLoginInfo == null)
             {
-                return LocalRedirect("/");
+                return LocalRedirect(HttpHelper.CreateQuerystring("/#/error", new KeyValuePair<string, string>("message", "Something terrible went wrong! Please try again.")));
             }
+
+            var parameters = new[]
+            {
+                new KeyValuePair<string, string>( "returnUrl", returnUrl),
+                new KeyValuePair<string, string>( "token", externalLoginInfo.GetAccessToken())
+            };
 
             // Sign in the user with this external login provider if the user already has a login.
             var loginResult = await _signInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider, externalLoginInfo.ProviderKey, isPersistent: false);
             if (loginResult.Succeeded)
             {
-                return LocalRedirect("/");
+                return LocalRedirect(HttpHelper.CreateQuerystring("/#/account/login", parameters));
             }
             if (loginResult.IsLockedOut)
             {
-                return LocalRedirect("/#/error");
+                return LocalRedirect(HttpHelper.CreateQuerystring("/#/error", new KeyValuePair<string, string>("message", "This account is not permitted to login.")));
             }
             else
             {
@@ -107,7 +114,7 @@ namespace TreasureGuide.Web.Controllers
                     }
                     AddErrors(registerResult);
                 }
-                return LocalRedirect("/#/error");
+                return LocalRedirect(HttpHelper.CreateQuerystring("/#/account/login", parameters));
             }
         }
 

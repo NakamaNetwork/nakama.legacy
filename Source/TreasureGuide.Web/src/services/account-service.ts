@@ -9,9 +9,16 @@ export class AccountService {
 
     constructor(accountQueryService: AccountQueryService) {
         this.accountQueryService = accountQueryService;
-        this.accountQueryService.getUserInfo().then(result => {
-            this.userInfo = result;
-        });
+        this.setToken(localStorage['access_token']);
+    }
+
+    setToken(newValue) {
+        localStorage['access_token'] = newValue;
+        if (newValue) {
+            this.accountQueryService.getUserInfo().then(result => {
+                this.userInfo = result;
+            });
+        }
     }
 
     @computedFrom('userInfo')
