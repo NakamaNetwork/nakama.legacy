@@ -113,11 +113,29 @@ namespace TreasureGuide.Web.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return Ok("Successfully registered!");
+                    var info = await _signInManager.GetExternalLoginInfoAsync();
+                    result = await _userManager.AddLoginAsync(user, info);
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return UserInfo();
+                    }
                 }
                 AddErrors(result);
             }
             return BadRequest(ModelState);
+        }
+
+        [HttpGet]
+        public IActionResult UserInfo()
+        {
+            var userModel = new UserInfoModel
+            {
+                UserName = User.FindFirstValue(ClaimTypes.Name),
+                EmailAddress = User.FindFirstValue(ClaimTypes.Email),
+                Roles = User.FindAll(ClaimTypes.Role).Select(x => x.Value)
+            };
+            return Ok(userModel);
         }
 
         private void AddErrors(IdentityResult result)
