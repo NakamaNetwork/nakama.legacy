@@ -108,13 +108,12 @@ namespace TreasureGuide.Web.Controllers
                         registerResult = await _userManager.AddLoginAsync(user, externalLoginInfo);
                         if (registerResult.Succeeded)
                         {
-                            await _signInManager.SignInAsync(user, isPersistent: false);
-                            return LocalRedirect("/");
+                            return LocalRedirect(HttpHelper.CreateQuerystring("/#/account/login", parameters));
                         }
                     }
                     AddErrors(registerResult);
                 }
-                return LocalRedirect(HttpHelper.CreateQuerystring("/#/account/login", parameters));
+                return LocalRedirect(HttpHelper.CreateQuerystring("/#/error", ModelState));
             }
         }
 
