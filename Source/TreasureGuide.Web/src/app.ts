@@ -33,8 +33,8 @@ export class App {
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true },
             // Account
-            { route: 'account', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: true },
-            { route: 'account/login', name: 'login', title: 'Login', moduleId: 'views/account/login', nav: true },
+            { route: 'account', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: false },
+            { route: 'account/login', name: 'login', title: 'Login', moduleId: 'views/account/login', nav: false },
             { route: 'account/register', name: 'register', title: 'Register', moduleId: 'views/account/register', nav: false }
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });

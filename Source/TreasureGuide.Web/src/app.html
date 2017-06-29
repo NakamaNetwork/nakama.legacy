@@ -11,6 +11,16 @@
                             ${nav.title}
                         </a>
                     </li>
+                    <li if.bind="!accountService.isLoggedIn">
+                        <a route-href="route: login">
+                            Login
+                        </a>
+                    </li>
+                    <li if.bind="accountService.isLoggedIn">
+                        <a route-href="route: account">
+                            ${accountService.userInfo.name}
+                        </a>
+                    </li>
                 </ul>
             </div>
             <a href="#" md-sidenav-collapse="ref.bind: sideNav;" class="button-collapse">
@@ -23,14 +33,12 @@
                             ${nav.title}
                         </a>
                     </li>
-                </ul>
-                <ul>
-                    <li if.bind="accountService.isLoggedIn">
+                    <li if.bind="!accountService.isLoggedIn">
                         <a route-href="route: login">
                             Login
                         </a>
                     </li>
-                    <li if.bind="!accountService.isLoggedIn">
+                    <li if.bind="accountService.isLoggedIn">
                         <a route-href="route: account">
                             ${accountService.userInfo.name}
                         </a>
