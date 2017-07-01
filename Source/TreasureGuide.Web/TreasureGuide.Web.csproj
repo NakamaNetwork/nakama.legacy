@@ -10,13 +10,12 @@
         <UserSecretsId>aspnet-TreasureGuide.Web-5f05675e-555e-48ff-bb51-5d655998ec83</UserSecretsId>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="6.1.0" />
+        <PackageReference Include="AutoMapper" Version="6.1.1" />
         <PackageReference Include="EntityFramework" Version="6.1.3" />
-        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.1" />
+        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.0" />
         <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="1.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
@@ -33,6 +32,9 @@
         <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
         <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
         <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="Views\Account\Profile.cshtml" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj" />

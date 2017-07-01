@@ -1,21 +1,21 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
-import { AccountQueryService } from './query/account-query-service';
+import { ProfileQueryService } from './query/profile-query-service';
 
 @autoinject
 export class AccountService {
-    private accountQueryService: AccountQueryService;
+    private profileQueryService: ProfileQueryService;
 
     public userInfo: UserInfoModel;
 
-    constructor(accountQueryService: AccountQueryService) {
-        this.accountQueryService = accountQueryService;
+    constructor(profileQueryService: ProfileQueryService) {
+        this.profileQueryService = profileQueryService;
         this.setToken(localStorage['access_token']);
     }
 
     setToken(newValue) {
         localStorage['access_token'] = newValue;
         if (newValue) {
-            this.accountQueryService.getUserInfo().then(result => {
+            this.profileQueryService.getProfile().then(result => {
                 this.userInfo = result;
             });
         }

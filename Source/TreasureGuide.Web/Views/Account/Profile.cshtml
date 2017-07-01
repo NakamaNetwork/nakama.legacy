@@ -1,0 +1,18 @@
+﻿@using TreasureGuide.Web.Models.ProfileModels
+@model TreasureGuide.Web.Models.ProfileModels.ProfileModel
+
+<p>
+    @Model.UserName
+</p>
+
+<p>
+    @Model.EmailAddress
+</p>
+
+<ul>
+    @foreach (var role in Model.Roles)
+    {
+    <li>@role</li>
+    }
+    }
+</ul>

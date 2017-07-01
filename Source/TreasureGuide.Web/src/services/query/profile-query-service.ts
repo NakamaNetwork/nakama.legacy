@@ -2,14 +2,14 @@
 import { HttpEngine } from '../../tools/http-engine';
 
 @autoinject
-export class AccountQueryService {
+export class ProfileQueryService {
     private http: HttpEngine;
 
     constructor(http: HttpEngine) {
         this.http = http;
     }
     
-    getUserInfo() {
-        return this.http.get('/account/userinfo');
+    getProfile() {
+        return this.http.get('/api/profile');
     }
 }

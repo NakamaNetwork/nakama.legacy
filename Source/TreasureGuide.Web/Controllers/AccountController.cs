@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountViewModels;
+using TreasureGuide.Web.Models.ProfileModels;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers
@@ -474,5 +475,20 @@ namespace TreasureGuide.Web.Controllers
         }
 
         #endregion
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var name = User.FindFirstValue(ClaimTypes.Name);
+            var roles = User.FindAll(ClaimTypes.Role).Select(x => x.Value);
+            var model = new ProfileModel
+            {
+                EmailAddress = email,
+                UserName = name,
+                Roles = roles
+            };
+            return View(model);
+        }
     }
 }
