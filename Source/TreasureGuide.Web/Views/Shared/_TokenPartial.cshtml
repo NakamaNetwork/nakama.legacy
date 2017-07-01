@@ -1,0 +1,8 @@
+@inject TreasureGuide.Web.Services.ITokenService TokenService
+<script id="auth_token_setter" type="text/javascript">
+        var token = @Html.Raw(await TokenService.Get(User));
+        localStorage['access_token'] = token['access_token'];
+        localStorage['access_token_exp'] = token['expires_in'];
+        console.log('access_token: ' + localStorage['access_token']);
+        console.log('access_token_exp: ' + localStorage['access_token_exp']);
+</script>

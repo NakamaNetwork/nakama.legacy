@@ -9,18 +9,11 @@ export class AccountService {
 
     constructor(profileQueryService: ProfileQueryService) {
         this.profileQueryService = profileQueryService;
-        this.setToken(localStorage['access_token']);
+        this.profileQueryService.getProfile().then(result => {
+            this.userInfo = result;
+        });
     }
-
-    setToken(newValue) {
-        localStorage['access_token'] = newValue;
-        if (newValue) {
-            this.profileQueryService.getProfile().then(result => {
-                this.userInfo = result;
-            });
-        }
-    }
-
+    
     @computedFrom('userInfo')
     get isLoggedIn(): boolean {
         if (this.userInfo) {
