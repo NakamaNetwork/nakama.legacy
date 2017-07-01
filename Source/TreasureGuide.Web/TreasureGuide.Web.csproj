@@ -35,9 +35,6 @@
         <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
     </ItemGroup>
     <ItemGroup>
-      <None Include="Views\Account\Profile.cshtml" />
-    </ItemGroup>
-    <ItemGroup>
         <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj" />
     </ItemGroup>
     <ItemGroup>
