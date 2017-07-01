@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
+using TreasureGuide.Web.Constants;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -33,14 +34,12 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return result as IActionResult ?? Ok(result); ;
         }
 
-        [Authorize("Admin")]
         protected override async Task<IActionResult> Post(TEditorModel model, TKey? id = null)
         {
             var result = await PerformPost(model, id);
             return result as IActionResult ?? Ok(result); ;
         }
 
-        [Authorize("Admin")]
         protected override async Task<IActionResult> Delete(TKey? id = null)
         {
             var result = await PerformDelete(id);
@@ -49,6 +48,10 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<object> PerformGet<TModel>(TKey? id = null)
         {
+            if (!CanGet(id))
+            {
+                return Unauthorized();
+            }
             var entities = FetchEntities(id);
             var transformed = typeof(TModel) == typeof(TEntity) ? entities.Cast<TModel>() : Project<TModel>(entities);
             if (id.HasValue)
@@ -61,6 +64,11 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 return NotFound(id);
             }
             return await transformed.ToListAsync();
+        }
+
+        protected virtual bool CanGet(TKey? id)
+        {
+            return true;
         }
 
         protected virtual IQueryable<TEntity> FetchEntities(TKey? id = null)
@@ -76,6 +84,10 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<object> PerformPost(TEditorModel model, TKey? id = null)
         {
+            if (!CanPost(id))
+            {
+                return Unauthorized();
+            }
             id = id ?? model.Id;
             if (id.HasValue)
             {
@@ -89,8 +101,17 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return await CreateOrUpdate(model);
         }
 
+        protected virtual bool CanPost(TKey? id)
+        {
+            return User.IsInRole(RoleConstants.Administrator);
+        }
+
         protected virtual async Task<object> PerformDelete(TKey? id)
         {
+            if (!CanDelete(id))
+            {
+                return Unauthorized();
+            }
             if (id.HasValue)
             {
                 var entities = FetchEntities(id);
@@ -98,6 +119,11 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 return await Remove(target);
             }
             return BadRequest("No item specified.");
+        }
+
+        protected virtual bool CanDelete(TKey? id)
+        {
+            return User.IsInRole(RoleConstants.Administrator);
         }
 
         protected virtual async Task<object> CreateOrUpdate(TEditorModel model, TEntity entity = null)

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 
@@ -25,6 +24,16 @@ namespace TreasureGuide.Web.Helpers
         public static bool IsInRole(this ClaimsPrincipal principal, string role)
         {
             return principal.FindFirst(x => x.Type == ClaimTypes.Role && x.Value == role) != null;
+        }
+
+        public static bool IsInAnyRole(this ClaimsPrincipal principal, params string[] roles)
+        {
+            return principal.FindFirst(x => x.Type == ClaimTypes.Role && roles.Contains(x.Value)) != null;
+        }
+
+        public static bool IsInAllRoles(this ClaimsPrincipal principal, params string[] roles)
+        {
+            return principal.FindAll(x => x.Type == ClaimTypes.Role && roles.Contains(x.Value)).Count() >= roles.Length;
         }
     }
 }

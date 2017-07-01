@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using AutoMapper;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
+using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Helpers;
@@ -14,11 +16,27 @@ namespace TreasureGuide.Web.Controllers.API
         public TeamController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
         {
         }
-
+        
         protected override Team PostProcess(Team entity)
         {
             entity.SubmittedById = User.GetId();
             return base.PostProcess(entity);
+        }
+
+        protected override bool CanPost(int? id)
+        {
+            return User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id);
+        }
+
+        protected override bool CanDelete(int? id)
+        {
+            return CanPost(id);
+        }
+
+        protected bool OwnsTeam(int? id)
+        {
+            var userId = User.GetId();
+            return DbContext.Teams.Any(x => x.Id == id && x.SubmittedById == userId);
         }
 
         protected override IQueryable<Team> PerformSearch(IQueryable<Team> results, TeamSearchModel model)
