@@ -1,11 +1,13 @@
-﻿@import "../../node_modules/materialize-css/sass/components/_color.scss";
-@import "../../node_modules/materialize-css/sass/components/_variables.scss";
-@import "./materialize/_custom-variables.scss";
+﻿@import "./materialize/custom-materialize.scss";
 
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 i {
@@ -18,6 +20,10 @@ i {
             padding: 0 5px;
         }
     }
+}
+
+.fill-width{
+    width: 100%;
 }
 
 $tiny-unit-size: 32px;

@@ -11,13 +11,13 @@ var download = require("gulp-download");
 gulp.task('_get-rbuild',
     function () {
         return download(
-            'https://raw.githubusercontent.com/aurelia-ui-toolkits/aurelia-materialize-bridge/master/build/tools/rbuild.js')
+            'https://raw.githubusercontent.com/aurelia-ui-toolkits/aurelia-materialize-bridge/0.28.0/build/tools/rbuild.js')
             .pipe(gulp.dest('./'));
     });
 gulp.task('_get-materialize-css',
     function () {
         return download(
-            'https://raw.githubusercontent.com/aurelia-ui-toolkits/aurelia-materialize-bridge/master/build/tools/materialize-css.js')
+            'https://raw.githubusercontent.com/aurelia-ui-toolkits/aurelia-materialize-bridge/0.28.0/build/tools/materialize-css.js')
             .pipe(gulp.dest('./'));
     });
 gulp.task('_materialize-amd', shell.task(['node_modules\\.bin\\r.js.cmd -o rbuild.js']));

@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
-using TreasureGuide.Web.Helpers;
+using TreasureGuide.Web.Constants;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -45,6 +48,10 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<object> PerformGet<TModel>(TKey? id = null)
         {
+            if (!CanGet(id))
+            {
+                return Unauthorized();
+            }
             var entities = FetchEntities(id);
             var transformed = typeof(TModel) == typeof(TEntity) ? entities.Cast<TModel>() : Project<TModel>(entities);
             if (id.HasValue)
@@ -57,6 +64,11 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 return NotFound(id);
             }
             return await transformed.ToListAsync();
+        }
+
+        protected virtual bool CanGet(TKey? id)
+        {
+            return true;
         }
 
         protected virtual IQueryable<TEntity> FetchEntities(TKey? id = null)
@@ -72,6 +84,10 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<object> PerformPost(TEditorModel model, TKey? id = null)
         {
+            if (!CanPost(id))
+            {
+                return Unauthorized();
+            }
             id = id ?? model.Id;
             if (id.HasValue)
             {
@@ -85,8 +101,17 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return await CreateOrUpdate(model);
         }
 
+        protected virtual bool CanPost(TKey? id)
+        {
+            return User.IsInRole(RoleConstants.Administrator);
+        }
+
         protected virtual async Task<object> PerformDelete(TKey? id)
         {
+            if (!CanDelete(id))
+            {
+                return Unauthorized();
+            }
             if (id.HasValue)
             {
                 var entities = FetchEntities(id);
@@ -94,6 +119,11 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 return await Remove(target);
             }
             return BadRequest("No item specified.");
+        }
+
+        protected virtual bool CanDelete(TKey? id)
+        {
+            return User.IsInRole(RoleConstants.Administrator);
         }
 
         protected virtual async Task<object> CreateOrUpdate(TEditorModel model, TEntity entity = null)
@@ -110,7 +140,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 entity = Update(model, entity);
             }
             entity = PostProcess(entity);
-            await DbContext.SaveChangesAsync();
+            await SaveChangesAsync();
             return entity.Id;
         }
 
@@ -118,7 +148,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         {
             throw new NotImplementedException();
             DbContext.Set<TEntity>().Remove(single);
-            await DbContext.SaveChangesAsync();
+            await SaveChangesAsync();
             return true;
         }
 
@@ -150,6 +180,29 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         protected virtual TEntity PostProcess(TEntity entity)
         {
             return entity;
+        }
+
+        protected virtual async Task SaveChangesAsync()
+        {
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        var message = $"{validationErrors.Entry.Entity}:{validationError.ErrorMessage}";
+                        // raise a new exception nesting
+                        // the current instance as InnerException
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
         }
     }
 }
