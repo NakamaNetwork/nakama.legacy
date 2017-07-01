@@ -21,6 +21,11 @@
                             ${accountService.userProfile.userName}
                         </a>
                     </li>
+                    <li if.bind="accountService.isLoggedIn">
+                        <a click.trigger="accountService.logout()">
+                            Logout
+                        </a>
+                    </li>
                 </ul>
             </div>
             <a href="#" md-sidenav-collapse="ref.bind: sideNav;" class="button-collapse">
@@ -41,6 +46,11 @@
                     <li if.bind="accountService.isLoggedIn">
                         <a route-href="route: account">
                             ${accountService.userProfile.userName}
+                        </a>
+                    </li>
+                    <li if.bind="accountService.isLoggedIn">
+                        <a click.trigger="accountService.logout()">
+                            Logout
                         </a>
                     </li>
                 </ul>

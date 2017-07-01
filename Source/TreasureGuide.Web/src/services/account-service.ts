@@ -1,10 +1,13 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
+import { Router } from 'aurelia-router';
 
 @autoinject
 export class AccountService {
+    private router: Router;
     public userProfile: any;
 
-    constructor() {
+    constructor(router: Router) {
+        this.router = router;
         this.loadProfile();
     }
 
@@ -22,5 +25,10 @@ export class AccountService {
             return true;
         }
         return false;
+    }
+
+    public logout() {
+        sessionStorage.clear();
+        window.location.href = '/Account/Logout';
     }
 }

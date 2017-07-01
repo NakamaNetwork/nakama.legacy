@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using TreasureGuide.Web.Configurations;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models.ProfileModels;
 
 namespace TreasureGuide.Web.Services
@@ -14,7 +15,7 @@ namespace TreasureGuide.Web.Services
     public interface IAuthExportService
     {
         Task<AccessTokenModel> Get(ClaimsPrincipal user);
-        ProfileModel GetUserInfo(ClaimsPrincipal user);
+        ProfileModel GetUserInfo(ClaimsPrincipal identity);
     }
 
     public class AuthExportService : IAuthExportService
@@ -28,9 +29,9 @@ namespace TreasureGuide.Web.Services
 
         public async Task<AccessTokenModel> Get(ClaimsPrincipal identity)
         {
-            if (identity == null)
+            if (!identity.IsAuthenticated())
             {
-                return null;
+                return new AccessTokenModel();
             }
 
             var claims = new[]
@@ -63,11 +64,15 @@ namespace TreasureGuide.Web.Services
             return response;
         }
 
-        public ProfileModel GetUserInfo(ClaimsPrincipal user)
+        public ProfileModel GetUserInfo(ClaimsPrincipal identity)
         {
-            var email = user.FindFirstValue(ClaimTypes.Email);
-            var name = user.FindFirstValue(ClaimTypes.Name);
-            var roles = user.FindAll(ClaimTypes.Role).Select(x => x.Value);
+            if (!identity.IsAuthenticated())
+            {
+                return null;
+            }
+            var email = identity.FindFirstValue(ClaimTypes.Email);
+            var name = identity.FindFirstValue(ClaimTypes.Name);
+            var roles = identity.FindAll(ClaimTypes.Role).Select(x => x.Value);
             var model = new ProfileModel
             {
                 EmailAddress = email,

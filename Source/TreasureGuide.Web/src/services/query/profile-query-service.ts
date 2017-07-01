@@ -12,4 +12,8 @@ export class ProfileQueryService {
     getProfile() {
         return this.http.get('/api/profile');
     }
+
+    logout() {
+        return this.http.post('/account/logout');
+    }
 }

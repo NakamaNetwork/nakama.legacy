@@ -5,7 +5,7 @@ using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Helpers
 {
-    public static class EnumerableExtensions
+    public static class EnumerableHelper
     {
         public static IQueryable<TEntity> FindId<TKey, TEntity>(this IQueryable<TEntity> queryable, TKey? id = null)
             where TKey : struct
