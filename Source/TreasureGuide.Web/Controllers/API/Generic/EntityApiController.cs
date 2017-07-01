@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
-using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -31,12 +33,14 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return result as IActionResult ?? Ok(result); ;
         }
 
+        [Authorize("Admin")]
         protected override async Task<IActionResult> Post(TEditorModel model, TKey? id = null)
         {
             var result = await PerformPost(model, id);
             return result as IActionResult ?? Ok(result); ;
         }
 
+        [Authorize("Admin")]
         protected override async Task<IActionResult> Delete(TKey? id = null)
         {
             var result = await PerformDelete(id);
@@ -110,7 +114,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 entity = Update(model, entity);
             }
             entity = PostProcess(entity);
-            await DbContext.SaveChangesAsync();
+            await SaveChangesAsync();
             return entity.Id;
         }
 
@@ -118,7 +122,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         {
             throw new NotImplementedException();
             DbContext.Set<TEntity>().Remove(single);
-            await DbContext.SaveChangesAsync();
+            await SaveChangesAsync();
             return true;
         }
 
@@ -150,6 +154,29 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         protected virtual TEntity PostProcess(TEntity entity)
         {
             return entity;
+        }
+
+        protected virtual async Task SaveChangesAsync()
+        {
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        var message = $"{validationErrors.Entry.Entity}:{validationError.ErrorMessage}";
+                        // raise a new exception nesting
+                        // the current instance as InnerException
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
         }
     }
 }

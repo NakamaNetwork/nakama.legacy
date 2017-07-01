@@ -5,6 +5,7 @@ using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.TeamModels;
+using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -13,10 +14,10 @@ namespace TreasureGuide.Web.Controllers.API
         public TeamController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
         {
         }
-        
+
         protected override Team PostProcess(Team entity)
         {
-            entity.SubmittedById = "Anonymous";
+            entity.SubmittedById = User.GetId();
             return base.PostProcess(entity);
         }
 

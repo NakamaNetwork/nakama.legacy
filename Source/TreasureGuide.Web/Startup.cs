@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,14 +25,11 @@ namespace TreasureGuide.Web
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
 
             if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets<Startup>();
-            }
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
@@ -44,7 +41,6 @@ namespace TreasureGuide.Web
         public IConfigurationRoot Configuration { get; }
         public SymmetricSecurityKey SigningKey { get; }
 
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -53,20 +49,17 @@ namespace TreasureGuide.Web
                 options.UseSqlServer(Configuration.GetConnectionString("TreasureEntities")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-                {
-                    options.User.RequireUniqueEmail = false;
-                    options.User.AllowedUserNameCharacters += " ";
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            {
+                options.User.RequireUniqueEmail = false;
+                options.User.AllowedUserNameCharacters += " ";
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
-            services.AddMvc(options =>
-                {
-                    options.Filters.Add(new RequireHttpsAttribute());
-                }).AddJsonOptions(json =>
-                {
-                    json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
+            services.AddMvc(options => { options.Filters.Add(new RequireHttpsAttribute()); }).AddJsonOptions(json =>
+            {
+                json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
@@ -80,18 +73,18 @@ namespace TreasureGuide.Web
             });
 
 
-            services.AddScoped<TreasureEntities>(x => new TreasureEntities(Configuration.GetConnectionString("TreasureEntities")));
+            services.AddScoped(x => new TreasureEntities(Configuration.GetConnectionString("TreasureEntities")));
             services.AddScoped<IAuthExportService, AuthExportService>();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            services.AddSingleton<IMapper>(x => MapperConfig.Create());
+            services.AddSingleton(x => MapperConfig.Create());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -103,14 +96,12 @@ namespace TreasureGuide.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/#/error");
             }
 
             app.UseStaticFiles();
 
             app.UseIdentity();
-
-            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             var tokenValidationParameters = new TokenValidationParameters
@@ -137,18 +128,19 @@ namespace TreasureGuide.Web
                 TokenValidationParameters = tokenValidationParameters
             });
 
-
             app.UseGoogleAuthentication(new GoogleOptions
             {
                 ClientId = Configuration["Authentication:Google:ClientId"],
                 ClientSecret = Configuration["Authentication:Google:ClientSecret"]
             });
 
+            RoleConfig.Configure(roleManager);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -36,12 +36,12 @@ namespace TreasureGuide.Web.Services
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, identity.FindFirstValue(ClaimTypes.Name)),
+                new Claim(JwtRegisteredClaimNames.Sub, identity.FindFirstValue(ClaimTypes.NameIdentifier)),
                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
                 identity.FindFirst(ClaimTypes.Name),
                 identity.FindFirst(ClaimTypes.Email)
-            };
+            }.Concat(identity.FindAll(ClaimTypes.Role)).Where(x => x != null).ToArray();
 
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
