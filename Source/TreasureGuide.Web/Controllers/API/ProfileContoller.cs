@@ -1,8 +1,5 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TreasureGuide.Web.Models.ProfileModels;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -11,18 +8,11 @@ namespace TreasureGuide.Web.Controllers.API
     public class ProfileContoller : Controller
     {
         [HttpGet]
+        [Route("")]
+        [ActionName("")]
         public IActionResult Get()
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            var name = User.FindFirstValue(ClaimTypes.Name);
-            var roles = User.FindAll(ClaimTypes.Role).Select(x => x.Value);
-            var model = new ProfileModel
-            {
-                EmailAddress = email,
-                UserName = name,
-                Roles = roles
-            };
-            return Ok(model);
+            return Ok("");
         }
     }
 }

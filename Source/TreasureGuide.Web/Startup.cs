@@ -81,7 +81,7 @@ namespace TreasureGuide.Web
 
 
             services.AddScoped<TreasureEntities>(x => new TreasureEntities(Configuration.GetConnectionString("TreasureEntities")));
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAuthExportService, AuthExportService>();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

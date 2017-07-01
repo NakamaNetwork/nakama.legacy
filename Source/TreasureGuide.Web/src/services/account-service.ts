@@ -1,19 +1,21 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
-import { ProfileQueryService } from './query/profile-query-service';
 
 @autoinject
 export class AccountService {
-    private profileQueryService: ProfileQueryService;
-
     public userInfo: UserInfoModel;
 
-    constructor(profileQueryService: ProfileQueryService) {
-        this.profileQueryService = profileQueryService;
-        this.profileQueryService.getProfile().then(result => {
-            this.userInfo = result;
-        });
+    constructor() {
+        this.loadProfile();
     }
-    
+
+    private loadProfile() {
+        var info = sessionStorage['user_info'];
+        if (info) {
+            var deserialized = JSON.parse(info) as UserInfoModel;
+            this.userInfo = deserialized;
+        }
+    }
+
     @computedFrom('userInfo')
     get isLoggedIn(): boolean {
         if (this.userInfo) {
