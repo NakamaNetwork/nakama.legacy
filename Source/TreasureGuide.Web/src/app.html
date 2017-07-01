@@ -18,7 +18,7 @@
                     </li>
                     <li if.bind="accountService.isLoggedIn">
                         <a route-href="route: account">
-                            ${accountService.userInfo.name}
+                            ${accountService.userProfile.userName}
                         </a>
                     </li>
                 </ul>
@@ -40,7 +40,7 @@
                     </li>
                     <li if.bind="accountService.isLoggedIn">
                         <a route-href="route: account">
-                            ${accountService.userInfo.name}
+                            ${accountService.userProfile.userName}
                         </a>
                     </li>
                 </ul>

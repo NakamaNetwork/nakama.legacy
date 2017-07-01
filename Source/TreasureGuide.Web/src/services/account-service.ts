@@ -2,29 +2,25 @@
 
 @autoinject
 export class AccountService {
-    public userInfo: UserInfoModel;
+    public userProfile: any;
 
     constructor() {
         this.loadProfile();
     }
 
     private loadProfile() {
-        var info = sessionStorage['user_info'];
+        var info = sessionStorage['user_profile'];
         if (info) {
-            var deserialized = JSON.parse(info) as UserInfoModel;
-            this.userInfo = deserialized;
+            var deserialized = JSON.parse(info);
+            this.userProfile = deserialized;
         }
     }
 
     @computedFrom('userInfo')
     get isLoggedIn(): boolean {
-        if (this.userInfo) {
+        if (this.userProfile) {
             return true;
         }
         return false;
     }
-}
-
-export class UserInfoModel {
-    public name: string;
 }

@@ -5,7 +5,7 @@
     sessionStorage['access_token_exp'] = token['expiration'];
 
     var profile = @Json.Serialize(AuthExportService.GetUserInfo(User));
-    sessionStorage['user_info'] = JSON.stringify(profile);
+    sessionStorage['user_profile'] = JSON.stringify(profile);
 
     // SUICIDE
     var currentScript;
