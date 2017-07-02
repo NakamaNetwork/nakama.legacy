@@ -40,5 +40,19 @@
     <ItemGroup>
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
+    <ItemGroup>
+      <None Update="src\models\imported.ts">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>imported.tt</DependentUpon>
+      </None>
+      <None Update="src\models\imported.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <LastGenOutput>imported.ts</LastGenOutput>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    </ItemGroup>
 
 </Project>

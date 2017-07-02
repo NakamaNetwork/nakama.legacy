@@ -10,3 +10,6 @@ src/**/*.js
 src/**/*.js.map
 test/unit/**/*.js
 test/unit/**/*.js.map
+
+// Templated Files
+*.tst.gen
