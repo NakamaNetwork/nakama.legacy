@@ -1,10 +1,11 @@
 ﻿@import "./materialize/custom-materialize.scss";
 
-body {
+.aurelia-wrapper {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
+
 
 main {
     flex: 1 0 auto;
@@ -22,7 +23,7 @@ i {
     }
 }
 
-.fill-width{
+.fill-width {
     width: 100%;
 }
 
@@ -80,10 +81,6 @@ $default-unit-margin: $huge-unit-margin;
     .btn-floating {
         margin: 2px;
     }
-}
-
-main {
-    flex: 1 0 auto;
 }
 
 .unit-button {

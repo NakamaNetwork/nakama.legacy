@@ -8,6 +8,12 @@ export class App {
     public message = 'Shukko da!';
     public accountService: AccountService;
 
+    public theme = {
+        primaryColor: '#C77028',
+        accentColor: '#264385',
+        errorColor: '#d50000'
+    };
+
     constructor(accountService: AccountService) {
         this.accountService = accountService;
     }

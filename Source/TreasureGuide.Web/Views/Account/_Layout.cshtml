@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login | NakamaDB</title>
+</head>
+<body class="valign-wrapper">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+            crossorigin="anonymous"
+            integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <style>
+        body {
+            background-color: grey;
+            height: 100vh;
+        }
+
+        .login-wrapper {
+            margin: auto;
+            margin-bottom: 20%;
+            width: 60%;
+        }
+    </style>
+    @RenderSection("Scripts", required: false)
+
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="card-panel">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>

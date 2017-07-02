@@ -1,4 +1,9 @@
 <template>
+    <md-colors with.bind="theme"
+               md-primary-color.bind="primaryColor"
+               md-accent-color.bind="accentColor"
+               md-error-color="errorColor">
+    </md-colors>
     <header>
         <md-navbar>
             <div class="container">
@@ -57,8 +62,10 @@
             </md-sidenav>
         </md-navbar>
     </header>
-    <main class="container">
-        <router-view></router-view>
+    <main>
+        <div class="container">
+            <router-view></router-view>
+        </div>
     </main>
     <footer md-footer>
         <div class="footer-copyright">
