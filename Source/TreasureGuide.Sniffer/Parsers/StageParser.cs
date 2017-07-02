@@ -14,15 +14,8 @@ namespace TreasureGuide.Sniffer.Parsers
     {
         private const string OptcDbStageData = "https://github.com/optc-db/optc-db.github.io/raw/master/common/data/drops.js";
 
-        private IDictionary<StageType, int> _indicies;
-
         public StageParser(TreasureEntities context) : base(context, OptcDbStageData)
         {
-            _indicies = new Dictionary<StageType, int>();
-            foreach (var type in Enum.GetValues(typeof(StageType)).Cast<StageType>())
-            {
-                _indicies[type] = ((int)type) * 1000;
-            }
         }
 
         protected override string TrimData(string input)
@@ -54,32 +47,15 @@ namespace TreasureGuide.Sniffer.Parsers
                     }
                 }));
             }
-            stages.AddRange(HandleForests(ref i));
 
             return stages;
         }
-
-        private IEnumerable<Stage> HandleForests(ref int i)
-        {
-            return new[]
-            {
-                HandleSingle("Mihawk Training Forest", true, StageType.TrainingForest),
-                HandleSingle("Whitebeard Training Forest", true, StageType.TrainingForest),
-                HandleSingle("Aokiji Training Forest", true, StageType.TrainingForest),
-                HandleSingle("Ace Training Forest", true, StageType.TrainingForest),
-                HandleSingle("Jimbe Training Forest", true, StageType.TrainingForest),
-                HandleSingle("Enel Training Forest", true, StageType.TrainingForest),
-                HandleSingle("Shanks Training Forest", true, StageType.TrainingForest),
-                HandleSingle("Boa Training Forest", true, StageType.TrainingForest),
-                HandleSingle("Doflamingo Training Forest", true, StageType.TrainingForest),
-            };
-        }
-
+        
         private Stage HandleSingle(string name, bool global, StageType stageType)
         {
             return new Stage
             {
-                Id = GetId(stageType),
+                Id = IdMaker.FromString(name),
                 Name = name,
                 Global = global,
                 Type = stageType
@@ -97,14 +73,6 @@ namespace TreasureGuide.Sniffer.Parsers
             var colo = units.Select(x => HandleSingle("Coliseum: " + x.Name, x.Flags.HasFlag(UnitFlag.Global), stageType))
                 .ToList();
             return colo;
-        }
-
-        private int GetId(StageType stageType)
-        {
-            var id = _indicies[stageType];
-            id++;
-            _indicies[stageType] = id;
-            return id;
         }
 
         protected override async Task Save(IEnumerable<Stage> items)

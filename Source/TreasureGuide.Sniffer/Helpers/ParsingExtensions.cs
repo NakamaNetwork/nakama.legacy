@@ -82,7 +82,7 @@ namespace TreasureGuide.Sniffer.Helpers
                     return StageType.Special;
                 case "coliseum":
                     return StageType.Coliseum;
-                case "forest":
+                case "training forest":
                     return StageType.TrainingForest;
                 default:
                     return StageType.Unknown;

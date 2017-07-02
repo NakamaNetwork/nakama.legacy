@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\NumberFormatter.cs" />
+    <Compile Include="Helpers\IdMaker.cs" />
     <Compile Include="Helpers\ParsingExtensions.cs" />
     <Compile Include="Parsers\StageParser.cs" />
     <Compile Include="Parsers\TreasureParser.cs" />
