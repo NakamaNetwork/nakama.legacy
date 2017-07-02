@@ -104,8 +104,9 @@ namespace TreasureGuide.Web.Controllers
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? "";
+                var name = email.Substring(0, email.IndexOf("@"));
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = name, Email = email });
             }
         }
 
@@ -124,7 +125,7 @@ namespace TreasureGuide.Web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
