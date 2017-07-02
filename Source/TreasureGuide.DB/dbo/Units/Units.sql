@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Units]
 (
     [Id] INT NOT NULL, 
-    [Name] NVARCHAR(500) NULL, 
+    [Name] NVARCHAR(128) NULL, 
     [Type] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Type] DEFAULT 0, 
     [Class] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Class] DEFAULT 0, 
     [Stars] TINYINT NULL, 

@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace TreasureGuide.Sniffer.Helpers
 {
     public static class IdMaker
     {
-        private static readonly HashSet<int> AlreadyUsed = new HashSet<int>();
+        private static readonly Regex CleanUpRegex = new Regex(@"^(\w\d)");
+        private static readonly IDictionary<int, string> Usages = new Dictionary<int, string>();
 
-        public static int FromString(string text)
+        public static int FromString(string text, int addition = 0)
         {
-            var id = Math.Abs(text.GetHashCode());
-            if (AlreadyUsed.Contains(id))
+            text = CleanUpRegex.Replace(text, "").ToLower();
+            var length = text.Length;
+            var id = text.Select((c, i) => c * 31 ^ (length - i)).Sum();
+            id += addition;
+
+            if (Usages.ContainsKey(id))
             {
-                // Add another hash from the middle of the text.
-                var start = (int)(text.Length * 0.3);
-                var end = (int)(text.Length * 0.6);
-                var addition = Math.Abs(text.Substring(start, end - start).GetHashCode());
-                id += addition;
+                throw new Exception();
             }
-            if (AlreadyUsed.Contains(id))
-            {
-                throw new Exception("This Id generation is stupid!");
-            }
-            AlreadyUsed.Add(id);
+            Usages.Add(id, text);
             return id;
         }
     }

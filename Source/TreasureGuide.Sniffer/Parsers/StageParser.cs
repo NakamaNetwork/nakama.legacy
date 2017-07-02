@@ -52,7 +52,7 @@ namespace TreasureGuide.Sniffer.Parsers
         {
             return new Stage
             {
-                Id = IdMaker.FromString(name),
+                Id = IdMaker.FromString(name, (int)(stageType) * 1000000),
                 Name = name,
                 Global = global,
                 Type = stageType

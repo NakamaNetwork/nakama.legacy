@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Stages]
 (
     [Id] INT NOT NULL,
-    [Name] NVARCHAR(500) NULL,
+    [Name] NVARCHAR(128) NULL,
     [Stamina] TINYINT NULL,
     [Type] TINYINT NOT NULL CONSTRAINT [DF_dbo.Stages_Type] DEFAULT 0,
     [Global] BIT NOT NULL CONSTRAINT [DF_dbo.Stages_Global] DEFAULT 1,
