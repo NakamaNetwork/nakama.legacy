@@ -1,4 +1,4 @@
-import { autoinject } from 'aurelia-framework';
+import { autoinject, computedFrom } from 'aurelia-framework';
 import { RouterConfiguration, Router } from 'aurelia-router';
 import { AccountService } from './services/account-service';
 import { AuthorizeStep } from './tools/authorize-step';
@@ -44,5 +44,12 @@ export class App {
             { route: 'account', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: false, auth: true }
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
+    }
+
+    @computedFrom('router.navigation', 'accountService.userProfile')
+    get authorizedRoutes() {
+        return this.router.navigation.filter(n => {
+            return this.accountService.isInRoles(n.config['auth']);
+        });
     }
 }

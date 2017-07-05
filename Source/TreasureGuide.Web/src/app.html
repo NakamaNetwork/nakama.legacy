@@ -11,7 +11,7 @@
                     ${router.title}
                 </a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}">
+                    <li repeat.for="nav of authorizedRoutes" class="${nav.isActive ? 'active' : ''}">
                         <a href.bind="nav.href">
                             ${nav.title}
                         </a>
@@ -38,7 +38,7 @@
             </a>
             <md-sidenav view-model.ref="sideNav">
                 <ul>
-                    <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}">
+                    <li repeat.for="nav of authorizedRoutes" class="${nav.isActive ? 'active' : ''}">
                         <a href.bind="nav.href">
                             ${nav.title}
                         </a>

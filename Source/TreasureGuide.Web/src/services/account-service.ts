@@ -19,22 +19,27 @@ export class AccountService {
         }
     }
 
-    isInRole(role: string): boolean {
-        return this.isInRoles([role]);
-    }
-
-    isInRoles(roles: string[]): boolean {
-        if (roles.length === 0) {
-            return this.isLoggedIn;
-        } else {
-            for (var i = 0; i < roles.length; i++) {
-                var userRoles = this.userProfile.roles.map(r => r.toLowerCase());
-                if (userRoles.indexOf(roles[i]) === -1) {
+    isInRoles(authParams): boolean {
+        if (!authParams || (Array.isArray(authParams) && authParams.length === 0)) {
+            return true;
+        }
+        if (!this.isLoggedIn) {
+            return false;
+        }
+        if (Array.isArray(authParams)) {
+            for (var i = 0; i < authParams.length; i++) {
+                if (!this.isInRoles(authParams[i].toString())) {
                     return false;
                 }
             }
+        } else {
+            return this.isInRole(authParams.toString());
         }
         return true;
+    }
+
+    private isInRole(role: string): boolean {
+        return this.lowerRoles.indexOf(role.toLowerCase()) > -1;
     }
 
     @computedFrom('userInfo')
@@ -43,6 +48,11 @@ export class AccountService {
             return true;
         }
         return false;
+    }
+
+    @computedFrom('userInfo')
+    private get lowerRoles() {
+        return this.userProfile.roles.map(r => r.toLowerCase());
     }
 
     public logout() {
