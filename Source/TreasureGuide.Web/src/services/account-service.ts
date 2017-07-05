@@ -19,6 +19,24 @@ export class AccountService {
         }
     }
 
+    isInRole(role: string): boolean {
+        return this.isInRoles([role]);
+    }
+
+    isInRoles(roles: string[]): boolean {
+        if (roles.length === 0) {
+            return this.isLoggedIn;
+        } else {
+            for (var i = 0; i < roles.length; i++) {
+                var userRoles = this.userProfile.roles.map(r => r.toLowerCase());
+                if (userRoles.indexOf(roles[i]) === -1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @computedFrom('userInfo')
     get isLoggedIn(): boolean {
         if (this.userProfile) {
