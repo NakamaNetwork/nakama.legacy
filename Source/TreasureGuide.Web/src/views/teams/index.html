@@ -1,6 +1,6 @@
 ﻿<template>
     <h1>${title}</h1>
-    <div class="fixed-action-btn">
+    <div class="fixed-action-btn" auth-req="Contributor">
         <a md-button="floating: true; large: true" md-tooltip="position: left; text: Create New Team;"
            md-waves="color: light; circle: true;" route-href="route: teamCreate">
             <i class="material-icons large">add</i>
@@ -53,7 +53,7 @@
                         Stage
                     </th>
                     <th>
-                        Actions
+                        View
                     </th>
                 </tr>
             </thead>
@@ -72,11 +72,8 @@
                         <stage-display stage-id.bind="team.stageId"></stage-display>
                     </td>
                     <td class="actions">
-                        <a md-button="floating: true" md-waves route-href="route: teamDetails; params.bind: {id: team.id}">
-                            <i class="material-icons left">visibility</i>
-                        </a>
-                        <a md-button="floating: true" md-waves route-href="route: teamEdit; params.bind: {id: team.id}">
-                            <i class="material-icons left">mode_edit</i>
+                        <a md-button md-waves route-href="route: teamDetails; params.bind: {id: team.id}">
+                            <i class="material-icons left">visibility</i> View
                         </a>
                     </td>
                 </tr>

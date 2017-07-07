@@ -26,14 +26,11 @@ export class AccountService {
         if (!this.isLoggedIn) {
             return false;
         }
+        if (typeof (authParams) === 'string') {
+            authParams = authParams.split(',');
+        }
         if (Array.isArray(authParams)) {
-            for (var i = 0; i < authParams.length; i++) {
-                if (!this.isInRoles(authParams[i].toString())) {
-                    return false;
-                }
-            }
-        } else if (typeof (authParams) === 'string') {
-            return this.isInRole(authParams.toString());
+            return authParams.some(p => this.isInRole(p.toString()));
         }
         return true;
     }
