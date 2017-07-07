@@ -32,7 +32,7 @@ export class AccountService {
                     return false;
                 }
             }
-        } else {
+        } else if (typeof (authParams) === 'string') {
             return this.isInRole(authParams.toString());
         }
         return true;
