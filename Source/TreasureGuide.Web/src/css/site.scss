@@ -187,3 +187,9 @@ ux-dialog-container {
         width: 100%;
     }
 }
+
+.collection {
+    .unit-button {
+        pointer-events: none;
+    }
+}

@@ -27,8 +27,6 @@ export class TeamEditPage {
         this.router = router;
 
         this.team = new TeamEditorModel();
-        this.inputUpdate.update();
-        this.controller.validate();
     }
 
     activate(params) {
@@ -43,6 +41,8 @@ export class TeamEditPage {
                 this.router.navigateToRoute('error', { error: 'The requested team could not be found for editing. It may not exist or you may not have permission to edit it.' });
             });
         }
+        this.inputUpdate.update();
+        this.controller.validate();
     }
 
     submit() {
@@ -76,6 +76,6 @@ ValidationRules
     .maxLength(10000)
     .ensure((x: TeamEditorModel) => x.teamUnits)
     .required()
-    .satisfies((x: any[]) => x.filter(y => !y.sub && y.id).length > 2)
-    .withMessage('Must specify a full team!')
+    .satisfies((x: any[]) => x.filter(y => !y.sub && y.unitId).length > 3)
+    .withMessage('Please specify at least 3 units for this team.')
     .on(TeamEditorModel);

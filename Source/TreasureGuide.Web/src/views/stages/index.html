@@ -1,6 +1,6 @@
 ﻿<template>
     <h1>${title}</h1>
-    <div class="fixed-action-btn">
+    <div class="fixed-action-btn" auth-req="Administrator">
         <a md-button="floating: true; large: true" md-tooltip="position: left; text: Create New Stage;"
            md-waves="color: light; circle: true;" route-href="route: stageCreate">
             <i class="material-icons large">add</i>
@@ -26,7 +26,7 @@
                         Teams
                     </th>
                     <th>
-                        Actions
+                        View
                     </th>
                 </tr>
             </thead>
@@ -48,11 +48,9 @@
                         ${stage.teamCount}
                     </td>
                     <td class="actions">
-                        <a md-button="floating: true" md-waves route-href="route: stageDetails; params.bind: {id: stage.id}">
+                        <a md-button md-waves route-href="route: stageDetails; params.bind: {id: stage.id}">
                             <i class="material-icons left">visibility</i>
-                        </a>
-                        <a md-button="floating: true" md-waves route-href="route: stageEdit; params.bind: {id: stage.id}">
-                            <i class="material-icons left">mode_edit</i>
+                            View
                         </a>
                     </td>
                 </tr>
