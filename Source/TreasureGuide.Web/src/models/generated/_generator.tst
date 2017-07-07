@@ -13,7 +13,7 @@
         return c.BaseClass != null ? "extends " + c.BaseClass.Name : "";
     }
 }
-$Classes(*Model)[export interface $Name$TypeParameters $ParentClass{ $Properties[
+$Classes(*Model)[export class $Name$TypeParameters $ParentClass{ $Properties[
     $name: $Type;]
 }
 

@@ -1,4 +1,4 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject } from 'aurelia-framework';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { MdToastService } from 'aurelia-materialize-bridge';
 import { HttpEngine } from '../../tools/http-engine';

@@ -1,7 +1,7 @@
-﻿import { bindable, computedFrom } from 'aurelia-framework';
-import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
+import { TeamEditorModel } from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -14,35 +14,3 @@ export class TeamQueryService extends SearchableQueryService {
         return super.save(model, id);
     }
 }
-
-export class TeamSearchModel {
-    term?: string;
-    leaderId?: number;
-    stageId?: number;
-    myBox?: boolean = false;
-    global?: boolean = false;
-    freeToPlay?: boolean = false;
-    page?: number = 1;
-    pageSize?: number = 25;
-
-    @computedFrom('term', 'leaderId', 'stageId', 'myBox', 'global', 'freeToPlay', 'page', 'pageSize')
-    get payload() {
-        var text = JSON.stringify(this);
-        var output = JSON.parse(text);
-        return output;
-    }
-};
-
-export class TeamEditorModel {
-    name = '';
-    description = '';
-    guide = '';
-    credits = '';
-    teamUnits = [];
-    teamSockets = [];
-    shipId = 1;
-    stageId?: number;
-
-    constructor() {
-    }
-};

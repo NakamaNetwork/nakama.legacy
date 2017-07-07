@@ -1,4 +1,4 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 
 @autoinject

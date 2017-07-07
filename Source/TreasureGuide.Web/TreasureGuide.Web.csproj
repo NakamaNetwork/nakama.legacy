@@ -41,6 +41,45 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\access-token-model.tst.gen">
+        <CustomToolNamespace>Models\ProfileModels\AccessTokenModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\external-login-confirmation-view-model.tst.gen">
+        <CustomToolNamespace>Models\AccountViewModels\ExternalLoginConfirmationViewModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\profile-model.tst.gen">
+        <CustomToolNamespace>Models\ProfileModels\ProfileModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\search-model.tst.gen">
+        <CustomToolNamespace>Models\SearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\ship-models.tst.gen">
+        <CustomToolNamespace>Models\ShipModels\ShipModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\stage-models.tst.gen">
+        <CustomToolNamespace>Models\StageModels\StageModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\stage-search-model.tst.gen">
+        <CustomToolNamespace>Models\StageModels\StageSearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-models.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-search-model.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamSearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-socket-models.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamSocketModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-unit-models.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamUnitModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\unit-models.tst.gen">
+        <CustomToolNamespace>Models\UnitModels\UnitModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\unit-search-model.tst.gen">
+        <CustomToolNamespace>Models\UnitModels\UnitSearchModel.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

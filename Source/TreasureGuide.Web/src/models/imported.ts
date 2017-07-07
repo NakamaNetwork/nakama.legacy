@@ -1,38 +1,38 @@
 ﻿
-export interface AccessTokenModel { 
+export class AccessTokenModel { 
     token: string;
     expiration: Date;
 }
 
 
-export interface ExternalLoginConfirmationViewModel { 
+export class ExternalLoginConfirmationViewModel { 
     userName: string;
     email: string;
 }
 
 
-export interface ProfileModel { 
+export class ProfileModel { 
     userName: string;
     roles: string[];
 }
 
 
-export interface SearchModel { 
+export class SearchModel { 
     page: number;
     pageSize: number;
 }
 
 
-export interface ShipStubModel { 
+export class ShipStubModel { 
     id: number;
     name: string;
 }
 
-export interface ShipDetailModel extends ShipStubModel{ 
+export class ShipDetailModel extends ShipStubModel{ 
     description: string;
 }
 
-export interface ShipEditorModel { 
+export class ShipEditorModel { 
     id: number;
 }
 
@@ -52,7 +52,7 @@ export enum SocketType {
 }
 
 
-export interface StageStubModel { 
+export class StageStubModel { 
     id: number;
     stamina: number;
     name: string;
@@ -61,7 +61,7 @@ export interface StageStubModel {
     teamCount: number;
 }
 
-export interface StageDetailModel { 
+export class StageDetailModel { 
     id: number;
     stamina: number;
     name: string;
@@ -70,7 +70,7 @@ export interface StageDetailModel {
     teams: TeamStubModel[];
 }
 
-export interface StageEditorModel { 
+export class StageEditorModel { 
     id: number;
     stamina: number;
     name: string;
@@ -79,7 +79,7 @@ export interface StageEditorModel {
 }
 
 
-export interface StageSearchModel extends SearchModel{ 
+export class StageSearchModel extends SearchModel{ 
     term: string;
     type: StageType;
     global: boolean;
@@ -98,7 +98,7 @@ export enum StageType {
 }
 
 
-export interface TeamStubModel { 
+export class TeamStubModel { 
     id: number;
     name: string;
     submittedById: string;
@@ -110,7 +110,7 @@ export interface TeamStubModel {
     teamUnits: TeamUnitStubModel[];
 }
 
-export interface TeamDetailModel { 
+export class TeamDetailModel { 
     id: number;
     name: string;
     submittedById: string;
@@ -126,7 +126,7 @@ export interface TeamDetailModel {
     teamSockets: TeamSocketStubModel[];
 }
 
-export interface TeamEditorModel { 
+export class TeamEditorModel { 
     id: number;
     name: string;
     description: string;
@@ -139,7 +139,7 @@ export interface TeamEditorModel {
 }
 
 
-export interface TeamSearchModel extends SearchModel{ 
+export class TeamSearchModel extends SearchModel{ 
     term: string;
     leaderId: number;
     stageId: number;
@@ -149,34 +149,34 @@ export interface TeamSearchModel extends SearchModel{
 }
 
 
-export interface TeamSocketModel { 
+export class TeamSocketModel { 
     socketType: SocketType;
     level: number;
 }
 
-export interface TeamSocketStubModel extends TeamSocketModel{ 
+export class TeamSocketStubModel extends TeamSocketModel{ 
 }
 
-export interface TeamSocketDetailModel extends TeamSocketModel{ 
+export class TeamSocketDetailModel extends TeamSocketModel{ 
 }
 
-export interface TeamSocketEditorModel extends TeamSocketModel{ 
+export class TeamSocketEditorModel extends TeamSocketModel{ 
 }
 
 
-export interface TeamUnitStubModel { 
+export class TeamUnitStubModel { 
     unitId: number;
     position: number;
 }
 
-export interface TeamUnitDetailModel { 
+export class TeamUnitDetailModel { 
     unitId: number;
     position: number;
     specialLevel: number;
     sub: boolean;
 }
 
-export interface TeamUnitEditorModel { 
+export class TeamUnitEditorModel { 
     unitId: number;
     position: number;
     specialLevel: number;
@@ -210,7 +210,7 @@ export enum UnitFlag {
 }
 
 
-export interface UnitModel { 
+export class UnitModel { 
     id: number;
     name: string;
     class: UnitClass;
@@ -218,18 +218,18 @@ export interface UnitModel {
     flags: UnitFlag;
 }
 
-export interface UnitStubModel extends UnitModel{ 
+export class UnitStubModel extends UnitModel{ 
 }
 
-export interface UnitDetailModel extends UnitModel{ 
+export class UnitDetailModel extends UnitModel{ 
 }
 
-export interface UnitEditorModel { 
+export class UnitEditorModel { 
     id: number;
 }
 
 
-export interface UnitSearchModel extends SearchModel{ 
+export class UnitSearchModel extends SearchModel{ 
     term: string;
     classes: UnitClass[];
     types: UnitType[];

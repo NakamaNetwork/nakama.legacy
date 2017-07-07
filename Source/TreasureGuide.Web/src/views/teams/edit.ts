@@ -1,9 +1,10 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject } from 'aurelia-framework';
 import { bindable } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { TeamQueryService, TeamEditorModel } from '../../services/query/team-query-service';
+import { TeamQueryService } from '../../services/query/team-query-service';
 import { MdToastService, MdInputUpdateService, MaterializeFormValidationRenderer } from 'aurelia-materialize-bridge';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
+import { TeamEditorModel } from '../../models/imported';
 
 @autoinject
 export class TeamEditPage {

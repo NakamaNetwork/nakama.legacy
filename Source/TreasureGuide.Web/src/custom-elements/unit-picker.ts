@@ -1,5 +1,5 @@
 ﻿import { bindable } from 'aurelia-framework';
-import { autoinject } from 'aurelia-dependency-injection';
+import { autoinject } from 'aurelia-framework';
 import { UnitQueryService, UnitSearchModel } from '../services/query/unit-query-service';
 import { DialogController } from 'aurelia-dialog';
 import { BindingEngine } from 'aurelia-binding';
