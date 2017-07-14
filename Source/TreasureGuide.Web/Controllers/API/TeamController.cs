@@ -21,10 +21,19 @@ namespace TreasureGuide.Web.Controllers.API
         {
             _throttleService = throttleService;
         }
-        
+
         protected override Team PostProcess(Team entity)
         {
-            entity.SubmittedById = User.GetId();
+            var userId = User.GetId();
+            var now = DateTimeOffset.Now;
+            if (entity.Version == 0)
+            {
+                entity.SubmittedById = userId;
+                entity.SubmittedDate = now;
+            }
+            entity.EditedById = userId;
+            entity.EditedDate = now;
+            entity.Version = entity.Version + 1;
             return base.PostProcess(entity);
         }
 
