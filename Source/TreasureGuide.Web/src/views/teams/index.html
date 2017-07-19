@@ -7,30 +7,7 @@
         </a>
     </div>
     <div class="row">
-        <form with.bind="searchModel">
-            <div class="col m6">
-                <div class="row">
-                    <md-input md-label="Name" md-type="text" md-value.two-way="term"></md-input>
-                </div>
-                <div class="row">
-                    <div class="col m4">
-                        <md-checkbox md-checked.two-way="global">Global</md-checkbox>
-                    </div>
-                    <div class="col m4">
-                        <md-checkbox md-checked.two-way="freeToPlay">Free to Play</md-checkbox>
-                    </div>
-                    <div class="col m4">
-                        <md-checkbox md-checked.two-way="myBox">In my Box</md-checkbox>
-                    </div>
-                </div>
-            </div>
-            <div class="col m3">
-                <unit-display unit-id.two-way="leaderId" editable="true"></unit-display>
-            </div>
-            <div class="col m3">
-                <stage-display editable="true" stage-id.two-way="stageId"></stage-display>
-            </div>
-        </form>
+        <team-search model.bind="searchModel"></team-search>
     </div>
     <div class="row center" if.bind="pages > 1">
         <md-pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>

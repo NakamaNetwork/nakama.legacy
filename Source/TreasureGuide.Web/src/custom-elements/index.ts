@@ -6,6 +6,7 @@
         './stage-picker',
         './team-display',
         './team-import',
+        './team-search',
         './unit-display',
         './unit-picker'
     ]);

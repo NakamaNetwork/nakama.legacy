@@ -4,6 +4,9 @@ import { TeamQueryService, TeamSearchModel } from '../../services/query/team-que
 
 @autoinject
 export class TeamIndexPage {
+    private self: TeamIndexPage;
+
+    bindingEngine: BindingEngine;
     teamQueryService: TeamQueryService;
     title = 'Teams';
     teams = [];
@@ -12,18 +15,15 @@ export class TeamIndexPage {
     pages = 0;
 
     searchModel = new TeamSearchModel();
-    searchTimer;
 
     constructor(teamQueryService: TeamQueryService, bindingEngine: BindingEngine) {
         this.teamQueryService = teamQueryService;
-        bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-            if (this.searchTimer) {
-                clearTimeout(this.searchTimer);
-            }
-            this.searchTimer = setTimeout(() => {
-                this.search(n);
-            }, 500);
-        });
+        this.bindingEngine = bindingEngine;
+        this.searchModel.onChanged = this.search;
+        this.self = this;
+    }
+
+    bind() {
         this.search(this.searchModel.payload);
     }
 

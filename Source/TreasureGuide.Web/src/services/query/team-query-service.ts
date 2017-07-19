@@ -1,4 +1,4 @@
-﻿import { bindable, computedFrom } from 'aurelia-framework';
+﻿import { computedFrom } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
@@ -27,10 +27,22 @@ export class TeamSearchModel {
 
     @computedFrom('term', 'leaderId', 'stageId', 'myBox', 'global', 'freeToPlay', 'page', 'pageSize')
     get payload() {
-        var text = JSON.stringify(this);
+        var text = JSON.stringify({
+            term: this.term,
+            leaderId: this.leaderId,
+            stageId: this.stageId,
+            myBox: this.myBox,
+            global: this.global,
+            freeToPlay: this.freeToPlay,
+            page: this.page,
+            pageSize: this.pageSize
+        });
         var output = JSON.parse(text);
+        this.onChanged(output);
         return output;
     }
+
+    onChanged: (any) => void;
 };
 
 export class TeamEditorModel {

@@ -1,0 +1,26 @@
+<template>
+    <form with.bind="searchModel">
+        <div class="row">
+            <stage-display editable="true" stage-id.bind="stageId"></stage-display>
+        </div>
+        <div class="row">
+            <div class="col s3">
+                <label>Captain:</label>
+                <unit-display unit-id.bind="leaderId" editable="true"></unit-display>
+            </div>
+            <div class="col s9">
+                <div class="row">
+                    <md-input md-label="Name" md-type="text" md-value.bind="term"></md-input>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        <md-checkbox md-checked.bind="global">Global</md-checkbox>
+                    </div>
+                    <div class="col s6">
+                        <md-checkbox md-checked.bind="freeToPlay">Free to Play</md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</template>
