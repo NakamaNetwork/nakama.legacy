@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountViewModels;
 
@@ -134,6 +135,10 @@ namespace TreasureGuide.Web.Controllers
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+
+#if DEBUG
+                        await _userManager.AddToRolesAsync(user, new[] { RoleConstants.Administrator, RoleConstants.Contributor, RoleConstants.Moderator });
+#endif
                         return RedirectToLocal(returnUrl);
                     }
                 }
