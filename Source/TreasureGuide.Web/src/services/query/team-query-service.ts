@@ -1,7 +1,7 @@
-﻿import { computedFrom } from 'aurelia-framework';
-import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
+import { TeamEditorModel } from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {

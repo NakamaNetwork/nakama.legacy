@@ -1,5 +1,5 @@
 ﻿import { bindable } from 'aurelia-framework';
-import { autoinject } from 'aurelia-dependency-injection';
+import { autoinject } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { ShipQueryService } from '../services/query/ship-query-service';
 

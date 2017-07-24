@@ -1,5 +1,5 @@
 ﻿import { bindable } from 'aurelia-framework';
-import { autoinject } from 'aurelia-dependency-injection';
+import { autoinject } from 'aurelia-framework';
 import { StageQueryService, StageSearchModel } from '../services/query/stage-query-service';
 import { DialogController } from 'aurelia-dialog';
 import { BindingEngine } from 'aurelia-binding';

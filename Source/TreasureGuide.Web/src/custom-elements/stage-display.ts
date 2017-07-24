@@ -1,5 +1,5 @@
 ﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
-import { autoinject } from 'aurelia-dependency-injection';
+import { autoinject } from 'aurelia-framework';
 import { StageQueryService } from '../services/query/stage-query-service';
 import { DialogService } from 'aurelia-dialog';
 import { StagePicker } from './stage-picker';

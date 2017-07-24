@@ -1,4 +1,4 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject } from 'aurelia-framework';
 import { StageQueryService } from '../../services/query/stage-query-service';
 
 @autoinject

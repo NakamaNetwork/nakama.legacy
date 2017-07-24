@@ -1,6 +1,6 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { TeamQueryService, TeamEditorModel } from '../../services/query/team-query-service';
+import { TeamQueryService } from '../../services/query/team-query-service';
 
 @autoinject
 export class TeamDetailPage {

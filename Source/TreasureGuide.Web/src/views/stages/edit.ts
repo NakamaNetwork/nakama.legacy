@@ -1,4 +1,4 @@
-﻿import { autoinject } from 'aurelia-dependency-injection';
+﻿import { autoinject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { StageQueryService } from '../../services/query/stage-query-service';
 import { MdToastService, MdInputUpdateService } from 'aurelia-materialize-bridge';
