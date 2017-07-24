@@ -37,13 +37,21 @@ export class UnitPicker {
         this.searchModel.page = e.detail;
     }
 
-    search(payload) {
+    search(payload: UnitSearchModel) {
         if (this.unitQueryService) {
-            this.unitQueryService.search(payload).then(x => {
-                this.units = x.results;
-                this.resultCount = x.totalResults;
-                this.pages = Math.ceil(x.totalResults / payload.pageSize);
-            });
+            if ((payload.classes && payload.classes.length > 0) ||
+                (payload.types && payload.types.length > 0) ||
+                payload.term || payload.myBox) {
+                this.unitQueryService.search(payload).then(x => {
+                    this.units = x.results;
+                    this.resultCount = x.totalResults;
+                    this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                });
+            } else {
+                this.units = [];
+                this.resultCount = 0;
+                this.pages = 0;
+            }
         }
     }
 
