@@ -4,7 +4,8 @@ import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { MdToastService, MdInputUpdateService, MaterializeFormValidationRenderer } from 'aurelia-materialize-bridge';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
-import { TeamEditorModel } from '../../models/imported';
+import { ITeamEditorModel } from '../../models/imported';
+import {TeamEditorModel} from '../../services/query/team-query-service';
 
 @autoinject
 export class TeamEditPage {
@@ -16,7 +17,7 @@ export class TeamEditPage {
     public controller: ValidationController;
 
     title = 'Create Team';
-    @bindable team: TeamEditorModel;
+    @bindable team: ITeamEditorModel;
 
     constructor(teamQueryService: TeamQueryService, router: Router, toast: MdToastService, inputUpdate: MdInputUpdateService, validFactory: ValidationControllerFactory) {
         this.controller = validFactory.createForCurrentScope();

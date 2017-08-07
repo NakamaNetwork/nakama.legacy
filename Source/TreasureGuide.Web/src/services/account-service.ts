@@ -1,11 +1,11 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { ProfileModel } from '../models/imported';
+import { IProfileModel } from '../models/imported';
 
 @autoinject
 export class AccountService {
     private router: Router;
-    public userProfile: ProfileModel;
+    public userProfile: IProfileModel;
 
     constructor(router: Router) {
         this.router = router;

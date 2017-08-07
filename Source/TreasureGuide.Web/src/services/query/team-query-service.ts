@@ -1,7 +1,7 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { TeamEditorModel } from '../../models/imported';
+import { ITeamEditorModel, ITeamSearchModel } from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -15,15 +15,15 @@ export class TeamQueryService extends SearchableQueryService {
     }
 }
 
-export class TeamSearchModel {
-    term?: string;
-    leaderId?: number;
-    stageId?: number;
-    myBox?: boolean = false;
-    global?: boolean = false;
-    freeToPlay?: boolean = false;
-    page?: number = 1;
-    pageSize?: number = 25;
+export class TeamSearchModel implements ITeamSearchModel {
+    term: string;
+    leaderId: number;
+    stageId: number;
+    myBox: boolean= false;
+    global: boolean= false;
+    freeToPlay: boolean= false;
+    page: number = 1;
+    pageSize: number = 25;
 
     @computedFrom('term', 'leaderId', 'stageId', 'myBox', 'global', 'freeToPlay', 'page', 'pageSize')
     get payload() {
@@ -45,16 +45,14 @@ export class TeamSearchModel {
     onChanged: (any) => void;
 };
 
-export class TeamEditorModel {
-    name = '';
-    description = '';
-    guide = '';
-    credits = '';
-    teamUnits = [];
-    teamSockets = [];
-    shipId = 1;
-    stageId?: number;
-
-    constructor() {
-    }
+export class TeamEditorModel implements ITeamEditorModel {
+    id: number;
+    name: string;
+    description: string;
+    credits: string;
+    guide: string;
+    shipId: number = 1;
+    stageId: number;
+    teamSockets: any[] =[];
+    teamUnits: any[] =[];
 };

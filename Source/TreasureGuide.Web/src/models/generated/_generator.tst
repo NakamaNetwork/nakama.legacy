@@ -10,11 +10,13 @@
     }
 
     string ParentClass(Class c){
-        return c.BaseClass != null ? "extends " + c.BaseClass.Name : "";
+        return c.BaseClass != null ? "extends I" + c.BaseClass.Name : "";
     }
 }
-$Classes(*Model)[export class $Name$TypeParameters $ParentClass{ $Properties[
-    $name: $Type;]
+$Classes(*Model)[export interface I$Name$TypeParameters $ParentClass{
+    $Properties(p=>!p.Type.IsEnum && !p.Type.IsPrimitive && (!p.Type.IsGeneric || p.Type.TypeArguments.All(z=>!z.IsEnum)))[$name: I$Type;
+    ]$Properties(p=>p.Type.IsEnum || p.Type.IsPrimitive || !(!p.Type.IsGeneric || p.Type.TypeArguments.All(z=>!z.IsEnum)))[$name: $Type;
+    ]
 }
 
 ]$Enums(*)[export enum $Name { $Values[

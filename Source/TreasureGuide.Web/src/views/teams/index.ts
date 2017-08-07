@@ -1,7 +1,6 @@
 ﻿import { BindingEngine } from 'aurelia-binding';
 import { autoinject } from 'aurelia-framework';
-import { TeamQueryService } from '../../services/query/team-query-service';
-import { TeamSearchModel } from '../../models/imported';
+import { TeamQueryService, TeamSearchModel } from '../../services/query/team-query-service';
 
 @autoinject
 export class TeamIndexPage {

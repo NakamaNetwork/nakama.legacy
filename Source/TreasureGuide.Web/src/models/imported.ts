@@ -1,39 +1,46 @@
 ﻿
-export class AccessTokenModel { 
+export interface IAccessTokenModel {
     token: string;
     expiration: Date;
+    
 }
 
 
-export class ExternalLoginConfirmationViewModel { 
+export interface IExternalLoginConfirmationViewModel {
     userName: string;
     email: string;
+    
 }
 
 
-export class ProfileModel { 
+export interface IProfileModel {
     userName: string;
     roles: string[];
+    
 }
 
 
-export class SearchModel { 
+export interface ISearchModel {
     page: number;
     pageSize: number;
+    
 }
 
 
-export class ShipStubModel { 
+export interface IShipStubModel {
     id: number;
     name: string;
+    
 }
 
-export class ShipDetailModel extends ShipStubModel{ 
+export interface IShipDetailModel extends IShipStubModel{
     description: string;
+    
 }
 
-export class ShipEditorModel { 
+export interface IShipEditorModel {
     id: number;
+    
 }
 
 
@@ -52,37 +59,41 @@ export enum SocketType {
 }
 
 
-export class StageStubModel { 
+export interface IStageStubModel {
     id: number;
     stamina: number;
     name: string;
     global: boolean;
     type: StageType;
     teamCount: number;
+    
 }
 
-export class StageDetailModel { 
+export interface IStageDetailModel {
+    teams: ITeamStubModel[];
     id: number;
     stamina: number;
     name: string;
     global: boolean;
     type: StageType;
-    teams: TeamStubModel[];
+    
 }
 
-export class StageEditorModel { 
+export interface IStageEditorModel {
     id: number;
     stamina: number;
     name: string;
     global: boolean;
     type: StageType;
+    
 }
 
 
-export class StageSearchModel extends SearchModel{ 
+export interface IStageSearchModel extends ISearchModel{
     term: string;
     type: StageType;
     global: boolean;
+    
 }
 
 
@@ -98,7 +109,8 @@ export enum StageType {
 }
 
 
-export class TeamStubModel { 
+export interface ITeamStubModel {
+    teamUnits: ITeamUnitStubModel[];
     id: number;
     name: string;
     submittedById: string;
@@ -107,10 +119,12 @@ export class TeamStubModel {
     global: boolean;
     shipId: number;
     stageId: number;
-    teamUnits: TeamUnitStubModel[];
+    
 }
 
-export class TeamDetailModel { 
+export interface ITeamDetailModel {
+    teamUnits: ITeamUnitDetailModel[];
+    teamSockets: ITeamSocketStubModel[];
     id: number;
     name: string;
     submittedById: string;
@@ -122,11 +136,12 @@ export class TeamDetailModel {
     global: boolean;
     shipId: number;
     stageId: number;
-    teamUnits: TeamUnitDetailModel[];
-    teamSockets: TeamSocketStubModel[];
+    
 }
 
-export class TeamEditorModel { 
+export interface ITeamEditorModel {
+    teamSockets: ITeamSocketEditorModel[];
+    teamUnits: ITeamUnitEditorModel[];
     id: number;
     name: string;
     description: string;
@@ -134,53 +149,60 @@ export class TeamEditorModel {
     guide: string;
     shipId: number;
     stageId: number;
-    teamSockets: TeamSocketEditorModel[];
-    teamUnits: TeamUnitEditorModel[];
+    
 }
 
 
-export class TeamSearchModel extends SearchModel{ 
+export interface ITeamSearchModel extends ISearchModel{
     term: string;
     leaderId: number;
     stageId: number;
     myBox: boolean;
     global: boolean;
     freeToPlay: boolean;
+    
 }
 
 
-export class TeamSocketModel { 
+export interface ITeamSocketModel {
     socketType: SocketType;
     level: number;
+    
 }
 
-export class TeamSocketStubModel extends TeamSocketModel{ 
+export interface ITeamSocketStubModel extends ITeamSocketModel{
+    
 }
 
-export class TeamSocketDetailModel extends TeamSocketModel{ 
+export interface ITeamSocketDetailModel extends ITeamSocketModel{
+    
 }
 
-export class TeamSocketEditorModel extends TeamSocketModel{ 
+export interface ITeamSocketEditorModel extends ITeamSocketModel{
+    
 }
 
 
-export class TeamUnitStubModel { 
+export interface ITeamUnitStubModel {
     unitId: number;
     position: number;
+    
 }
 
-export class TeamUnitDetailModel { 
+export interface ITeamUnitDetailModel {
     unitId: number;
     position: number;
     specialLevel: number;
     sub: boolean;
+    
 }
 
-export class TeamUnitEditorModel { 
+export interface ITeamUnitEditorModel {
     unitId: number;
     position: number;
     specialLevel: number;
     sub: boolean;
+    
 }
 
 
@@ -210,26 +232,30 @@ export enum UnitFlag {
 }
 
 
-export class UnitModel { 
+export interface IUnitModel {
     id: number;
     name: string;
     class: UnitClass;
     type: UnitType;
     flags: UnitFlag;
+    
 }
 
-export class UnitStubModel extends UnitModel{ 
+export interface IUnitStubModel extends IUnitModel{
+    
 }
 
-export class UnitDetailModel extends UnitModel{ 
+export interface IUnitDetailModel extends IUnitModel{
+    
 }
 
-export class UnitEditorModel { 
+export interface IUnitEditorModel {
     id: number;
+    
 }
 
 
-export class UnitSearchModel extends SearchModel{ 
+export interface IUnitSearchModel extends ISearchModel{
     term: string;
     classes: UnitClass[];
     types: UnitType[];
@@ -237,6 +263,7 @@ export class UnitSearchModel extends SearchModel{
     freeToPlay: boolean;
     global: boolean;
     myBox: boolean;
+    
 }
 
 
