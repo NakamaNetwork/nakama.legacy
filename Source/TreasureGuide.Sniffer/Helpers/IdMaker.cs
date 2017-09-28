@@ -19,7 +19,7 @@ namespace TreasureGuide.Sniffer.Helpers
 
             if (Usages.ContainsKey(id))
             {
-                throw new Exception();
+                return FromString($"{text}{text}", addition);
             }
             Usages.Add(id, text);
             return id;
