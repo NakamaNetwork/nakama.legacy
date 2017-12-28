@@ -11,10 +11,6 @@ main {
     flex: 1 0 auto;
 }
 
-i {
-    vertical-align: middle;
-}
-
 .pagination {
     li {
         a {
@@ -194,4 +190,8 @@ ux-dialog-container {
 
 .right {
     float: right !important;
+}
+
+.center {
+    text-align: center;
 }

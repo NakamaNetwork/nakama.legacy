@@ -1,50 +1,58 @@
 ﻿<template>
-    <md-colors></md-colors>
     <h1>${title}</h1>
-    <div with.bind="team">
-        <div class="row">
-            <md-input md-type="text"
-                      md-label="Name"
-                      md-char-counter="length: 250"
-                      md-value.bind="name & validate"></md-input>
-        </div>
-        <div class="row">
-            <stage-display editable="true" stage-id.two-way="stageId"></stage-display>
-        </div>
-        <div class="row center">
-            <team-display team.two-way="teamUnits"
-                          ship.two-way="shipId"
-                          editable.bind="true"></team-display>
-        </div>
-        <div class="row center">
-            <socket-picker sockets.two-way="teamSockets"></socket-picker>
-        </div>
-        <div class="row">
-            <md-input md-text-area="true"
-                      md-label="Description"
-                      md-validate="true"
-                      md-char-counter="length: 1000"
-                      md-value.bind="description & validate"></md-input>
-        </div>
-        <div class="row">
-            <md-input md-text-area="true"
-                      md-label="Guide"
-                      md-char-counter="length: 10000"
-                      md-value.bind="guide & validate"></md-input>
-        </div>
-        <div class="row">
-            <md-input md-text-area="true"
-                      md-label="Credits"
-                      md-char-counter="length: 250"
-                      md-value.bind="credits & validate"></md-input>
-        </div>
-        <div class="row right">
-            <button md-button="large: true"
-                    md-waves
-                    click.delegate="submit()">
-                Submit
-                <i class="material-icons right large">send</i>
-            </button>
-        </div>
-    </div>
+    <form with.bind="team">
+        <fieldset>
+            <legend>Team Info</legend>
+            <div class="row">
+                <div class="col m6">
+                    <label for="nameInput">Name</label>
+                    <input id="nameInput"
+                           type="text"
+                           placeholder="Name"
+                           value.bind="name & validate" />
+                </div>
+                <div class="col m6">
+                    <stage-display editable="true" stage-id.two-way="stageId"></stage-display>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Units and Sockets</legend>
+            <div class="row center">
+                <team-display team.two-way="teamUnits"
+                              ship.two-way="shipId"
+                              editable.bind="true"></team-display>
+            </div>
+            <div class="row center">
+                <socket-picker sockets.two-way="teamSockets"></socket-picker>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Write-Ups</legend>
+            <div class="row">
+                <label for="descriptionInput">Description</label>
+                <textarea id="descriptionInput"
+                          class="_width100"
+                          placeholder="A brief description of the team..."
+                          text.bind="description & validate"></textarea>
+            </div>
+            <div class="row">
+                <label for="guideInput">Guide</label>
+                <textarea id="guideInput"
+                          class="_width100"
+                          placeholder="Details on how to use the team..."
+                          value.bind="guide & validate"></textarea>
+            </div>
+            <div class="row">
+                <label for="creditInput">Credits</label>
+                <textarea id="creditInput"
+                          class="_width100"
+                          placeholder="Credits, videos, and other supplemental materials."
+                          value.bind="credits & validate"></textarea>
+            </div>
+            <div class="row right">
+                <input type="submit" class="_primary" click.delegate="submit()" />
+            </div>
+        </fieldset>
+    </form>
 </template>

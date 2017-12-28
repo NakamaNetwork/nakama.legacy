@@ -1,9 +1,8 @@
 ﻿<template>
     <h1>${title}</h1>
-    <div class="fixed-action-btn" auth-req="Contributor">
-        <a button="floating: true; large: true" md-tooltip="position: left; text: Create New Team;"
-           waves="color: light; circle: true;" route-href="route: teamCreate">
-            <i class="material-icons large">add</i>
+    <div auth-req="Contributor">
+        <a class="button" route-href="route: teamCreate">
+            <i class="fa fa-plus"></i> Create New Team
         </a>
     </div>
     <div class="row">
