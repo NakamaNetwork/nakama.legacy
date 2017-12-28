@@ -200,9 +200,24 @@ ux-dialog-container {
     vertical-align: middle;
 }
 
+.button,
+button,
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+    i {
+        padding: 0 2px;
+    }
+
+    &._unclickable {
+        @extend ._disabled;
+        cursor: default;
+    }
+}
+
 ._flat {
     border: none !important;
-    margin-left: 20px;
+    margin-left: -20px;
 }
 
 ux-dialog-footer {

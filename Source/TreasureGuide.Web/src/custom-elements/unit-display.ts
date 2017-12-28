@@ -40,6 +40,11 @@ export class UnitDisplay {
         return 'fa fa-2x fa-' + (this.unitId ? 'user' : 'user-plus');
     }
 
+    @computedFrom('editable')
+    get buttonClass() {
+        return 'unit-button ' + (this.editable ? '' : '_unclickable');
+    }
+
     clicked() {
         if (this.editable) {
             this.dialogService.open({ viewModel: UnitPicker, model: { unitId: this.unitId }, lock: true }).whenClosed(result => {
