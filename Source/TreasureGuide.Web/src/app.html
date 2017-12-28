@@ -1,61 +1,39 @@
 <template>
     <header>
-        <navbar>
-            <div class="container">
-                <a route-href="route: home" class="brand-logo">
-                    ${router.title}
-                </a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li repeat.for="nav of authorizedRoutes" class="${nav.isActive ? 'active' : ''}">
-                        <a href.bind="nav.href">
-                            ${nav.title}
-                        </a>
-                    </li>
-                    <li if.bind="!accountService.isLoggedIn">
-                        <a href="/Account/Login">
-                            Login
-                        </a>
-                    </li>
-                    <li if.bind="accountService.isLoggedIn">
-                        <a route-href="route: account">
-                            ${accountService.userProfile.userName}
-                        </a>
-                    </li>
-                    <li if.bind="accountService.isLoggedIn">
-                        <a click.trigger="accountService.logout()">
-                            Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <a href="#" md-sidenav-collapse="ref.bind: sideNav;" class="button-collapse">
-                <i class="material-icons">menu</i>
-            </a>
-            <sidenav view-model.ref="sideNav">
-                <ul>
-                    <li repeat.for="nav of authorizedRoutes" class="${nav.isActive ? 'active' : ''}">
-                        <a href.bind="nav.href">
-                            ${nav.title}
-                        </a>
-                    </li>
-                    <li if.bind="!accountService.isLoggedIn">
-                        <a href="/Account/Login">
-                            Login
-                        </a>
-                    </li>
-                    <li if.bind="accountService.isLoggedIn">
-                        <a route-href="route: account">
-                            ${accountService.userProfile.userName}
-                        </a>
-                    </li>
-                    <li if.bind="accountService.isLoggedIn">
-                        <a click.trigger="accountService.logout()">
-                            Logout
-                        </a>
-                    </li>
-                </ul>
-            </sidenav>
-        </navbar>
+        <div>
+            <ul class.bind="topnavCss">
+                <li class="brand">
+                    <a route-href="route: home" class="brand-logo">
+                        ${router.title}
+                    </a>
+                </li>
+                <li repeat.for="nav of authorizedRoutes">
+                    <a href.bind="nav.href" class="${nav.isActive ? 'active' : ''}">
+                        ${nav.title}
+                    </a>
+                </li>
+                <li class="right" if.bind="!accountService.isLoggedIn">
+                    <a href="/Account/Login">
+                        Login
+                    </a>
+                </li>
+                <li class="right" if.bind="accountService.isLoggedIn">
+                    <a route-href="route: account">
+                        ${accountService.userProfile.userName}
+                    </a>
+                </li>
+                <li class="right" if.bind="accountService.isLoggedIn">
+                    <a href="#" click.trigger="accountService.logout()">
+                        Logout
+                    </a>
+                </li>
+                <li class="-icon">
+                    <a click.trigger="toggleDropdown()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </header>
     <main>
         <div class="container">

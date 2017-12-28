@@ -9,12 +9,6 @@ export class App {
     public message = 'Shukko da!';
     public accountService: AccountService;
 
-    public theme = {
-        primaryColor: '#C77028',
-        accentColor: '#264385',
-        errorColor: '#d50000'
-    };
-
     constructor(accountService: AccountService) {
         this.accountService = accountService;
     }
@@ -44,6 +38,16 @@ export class App {
             { route: 'account', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: false, auth: true }
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
+    }
+
+    private navToggled: boolean;
+
+    toggleDropdown(): void {
+        this.navToggled = !this.navToggled;
+    }
+
+    get topnavCss() {
+        return 'topnav' + (this.navToggled ? ' responsive' : '');
     }
 
     @computedFrom('router.navigation', 'accountService.userProfile')

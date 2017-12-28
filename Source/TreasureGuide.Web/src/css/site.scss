@@ -1,4 +1,6 @@
-﻿.aurelia-wrapper {
+﻿@import "../../node_modules/@outboxcraft/beauter/beauter";
+
+.aurelia-wrapper {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -188,4 +190,8 @@ ux-dialog-container {
     .unit-button {
         pointer-events: none;
     }
+}
+
+.right {
+    float: right !important;
 }
