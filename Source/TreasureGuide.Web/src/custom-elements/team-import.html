@@ -2,33 +2,33 @@
     <ux-dialog>
         <ux-dialog-header>
             <div class="right">
-                <a click.delegate="cancel()" md-button="flat: true;" class="modal-action">X</a>
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
             </div>
-            <h3>Pick a Unit</h3>
+            <h3>Import from optc-db</h3>
         </ux-dialog-header>
         <ux-dialog-body>
             <form>
-                <div class="row">
-                    <p>
-                        Import your team from <a href="http://optc-db.github.io/damage/#/" target="_blank">optc-db</a>!
-                        Simply click the green "Export URL" button at the bottom of the page and paste the code into this form.
-                    </p>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">tag_faces</i>
-                        <input type="text" id="input" class="validate" value.bind="input" />
-                        <label for="input">Link</label>
+                <fieldset>
+                    <legend>Import</legend>
+                    <a href="http://optc-db.github.io/damage/#/" class="button _success _xlarge _width100" target="_blank">
+                        <i class="fa fa-external-link"></i>
+                        optc-db
+                    </a>
+                    Click the green "Export URL" button at the bottom of the calculator page and paste the code below.
+                    <label for="linkInput">Team Export URL</label>
+                    <input type="text" id="linkInput" class="validate _width100" value.bind="input" />
+                </fieldset>
+                <fieldset>
+                    <legend>Preview</legend>
+                    <div class="center">
+                        <team-display team.bind="team" ship.bind="ship"></team-display>
                     </div>
-                </div>
-                <div class="row center">
-                    <team-display team.bind="team" ship.bind="ship"></team-display>
-                </div>
+                </fieldset>
             </form>
         </ux-dialog-body>
         <ux-dialog-footer>
-            <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
-            <a click.delegate="submit()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Accept</a>
+            <a click.delegate="submit()" class="button _primary modal-action">Accept</a>
+            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
         </ux-dialog-footer>
     </ux-dialog>
 </template>

@@ -199,3 +199,14 @@ ux-dialog-container {
 .unit-button {
     vertical-align: middle;
 }
+
+._flat {
+    border: none !important;
+    margin-left: 20px;
+}
+
+ux-dialog-footer {
+    .button {
+        margin-left: 5px;
+    }
+}
