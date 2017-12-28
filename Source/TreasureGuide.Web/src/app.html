@@ -12,17 +12,17 @@
                         ${nav.title}
                     </a>
                 </li>
-                <li class="right" if.bind="!accountService.isLoggedIn">
+                <li class="_floatRight" if.bind="!accountService.isLoggedIn">
                     <a href="/Account/Login">
                         Login
                     </a>
                 </li>
-                <li class="right" if.bind="accountService.isLoggedIn">
+                <li class="_floatRight" if.bind="accountService.isLoggedIn">
                     <a href="#" click.trigger="accountService.logout()">
                         Logout
                     </a>
                 </li>
-                <li class="right" if.bind="accountService.isLoggedIn">
+                <li class="_floatRight" if.bind="accountService.isLoggedIn">
                     <a route-href="route: account">
                         ${accountService.userProfile.userName}
                     </a>
@@ -41,13 +41,16 @@
         </div>
     </main>
     <footer>
-        <div class="footer-copyright">
-            <div class="container">
-                &copy; 2017 RoboCafaz
-                <a class="grey-text text-lighten-4 right" href="https://github.com/RoboCafaz/TreasureGuide">
-                    View on GitHub
-                </a>
-            </div>
+        <div class="jumbo _dark">
+            Developed by <a href="http://robocafaz.com" target="_blank">RoboCafaz</a>
+            <br />
+            <a class="button _small _info" href="https://github.com/RoboCafaz/TreasureGuide">
+                <i class="fa fa-github"></i>View on GitHub
+            </a>
+            <br />
+            Character, Stage, and Ship Data sourced from <a href="https://optc-db.github.io/" target="_blank">optc-db</a>
+            <br />
+            &copy; 2017
         </div>
     </footer>
 </template>
