@@ -2,36 +2,75 @@
     <ux-dialog>
         <ux-dialog-header>
             <div class="right">
-                <a click.delegate="cancel()" md-button="flat: true;" class="modal-action">X</a>
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
             </div>
             <h3>Select a Unit</h3>
         </ux-dialog-header>
         <ux-dialog-body>
             <div class="row">
                 <form with.bind="searchModel">
-                    <div class="col m6">
-                        <div class="row">
-                            <md-input md-label="Term" md-type="text" md-value.two-way="term"></md-input>
+                    <fieldset>
+                        <legend>
+                            Search
+                        </legend>
+                        <div class="col m6">
+                            <div class="row">
+                                <label for="termInput">
+                                    Unit Name
+                                </label>
+                                <input id="termInput"
+                                       type="text"
+                                       placeholder="Unit name..."
+                                       value.two-way="term" />
+                            </div>
+                            <div class="row">
+                                <div class="col m4">
+                                    <label for="globalInput">
+                                        <input type="checkbox" checked.two-way="global" />
+                                        <span class="-label-body">Global</span>
+                                    </label>
+                                </div>
+                                <div class="col m4">
+                                    <label for="freeToPlayInput">
+                                        <input type="checkbox" checked.two-way="freeToPlay" />
+                                        <span class="-label-body">F2P</span>
+                                    </label>
+                                </div>
+                                <div class="col m4">
+                                    <label for="myBoxInput">
+                                        <input id="myBoxInput"
+                                               type="checkbox"
+                                               checked.two-way="myBox" />
+                                        <span class="-label-body">My Box</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col m4">
-                                <md-checkbox md-checked.two-way="global">Global</md-checkbox>
-                            </div>
-                            <div class="col m4">
-                                <md-checkbox md-checked.two-way="freeToPlay">Free to Play</md-checkbox>
-                            </div>
-                            <div class="col m4">
-                                <md-checkbox md-checked.two-way="myBox">In my Box</md-checkbox>
-                            </div>
+                        <div class="col m3">
+                            <label for="classInput">
+                                Unit Class
+                            </label>
+                            <input id="classInput"
+                                   type="number"
+                                   placeholder="Class..."
+                                   md-value.two-way="classes" />
                         </div>
-                    </div>
-                    <div class="col m3">
-                        <md-input md-label="Class" md-type="number" md-value.two-way="classes"></md-input>
-                    </div>
-                    <div class="col m3">
-                        <md-input md-label="Type" md-type="number" md-value.two-way="types"></md-input>
-                        <md-checkbox md-checked.two-way="forceTypes">Force</md-checkbox>
-                    </div>
+                        <div class="col m3">
+                            <label for="typeInput">
+                                Unit Type
+                            </label>
+                            <input id="typeInput"
+                                   placeholder="Type..."
+                                   type="number"
+                                   value.two-way="types" />
+                            <label for="forceTypeInput">
+                                <input id="forceTypeInput"
+                                       type="checkbox"
+                                       checked.two-way="forceTypes" />
+                                <span class="-label-body">Exclude Others</span>
+                            </label>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
             <div class="row center" if.bind="pages > 1">
@@ -42,10 +81,10 @@
                     <p>${((searchModel.page - 1) * searchModel.pageSize) +1} - ${((searchModel.page - 1) * searchModel.pageSize) + units.length} of ${resultCount}</p>
                 </div>
                 <div class="unit-collection">
-                    <button class="grey unit-button" md-button="large: true" md-waves click.delegate="clicked(null)">
-                        <i class="material-icons">person_outline</i>
+                    <button class="unit-button" click.delegate="clicked(null)">
+                        <i class="fa fa-2x fa-user-times"></i>
                     </button>
-                    <button repeat.for="unit of units" class="grey unit-button" md-button="large: true" md-waves click.delegate="clicked(unit.id)">
+                    <button repeat.for="unit of units" class="unit-button" click.delegate="clicked(unit.id)">
                         <img src.bind="getIcon(unit.id)">
                     </button>
                 </div>
@@ -55,7 +94,7 @@
             </div>
         </ux-dialog-body>
         <ux-dialog-footer>
-            <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
+            <a click.delegate="cancel()" class="button _flat modal-action">Cancel</a>
         </ux-dialog-footer>
     </ux-dialog>
 </template>
