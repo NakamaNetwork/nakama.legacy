@@ -28,6 +28,11 @@ export class StageDisplay {
             console.error(error);
         });
     };
+
+    @computedFrom('stageId')
+    get iconClass() {
+        return 'fa fa-' + (this.stageId ? 'map' : 'map-o');
+    }
     
     clicked() {
         if (this.editable) {

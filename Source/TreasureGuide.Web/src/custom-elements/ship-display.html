@@ -1,10 +1,10 @@
 ﻿<template>
-    <button if.bind="editable" class="orange" md-button md-waves click.delegate="clicked()">
-        <i class="material-icons">directions_boat</i>
+    <button if.bind="editable" class="_small" click.delegate="clicked()">
+        <i class="fa fa-ship"></i>
         ${ship.name}
     </button>
     <span if.bind="!editable">
-        <i class="material-icons">directions_boat</i>
+        <i class="fa fa-ship"></i>
         ${ship.name}
     </span>
 </template>

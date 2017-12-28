@@ -1,8 +1,8 @@
 ﻿<template>
     <unit-display repeat.for="unit of teamSlots" unit-id.two-way="unit.unitId" editable.bind="editable"></unit-display>
     <ship-display ship-id.bind="ship" editable.bind="editable"></ship-display>
-    <button if.bind="editable" md-button md-waves click.delegate="openImport()">
-        <i class="material-icons left">input</i>
+    <button if.bind="editable" class="_xsmall _active" click.delegate="openImport()">
+        <i class="fa fa-cloud-download"></i>
         Import from OPTC-DB
     </button>
 </template>

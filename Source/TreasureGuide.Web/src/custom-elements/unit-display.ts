@@ -35,6 +35,11 @@ export class UnitDisplay {
         return this.unitQueryService.getIcon(this.unitId);
     }
 
+    @computedFrom('unitId')
+    get iconClass() {
+        return 'fa fa-2x fa-' + (this.unitId ? 'user' : 'user-plus');
+    }
+
     clicked() {
         if (this.editable) {
             this.dialogService.open({ viewModel: UnitPicker, model: { unitId: this.unitId }, lock: true }).whenClosed(result => {

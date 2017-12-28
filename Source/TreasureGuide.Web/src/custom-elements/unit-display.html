@@ -1,8 +1,6 @@
 ﻿<template>
-    <button class="grey unit-button" md-button="large: true" md-waves click.delegate="clicked()">
+    <button class="unit-button" click.delegate="clicked()">
         <img src.bind="imageUrl" if.bind="unitId" />
-        <i class="material-icons " if.bind="!unitId">
-            ${editable ? 'person_add' : 'person_outline'}
-        </i>
+        <i class.bind="iconClass" if.bind="!unitId"></i>
     </button>
 </template>

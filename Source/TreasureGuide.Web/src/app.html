@@ -18,13 +18,13 @@
                     </a>
                 </li>
                 <li class="right" if.bind="accountService.isLoggedIn">
-                    <a route-href="route: account">
-                        ${accountService.userProfile.userName}
+                    <a href="#" click.trigger="accountService.logout()">
+                        Logout
                     </a>
                 </li>
                 <li class="right" if.bind="accountService.isLoggedIn">
-                    <a href="#" click.trigger="accountService.logout()">
-                        Logout
+                    <a route-href="route: account">
+                        ${accountService.userProfile.userName}
                     </a>
                 </li>
                 <li class="-icon">
