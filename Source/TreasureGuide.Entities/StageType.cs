@@ -20,6 +20,7 @@ namespace TreasureGuide.Entities
         Raid = 4,
         Coliseum = 5,
         Special = 6,
-        TrainingForest = 7
+        TrainingForest = 7,
+        TreasureMap = 8
     }
 }

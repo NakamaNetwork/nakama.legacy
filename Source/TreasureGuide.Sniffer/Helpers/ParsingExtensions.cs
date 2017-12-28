@@ -84,6 +84,8 @@ namespace TreasureGuide.Sniffer.Helpers
                     return StageType.Coliseum;
                 case "training forest":
                     return StageType.TrainingForest;
+                case "treasure map":
+                    return StageType.TreasureMap;
                 default:
                     return StageType.Unknown;
             }

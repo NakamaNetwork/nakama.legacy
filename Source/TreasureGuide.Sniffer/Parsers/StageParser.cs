@@ -36,7 +36,7 @@ namespace TreasureGuide.Sniffer.Parsers
                 stages.AddRange(datum.Value.SelectMany(child =>
                 {
                     var name = child["name"]?.ToString() ?? "Unknown";
-                    if (name == "Coliseum")
+                    if (stageType == StageType.Coliseum)
                     {
                         return HandleColiseum(child);
                     }
@@ -74,7 +74,11 @@ namespace TreasureGuide.Sniffer.Parsers
                 .SelectMany(x => Enumerable.Range(1, 5)
                     .Select(y => Tuple.Create(x, $" - Chaos Stage {y}")));
 
-            var all = exhibition.Concat(underground).Concat(chaos).Distinct();
+            var neo = JsonConvert.DeserializeObject<int[]>(child["Neo"].ToString())
+                .SelectMany(x => Enumerable.Range(1, 5)
+                    .Select(y => Tuple.Create(x, $" - Neo Stage {y}")));
+
+            var all = exhibition.Concat(underground).Concat(chaos).Concat(neo).Distinct();
             var units = all.Join(Context.Units, x => x.Item1, y => y.Id,
                 (stage, unit) => Tuple.Create(unit, stage.Item2));
             var colo = units.Select(x =>
