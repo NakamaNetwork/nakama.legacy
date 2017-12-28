@@ -1,6 +1,5 @@
 import * as gulp from 'gulp';
 import transpile from './transpile';
-import prepareMaterialize from './prepare-materialize';
 import processMarkup from './process-markup';
 import processCSS from './process-css';
 import copyFiles from './copy-files';
@@ -11,7 +10,6 @@ export default gulp.series(
     readProjectConfiguration,
     gulp.parallel(
         transpile,
-        prepareMaterialize,
         processMarkup,
         processCSS,
         copyFiles

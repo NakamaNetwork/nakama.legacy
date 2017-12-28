@@ -1,11 +1,6 @@
 <template>
-    <md-colors with.bind="theme"
-               md-primary-color.bind="primaryColor"
-               md-accent-color.bind="accentColor"
-               md-error-color="errorColor">
-    </md-colors>
     <header>
-        <md-navbar>
+        <navbar>
             <div class="container">
                 <a route-href="route: home" class="brand-logo">
                     ${router.title}
@@ -36,7 +31,7 @@
             <a href="#" md-sidenav-collapse="ref.bind: sideNav;" class="button-collapse">
                 <i class="material-icons">menu</i>
             </a>
-            <md-sidenav view-model.ref="sideNav">
+            <sidenav view-model.ref="sideNav">
                 <ul>
                     <li repeat.for="nav of authorizedRoutes" class="${nav.isActive ? 'active' : ''}">
                         <a href.bind="nav.href">
@@ -59,15 +54,15 @@
                         </a>
                     </li>
                 </ul>
-            </md-sidenav>
-        </md-navbar>
+            </sidenav>
+        </navbar>
     </header>
     <main>
         <div class="container">
             <router-view></router-view>
         </div>
     </main>
-    <footer md-footer>
+    <footer>
         <div class="footer-copyright">
             <div class="container">
                 &copy; 2017 RoboCafaz

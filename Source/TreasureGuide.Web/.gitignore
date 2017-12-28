@@ -2,9 +2,6 @@ node_modules
 .idea
 .DS_STORE
 
-materialize-css.js
-rbuild.js
-
 wwwroot/
 src/**/*.js
 src/**/*.js.map

@@ -1,4 +1,4 @@
-/// <binding AfterBuild='build-dev' ProjectOpened='build-dev, materialize-amd' />
+/// <binding AfterBuild='build-dev' ProjectOpened='build-dev' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
@@ -6,21 +6,6 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 
 var gulp = require('gulp');
 var shell = require('gulp-shell');
-var download = require("gulp-download");
-
-gulp.task('_get-rbuild',
-    function () {
-        return download(
-            'https://raw.githubusercontent.com/aurelia-ui-toolkits/aurelia-materialize-bridge/0.28.0/build/tools/rbuild.js')
-            .pipe(gulp.dest('./'));
-    });
-gulp.task('_get-materialize-css',
-    function () {
-        return download(
-            'https://raw.githubusercontent.com/aurelia-ui-toolkits/aurelia-materialize-bridge/0.28.0/build/tools/materialize-css.js')
-            .pipe(gulp.dest('./'));
-    });
-gulp.task('_materialize-amd', shell.task(['node_modules\\.bin\\r.js.cmd -o rbuild.js']));
 
 gulp.task('build-dev', shell.task(['au build --env dev']));
 gulp.task('build-prod', shell.task(['au build --env prod']));
@@ -29,8 +14,6 @@ gulp.task('run', shell.task(['au run']));
 gulp.task('run watch', shell.task(['au run --watch']));
 gulp.task('test', shell.task(['au test']));
 gulp.task('test watch', shell.task(['au test --watch']));
-gulp.task('prepare-project', gulp.series('_get-rbuild', '_get-materialize-css', '_materialize-amd'));
-
 
 console.log('--- NOTICE ---'
     + '\n'

@@ -12,10 +12,8 @@
     "aurelia-bootstrapper": "^2.1.0",
     "aurelia-dialog": "^1.0.0-rc.1.0.3",
     "aurelia-fetch-client": "^1.1.2",
-    "aurelia-materialize-bridge": "^0.27.0",
     "aurelia-validation": "^1.0.0",
     "bluebird": "^3.4.1",
-    "materialize-css": "^0.98.2",
     "requirejs": "^2.3.2",
     "text": "github:requirejs/text#latest"
   },
@@ -31,7 +29,6 @@
     "event-stream": "^3.3.3",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-changed-in-place": "^2.0.3",
-    "gulp-download": "^0.0.1",
     "gulp-htmlmin": "^3.0.0",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",

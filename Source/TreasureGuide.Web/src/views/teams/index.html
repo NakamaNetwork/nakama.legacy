@@ -1,8 +1,8 @@
 ﻿<template>
     <h1>${title}</h1>
     <div class="fixed-action-btn" auth-req="Contributor">
-        <a md-button="floating: true; large: true" md-tooltip="position: left; text: Create New Team;"
-           md-waves="color: light; circle: true;" route-href="route: teamCreate">
+        <a button="floating: true; large: true" md-tooltip="position: left; text: Create New Team;"
+           waves="color: light; circle: true;" route-href="route: teamCreate">
             <i class="material-icons large">add</i>
         </a>
     </div>
@@ -10,7 +10,7 @@
         <team-search model.bind="searchModel"></team-search>
     </div>
     <div class="row center" if.bind="pages > 1">
-        <md-pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
+        <pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></pagination>
     </div>
     <div class="row" if.bind="teams.length > 0">
         <p>${((searchModel.page - 1) * searchModel.pageSize) + 1} - ${((searchModel.page - 1) * searchModel.pageSize) + teams.length} of ${resultCount}</p>

@@ -1,19 +1,16 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { TeamQueryService } from '../../services/query/team-query-service';
-import { MdToastService } from 'aurelia-materialize-bridge';
 import { HttpEngine } from '../../tools/http-engine';
 
 @autoinject
 export class AdminPage {
     message = 'Admin Page';
     httpEngine;
-    toast;
     teamQueryService;
 
-    constructor(httpEngine: HttpEngine, teamQueryService: TeamQueryService, toast: MdToastService) {
+    constructor(httpEngine: HttpEngine, teamQueryService: TeamQueryService) {
         this.httpEngine = httpEngine;
         this.teamQueryService = teamQueryService;
-        this.toast = toast;
     }
 
     createTeam() {
@@ -57,9 +54,9 @@ export class AdminPage {
             teamSockets: []
         };
         this.teamQueryService.save(team).then(x => {
-            this.toast.show('Successfully created team \'' + team.name + '\'.', 2000);
+           // this.toast.show('Successfully created team \'' + team.name + '\'.', 2000);
         }, x => {
-            this.toast.show('Failed to create team \'' + team.name + '\'. Probably gave a bad unit or something.', 2000);
+           // this.toast.show('Failed to create team \'' + team.name + '\'. Probably gave a bad unit or something.', 2000);
         });
     }
 }

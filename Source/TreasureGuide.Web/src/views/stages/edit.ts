@@ -1,14 +1,11 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { StageQueryService } from '../../services/query/stage-query-service';
-import { MdToastService, MdInputUpdateService } from 'aurelia-materialize-bridge';
 import { StageType } from '../../models/stage-type';
 
 @autoinject
 export class StageEditPage {
     private stageQueryService: StageQueryService;
-    private toast: MdToastService;
-    private inputUpdate: MdInputUpdateService;
     private router: Router;
 
     title = 'Create Stage';
@@ -21,10 +18,8 @@ export class StageEditPage {
     };
     stageTypes = StageType.all;
 
-    constructor(stageQueryService: StageQueryService, router: Router, toast: MdToastService, inputUpdate: MdInputUpdateService) {
+    constructor(stageQueryService: StageQueryService, router: Router) {
         this.stageQueryService = stageQueryService;
-        this.toast = toast;
-        this.inputUpdate = inputUpdate;
         this.router = router;
     }
 
@@ -34,7 +29,6 @@ export class StageEditPage {
             this.stageQueryService.editor(id).then(result => {
                 this.title = 'Edit Stage';
                 this.stage = result;
-                this.inputUpdate.update();
             }).catch(error => {
                 this.router.navigateToRoute('error', { error: 'The requested stage could not be found for editing. It may not exist or you may not have permission to edit it.' });
             });
@@ -43,7 +37,7 @@ export class StageEditPage {
 
     submit() {
         this.stageQueryService.save(this.stage).then(results => {
-            this.toast.show('Successfully saved ' + this.stage.name + ' to server!', 2000);
+           // this.toast.show('Successfully saved ' + this.stage.name + ' to server!', 2000);
             this.router.navigateToRoute('stageDetails', { id: results });
         }).catch(results => {
             console.error(results);

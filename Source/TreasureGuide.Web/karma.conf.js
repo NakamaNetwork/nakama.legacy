@@ -13,9 +13,8 @@ let appSrc = project.build.bundles.map(x => path.join(output, x.name));
 let entryIndex = appSrc.indexOf(path.join(output, project.build.loader.configTarget));
 
 let entryBundle = appSrc.splice(entryIndex, 1)[0];
-let otherBundle = path.join(output, 'materialize-bundle.js');
 
-let files = [entryBundle, otherBundle].concat(testSrc).concat(appSrc);
+let files = [entryBundle].concat(testSrc).concat(appSrc);
 
 module.exports = function (config) {
     config.set({

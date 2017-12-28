@@ -1,6 +1,4 @@
-﻿@import "./materialize/custom-materialize.scss";
-
-.aurelia-wrapper {
+﻿.aurelia-wrapper {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -60,17 +58,16 @@ $default-unit-margin: $huge-unit-margin;
 
 .unit-collection {
     .unit-button {
-        @media #{$medium-and-down} {
-            height: $small-unit-size;
-            width: $small-unit-size;
-            margin: $small-unit-margin;
-        }
-
-        @media #{$large-and-up} {
-            height: $medium-unit-size;
-            width: $medium-unit-size;
-            margin: $medium-unit-margin;
-        }
+        // @media #{$medium-and-down} {
+        height: $small-unit-size;
+        width: $small-unit-size;
+        margin: $small-unit-margin;
+        //  }
+        //  @media #{$large-and-up} {
+        //     height: $medium-unit-size;
+        //      width: $medium-unit-size;
+        //     margin: $medium-unit-margin;
+        //  }
     }
 }
 
@@ -164,23 +161,22 @@ ux-dialog-overlay.active {
 
 ux-dialog-container {
     & > div {
-        @media #{$medium-and-down} {
-            padding: 2px;
-        }
+        //  @media #{$medium-and-down} {
+        padding: 2px;
+        //   }
     }
 
     & > div > div {
-        @media #{$large-and-up} {
-            width: 70%;
-            max-width: 70%;
-            min-width: 70%;
-        }
-
-        @media #{$extra-large-and-up} {
-            width: 60%;
-            max-width: 60%;
-            min-width: 60%;
-        }
+        //   @media #{$large-and-up} {
+        width: 70%;
+        max-width: 70%;
+        min-width: 70%;
+        //  }
+        //@media #{$extra-large-and-up} {
+        //    width: 60%;
+        //     max-width: 60%;
+        //     min-width: 60%;
+        // }
     }
 
     ux-dialog {
