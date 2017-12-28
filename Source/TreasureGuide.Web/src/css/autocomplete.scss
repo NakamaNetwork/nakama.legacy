@@ -1,0 +1,11 @@
+auto-complete {
+    .dropdown-menu {
+        @extend .listnav;
+        border-radius: 4px;
+    }
+
+    input {
+        @extend ._width100;
+        margin-bottom: 0 !important;
+    }
+}

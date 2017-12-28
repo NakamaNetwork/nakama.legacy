@@ -1,24 +1,19 @@
-﻿import { bindable } from 'aurelia-framework';
+﻿import { bindable, computedFrom } from 'aurelia-framework';
 import { autoinject } from 'aurelia-framework';
-import { DialogController } from 'aurelia-dialog';
 import { ShipQueryService } from '../services/query/ship-query-service';
+import { IShipStubModel } from '../models/imported';
 
 @autoinject
 export class ShipPicker {
-    private controller: DialogController;
     private shipQueryService: ShipQueryService;
     @bindable shipId = 0;
 
     ship;
     ships: any[];
 
-    resultCount = 0;
-    pages = 0;
-
-    constructor(shipQueryService: ShipQueryService, controller: DialogController) {
-        this.controller = controller;
-        this.controller.settings.centerHorizontalOnly = true;
+    constructor(shipQueryService: ShipQueryService) {
         this.shipQueryService = shipQueryService;
+        this.ships = [];
 
         this.shipQueryService.stub().then(x => {
             this.ships = x;
@@ -29,17 +24,12 @@ export class ShipPicker {
         this.shipId = viewModel.shipId;
     }
 
-    submit() {
-        this.controller.ok(this.shipId);
-    };
+    shipSort(ships: IShipStubModel[]) {
+        return ships.sort((a, b) => a.name.localeCompare(b.name));
+    }
 
-    cancel() {
-        this.controller.cancel();
-    };
-
-    clicked(shipId) {
-        this.shipId = shipId;
-        this.submit();
+    shipName(ship: IShipStubModel) {
+        return ship ? ship.name : '';
     }
 
     getIcon(id: number) {

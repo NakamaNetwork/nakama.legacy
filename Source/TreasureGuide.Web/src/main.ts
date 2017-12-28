@@ -18,6 +18,7 @@ export function configure(aurelia: Aurelia) {
         .plugin('aurelia-fetch-client')
         .plugin('aurelia-dialog')
         .plugin('aurelia-validation')
+        .plugin('aurelia-autocomplete')
         // Custom Elements
         .feature('./custom-attributes')
         .feature('./custom-elements')

@@ -2,7 +2,6 @@
 import { autoinject } from 'aurelia-framework';
 import { ShipQueryService } from '../services/query/ship-query-service';
 import { DialogService } from 'aurelia-dialog';
-import { ShipPicker } from './ship-picker';
 
 @autoinject
 @customElement('ship-display')
@@ -32,15 +31,5 @@ export class ShipDisplay {
     @computedFrom('shipId')
     get imageUrl() {
         return this.shipQueryService.getIcon(this.shipId);
-    }
-
-    clicked() {
-        if (this.editable) {
-            this.dialogService.open({ viewModel: ShipPicker, model: { shipId: this.shipId }, lock: true }).whenClosed(result => {
-                if (!result.wasCancelled) {
-                    this.shipId = result.output;
-                }
-            });
-        }
     }
 }
