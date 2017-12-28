@@ -1,11 +1,16 @@
 auto-complete {
+    .dropdown {
+        @extend ._alignCenter;
+    }
+
     .dropdown-menu {
         @extend .listnav;
+        max-width: max-content;
         border-radius: 4px;
+        margin: auto;
     }
 
     input {
-        @extend ._width100;
         margin-bottom: 0 !important;
     }
 }
