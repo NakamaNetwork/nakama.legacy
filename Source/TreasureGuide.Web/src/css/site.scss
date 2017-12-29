@@ -85,6 +85,8 @@ $default-unit-margin: $huge-unit-margin;
     margin: $default-unit-margin;
     padding: 0;
     line-height: 0;
+    background-position: center;
+    background-size: 120%;
 
     img {
         width: 100%;

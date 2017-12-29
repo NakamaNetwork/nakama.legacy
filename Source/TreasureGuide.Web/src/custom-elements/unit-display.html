@@ -1,6 +1,5 @@
 ﻿<template>
-    <button class.bind="buttonClass" click.delegate="clicked()">
-        <img src.bind="imageUrl" if.bind="unitId" />
+    <button class.bind="buttonClass" click.delegate="clicked()" style.bind="backgroundStyle">
         <i class.bind="iconClass" if.bind="!unitId"></i>
     </button>
 </template>

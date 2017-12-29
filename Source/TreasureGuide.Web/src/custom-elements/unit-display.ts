@@ -45,6 +45,14 @@ export class UnitDisplay {
         return 'unit-button ' + (this.editable ? '' : '_unclickable');
     }
 
+    @computedFrom('unitId', 'imageUrl')
+    get backgroundStyle() {
+        if (this.unitId) {
+            return 'background-image: url(\'' + this.imageUrl + '\')';
+        }
+        return '';
+    }
+
     clicked() {
         if (this.editable) {
             this.dialogService.open({ viewModel: UnitPicker, model: { unitId: this.unitId }, lock: true }).whenClosed(result => {

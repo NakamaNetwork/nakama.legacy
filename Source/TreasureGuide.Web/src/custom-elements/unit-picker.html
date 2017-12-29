@@ -82,13 +82,13 @@
                         <i class="fa fa-fw fa-2x fa-user-times"></i>
                     </button>
                     <button repeat.for="unit of units" class="unit-button" click.delegate="clicked(unit.id)">
-                        <img src.bind="getIcon(unit.id)">
+                        <img src.bind="getIcon(unit.id)" />
                     </button>
                 </div>
             </div>
         </ux-dialog-body>
         <ux-dialog-footer>
-            <a click.delegate="cancel()" class="button _flat modal-action">Cancel</a>
+            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
         </ux-dialog-footer>
     </ux-dialog>
 </template>

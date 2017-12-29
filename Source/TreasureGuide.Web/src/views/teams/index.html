@@ -1,8 +1,8 @@
 ﻿<template>
     <h1>${title}</h1>
     <div auth-req="Contributor">
-        <a class="button" route-href="route: teamCreate">
-            <i class="fa fa-fw fa-plus"></i> Create New Team
+        <a class="button _info _xlarge _width100" route-href="route: teamCreate">
+            <i class="fa fa-fw fa-plus"></i> Submit a Team
         </a>
     </div>
     <div class="row">
@@ -12,7 +12,7 @@
         <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
     </div>
     <div class="row" if.bind="teams.length > 0">
-        <table class="striped responsive-table">
+        <table class="_width100">
             <thead>
                 <tr>
                     <th>
@@ -27,13 +27,10 @@
                     <th>
                         Stage
                     </th>
-                    <th>
-                        View
-                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr repeat.for="team of teams">
+                <tr repeat.for="team of teams" route-href="route: teamDetails; params.bind: {id: team.id}">
                     <td>
                         ${team.id}
                     </td>
@@ -41,15 +38,10 @@
                         ${team.name}
                     </td>
                     <td>
-                        <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
+                        <team-display team.bind="team.teamUnits" size="tiny" in-line></team-display>
                     </td>
                     <td>
                         <stage-display stage-id.bind="team.stageId"></stage-display>
-                    </td>
-                    <td class="actions">
-                        <a md-button md-waves route-href="route: teamDetails; params.bind: {id: team.id}">
-                            <i class="material-icons left">visibility</i> View
-                        </a>
                     </td>
                 </tr>
             </tbody>
