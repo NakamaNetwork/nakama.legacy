@@ -48,9 +48,6 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
-      <None Update="src\models\generated\stage-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\StageType.cs</CustomToolNamespace>
-      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

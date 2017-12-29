@@ -13,6 +13,11 @@ export interface IExternalLoginConfirmationViewModel {
 }
 
 
+export interface ILoginViewModel {
+    
+}
+
+
 export interface IProfileModel {
     userName: string;
     roles: string[];
@@ -105,7 +110,8 @@ export enum StageType {
     Raid = 4,
     Coliseum = 5,
     Special = 6,
-    TrainingForest = 7
+    TrainingForest = 7,
+    TreasureMap = 8
 }
 
 
