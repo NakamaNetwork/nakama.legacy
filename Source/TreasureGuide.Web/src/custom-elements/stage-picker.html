@@ -28,18 +28,18 @@
             <div class="row center" if.bind="pages > 1">
                 <md-pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
             </div>
-            <div class="row">
-                <div class="center" if.bind="stages.length > 0">
+            <div class="row" if.bind="stages.length > 0">
+                <div class="center">
                     <p>${((searchModel.page - 1) * searchModel.pageSize) +1} - ${((searchModel.page - 1) * searchModel.pageSize) + stages.length} of ${resultCount}</p>
                 </div>
                 <ul class="listnav">
-                    <li>
-                        <a href="#" click.delegate="clicked(null)" class="${(!stageId ? 'active' : '')}">
+                    <li class="${(!stageId ? 'active' : '')}">
+                        <a href="#" click.delegate="clicked(null)">
                             Any
                         </a>
                     </li>
-                    <li repeat.for="stage of stages">
-                        <a href="#" click.delegate="clicked(stage.id)" class="${(stageId === stage.id ? 'active' : '')}">
+                    <li repeat.for="stage of stages" class="${(stageId === stage.id ? 'active' : '')}">
+                        <a href="#" click.delegate="clicked(stage.id)">
                             <global-display global.bind="stage.global"></global-display>
                             ${stage.name}
                             <stage-type-display type.bind="stage.type" class="_floatRight"></stage-type-display>

@@ -9,8 +9,8 @@
         <ux-dialog-body>
             <div class="row" if.bind="ships.length > 0">
                 <ul class="listnav">
-                    <li repeat.for="ship of ships">
-                        <a href="#" click.delegate="clicked(ship.id)" class="${(shipId === ship.id ? 'active' : '')}">
+                    <li repeat.for="ship of ships" class="${(shipId === ship.id ? 'active' : '')}">
+                        <a href="#" click.delegate="clicked(ship.id)">
                             <i class="fa fa-fw fa-ship"></i>
                             ${ship.name}
                         </a>
