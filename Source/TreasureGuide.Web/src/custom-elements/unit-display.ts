@@ -35,9 +35,9 @@ export class UnitDisplay {
         return this.unitQueryService.getIcon(this.unitId);
     }
 
-    @computedFrom('unitId')
+    @computedFrom('unitId', 'editable')
     get iconClass() {
-        return 'fa fa-2x fa-' + (this.unitId ? 'user' : 'user-plus');
+        return 'fa fa-2x fa-' + (this.unitId ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
     }
 
     @computedFrom('editable')
