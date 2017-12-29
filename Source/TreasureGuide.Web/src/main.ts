@@ -22,6 +22,7 @@ export function configure(aurelia: Aurelia) {
         // Custom Elements
         .feature('./custom-attributes')
         .feature('./custom-elements')
+        .feature('./custom-elements/displays')
         .globalResources([
             // CSS
             './css/site.css'

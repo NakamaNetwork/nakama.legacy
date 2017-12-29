@@ -9,6 +9,13 @@
     <PropertyGroup>
         <UserSecretsId>aspnet-TreasureGuide.Web-5f05675e-555e-48ff-bb51-5d655998ec83</UserSecretsId>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="src\custom-elements\NewFolder\**" />
+      <Content Remove="src\custom-elements\NewFolder\**" />
+      <EmbeddedResource Remove="src\custom-elements\NewFolder\**" />
+      <None Remove="src\custom-elements\NewFolder\**" />
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="6.1.1" />
         <PackageReference Include="EntityFramework" Version="6.1.3" />

@@ -1,7 +1,7 @@
 ﻿<template>
     <ux-dialog>
         <ux-dialog-header>
-            <div class="right">
+            <div class="_floatRight">
                 <a click.delegate="cancel()" class="button _flat modal-action">X</a>
             </div>
             <h3>Select a Stage</h3>
@@ -10,13 +10,18 @@
             <div class="row">
                 <form with.bind="searchModel">
                     <div class="col m4">
-                        <md-input md-label="Term" md-type="text" md-value.two-way="term"></md-input>
+                        <label for="termInput">Term</label>
+                        <input id="termInput" type="text" value.two-way="term" />
                     </div>
                     <div class="col m4">
-                        <md-checkbox md-checked.two-way="global">Global</md-checkbox>
+                        <label for="checkInput">
+                            <input type="checkbox" checked.two-way="global" />
+                            Global
+                        </label>
                     </div>
                     <div class="col m4">
-                        <md-input md-label="Type" md-type="number" md-value.two-way="type"></md-input>
+                        <label for="typeInput">Type</label>
+                        <input id="typeInput" type="number" value.two-way="type" />
                     </div>
                 </form>
             </div>
@@ -27,23 +32,34 @@
                 <div class="center" if.bind="stages.length > 0">
                     <p>${((searchModel.page - 1) * searchModel.pageSize) +1} - ${((searchModel.page - 1) * searchModel.pageSize) + stages.length} of ${resultCount}</p>
                 </div>
-                <div class="collection">
-                    <a click.delegate="clicked(null)" class="${'collection-item ' + (!stageId ? 'active' : '')}">
-                        <i class="circle material-icons primary-text left">turned_in_not</i>
-                        <span class="title">Any</span>
-                    </a>
-                    <a repeat.for="stage of stages" click.delegate="clicked(stage.id)" class="${'collection-item ' + (stageId === stage.id ? 'active' : '')}">
-                        <i class="circle material-icons primary-text left">turned_in</i>
-                        <span class="title">${stage.name}</span>
-                    </a>
-                </div>
+                <table class="_width100">
+                    <thead>
+                        <tr>
+                            <th>Stage</th>
+                            <th>Type</th>
+                            <th>Global</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr click.delegate="clicked(null)" class="${(!stageId ? 'active' : '')}">
+                            <td>Any</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr repeat.for="stage of stages" click.delegate="clicked(stage.id)" class="${(stageId === stage.id ? 'active' : '')}">
+                            <td>${stage.name}</td>
+                            <td><stage-type-display type.bind="stage.type" /></td>
+                            <td><global-display global.bind="stage.global" /></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="row center" if.bind="!stages || stages.length == 0">
                 <h3>Search yielded no results!</h3>
             </div>
         </ux-dialog-body>
         <ux-dialog-footer>
-            <a click.delegate="cancel()" md-button="flat: true;" md-waves="color: accent;" class="modal-action">Cancel</a>
+            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
         </ux-dialog-footer>
     </ux-dialog>
 </template>
