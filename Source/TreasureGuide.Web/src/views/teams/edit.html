@@ -3,46 +3,46 @@
     <form with.bind="team">
         <fieldset>
             <legend>Team Info</legend>
-            <div class="row">
+            <div class="form-group">
                 <label for="nameInput">Name</label>
                 <input id="nameInput"
                        type="text"
                        placeholder="Name"
                        value.bind="name & validate" />
             </div>
-            <div class="row">
+            <div class="form-group">
                 <label for="stageInput">Stage</label>
                 <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
             </div>
         </fieldset>
         <fieldset>
             <legend>Units and Sockets</legend>
-            <div class="row _alignCenter">
+            <div class="form-group _alignCenter">
                 <team-display team.two-way="teamUnits"
                               ship.two-way="shipId"
                               editable.bind="true"></team-display>
             </div>
-            <div class="row _alignCenter">
+            <div class="form-group _alignCenter">
                 <socket-picker sockets.two-way="teamSockets"></socket-picker>
             </div>
         </fieldset>
         <fieldset>
             <legend>Write-Ups</legend>
-            <div class="row">
+            <div class="form-group">
                 <label for="descriptionInput">Description</label>
                 <textarea id="descriptionInput"
                           class="_width100"
                           placeholder="A brief description of the team..."
-                          text.bind="description & validate"></textarea>
+                          value.bind="description & validate"></textarea>
             </div>
-            <div class="row">
+            <div class="form-group">
                 <label for="guideInput">Guide</label>
                 <textarea id="guideInput"
                           class="_width100"
                           placeholder="Details on how to use the team..."
                           value.bind="guide & validate"></textarea>
             </div>
-            <div class="row">
+            <div class="form-group">
                 <label for="creditInput">Credits</label>
                 <textarea id="creditInput"
                           class="_width100"

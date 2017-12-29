@@ -4,7 +4,8 @@ import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
 import { ITeamEditorModel } from '../../models/imported';
-import {TeamEditorModel} from '../../services/query/team-query-service';
+import { TeamEditorModel } from '../../services/query/team-query-service';
+import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 
 @autoinject
 export class TeamEditPage {
@@ -18,6 +19,7 @@ export class TeamEditPage {
 
     constructor(teamQueryService: TeamQueryService, router: Router, validFactory: ValidationControllerFactory) {
         this.controller = validFactory.createForCurrentScope();
+        this.controller.addRenderer(new BeauterValidationFormRenderer());
 
         this.teamQueryService = teamQueryService;
         this.router = router;
@@ -43,14 +45,14 @@ export class TeamEditPage {
         this.controller.validate().then(x => {
             if (x.valid) {
                 this.teamQueryService.save(this.team).then(results => {
-                   // this.toast.show('Successfully saved ' + this.team.name + ' to server!', 5000);
+                    // this.toast.show('Successfully saved ' + this.team.name + ' to server!', 5000);
                     this.router.navigateToRoute('teamDetails', { id: results });
                 }).catch(results => {
                     console.error(results);
                 });
             } else {
                 x.results.filter(y => !y.valid && y.message).forEach(y => {
-                   // this.toast.show(y.message, 5000);
+                    // this.toast.show(y.message, 5000);
                 });
             }
         });

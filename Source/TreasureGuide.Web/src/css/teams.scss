@@ -1,0 +1,122 @@
+
+
+$tiny-unit-size: 32px;
+$tiny-unit-margin: 1px;
+
+$small-unit-size: 48px;
+$small-unit-margin: 2px;
+
+$medium-unit-size: 64px;
+$medium-unit-margin: 3px;
+
+$large-unit-size: 96px;
+$large-unit-margin: 4px;
+
+$huge-unit-size: 112px;
+$huge-unit-margin: 5px;
+
+$default-unit-size: $huge-unit-size;
+$default-unit-margin: $huge-unit-margin;
+
+.unit-collection {
+    .unit-button {
+        // @media #{$medium-and-down} {
+        height: $small-unit-size;
+        width: $small-unit-size;
+        margin: $small-unit-margin;
+        //  }
+        //  @media #{$large-and-up} {
+        //     height: $medium-unit-size;
+        //      width: $medium-unit-size;
+        //     margin: $medium-unit-margin;
+        //  }
+    }
+}
+
+.unit-button {
+    height: $default-unit-size;
+    width: $default-unit-size;
+    margin: $default-unit-margin;
+    padding: 0;
+    line-height: 0;
+    background-position: center;
+    background-size: 120%;
+    vertical-align: middle;
+
+    img {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    &[size="tiny"],
+    [size="tiny"] & {
+        height: $tiny-unit-size;
+        width: $tiny-unit-size;
+        margin: $tiny-unit-margin;
+    }
+
+    &[size="small"],
+    [size="small"] & {
+        height: $small-unit-size;
+        width: $small-unit-size;
+        margin: $small-unit-margin;
+    }
+
+    &[size="medium"],
+    [size="medium"] & {
+        height: $medium-unit-size;
+        width: $medium-unit-size;
+        margin: $medium-unit-margin;
+    }
+
+    &[size="large"],
+    [size="large"] & {
+        height: $large-unit-size;
+        width: $large-unit-size;
+        margin: $large-unit-margin;
+    }
+
+    &[size="huge"],
+    [size="huge"] & {
+        height: $huge-unit-size;
+        width: $huge-unit-size;
+        margin: $huge-unit-margin;
+    }
+}
+
+team-display {
+    overflow: hidden;
+    white-space: nowrap;
+
+    &[in-line] {
+        ship-display {
+            display: none;
+        }
+    }
+
+    &:not([in-line]) {
+        unit-display:nth-of-type(2n):after {
+            content: "";
+            display: block;
+        }
+
+        ship-display:after {
+            content: "";
+            display: block;
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.teambox {
+    a {
+        text-decoration: none;
+        color: unset;
+    }
+
+    fieldset:hover {
+        opacity: 0.6;
+    }
+}

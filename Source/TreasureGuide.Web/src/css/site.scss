@@ -1,5 +1,7 @@
 ﻿@import "../../node_modules/@outboxcraft/beauter/beauter";
+@import "forms.scss";
 @import "pagination.scss";
+@import "teams.scss";
 
 .aurelia-wrapper {
     display: flex;
@@ -7,152 +9,8 @@
     flex-direction: column;
 }
 
-
 main {
     flex: 1 0 auto;
-}
-
-.pagination {
-    li {
-        a {
-            padding: 0 5px;
-        }
-    }
-}
-
-.fill-width {
-    width: 100%;
-}
-
-$tiny-unit-size: 32px;
-$tiny-unit-margin: 1px;
-
-$small-unit-size: 48px;
-$small-unit-margin: 2px;
-
-$medium-unit-size: 64px;
-$medium-unit-margin: 3px;
-
-$large-unit-size: 96px;
-$large-unit-margin: 4px;
-
-$huge-unit-size: 112px;
-$huge-unit-margin: 5px;
-
-$default-unit-size: $huge-unit-size;
-$default-unit-margin: $huge-unit-margin;
-
-.stage-collection {
-    .row {
-        padding: 0;
-        margin: 0;
-    }
-
-    button {
-        width: 100%;
-        height: 100%;
-        text-align: left;
-    }
-}
-
-.unit-collection {
-    .unit-button {
-        // @media #{$medium-and-down} {
-        height: $small-unit-size;
-        width: $small-unit-size;
-        margin: $small-unit-margin;
-        //  }
-        //  @media #{$large-and-up} {
-        //     height: $medium-unit-size;
-        //      width: $medium-unit-size;
-        //     margin: $medium-unit-margin;
-        //  }
-    }
-}
-
-.actions {
-    text-align: center;
-
-    .btn,
-    .btn-floating {
-        margin: 2px;
-    }
-}
-
-.unit-button {
-    height: $default-unit-size;
-    width: $default-unit-size;
-    margin: $default-unit-margin;
-    padding: 0;
-    line-height: 0;
-    background-position: center;
-    background-size: 120%;
-
-    img {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-    }
-
-    &[size="tiny"],
-    [size="tiny"] & {
-        height: $tiny-unit-size;
-        width: $tiny-unit-size;
-        margin: $tiny-unit-margin;
-    }
-
-    &[size="small"],
-    [size="small"] & {
-        height: $small-unit-size;
-        width: $small-unit-size;
-        margin: $small-unit-margin;
-    }
-
-    &[size="medium"],
-    [size="medium"] & {
-        height: $medium-unit-size;
-        width: $medium-unit-size;
-        margin: $medium-unit-margin;
-    }
-
-    &[size="large"],
-    [size="large"] & {
-        height: $large-unit-size;
-        width: $large-unit-size;
-        margin: $large-unit-margin;
-    }
-
-    &[size="huge"],
-    [size="huge"] & {
-        height: $huge-unit-size;
-        width: $huge-unit-size;
-        margin: $huge-unit-margin;
-    }
-}
-
-team-display {
-    overflow: hidden;
-    white-space: nowrap;
-
-    &[in-line] {
-        ship-display {
-            display: none;
-        }
-    }
-
-    &:not([in-line]) {
-        unit-display:nth-of-type(2n):after {
-            content: "";
-            display: block;
-        }
-
-        ship-display:after {
-            content: "";
-            display: block;
-            margin-bottom: 5px;
-        }
-    }
 }
 
 ux-dialog-overlay.active {
@@ -185,16 +43,6 @@ ux-dialog-container {
     }
 }
 
-.collection {
-    .unit-button {
-        pointer-events: none;
-    }
-}
-
-.unit-button {
-    vertical-align: middle;
-}
-
 .button,
 button,
 input[type='submit'],
@@ -222,16 +70,5 @@ ux-dialog-header {
 ux-dialog-footer {
     .button {
         margin-left: 5px;
-    }
-}
-
-.teambox {
-    a {
-        text-decoration: none;
-        color: unset;
-    }
-
-    fieldset:hover {
-        opacity: 0.6;
     }
 }

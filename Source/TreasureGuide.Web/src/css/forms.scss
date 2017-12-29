@@ -1,0 +1,18 @@
+$error-color: #f44336;
+
+.validation-error {
+
+    label {
+        color: $error-color !important;
+    }
+
+    input {
+        border-color: $error-color !important;
+    }
+
+    .validation-message {
+        color: $error-color !important;
+        font-style: italic;
+        margin-left: 0.5em;
+    }
+}
