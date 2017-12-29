@@ -17,8 +17,19 @@ export class SearchPager {
         return Math.min(this.resultCount, this.searchModel.page * this.searchModel.pageSize);
     }
 
+    @computedFrom('resultCount')
+    get hasResults() {
+        return this.resultCount > 0;
+    }
+
     @computedFrom('searchModel.pageSize', 'resultCount')
     get hasPages() {
         return this.resultCount > this.searchModel.pageSize;
+    }
+
+    resultCountChanged() {
+        if (this.startIndex > this.endIndex && this.resultCount !== 0) {
+            this.searchModel.page = 1;
+        }
     }
 }
