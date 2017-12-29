@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <h3>Team</h3>
-            <div class="center">
+            <div class="_alignCenter">
                 <team-display team.bind="teamUnits"
                               ship.bind="shipId">
                 </team-display>
@@ -19,7 +19,7 @@
         </div>
         <div class="row" if.bind="teamSockets && teamSockets.length > 0">
             <h3>Sockets</h3>
-            <div class="center">
+            <div class="_alignCenter">
                 <socket-picker sockets.two-way="teamSockets"></socket-picker>
             </div>
         </div>

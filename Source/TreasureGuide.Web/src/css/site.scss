@@ -191,10 +191,6 @@ ux-dialog-container {
     }
 }
 
-.center {
-    text-align: center;
-}
-
 .unit-button {
     vertical-align: middle;
 }
@@ -225,5 +221,16 @@ ux-dialog-header {
 ux-dialog-footer {
     .button {
         margin-left: 5px;
+    }
+}
+
+.teambox {
+    a {
+        text-decoration: none;
+        color: unset;
+    }
+
+    fieldset:hover {
+        @extend ._cream;
     }
 }

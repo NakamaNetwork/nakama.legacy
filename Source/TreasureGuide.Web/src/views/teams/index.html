@@ -12,39 +12,19 @@
         <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
     </div>
     <div class="row" if.bind="teams.length > 0">
-        <table class="_width100">
-            <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Units
-                    </th>
-                    <th>
-                        Stage
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr repeat.for="team of teams" route-href="route: teamDetails; params.bind: {id: team.id}">
-                    <td>
-                        ${team.id}
-                    </td>
-                    <td>
+        <div class="col m6 teambox" repeat.for="team of teams">
+            <a route-href="route: teamDetails; params.bind: {id: team.id}">
+                <fieldset>
+                    <legend>
                         ${team.name}
-                    </td>
-                    <td>
-                        <team-display team.bind="team.teamUnits" size="tiny" in-line></team-display>
-                    </td>
-                    <td>
+                    </legend>
+                    <div class="_alignCenter">
+                        <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
+                        <br />
                         <stage-display stage-id.bind="team.stageId"></stage-display>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </fieldset>
+            </a>
+        </div>
     </div>
 </template>
