@@ -205,6 +205,7 @@ input[type='button'] {
         @extend ._disabled;
         cursor: default;
         opacity: 1.0;
+        pointer-events: none;
     }
 }
 
@@ -231,6 +232,6 @@ ux-dialog-footer {
     }
 
     fieldset:hover {
-        @extend ._cream;
+        opacity: 0.6;
     }
 }

@@ -1,16 +1,12 @@
 ﻿<template>
-    <md-colors></md-colors>
-    <h1>${title}</h1>
+    <h1>${name}</h1>
     <div with.bind="team">
-        <div class="row">
-            <h2>${name}</h2>
-        </div>
         <div class="row" if.bind="stageId">
-            <h3>Stage</h3>
+            <h2>Stage</h2>
             <stage-display stage-id.bind="stageId"></stage-display>
         </div>
         <div class="row">
-            <h3>Team</h3>
+            <h2>Team</h2>
             <div class="_alignCenter">
                 <team-display team.bind="teamUnits"
                               ship.bind="shipId">
@@ -18,21 +14,21 @@
             </div>
         </div>
         <div class="row" if.bind="teamSockets && teamSockets.length > 0">
-            <h3>Sockets</h3>
+            <h2>Sockets</h2>
             <div class="_alignCenter">
                 <socket-picker sockets.two-way="teamSockets"></socket-picker>
             </div>
         </div>
         <div class="row" if.bind="description">
-            <h3>Description</h3>
+            <h2>Description</h2>
             <p>${description}</p>
         </div>
         <div class="row" if.bind="guide">
-            <h3>Guide</h3>
+            <h2>Guide</h2>
             <p>${guide}</p>
         </div>
         <div class="row" if.bind="credits">
-            <h3>Credits</h3>
+            <h2>Credits</h2>
             <p>${credits}</p>
         </div>
     </div>

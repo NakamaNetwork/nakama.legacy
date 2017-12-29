@@ -4,16 +4,15 @@
         <fieldset>
             <legend>Team Info</legend>
             <div class="row">
-                <div class="col m6">
-                    <label for="nameInput">Name</label>
-                    <input id="nameInput"
-                           type="text"
-                           placeholder="Name"
-                           value.bind="name & validate" />
-                </div>
-                <div class="col m6">
-                    <stage-display editable="true" stage-id.two-way="stageId"></stage-display>
-                </div>
+                <label for="nameInput">Name</label>
+                <input id="nameInput"
+                       type="text"
+                       placeholder="Name"
+                       value.bind="name & validate" />
+            </div>
+            <div class="row">
+                <label for="stageInput">Stage</label>
+                <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
             </div>
         </fieldset>
         <fieldset>

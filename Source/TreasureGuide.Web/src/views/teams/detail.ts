@@ -6,8 +6,7 @@ import { TeamQueryService } from '../../services/query/team-query-service';
 export class TeamDetailPage {
     private teamQueryService: TeamQueryService;
     private router: Router;
-
-    title = 'Team Details';
+    
     team = [];
 
     constructor(teamQueryService: TeamQueryService, router: Router) {
