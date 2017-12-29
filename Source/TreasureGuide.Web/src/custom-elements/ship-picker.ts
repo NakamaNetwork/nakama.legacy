@@ -1,4 +1,4 @@
-﻿import { bindable, computedFrom } from 'aurelia-framework';
+﻿import { bindable } from 'aurelia-framework';
 import { autoinject } from 'aurelia-framework';
 import { ShipQueryService } from '../services/query/ship-query-service';
 import { IShipStubModel } from '../models/imported';
@@ -8,7 +8,7 @@ export class ShipPicker {
     private shipQueryService: ShipQueryService;
     @bindable shipId = 0;
 
-    ship;
+    @bindable ship;
     ships: any[];
 
     constructor(shipQueryService: ShipQueryService) {
@@ -17,6 +17,9 @@ export class ShipPicker {
 
         this.shipQueryService.stub().then(x => {
             this.ships = x;
+            if (this.shipId != null) {
+                this.ship = this.ships.find(x => x.id == this.shipId);
+            }
         });
     }
 
@@ -30,6 +33,14 @@ export class ShipPicker {
 
     shipName(ship: IShipStubModel) {
         return ship ? ship.name : '';
+    }
+
+    shipChanged(newValue: any, oldValue: any) {
+        if (newValue) {
+            this.shipId = newValue.id;
+        } else {
+            this.shipId = 0;
+        }
     }
 
     getIcon(id: number) {

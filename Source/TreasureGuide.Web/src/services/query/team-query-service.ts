@@ -51,7 +51,7 @@ export class TeamEditorModel implements ITeamEditorModel {
     description: string;
     credits: string;
     guide: string;
-    shipId: number = 1;
+    shipId: number;
     stageId: number;
     teamSockets: any[] =[];
     teamUnits: any[] =[];
