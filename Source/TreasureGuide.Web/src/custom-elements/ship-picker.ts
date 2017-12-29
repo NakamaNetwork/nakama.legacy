@@ -1,25 +1,27 @@
 ﻿import { bindable } from 'aurelia-framework';
 import { autoinject } from 'aurelia-framework';
+import { DialogController } from 'aurelia-dialog';
 import { ShipQueryService } from '../services/query/ship-query-service';
-import { IShipStubModel } from '../models/imported';
 
 @autoinject
 export class ShipPicker {
+    private controller: DialogController;
     private shipQueryService: ShipQueryService;
     @bindable shipId = 0;
 
-    @bindable ship;
+    ship;
     ships: any[];
 
-    constructor(shipQueryService: ShipQueryService) {
+    resultCount = 0;
+    pages = 0;
+
+    constructor(shipQueryService: ShipQueryService, controller: DialogController) {
+        this.controller = controller;
+        this.controller.settings.centerHorizontalOnly = true;
         this.shipQueryService = shipQueryService;
-        this.ships = [];
 
         this.shipQueryService.stub().then(x => {
             this.ships = x;
-            if (this.shipId != null) {
-                this.ship = this.ships.find(x => x.id == this.shipId);
-            }
         });
     }
 
@@ -27,20 +29,17 @@ export class ShipPicker {
         this.shipId = viewModel.shipId;
     }
 
-    shipSort(ships: IShipStubModel[]) {
-        return ships.sort((a, b) => a.name.localeCompare(b.name));
-    }
+    submit() {
+        this.controller.ok(this.shipId);
+    };
 
-    shipName(ship: IShipStubModel) {
-        return ship ? ship.name : '';
-    }
+    cancel() {
+        this.controller.cancel();
+    };
 
-    shipChanged(newValue: any, oldValue: any) {
-        if (newValue) {
-            this.shipId = newValue.id;
-        } else {
-            this.shipId = 0;
-        }
+    clicked(shipId) {
+        this.shipId = shipId;
+        this.submit();
     }
 
     getIcon(id: number) {

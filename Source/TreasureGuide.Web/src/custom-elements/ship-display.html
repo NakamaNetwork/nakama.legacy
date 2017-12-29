@@ -1,7 +1,8 @@
 ﻿<template>
-    <span if.bind="editable">
-        <ship-picker ship-id.two-way="shipId"></ship-picker>
-    </span>
+    <button if.bind="editable" class="_small" click.delegate="clicked()">
+        <i class="fa fa-ship"></i>
+        ${ship.name}
+    </button>
     <span if.bind="!editable">
         <i class="fa fa-ship"></i>
         ${ship.name}
