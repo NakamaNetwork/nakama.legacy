@@ -32,11 +32,7 @@ export class StagePicker {
     activate(viewModel) {
         this.stageId = viewModel.stageId;
     }
-
-    onPageChanged(e) {
-        this.searchModel.page = e.detail;
-    }
-
+    
     search(payload) {
         if (this.stageQueryService) {
             this.stageQueryService.search(payload).then(x => {

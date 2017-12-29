@@ -8,11 +8,10 @@
     <div class="row">
         <team-search model.bind="searchModel"></team-search>
     </div>
-    <div class="row center" if.bind="pages > 1">
-        <pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></pagination>
+    <div class="row">
+        <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
     </div>
     <div class="row" if.bind="teams.length > 0">
-        <p>${((searchModel.page - 1) * searchModel.pageSize) + 1} - ${((searchModel.page - 1) * searchModel.pageSize) + teams.length} of ${resultCount}</p>
         <table class="striped responsive-table">
             <thead>
                 <tr>

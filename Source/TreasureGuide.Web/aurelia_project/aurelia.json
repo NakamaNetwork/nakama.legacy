@@ -96,16 +96,10 @@
                 "prepend": [
                     "node_modules/bluebird/js/browser/bluebird.core.js",
                     "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
-                    "node_modules/requirejs/require.js"
+                    "node_modules/requirejs/require.js",
+                    "node_modules/babel-polyfill/dist/polyfill.js"
                 ],
                 "dependencies": [
-                    "aurelia-api",
-                    {
-                        "name": "aurelia-autocomplete",
-                        "main": "aurelia-autocomplete",
-                        "path": "../node_modules/aurelia-autocomplete/dist/amd",
-                        "resources": [ "**/*.html" ]
-                    },
                     "aurelia-binding",
                     "aurelia-bootstrapper",
                     {
@@ -132,6 +126,12 @@
                     "aurelia-pal",
                     "aurelia-pal-browser",
                     "aurelia-path",
+                    {
+                        "name": "aurelia-plugins-pagination",
+                        "path": "../node_modules/aurelia-plugins-pagination/dist/amd",
+                        "main": "aurelia-plugins-pagination",
+                        "resources": [ "**/*.{js,html}" ]
+                    },
                     "aurelia-polyfills",
                     "aurelia-route-recognizer",
                     "aurelia-router",
@@ -160,9 +160,7 @@
                         "main": "aurelia-validation",
                         "path": "../node_modules/aurelia-validation/dist/amd",
                         "resources": []
-                    },
-                    "aurelia-view-manager",
-                    "extend"
+                    }
                 ]
             }
         ]

@@ -1,0 +1,23 @@
+aup-pagination {
+    .list-inline {
+        list-style: disc outside;
+
+        li {
+            display: inline-block;
+            margin: 0 !important;
+
+            * {
+                margin: 0 !important;
+            }
+
+            a {
+                @extend .button;
+                @extend ._small;
+            }
+
+            input {
+                max-width: 64px;
+            }
+        }
+    }
+}

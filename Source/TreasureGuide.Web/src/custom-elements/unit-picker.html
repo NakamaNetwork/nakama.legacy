@@ -73,13 +73,10 @@
                     </fieldset>
                 </form>
             </div>
-            <div class="row center" if.bind="pages > 1">
-                <md-pagination md-pages.bind="pages" md-active-page.bind="searchModel.page" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
+            <div class="row">
+                <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
             </div>
             <div class="row center">
-                <div if.bind="units.length > 0">
-                    <p>${((searchModel.page - 1) * searchModel.pageSize) +1} - ${((searchModel.page - 1) * searchModel.pageSize) + units.length} of ${resultCount}</p>
-                </div>
                 <div class="unit-collection">
                     <button class="unit-button" click.delegate="clicked(null)">
                         <i class="fa fa-fw fa-2x fa-user-times"></i>
