@@ -201,9 +201,6 @@ button,
 input[type='submit'],
 input[type='reset'],
 input[type='button'] {
-    i {
-        padding: 0 2px;
-    }
 
     &._unclickable {
         @extend ._disabled;
@@ -214,7 +211,12 @@ input[type='button'] {
 
 ._flat {
     border: none !important;
-    margin-left: -20px;
+}
+
+ux-dialog-header {
+    .modal-action {
+        right: -20px;
+    }
 }
 
 ux-dialog-footer {

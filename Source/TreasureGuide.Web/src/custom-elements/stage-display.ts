@@ -31,7 +31,7 @@ export class StageDisplay {
 
     @computedFrom('stageId')
     get iconClass() {
-        return 'fa fa-' + (this.stageId ? 'map' : 'map-o');
+        return 'fa fa-fw fa-' + (this.stageId ? 'map' : 'map-o');
     }
     
     clicked() {

@@ -21,7 +21,7 @@ export class ShipPicker {
         this.shipQueryService = shipQueryService;
 
         this.shipQueryService.stub().then(x => {
-            this.ships = x;
+            this.ships = x.sort((a, b) => a.name.localeCompare(b.name));
         });
     }
 

@@ -32,27 +32,20 @@
                 <div class="center" if.bind="stages.length > 0">
                     <p>${((searchModel.page - 1) * searchModel.pageSize) +1} - ${((searchModel.page - 1) * searchModel.pageSize) + stages.length} of ${resultCount}</p>
                 </div>
-                <table class="_width100">
-                    <thead>
-                        <tr>
-                            <th>Stage</th>
-                            <th>Type</th>
-                            <th>Global</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr click.delegate="clicked(null)" class="${(!stageId ? 'active' : '')}">
-                            <td>Any</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr repeat.for="stage of stages" click.delegate="clicked(stage.id)" class="${(stageId === stage.id ? 'active' : '')}">
-                            <td>${stage.name}</td>
-                            <td><stage-type-display type.bind="stage.type" /></td>
-                            <td><global-display global.bind="stage.global" /></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <ul class="listnav">
+                    <li>
+                        <a href="#" click.delegate="clicked(null)" class="${(!stageId ? 'active' : '')}">
+                            Any
+                        </a>
+                    </li>
+                    <li repeat.for="stage of stages">
+                        <a href="#" click.delegate="clicked(stage.id)" class="${(stageId === stage.id ? 'active' : '')}">
+                            <global-display global.bind="stage.global"></global-display>
+                            ${stage.name}
+                            <stage-type-display type.bind="stage.type" class="_floatRight"></stage-type-display>
+                        </a>
+                    </li>
+                </ul>
             </div>
             <div class="row center" if.bind="!stages || stages.length == 0">
                 <h3>Search yielded no results!</h3>
