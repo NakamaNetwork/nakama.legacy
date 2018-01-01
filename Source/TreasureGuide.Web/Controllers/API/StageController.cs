@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using TreasureGuide.Entities;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.StageModels;
+using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
 {
     public class StageController : SearchableApiController<int, Stage, int?, StageStubModel, StageDetailModel, StageEditorModel, StageSearchModel>
     {
-        public StageController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
+        public StageController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
         }
 
-        protected override IQueryable<Stage> PerformSearch(IQueryable<Stage> results, StageSearchModel model)
+        protected override async Task<IQueryable<Stage>> PerformSearch(IQueryable<Stage> results, StageSearchModel model)
         {
             results = SearchGlobal(results, model.Global);
             results = SearchType(results, model.Type);

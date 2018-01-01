@@ -10,6 +10,8 @@ using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
 using TreasureGuide.Web.Constants;
+using TreasureGuide.Web.Services;
+using System.Net;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -19,11 +21,15 @@ namespace TreasureGuide.Web.Controllers.API.Generic
     {
         protected readonly TreasureEntities DbContext;
         protected readonly IMapper AutoMapper;
+        protected readonly IThrottleService ThrottlingService;
 
-        public EntityApiController(TreasureEntities dbContext, IMapper autoMapper)
+        public bool Throttled { get; set; }
+
+        public EntityApiController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService)
         {
             DbContext = dbContext;
             AutoMapper = autoMapper;
+            ThrottlingService = throttlingService;
         }
 
         protected override async Task<IActionResult> Get<TModel>(TKey id = default(TKey))
@@ -85,6 +91,10 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             if (!CanPost(id))
             {
                 return Unauthorized();
+            }
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
             }
             id = DefaultIfUnspecified(id, model.Id);
             if (!IsUnspecified(id))

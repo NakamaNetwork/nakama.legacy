@@ -3,7 +3,7 @@ using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.ProfileModels
 {
-    public class ProfileAuthExport
+    public class ProfileAuthExportModel
     {
         public string UserName { get; set; }
         public IEnumerable<string> Roles { get; set; }
@@ -32,5 +32,11 @@ namespace TreasureGuide.Web.Models.ProfileModels
         public string AccountNumber { get; set; }
         public string Website { get; set; }
         public bool Global { get; set; }
+    }
+
+    public class UserProfileSearchModel : SearchModel
+    {
+        public string Term { get; set; }
+        public IEnumerable<string> Roles { get; set; }
     }
 }

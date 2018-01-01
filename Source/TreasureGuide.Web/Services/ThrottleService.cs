@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
+using TreasureGuide.Web.Constants;
+using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Services
 {
     public interface IThrottleService
     {
-        bool CanAccess(HttpRequest request);
+        bool CanAccess(ClaimsPrincipal user, HttpRequest request);
     }
 
     public class ThrottleService : IThrottleService
     {
+        public const string Message = "Slow down!";
         private readonly IMemoryCache _cache;
 
         public ThrottleService(IMemoryCache cache)
@@ -22,8 +23,12 @@ namespace TreasureGuide.Web.Services
             _cache = cache;
         }
 
-        public bool CanAccess(HttpRequest request)
+        public bool CanAccess(ClaimsPrincipal user, HttpRequest request)
         {
+            if (user.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+            {
+                return true;
+            }
             var now = DateTimeOffset.Now;
             var key = GenerateKey(request);
             DateTimeOffset? timestamp = null;
@@ -32,8 +37,11 @@ namespace TreasureGuide.Web.Services
             {
                 _cache.Remove(key);
             }
-            var timeout = GenerateTimeout(request);
-            _cache.Set(key, now, timeout);
+            else
+            {
+                var timeout = GenerateTimeout(request);
+                _cache.Set(key, now, timeout);
+            }
             return !cached;
         }
 
@@ -51,7 +59,7 @@ namespace TreasureGuide.Web.Services
 
         private DateTimeOffset GenerateTimeout(HttpRequest request)
         {
-            return DateTimeOffset.Now.AddSeconds(30);
+            return DateTimeOffset.Now.AddSeconds(15);
         }
     }
 }

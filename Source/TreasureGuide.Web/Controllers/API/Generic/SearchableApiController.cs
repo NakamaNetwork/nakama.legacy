@@ -8,6 +8,7 @@ using TreasureGuide.Entities;
 using TreasureGuide.Entities.Interfaces;
 using TreasureGuide.Web.Models;
 using System.Data.Entity;
+using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -16,7 +17,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         where TEditorModel : IIdItem<TKey>
         where TSearchModel : SearchModel, new()
     {
-        protected SearchableApiController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
+        protected SearchableApiController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
         }
 
@@ -28,7 +29,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             model = model ?? new TSearchModel();
             model.PageSize = Math.Min(100, Math.Max(10, model.PageSize));
             var entities = FetchEntities();
-            entities = PerformSearch(entities, model).AsQueryable();
+            entities = (await PerformSearch(entities, model)).AsQueryable();
             var resultCount = await entities.CountAsync();
             entities = OrderSearchResults(entities);
             entities = entities.Skip(model.PageSize * (model.Page - 1)).Take(model.PageSize);
@@ -41,7 +42,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             };
         }
 
-        protected abstract IQueryable<TEntity> PerformSearch(IQueryable<TEntity> results, TSearchModel model);
+        protected abstract Task<IQueryable<TEntity>> PerformSearch(IQueryable<TEntity> results, TSearchModel model);
 
         protected virtual IQueryable<TEntity> OrderSearchResults(IQueryable<TEntity> results)
         {

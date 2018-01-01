@@ -13,6 +13,12 @@ export interface IExternalLoginConfirmationViewModel {
 }
 
 
+export interface IProfileAuthExportModel {
+    userName: string;
+    roles: string[];
+    
+}
+
 export interface IUserProfileStubModel {
     id: string;
     userName: string;
@@ -35,6 +41,12 @@ export interface IUserProfileEditorModel {
     accountNumber: string;
     website: string;
     global: boolean;
+    
+}
+
+export interface IUserProfileSearchModel extends ISearchModel{
+    term: string;
+    roles: string[];
     
 }
 

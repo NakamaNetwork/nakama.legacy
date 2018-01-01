@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.UnitModels;
+using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
 {
     public class UnitController : SearchableApiController<int, Unit, int?, UnitStubModel, UnitDetailModel, UnitEditorModel, UnitSearchModel>
     {
-        public UnitController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
+        public UnitController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
         }
 
-        protected override IQueryable<Unit> PerformSearch(IQueryable<Unit> results, UnitSearchModel model)
+        protected override async Task<IQueryable<Unit>> PerformSearch(IQueryable<Unit> results, UnitSearchModel model)
         {
             results = SearchTerm(results, model.Term);
             results = SearchTypes(results, model.Types);

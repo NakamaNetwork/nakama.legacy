@@ -1,13 +1,10 @@
 ﻿<template>
-    <h1>${title}</h1>
-    <div class="row" with.bind="accountService.userProfile">
-        <div class="row">
-            <h3>User Name</h3>
-            <p>${userName}</p>
-        </div>
-        <div class="row">
-            <h3>Roles</h3>
-            <p repeat.for="role of roles">${role}</p>
-        </div>
+    <div with.bind="profile">
+        <h1>${userName}</h1>
+        Id: ${id}
+        #: ${accountNumber}
+        Site: ${website}
+        Global: ${global}
+        Roles: <span repeat.for="role of roles">${role}</span>
     </div>
 </template>

@@ -15,11 +15,8 @@ namespace TreasureGuide.Web.Controllers.API
 {
     public class TeamController : SearchableApiController<int, Team, int?, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
-        private readonly IThrottleService _throttleService;
-
-        public TeamController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttleService) : base(dbContext, autoMapper)
+        public TeamController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
-            _throttleService = throttleService;
         }
 
         protected override Team PostProcess(Team entity)
@@ -35,18 +32,6 @@ namespace TreasureGuide.Web.Controllers.API
             entity.EditedDate = now;
             entity.Version = entity.Version + 1;
             return base.PostProcess(entity);
-        }
-
-        protected override async Task<object> PerformPost(TeamEditorModel model, int? id = null)
-        {
-            if (_throttleService.CanAccess(Request))
-            {
-                return await base.PerformPost(model, id);
-            }
-            else
-            {
-                return StatusCode((int)HttpStatusCode.Conflict, "Slow down, please.");
-            }
         }
 
         protected override bool CanPost(int? id)
@@ -65,7 +50,7 @@ namespace TreasureGuide.Web.Controllers.API
             return DbContext.Teams.Any(x => x.Id == id && x.SubmittedById == userId);
         }
 
-        protected override IQueryable<Team> PerformSearch(IQueryable<Team> results, TeamSearchModel model)
+        protected override async Task<IQueryable<Team>> PerformSearch(IQueryable<Team> results, TeamSearchModel model)
         {
             results = SearchStage(results, model.StageId);
             results = SearchTerm(results, model.Term);

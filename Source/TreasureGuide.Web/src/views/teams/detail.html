@@ -31,5 +31,13 @@
             <h2>Credits</h2>
             <p>${credits}</p>
         </div>
+        <div class="row edit-timestamps">
+            <div class="col m6">
+                Created by ${submittedByName} on ${submittedDate}
+            </div>
+            <div class="col m6" if.bind="editedByName">
+                Lasted Edited by ${submittedByName} on ${submittedDate}
+            </div>
+        </div>
     </div>
 </template>

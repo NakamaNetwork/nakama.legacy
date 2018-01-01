@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using AutoMapper;
 using TreasureGuide.Entities;
+using TreasureGuide.Web.Models.ProfileModels;
 using TreasureGuide.Web.Models.ShipModels;
 using TreasureGuide.Web.Models.StageModels;
 using TreasureGuide.Web.Models.TeamModels;
@@ -34,6 +35,9 @@ namespace TreasureGuide.Web.Configurations
 
                 var stage = mapper.CreateControllerMapping<Stage, StageDetailModel, StageStubModel, StageEditorModel>();
                 stage.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count));
+
+                var user = mapper.CreateControllerMapping<UserProfile, UserProfileDetailModel, UserProfileStubModel, UserProfileEditorModel>();
+                user.DetailMapping.ForMember(x => x.Roles, o => o.UseValue(new string[0]));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

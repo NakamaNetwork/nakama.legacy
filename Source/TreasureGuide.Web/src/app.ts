@@ -36,7 +36,8 @@ export class App {
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: 'Administrator' },
             // Account
-            { route: 'account', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: false, auth: true }
+            { route: 'account/:id?', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: false, auth: false },
+            { route: 'account/:id/edit', name: 'accountEdit', title: 'Account', moduleId: 'views/account/edit', nav: false, auth: true }
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }
