@@ -39,6 +39,9 @@
                     </li>
                 </ul>
             </div>
+            <div class="row">
+                <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+            </div>
         </ux-dialog-body>
         <ux-dialog-footer>
             <a click.delegate="clicked(null)" class="button _danger modal-action">

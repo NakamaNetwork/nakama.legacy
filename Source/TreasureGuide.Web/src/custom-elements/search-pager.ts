@@ -5,6 +5,7 @@ import { ISearchModel } from '../models/imported';
 export class SearchPager {
     @bindable searchModel: ISearchModel;
     @bindable resultCount = 0;
+    @bindable bottom = false;
     pageSizes = [10, 25, 50, 100];
 
     @computedFrom('searchModel.page', 'searchModel.pageSize', 'resultCount')
