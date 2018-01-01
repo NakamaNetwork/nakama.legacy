@@ -48,6 +48,18 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\profile-model.tst.gen">
+        <CustomToolNamespace>Models\ProfileModels\ProfileModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\profile-models.tst.gen">
+        <CustomToolNamespace>Models\ProfileModels\ProfileModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\role-constants.tst.gen">
+        <CustomToolNamespace>Constants\RoleConstants.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-models.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamModels.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

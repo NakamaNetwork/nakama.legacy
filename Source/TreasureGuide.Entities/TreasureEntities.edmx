@@ -134,6 +134,7 @@
           <Property Name="AccountNumber" Type="numeric" Precision="9" Scale="0" />
           <Property Name="Website" Type="nvarchar" MaxLength="200" />
           <Property Name="UnitId" Type="int" />
+          <Property Name="Global" Type="bit" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Role="Ships" Type="Self.Ships" Multiplicity="1" />
@@ -784,6 +785,7 @@
           <Property Name="UnitId" Type="Int32" />
           <NavigationProperty Name="TeamsEdited" Relationship="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
           <NavigationProperty Name="TeamsSubmitted" Relationship="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
+          <Property Name="Global" Type="Boolean" />
         </EntityType>
         <Association Name="FK_dbo_Teams_EditedById_dbo_UserProfiles">
           <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
@@ -956,6 +958,7 @@
           <EntitySetMapping Name="UserProfiles">
             <EntityTypeMapping TypeName="tcdbModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfiles">
+                <ScalarProperty Name="Global" ColumnName="Global" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="Website" ColumnName="Website" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TreasureGuide.Entities.Interfaces;
 
@@ -24,6 +25,10 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string Name { get; set; }
         public string SubmittedById { get; set; }
         public string SubmittedByName { get; set; }
+        public DateTimeOffset SubmittedDate { get; set; }
+        public string EditedById { get; set; }
+        public string EditedByName { get; set; }
+        public DateTimeOffset EditedDate { get; set; }
         public int Score { get; set; }
         public string Description { get; set; }
         public string Guide { get; set; }

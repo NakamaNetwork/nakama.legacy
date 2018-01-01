@@ -26,6 +26,7 @@ namespace TreasureGuide.Entities
         public Nullable<decimal> AccountNumber { get; set; }
         public string Website { get; set; }
         public Nullable<int> UnitId { get; set; }
+        public Nullable<bool> Global { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> TeamsEdited { get; set; }
