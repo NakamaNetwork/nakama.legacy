@@ -43,5 +43,7 @@ namespace TreasureGuide.Entities
         public virtual Stage Stage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
+        public virtual UserProfile EditingUser { get; set; }
+        public virtual UserProfile SubmittingUser { get; set; }
     }
 }

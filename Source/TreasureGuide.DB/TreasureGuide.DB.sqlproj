@@ -85,11 +85,11 @@
     <Build Include="dbo\Stages\Rounds.sql" />
     <Build Include="dbo\Units\Ships.sql" />
     <None Include="PostDeploy\ShipData.sql" />
+    <Build Include="dbo\Accounts\UserProfiles.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
     <PostDeploy Include="PostDeploy.sql" />
-    <None Include="PostDeploy\AuthData.sql" />
     <None Include="_staging.publish.xml" />
   </ItemGroup>
   <ItemGroup>

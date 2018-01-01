@@ -25,6 +25,10 @@
         <EntityTypeShape EntityType="tcdbModel.TeamUnit" Width="1.5" PointX="5" PointY="0.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Units" />
+        <EntityTypeShape EntityType="tcdbModel.UserProfile" Width="1.5" PointX="5" PointY="6.75" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_UserProfile_dbo_Units" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

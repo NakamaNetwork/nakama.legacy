@@ -4,317 +4,375 @@
     <edmx:Runtime>
         <!-- SSDL content -->
         <edmx:StorageModels>
-            <Schema Namespace="tcdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-                <EntityType Name="Rounds">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-                    <Property Name="StageId" Type="int" Nullable="false" />
-                    <Property Name="Number" Type="tinyint" Nullable="false" />
-                </EntityType>
-                <EntityType Name="RoundUnitBehavior">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-                    <Property Name="RoundUnitId" Type="int" Nullable="false" />
-                    <Property Name="Condition" Type="nvarchar" MaxLength="250" />
-                    <Property Name="Description" Type="nvarchar" MaxLength="1000" />
-                </EntityType>
-                <EntityType Name="RoundUnits">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-                    <Property Name="RoundId" Type="int" Nullable="false" />
-                    <Property Name="Position" Type="int" />
-                    <Property Name="Level" Type="tinyint" Nullable="false" />
-                    <Property Name="UnitId" Type="int" Nullable="false" />
-                    <Property Name="HP" Type="smallint" />
-                    <Property Name="Defense" Type="smallint" />
-                    <Property Name="ATK" Type="smallint" />
-                    <Property Name="MinCD" Type="tinyint" />
-                    <Property Name="MaxCD" Type="tinyint" />
-                    <Property Name="Interval" Type="tinyint" />
-                </EntityType>
-                <EntityType Name="Ships">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="int" Nullable="false" />
-                    <Property Name="Name" Type="nvarchar" MaxLength="128" />
-                    <Property Name="Description" Type="nvarchar" MaxLength="1000" />
-                </EntityType>
-                <EntityType Name="Stages">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="int" Nullable="false" />
-                    <Property Name="Name" Type="nvarchar" MaxLength="128" />
-                    <Property Name="Stamina" Type="tinyint" />
-                    <Property Name="Type" Type="tinyint" Nullable="false" />
-                    <Property Name="Global" Type="bit" Nullable="false" />
-                </EntityType>
-                <EntityType Name="Teams">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-                    <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
-                    <Property Name="Description" Type="nvarchar" MaxLength="1000" />
-                    <Property Name="Guide" Type="nvarchar(max)" />
-                    <Property Name="Credits" Type="nvarchar" MaxLength="250" />
-                    <Property Name="StageId" Type="int" />
-                    <Property Name="ShipId" Type="int" Nullable="false" />
-                    <Property Name="SubmittedById" Type="nvarchar" MaxLength="450" Nullable="false" />
-                    <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
-                    <Property Name="EditedById" Type="nvarchar" MaxLength="450" Nullable="false" />
-                    <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
-                    <Property Name="Version" Type="int" Nullable="false" />
-                </EntityType>
-                <EntityType Name="TeamSockets">
-                    <Key>
-                        <PropertyRef Name="TeamId" />
-                        <PropertyRef Name="SocketType" />
-                    </Key>
-                    <Property Name="TeamId" Type="int" Nullable="false" />
-                    <Property Name="SocketType" Type="tinyint" Nullable="false" />
-                    <Property Name="Level" Type="tinyint" Nullable="false" />
-                </EntityType>
-                <EntityType Name="TeamUnits">
-                    <Key>
-                        <PropertyRef Name="TeamId" />
-                        <PropertyRef Name="UnitId" />
-                        <PropertyRef Name="Position" />
-                    </Key>
-                    <Property Name="TeamId" Type="int" Nullable="false" />
-                    <Property Name="UnitId" Type="int" Nullable="false" />
-                    <Property Name="Position" Type="tinyint" Nullable="false" />
-                    <Property Name="SpecialLevel" Type="tinyint" />
-                    <Property Name="Sub" Type="bit" Nullable="false" />
-                </EntityType>
-                <EntityType Name="TeamVotes">
-                    <Key>
-                        <PropertyRef Name="TeamId" />
-                        <PropertyRef Name="UserHash" />
-                    </Key>
-                    <Property Name="TeamId" Type="int" Nullable="false" />
-                    <Property Name="UserHash" Type="nvarchar" MaxLength="256" Nullable="false" />
-                </EntityType>
-                <EntityType Name="Units">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="int" Nullable="false" />
-                    <Property Name="Name" Type="nvarchar" MaxLength="128" />
-                    <Property Name="Type" Type="smallint" Nullable="false" />
-                    <Property Name="Class" Type="smallint" Nullable="false" />
-                    <Property Name="Stars" Type="tinyint" />
-                    <Property Name="Cost" Type="tinyint" />
-                    <Property Name="Combo" Type="tinyint" />
-                    <Property Name="Sockets" Type="tinyint" />
-                    <Property Name="MaxLevel" Type="tinyint" />
-                    <Property Name="EXPtoMax" Type="int" />
-                    <Property Name="MinHP" Type="smallint" />
-                    <Property Name="MinATK" Type="smallint" />
-                    <Property Name="MinRCV" Type="smallint" />
-                    <Property Name="MaxHP" Type="smallint" />
-                    <Property Name="MaxATK" Type="smallint" />
-                    <Property Name="MaxRCV" Type="smallint" />
-                    <Property Name="GrowthRate" Type="decimal" Precision="2" Scale="1" />
-                    <Property Name="Flags" Type="smallint" Nullable="false" />
-                </EntityType>
-                <Association Name="FK_dbo_Teams_dbo_Ships">
-                    <End Role="Ships" Type="Self.Ships" Multiplicity="1" />
-                    <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Ships">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="Teams">
-                            <PropertyRef Name="ShipId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_Teams_dbo_Stages">
-                    <End Role="Stages" Type="Self.Stages" Multiplicity="0..1" />
-                    <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Stages">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="Teams">
-                            <PropertyRef Name="StageId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_Rounds_dbo_Stages">
-                    <End Role="Stages" Type="Self.Stages" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Role="Rounds" Type="Self.Rounds" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Stages">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="Rounds">
-                            <PropertyRef Name="StageId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
-                    <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Role="RoundUnitBehavior" Type="Self.RoundUnitBehavior" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="RoundUnits">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="RoundUnitBehavior">
-                            <PropertyRef Name="RoundUnitId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_RoundUnits_dbo_Stages">
-                    <End Role="Rounds" Type="Self.Rounds" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Rounds">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="RoundUnits">
-                            <PropertyRef Name="RoundId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_RoundUnits_dbo_Units">
-                    <End Role="Units" Type="Self.Units" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Units">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="RoundUnits">
-                            <PropertyRef Name="UnitId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_TeamSockets_dbo_Teams">
-                    <End Role="Teams" Type="Self.Teams" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Role="TeamSockets" Type="Self.TeamSockets" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Teams">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="TeamSockets">
-                            <PropertyRef Name="TeamId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_TeamUnits_dbo_Teams">
-                    <End Role="Teams" Type="Self.Teams" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Role="TeamUnits" Type="Self.TeamUnits" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Teams">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="TeamUnits">
-                            <PropertyRef Name="TeamId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_TeamUnits_dbo_Units">
-                    <End Role="Units" Type="Self.Units" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Role="TeamUnits" Type="Self.TeamUnits" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Units">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="TeamUnits">
-                            <PropertyRef Name="UnitId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_TeamVotes_dbo_Teams">
-                    <End Role="Teams" Type="Self.Teams" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Role="TeamVotes" Type="Self.TeamVotes" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Teams">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="TeamVotes">
-                            <PropertyRef Name="TeamId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <EntityContainer Name="tcdbModelStoreContainer">
-                    <EntitySet Name="Rounds" EntityType="Self.Rounds" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="RoundUnitBehavior" EntityType="Self.RoundUnitBehavior" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="RoundUnits" EntityType="Self.RoundUnits" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="TeamSockets" EntityType="Self.TeamSockets" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="TeamUnits" EntityType="Self.TeamUnits" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
-                    <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
-                    <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="Self.FK_dbo_Teams_dbo_Ships">
-                        <End Role="Ships" EntitySet="Ships" />
-                        <End Role="Teams" EntitySet="Teams" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_Teams_dbo_Stages" Association="Self.FK_dbo_Teams_dbo_Stages">
-                        <End Role="Stages" EntitySet="Stages" />
-                        <End Role="Teams" EntitySet="Teams" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_Rounds_dbo_Stages" Association="Self.FK_dbo_Rounds_dbo_Stages">
-                        <End Role="Stages" EntitySet="Stages" />
-                        <End Role="Rounds" EntitySet="Rounds" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits" Association="Self.FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
-                        <End Role="RoundUnits" EntitySet="RoundUnits" />
-                        <End Role="RoundUnitBehavior" EntitySet="RoundUnitBehavior" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_RoundUnits_dbo_Stages" Association="Self.FK_dbo_RoundUnits_dbo_Stages">
-                        <End Role="Rounds" EntitySet="Rounds" />
-                        <End Role="RoundUnits" EntitySet="RoundUnits" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_RoundUnits_dbo_Units" Association="Self.FK_dbo_RoundUnits_dbo_Units">
-                        <End Role="Units" EntitySet="Units" />
-                        <End Role="RoundUnits" EntitySet="RoundUnits" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_TeamSockets_dbo_Teams" Association="Self.FK_dbo_TeamSockets_dbo_Teams">
-                        <End Role="Teams" EntitySet="Teams" />
-                        <End Role="TeamSockets" EntitySet="TeamSockets" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_TeamUnits_dbo_Teams" Association="Self.FK_dbo_TeamUnits_dbo_Teams">
-                        <End Role="Teams" EntitySet="Teams" />
-                        <End Role="TeamUnits" EntitySet="TeamUnits" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="Self.FK_dbo_TeamUnits_dbo_Units">
-                        <End Role="Units" EntitySet="Units" />
-                        <End Role="TeamUnits" EntitySet="TeamUnits" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_TeamVotes_dbo_Teams" Association="Self.FK_dbo_TeamVotes_dbo_Teams">
-                        <End Role="Teams" EntitySet="Teams" />
-                        <End Role="TeamVotes" EntitySet="TeamVotes" />
-                    </AssociationSet>
-                </EntityContainer>
-            </Schema>
-        </edmx:StorageModels>
+        <Schema Namespace="tcdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Rounds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageId" Type="int" Nullable="false" />
+          <Property Name="Number" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoundUnitBehavior">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoundUnitId" Type="int" Nullable="false" />
+          <Property Name="Condition" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="RoundUnits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoundId" Type="int" Nullable="false" />
+          <Property Name="Position" Type="int" />
+          <Property Name="Level" Type="tinyint" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="HP" Type="smallint" />
+          <Property Name="Defense" Type="smallint" />
+          <Property Name="ATK" Type="smallint" />
+          <Property Name="MinCD" Type="tinyint" />
+          <Property Name="MaxCD" Type="tinyint" />
+          <Property Name="Interval" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Ships">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Stages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Stamina" Type="tinyint" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
+          <Property Name="Global" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Guide" Type="nvarchar(max)" />
+          <Property Name="Credits" Type="nvarchar" MaxLength="250" />
+          <Property Name="StageId" Type="int" />
+          <Property Name="ShipId" Type="int" Nullable="false" />
+          <Property Name="SubmittedById" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="EditedById" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Version" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamSockets">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="SocketType" />
+          </Key>
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="SocketType" Type="tinyint" Nullable="false" />
+          <Property Name="Level" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamUnits">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="Position" />
+          </Key>
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="Position" Type="tinyint" Nullable="false" />
+          <Property Name="SpecialLevel" Type="tinyint" />
+          <Property Name="Sub" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamVotes">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="UserHash" />
+          </Key>
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="UserHash" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+          <Property Name="Class" Type="smallint" Nullable="false" />
+          <Property Name="Stars" Type="tinyint" />
+          <Property Name="Cost" Type="tinyint" />
+          <Property Name="Combo" Type="tinyint" />
+          <Property Name="Sockets" Type="tinyint" />
+          <Property Name="MaxLevel" Type="tinyint" />
+          <Property Name="EXPtoMax" Type="int" />
+          <Property Name="MinHP" Type="smallint" />
+          <Property Name="MinATK" Type="smallint" />
+          <Property Name="MinRCV" Type="smallint" />
+          <Property Name="MaxHP" Type="smallint" />
+          <Property Name="MaxATK" Type="smallint" />
+          <Property Name="MaxRCV" Type="smallint" />
+          <Property Name="GrowthRate" Type="decimal" Precision="2" Scale="1" />
+          <Property Name="Flags" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="AccountNumber" Type="numeric" Precision="9" Scale="0" />
+          <Property Name="Website" Type="nvarchar" MaxLength="200" />
+          <Property Name="UnitId" Type="int" />
+        </EntityType>
+        <Association Name="FK_dbo_Teams_dbo_Ships">
+          <End Role="Ships" Type="Self.Ships" Multiplicity="1" />
+          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ships">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teams">
+              <PropertyRef Name="ShipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Teams_dbo_Stages">
+          <End Role="Stages" Type="Self.Stages" Multiplicity="0..1" />
+          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teams">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Teams_EditedById_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1" />
+          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teams">
+              <PropertyRef Name="EditedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Teams_SubmittedById_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1" />
+          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teams">
+              <PropertyRef Name="SubmittedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserProfile_dbo_Units">
+          <End Role="Units" Type="Self.Units" Multiplicity="0..1" />
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfiles">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Rounds_dbo_Stages">
+          <End Role="Stages" Type="Self.Stages" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rounds" Type="Self.Rounds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rounds">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
+          <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoundUnitBehavior" Type="Self.RoundUnitBehavior" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoundUnits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoundUnitBehavior">
+              <PropertyRef Name="RoundUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RoundUnits_dbo_Stages">
+          <End Role="Rounds" Type="Self.Rounds" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rounds">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoundUnits">
+              <PropertyRef Name="RoundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RoundUnits_dbo_Units">
+          <End Role="Units" Type="Self.Units" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoundUnits">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamSockets_dbo_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamSockets" Type="Self.TeamSockets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamSockets">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamUnits_dbo_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamUnits" Type="Self.TeamUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamUnits">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamUnits_dbo_Units">
+          <End Role="Units" Type="Self.Units" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamUnits" Type="Self.TeamUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamUnits">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamVotes_dbo_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamVotes" Type="Self.TeamVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVotes">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tcdbModelStoreContainer">
+          <EntitySet Name="Rounds" EntityType="Self.Rounds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoundUnitBehavior" EntityType="Self.RoundUnitBehavior" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoundUnits" EntityType="Self.RoundUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamSockets" EntityType="Self.TeamSockets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamUnits" EntityType="Self.TeamUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="Self.FK_dbo_Teams_dbo_Ships">
+            <End Role="Ships" EntitySet="Ships" />
+            <End Role="Teams" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Teams_dbo_Stages" Association="Self.FK_dbo_Teams_dbo_Stages">
+            <End Role="Stages" EntitySet="Stages" />
+            <End Role="Teams" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Teams_EditedById_dbo_UserProfiles" Association="Self.FK_dbo_Teams_EditedById_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="Teams" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Teams_SubmittedById_dbo_UserProfiles" Association="Self.FK_dbo_Teams_SubmittedById_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="Teams" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserProfile_dbo_Units" Association="Self.FK_dbo_UserProfile_dbo_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Rounds_dbo_Stages" Association="Self.FK_dbo_Rounds_dbo_Stages">
+            <End Role="Stages" EntitySet="Stages" />
+            <End Role="Rounds" EntitySet="Rounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits" Association="Self.FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
+            <End Role="RoundUnits" EntitySet="RoundUnits" />
+            <End Role="RoundUnitBehavior" EntitySet="RoundUnitBehavior" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RoundUnits_dbo_Stages" Association="Self.FK_dbo_RoundUnits_dbo_Stages">
+            <End Role="Rounds" EntitySet="Rounds" />
+            <End Role="RoundUnits" EntitySet="RoundUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RoundUnits_dbo_Units" Association="Self.FK_dbo_RoundUnits_dbo_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="RoundUnits" EntitySet="RoundUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamSockets_dbo_Teams" Association="Self.FK_dbo_TeamSockets_dbo_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamSockets" EntitySet="TeamSockets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamUnits_dbo_Teams" Association="Self.FK_dbo_TeamUnits_dbo_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamUnits" EntitySet="TeamUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="Self.FK_dbo_TeamUnits_dbo_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="TeamUnits" EntitySet="TeamUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamVotes_dbo_Teams" Association="Self.FK_dbo_TeamVotes_dbo_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamVotes" EntitySet="TeamVotes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
         <!-- CSDL content -->
         <edmx:ConceptualModels>
             <Schema Namespace="tcdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -369,6 +427,19 @@
                         <End Role="Unit" EntitySet="Units" />
                         <End Role="TeamUnit" EntitySet="TeamUnits" />
                     </AssociationSet>
+          <EntitySet Name="UserProfiles" EntityType="tcdbModel.UserProfile" />
+          <AssociationSet Name="FK_dbo_Teams_EditedById_dbo_UserProfiles" Association="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Teams_SubmittedById_dbo_UserProfiles" Association="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserProfile_dbo_Units" Association="tcdbModel.FK_dbo_UserProfile_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
                 </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -454,6 +525,8 @@
                     <Property Name="EditedById" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
                     <Property Name="EditedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
                     <Property Name="Version" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EditingUser" Relationship="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" FromRole="Team" ToRole="UserProfile" />
+          <NavigationProperty Name="SubmittingUser" Relationship="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" FromRole="Team" ToRole="UserProfile" />
                 </EntityType>
                 <Association Name="FK_dbo_TeamVotes_dbo_Teams">
                     <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
@@ -700,6 +773,54 @@
                         </Dependent>
                     </ReferentialConstraint>
                 </Association>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNumber" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="Website" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UnitId" Type="Int32" />
+          <NavigationProperty Name="TeamsEdited" Relationship="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
+          <NavigationProperty Name="TeamsSubmitted" Relationship="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_dbo_Teams_EditedById_dbo_UserProfiles">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="EditedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Teams_SubmittedById_dbo_UserProfiles">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="SubmittedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserProfile_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
             </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -832,6 +953,17 @@
                             </MappingFragment>
                         </EntityTypeMapping>
                     </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="tcdbModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfiles">
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
                 </EntityContainerMapping>
             </Mapping>
         </edmx:Mappings>

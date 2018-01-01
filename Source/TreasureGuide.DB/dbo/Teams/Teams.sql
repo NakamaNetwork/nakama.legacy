@@ -15,6 +15,6 @@
     CONSTRAINT [PK_dbo.Teams] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK.dbo_Teams_dbo.Stages] FOREIGN KEY([StageId]) REFERENCES [dbo].[Stages]([Id]) ON DELETE SET NULL,
     CONSTRAINT [FK.dbo_Teams_dbo.Ships] FOREIGN KEY([ShipId]) REFERENCES [dbo].[Ships]([Id]) ON DELETE SET DEFAULT,
-    CONSTRAINT [FK.dbo_Teams_SubmittedById_dbo.AspNetUsers] FOREIGN KEY([SubmittedById]) REFERENCES [dbo].[AspNetUsers]([Id]),
-    CONSTRAINT [FK.dbo_Teams_EditedById_dbo.AspNetUsers] FOREIGN KEY([EditedById]) REFERENCES [dbo].[AspNetUsers]([Id])
+    CONSTRAINT [FK.dbo_Teams_SubmittedById_dbo.UserProfiles] FOREIGN KEY([SubmittedById]) REFERENCES [dbo].[UserProfiles]([Id]),
+    CONSTRAINT [FK.dbo_Teams_EditedById_dbo.UserProfiles] FOREIGN KEY([EditedById]) REFERENCES [dbo].[UserProfiles]([Id])
 )

@@ -117,6 +117,9 @@
     <Compile Include="UnitType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserProfile.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

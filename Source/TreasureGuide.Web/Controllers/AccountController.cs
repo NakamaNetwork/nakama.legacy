@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TreasureGuide.Entities;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountViewModels;
@@ -18,17 +19,20 @@ namespace TreasureGuide.Web.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
         private readonly string _externalCookieScheme;
+        private readonly TreasureEntities _entities;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<IdentityCookieOptions> identityCookieOptions,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            TreasureEntities entities)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _entities = entities;
         }
 
         //
@@ -133,12 +137,18 @@ namespace TreasureGuide.Web.Controllers
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
 
 #if DEBUG
                         await _userManager.AddToRolesAsync(user, new[] { RoleConstants.Administrator, RoleConstants.Contributor, RoleConstants.Moderator });
 #endif
+                        _entities.UserProfiles.Add(new UserProfile
+                        {
+                            Id = user.Id,
+                            UserName = user.UserName
+                        });
+                        await _entities.SaveChangesAsync();
+                        await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }
                 }
