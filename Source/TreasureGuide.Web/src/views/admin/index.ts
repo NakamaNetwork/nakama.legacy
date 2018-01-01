@@ -1,16 +1,19 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { HttpEngine } from '../../tools/http-engine';
+import { AlertService } from '../../services/alert-service';
 
 @autoinject
 export class AdminPage {
     message = 'Admin Page';
     httpEngine;
     teamQueryService;
+    alert;
 
-    constructor(httpEngine: HttpEngine, teamQueryService: TeamQueryService) {
+    constructor(httpEngine: HttpEngine, teamQueryService: TeamQueryService, alertService: AlertService) {
         this.httpEngine = httpEngine;
         this.teamQueryService = teamQueryService;
+        this.alert = alertService;
     }
 
     createTeam() {
@@ -54,9 +57,9 @@ export class AdminPage {
             teamSockets: []
         };
         this.teamQueryService.save(team).then(x => {
-           // this.toast.show('Successfully created team \'' + team.name + '\'.', 2000);
+            this.alert.success('Successfully created team \'' + team.name + '\'.');
         }, x => {
-           // this.toast.show('Failed to create team \'' + team.name + '\'. Probably gave a bad unit or something.', 2000);
+            this.alert.danger('Failed to create team \'' + team.name + '\'. Probably gave a bad unit or something.');
         });
     }
 }

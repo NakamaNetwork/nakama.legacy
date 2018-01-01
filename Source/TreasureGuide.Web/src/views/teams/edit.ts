@@ -5,6 +5,7 @@ import { ValidationControllerFactory, ValidationRules, ValidationController } fr
 import { ITeamEditorModel } from '../../models/imported';
 import { TeamEditorModel } from '../../services/query/team-query-service';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
+import {AlertService} from '../../services/alert-service';
 
 @autoinject
 export class TeamEditPage {
@@ -16,18 +17,20 @@ export class TeamEditPage {
 
     private teamQueryService: TeamQueryService;
     private router: Router;
+    private alert: AlertService;
 
     public controller: ValidationController;
 
     title = 'Create Team';
     @bindable team: ITeamEditorModel;
 
-    constructor(teamQueryService: TeamQueryService, router: Router, validFactory: ValidationControllerFactory) {
+    constructor(teamQueryService: TeamQueryService, router: Router, alertService: AlertService, validFactory: ValidationControllerFactory) {
         this.controller = validFactory.createForCurrentScope();
         this.controller.addRenderer(new BeauterValidationFormRenderer());
 
         this.teamQueryService = teamQueryService;
         this.router = router;
+        this.alert = alertService;
 
         this.team = new TeamEditorModel();
     }
@@ -50,14 +53,14 @@ export class TeamEditPage {
         this.controller.validate().then(x => {
             if (x.valid) {
                 this.teamQueryService.save(this.team).then(results => {
-                    // this.toast.show('Successfully saved ' + this.team.name + ' to server!', 5000);
+                    this.alert.success('Successfully saved ' + this.team.name + ' to server!');
                     this.router.navigateToRoute('teamDetails', { id: results });
                 }).catch(results => {
                     console.error(results);
                 });
             } else {
                 x.results.filter(y => !y.valid && y.message).forEach(y => {
-                    // this.toast.show(y.message, 5000);
+                    this.alert.danger(y.message);
                 });
             }
         });

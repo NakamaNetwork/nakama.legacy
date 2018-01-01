@@ -22,7 +22,13 @@ input, textarea, select, fieldset {
     @extend ._floatRight;
     font-size: 0.8em;
     font-style: italic;
-
     margin-left: 8px;
     margin-top: -2px;
+}
+
+.alert-area {
+    @extend ._width100;
+    position: fixed;
+    z-index: 99999;
+    margin: 20px;
 }

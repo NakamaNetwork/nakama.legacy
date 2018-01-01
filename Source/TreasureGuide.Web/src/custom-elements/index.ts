@@ -1,5 +1,6 @@
 ﻿export function configure(config) {
     config.globalResources([
+        './alert-area',
         './search-pager',
         './ship-display',
         './ship-picker',

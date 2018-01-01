@@ -1,4 +1,5 @@
 import { autoinject, computedFrom } from 'aurelia-framework';
+import { EventAggregator } from 'aurelia-event-aggregator';
 import { RouterConfiguration, Router } from 'aurelia-router';
 import { AccountService } from './services/account-service';
 import { AuthorizeStep } from './tools/authorize-step';
@@ -8,9 +9,14 @@ export class App {
     public router: Router;
     public message = 'Shukko da!';
     public accountService: AccountService;
+    private ea: EventAggregator;
 
-    constructor(accountService: AccountService) {
+    constructor(accountService: AccountService, eventAggregator: EventAggregator) {
         this.accountService = accountService;
+        this.ea = eventAggregator;
+        this.ea.subscribe('router:navigation:complete', response => {
+            this.navToggled = false;
+        });
     }
 
     configureRouter(config: RouterConfiguration, router: Router): void {

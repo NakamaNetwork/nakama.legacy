@@ -1,0 +1,10 @@
+<template>
+    <div class="alert-area">
+        <div class="alert _shadow" repeat.for="alert of alertService.alerts" class.bind="alert.class">
+            <span class="-close" click.trigger="alertService.dismiss(alert.id)">
+                <i class="fa fa-fw fa-times"></i>
+            </span>
+            ${alert.message}
+        </div>
+    </div>
+</template>
