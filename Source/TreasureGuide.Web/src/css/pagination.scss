@@ -21,3 +21,13 @@ aup-pagination {
         }
     }
 }
+
+.loading-area {
+    @extend ._width100;
+    @extend ._alignCenter;
+    padding: 60px 0;
+
+    i {
+        font-size: 8em;
+    }
+}

@@ -73,18 +73,21 @@
                     </fieldset>
                 </form>
             </div>
-            <div class="row">
-                <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
-            </div>
-            <div class="row _alignCenter">
-                <div class="unit-collection">
-                    <button repeat.for="unit of units" class="unit-button" size="medium" click.delegate="clicked(unit.id)">
-                        <img src.bind="getIcon(unit.id)" />
-                    </button>
+            <loading-area if.bind="loading"></loading-area>
+            <div if.bind="!loading">
+                <div class="row">
+                    <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
                 </div>
-            </div>
-            <div class="row">
-                <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+                <div class="row _alignCenter">
+                    <div class="unit-collection">
+                        <button repeat.for="unit of units" class="unit-button" size="medium" click.delegate="clicked(unit.id)">
+                            <img src.bind="getIcon(unit.id)" />
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+                </div>
             </div>
         </ux-dialog-body>
         <ux-dialog-footer>

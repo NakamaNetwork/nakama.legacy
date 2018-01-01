@@ -17,6 +17,7 @@ export class UnitPicker {
     pages = 0;
 
     searchModel = new UnitSearchModel();
+    loading;
 
     constructor(unitQueryService: UnitQueryService, controller: DialogController, bindingEngine: BindingEngine) {
         this.controller = controller;
@@ -39,6 +40,7 @@ export class UnitPicker {
 
     search(payload: UnitSearchModel) {
         if (this.unitQueryService) {
+            this.loading = true;
             if ((payload.classes && payload.classes.length > 0) ||
                 (payload.types && payload.types.length > 0) ||
                 payload.term || payload.myBox) {
@@ -46,11 +48,15 @@ export class UnitPicker {
                     this.units = x.results;
                     this.resultCount = x.totalResults;
                     this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                    this.loading = false;
+                }).catch((e) => {
+                    this.loading = false;
                 });
             } else {
                 this.units = [];
                 this.resultCount = 0;
                 this.pages = 0;
+                this.loading = false;
             }
         }
     }

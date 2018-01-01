@@ -17,6 +17,7 @@ export class StagePicker {
     pages = 0;
 
     searchModel = new StageSearchModel();
+    loading;
 
     constructor(stageQueryService: StageQueryService, controller: DialogController, bindingEngine: BindingEngine) {
         this.controller = controller;
@@ -32,13 +33,17 @@ export class StagePicker {
     activate(viewModel) {
         this.stageId = viewModel.stageId;
     }
-    
+
     search(payload) {
         if (this.stageQueryService) {
+            this.loading = true;
             this.stageQueryService.search(payload).then(x => {
                 this.stages = x.results;
                 this.resultCount = x.totalResults;
                 this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                this.loading = false;
+            }).catch((e) => {
+                this.loading = false;
             });
         }
     }

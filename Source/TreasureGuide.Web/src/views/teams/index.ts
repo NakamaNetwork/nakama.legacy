@@ -13,6 +13,7 @@ export class TeamIndexPage {
     pages = 0;
 
     searchModel = new TeamSearchModel();
+    loading;
 
     constructor(teamQueryService: TeamQueryService, bindingEngine: BindingEngine) {
         this.teamQueryService = teamQueryService;
@@ -22,13 +23,17 @@ export class TeamIndexPage {
         });
         this.search(this.searchModel.payload);
     }
-    
+
     search(payload) {
         if (this.teamQueryService) {
+            this.loading = true;
             this.teamQueryService.search(payload).then(x => {
                 this.teams = x.results;
                 this.resultCount = x.totalResults;
                 this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                this.loading = false;
+            }).catch((e) => {
+                this.loading = false;
             });
         }
     }

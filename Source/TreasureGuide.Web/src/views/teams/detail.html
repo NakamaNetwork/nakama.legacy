@@ -1,6 +1,6 @@
 ﻿<template>
-    <h1>${name}</h1>
     <div with.bind="team">
+        <h1>${name}</h1>
         <div class="row" if.bind="stageId">
             <h2>Stage</h2>
             <stage-display stage-id.bind="stageId"></stage-display>

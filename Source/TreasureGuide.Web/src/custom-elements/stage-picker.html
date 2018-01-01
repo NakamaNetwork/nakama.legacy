@@ -25,22 +25,25 @@
                     </div>
                 </form>
             </div>
-            <div class="row">
-                <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
-            </div>
-            <div class="row" if.bind="stages.length > 0">
-                <ul class="listnav">
-                    <li repeat.for="stage of stages" class="${(stageId === stage.id ? 'active' : '')}">
-                        <a href="#" click.delegate="clicked(stage.id)">
-                            <global-display global.bind="stage.global"></global-display>
-                            ${stage.name}
-                            <stage-type-display type.bind="stage.type" class="_floatRight"></stage-type-display>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="row">
-                <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+            <loading-area if.bind="loading"></loading-area>
+            <div if.bind="!loading">
+                <div class="row">
+                    <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
+                </div>
+                <div class="row" if.bind="stages.length > 0">
+                    <ul class="listnav">
+                        <li repeat.for="stage of stages" class="${(stageId === stage.id ? 'active' : '')}">
+                            <a href="#" click.delegate="clicked(stage.id)">
+                                <global-display global.bind="stage.global"></global-display>
+                                ${stage.name}
+                                <stage-type-display type.bind="stage.type" class="_floatRight"></stage-type-display>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+                </div>
             </div>
         </ux-dialog-body>
         <ux-dialog-footer>

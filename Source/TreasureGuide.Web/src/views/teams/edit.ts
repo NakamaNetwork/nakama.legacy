@@ -5,7 +5,7 @@ import { ValidationControllerFactory, ValidationRules, ValidationController } fr
 import { ITeamEditorModel } from '../../models/imported';
 import { TeamEditorModel } from '../../services/query/team-query-service';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
-import {AlertService} from '../../services/alert-service';
+import { AlertService } from '../../services/alert-service';
 
 @autoinject
 export class TeamEditPage {
@@ -33,6 +33,7 @@ export class TeamEditPage {
         this.alert = alertService;
 
         this.team = new TeamEditorModel();
+        this.controller.addObject(this.team);
     }
 
     activate(params) {
@@ -100,6 +101,6 @@ ValidationRules
     .maxLength(TeamEditPage.guideMaxLength)
     .ensure((x: TeamEditorModel) => x.teamUnits)
     .required()
-    .satisfies((x: any[]) => x.filter(y => !y.sub && y.unitId).length > 3)
-    .withMessage('Please specify at least 3 units for this team.')
+    .satisfies((x: any[], m: TeamEditorModel) => x.filter(y => !y.sub && y.unitId).length > 3)
+    .withMessage('Please include at least 4 units on your team!')
     .on(TeamEditorModel);
