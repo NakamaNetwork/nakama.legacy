@@ -2,6 +2,7 @@
 import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
+import {IUnitSearchModel} from '../../models/imported';
 
 @autoinject
 export class UnitQueryService extends SearchableQueryService {
@@ -26,16 +27,16 @@ export class UnitQueryService extends SearchableQueryService {
     }
 }
 
-export class UnitSearchModel {
-    term?: string;
-    classes?: number[];
-    types?: number[];
-    forceTypes?: boolean = false;
-    myBox?: boolean = false;
-    global?: boolean = false;
-    freeToPlay?: boolean = false;
-    page?: number = 1;
-    pageSize?: number = 25;
+export class UnitSearchModel implements IUnitSearchModel {
+    term: string;
+    classes: number[];
+    types: number[];
+    forceTypes: boolean = false;
+    myBox: boolean = false;
+    global: boolean = false;
+    freeToPlay: boolean = false;
+    page: number = 1;
+    pageSize: number = 25;
 
     @computedFrom('term', 'classes', 'types', 'forceTypes', 'myBox', 'freeToPlay', 'global', 'page', 'pageSize')
     get payload() {

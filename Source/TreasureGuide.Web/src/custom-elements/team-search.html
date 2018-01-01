@@ -1,5 +1,5 @@
 <template>
-    <form with.bind="searchModel">
+    <form with.bind="model">
         <fieldset>
             <legend>Search</legend>
             <div class="row">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="col m4">
                     <label for="unitInput">Captain</label>
-                    <unit-display id="unitInput" unit-id.bind="leaderId" editable="true"></unit-display>
+                    <unit-display id="unitInput" unit-id.two-way="leaderId" editable="true"></unit-display>
                 </div>
                 <div class="col m4">
                     <label for="globalCheckbox">

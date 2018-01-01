@@ -19,9 +19,9 @@ export class TeamSearchModel implements ITeamSearchModel {
     term: string;
     leaderId: number;
     stageId: number;
-    myBox: boolean= false;
-    global: boolean= false;
-    freeToPlay: boolean= false;
+    myBox: boolean = false;
+    global: boolean = false;
+    freeToPlay: boolean = false;
     page: number = 1;
     pageSize: number = 25;
 
@@ -38,11 +38,8 @@ export class TeamSearchModel implements ITeamSearchModel {
             pageSize: this.pageSize
         });
         var output = JSON.parse(text);
-        this.onChanged(output);
         return output;
     }
-
-    onChanged: (any) => void;
 };
 
 export class TeamEditorModel implements ITeamEditorModel {
@@ -53,6 +50,6 @@ export class TeamEditorModel implements ITeamEditorModel {
     guide: string;
     shipId: number = 1;
     stageId: number;
-    teamSockets: any[] =[];
-    teamUnits: any[] =[];
+    teamSockets: any[] = [];
+    teamUnits: any[] = [];
 };
