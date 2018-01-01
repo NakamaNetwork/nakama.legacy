@@ -13,14 +13,28 @@ export interface IExternalLoginConfirmationViewModel {
 }
 
 
-export interface ILoginViewModel {
+export interface IUserProfileStubModel {
+    id: string;
+    userName: string;
+    unitId: number;
     
 }
 
-
-export interface IProfileModel {
-    userName: string;
+export interface IUserProfileDetailModel extends IUserProfileStubModel{
+    accountNumber: string;
+    website: string;
     roles: string[];
+    global: boolean;
+    
+}
+
+export interface IUserProfileEditorModel {
+    id: string;
+    userName: string;
+    unitId: number;
+    accountNumber: string;
+    website: string;
+    global: boolean;
     
 }
 
@@ -135,6 +149,10 @@ export interface ITeamDetailModel {
     name: string;
     submittedById: string;
     submittedByName: string;
+    submittedDate: Date;
+    editedById: string;
+    editedByName: string;
+    editedDate: Date;
     score: number;
     description: string;
     guide: string;
