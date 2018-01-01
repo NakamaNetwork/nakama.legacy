@@ -13,7 +13,7 @@ using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
 {
-    public class TeamController : SearchableApiController<int, Team, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
+    public class TeamController : SearchableApiController<int, Team, int?, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
         private readonly IThrottleService _throttleService;
 

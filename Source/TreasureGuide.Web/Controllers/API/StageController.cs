@@ -7,7 +7,7 @@ using TreasureGuide.Web.Models.StageModels;
 
 namespace TreasureGuide.Web.Controllers.API
 {
-    public class StageController : SearchableApiController<int, Stage, StageStubModel, StageDetailModel, StageEditorModel, StageSearchModel>
+    public class StageController : SearchableApiController<int, Stage, int?, StageStubModel, StageDetailModel, StageEditorModel, StageSearchModel>
     {
         public StageController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
         {

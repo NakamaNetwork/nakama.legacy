@@ -11,10 +11,9 @@ using System.Data.Entity;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
-    public abstract class SearchableApiController<TKey, TEntity, TStubModel, TDetailModel, TEditorModel, TSearchModel> : EntityApiController<TKey, TEntity, TStubModel, TDetailModel, TEditorModel>
-        where TKey : struct
-        where TEntity : class, IIdItem<TKey>
-        where TEditorModel : IIdItem<TKey?>
+    public abstract class SearchableApiController<TEntityKey, TEntity, TKey, TStubModel, TDetailModel, TEditorModel, TSearchModel> : EntityApiController<TEntityKey, TEntity, TKey, TStubModel, TDetailModel, TEditorModel>
+        where TEntity : class, IIdItem<TEntityKey>
+        where TEditorModel : IIdItem<TKey>
         where TSearchModel : SearchModel, new()
     {
         protected SearchableApiController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)

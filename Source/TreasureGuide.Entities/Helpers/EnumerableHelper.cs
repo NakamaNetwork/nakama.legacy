@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Entities.Helpers
 {
@@ -14,9 +13,7 @@ namespace TreasureGuide.Entities.Helpers
             UnitFlag.RareRecruitLimited
         };
 
-        public static IQueryable<TEntity> FindId<TKey, TEntity>(this IQueryable<TEntity> queryable, TKey? id = null)
-            where TKey : struct
-            where TEntity : IIdItem<TKey>
+        public static IQueryable<TEntity> FindId<TNullable, TEntity>(this IQueryable<TEntity> queryable, TNullable id = default(TNullable))
         {
             var arg = Expression.Parameter(typeof(TEntity), "i");
             var predicate =

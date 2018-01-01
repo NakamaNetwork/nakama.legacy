@@ -9,7 +9,7 @@ using TreasureGuide.Web.Models.UnitModels;
 
 namespace TreasureGuide.Web.Controllers.API
 {
-    public class UnitController : SearchableApiController<int, Unit, UnitStubModel, UnitDetailModel, UnitEditorModel, UnitSearchModel>
+    public class UnitController : SearchableApiController<int, Unit, int?, UnitStubModel, UnitDetailModel, UnitEditorModel, UnitSearchModel>
     {
         public UnitController(TreasureEntities dbContext, IMapper autoMapper) : base(dbContext, autoMapper)
         {
