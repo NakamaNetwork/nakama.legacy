@@ -6,9 +6,11 @@
             <div class="form-group">
                 <label for="nameInput">Name</label>
                 <input id="nameInput"
+                       class="_width100"
                        type="text"
                        placeholder="Name"
                        value.bind="name & validate" />
+                <div class="field-length">${nameLength}</div>
             </div>
             <div class="form-group">
                 <label for="stageInput">Stage</label>
@@ -34,6 +36,7 @@
                           class="_width100"
                           placeholder="A brief description of the team..."
                           value.bind="description & validate"></textarea>
+                <div class="field-length">${descLength}</div>
             </div>
             <div class="form-group">
                 <label for="guideInput">Guide</label>
@@ -41,6 +44,7 @@
                           class="_width100"
                           placeholder="Details on how to use the team..."
                           value.bind="guide & validate"></textarea>
+                <div class="field-length">${guideLength}</div>
             </div>
             <div class="form-group">
                 <label for="creditInput">Credits</label>
@@ -48,6 +52,7 @@
                           class="_width100"
                           placeholder="Credits, videos, and other supplemental materials."
                           value.bind="credits & validate"></textarea>
+                <div class="field-length">${creditLength}</div>
             </div>
             <div class="row">
                 <input type="submit" class="_primary _floatRight" click.delegate="submit()" />

@@ -1,10 +1,8 @@
 $error-color: #f44336;
 
 .validation-error {
-
-    label {
-        color: $error-color !important;
-    }
+    color: $error-color !important;
+    font-style: italic;
 
     input {
         border-color: $error-color !important;
@@ -12,7 +10,19 @@ $error-color: #f44336;
 
     .validation-message {
         color: $error-color !important;
-        font-style: italic;
         margin-left: 0.5em;
     }
+}
+
+input, textarea, select, fieldset {
+    margin-bottom: 0;
+}
+
+.field-length {
+    @extend ._floatRight;
+    font-size: 0.8em;
+    font-style: italic;
+
+    margin-left: 8px;
+    margin-top: -2px;
 }

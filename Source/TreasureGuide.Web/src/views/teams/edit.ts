@@ -1,5 +1,4 @@
-﻿import { autoinject } from 'aurelia-framework';
-import { bindable } from 'aurelia-framework';
+﻿import { autoinject, bindable, computedFrom } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
@@ -9,6 +8,12 @@ import { BeauterValidationFormRenderer } from '../../renderers/beauter-validatio
 
 @autoinject
 export class TeamEditPage {
+    public static nameMinLength = 10;
+    public static nameMaxLength = 250;
+    public static descriptionMaxLength = 1000;
+    public static guideMaxLength = 10000;
+    public static creditMaxLength = 250;
+
     private teamQueryService: TeamQueryService;
     private router: Router;
 
@@ -57,19 +62,39 @@ export class TeamEditPage {
             }
         });
     }
+
+    @computedFrom('team.description')
+    get descLength() {
+        return (this.team.description || '').length + '/' + TeamEditPage.descriptionMaxLength;
+    }
+
+    @computedFrom('team.name')
+    get nameLength() {
+        return (this.team.name || '').length + '/' + TeamEditPage.nameMaxLength;
+    }
+
+    @computedFrom('team.credits')
+    get creditLength() {
+        return (this.team.credits || '').length + '/' + TeamEditPage.creditMaxLength;
+    }
+
+    @computedFrom('team.guide')
+    get guideLength() {
+        return (this.team.guide || '').length + '/' + TeamEditPage.guideMaxLength;
+    }
 }
 
 ValidationRules
     .ensure((x: TeamEditorModel) => x.name)
     .required()
-    .minLength(10)
-    .maxLength(250)
+    .minLength(TeamEditPage.nameMinLength)
+    .maxLength(TeamEditPage.nameMaxLength)
     .ensure((x: TeamEditorModel) => x.description)
-    .maxLength(1000)
+    .maxLength(TeamEditPage.descriptionMaxLength)
     .ensure((x: TeamEditorModel) => x.credits)
-    .maxLength(250)
+    .maxLength(TeamEditPage.creditMaxLength)
     .ensure((x: TeamEditorModel) => x.guide)
-    .maxLength(10000)
+    .maxLength(TeamEditPage.guideMaxLength)
     .ensure((x: TeamEditorModel) => x.teamUnits)
     .required()
     .satisfies((x: any[]) => x.filter(y => !y.sub && y.unitId).length > 3)
