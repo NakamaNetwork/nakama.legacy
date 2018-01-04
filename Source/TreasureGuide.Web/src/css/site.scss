@@ -18,6 +18,10 @@ ux-dialog-overlay.active {
     opacity: 0.5;
 }
 
+a {
+    padding: 0 3px;
+}
+
 ux-dialog-container {
     & > div {
         //  @media #{$medium-and-down} {

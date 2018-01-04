@@ -33,10 +33,14 @@
         </div>
         <div class="row edit-timestamps">
             <div class="col m6">
-                Created by ${submittedByName} on ${submittedDate}
+                Created by
+                <a route-href="route: account; params.bind: {id: submittedById}">${submittedByName}</a>
+                on ${submittedDate}
             </div>
             <div class="col m6" if.bind="editedByName">
-                Lasted Edited by ${submittedByName} on ${submittedDate}
+                Lasted Edited by
+                <a route-href="route: account; params.bind: {id: editedById}">${editedByName}</a>
+                ${submittedDate}
             </div>
         </div>
     </div>
