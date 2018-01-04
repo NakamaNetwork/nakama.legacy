@@ -45,7 +45,6 @@ export class TeamSearchModel implements ITeamSearchModel {
 export class TeamEditorModel implements ITeamEditorModel {
     id: number;
     name: string;
-    description: string;
     credits: string;
     guide: string;
     shipId: number = 1;

@@ -30,7 +30,6 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string EditedByName { get; set; }
         public DateTimeOffset EditedDate { get; set; }
         public int Score { get; set; }
-        public string Description { get; set; }
         public string Guide { get; set; }
         public string Credits { get; set; }
         public bool Global { get; set; }
@@ -46,13 +45,10 @@ namespace TreasureGuide.Web.Models.TeamModels
     {
         public int? Id { get; set; }
 
-        [StringLength(250, MinimumLength = 250)]
+        [StringLength(250, MinimumLength = 10)]
         public string Name { get; set; }
-
+        
         [StringLength(1000)]
-        public string Description { get; set; }
-
-        [StringLength(250)]
         public string Credits { get; set; }
 
         [StringLength(10000)]

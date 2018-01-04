@@ -27,10 +27,11 @@ export interface IUserProfileStubModel {
 }
 
 export interface IUserProfileDetailModel extends IUserProfileStubModel{
-    accountNumber: string;
+    accountNumber: number;
     website: string;
     roles: string[];
     global: boolean;
+    canEdit: boolean;
     
 }
 
@@ -38,7 +39,7 @@ export interface IUserProfileEditorModel {
     id: string;
     userName: string;
     unitId: number;
-    accountNumber: string;
+    accountNumber: number;
     website: string;
     global: boolean;
     
@@ -166,12 +167,12 @@ export interface ITeamDetailModel {
     editedByName: string;
     editedDate: Date;
     score: number;
-    description: string;
     guide: string;
     credits: string;
     global: boolean;
     shipId: number;
     stageId: number;
+    canEdit: boolean;
     
 }
 
@@ -180,7 +181,6 @@ export interface ITeamEditorModel {
     teamUnits: ITeamUnitEditorModel[];
     id: number;
     name: string;
-    description: string;
     credits: string;
     guide: string;
     shipId: number;

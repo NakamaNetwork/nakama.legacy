@@ -11,9 +11,8 @@ import { AlertService } from '../../services/alert-service';
 export class TeamEditPage {
     public static nameMinLength = 10;
     public static nameMaxLength = 250;
-    public static descriptionMaxLength = 1000;
     public static guideMaxLength = 10000;
-    public static creditMaxLength = 250;
+    public static creditMaxLength = 1000;
 
     private teamQueryService: TeamQueryService;
     private router: Router;
@@ -56,8 +55,6 @@ export class TeamEditPage {
                 this.teamQueryService.save(this.team).then(results => {
                     this.alert.success('Successfully saved ' + this.team.name + ' to server!');
                     this.router.navigateToRoute('teamDetails', { id: results });
-                }).catch(results => {
-                    console.error(results);
                 });
             } else {
                 x.results.filter(y => !y.valid && y.message).forEach(y => {
@@ -65,11 +62,6 @@ export class TeamEditPage {
                 });
             }
         });
-    }
-
-    @computedFrom('team.description')
-    get descLength() {
-        return (this.team.description || '').length + '/' + TeamEditPage.descriptionMaxLength;
     }
 
     @computedFrom('team.name')
@@ -93,8 +85,6 @@ ValidationRules
     .required()
     .minLength(TeamEditPage.nameMinLength)
     .maxLength(TeamEditPage.nameMaxLength)
-    .ensure((x: TeamEditorModel) => x.description)
-    .maxLength(TeamEditPage.descriptionMaxLength)
     .ensure((x: TeamEditorModel) => x.credits)
     .maxLength(TeamEditPage.creditMaxLength)
     .ensure((x: TeamEditorModel) => x.guide)

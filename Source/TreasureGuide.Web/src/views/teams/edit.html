@@ -1,60 +1,58 @@
 ﻿<template>
     <h1>${title}</h1>
     <form with.bind="team">
-        <fieldset class="row">
-            <legend>Team Info</legend>
-            <div class="form-group">
-                <label for="nameInput">Name</label>
-                <input id="nameInput"
-                       class="_width100"
-                       type="text"
-                       placeholder="Name"
-                       value.bind="name & validate" />
-                <div class="field-length">${nameLength}</div>
-            </div>
-            <div class="form-group">
-                <label for="stageInput">Stage</label>
-                <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
-            </div>
-        </fieldset>
-        <fieldset class="row">
-            <legend>Units and Sockets</legend>
-            <div class="form-group _alignCenter">
-                <team-display team.two-way="teamUnits"
-                              ship.two-way="shipId"
-                              editable.bind="true"></team-display>
-            </div>
-            <div class="form-group _alignCenter">
-                <socket-picker sockets.two-way="teamSockets"></socket-picker>
-            </div>
-        </fieldset>
-        <fieldset class="row">
-            <legend>Write-Ups</legend>
-            <div class="form-group">
-                <label for="descriptionInput">Summary</label>
-                <textarea id="descriptionInput"
-                          class="_width100"
-                          placeholder="A brief description of the team..."
-                          value.bind="description & validate"></textarea>
-                <div class="field-length">${descLength}</div>
-            </div>
-            <div class="form-group">
-                <label for="guideInput">Guide</label>
-                <textarea id="guideInput"
-                          class="_width100"
-                          placeholder="In-depth details on how to use the team..."
-                          value.bind="guide & validate"></textarea>
-                <div class="field-length">${guideLength}</div>
-            </div>
-            <div class="form-group">
-                <label for="creditInput">Credits</label>
-                <textarea id="creditInput"
-                          class="_width100"
-                          placeholder="Credits, videos, and other supplemental materials."
-                          value.bind="credits & validate"></textarea>
-                <div class="field-length">${creditLength}</div>
-            </div>
-        </fieldset>
+        <div class="row">
+            <fieldset>
+                <legend>Team Info</legend>
+                <div class="form-group">
+                    <label for="nameInput">Name</label>
+                    <input id="nameInput"
+                           class="_width100"
+                           type="text"
+                           placeholder="Name"
+                           value.bind="name & validate" />
+                    <div class="field-length">${nameLength}</div>
+                </div>
+                <div class="form-group">
+                    <label for="stageInput">Stage</label>
+                    <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <fieldset>
+                <legend>Units and Sockets</legend>
+                <div class="form-group _alignCenter">
+                    <team-display team.two-way="teamUnits"
+                                  ship.two-way="shipId"
+                                  editable.bind="true"></team-display>
+                </div>
+                <div class="form-group _alignCenter">
+                    <socket-picker sockets.two-way="teamSockets"></socket-picker>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <fieldset>
+                <legend>Write-Ups</legend>
+                <div class="form-group">
+                    <label for="guideInput">Guide</label>
+                    <textarea id="guideInput"
+                              class="_width100"
+                              placeholder="In-depth details on how to use the team..."
+                              value.bind="guide & validate"></textarea>
+                    <div class="field-length">${guideLength}</div>
+                </div>
+                <div class="form-group">
+                    <label for="creditInput">Credits</label>
+                    <textarea id="creditInput"
+                              class="_width100"
+                              placeholder="Credits, videos, and other supplemental materials."
+                              value.bind="credits & validate"></textarea>
+                    <div class="field-length">${creditLength}</div>
+                </div>
+            </fieldset>
+        </div>
         <div class="row">
             <input type="submit" class="_primary _floatRight" click.delegate="submit()" />
         </div>

@@ -12,6 +12,7 @@ using TreasureGuide.Entities.Interfaces;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Services;
 using System.Net;
+using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -96,13 +97,17 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<object> PerformPost(TEditorModel model, TKey id = default(TKey))
         {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
             if (!CanPost(id))
             {
                 return Unauthorized();
             }
-            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            if (!ModelState.IsValid)
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode((int)HttpStatusCode.BadRequest, ModelState.ConcatErrors());
             }
             id = DefaultIfUnspecified(id, model.Id);
             if (!IsUnspecified(id))
