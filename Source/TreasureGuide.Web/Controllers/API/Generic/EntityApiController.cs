@@ -32,9 +32,9 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             ThrottlingService = throttlingService;
         }
 
-        protected override async Task<IActionResult> Get<TModel>(TKey id = default(TKey))
+        protected override async Task<IActionResult> Get<TModel>(TKey id = default(TKey), bool required = false)
         {
-            var result = await PerformGet<TModel>(id);
+            var result = await PerformGet<TModel>(id, required);
             return result as IActionResult ?? Ok(result); ;
         }
 
@@ -50,8 +50,12 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return result as IActionResult ?? Ok(result); ;
         }
 
-        protected virtual async Task<object> PerformGet<TModel>(TKey id = default(TKey))
+        protected virtual async Task<object> PerformGet<TModel>(TKey id = default(TKey), bool required = false)
         {
+            if (required && IsUnspecified(id))
+            {
+                return BadRequest("Must specify an Id.");
+            }
             if (!CanGet(id))
             {
                 return Unauthorized();

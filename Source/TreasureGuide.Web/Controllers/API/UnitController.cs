@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
@@ -11,6 +12,7 @@ using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
 {
+    [Route("api/unit")]
     public class UnitController : SearchableApiController<int, Unit, int?, UnitStubModel, UnitDetailModel, UnitEditorModel, UnitSearchModel>
     {
         public UnitController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)

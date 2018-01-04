@@ -136,6 +136,16 @@
           <Property Name="UnitId" Type="int" />
           <Property Name="Global" Type="bit" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Role="Ships" Type="Self.Ships" Multiplicity="1" />
           <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
@@ -320,6 +330,12 @@
           <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserRoles].[Id] AS [Id], 
+    [UserRoles].[Name] AS [Name]
+    FROM [dbo].[UserRoles] AS [UserRoles]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="Self.FK_dbo_Teams_dbo_Ships">
             <End Role="Ships" EntitySet="Ships" />
             <End Role="Teams" EntitySet="Teams" />
@@ -440,6 +456,11 @@
           <AssociationSet Name="FK_dbo_UserProfile_dbo_Units" Association="tcdbModel.FK_dbo_UserProfile_dbo_Units">
             <End Role="Unit" EntitySet="Units" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <EntitySet Name="UserRoles" EntityType="tcdbModel.UserRole" />
+          <AssociationSet Name="UserProfileUserRole" Association="tcdbModel.UserProfileUserRole">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
                 </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
@@ -786,6 +807,7 @@
           <NavigationProperty Name="TeamsEdited" Relationship="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
           <NavigationProperty Name="TeamsSubmitted" Relationship="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
           <Property Name="Global" Type="Boolean" />
+          <NavigationProperty Name="UserRoles" Relationship="tcdbModel.UserProfileUserRole" FromRole="UserProfile" ToRole="UserRole" />
         </EntityType>
         <Association Name="FK_dbo_Teams_EditedById_dbo_UserProfiles">
           <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
@@ -820,6 +842,27 @@
             </Principal>
             <Dependent Role="UserProfile">
               <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="tcdbModel.UserProfileUserRole" FromRole="UserRole" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="UserProfileUserRole">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="tcdbModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -963,6 +1006,14 @@
                 <ScalarProperty Name="Website" ColumnName="Website" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="tcdbModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

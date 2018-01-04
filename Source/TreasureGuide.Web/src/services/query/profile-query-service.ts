@@ -6,7 +6,7 @@ import { IUserProfileSearchModel } from '../../models/imported';
 @autoinject
 export class ProfileQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
-        super("user-profile", http, true);
+        super('profile', http, true);
     }
 
     logout() {

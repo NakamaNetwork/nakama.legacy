@@ -58,34 +58,36 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo" />
-    <Folder Include="dbo\Stages" />
-    <Folder Include="dbo\Units" />
-    <Folder Include="dbo\Accounts" />
-    <Folder Include="dbo\Teams" />
     <Folder Include="PostDeploy" />
+    <Folder Include="dbo\Views" />
+    <Folder Include="dbo\Tables" />
+    <Folder Include="dbo\Tables\Units" />
+    <Folder Include="dbo\Tables\Teams" />
+    <Folder Include="dbo\Tables\Stages" />
+    <Folder Include="dbo\Tables\Accounts" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Stages\Stages.sql" />
-    <Build Include="dbo\Stages\RoundUnitBehavior.sql" />
-    <Build Include="dbo\Stages\RoundUnits.sql" />
-    <Build Include="dbo\Units\Units.sql" />
-    <Build Include="dbo\Teams\Teams.sql" />
-    <Build Include="dbo\Teams\TeamUnits.sql" />
-    <Build Include="dbo\Teams\TeamSockets.sql" />
-    <Build Include="dbo\Teams\TeamVotes.sql" />
     <None Include="PostDeploy\StageData.sql" />
     <None Include="PostDeploy\CharacterData.sql" />
-    <Build Include="dbo\Accounts\AspNetRoleClaims.sql" />
-    <Build Include="dbo\Accounts\AspNetRoles.sql" />
-    <Build Include="dbo\Accounts\AspNetUserClaims.sql" />
-    <Build Include="dbo\Accounts\AspNetUserLogins.sql" />
-    <Build Include="dbo\Accounts\AspNetUserRoles.sql" />
-    <Build Include="dbo\Accounts\AspNetUsers.sql" />
-    <Build Include="dbo\Accounts\AspNetUserTokens.sql" />
-    <Build Include="dbo\Stages\Rounds.sql" />
-    <Build Include="dbo\Units\Ships.sql" />
     <None Include="PostDeploy\ShipData.sql" />
-    <Build Include="dbo\Accounts\UserProfiles.sql" />
+    <Build Include="dbo\Tables\Units\Ships.sql" />
+    <Build Include="dbo\Tables\Units\Units.sql" />
+    <Build Include="dbo\Tables\Teams\Teams.sql" />
+    <Build Include="dbo\Tables\Teams\TeamSockets.sql" />
+    <Build Include="dbo\Tables\Teams\TeamUnits.sql" />
+    <Build Include="dbo\Tables\Teams\TeamVotes.sql" />
+    <Build Include="dbo\Tables\Stages\Rounds.sql" />
+    <Build Include="dbo\Tables\Stages\RoundUnitBehavior.sql" />
+    <Build Include="dbo\Tables\Stages\RoundUnits.sql" />
+    <Build Include="dbo\Tables\Stages\Stages.sql" />
+    <Build Include="dbo\Tables\Accounts\AspNetRoleClaims.sql" />
+    <Build Include="dbo\Tables\Accounts\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\Accounts\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\Accounts\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\Accounts\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\Accounts\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\Accounts\AspNetUserTokens.sql" />
+    <Build Include="dbo\Tables\Accounts\UserProfiles.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
@@ -94,5 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TreasureGuide.DB.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Views\UserRoles.sql" />
   </ItemGroup>
 </Project>

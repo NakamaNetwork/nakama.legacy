@@ -6,7 +6,6 @@ using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
-    [Route("api/[controller]")]
     public abstract class GenericApiController<TKey, TStubModel, TDetailModel, TEditorModel> : Controller
         where TEditorModel : IIdItem<TKey>
     {
@@ -180,20 +179,12 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<IActionResult> Detail(TKey id = default(TKey))
         {
-            if (IsUnspecified(id))
-            {
-                return BadRequest("Must specify an Id.");
-            }
-            return await Get<TDetailModel>(id);
+            return await Get<TDetailModel>(id, true);
         }
 
         protected virtual async Task<IActionResult> Editor(TKey id = default(TKey))
         {
-            if (IsUnspecified(id))
-            {
-                return BadRequest("Must specify an Id.");
-            }
-            return await Get<TEditorModel>(id);
+            return await Get<TEditorModel>(id, true);
         }
 
         protected virtual async Task<IActionResult> Put(TEditorModel model, TKey id = default(TKey))
@@ -201,7 +192,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return await Post(model, id);
         }
 
-        protected abstract Task<IActionResult> Get<TModel>(TKey id = default(TKey));
+        protected abstract Task<IActionResult> Get<TModel>(TKey id = default(TKey), bool required = false);
         protected abstract Task<IActionResult> Post(TEditorModel model, TKey id = default(TKey));
         protected abstract Task<IActionResult> Delete(TKey id = default(TKey));
 

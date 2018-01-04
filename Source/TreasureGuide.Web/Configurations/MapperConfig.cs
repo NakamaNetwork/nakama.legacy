@@ -37,7 +37,9 @@ namespace TreasureGuide.Web.Configurations
                 stage.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count));
 
                 var user = mapper.CreateControllerMapping<UserProfile, UserProfileDetailModel, UserProfileStubModel, UserProfileEditorModel>();
-                user.DetailMapping.ForMember(x => x.Roles, o => o.UseValue(new string[0]));
+                user.DetailMapping.ForMember(x => x.Roles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
+
+                user.EntityMapping.ForMember(x => x.UserRoles, o => o.Ignore());
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();
