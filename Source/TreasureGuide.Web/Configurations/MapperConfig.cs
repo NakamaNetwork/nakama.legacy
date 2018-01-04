@@ -28,6 +28,7 @@ namespace TreasureGuide.Web.Configurations
                 team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
                 team.DetailMapping.ForMember(x => x.EditedByName, o => o.MapFrom(y => y.EditingUser != null ? y.EditingUser.UserName : DefaultSubmitterName));
                 team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
+                team.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore());
 
                 team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
                 team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
@@ -38,8 +39,7 @@ namespace TreasureGuide.Web.Configurations
 
                 var user = mapper.CreateControllerMapping<UserProfile, UserProfileDetailModel, UserProfileStubModel, UserProfileEditorModel>();
                 user.DetailMapping.ForMember(x => x.Roles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
-
-                user.EntityMapping.ForMember(x => x.UserRoles, o => o.Ignore());
+                user.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore());
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

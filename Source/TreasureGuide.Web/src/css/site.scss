@@ -22,7 +22,7 @@ a {
     padding: 0 3px;
 }
 
-ux-dialog-container {
+b ux-dialog-container {
     & > div {
         //  @media #{$medium-and-down} {
         padding: 2px;
@@ -52,6 +52,7 @@ button,
 input[type='submit'],
 input[type='reset'],
 input[type='button'] {
+    margin-bottom: unset;
 
     &._unclickable {
         @extend ._disabled;

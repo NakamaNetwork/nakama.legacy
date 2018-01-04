@@ -16,12 +16,13 @@ namespace TreasureGuide.Web.Models.ProfileModels
         public int? UnitId { get; set; }
     }
 
-    public class UserProfileDetailModel : UserProfileStubModel
+    public class UserProfileDetailModel : UserProfileStubModel, ICanEdit
     {
         public decimal? AccountNumber { get; set; }
         public string Website { get; set; }
         public IEnumerable<string> Roles { get; set; }
         public bool? Global { get; set; }
+        public bool CanEdit { get; set; }
     }
 
     public class UserProfileEditorModel : IIdItem<string>

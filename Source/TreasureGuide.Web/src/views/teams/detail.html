@@ -1,6 +1,10 @@
 ﻿<template>
     <div with.bind="team">
         <h1>${name}</h1>
+        <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
+            <i class="fa fa-fw fa-pencil"></i>
+            Edit Team
+        </a>
         <div class="row" if.bind="stageId">
             <h2>Stage</h2>
             <stage-display stage-id.bind="stageId"></stage-display>

@@ -41,7 +41,7 @@ export class TeamEditPage {
         if (id) {
             this.teamQueryService.editor(id).then(result => {
                 this.title = 'Edit Team';
-                this.team = Object.assign(new TeamEditorModel(), result);
+                this.team = Object.assign(this.team, result);
                 this.controller.validate();
             }).catch(error => {
                 this.router.navigateToRoute('error', { error: 'The requested team could not be found for editing. It may not exist or you may not have permission to edit it.' });

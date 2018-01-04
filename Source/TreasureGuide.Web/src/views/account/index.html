@@ -1,18 +1,24 @@
 ﻿<template>
     <div with.bind="profile">
-        <h1>${userName}</h1>
+            <h1>${userName}</h1>
+        <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
+            <i class="fa fa-fw fa-pencil"></i>
+            Edit Profile
+        </a>
         <div class="_floatRight" if.bind="unitId">
             <unit-display unit-id.bind="unitId"></unit-display>
         </div>
-        <div if.bind="accountNumber">
+        <div class="row" if.bind="accountNumber">
             <label for="accountNumber">Account:</label>
             <span id="accountNumber">${accountNumber}</span>
         </div>
-        <fieldset>
-            <legend>Roles</legend>
-            <ul>
-                <li repeat.for="role of roles">${role}</li>
-            </ul>
-        </fieldset>
+        <div class="row">
+            <fieldset>
+                <legend>Roles</legend>
+                <ul>
+                    <li repeat.for="role of roles">${role}</li>
+                </ul>
+            </fieldset>
+        </div>
     </div>
 </template>

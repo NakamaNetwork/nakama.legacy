@@ -67,6 +67,10 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 var single = await transformed.SingleOrDefaultAsync();
                 if (single != null)
                 {
+                    if (typeof(ICanEdit).IsAssignableFrom(typeof(TModel)))
+                    {
+                        ((ICanEdit)single).CanEdit = CanPost(id);
+                    }
                     return single;
                 }
                 return NotFound(id);

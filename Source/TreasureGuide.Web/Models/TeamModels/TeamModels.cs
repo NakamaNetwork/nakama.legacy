@@ -19,7 +19,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public IEnumerable<TeamUnitStubModel> TeamUnits { get; set; }
     }
 
-    public class TeamDetailModel : IIdItem<int>
+    public class TeamDetailModel : IIdItem<int>, ICanEdit
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -36,6 +36,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Global { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
+        public bool CanEdit { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
