@@ -16,7 +16,7 @@ using TreasureGuide.Web.Services;
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/profile")]
-    public class ProfileContoller : SearchableApiController<string, UserProfile, string, UserProfileStubModel, UserProfileDetailModel, UserProfileEditorModel, UserProfileSearchModel>
+    public class ProfileContoller : SearchableApiController<string, UserProfile, string, ProfileStubModel, ProfileDetailModel, ProfileEditorModel, ProfileSearchModel>
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -36,7 +36,7 @@ namespace TreasureGuide.Web.Controllers.API
             return base.CanPost(id) || id == User.GetId();
         }
 
-        protected override async Task<IQueryable<UserProfile>> PerformSearch(IQueryable<UserProfile> results, UserProfileSearchModel model)
+        protected override async Task<IQueryable<UserProfile>> PerformSearch(IQueryable<UserProfile> results, ProfileSearchModel model)
         {
             results = SearchTerm(results, model.Term);
             results = await SearchRoles(results, model.Roles);

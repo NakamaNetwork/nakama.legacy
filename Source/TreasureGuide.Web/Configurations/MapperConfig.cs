@@ -37,9 +37,13 @@ namespace TreasureGuide.Web.Configurations
                 var stage = mapper.CreateControllerMapping<Stage, StageDetailModel, StageStubModel, StageEditorModel>();
                 stage.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count));
 
-                var user = mapper.CreateControllerMapping<UserProfile, UserProfileDetailModel, UserProfileStubModel, UserProfileEditorModel>();
-                user.DetailMapping.ForMember(x => x.Roles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
+                var user = mapper.CreateControllerMapping<UserProfile, ProfileDetailModel, ProfileStubModel, ProfileEditorModel>();
+                user.EntityMapping.ForMember(x => x.UserRoles, o => o.Ignore()); // Handle this manually.
+
+                user.DetailMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
                 user.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore());
+
+                user.EditorMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

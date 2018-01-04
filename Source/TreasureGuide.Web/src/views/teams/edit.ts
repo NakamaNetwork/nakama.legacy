@@ -54,7 +54,13 @@ export class TeamEditPage {
             if (x.valid) {
                 this.teamQueryService.save(this.team).then(results => {
                     this.alert.success('Successfully saved ' + this.team.name + ' to server!');
-                    this.router.navigateToRoute('teamDetails', { id: results });
+                    this.router.navigateToRoute('teamDetails', { id: results.id });
+                }).catch(response => {
+                    return response.text().then(msg => {
+                        this.alert.danger(msg);
+                    }).catch(error => {
+                        this.alert.danger('An error has occurred. Please try again in a few moments.');
+                    });
                 });
             } else {
                 x.results.filter(y => !y.valid && y.message).forEach(y => {

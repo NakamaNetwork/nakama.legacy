@@ -1,7 +1,7 @@
 ﻿<template>
     <div with.bind="profile">
-            <h1>${userName}</h1>
-        <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
+        <h1>${userName}</h1>
+        <a if.bind="canEdit" class="button _primary" route-href="route: accountEdit; params.bind: {id: id}">
             <i class="fa fa-fw fa-pencil"></i>
             Edit Profile
         </a>
@@ -9,14 +9,18 @@
             <unit-display unit-id.bind="unitId"></unit-display>
         </div>
         <div class="row" if.bind="accountNumber">
-            <label for="accountNumber">Account:</label>
-            <span id="accountNumber">${accountNumber}</span>
+            <label for="friendId">Friend Id</label>
+            <friend-id-display id="friendId" friend-id.bind="accountNumber" global.bind="global"></friend-id-display>
+        </div>
+        <div class="row" if.bind="website">
+            <label for="website">Website</label>
+            <a id="website" href.bind="website" href="#" target="_blank">${website}</a>
         </div>
         <div class="row">
             <fieldset>
                 <legend>Roles</legend>
                 <ul>
-                    <li repeat.for="role of roles">${role}</li>
+                    <li repeat.for="role of userRoles">${role}</li>
                 </ul>
             </fieldset>
         </div>

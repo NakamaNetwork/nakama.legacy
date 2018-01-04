@@ -1,15 +1,12 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
-import { AlertService } from '../services/alert-service';
 
 @autoinject
 export class HttpEngine {
     private http: HttpClient;
-    private alert: AlertService;
 
-    constructor(http: HttpClient, alert: AlertService) {
+    constructor(http: HttpClient) {
         this.http = http;
-        this.alert = alert;
     }
 
     parameterize(endpoint: string, params: any) {
@@ -53,12 +50,7 @@ export class HttpEngine {
                     throw error;
                 });
             }
-            return response.text().then(msg => {
-                this.alert.danger(msg);
-                throw response;
-            }).catch(error => {
-                throw error;
-            });
+            throw response;
         });
     };
 

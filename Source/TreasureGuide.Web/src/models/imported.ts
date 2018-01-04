@@ -19,14 +19,14 @@ export interface IProfileAuthExportModel {
     
 }
 
-export interface IUserProfileStubModel {
+export interface IProfileStubModel {
     id: string;
     userName: string;
     unitId: number;
     
 }
 
-export interface IUserProfileDetailModel extends IUserProfileStubModel{
+export interface IProfileDetailModel extends IProfileStubModel{
     accountNumber: number;
     website: string;
     roles: string[];
@@ -35,7 +35,7 @@ export interface IUserProfileDetailModel extends IUserProfileStubModel{
     
 }
 
-export interface IUserProfileEditorModel {
+export interface IProfileEditorModel {
     id: string;
     userName: string;
     unitId: number;
@@ -45,7 +45,7 @@ export interface IUserProfileEditorModel {
     
 }
 
-export interface IUserProfileSearchModel extends ISearchModel{
+export interface IProfileSearchModel extends ISearchModel{
     term: string;
     roles: string[];
     

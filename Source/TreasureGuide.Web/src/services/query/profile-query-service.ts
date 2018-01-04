@@ -1,7 +1,8 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { IUserProfileSearchModel } from '../../models/imported';
+import { IProfileSearchModel } from '../../models/imported';
+import { IProfileEditorModel } from '../../models/imported';
 
 @autoinject
 export class ProfileQueryService extends SearchableQueryService {
@@ -14,7 +15,7 @@ export class ProfileQueryService extends SearchableQueryService {
     }
 }
 
-export class ProfileSearchModel implements IUserProfileSearchModel {
+export class ProfileSearchModel implements IProfileSearchModel {
     term: string = '';
     roles: string[] = [];
     page: number = 1;
@@ -26,4 +27,13 @@ export class ProfileSearchModel implements IUserProfileSearchModel {
         var output = JSON.parse(text);
         return output;
     }
+}
+
+export class ProfileEditorModel implements IProfileEditorModel {
+    public id: string;
+    public userName: string;
+    public unitId: number;
+    public accountNumber: number;
+    public website: string;
+    public global: boolean;
 }

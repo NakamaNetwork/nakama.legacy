@@ -13,6 +13,7 @@ using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Services;
 using System.Net;
 using TreasureGuide.Web.Helpers;
+using TreasureGuide.Web.Models;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -162,7 +163,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             }
             entity = PostProcess(entity);
             await SaveChangesAsync();
-            return entity.Id;
+            return new IdResponse<TEntityKey> { Id = entity.Id };
         }
 
         protected virtual async Task<object> Remove(TEntity single)
