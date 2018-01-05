@@ -41,6 +41,6 @@ namespace TreasureGuide.Web.Models.ProfileModels
     public class ProfileSearchModel : SearchModel
     {
         public string Term { get; set; }
-        public IEnumerable<string> Roles { get; set; }
+        public string[] Roles { get; set; }
     }
 }

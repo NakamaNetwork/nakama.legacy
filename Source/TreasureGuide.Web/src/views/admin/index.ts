@@ -5,6 +5,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { AlertService } from '../../services/alert-service';
 import { ProfileSearchModel } from '../../services/query/profile-query-service';
 import { ProfileQueryService } from '../../services/query/profile-query-service';
+import { AccountService } from '../../services/account-service';
 
 @autoinject
 export class AdminPage {
@@ -21,6 +22,8 @@ export class AdminPage {
 
     searchModel = new ProfileSearchModel();
     loading;
+
+    allRoles = AccountService.allRoles;
 
     constructor(httpEngine: HttpEngine, teamQueryService: TeamQueryService, profileQueryService: ProfileQueryService, alertService: AlertService, bindingEngine: BindingEngine) {
         this.httpEngine = httpEngine;

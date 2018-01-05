@@ -79,8 +79,11 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (modelRoles?.Any() ?? false)
             {
-                var userIds = modelRoles.Select(x => _userManager.GetUsersInRoleAsync(x))
-                    .SelectMany(x => x.Result).Select(y => y.Id).Distinct();
+                var userIds = modelRoles
+                    .SelectMany(x => x.Split(','))
+                    .Select(x => _userManager.GetUsersInRoleAsync(x))
+                    .SelectMany(x => x.Result)
+                    .Select(y => y.Id).Distinct();
                 results = results.Where(x => userIds.Contains(x.Id));
             }
             return results;

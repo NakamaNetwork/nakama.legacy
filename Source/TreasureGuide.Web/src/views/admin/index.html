@@ -4,8 +4,28 @@
         <h2>Tools</h2>
         <button md-button md-waves click.delegate="createTeam()">Create a Random Team</button>
     </div>
+    <h2>User Management</h2>
+    <form with.bind="searchModel">
+        <fieldset>
+            <legend>Search</legend>
+            <div class="row">
+                <div class="col m6">
+                    <label for="nameInput">User Name</label>
+                    <input id="nameInput" type="text" value.bind="term" />
+                </div>
+                <div class="col m6">
+                    <label for="roleInput">Roles</label>
+                    <select multiple value.bind="roles" class="_width100">
+                        <option repeat.for="role of allRoles" model.bind="role">${role}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <button class="button _floatRight" click.trigger="reset()">Reset</button>
+            </div>
+        </fieldset>
+    </form>
     <div class="row">
-        <h2>User Management</h2>
         <loading-area if.bind="loading"></loading-area>
         <div if.bind="!loading">
             <div class="row">

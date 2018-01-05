@@ -103,7 +103,7 @@ export class ProfileEditPage {
         return (this.profile.website || '').length + '/' + ProfileEditPage.websiteMaxLength;
     }
 
-    allRoles = AccountService.AllRoles;
+    allRoles = AccountService.allRoles;
 }
 
 ValidationRules
