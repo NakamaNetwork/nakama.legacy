@@ -1,0 +1,98 @@
+@import "_variables.scss";
+
+body {
+    background-color: $background-color;
+}
+
+._primary {
+    border-color: $primary-color !important;
+    background-color: $primary-color !important;
+}
+
+.primary-text {
+    color: $primary-color;
+}
+
+._dark {
+    border-color: $dark-color !important;
+    background-color: $dark-color !important;
+}
+
+.dark-text {
+    color: $dark-color;
+}
+
+._light {
+    border-color: $light-color !important;
+    background-color: $light-color !important;
+}
+
+.light-text {
+    color: $light-color;
+}
+
+._danger {
+    border-color: $danger-color !important;
+    background-color: $danger-color !important;
+}
+
+.danger-text {
+    color: $danger-color;
+}
+
+._success {
+    border-color: $success-color !important;
+    background-color: $success-color !important;
+}
+
+.success-text {
+    color: $danger-color;
+}
+
+
+._warning {
+    border-color: $warning-color !important;
+    background-color: $warning-color !important;
+}
+
+.warning-text {
+    color: $warning-color;
+}
+
+._active {
+    border-color: $active-color !important;
+    background-color: $active-color !important;
+}
+
+.active-text {
+    color: $active-color;
+}
+
+._info {
+    border-color: $info-color !important;
+    background-color: $info-color !important;
+}
+
+.info-text {
+    color: $info-color;
+}
+
+a {
+    @extend .primary-text;
+
+    &:hover {
+        @extend .primary-text;
+        opacity: 0.6;
+    }
+}
+
+
+._dark {
+    a {
+        @extend .light-text;
+
+        &:hover {
+            @extend .light-text;
+        }
+    }
+}

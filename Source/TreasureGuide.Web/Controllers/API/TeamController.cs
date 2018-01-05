@@ -3,7 +3,9 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
@@ -36,6 +38,18 @@ namespace TreasureGuide.Web.Controllers.API
             return await base.PostProcess(entity);
         }
 
+        protected override async Task<TModel> SingleGetTransform<TModel>(TModel single, int? id = null)
+        {
+            var detail = single as TeamDetailModel;
+            if (detail != null)
+            {
+                var userId = User.GetId();
+                var vote = await DbContext.TeamVotes.SingleOrDefaultAsync(x => x.TeamId == id && x.UserId == userId);
+                detail.MyVote = vote?.Value ?? 0;
+            }
+            return await base.SingleGetTransform(single, id);
+        }
+
         protected override bool CanPost(int? id)
         {
             return User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id);
@@ -44,6 +58,11 @@ namespace TreasureGuide.Web.Controllers.API
         protected override bool CanDelete(int? id)
         {
             return CanPost(id);
+        }
+
+        protected override IQueryable<Team> OrderSearchResults(IQueryable<Team> results)
+        {
+            return results.OrderByDescending(x => x.EditedDate);
         }
 
         protected bool OwnsTeam(int? id)
@@ -125,6 +144,40 @@ namespace TreasureGuide.Web.Controllers.API
                 results = results.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.UnitId == leaderId || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))));
             }
             return results;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("Vote")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Vote([FromBody] TeamVoteModel model, int? id = null)
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
+            var userId = User.GetId();
+            var vote = await DbContext.TeamVotes.SingleOrDefaultAsync(x => x.TeamId == model.TeamId && x.UserId == userId);
+            var exists = vote != null;
+            vote = vote ?? new TeamVote
+            {
+                UserId = userId
+            };
+            var value = model.Up.HasValue ? (model.Up ?? true) ? 1 : -1 : 0;
+            if (model.Up.HasValue)
+            {
+                if (!exists)
+                {
+                    DbContext.TeamVotes.Add(vote);
+                }
+                vote.Value = (short)value;
+            }
+            else if (exists)
+            {
+                DbContext.TeamVotes.Remove(vote);
+            }
+            await DbContext.SaveChangesAsync();
+            return Ok(value);
         }
     }
 }

@@ -1,7 +1,10 @@
 <template>
     <a route-href="route: teamDetails; params.bind: {id: team.id}">
         <fieldset>
-            <legend>${team.name}</legend>
+            <legend>
+                ${team.name}
+            </legend>
+            <score-display score.bind="team.score" team-id.bind="team.id"></score-display>
             <div class="row">
                 <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
             </div>

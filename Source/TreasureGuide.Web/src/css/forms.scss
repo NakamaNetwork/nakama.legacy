@@ -1,28 +1,24 @@
-$error-color: #f44336;
+@import "_variables.scss";
 
 .input-validation-error {
-    color: $error-color !important;
+    color: $danger-color !important;
     font-style: italic;
 
     input {
-        border-color: $error-color !important;
+        border-color: $danger-color !important;
         font-style: unset;
         color: unset;
     }
 }
 
 input.input-validation-error {
-    border-color: $error-color !important;
+    border-color: $danger-color !important;
     font-style: unset;
     color: unset;
 }
 
-.error-text {
-    color: $error-color !important;
-}
-
 .field-validation-error {
-    @extend .error-text;
+    @extend .danger-text;
     margin-left: 0.5em;
 }
 

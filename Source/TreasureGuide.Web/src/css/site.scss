@@ -1,8 +1,9 @@
 ﻿@import "../../node_modules/@outboxcraft/beauter/beauter";
+@import "_variables.scss";
+@import "colors.scss";
 @import "forms.scss";
 @import "pagination.scss";
 @import "teams.scss";
-@import "_variables.scss";
 
 body {
     overflow-y: scroll;
@@ -16,6 +17,7 @@ body {
 
 main {
     flex: 1 0 auto;
+    padding: 20px 0;
 }
 
 ux-dialog-overlay.active {

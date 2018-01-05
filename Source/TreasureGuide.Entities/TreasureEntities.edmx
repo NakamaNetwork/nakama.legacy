@@ -96,10 +96,11 @@
         <EntityType Name="TeamVotes">
           <Key>
             <PropertyRef Name="TeamId" />
-            <PropertyRef Name="UserHash" />
+            <PropertyRef Name="UserId" />
           </Key>
           <Property Name="TeamId" Type="int" Nullable="false" />
-          <Property Name="UserHash" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Value" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Units">
           <Key>
@@ -317,6 +318,20 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_TeamVotes_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamVotes" Type="Self.TeamVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVotes">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="tcdbModelStoreContainer">
           <EntitySet Name="Rounds" EntityType="Self.Rounds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoundUnitBehavior" EntityType="Self.RoundUnitBehavior" Schema="dbo" store:Type="Tables" />
@@ -387,13 +402,16 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Teams" EntitySet="Teams" />
             <End Role="TeamVotes" EntitySet="TeamVotes" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamVotes_dbo_UserProfiles" Association="Self.FK_dbo_TeamVotes_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="TeamVotes" EntitySet="TeamVotes" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
         <!-- CSDL content -->
         <edmx:ConceptualModels>
             <Schema Namespace="tcdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
                 <EntityContainer Name="TreasureEntities" annotation:LazyLoadingEnabled="true">
-                    <EntitySet Name="TeamVotes" EntityType="tcdbModel.TeamVote" />
                     <EntitySet Name="TeamSockets" EntityType="tcdbModel.TeamSocket" />
                     <EntitySet Name="Rounds" EntityType="tcdbModel.Round" />
                     <EntitySet Name="RoundUnitBehaviors" EntityType="tcdbModel.RoundUnitBehavior" />
@@ -457,11 +475,16 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamUnit" EntitySet="TeamUnits" />
           </AssociationSet>
+          <EntitySet Name="TeamVotes" EntityType="tcdbModel.TeamVote" />
           <AssociationSet Name="FK_dbo_TeamVotes_dbo_Teams" Association="tcdbModel.FK_dbo_TeamVotes_dbo_Teams">
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamVote" EntitySet="TeamVotes" />
           </AssociationSet>
-                </EntityContainer>
+          <AssociationSet Name="FK_dbo_TeamVotes_dbo_UserProfiles" Association="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="TeamVote" EntitySet="TeamVotes" />
+          </AssociationSet>
+          </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
                     <Member Name="Shooter" Value="1" />
@@ -516,15 +539,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Member Name="MapDamageResistance" />
                     <Member Name="Resilience" />
                 </EnumType>
-                <EntityType Name="TeamVote">
-                    <Key>
-                        <PropertyRef Name="TeamId" />
-                        <PropertyRef Name="UserHash" />
-                    </Key>
-                    <Property Name="TeamId" Type="Int32" Nullable="false" />
-                    <Property Name="UserHash" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="TeamVote" ToRole="Team" />
-                </EntityType>
                 <EntityType Name="TeamSocket">
                     <Key>
                         <PropertyRef Name="TeamId" />
@@ -717,6 +731,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="UserRoles" Relationship="tcdbModel.UserProfileUserRole" FromRole="UserProfile" ToRole="UserRole" />
           <NavigationProperty Name="EditedTeams" Relationship="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
           <NavigationProperty Name="SubmittedTeams" Relationship="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
+          <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamVote" />
         </EntityType>
         <Association Name="FK_dbo_UserProfile_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
@@ -850,6 +865,17 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TeamVote">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="TeamVote" ToRole="Team" />
+          <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles" FromRole="TeamVote" ToRole="UserProfile" />
+        </EntityType>
         <Association Name="FK_dbo_TeamVotes_dbo_Teams">
           <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -864,20 +890,26 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-            </Schema>
+        <Association Name="FK_dbo_TeamVotes_dbo_UserProfiles">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamVote" Role="TeamVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVote">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
         <edmx:Mappings>
             <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
                 <EntityContainerMapping StorageEntityContainer="tcdbModelStoreContainer" CdmEntityContainer="TreasureEntities">
-                    <EntitySetMapping Name="TeamVotes">
-                        <EntityTypeMapping TypeName="tcdbModel.TeamVote">
-                            <MappingFragment StoreEntitySet="TeamVotes">
-                                <ScalarProperty Name="UserHash" ColumnName="UserHash" />
-                                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                            </MappingFragment>
-                        </EntityTypeMapping>
-                    </EntitySetMapping>
                     <EntitySetMapping Name="TeamSockets">
                         <EntityTypeMapping TypeName="tcdbModel.TeamSocket">
                             <MappingFragment StoreEntitySet="TeamSockets">
@@ -1012,6 +1044,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="Guide" ColumnName="Guide" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamVotes">
+            <EntityTypeMapping TypeName="tcdbModel.TeamVote">
+              <MappingFragment StoreEntitySet="TeamVotes">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

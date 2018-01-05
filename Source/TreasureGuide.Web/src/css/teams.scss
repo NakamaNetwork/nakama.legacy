@@ -115,7 +115,7 @@ team-display {
 .team-collection {
     .col {
         line-height: 0;
-        padding: 6px;
+        padding: 12px 6px;
     }
 }
 
@@ -161,5 +161,42 @@ team-box {
 
     .time {
         @extend ._floatRight;
+    }
+
+    score-display {
+        @extend ._floatRight;
+        margin-top: -10px;
+        margin-right: -5px;
+    }
+}
+
+.score-container {
+    background-color: $background-color;
+    display: inline;
+    font-weight: bold;
+    border: 1px solid;
+    border-radius: 12px;
+    padding: 3px 8px;
+}
+
+.score-text {
+    .positive {
+        @extend .success-text;
+    }
+
+    .negative {
+        @extend .danger-text;
+    }
+
+    .my-vote {
+        border: 2px solid;
+    }
+
+    .my-positive {
+        @extend ._success;
+    }
+
+    .my-negative {
+        @extend ._danger;
     }
 }

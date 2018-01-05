@@ -45,6 +45,9 @@
       <None Update="src\models\generated\team-models.tst.gen">
         <CustomToolNamespace>Models\TeamModels\TeamModels.cs</CustomToolNamespace>
       </None>
+      <None Update="src\models\generated\team-vote-m-odel.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamVoteMOdel.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

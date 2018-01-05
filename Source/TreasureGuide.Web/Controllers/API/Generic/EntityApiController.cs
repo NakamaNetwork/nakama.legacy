@@ -69,10 +69,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 var single = await transformed.SingleOrDefaultAsync();
                 if (single != null)
                 {
-                    if (typeof(ICanEdit).IsAssignableFrom(typeof(TModel)))
-                    {
-                        ((ICanEdit)single).CanEdit = CanPost(id);
-                    }
+                    single = await SingleGetTransform(single, id);
                     return single;
                 }
                 return NotFound(id);
@@ -94,6 +91,15 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             }
             queryable = Filter(queryable);
             return queryable;
+        }
+
+        protected virtual async Task<TModel> SingleGetTransform<TModel>(TModel single, TKey id = default(TKey))
+        {
+            if (typeof(ICanEdit).IsAssignableFrom(typeof(TModel)))
+            {
+                ((ICanEdit)single).CanEdit = CanPost(id);
+            }
+            return single;
         }
 
         protected virtual async Task<object> PerformPost(TEditorModel model, TKey id = default(TKey))
