@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TreasureGuide.Entities.Interfaces;
 
@@ -18,19 +19,23 @@ namespace TreasureGuide.Web.Models.TeamModels
         public IEnumerable<TeamUnitStubModel> TeamUnits { get; set; }
     }
 
-    public class TeamDetailModel : IIdItem<int>
+    public class TeamDetailModel : IIdItem<int>, ICanEdit
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string SubmittedById { get; set; }
         public string SubmittedByName { get; set; }
+        public DateTimeOffset SubmittedDate { get; set; }
+        public string EditedById { get; set; }
+        public string EditedByName { get; set; }
+        public DateTimeOffset EditedDate { get; set; }
         public int Score { get; set; }
-        public string Description { get; set; }
         public string Guide { get; set; }
         public string Credits { get; set; }
         public bool Global { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
+        public bool CanEdit { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
@@ -40,13 +45,10 @@ namespace TreasureGuide.Web.Models.TeamModels
     {
         public int? Id { get; set; }
 
-        [StringLength(250, MinimumLength = 250)]
+        [StringLength(250, MinimumLength = 10)]
         public string Name { get; set; }
-
+        
         [StringLength(1000)]
-        public string Description { get; set; }
-
-        [StringLength(250)]
         public string Credits { get; set; }
 
         [StringLength(10000)]

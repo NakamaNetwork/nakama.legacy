@@ -1,13 +1,28 @@
 ﻿<template>
-    <h1>${title}</h1>
-    <div class="row" with.bind="accountService.userProfile">
-        <div class="row">
-            <h3>User Name</h3>
-            <p>${userName}</p>
+    <div with.bind="profile">
+        <h1>${userName}</h1>
+        <a if.bind="canEdit" class="button _primary" route-href="route: accountEdit; params.bind: {id: id}">
+            <i class="fa fa-fw fa-pencil"></i>
+            Edit Profile
+        </a>
+        <div class="_floatRight" if.bind="unitId">
+            <unit-display unit-id.bind="unitId"></unit-display>
+        </div>
+        <div class="row" if.bind="friendId">
+            <label for="friendId">Friend Id</label>
+            <friend-id-display id="friendId" friend-id.bind="friendId" global.bind="global"></friend-id-display>
+        </div>
+        <div class="row" if.bind="website">
+            <label for="website">Website</label>
+            <a id="website" href.bind="website" href="#" target="_blank">${website}</a>
         </div>
         <div class="row">
-            <h3>Roles</h3>
-            <p repeat.for="role of roles">${role}</p>
+            <fieldset>
+                <legend>Roles</legend>
+                <ul>
+                    <li repeat.for="role of userRoles">${role}</li>
+                </ul>
+            </fieldset>
         </div>
     </div>
 </template>

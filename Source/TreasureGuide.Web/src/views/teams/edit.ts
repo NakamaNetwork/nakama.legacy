@@ -11,9 +11,8 @@ import { AlertService } from '../../services/alert-service';
 export class TeamEditPage {
     public static nameMinLength = 10;
     public static nameMaxLength = 250;
-    public static descriptionMaxLength = 1000;
     public static guideMaxLength = 10000;
-    public static creditMaxLength = 250;
+    public static creditMaxLength = 1000;
 
     private teamQueryService: TeamQueryService;
     private router: Router;
@@ -41,7 +40,7 @@ export class TeamEditPage {
         if (id) {
             this.teamQueryService.editor(id).then(result => {
                 this.title = 'Edit Team';
-                this.team = Object.assign(new TeamEditorModel(), result);
+                this.team = Object.assign(this.team, result);
                 this.controller.validate();
             }).catch(error => {
                 this.router.navigateToRoute('error', { error: 'The requested team could not be found for editing. It may not exist or you may not have permission to edit it.' });
@@ -55,9 +54,13 @@ export class TeamEditPage {
             if (x.valid) {
                 this.teamQueryService.save(this.team).then(results => {
                     this.alert.success('Successfully saved ' + this.team.name + ' to server!');
-                    this.router.navigateToRoute('teamDetails', { id: results });
-                }).catch(results => {
-                    console.error(results);
+                    this.router.navigateToRoute('teamDetails', { id: results.id });
+                }).catch(response => {
+                    return response.text().then(msg => {
+                        this.alert.danger(msg);
+                    }).catch(error => {
+                        this.alert.danger('An error has occurred. Please try again in a few moments.');
+                    });
                 });
             } else {
                 x.results.filter(y => !y.valid && y.message).forEach(y => {
@@ -65,11 +68,6 @@ export class TeamEditPage {
                 });
             }
         });
-    }
-
-    @computedFrom('team.description')
-    get descLength() {
-        return (this.team.description || '').length + '/' + TeamEditPage.descriptionMaxLength;
     }
 
     @computedFrom('team.name')
@@ -93,8 +91,6 @@ ValidationRules
     .required()
     .minLength(TeamEditPage.nameMinLength)
     .maxLength(TeamEditPage.nameMaxLength)
-    .ensure((x: TeamEditorModel) => x.description)
-    .maxLength(TeamEditPage.descriptionMaxLength)
     .ensure((x: TeamEditorModel) => x.credits)
     .maxLength(TeamEditPage.creditMaxLength)
     .ensure((x: TeamEditorModel) => x.guide)

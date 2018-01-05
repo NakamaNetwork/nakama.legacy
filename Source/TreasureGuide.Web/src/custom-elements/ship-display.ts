@@ -2,7 +2,7 @@
 import { autoinject } from 'aurelia-framework';
 import { ShipQueryService } from '../services/query/ship-query-service';
 import { DialogService } from 'aurelia-dialog';
-import { ShipPicker } from './ship-picker';
+import { ShipPicker } from './dialogs/ship-picker';
 
 @autoinject
 @customElement('ship-display')

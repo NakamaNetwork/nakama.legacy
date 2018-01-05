@@ -2,7 +2,7 @@
 import { autoinject } from 'aurelia-framework';
 import { UnitQueryService } from '../services/query/unit-query-service';
 import { DialogService } from 'aurelia-dialog';
-import { UnitPicker } from './unit-picker';
+import { UnitPicker } from './dialogs/unit-picker';
 
 @autoinject
 @customElement('unit-display')

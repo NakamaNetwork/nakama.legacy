@@ -1,7 +1,6 @@
-﻿import { bindable } from 'aurelia-framework';
-import { autoinject } from 'aurelia-framework';
+﻿import { autoinject, bindable } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
-import { ShipQueryService } from '../services/query/ship-query-service';
+import { ShipQueryService } from '../../services/query/ship-query-service';
 
 @autoinject
 export class ShipPicker {
@@ -17,7 +16,7 @@ export class ShipPicker {
 
     constructor(shipQueryService: ShipQueryService, controller: DialogController) {
         this.controller = controller;
-        this.controller.settings.centerHorizontalOnly = true;
+
         this.shipQueryService = shipQueryService;
 
         this.shipQueryService.stub().then(x => {

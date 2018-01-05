@@ -21,6 +21,7 @@ export function configure(aurelia: Aurelia) {
         // Custom Elements
         .feature('./custom-attributes')
         .feature('./custom-elements')
+        .feature('./custom-elements/dialogs')
         .feature('./custom-elements/displays')
         .globalResources([
             // CSS

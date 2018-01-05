@@ -5,60 +5,74 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
 using TreasureGuide.Web.Constants;
+using TreasureGuide.Web.Services;
+using System.Net;
+using TreasureGuide.Web.Helpers;
+using TreasureGuide.Web.Models;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
-    public class EntityApiController<TKey, TEntity, TStubModel, TDetailModel, TEditorModel> : GenericApiController<TKey, TEntity, TStubModel, TDetailModel, TEditorModel>
-        where TKey : struct
-        where TEntity : class, IIdItem<TKey>
-        where TEditorModel : IIdItem<TKey?>
+    public class EntityApiController<TEntityKey, TEntity, TKey, TStubModel, TDetailModel, TEditorModel> : GenericApiController<TKey, TStubModel, TDetailModel, TEditorModel>
+        where TEntity : class, IIdItem<TEntityKey>
+        where TEditorModel : IIdItem<TKey>
     {
         protected readonly TreasureEntities DbContext;
         protected readonly IMapper AutoMapper;
+        protected readonly IThrottleService ThrottlingService;
 
-        public EntityApiController(TreasureEntities dbContext, IMapper autoMapper)
+        public bool Throttled { get; set; }
+
+        public EntityApiController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService)
         {
             DbContext = dbContext;
             AutoMapper = autoMapper;
+            ThrottlingService = throttlingService;
         }
 
-        protected override async Task<IActionResult> Get<TModel>(TKey? id = null)
+        protected override async Task<IActionResult> Get<TModel>(TKey id = default(TKey), bool required = false)
         {
-            var result = await PerformGet<TModel>(id);
+            var result = await PerformGet<TModel>(id, required);
             return result as IActionResult ?? Ok(result); ;
         }
 
-        protected override async Task<IActionResult> Post(TEditorModel model, TKey? id = null)
+        protected override async Task<IActionResult> Post(TEditorModel model, TKey id = default(TKey))
         {
             var result = await PerformPost(model, id);
             return result as IActionResult ?? Ok(result); ;
         }
 
-        protected override async Task<IActionResult> Delete(TKey? id = null)
+        protected override async Task<IActionResult> Delete(TKey id = default(TKey))
         {
             var result = await PerformDelete(id);
             return result as IActionResult ?? Ok(result); ;
         }
 
-        protected virtual async Task<object> PerformGet<TModel>(TKey? id = null)
+        protected virtual async Task<object> PerformGet<TModel>(TKey id = default(TKey), bool required = false)
         {
+            if (required && IsUnspecified(id))
+            {
+                return BadRequest("Must specify an Id.");
+            }
             if (!CanGet(id))
             {
                 return Unauthorized();
             }
             var entities = FetchEntities(id);
             var transformed = typeof(TModel) == typeof(TEntity) ? entities.Cast<TModel>() : Project<TModel>(entities);
-            if (id.HasValue)
+            if (!IsUnspecified(id))
             {
                 var single = await transformed.SingleOrDefaultAsync();
                 if (single != null)
                 {
+                    if (typeof(ICanEdit).IsAssignableFrom(typeof(TModel)))
+                    {
+                        ((ICanEdit)single).CanEdit = CanPost(id);
+                    }
                     return single;
                 }
                 return NotFound(id);
@@ -66,15 +80,15 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return await transformed.ToListAsync();
         }
 
-        protected virtual bool CanGet(TKey? id)
+        protected virtual bool CanGet(TKey id)
         {
             return true;
         }
 
-        protected virtual IQueryable<TEntity> FetchEntities(TKey? id = null)
+        protected virtual IQueryable<TEntity> FetchEntities(TKey id = default(TKey))
         {
             var queryable = DbContext.Set<TEntity>().AsQueryable();
-            if (id.HasValue)
+            if (!IsUnspecified(id))
             {
                 queryable = queryable.FindId(id);
             }
@@ -82,14 +96,22 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return queryable;
         }
 
-        protected virtual async Task<object> PerformPost(TEditorModel model, TKey? id = null)
+        protected virtual async Task<object> PerformPost(TEditorModel model, TKey id = default(TKey))
         {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
             if (!CanPost(id))
             {
                 return Unauthorized();
             }
-            id = id ?? model.Id;
-            if (id.HasValue)
+            if (!ModelState.IsValid)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest, ModelState.ConcatErrors());
+            }
+            id = DefaultIfUnspecified(id, model.Id);
+            if (!IsUnspecified(id))
             {
                 var entities = FetchEntities(id);
                 var single = entities.SingleOrDefault();
@@ -101,18 +123,18 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return await CreateOrUpdate(model);
         }
 
-        protected virtual bool CanPost(TKey? id)
+        protected virtual bool CanPost(TKey id)
         {
             return User.IsInRole(RoleConstants.Administrator);
         }
 
-        protected virtual async Task<object> PerformDelete(TKey? id)
+        protected virtual async Task<object> PerformDelete(TKey id)
         {
             if (!CanDelete(id))
             {
                 return Unauthorized();
             }
-            if (id.HasValue)
+            if (!IsUnspecified(id))
             {
                 var entities = FetchEntities(id);
                 var target = entities.SingleOrDefault();
@@ -121,14 +143,14 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return BadRequest("No item specified.");
         }
 
-        protected virtual bool CanDelete(TKey? id)
+        protected virtual bool CanDelete(TKey id)
         {
             return User.IsInRole(RoleConstants.Administrator);
         }
 
         protected virtual async Task<object> CreateOrUpdate(TEditorModel model, TEntity entity = null)
         {
-            model = PreProcess(model);
+            model = await PreProcess(model);
             var newItem = entity == null;
             if (newItem)
             {
@@ -139,9 +161,9 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 entity = Update(model, entity);
             }
-            entity = PostProcess(entity);
+            entity = await PostProcess(entity);
             await SaveChangesAsync();
-            return entity.Id;
+            return new IdResponse<TEntityKey> { Id = entity.Id };
         }
 
         protected virtual async Task<object> Remove(TEntity single)
@@ -172,12 +194,12 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return entities;
         }
 
-        protected virtual TEditorModel PreProcess(TEditorModel model)
+        protected virtual async Task<TEditorModel> PreProcess(TEditorModel model)
         {
             return model;
         }
 
-        protected virtual TEntity PostProcess(TEntity entity)
+        protected virtual async Task<TEntity> PostProcess(TEntity entity)
         {
             return entity;
         }

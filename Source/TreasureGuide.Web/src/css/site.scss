@@ -18,6 +18,22 @@ ux-dialog-overlay.active {
     opacity: 0.5;
 }
 
+a {
+    padding: 0 3px;
+}
+
+.dialog-header-content {
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .modal-action {
+        margin-top: 6px;
+        margin-right: -20px;
+    }
+}
+
 ux-dialog-container {
     & > div {
         //  @media #{$medium-and-down} {
@@ -48,6 +64,7 @@ button,
 input[type='submit'],
 input[type='reset'],
 input[type='button'] {
+    margin-bottom: unset;
 
     &._unclickable {
         @extend ._disabled;
@@ -61,14 +78,12 @@ input[type='button'] {
     border: none !important;
 }
 
-ux-dialog-header {
-    .modal-action {
-        right: -20px;
-    }
-}
-
 ux-dialog-footer {
     .button {
         margin-left: 5px;
     }
+}
+
+.row {
+    margin-bottom: 0.6em;
 }

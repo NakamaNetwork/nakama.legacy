@@ -1,6 +1,10 @@
 ﻿<template>
     <div with.bind="team">
         <h1>${name}</h1>
+        <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
+            <i class="fa fa-fw fa-pencil"></i>
+            Edit Team
+        </a>
         <div class="row" if.bind="stageId">
             <h2>Stage</h2>
             <stage-display stage-id.bind="stageId"></stage-display>
@@ -19,10 +23,6 @@
                 <socket-picker sockets.two-way="teamSockets"></socket-picker>
             </div>
         </div>
-        <div class="row" if.bind="description">
-            <h2>Description</h2>
-            <p>${description}</p>
-        </div>
         <div class="row" if.bind="guide">
             <h2>Guide</h2>
             <p>${guide}</p>
@@ -30,6 +30,18 @@
         <div class="row" if.bind="credits">
             <h2>Credits</h2>
             <p>${credits}</p>
+        </div>
+        <div class="row edit-timestamps">
+            <div class="col m6">
+                Created by
+                <a route-href="route: account; params.bind: {id: submittedById}">${submittedByName}</a>
+                on ${submittedDate}
+            </div>
+            <div class="col m6" if.bind="editedByName">
+                Lasted Edited by
+                <a route-href="route: account; params.bind: {id: editedById}">${editedByName}</a>
+                ${submittedDate}
+            </div>
         </div>
     </div>
 </template>

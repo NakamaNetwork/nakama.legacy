@@ -13,14 +13,51 @@ export interface IExternalLoginConfirmationViewModel {
 }
 
 
-export interface ILoginViewModel {
+export interface IProfileAuthExportModel {
+    userName: string;
+    roles: string[];
+    
+}
+
+export interface IProfileStubModel {
+    id: string;
+    userName: string;
+    unitId: number;
+    teamCount: number;
+    
+}
+
+export interface IProfileDetailModel extends IProfileStubModel{
+    friendId: number;
+    website: string;
+    userRoles: string[];
+    global: boolean;
+    canEdit: boolean;
+    
+}
+
+export interface IProfileEditorModel {
+    id: string;
+    userName: string;
+    unitId: number;
+    friendId: number;
+    website: string;
+    userRoles: string[];
+    global: boolean;
+    
+}
+
+export interface IProfileSearchModel extends ISearchModel{
+    term: string;
+    roles: string[];
     
 }
 
 
-export interface IProfileModel {
-    userName: string;
-    roles: string[];
+export class RoleConstants {
+    public static Administrator: string = "Administrator";
+    public static Moderator: string = "Moderator";
+    public static Contributor: string = "Contributor";
     
 }
 
@@ -135,13 +172,17 @@ export interface ITeamDetailModel {
     name: string;
     submittedById: string;
     submittedByName: string;
+    submittedDate: Date;
+    editedById: string;
+    editedByName: string;
+    editedDate: Date;
     score: number;
-    description: string;
     guide: string;
     credits: string;
     global: boolean;
     shipId: number;
     stageId: number;
+    canEdit: boolean;
     
 }
 
@@ -150,7 +191,6 @@ export interface ITeamEditorModel {
     teamUnits: ITeamUnitEditorModel[];
     id: number;
     name: string;
-    description: string;
     credits: string;
     guide: string;
     shipId: number;
@@ -161,6 +201,7 @@ export interface ITeamEditorModel {
 
 export interface ITeamSearchModel extends ISearchModel{
     term: string;
+    submittedBy: string;
     leaderId: number;
     stageId: number;
     myBox: boolean;

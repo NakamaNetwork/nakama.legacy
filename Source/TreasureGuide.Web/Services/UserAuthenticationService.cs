@@ -13,7 +13,7 @@ namespace TreasureGuide.Web.Services
     public interface IAuthExportService
     {
         Task<AccessTokenModel> Get(ClaimsPrincipal user);
-        ProfileModel GetUserInfo(ClaimsPrincipal identity);
+        ProfileAuthExportModel GetUserInfo(ClaimsPrincipal identity);
     }
 
     public class AuthExportService : IAuthExportService
@@ -61,7 +61,7 @@ namespace TreasureGuide.Web.Services
             return response;
         }
 
-        public ProfileModel GetUserInfo(ClaimsPrincipal identity)
+        public ProfileAuthExportModel GetUserInfo(ClaimsPrincipal identity)
         {
             if (!identity.IsAuthenticated())
             {
@@ -69,7 +69,7 @@ namespace TreasureGuide.Web.Services
             }
             var name = identity.FindFirstValue(ClaimTypes.Name);
             var roles = identity.FindAll(ClaimTypes.Role).Select(x => x.Value);
-            var model = new ProfileModel
+            var model = new ProfileAuthExportModel
             {
                 UserName = name,
                 Roles = roles

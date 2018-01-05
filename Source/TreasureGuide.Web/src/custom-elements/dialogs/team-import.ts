@@ -1,7 +1,6 @@
-﻿import { bindable } from 'aurelia-framework';
-import { autoinject } from 'aurelia-framework';
-import { CalcParser } from '../tools/calc-parser';
+﻿import { autoinject, bindable } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
+import { CalcParser } from '../../tools/calc-parser';
 
 @autoinject
 export class TeamImportView {

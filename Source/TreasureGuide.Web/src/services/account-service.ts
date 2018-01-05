@@ -1,11 +1,12 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { IProfileModel } from '../models/imported';
+import { IProfileAuthExportModel } from '../models/imported';
+import { RoleConstants } from '../models/imported';
 
 @autoinject
 export class AccountService {
     private router: Router;
-    public userProfile: IProfileModel;
+    public userProfile: IProfileAuthExportModel;
 
     constructor(router: Router) {
         this.router = router;
@@ -20,7 +21,7 @@ export class AccountService {
         }
     }
 
-    isInRoles(authParams): boolean {
+    isInRoles(authParams, all: boolean = false): boolean {
         if (!authParams || (Array.isArray(authParams) && authParams.length === 0)) {
             return true;
         }
@@ -31,7 +32,11 @@ export class AccountService {
             authParams = authParams.split(',');
         }
         if (Array.isArray(authParams)) {
-            return authParams.some(p => this.isInRole(p.toString()));
+            if (all) {
+                return authParams.every(p => this.isInRole(p.toString()));
+            } else {
+                return authParams.some(p => this.isInRole(p.toString()));
+            }
         }
         return true;
     }
@@ -57,4 +62,10 @@ export class AccountService {
         sessionStorage.clear();
         window.location.href = '/Account/Logout';
     }
+
+    static AllRoles: string[] = [
+        RoleConstants.Administrator,
+        RoleConstants.Moderator,
+        RoleConstants.Contributor
+    ];
 }

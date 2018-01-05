@@ -26,7 +26,6 @@ namespace TreasureGuide.Entities
         }
     
         public virtual DbSet<TeamVote> TeamVotes { get; set; }
-        public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamSocket> TeamSockets { get; set; }
         public virtual DbSet<Round> Rounds { get; set; }
         public virtual DbSet<RoundUnitBehavior> RoundUnitBehaviors { get; set; }
@@ -35,5 +34,8 @@ namespace TreasureGuide.Entities
         public virtual DbSet<Ship> Ships { get; set; }
         public virtual DbSet<Stage> Stages { get; set; }
         public virtual DbSet<TeamUnit> TeamUnits { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<Team> Teams { get; set; }
     }
 }

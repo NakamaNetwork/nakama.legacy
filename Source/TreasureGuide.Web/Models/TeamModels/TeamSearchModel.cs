@@ -3,6 +3,7 @@
     public class TeamSearchModel : SearchModel
     {
         public string Term { get; set; }
+        public string SubmittedBy { get; set; }
         public int? LeaderId { get; set; }
         public int? StageId { get; set; }
 

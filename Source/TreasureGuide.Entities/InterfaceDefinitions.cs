@@ -11,4 +11,6 @@ namespace TreasureGuide.Entities
     public partial class Ship : IIdItem<int> { }
 
     public partial class Round : IIdItem<int> { }
+
+    public partial class UserProfile : IIdItem<string> { }
 }

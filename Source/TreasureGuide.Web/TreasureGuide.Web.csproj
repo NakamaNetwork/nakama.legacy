@@ -9,13 +9,6 @@
     <PropertyGroup>
         <UserSecretsId>aspnet-TreasureGuide.Web-5f05675e-555e-48ff-bb51-5d655998ec83</UserSecretsId>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Compile Remove="src\custom-elements\NewFolder\**" />
-      <Content Remove="src\custom-elements\NewFolder\**" />
-      <EmbeddedResource Remove="src\custom-elements\NewFolder\**" />
-      <None Remove="src\custom-elements\NewFolder\**" />
-    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="6.1.1" />
         <PackageReference Include="EntityFramework" Version="6.1.3" />
@@ -48,6 +41,21 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\profile-model.tst.gen">
+        <CustomToolNamespace>Models\ProfileModels\ProfileModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\profile-models.tst.gen">
+        <CustomToolNamespace>Models\ProfileModels\ProfileModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\role-constants.tst.gen">
+        <CustomToolNamespace>Constants\RoleConstants.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-models.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-search-model.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamSearchModel.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

@@ -2,7 +2,7 @@
 import { autoinject } from 'aurelia-framework';
 import { StageQueryService } from '../services/query/stage-query-service';
 import { DialogService } from 'aurelia-dialog';
-import { StagePicker } from './stage-picker';
+import { StagePicker } from './dialogs/stage-picker';
 
 @autoinject
 @customElement('stage-display')
