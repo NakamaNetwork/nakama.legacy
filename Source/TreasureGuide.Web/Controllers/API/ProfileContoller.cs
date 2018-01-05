@@ -5,8 +5,11 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TreasureGuide.Entities;
+using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
@@ -20,7 +23,7 @@ namespace TreasureGuide.Web.Controllers.API
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProfileContoller(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService, UserManager<ApplicationUser> userManager) : base(dbContext, autoMapper, throttlingService)
+        public ProfileContoller(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) : base(dbContext, autoMapper, throttlingService)
         {
             _userManager = userManager;
         }
@@ -34,6 +37,35 @@ namespace TreasureGuide.Web.Controllers.API
         protected override bool CanPost(string id)
         {
             return base.CanPost(id) || id == User.GetId();
+        }
+
+        protected override async Task<ProfileEditorModel> PreProcess(ProfileEditorModel model)
+        {
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Id == model.Id);
+                if (user == null)
+                {
+                    return model;
+                }
+                var roleList = model.UserRoles.ToList();
+                if (User.GetId() == model.Id)
+                {
+                    roleList.Add(RoleConstants.Administrator);
+                }
+                var currentRoles = (await _userManager.GetRolesAsync(user)).ToList();
+                var remove = currentRoles.Except(roleList).ToList();
+                if (remove.Any())
+                {
+                    await _userManager.RemoveFromRolesAsync(user, remove);
+                }
+                var add = roleList.Except(currentRoles).ToList();
+                if (add.Any())
+                {
+                    await _userManager.AddToRolesAsync(user, add);
+                }
+            }
+            return await base.PreProcess(model);
         }
 
         protected override async Task<IQueryable<UserProfile>> PerformSearch(IQueryable<UserProfile> results, ProfileSearchModel model)

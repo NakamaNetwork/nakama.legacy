@@ -21,7 +21,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
         }
 
-        protected override Team PostProcess(Team entity)
+        protected override async Task<Team> PostProcess(Team entity)
         {
             var userId = User.GetId();
             var now = DateTimeOffset.Now;
@@ -33,7 +33,7 @@ namespace TreasureGuide.Web.Controllers.API
             entity.EditedById = userId;
             entity.EditedDate = now;
             entity.Version = entity.Version + 1;
-            return base.PostProcess(entity);
+            return await base.PostProcess(entity);
         }
 
         protected override bool CanPost(int? id)

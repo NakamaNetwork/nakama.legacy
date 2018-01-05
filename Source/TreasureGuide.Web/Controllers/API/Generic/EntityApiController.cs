@@ -150,7 +150,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<object> CreateOrUpdate(TEditorModel model, TEntity entity = null)
         {
-            model = PreProcess(model);
+            model = await PreProcess(model);
             var newItem = entity == null;
             if (newItem)
             {
@@ -161,7 +161,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 entity = Update(model, entity);
             }
-            entity = PostProcess(entity);
+            entity = await PostProcess(entity);
             await SaveChangesAsync();
             return new IdResponse<TEntityKey> { Id = entity.Id };
         }
@@ -194,12 +194,12 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return entities;
         }
 
-        protected virtual TEditorModel PreProcess(TEditorModel model)
+        protected virtual async Task<TEditorModel> PreProcess(TEditorModel model)
         {
             return model;
         }
 
-        protected virtual TEntity PostProcess(TEntity entity)
+        protected virtual async Task<TEntity> PostProcess(TEntity entity)
         {
             return entity;
         }
