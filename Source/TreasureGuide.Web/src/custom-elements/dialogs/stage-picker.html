@@ -9,19 +9,20 @@
         <ux-dialog-body>
             <form with.bind="searchModel">
                 <div class="row">
-                    <div class="col m4">
+                    <div class="col m8">
                         <label for="termInput">Term</label>
-                        <input id="termInput" type="text" value.two-way="term" />
-                    </div>
-                    <div class="col m4">
+                        <input id="termInput" type="text" value.two-way="term" placeholder="Water Seven..." />
+
                         <label for="checkInput">
                             <input type="checkbox" checked.two-way="global" />
                             Global
                         </label>
                     </div>
                     <div class="col m4">
-                        <label for="typeInput">Type</label>
-                        <input id="typeInput" type="number" value.two-way="type" />
+                        <label for="typeInput">
+                            Stage Type
+                        </label>
+                        <stage-type-picker id="typeInput" stage-type.two-way="type"></stage-type-picker>
                     </div>
                 </div>
                 <div class="row">

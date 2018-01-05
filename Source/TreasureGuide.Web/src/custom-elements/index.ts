@@ -5,6 +5,7 @@
         './search-pager',
         './ship-display',
         './stage-display',
+        './stage-type-picker',
         './team-box',
         './team-display',
         './team-search',
