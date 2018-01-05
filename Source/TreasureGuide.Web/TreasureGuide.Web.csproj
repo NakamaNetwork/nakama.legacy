@@ -55,10 +55,4 @@
     <ItemGroup>
       <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
-    <ItemGroup>
-      <TypeScriptCompile Include="src\custom-elements\unit-class-picker - Copy.ts" />
-      <TypeScriptCompile Include="src\custom-elements\unit-class-picker.ts" />
-      <TypeScriptCompile Include="src\models\search-model.ts" />
-    </ItemGroup>
-
 </Project>
