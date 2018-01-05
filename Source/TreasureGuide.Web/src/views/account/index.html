@@ -8,9 +8,9 @@
         <div class="_floatRight" if.bind="unitId">
             <unit-display unit-id.bind="unitId"></unit-display>
         </div>
-        <div class="row" if.bind="accountNumber">
+        <div class="row" if.bind="friendId">
             <label for="friendId">Friend Id</label>
-            <friend-id-display id="friendId" friend-id.bind="accountNumber" global.bind="global"></friend-id-display>
+            <friend-id-display id="friendId" friend-id.bind="friendId" global.bind="global"></friend-id-display>
         </div>
         <div class="row" if.bind="website">
             <label for="website">Website</label>

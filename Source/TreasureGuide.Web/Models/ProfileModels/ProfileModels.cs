@@ -15,22 +15,25 @@ namespace TreasureGuide.Web.Models.ProfileModels
         public string UserName { get; set; }
         public int? UnitId { get; set; }
     }
-
-    public abstract class ProfileFullModel : ProfileStubModel
+    
+    public class ProfileDetailModel : ProfileStubModel, ICanEdit
     {
-        public decimal? AccountNumber { get; set; }
+        public decimal? FriendId { get; set; }
         public string Website { get; set; }
         public IEnumerable<string> UserRoles { get; set; }
         public bool? Global { get; set; }
-    }
-
-    public class ProfileDetailModel : ProfileFullModel, ICanEdit
-    {
         public bool CanEdit { get; set; }
     }
 
-    public class ProfileEditorModel : ProfileFullModel
+    public class ProfileEditorModel : IIdItem<string>
     {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public int? UnitId { get; set; }
+        public decimal? FriendId { get; set; }
+        public string Website { get; set; }
+        public IEnumerable<string> UserRoles { get; set; }
+        public bool? Global { get; set; }
     }
 
     public class ProfileSearchModel : SearchModel

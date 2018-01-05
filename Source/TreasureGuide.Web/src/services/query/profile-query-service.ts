@@ -33,7 +33,8 @@ export class ProfileEditorModel implements IProfileEditorModel {
     public id: string;
     public userName: string;
     public unitId: number;
-    public accountNumber: number;
+    public friendId: number;
     public website: string;
     public global: boolean;
+    public userRoles: string[];
 }

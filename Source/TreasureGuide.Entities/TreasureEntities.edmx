@@ -130,7 +130,7 @@
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="AccountNumber" Type="numeric" Precision="9" Scale="0" />
+          <Property Name="FriendId" Type="numeric" Precision="9" Scale="0" />
           <Property Name="Website" Type="nvarchar" MaxLength="200" />
           <Property Name="UnitId" Type="int" />
           <Property Name="Global" Type="bit" />
@@ -710,7 +710,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="AccountNumber" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="FriendId" Type="Decimal" Precision="9" Scale="0" />
           <Property Name="Website" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="UnitId" Type="Int32" />
           <Property Name="Global" Type="Boolean" />
@@ -984,7 +984,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="Global" ColumnName="Global" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="Website" ColumnName="Website" />
-                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="FriendId" ColumnName="FriendId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

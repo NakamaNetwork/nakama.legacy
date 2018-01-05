@@ -5,23 +5,28 @@ import { ValidationControllerFactory, ValidationRules, ValidationController } fr
 import { IProfileEditorModel } from '../../models/imported';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { AlertService } from '../../services/alert-service';
+import { AccountService } from '../../services/account-service';
 
 @autoinject
 export class ProfileEditPage {
-    public static nameMinLength = 10;
-    public static nameMaxLength = 250;
     public static websiteMaxLength = 200;
 
     private profileQueryService: ProfileQueryService;
     private router: Router;
     private alert: AlertService;
+    private accountService: AccountService;
 
     public controller: ValidationController;
 
     title = 'Edit Profile';
     @bindable profile: IProfileEditorModel;
 
-    constructor(profileQueryService: ProfileQueryService, router: Router, alertService: AlertService, validFactory: ValidationControllerFactory) {
+    constructor(profileQueryService: ProfileQueryService,
+        router: Router,
+        alertService: AlertService,
+        validFactory: ValidationControllerFactory,
+        accountService: AccountService
+    ) {
         this.controller = validFactory.createForCurrentScope();
         this.controller.addRenderer(new BeauterValidationFormRenderer());
 
@@ -31,6 +36,7 @@ export class ProfileEditPage {
 
         this.profile = new ProfileEditorModel();
         this.controller.addObject(this.profile);
+        this.accountService = accountService;
     }
 
     activate(params) {
@@ -51,7 +57,7 @@ export class ProfileEditPage {
         this.controller.validate().then(x => {
             if (x.valid) {
                 var item = this.profile;
-                item.accountNumber = parseInt(item.accountNumber.toString().replace(/\D/g, ''));
+                item.friendId = item.friendId ? parseInt(item.friendId.toString().replace(/\D/g, '')) : item.friendId;
                 this.profileQueryService.save(item).then(results => {
                     this.alert.success('Successfully updated profile information!');
                     this.router.navigateToRoute('account', { id: results.id });
@@ -70,11 +76,6 @@ export class ProfileEditPage {
         });
     }
 
-    @computedFrom('profile.userName')
-    get nameLength() {
-        return (this.profile.userName || '').length + '/' + ProfileEditPage.nameMaxLength;
-    }
-
     @computedFrom('profile.website')
     get webLength() {
         return (this.profile.website || '').length + '/' + ProfileEditPage.websiteMaxLength;
@@ -82,13 +83,9 @@ export class ProfileEditPage {
 }
 
 ValidationRules
-    .ensure((x: ProfileEditorModel) => x.userName)
-    .required()
-    .minLength(ProfileEditPage.nameMinLength)
-    .maxLength(ProfileEditPage.nameMaxLength)
-    .ensure((x: ProfileEditorModel) => x.accountNumber)
-    .satisfies(x => x.toString().replace(/\D/g, '').length === 9)
-    .withMessage('Friend Id must be a valid 9-digit string!')
+    .ensure((x: ProfileEditorModel) => x.friendId)
+    .satisfies(x => x ? x.toString().replace(/\D/g, '').length === 9 : true)
+    .withMessage('Friend Id must be a valid 9-digit number!')
     .ensure((x: ProfileEditorModel) => x.website)
     .maxLength(ProfileEditPage.websiteMaxLength)
     .on(ProfileEditorModel);

@@ -26,22 +26,20 @@ export interface IProfileStubModel {
     
 }
 
-export interface IProfileDetailModel extends IProfileStubModel{
-    accountNumber: number;
+export interface IProfileFullModel extends IProfileStubModel{
+    friendId: number;
     website: string;
-    roles: string[];
+    userRoles: string[];
     global: boolean;
+    
+}
+
+export interface IProfileDetailModel extends IProfileFullModel{
     canEdit: boolean;
     
 }
 
-export interface IProfileEditorModel {
-    id: string;
-    userName: string;
-    unitId: number;
-    accountNumber: number;
-    website: string;
-    global: boolean;
+export interface IProfileEditorModel extends IProfileFullModel{
     
 }
 

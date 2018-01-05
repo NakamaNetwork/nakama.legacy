@@ -5,11 +5,16 @@
             <div class="row">
                 <fieldset>
                     <legend>User Details</legend>
+                    <div class="form-group">
+                        <label for="accountInput">Friend Id</label>
+                        <input id="accountInput" class="_width100" type="text" value.bind="friendId & validate" />
+                    </div>
 
                     <div class="form-group">
-                        <label for="nameInput">User Name</label>
-                        <input id="nameInput" class="_width100" type="text" value.bind="userName & validate" />
-                        <div class="field-length">${nameLength}</div>
+                        <label for="globalInput">
+                            <input id="globalInput" type="checkbox" checked.bind="global" />
+                            Global
+                        </label>
                     </div>
 
                     <div class="form-group">
@@ -27,24 +32,11 @@
             </div>
             <div class="row">
                 <fieldset>
-                    <legend>Treasure Cruise Info</legend>
-                    <div class="form-group">
-                        <label for="accountInput">Friend Id</label>
-                        <input id="accountInput" class="_width100" type="text" value.bind="accountNumber & validate" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="globalInput">
-                            <input id="globalInput" type="checkbox" checked.bind="global" />
-                            Global
-                        </label>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="row">
-                <fieldset>
                     <legend>Roles</legend>
-                    <ul>
+                    <select auth-req="Administrator" multiple aria-valuemax.bind="userRoles">
+                        <option repeat.for="role of availableRoles" model.bind="role">${role}</option>
+                    </select>
+                    <ul auth-req="roles: Administrator; inverse: true">
                         <li repeat.for="role of userRoles">${role}</li>
                     </ul>
                 </fieldset>

@@ -20,7 +20,7 @@ export class AccountService {
         }
     }
 
-    isInRoles(authParams): boolean {
+    isInRoles(authParams, all: boolean = false): boolean {
         if (!authParams || (Array.isArray(authParams) && authParams.length === 0)) {
             return true;
         }
@@ -31,7 +31,11 @@ export class AccountService {
             authParams = authParams.split(',');
         }
         if (Array.isArray(authParams)) {
-            return authParams.some(p => this.isInRole(p.toString()));
+            if (all) {
+                return authParams.every(p => this.isInRole(p.toString()));
+            } else {
+                return authParams.some(p => this.isInRole(p.toString()));
+            }
         }
         return true;
     }

@@ -24,7 +24,7 @@ namespace TreasureGuide.Entities
     
         public string Id { get; set; }
         public string UserName { get; set; }
-        public Nullable<decimal> AccountNumber { get; set; }
+        public Nullable<decimal> FriendId { get; set; }
         public string Website { get; set; }
         public Nullable<int> UnitId { get; set; }
         public Nullable<bool> Global { get; set; }
