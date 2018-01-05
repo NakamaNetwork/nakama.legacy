@@ -1,0 +1,5 @@
+﻿<template>
+    <select multiple class="_width100" value.bind="unitClass">
+        <option repeat.for="unitClass of unitClasses" model.bind="unitClass.id">${unitClass.name}</option>
+    </select>
+</template>

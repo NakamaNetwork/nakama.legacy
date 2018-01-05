@@ -13,8 +13,8 @@
                         <legend>
                             Search
                         </legend>
-                        <div class="col m6">
-                            <div class="row">
+                        <div class="row">
+                            <div class="col m4">
                                 <label for="termInput">
                                     Unit Name
                                 </label>
@@ -23,52 +23,49 @@
                                        placeholder="Unit name..."
                                        value.two-way="term" />
                             </div>
-                            <div class="row">
-                                <div class="col m4">
-                                    <label for="globalInput">
-                                        <input type="checkbox" checked.two-way="global" />
-                                        <span class="-label-body">Global</span>
-                                    </label>
-                                </div>
-                                <div class="col m4">
-                                    <label for="freeToPlayInput">
-                                        <input type="checkbox" checked.two-way="freeToPlay" />
-                                        <span class="-label-body">F2P</span>
-                                    </label>
-                                </div>
-                                <div class="col m4">
-                                    <label for="myBoxInput">
-                                        <input id="myBoxInput"
-                                               type="checkbox"
-                                               checked.two-way="myBox" />
-                                        <span class="-label-body">My Box</span>
-                                    </label>
-                                </div>
+                            <div class="col m4">
+                                <label for="classInput">
+                                    Unit Class
+                                </label>
+                                <unit-class-picker id="classInput" unit-class.two-way="classes"></unit-class-picker>
+                            </div>
+                            <div class="col m4">
+                                <label for="typeInput">
+                                    Unit Type
+                                </label>
+                                <input id="typeInput"
+                                       placeholder="Type..."
+                                       type="number"
+                                       value.two-way="types" />
+                                <label for="forceTypeInput">
+                                    <input id="forceTypeInput"
+                                           type="checkbox"
+                                           checked.two-way="forceTypes" />
+                                    <span class="-label-body">Exclude Others</span>
+                                </label>
                             </div>
                         </div>
-                        <div class="col m3">
-                            <label for="classInput">
-                                Unit Class
-                            </label>
-                            <input id="classInput"
-                                   type="number"
-                                   placeholder="Class..."
-                                   md-value.two-way="classes" />
-                        </div>
-                        <div class="col m3">
-                            <label for="typeInput">
-                                Unit Type
-                            </label>
-                            <input id="typeInput"
-                                   placeholder="Type..."
-                                   type="number"
-                                   value.two-way="types" />
-                            <label for="forceTypeInput">
-                                <input id="forceTypeInput"
-                                       type="checkbox"
-                                       checked.two-way="forceTypes" />
-                                <span class="-label-body">Exclude Others</span>
-                            </label>
+                        <div class="row">
+                            <div class="col m4">
+                                <label for="globalInput">
+                                    <input type="checkbox" checked.two-way="global" />
+                                    <span class="-label-body">Global</span>
+                                </label>
+                            </div>
+                            <div class="col m4">
+                                <label for="freeToPlayInput">
+                                    <input type="checkbox" checked.two-way="freeToPlay" />
+                                    <span class="-label-body">F2P</span>
+                                </label>
+                            </div>
+                            <div class="col m4">
+                                <label for="myBoxInput">
+                                    <input id="myBoxInput"
+                                           type="checkbox"
+                                           checked.two-way="myBox" />
+                                    <span class="-label-body">My Box</span>
+                                </label>
+                            </div>
                         </div>
                         <div class="row">
                             <button class="button _floatRight" click.trigger="reset()">Reset</button>
