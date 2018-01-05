@@ -1,5 +1,11 @@
 <template>
     <div class="score-container" class.bind="scoreClass">
+        <a href="#" if.bind="votable" auth-req click.delegate="thumbsDown()" class="thumbs-down">
+            <i class="fa fa-fw" class.bind="thumbsDownIcon"></i>
+        </a>
         <span>${score}</span>
+        <a href="#" if.bind="votable" auth-req click.delegate="thumbsUp()" class="thumbs-up">
+            <i class="fa fa-fw" class.bind="thumbsUpIcon"></i>
+        </a>
     </div>
 </template>

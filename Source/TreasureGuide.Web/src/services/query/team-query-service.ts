@@ -1,7 +1,7 @@
-﻿import { autoinject, computedFrom } from 'aurelia-framework';
+﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { ITeamEditorModel, ITeamSearchModel } from '../../models/imported';
+import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 
 @autoinject
@@ -13,6 +13,10 @@ export class TeamQueryService extends SearchableQueryService {
     save(model: TeamEditorModel, id?): Promise<any> {
         model.teamUnits = model.teamUnits.filter(x => x.unitId);
         return super.save(model, id);
+    }
+
+    vote(model: ITeamVoteModel): Promise<number> {
+        return this.http.post(this.buildAddress('vote'), model);
     }
 }
 

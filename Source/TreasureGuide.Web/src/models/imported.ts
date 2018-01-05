@@ -158,6 +158,8 @@ export interface ITeamStubModel {
     name: string;
     submittedById: string;
     submittedByName: string;
+    submittedByUnitId: number;
+    editedDate: Date;
     score: number;
     global: boolean;
     shipId: number;
@@ -172,11 +174,10 @@ export interface ITeamDetailModel {
     name: string;
     submittedById: string;
     submittedByName: string;
-    submittedDate: Date;
-    editedById: string;
-    editedByName: string;
+    submittedByUnitId: number;
     editedDate: Date;
     score: number;
+    myVote: number;
     guide: string;
     credits: string;
     global: boolean;
@@ -249,6 +250,13 @@ export interface ITeamUnitEditorModel {
     position: number;
     specialLevel: number;
     sub: boolean;
+    
+}
+
+
+export interface ITeamVoteModel {
+    teamId: number;
+    up: boolean;
     
 }
 

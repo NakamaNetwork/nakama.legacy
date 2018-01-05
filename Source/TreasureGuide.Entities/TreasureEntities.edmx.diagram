@@ -29,7 +29,7 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" />
-        <EntityTypeShape EntityType="tcdbModel.TeamVote" Width="1.5" PointX="7.25" PointY="5.625" />
+        <EntityTypeShape EntityType="tcdbModel.TeamVote" Width="1.5" PointX="7.25" PointY="5.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles" />
         </Diagram>

@@ -4,84 +4,34 @@ body {
     background-color: $background-color;
 }
 
-._primary {
-    border-color: $primary-color !important;
-    background-color: $primary-color !important;
+@mixin color($name, $color) {
+    ._#{$name} {
+        border-color: darken($color, 10%) !important;
+        background-color: $color !important;
+    }
+
+    ._#{$name}Text {
+        color: darken($color, 10%);
+    }
 }
 
-.primary-text {
-    color: $primary-color;
-}
-
-._dark {
-    border-color: $dark-color !important;
-    background-color: $dark-color !important;
-}
-
-.dark-text {
-    color: $dark-color;
-}
-
-._light {
-    border-color: $light-color !important;
-    background-color: $light-color !important;
-}
-
-.light-text {
-    color: $light-color;
-}
-
-._danger {
-    border-color: $danger-color !important;
-    background-color: $danger-color !important;
-}
-
-.danger-text {
-    color: $danger-color;
-}
-
-._success {
-    border-color: $success-color !important;
-    background-color: $success-color !important;
-}
-
-.success-text {
-    color: $danger-color;
-}
-
-
-._warning {
-    border-color: $warning-color !important;
-    background-color: $warning-color !important;
-}
-
-.warning-text {
-    color: $warning-color;
-}
-
-._active {
-    border-color: $active-color !important;
-    background-color: $active-color !important;
-}
-
-.active-text {
-    color: $active-color;
-}
-
-._info {
-    border-color: $info-color !important;
-    background-color: $info-color !important;
-}
-
-.info-text {
-    color: $info-color;
-}
+@include color("active",$active-color);
+@include color("background",$background-color);
+@include color("danger",$danger-color);
+@include color("dark",$dark-color);
+@include color("info",$info-color);
+@include color("light",$light-color);
+@include color("primary",$primary-color);
+@include color("success",$success-color);
+@include color("warning",$warning-color);
+@include color("white",$white-color);
+@include color("black",$black-color);
 
 a {
-    @extend .primary-text;
+    @extend ._primaryText;
 
     &:hover {
-        @extend .primary-text;
+        @extend ._primaryText;
         opacity: 0.6;
     }
 }
@@ -89,10 +39,10 @@ a {
 
 ._dark {
     a {
-        @extend .light-text;
+        @extend ._lightText;
 
         &:hover {
-            @extend .light-text;
+            @extend ._lightText;
         }
     }
 }

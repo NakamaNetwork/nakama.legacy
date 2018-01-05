@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
-using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Helpers;
+using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
@@ -44,8 +44,11 @@ namespace TreasureGuide.Web.Controllers.API
             if (detail != null)
             {
                 var userId = User.GetId();
-                var vote = await DbContext.TeamVotes.SingleOrDefaultAsync(x => x.TeamId == id && x.UserId == userId);
-                detail.MyVote = vote?.Value ?? 0;
+                if (userId != null)
+                {
+                    var vote = await DbContext.TeamVotes.SingleOrDefaultAsync(x => x.TeamId == id && x.UserId == userId);
+                    detail.MyVote = vote?.Value ?? 0;
+                }
             }
             return await base.SingleGetTransform(single, id);
         }
@@ -156,11 +159,13 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
             }
+            var teamId = id ?? model.TeamId;
             var userId = User.GetId();
             var vote = await DbContext.TeamVotes.SingleOrDefaultAsync(x => x.TeamId == model.TeamId && x.UserId == userId);
             var exists = vote != null;
             vote = vote ?? new TeamVote
             {
+                TeamId = teamId,
                 UserId = userId
             };
             var value = model.Up.HasValue ? (model.Up ?? true) ? 1 : -1 : 0;
@@ -177,7 +182,8 @@ namespace TreasureGuide.Web.Controllers.API
                 DbContext.TeamVotes.Remove(vote);
             }
             await DbContext.SaveChangesAsync();
-            return Ok(value);
+            var returnValue = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
+            return Ok(returnValue);
         }
     }
 }

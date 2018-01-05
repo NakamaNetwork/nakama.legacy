@@ -180,23 +180,32 @@ team-box {
 }
 
 .score-text {
-    .positive {
-        @extend .success-text;
+    margin: 1px;
+
+    span {
+        @extend ._alignCenter;
+        min-width: 24px;
+        display: inline-block;
     }
 
-    .negative {
-        @extend .danger-text;
+    &.positive {
+        @extend ._successText;
     }
 
-    .my-vote {
+    &.negative {
+        @extend ._dangerText;
+    }
+
+    &.my-vote {
         border: 2px solid;
+        margin: 0px;
     }
 
-    .my-positive {
-        @extend ._success;
+    a {
+        @extend ._blackText;
     }
 
-    .my-negative {
-        @extend ._danger;
+    a:hover {
+        @extend ._blackText;
     }
 }

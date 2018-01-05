@@ -18,7 +18,7 @@ input.input-validation-error {
 }
 
 .field-validation-error {
-    @extend .danger-text;
+    @extend ._dangerText;
     margin-left: 0.5em;
 }
 
@@ -43,6 +43,19 @@ select[multiple] {
     position: fixed;
     z-index: 99999;
     margin: 20px;
+}
+
+.alert {
+    margin-left: auto;
+    margin-right: auto;
+
+    @media #{$medium-and-down} {
+        width: 90%;
+    }
+
+    @media #{$large-and-up} {
+        width: 75%;
+    }
 }
 
 

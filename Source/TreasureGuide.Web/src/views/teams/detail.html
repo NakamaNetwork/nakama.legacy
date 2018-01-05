@@ -2,15 +2,20 @@
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading" with.bind="team">
         <h1>${name}</h1>
-        <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
-            <i class="fa fa-fw fa-pencil"></i>
-            Edit Team
-        </a>
+        <div class="row" if.bind="canEdit">
+            <a class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
+                <i class="fa fa-fw fa-pencil"></i>
+                Edit Team
+            </a>
+        </div>
         <div class="row" if.bind="stageId">
             <h2>Stage</h2>
             <stage-display stage-id.bind="stageId"></stage-display>
         </div>
         <div class="row">
+            <div class="_floatRight">
+                <score-display team-id.bind="id" score.bind="score" my-vote.two-way="myVote" votable="true"></score-display>
+            </div>
             <h2>Team</h2>
             <div class="_alignCenter">
                 <team-display team.bind="teamUnits"></team-display>
