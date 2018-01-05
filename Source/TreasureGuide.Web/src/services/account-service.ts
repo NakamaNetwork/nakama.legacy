@@ -1,6 +1,7 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { IProfileAuthExportModel } from '../models/imported';
+import { RoleConstants } from '../models/imported';
 
 @autoinject
 export class AccountService {
@@ -61,4 +62,10 @@ export class AccountService {
         sessionStorage.clear();
         window.location.href = '/Account/Logout';
     }
+
+    static AllRoles: string[] = [
+        RoleConstants.Administrator,
+        RoleConstants.Moderator,
+        RoleConstants.Contributor
+    ];
 }

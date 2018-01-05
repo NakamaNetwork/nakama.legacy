@@ -6,6 +6,8 @@ import { IProfileEditorModel } from '../../models/imported';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { AlertService } from '../../services/alert-service';
 import { AccountService } from '../../services/account-service';
+import { DialogService } from 'aurelia-dialog';
+import { AlertDialog } from '../../custom-elements/dialogs/alert-dialog';
 
 @autoinject
 export class ProfileEditPage {
@@ -15,8 +17,11 @@ export class ProfileEditPage {
     private router: Router;
     private alert: AlertService;
     private accountService: AccountService;
+    private dialogService: DialogService;
 
     public controller: ValidationController;
+
+    private initialRoles: string;
 
     title = 'Edit Profile';
     @bindable profile: IProfileEditorModel;
@@ -25,18 +30,20 @@ export class ProfileEditPage {
         router: Router,
         alertService: AlertService,
         validFactory: ValidationControllerFactory,
-        accountService: AccountService
+        accountService: AccountService,
+        dialogService: DialogService
     ) {
         this.controller = validFactory.createForCurrentScope();
         this.controller.addRenderer(new BeauterValidationFormRenderer());
 
         this.profileQueryService = profileQueryService;
+        this.accountService = accountService;
+        this.dialogService = dialogService;
         this.router = router;
         this.alert = alertService;
 
         this.profile = new ProfileEditorModel();
         this.controller.addObject(this.profile);
-        this.accountService = accountService;
     }
 
     activate(params) {
@@ -46,6 +53,7 @@ export class ProfileEditPage {
                 this.title = 'Edit Profile';
                 this.profile = Object.assign(this.profile, result);
                 this.controller.validate();
+                this.initialRoles = JSON.stringify(this.profile.userRoles);
             }).catch(error => {
                 this.router.navigateToRoute('error', { error: 'The requested profile could not be found for editing. It may not exist or you may not have permission to edit it.' });
             });
@@ -56,18 +64,17 @@ export class ProfileEditPage {
     submit() {
         this.controller.validate().then(x => {
             if (x.valid) {
-                var item = this.profile;
-                item.friendId = item.friendId ? parseInt(item.friendId.toString().replace(/\D/g, '')) : item.friendId;
-                this.profileQueryService.save(item).then(results => {
-                    this.alert.success('Successfully updated profile information!');
-                    this.router.navigateToRoute('account', { id: results.id });
-                }).catch(response => {
-                    return response.text().then(msg => {
-                        this.alert.danger(msg);
-                    }).catch(error => {
-                        this.alert.danger('An error has occurred. Please try again in a few moments.');
+                var rolesChanged = this.initialRoles != JSON.stringify(this.profile.userRoles);
+                if (rolesChanged) {
+                    var message = 'Are you sure you want to set ' + this.profile.userName + '\'s roles to ' + this.profile.userRoles.join(', ') + '?';
+                    this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
+                        if (!x.wasCancelled) {
+                            this.doSubmit();
+                        }
                     });
-                });
+                } else {
+                    this.doSubmit();
+                }
             } else {
                 x.results.filter(y => !y.valid && y.message).forEach(y => {
                     this.alert.danger(y.message);
@@ -76,10 +83,27 @@ export class ProfileEditPage {
         });
     }
 
+    doSubmit() {
+        var item = this.profile;
+        item.friendId = item.friendId ? parseInt(item.friendId.toString().replace(/\D/g, '')) : item.friendId;
+        this.profileQueryService.save(item).then(results => {
+            this.alert.success('Successfully updated profile information!');
+            this.router.navigateToRoute('account', { id: results.id });
+        }).catch(response => {
+            return response.text().then(msg => {
+                this.alert.danger(msg);
+            }).catch(error => {
+                this.alert.danger('An error has occurred. Please try again in a few moments.');
+            });
+        });
+    }
+
     @computedFrom('profile.website')
     get webLength() {
         return (this.profile.website || '').length + '/' + ProfileEditPage.websiteMaxLength;
     }
+
+    allRoles = AccountService.AllRoles;
 }
 
 ValidationRules

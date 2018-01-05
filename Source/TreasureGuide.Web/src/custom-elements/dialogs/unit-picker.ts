@@ -1,8 +1,7 @@
-﻿import { bindable } from 'aurelia-framework';
-import { autoinject } from 'aurelia-framework';
-import { UnitQueryService, UnitSearchModel } from '../services/query/unit-query-service';
+﻿import { autoinject, bindable } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { BindingEngine } from 'aurelia-binding';
+import { UnitQueryService, UnitSearchModel } from '../../services/query/unit-query-service';
 
 @autoinject
 export class UnitPicker {
@@ -21,7 +20,6 @@ export class UnitPicker {
 
     constructor(unitQueryService: UnitQueryService, controller: DialogController, bindingEngine: BindingEngine) {
         this.controller = controller;
-        this.controller.settings.centerHorizontalOnly = true;
         this.unitQueryService = unitQueryService;
 
         bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {

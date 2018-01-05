@@ -22,7 +22,19 @@ a {
     padding: 0 3px;
 }
 
-b ux-dialog-container {
+.dialog-header-content {
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .modal-action {
+        margin-top: 6px;
+        margin-right: -20px;
+    }
+}
+
+ux-dialog-container {
     & > div {
         //  @media #{$medium-and-down} {
         padding: 2px;
@@ -64,12 +76,6 @@ input[type='button'] {
 
 ._flat {
     border: none !important;
-}
-
-ux-dialog-header {
-    .modal-action {
-        right: -20px;
-    }
 }
 
 ux-dialog-footer {

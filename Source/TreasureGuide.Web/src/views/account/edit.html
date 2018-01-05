@@ -33,8 +33,8 @@
             <div class="row">
                 <fieldset>
                     <legend>Roles</legend>
-                    <select auth-req="Administrator" multiple aria-valuemax.bind="userRoles">
-                        <option repeat.for="role of availableRoles" model.bind="role">${role}</option>
+                    <select auth-req="Administrator" class="_width100" multiple value.bind="userRoles">
+                        <option repeat.for="role of allRoles" model.bind="role">${role}</option>
                     </select>
                     <ul auth-req="roles: Administrator; inverse: true">
                         <li repeat.for="role of userRoles">${role}</li>

@@ -18,6 +18,10 @@ input, textarea, select, fieldset {
     margin-bottom: 0;
 }
 
+select[multiple] {
+    min-height: 112px;
+}
+
 .field-length {
     @extend ._floatRight;
     font-size: 0.8em;

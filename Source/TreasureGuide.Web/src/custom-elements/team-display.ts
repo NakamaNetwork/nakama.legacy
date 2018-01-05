@@ -1,7 +1,7 @@
 ﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
-import { TeamImportView } from './team-import';
+import { TeamImportView } from './dialogs/team-import';
 
 @customElement('team-display')
 @autoinject
