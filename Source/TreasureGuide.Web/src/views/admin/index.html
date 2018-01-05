@@ -29,7 +29,7 @@
         <loading-area if.bind="loading"></loading-area>
         <div if.bind="!loading">
             <div class="row">
-                <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
+                <search-pager search-model.bind="searchModel"></search-pager>
             </div>
             <div class="row" if.bind="profiles.length > 0">
                 <table class="_width100">
@@ -58,7 +58,7 @@
                 </table>
             </div>
             <div class="row">
-                <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+                <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
             </div>
         </div>
     </div>

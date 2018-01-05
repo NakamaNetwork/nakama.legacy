@@ -11,7 +11,7 @@
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading">
         <div class="row">
-            <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
+            <search-pager search-model.bind="searchModel"></search-pager>
         </div>
         <div class="row team-collection" if.bind="teams.length > 0">
             <div class=" col m6" repeat.for="team of teams">
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row">
-            <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+            <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
         </div>
     </div>
 </template>

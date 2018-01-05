@@ -11,9 +11,6 @@ export class ShipPicker {
     ship;
     ships: any[];
 
-    resultCount = 0;
-    pages = 0;
-
     constructor(shipQueryService: ShipQueryService, controller: DialogController) {
         this.controller = controller;
 

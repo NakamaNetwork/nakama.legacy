@@ -11,10 +11,7 @@ export class StagePicker {
 
     stage;
     stages: any[];
-
-    resultCount = 0;
-    pages = 0;
-
+    
     searchModel = new StageSearchModel().getCached();
     loading;
 
@@ -38,8 +35,7 @@ export class StagePicker {
             this.loading = true;
             this.stageQueryService.search(payload).then(x => {
                 this.stages = x.results;
-                this.resultCount = x.totalResults;
-                this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                this.searchModel.totalResults = x.totalResults;
                 this.loading = false;
             }).catch((e) => {
                 this.loading = false;

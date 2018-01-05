@@ -25,5 +25,25 @@
                 </ul>
             </fieldset>
         </div>
+
+        <div class="row">
+            <fieldset>
+                <legend>Teams</legend>
+                <loading-area if.bind="loadingTeams"></loading-area>
+                <div if.bind="!loadingTeams">
+                    <div class="row">
+                        <search-pager search-model.bind="teamSearchModel"></search-pager>
+                    </div>
+                    <div class="row team-collection" if.bind="teams.length > 0">
+                        <div class=" col m6" repeat.for="team of teams">
+                            <team-box team.bind="team"></team-box>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <search-pager search-model.bind="teamSearchModel" bottom="true"></search-pager>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
     </div>
 </template>

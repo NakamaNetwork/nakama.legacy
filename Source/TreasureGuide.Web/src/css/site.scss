@@ -9,6 +9,14 @@ body {
     overflow-y: scroll;
 }
 
+.scrollbar-measure {
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: -9999px;
+}
+
 .aurelia-wrapper {
     display: flex;
     min-height: 100vh;
@@ -42,6 +50,8 @@ a {
 }
 
 ux-dialog-container {
+    overflow-y: scroll;
+
     & > div {
         @media #{$medium-and-down} {
             padding: 2px;

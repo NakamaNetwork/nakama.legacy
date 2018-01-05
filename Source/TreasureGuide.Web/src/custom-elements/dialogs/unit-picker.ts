@@ -12,9 +12,6 @@ export class UnitPicker {
     unit;
     units: any[];
 
-    resultCount = 0;
-    pages = 0;
-
     searchModel = new UnitSearchModel().getCached();
     loading;
 
@@ -41,8 +38,7 @@ export class UnitPicker {
             this.loading = true;
             this.unitQueryService.search(payload).then(x => {
                 this.units = x.results;
-                this.resultCount = x.totalResults;
-                this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                this.searchModel.totalResults = x.totalResults;
                 this.loading = false;
             }).catch((e) => {
                 this.loading = false;

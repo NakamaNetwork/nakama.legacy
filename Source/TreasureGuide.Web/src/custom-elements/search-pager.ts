@@ -1,36 +1,29 @@
 import { bindable, computedFrom, customElement } from 'aurelia-framework';
-import { ISearchModel } from '../models/imported';
+import { SearchModel } from '../models/search-model';
 
 @customElement('search-pager')
 export class SearchPager {
-    @bindable searchModel: ISearchModel;
-    @bindable resultCount = 0;
+    @bindable searchModel: SearchModel;
     @bindable bottom = false;
     pageSizes = [10, 25, 50, 100];
 
-    @computedFrom('searchModel.page', 'searchModel.pageSize', 'resultCount')
+    @computedFrom('searchModel.page', 'searchModel.pageSize', 'searchModel.totalResults')
     get startIndex() {
         return ((this.searchModel.page - 1) * this.searchModel.pageSize) + 1;
     }
 
-    @computedFrom('searchModel.page', 'searchModel.pageSize', 'resultCount')
+    @computedFrom('searchModel.page', 'searchModel.pageSize', 'searchModel.totalResults')
     get endIndex() {
-        return Math.min(this.resultCount, this.searchModel.page * this.searchModel.pageSize);
+        return Math.min(this.searchModel.totalResults, this.searchModel.page * this.searchModel.pageSize);
     }
 
-    @computedFrom('resultCount')
+    @computedFrom('searchModel.totalResults')
     get hasResults() {
-        return this.resultCount > 0;
+        return this.searchModel.totalResults > 0;
     }
 
-    @computedFrom('searchModel.pageSize', 'resultCount')
+    @computedFrom('searchModel.pageSize', 'searchModel.totalResults')
     get hasPages() {
-        return this.resultCount > this.searchModel.pageSize;
-    }
-
-    resultCountChanged() {
-        if (this.startIndex > this.endIndex && this.resultCount !== 0) {
-            this.searchModel.page = 1;
-        }
+        return this.searchModel.totalResults > this.searchModel.pageSize;
     }
 }

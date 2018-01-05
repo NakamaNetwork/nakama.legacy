@@ -1,4 +1,24 @@
 ﻿<!-- Style Sheets-->
 <link rel="stylesheet" href="~/css/site.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<!-- Scrollbar Measurer for Modal Indents -->
+<script id="scroll_measurer" type="text/javascript">
+    var scrollDiv = document.createElement("div");
+    scrollDiv.className = "scrollbar-measure";
+    document.body.appendChild(scrollDiv);
+
+    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+    document.body.removeChild(scrollDiv);
+
+    var node = document.createElement('style');
+    node.innerHTML = 'body.ux-dialog-open{ margin-right: ' + scrollbarWidth + 'px;}';
+    document.body.appendChild(node);
+
+    // SUICIDE
+    var currentScript;
+    currentScript = document.currentScript || document.scripts[document.scripts.length - 1];
+    currentScript.parentNode.removeChild(currentScript);
+</script>

@@ -31,7 +31,7 @@
             <loading-area if.bind="loading"></loading-area>
             <div if.bind="!loading">
                 <div class="row">
-                    <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
+                    <search-pager search-model.bind="searchModel"></search-pager>
                 </div>
                 <div class="row" if.bind="stages.length > 0">
                     <ul class="listnav">
@@ -45,7 +45,7 @@
                     </ul>
                 </div>
                 <div class="row">
-                    <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+                    <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
                 </div>
             </div>
         </ux-dialog-body>

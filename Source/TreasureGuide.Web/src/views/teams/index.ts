@@ -9,9 +9,6 @@ export class TeamIndexPage {
     title = 'Teams';
     teams = [];
 
-    resultCount = 0;
-    pages = 0;
-
     searchModel = new TeamSearchModel().getCached();
     loading;
 
@@ -29,8 +26,7 @@ export class TeamIndexPage {
             this.loading = true;
             this.teamQueryService.search(payload).then(x => {
                 this.teams = x.results;
-                this.resultCount = x.totalResults;
-                this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                this.searchModel.totalResults = x.totalResults;
                 this.loading = false;
             }).catch((e) => {
                 this.loading = false;

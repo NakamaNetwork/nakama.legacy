@@ -17,10 +17,7 @@ export class AdminPage {
     profileQueryService;
 
     profiles = [];
-
-    resultCount = 0;
-    pages = 0;
-
+    
     searchModel = new ProfileSearchModel().getCached();
     loading;
 
@@ -43,8 +40,7 @@ export class AdminPage {
             this.loading = true;
             this.profileQueryService.search(payload).then(x => {
                 this.profiles = x.results;
-                this.resultCount = x.totalResults;
-                this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                this.searchModel.totalResults = x.totalResults;
                 this.loading = false;
             }).catch((e) => {
                 this.loading = false;
