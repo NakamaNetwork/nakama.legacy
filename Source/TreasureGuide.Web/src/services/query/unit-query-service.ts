@@ -12,16 +12,14 @@ export class UnitQueryService extends SearchableQueryService {
 
     getIcon(unitId: number) {
         if (unitId) {
-            var id = ('0000' + unitId).slice(-4).replace(/(057[54])/, '0$1');
+            var id = ('0000' + unitId).slice(-4).replace(/(057[54])/, '0$1'); // missing aokiji image
+            if (id == '0742')
+                return 'https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png';
+            if (id == '1923')
+                return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5009.png';
+            if (id == '1924')
+                return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5010.png';
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
-        }
-        return null;
-    }
-
-    getPortrait(unitId: number) {
-        if (unitId) {
-            var id = ('0000' + unitId).slice(-4).replace(/(057[54])/, '0$1');
-            return 'https://onepiece-treasurecruise.com/wp-content/uploads/c' + id + '.png';
         }
         return null;
     }

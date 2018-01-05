@@ -64,16 +64,6 @@ export class UnitPicker {
     }
 
     getIcon(id: number) {
-        if (id) {
-            return this.unitQueryService.getIcon(id);
-        }
-        return null;
-    }
-
-    getPortrait(id: number) {
-        if (id) {
-            return this.unitQueryService.getPortrait(id);
-        }
-        return null;
+        return this.unitQueryService.getIcon(id);
     }
 }

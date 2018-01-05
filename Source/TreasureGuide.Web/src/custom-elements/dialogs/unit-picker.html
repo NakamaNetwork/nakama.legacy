@@ -77,9 +77,7 @@
                 </div>
                 <div class="row _alignCenter">
                     <div class="unit-collection">
-                        <button repeat.for="unit of units" class="unit-button" size="medium" click.delegate="clicked(unit.id)">
-                            <img src.bind="getIcon(unit.id)" />
-                        </button>
+                        <unit-display repeat.for="unit of units" unit-id.bind="unit.id" size="medium" click.delegate="clicked(unit.id)"></unit-display>
                     </div>
                 </div>
                 <div class="row">

@@ -6,6 +6,8 @@ import { ITeamEditorModel } from '../../models/imported';
 import { TeamEditorModel } from '../../services/query/team-query-service';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { AlertService } from '../../services/alert-service';
+import { TeamImportView } from '../../custom-elements/dialogs/team-import';
+import { DialogService } from 'aurelia-dialog';
 
 @autoinject
 export class TeamEditPage {
@@ -17,15 +19,22 @@ export class TeamEditPage {
     private teamQueryService: TeamQueryService;
     private router: Router;
     private alert: AlertService;
+    private dialogService: DialogService;
 
     public controller: ValidationController;
 
     title = 'Create Team';
     @bindable team: ITeamEditorModel;
 
-    constructor(teamQueryService: TeamQueryService, router: Router, alertService: AlertService, validFactory: ValidationControllerFactory) {
+    constructor(teamQueryService: TeamQueryService,
+        router: Router,
+        alertService: AlertService,
+        dialogService: DialogService,
+        validFactory: ValidationControllerFactory
+    ) {
         this.controller = validFactory.createForCurrentScope();
         this.controller.addRenderer(new BeauterValidationFormRenderer());
+        this.dialogService = dialogService;
 
         this.teamQueryService = teamQueryService;
         this.router = router;
@@ -48,6 +57,15 @@ export class TeamEditPage {
         }
         this.controller.validate();
     }
+
+    openImport() {
+        this.dialogService.open({ viewModel: TeamImportView, lock: true }).whenClosed(result => {
+            if (!result.wasCancelled) {
+                this.team.teamUnits = result.output.team;
+                this.team.shipId = result.output.ship;
+            }
+        });
+    };
 
     submit() {
         this.controller.validate().then(x => {

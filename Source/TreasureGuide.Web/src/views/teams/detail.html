@@ -12,9 +12,8 @@
         <div class="row">
             <h2>Team</h2>
             <div class="_alignCenter">
-                <team-display team.bind="teamUnits"
-                              ship.bind="shipId">
-                </team-display>
+                <team-display team.bind="teamUnits"></team-display>
+                <ship-display ship-id.two-way="shipId"></ship-display>
             </div>
         </div>
         <div class="row" if.bind="teamSockets && teamSockets.length > 0">

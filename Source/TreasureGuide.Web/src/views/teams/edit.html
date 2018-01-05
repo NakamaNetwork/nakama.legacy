@@ -23,11 +23,13 @@
             <fieldset>
                 <legend>Units and Sockets</legend>
                 <div class="form-group _alignCenter">
-                    <team-display team.two-way="teamUnits"
-                                  ship.two-way="shipId"
-                                  editable.bind="true"></team-display>
-                </div>
-                <div class="form-group _alignCenter">
+                    <team-display team.two-way="teamUnits" editable="true"></team-display>
+                    <ship-display ship-id.two-way="shipId" editable="true"></ship-display>
+                    <br />
+                    <button class="_xsmall _active" click.delegate="openImport()">
+                        <i class="fa fa-fw fa-cloud-download"></i>
+                        Import from OPTC-DB
+                    </button>
                     <socket-picker sockets.two-way="teamSockets"></socket-picker>
                 </div>
             </fieldset>

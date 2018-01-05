@@ -48,7 +48,7 @@ export class UnitDisplay {
     @computedFrom('unitId', 'imageUrl')
     get backgroundStyle() {
         if (this.unitId) {
-            return 'background-image: url(\'' + this.imageUrl + '\')';
+            return 'background-image: url(\'' + this.imageUrl + '\'), url(\'https://onepiece-treasurecruise.com/wp-content/themes/onepiece-treasurecruise/images/noimage.png\')';
         }
         return '';
     }

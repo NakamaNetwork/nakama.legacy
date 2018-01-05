@@ -1,21 +1,16 @@
 ﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-framework';
-import { DialogService } from 'aurelia-dialog';
-import { TeamImportView } from './dialogs/team-import';
 
 @customElement('team-display')
 @autoinject
 export class TeamDisplay {
     private element: Element;
-    private dialogService: DialogService;
 
     @bindable team: any[] = [];
-    @bindable ship: number = 0;
     @bindable editable = false;
 
-    constructor(element: Element, dialogService: DialogService) {
+    constructor(element: Element) {
         this.element = element;
-        this.dialogService = dialogService;
     }
 
     @computedFrom('team')
@@ -39,17 +34,6 @@ export class TeamDisplay {
         }
         return slots;
     }
-
-    openImport() {
-        if (this.editable) {
-            this.dialogService.open({ viewModel: TeamImportView, lock: true }).whenClosed(result => {
-                if (!result.wasCancelled) {
-                    this.team = result.output.team;
-                    this.ship = result.output.ship;
-                }
-            });
-        }
-    };
 
     private getSlot(id: number) {
         return this.team.filter(unit => {
