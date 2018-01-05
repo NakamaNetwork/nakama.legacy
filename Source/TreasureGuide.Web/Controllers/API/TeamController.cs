@@ -56,6 +56,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             results = SearchStage(results, model.StageId);
             results = SearchTerm(results, model.Term);
+            results = SearchSubmitter(results, model.SubmittedBy);
             results = SearchLead(results, model.LeaderId);
             results = SearchGlobal(results, model.Global);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
@@ -68,6 +69,15 @@ namespace TreasureGuide.Web.Controllers.API
             if (!String.IsNullOrEmpty(term))
             {
                 teams = teams.Where(x => x.Name.Contains(term));
+            }
+            return teams;
+        }
+
+        private IQueryable<Team> SearchSubmitter(IQueryable<Team> teams, string term)
+        {
+            if (!String.IsNullOrEmpty(term))
+            {
+                teams = teams.Where(x => x.SubmittingUser.UserName.Contains(term));
             }
             return teams;
         }

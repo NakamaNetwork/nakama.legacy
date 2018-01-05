@@ -17,6 +17,7 @@ export class TeamQueryService extends SearchableQueryService {
 
 export class TeamSearchModel implements ITeamSearchModel {
     term: string;
+    submittedBy: string;
     leaderId: number;
     stageId: number;
     myBox: boolean = false;
@@ -25,10 +26,11 @@ export class TeamSearchModel implements ITeamSearchModel {
     page: number = 1;
     pageSize: number = 25;
 
-    @computedFrom('term', 'leaderId', 'stageId', 'myBox', 'global', 'freeToPlay', 'page', 'pageSize')
+    @computedFrom('term', 'submittedBy', 'leaderId', 'stageId', 'myBox', 'global', 'freeToPlay', 'page', 'pageSize')
     get payload() {
         var text = JSON.stringify({
             term: this.term,
+            submittedBy: this.submittedBy,
             leaderId: this.leaderId,
             stageId: this.stageId,
             myBox: this.myBox,

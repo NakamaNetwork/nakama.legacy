@@ -14,8 +14,10 @@ namespace TreasureGuide.Web.Models.ProfileModels
         public string Id { get; set; }
         public string UserName { get; set; }
         public int? UnitId { get; set; }
+
+        public int TeamCount { get; set; }
     }
-    
+
     public class ProfileDetailModel : ProfileStubModel, ICanEdit
     {
         public decimal? FriendId { get; set; }

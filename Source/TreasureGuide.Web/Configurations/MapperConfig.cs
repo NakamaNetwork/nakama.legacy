@@ -41,6 +41,9 @@ namespace TreasureGuide.Web.Configurations
                 user.EntityMapping.ForMember(x => x.UserRoles, o => o.Ignore()); // Handle this manually.
                 user.EntityMapping.ForMember(x => x.UserName, o => o.Ignore()); // Don't allow thise to be changed.
 
+                user.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.SubmittedTeams.Count));
+
+                user.DetailMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.SubmittedTeams.Count));
                 user.DetailMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
                 user.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore());
 

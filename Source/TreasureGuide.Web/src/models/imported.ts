@@ -23,6 +23,7 @@ export interface IProfileStubModel {
     id: string;
     userName: string;
     unitId: number;
+    teamCount: number;
     
 }
 
@@ -200,6 +201,7 @@ export interface ITeamEditorModel {
 
 export interface ITeamSearchModel extends ISearchModel{
     term: string;
+    submittedBy: string;
     leaderId: number;
     stageId: number;
     myBox: boolean;
