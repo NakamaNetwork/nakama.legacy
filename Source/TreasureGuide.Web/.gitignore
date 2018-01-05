@@ -2,7 +2,8 @@ node_modules
 .idea
 .DS_STORE
 
-wwwroot/
+wwwroot/scripts
+wwwroot/css
 src/**/*.js
 src/**/*.js.map
 test/unit/**/*.js
