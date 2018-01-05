@@ -26,7 +26,19 @@ export interface IProfileStubModel {
     
 }
 
-export interface IProfileFullModel extends IProfileStubModel{
+export interface IProfileDetailModel extends IProfileStubModel{
+    friendId: number;
+    website: string;
+    userRoles: string[];
+    global: boolean;
+    canEdit: boolean;
+    
+}
+
+export interface IProfileEditorModel {
+    id: string;
+    userName: string;
+    unitId: number;
     friendId: number;
     website: string;
     userRoles: string[];
@@ -34,18 +46,17 @@ export interface IProfileFullModel extends IProfileStubModel{
     
 }
 
-export interface IProfileDetailModel extends IProfileFullModel{
-    canEdit: boolean;
-    
-}
-
-export interface IProfileEditorModel extends IProfileFullModel{
-    
-}
-
 export interface IProfileSearchModel extends ISearchModel{
     term: string;
     roles: string[];
+    
+}
+
+
+export class RoleConstants {
+    public static Administrator: string = "Administrator";
+    public static Moderator: string = "Moderator";
+    public static Contributor: string = "Contributor";
     
 }
 

@@ -12,10 +12,19 @@
     string ParentClass(Class c){
         return c.BaseClass != null ? "extends I" + c.BaseClass.Name : "";
     }
+
+    string ConstantValue(Constant c){
+        return c.Type.Name == "string" ? $"\"{c.Value}\"" : c.Value;
+    }
 }
 $Classes(*Model)[export interface I$Name$TypeParameters $ParentClass{
     $Properties(p=>!p.Type.IsEnum && !p.Type.IsPrimitive && (!p.Type.IsGeneric || p.Type.TypeArguments.All(z=>!z.IsEnum)))[$name: I$Type;
     ]$Properties(p=>p.Type.IsEnum || p.Type.IsPrimitive || !(!p.Type.IsGeneric || p.Type.TypeArguments.All(z=>!z.IsEnum)))[$name: $Type;
+    ]
+}
+
+]$Classes(*Constants)[export class $Name$TypeParameters {
+    $Constants(p=>p.Type.IsPrimitive)[public static $Name: $Type = $ConstantValue;
     ]
 }
 
