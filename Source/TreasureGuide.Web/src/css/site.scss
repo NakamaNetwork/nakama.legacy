@@ -89,3 +89,17 @@ ux-dialog-footer {
 .row {
     margin-bottom: 0.6em;
 }
+
+.tooltip {
+    border-bottom: unset;
+}
+
+
+.tooltiptext {
+    padding: 6px;
+    pointer-events: none;
+
+    .-tooltip-top & {
+        bottom: 100%;
+    }
+}

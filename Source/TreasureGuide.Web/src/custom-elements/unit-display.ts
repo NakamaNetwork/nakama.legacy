@@ -12,23 +12,15 @@ export class UnitDisplay {
     private dialogService: DialogService;
 
     @bindable unitId = 0;
+    @bindable name: string;
     @bindable editable = false;
+    @bindable clickable = false;
 
     constructor(unitQueryService: UnitQueryService, dialogService: DialogService, element: Element) {
         this.unitQueryService = unitQueryService;
         this.element = element;
         this.dialogService = dialogService;
     }
-
-    @computedFrom('unitId')
-    get unit() {
-        return this.unitQueryService.stub(this.unitId).then(result => {
-            return result;
-        }).catch(error => {
-            console.error(error);
-            return null;
-        });
-    };
 
     @computedFrom('unitId')
     get imageUrl() {
@@ -40,9 +32,9 @@ export class UnitDisplay {
         return 'fa fa-fw fa-2x fa-' + (this.unitId ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
     }
 
-    @computedFrom('editable')
+    @computedFrom('editable', 'clickable')
     get buttonClass() {
-        return 'unit-button ' + (this.editable ? '' : '_unclickable');
+        return 'unit-button ' + (this.editable || this.clickable ? '' : '_unclickable');
     }
 
     @computedFrom('unitId', 'imageUrl')
