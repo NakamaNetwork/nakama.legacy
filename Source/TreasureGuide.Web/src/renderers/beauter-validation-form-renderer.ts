@@ -2,8 +2,8 @@
 
 export class BeauterValidationFormRenderer implements ValidationRenderer {
     private static containerQuery = '.form-group';
-    private static containerErrorClass = 'validation-error';
-    private static messageErrorClass = 'validation-message';
+    private static containerErrorClass = 'input-validation-error';
+    private static messageErrorClass = 'field-validation-error';
 
     render(instruction: RenderInstruction) {
         for (let { result, elements } of instruction.unrender) {

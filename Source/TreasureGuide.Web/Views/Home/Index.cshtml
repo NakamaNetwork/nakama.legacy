@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="~/css/site.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>NakamaDB</title>
+    <title>Nakama Network</title>
 </head>
 <body>
     @{ Html.RenderPartial("_AuthExportPartial"); }
@@ -13,12 +14,13 @@
 
     <div class="aurelia-wrapper" aurelia-app="main">
         <div class="preloader">
+            <i class="fa fa-circle-o-notch fa-spin fa-fw fa-5x"></i>
             <h1>Loading...</h1>
             <style>
                 .preloader {
                     text-align: center;
                     font-family: sans-serif;
-                    margin-top: 40%;
+                    margin-top: 25%;
                 }
             </style>
         </div>

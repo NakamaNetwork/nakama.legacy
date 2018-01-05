@@ -1,45 +1,51 @@
-﻿@model ExternalLoginConfirmationViewModel
+﻿@using TreasureGuide.Web.Helpers
+@model ExternalLoginConfirmationViewModel
 @{
     ViewData["Title"] = "Register";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-controller="Account" asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-
+<div class="row">
+    <h5>
+        You've successfully authorized your <strong>@ViewData["LoginProvider"]</strong> account.
+    </h5>
+    <h6>
+        Please select a UserName and Email Address for Nakama Network below to finish registration.
+    </h6>
+</div>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert _danger">
+        @ViewData.ModelState.ConcatErrors()
+    </div>
+}
+<form asp-controller="Account" asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="_alignLeft">
     <div class="row">
-        <p class="text-info">
-            You've successfully authorized your <strong>@ViewData["LoginProvider"]</strong> account.
-            Please select a UserName and Email Address for NakamaDB below to finish registration.
-        </p>
+        <fieldset>
+            <div class="form-group">
+                <label asp-for="UserName">
+                    <i class="fa fa-fw fa-user"></i>
+                    User Name
+                </label>
+                <input asp-for="UserName" type="text" class="_width100" />
+                <span asp-validation-for="UserName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">
+                    <i class="fa fa-fw fa-envelope"></i>
+                    Email
+                </label>
+                <input asp-for="Email" type="email" class="_width100" />
+                <span asp-validation-for="Email"></span>
+            </div>
+        </fieldset>
     </div>
     <div class="row">
-        <div class="input-field">
-            <i class="material-icons prefix">account_circle</i>
-            <input asp-for="UserName" type="text" class="validate" />
-            <label asp-for="UserName" class="col m2"></label>
-            <span asp-validation-for="UserName" class="red-text"></span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="input-field">
-            <i class="material-icons prefix">email</i>
-            <input asp-for="Email" type="email" class="validate" />
-            <label asp-for="Email" class="col m2"></label>
-            <span asp-validation-for="Email" class="red-text"></span>
-        </div>
-    </div>
-    <div class="row right">
-        <button class="waves-effect waves-light btn btn-large orange darken-3" type="submit">
+        <button class="button _primary _floatRight" type="submit">
             Register
-            <i class="material-icons right large">send</i>
         </button>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            Materialize.updateTextFields();
-        });
-    </script>
 </form>
 
 @section Scripts {

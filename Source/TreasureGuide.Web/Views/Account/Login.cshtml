@@ -1,7 +1,7 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager
 
 @{
-    ViewData["Title"] = "Log In";
+    ViewData["Title"] = "Log into Nakama Network";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -10,13 +10,11 @@
     <hr />
     @{
         var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
-        <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-            <div class="center">
-                @foreach (var provider in loginProviders)
-                {
-                    <button type="submit" class="waves-effect waves-light btn btn-large orange darken-3" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
-                }
-            </div>
+        <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="_width100 _alignCenter">
+            @foreach (var provider in loginProviders)
+            {
+                <button type="submit" class="button _primary _large" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+            }
         </form>
     }
 </div>

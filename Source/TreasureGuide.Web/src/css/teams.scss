@@ -1,6 +1,6 @@
 @import "_variables.scss";
 
-$tiny-unit-size: 2em;
+$tiny-unit-size: 20px;
 $tiny-unit-margin: 1px;
 
 $small-unit-size: 48px;
@@ -56,6 +56,7 @@ $default-unit-margin: $huge-unit-margin;
         height: $tiny-unit-size;
         width: $tiny-unit-size;
         margin: $tiny-unit-margin;
+        font-size: 0.6em;
     }
 
     &[size="small"],

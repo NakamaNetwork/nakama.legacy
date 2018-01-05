@@ -1,8 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Locked out";
+    ViewData["Title"] = "Locked Out";
 }
 
 <header>
-    <h1 class="red-text">Locked out.</h1>
+    <h1 class="error-text">@ViewData["Title"]</h1>
     <p>This account has been locked out, please try again later.</p>
+    <a href="/" class="button _primary">Return Home</a>
 </header>

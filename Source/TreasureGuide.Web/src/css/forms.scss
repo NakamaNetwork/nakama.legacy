@@ -1,17 +1,29 @@
 $error-color: #f44336;
 
-.validation-error {
+.input-validation-error {
     color: $error-color !important;
     font-style: italic;
 
     input {
         border-color: $error-color !important;
+        font-style: unset;
+        color: unset;
     }
+}
 
-    .validation-message {
-        color: $error-color !important;
-        margin-left: 0.5em;
-    }
+input.input-validation-error {
+    border-color: $error-color !important;
+    font-style: unset;
+    color: unset;
+}
+
+.error-text {
+    color: $error-color !important;
+}
+
+.field-validation-error {
+    @extend .error-text;
+    margin-left: 0.5em;
 }
 
 input, textarea, select, fieldset {
@@ -35,4 +47,18 @@ select[multiple] {
     position: fixed;
     z-index: 99999;
     margin: 20px;
+}
+
+
+.login-wrapper {
+    margin: 50px auto;
+    height: 80vh;
+
+    .container {
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
 }

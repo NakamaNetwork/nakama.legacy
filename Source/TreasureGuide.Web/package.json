@@ -34,6 +34,7 @@
     "event-stream": "^3.3.3",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-changed-in-place": "^2.0.3",
+    "gulp-clean-css": "^3.9.2",
     "gulp-htmlmin": "^3.0.0",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",

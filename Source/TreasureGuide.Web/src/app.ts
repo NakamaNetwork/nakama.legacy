@@ -21,7 +21,7 @@ export class App {
 
     configureRouter(config: RouterConfiguration, router: Router): void {
         this.router = router;
-        config.title = 'NakamaDB';
+        config.title = 'Nakama Network';
         config.addAuthorizeStep(AuthorizeStep);
         config.map([
             { route: ['', '/', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
