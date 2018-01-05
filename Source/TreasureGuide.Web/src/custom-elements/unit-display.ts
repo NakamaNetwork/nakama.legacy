@@ -24,7 +24,7 @@ export class UnitDisplay {
 
     @computedFrom('unitId')
     get imageUrl() {
-        return this.unitQueryService.getIcon(this.unitId);
+        return UnitQueryService.getIcon(this.unitId);
     }
 
     @computedFrom('unitId', 'editable')

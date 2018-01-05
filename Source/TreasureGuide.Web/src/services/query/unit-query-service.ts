@@ -10,7 +10,7 @@ export class UnitQueryService extends SearchableQueryService {
         super('unit', http, true);
     }
 
-    getIcon(unitId: number) {
+    static getIcon(unitId: number) {
         if (unitId) {
             var id = ('0000' + unitId).slice(-4).replace(/(057[54])/, '0$1'); // missing aokiji image
             if (id == '0742')

@@ -64,6 +64,6 @@ export class UnitPicker {
     }
 
     getIcon(id: number) {
-        return this.unitQueryService.getIcon(id);
+        return UnitQueryService.getIcon(id);
     }
 }

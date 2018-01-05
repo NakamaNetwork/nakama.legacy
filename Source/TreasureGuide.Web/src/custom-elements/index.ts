@@ -5,6 +5,7 @@
         './search-pager',
         './ship-display',
         './stage-display',
+        './team-box',
         './team-display',
         './team-search',
         './unit-class-picker',

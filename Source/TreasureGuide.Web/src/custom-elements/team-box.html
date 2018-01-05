@@ -1,0 +1,18 @@
+<template>
+    <a route-href="route: teamDetails; params.bind: {id: team.id}">
+        <fieldset>
+            <legend>${team.name}</legend>
+            <div class="row">
+                <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
+            </div>
+            <div class="row">
+                <stage-display stage-id.bind="team.stageId"></stage-display>
+                <ship-display ship-id.bind="team.shipId"></ship-display>
+            </div>
+            <div class="row">
+                <user-display name.bind="team.submittedByName" unit-id.bind="team.submittedByUnitId"></user-display>
+                <span class="time">${team.editedDate}</span>
+            </div>
+        </fieldset>
+    </a>
+</template>

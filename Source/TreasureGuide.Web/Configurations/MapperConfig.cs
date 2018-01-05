@@ -24,15 +24,16 @@ namespace TreasureGuide.Web.Configurations
                 var teamSocket = mapper.CreateControllerMapping<TeamSocket, TeamSocketDetailModel, TeamSocketStubModel, TeamSocketEditorModel>();
 
                 var team = mapper.CreateControllerMapping<Team, TeamDetailModel, TeamStubModel, TeamEditorModel>();
-                team.DetailMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
-                team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
-                team.DetailMapping.ForMember(x => x.EditedByName, o => o.MapFrom(y => y.EditingUser != null ? y.EditingUser.UserName : DefaultSubmitterName));
-                team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
-                team.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore());
-
                 team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
                 team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
+                team.StubMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UnitId : null));
                 team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
+
+                team.DetailMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
+                team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
+                team.DetailMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UnitId : null));
+                team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Count));
+                team.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore());
 
                 var stage = mapper.CreateControllerMapping<Stage, StageDetailModel, StageStubModel, StageEditorModel>();
                 stage.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count));

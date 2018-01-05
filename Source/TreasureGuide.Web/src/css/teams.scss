@@ -1,6 +1,6 @@
 @import "_variables.scss";
 
-$tiny-unit-size: 32px;
+$tiny-unit-size: 2em;
 $tiny-unit-margin: 1px;
 
 $small-unit-size: 48px;
@@ -111,13 +111,54 @@ team-display {
     }
 }
 
-.teambox {
+.team-collection {
+    .col {
+        line-height: 0;
+        padding: 6px;
+    }
+}
+
+team-box {
     a {
         text-decoration: none;
         color: unset;
     }
 
+    fieldset {
+        padding-bottom: 0;
+    }
+
     fieldset:hover {
         opacity: 0.6;
+    }
+
+    h1 {
+        font-size: 1.4em;
+        margin-top: -2.2em;
+    }
+
+    .row {
+        @extend ._alignCenter;
+        line-height: 1.6em;
+        margin: 0;
+    }
+
+    team-display {
+    }
+
+    stage-display {
+        @extend ._floatRight;
+    }
+
+    ship-display {
+        @extend ._floatLeft;
+    }
+
+    .username {
+        @extend ._floatLeft;
+    }
+
+    .time {
+        @extend ._floatRight;
     }
 }

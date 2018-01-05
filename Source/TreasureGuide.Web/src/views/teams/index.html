@@ -13,20 +13,9 @@
         <div class="row">
             <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
         </div>
-        <div class="row" if.bind="teams.length > 0">
-            <div class="col m6 teambox" repeat.for="team of teams">
-                <a route-href="route: teamDetails; params.bind: {id: team.id}">
-                    <fieldset>
-                        <legend>
-                            ${team.name}
-                        </legend>
-                        <div class="_alignCenter">
-                            <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
-                            <br />
-                            <stage-display stage-id.bind="team.stageId"></stage-display>
-                        </div>
-                    </fieldset>
-                </a>
+        <div class="row team-collection" if.bind="teams.length > 0">
+            <div class=" col m6" repeat.for="team of teams">
+                <team-box team.bind="team"></team-box>
             </div>
         </div>
         <div class="row">

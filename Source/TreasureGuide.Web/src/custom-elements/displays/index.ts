@@ -2,6 +2,7 @@
     config.globalResources([
         './friend-id-display',
         './global-display',
-        './stage-type-display'
+        './stage-type-display',
+        './user-display'
     ]);
 }

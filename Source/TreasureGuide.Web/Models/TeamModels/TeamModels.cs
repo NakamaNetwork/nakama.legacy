@@ -11,6 +11,8 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string Name { get; set; }
         public string SubmittedById { get; set; }
         public string SubmittedByName { get; set; }
+        public int? SubmittedByUnitId { get; set; }
+        public DateTimeOffset EditedDate { get; set; }
         public int Score { get; set; }
         public bool Global { get; set; }
         public int ShipId { get; set; }
@@ -25,9 +27,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string Name { get; set; }
         public string SubmittedById { get; set; }
         public string SubmittedByName { get; set; }
-        public DateTimeOffset SubmittedDate { get; set; }
-        public string EditedById { get; set; }
-        public string EditedByName { get; set; }
+        public int? SubmittedByUnitId { get; set; }
         public DateTimeOffset EditedDate { get; set; }
         public int Score { get; set; }
         public string Guide { get; set; }
@@ -47,7 +47,7 @@ namespace TreasureGuide.Web.Models.TeamModels
 
         [StringLength(250, MinimumLength = 10)]
         public string Name { get; set; }
-        
+
         [StringLength(1000)]
         public string Credits { get; set; }
 
