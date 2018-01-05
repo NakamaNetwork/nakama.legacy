@@ -40,6 +40,10 @@ namespace TreasureGuide.Sniffer.Parsers
                     {
                         return HandleColiseum(child);
                     }
+                    else if (stageType == StageType.TreasureMap)
+                    {
+                        name = "Treasure Map: " + name;
+                    }
                     var global = child["global"]?.ToString().ToBoolean() ?? false;
                     return new[] { HandleSingle(name, global, stageType) };
                 }));

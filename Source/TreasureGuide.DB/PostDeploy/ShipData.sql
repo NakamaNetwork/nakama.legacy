@@ -1,5 +1,4 @@
-﻿GO
-INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (0, N'Dinghy', N'Boosts HP by 1.3x, boosts captain''s RCV by 120 units')
+﻿INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (0, N'Dinghy', N'Boosts HP by 1.3x, boosts captain''s RCV by 120 units')
 INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (1, N'Merry Go', N'Boosts ATK by 1.5x, boosts captain''s HP by 300 units')
 INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (2, N'Navy Ship', N'Boosts HP by 1.5x, boosts ATK of Shooter characters by 100 units')
 INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (3, N'Baratie', N'Boosts captain''s HP by 2000 units')
@@ -38,3 +37,4 @@ INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (35, N'Marshal D. Teac
 INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (36, N'Revolutionary Black Crow', N'Boosts HP by 1.2x and reduces special cooldown of all characters by 1 at the start of the adventure. Boosts ATK of [STR], [DEX] and [QCK] characters by 1.55x if you have a [STR], [DEX] and [QCK] character on your crew.')
 INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (37, N'Zunisha', N'Boost ATK of Powerhouse and Cerebral units by 1.55x and their HP by 1.25x, makes Perfects easier to hit, and makes TND and Meat orbs beneficial to Powerhouse and Cerebral units.')
 INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (38, N'Laboon', N'Boosts ATK of all units by 1.5x. At the start of the adventure, all specials start at MAX charge.')
+INSERT [dbo].[Ships] ([Id], [Name], [Description]) VALUES (39, N'Sexy Foxy', N'Boosts ATK of all units by 1.5x. Boosts EXP gained by 1.2x and Beli gained by 2x.')

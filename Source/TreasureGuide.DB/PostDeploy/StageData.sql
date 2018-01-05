@@ -1,5 +1,4 @@
-﻿GO
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (1009978, N'3D2Y', NULL, 1, 1)
+﻿INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (1009978, N'3D2Y', NULL, 1, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (1013041, N'Jaya', NULL, 1, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (1022550, N'Baratie', NULL, 1, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (1025960, N'Alubarna', NULL, 1, 1)
@@ -114,6 +113,7 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (209335
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (2094090, N'Camie and Hachi''s Takoyaki Stand!', NULL, 2, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (2094857, N'Crisis of the 800 Year Old Kingdom!', NULL, 2, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (2096300, N'Butler and Strange Animal Island', NULL, 2, 1)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (2100245, N'Final Thought to my Brother Sanji!', NULL, 2, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (2100886, N'Perv-salom''s Very Manly Adventure', NULL, 2, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (2101780, N'Marines! Sengoku the Fleet Admiral!', NULL, 2, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (2106825, N'The Secret Garden! Men are Forbidden!?', NULL, 2, 1)
@@ -157,6 +157,7 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (404299
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (4043234, N'Clash Neo!! Sabo', NULL, 4, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (4045622, N'Clash!! Rayleigh', NULL, 4, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (4046083, N'Clash!! Fujitora', NULL, 4, 0)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (4047005, N'Clash Neo!! Eneru', NULL, 4, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (4049729, N'Clash Neo!! Aokiji', NULL, 4, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (4049780, N'Clash!! Heracles''n', NULL, 4, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (4049783, N'Clash Neo!! Akainu', NULL, 4, 0)
@@ -198,9 +199,9 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (509259
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5092796, N'Coliseum: Kanjuro - Chaos Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5092829, N'Coliseum: Kanjuro - Chaos Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5092858, N'Coliseum: Kanjuro - Chaos Stage 3', NULL, 5, 1)
+GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5092891, N'Coliseum: Kanjuro - Chaos Stage 4', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5092920, N'Coliseum: Kanjuro - Chaos Stage 5', NULL, 5, 1)
-GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5097496, N'Coliseum: Musshuru - Chaos Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5097529, N'Coliseum: Musshuru - Chaos Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5097558, N'Coliseum: Musshuru - Chaos Stage 3', NULL, 5, 1)
@@ -299,9 +300,9 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (512753
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5127675, N'Coliseum: Ideo, XXX Rank Boxer - Chaos Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5127708, N'Coliseum: Ideo, XXX Rank Boxer - Chaos Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5127737, N'Coliseum: Ideo, XXX Rank Boxer - Chaos Stage 3', NULL, 5, 1)
+GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5127770, N'Coliseum: Ideo, XXX Rank Boxer - Chaos Stage 4', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5127799, N'Coliseum: Ideo, XXX Rank Boxer - Chaos Stage 5', NULL, 5, 1)
-GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5129646, N'Coliseum: Hina, Navy HQ Captain - Chaos Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5129679, N'Coliseum: Hina, Navy HQ Captain - Chaos Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5129708, N'Coliseum: Hina, Navy HQ Captain - Chaos Stage 3', NULL, 5, 1)
@@ -400,9 +401,9 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (514489
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5144922, N'Coliseum: Marco, Whitebeard Pirates - Chaos Stage 3', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5144955, N'Coliseum: Marco, Whitebeard Pirates - Chaos Stage 4', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5144984, N'Coliseum: Marco, Whitebeard Pirates - Chaos Stage 5', NULL, 5, 1)
+GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5145648, N'Coliseum: Inuarashi, Mokomo Dukedom - Chaos Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5145681, N'Coliseum: Inuarashi, Mokomo Dukedom - Chaos Stage 2', NULL, 5, 1)
-GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5145710, N'Coliseum: Inuarashi, Mokomo Dukedom - Chaos Stage 3', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5145743, N'Coliseum: Inuarashi, Mokomo Dukedom - Chaos Stage 4', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5145772, N'Coliseum: Inuarashi, Mokomo Dukedom - Chaos Stage 5', NULL, 5, 1)
@@ -475,13 +476,8 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (515175
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5151787, N'Coliseum: Kyros, Undefeated Gladiator - Chaos Stage 4', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5151816, N'Coliseum: Kyros, Undefeated Gladiator - Chaos Stage 5', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5152079, N'Coliseum: T-Bone, Navy HQ Colonel - Exhibition Stage 1', NULL, 5, 1)
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5152109, N'Coliseum: Enel, The Only God of Skypiea - Chaos Stage 1', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5152112, N'Coliseum: T-Bone, Navy HQ Colonel - Exhibition Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5152141, N'Coliseum: T-Bone, Navy HQ Colonel - Exhibition Stage 3', NULL, 5, 1)
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5152142, N'Coliseum: Enel, The Only God of Skypiea - Chaos Stage 2', NULL, 5, 0)
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5152171, N'Coliseum: Enel, The Only God of Skypiea - Chaos Stage 3', NULL, 5, 0)
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5152204, N'Coliseum: Enel, The Only God of Skypiea - Chaos Stage 4', NULL, 5, 0)
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5152233, N'Coliseum: Enel, The Only God of Skypiea - Chaos Stage 5', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5153104, N'Coliseum: Mr. 7 and Ms. Father''s Day - Exhibition Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5153137, N'Coliseum: Mr. 7 and Ms. Father''s Day - Exhibition Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5153166, N'Coliseum: Mr. 7 and Ms. Father''s Day - Exhibition Stage 3', NULL, 5, 1)
@@ -503,18 +499,23 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (515420
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5154733, N'Coliseum: Dorry, Giant Warrior Pirates - Chaos Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5154766, N'Coliseum: Dorry, Giant Warrior Pirates - Chaos Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5154795, N'Coliseum: Dorry, Giant Warrior Pirates - Chaos Stage 3', NULL, 5, 1)
-GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5154828, N'Coliseum: Dorry, Giant Warrior Pirates - Chaos Stage 4', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5154857, N'Coliseum: Dorry, Giant Warrior Pirates - Chaos Stage 5', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155621, N'Coliseum: Tony Tony Chopper Jump Point - Chaos Stage 1', NULL, 5, 0)
+GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155654, N'Coliseum: Tony Tony Chopper Jump Point - Chaos Stage 2', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155683, N'Coliseum: Tony Tony Chopper Jump Point - Chaos Stage 3', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155716, N'Coliseum: Tony Tony Chopper Jump Point - Chaos Stage 4', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155745, N'Coliseum: Tony Tony Chopper Jump Point - Chaos Stage 5', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155846, N'Coliseum: T-Bone, Navy HQ Colonel - Underground Stage 1', NULL, 5, 1)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155868, N'Coliseum: Eneru, The Only God of Skypiea - Chaos Stage 1', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155879, N'Coliseum: T-Bone, Navy HQ Colonel - Underground Stage 2', NULL, 5, 1)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155901, N'Coliseum: Eneru, The Only God of Skypiea - Chaos Stage 2', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155908, N'Coliseum: T-Bone, Navy HQ Colonel - Underground Stage 3', NULL, 5, 1)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155930, N'Coliseum: Eneru, The Only God of Skypiea - Chaos Stage 3', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155941, N'Coliseum: T-Bone, Navy HQ Colonel - Underground Stage 4', NULL, 5, 1)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155963, N'Coliseum: Eneru, The Only God of Skypiea - Chaos Stage 4', NULL, 5, 0)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5155992, N'Coliseum: Eneru, The Only God of Skypiea - Chaos Stage 5', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5156371, N'Coliseum: Boa Sandersonia, Kuja Warrior - Chaos Stage 1', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5156404, N'Coliseum: Boa Sandersonia, Kuja Warrior - Chaos Stage 2', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5156433, N'Coliseum: Boa Sandersonia, Kuja Warrior - Chaos Stage 3', NULL, 5, 0)
@@ -602,9 +603,9 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (516547
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5165493, N'Coliseum: Secuurity Chief Miss Sadie - Exhibition Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5165501, N'Coliseum: Coby, Navy HQ Petty Officer - Exhibition Stage 3', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5165526, N'Coliseum: Secuurity Chief Miss Sadie - Exhibition Stage 2', NULL, 5, 1)
+GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5165555, N'Coliseum: Secuurity Chief Miss Sadie - Exhibition Stage 3', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5166961, N'Coliseum: Boa Marigold, Kuja Warrior - Underground Stage 1', NULL, 5, 0)
-GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5166994, N'Coliseum: Boa Marigold, Kuja Warrior - Underground Stage 2', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5167023, N'Coliseum: Boa Marigold, Kuja Warrior - Underground Stage 3', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5167056, N'Coliseum: Boa Marigold, Kuja Warrior - Underground Stage 4', NULL, 5, 0)
@@ -703,9 +704,9 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (517754
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5178120, N'Coliseum: Broggy, Giant Warrior Pirates - Underground Stage 1', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5178153, N'Coliseum: Broggy, Giant Warrior Pirates - Underground Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5178182, N'Coliseum: Broggy, Giant Warrior Pirates - Underground Stage 3', NULL, 5, 1)
+GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5178215, N'Coliseum: Broggy, Giant Warrior Pirates - Underground Stage 4', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5179114, N'Coliseum: Rebecca, Imprisoned Swordsman - Underground Stage 1', NULL, 5, 1)
-GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5179147, N'Coliseum: Rebecca, Imprisoned Swordsman - Underground Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5179176, N'Coliseum: Rebecca, Imprisoned Swordsman - Underground Stage 3', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5179209, N'Coliseum: Rebecca, Imprisoned Swordsman - Underground Stage 4', NULL, 5, 1)
@@ -804,9 +805,9 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (521134
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5211378, N'Coliseum: Paulie Galley-La Company Dock One Foreman - Underground Stage 2', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5211407, N'Coliseum: Paulie Galley-La Company Dock One Foreman - Underground Stage 3', NULL, 5, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5211440, N'Coliseum: Paulie Galley-La Company Dock One Foreman - Underground Stage 4', NULL, 5, 1)
+GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5222705, N'Coliseum: Dellinger, Blood Thirsty Half-Fishman Fighting Fish - Chaos Stage 1', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5222738, N'Coliseum: Dellinger, Blood Thirsty Half-Fishman Fighting Fish - Chaos Stage 2', NULL, 5, 0)
-GO
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5222767, N'Coliseum: Dellinger, Blood Thirsty Half-Fishman Fighting Fish - Chaos Stage 3', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5222800, N'Coliseum: Dellinger, Blood Thirsty Half-Fishman Fighting Fish - Chaos Stage 4', NULL, 5, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (5222829, N'Coliseum: Dellinger, Blood Thirsty Half-Fishman Fighting Fish - Chaos Stage 5', NULL, 5, 0)
@@ -883,6 +884,7 @@ INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (708492
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (7085117, N'Forest of Training: Darkness', NULL, 7, 0)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (7089052, N'Forest of Training: Flame Fist', NULL, 7, 1)
 INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (7102536, N'Forest of Training: Heavenly Demon', NULL, 7, 1)
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (8019870, N'Mihawk', NULL, 8, 0)
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (8029408, N'Cavendish', NULL, 8, 0)
-INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (8032698, N'Whitebeard', NULL, 8, 0)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (8060648, N'Treasure Map: Mihawk', NULL, 8, 0)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (8070238, N'Treasure Map: Cavendish', NULL, 8, 0)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (8073508, N'Treasure Map: Whitebeard', NULL, 8, 0)
+INSERT [dbo].[Stages] ([Id], [Name], [Stamina], [Type], [Global]) VALUES (8082879, N'Treasure Map: Luffy: Gear 4th', NULL, 8, 0)
