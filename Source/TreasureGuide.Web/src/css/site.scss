@@ -2,6 +2,7 @@
 @import "forms.scss";
 @import "pagination.scss";
 @import "teams.scss";
+@import "_variables.scss";
 
 .aurelia-wrapper {
     display: flex;
@@ -36,22 +37,23 @@ a {
 
 ux-dialog-container {
     & > div {
-        //  @media #{$medium-and-down} {
-        padding: 2px;
-        //   }
+        @media #{$medium-and-down} {
+            padding: 2px;
+        }
     }
 
     & > div > div {
-        //   @media #{$large-and-up} {
-        width: 70%;
-        max-width: 70%;
-        min-width: 70%;
-        //  }
-        //@media #{$extra-large-and-up} {
-        //    width: 60%;
-        //     max-width: 60%;
-        //     min-width: 60%;
-        // }
+        @media #{$large-and-up} {
+            width: 70%;
+            max-width: 70%;
+            min-width: 70%;
+        }
+
+        @media #{$extra-large-and-up} {
+            width: 60%;
+            max-width: 60%;
+            min-width: 60%;
+        }
     }
 
     ux-dialog {

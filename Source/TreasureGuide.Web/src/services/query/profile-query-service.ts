@@ -3,6 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { IProfileSearchModel } from '../../models/imported';
 import { IProfileEditorModel } from '../../models/imported';
+import { SearchModel } from '../../models/search-model';
 
 @autoinject
 export class ProfileQueryService extends SearchableQueryService {
@@ -15,17 +16,12 @@ export class ProfileQueryService extends SearchableQueryService {
     }
 }
 
-export class ProfileSearchModel implements IProfileSearchModel {
+export class ProfileSearchModel extends SearchModel implements IProfileSearchModel {
     term: string = '';
     roles: string[] = [];
-    page: number = 1;
-    pageSize: number = 25;
 
-    @computedFrom('term', 'roles', 'page', 'pageSize')
-    get payload() {
-        var text = JSON.stringify(this);
-        var output = JSON.parse(text);
-        return output;
+    public getDefault(): SearchModel {
+        return new ProfileSearchModel();
     }
 }
 

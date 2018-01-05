@@ -7,8 +7,8 @@
             <h3>Select a Stage</h3>
         </ux-dialog-header>
         <ux-dialog-body>
-            <div class="row">
-                <form with.bind="searchModel">
+            <form with.bind="searchModel">
+                <div class="row">
                     <div class="col m4">
                         <label for="termInput">Term</label>
                         <input id="termInput" type="text" value.two-way="term" />
@@ -23,8 +23,11 @@
                         <label for="typeInput">Type</label>
                         <input id="typeInput" type="number" value.two-way="type" />
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="row">
+                    <button class="button _floatRight" click.trigger="reset()">Reset</button>
+                </div>
+            </form>
             <loading-area if.bind="loading"></loading-area>
             <div if.bind="!loading">
                 <div class="row">

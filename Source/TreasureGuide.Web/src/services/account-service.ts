@@ -63,7 +63,7 @@ export class AccountService {
         window.location.href = '/Account/Logout';
     }
 
-    static AllRoles: string[] = [
+    public static allRoles: string[] = [
         RoleConstants.Administrator,
         RoleConstants.Moderator,
         RoleConstants.Contributor

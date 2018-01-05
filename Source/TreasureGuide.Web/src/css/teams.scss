@@ -1,4 +1,4 @@
-
+@import "_variables.scss";
 
 $tiny-unit-size: 32px;
 $tiny-unit-margin: 1px;
@@ -20,16 +20,17 @@ $default-unit-margin: $huge-unit-margin;
 
 .unit-collection {
     .unit-button {
-        // @media #{$medium-and-down} {
-        height: $small-unit-size;
-        width: $small-unit-size;
-        margin: $small-unit-margin;
-        //  }
-        //  @media #{$large-and-up} {
-        //     height: $medium-unit-size;
-        //      width: $medium-unit-size;
-        //     margin: $medium-unit-margin;
-        //  }
+        @media #{$medium-and-down} {
+            height: $small-unit-size;
+            width: $small-unit-size;
+            margin: $small-unit-margin;
+        }
+
+        @media #{$large-and-up} {
+            height: $medium-unit-size;
+            width: $medium-unit-size;
+            margin: $medium-unit-margin;
+        }
     }
 }
 

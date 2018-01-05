@@ -2,6 +2,7 @@
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { ITeamEditorModel, ITeamSearchModel } from '../../models/imported';
+import { SearchModel } from '../../models/search-model';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -15,32 +16,17 @@ export class TeamQueryService extends SearchableQueryService {
     }
 }
 
-export class TeamSearchModel implements ITeamSearchModel {
+export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     term: string;
     submittedBy: string;
     leaderId: number;
     stageId: number;
-    myBox: boolean = false;
-    global: boolean = false;
-    freeToPlay: boolean = false;
-    page: number = 1;
-    pageSize: number = 25;
+    myBox: boolean;
+    global: boolean;
+    freeToPlay: boolean;
 
-    @computedFrom('term', 'submittedBy', 'leaderId', 'stageId', 'myBox', 'global', 'freeToPlay', 'page', 'pageSize')
-    get payload() {
-        var text = JSON.stringify({
-            term: this.term,
-            submittedBy: this.submittedBy,
-            leaderId: this.leaderId,
-            stageId: this.stageId,
-            myBox: this.myBox,
-            global: this.global,
-            freeToPlay: this.freeToPlay,
-            page: this.page,
-            pageSize: this.pageSize
-        });
-        var output = JSON.parse(text);
-        return output;
+    getDefault(): TeamSearchModel {
+        return new TeamSearchModel();
     }
 };
 

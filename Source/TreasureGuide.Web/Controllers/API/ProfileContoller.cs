@@ -77,10 +77,13 @@ namespace TreasureGuide.Web.Controllers.API
 
         private async Task<IQueryable<UserProfile>> SearchRoles(IQueryable<UserProfile> results, IEnumerable<string> modelRoles)
         {
-            if (modelRoles.Any())
+            if (modelRoles?.Any() ?? false)
             {
-                var userIds = modelRoles.Select(async x => await _userManager.GetUsersInRoleAsync(x))
-                    .SelectMany(x => x.Result).Select(y => y.Id).Distinct();
+                var userIds = modelRoles
+                    .SelectMany(x => x.Split(','))
+                    .Select(x => _userManager.GetUsersInRoleAsync(x))
+                    .SelectMany(x => x.Result)
+                    .Select(y => y.Id).Distinct();
                 results = results.Where(x => userIds.Contains(x.Id));
             }
             return results;
