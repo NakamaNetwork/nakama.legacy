@@ -7,8 +7,8 @@
             <h3>Select a Unit</h3>
         </ux-dialog-header>
         <ux-dialog-body>
-            <div class="row">
-                <form with.bind="searchModel">
+            <form with.bind="searchModel">
+                <div class="row">
                     <fieldset>
                         <legend>
                             Search
@@ -70,9 +70,12 @@
                                 <span class="-label-body">Exclude Others</span>
                             </label>
                         </div>
+                        <div class="row">
+                            <button class="button _floatRight" click.trigger="reset()">Reset</button>
+                        </div>
                     </fieldset>
-                </form>
-            </div>
+                </div>
+            </form>
             <loading-area if.bind="loading"></loading-area>
             <div if.bind="!loading">
                 <div class="row">

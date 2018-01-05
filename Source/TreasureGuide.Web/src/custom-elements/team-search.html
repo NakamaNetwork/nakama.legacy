@@ -3,7 +3,7 @@
         <fieldset>
             <legend>Search</legend>
             <div class="row">
-                <div class="col m4">
+                <div class="col m8">
                     <label for="termInput">Term</label>
                     <input id="termInput" type="text" value.bind="term" placeholder="My Nakama..." />
                     <label for="userInput">User Name</label>
@@ -14,8 +14,7 @@
                 <div class="col m4">
                     <label for="unitInput">Captain</label>
                     <unit-display id="unitInput" unit-id.two-way="leaderId" editable="true"></unit-display>
-                </div>
-                <div class="col m4">
+
                     <label for="globalCheckbox">
                         <input id="globalCheckbox" type="checkbox" checked.bind="global" />
                         Global
@@ -25,6 +24,9 @@
                         Free to Play
                     </label>
                 </div>
+            </div>
+            <div class="row">
+                <button class="button _floatRight" click.trigger="reset()">Reset</button>
             </div>
         </fieldset>
     </form>
