@@ -4,6 +4,10 @@
 @import "teams.scss";
 @import "_variables.scss";
 
+body {
+    overflow-y: scroll;
+}
+
 .aurelia-wrapper {
     display: flex;
     min-height: 100vh;
@@ -43,16 +47,20 @@ ux-dialog-container {
     }
 
     & > div > div {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+
         @media #{$large-and-up} {
-            width: 70%;
-            max-width: 70%;
-            min-width: 70%;
+            width: 90%;
+            max-width: 90%;
+            min-width: 90%;
         }
 
         @media #{$extra-large-and-up} {
-            width: 60%;
-            max-width: 60%;
-            min-width: 60%;
+            width: 80%;
+            max-width: 80%;
+            min-width: 80%;
         }
     }
 
