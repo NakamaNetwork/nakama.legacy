@@ -21,7 +21,7 @@ export class AdminPage {
     resultCount = 0;
     pages = 0;
 
-    searchModel = new ProfileSearchModel();
+    searchModel = new ProfileSearchModel().getCached();
     loading;
 
     allRoles = AccountService.allRoles;

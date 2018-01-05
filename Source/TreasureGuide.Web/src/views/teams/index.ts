@@ -12,7 +12,7 @@ export class TeamIndexPage {
     resultCount = 0;
     pages = 0;
 
-    searchModel = new TeamSearchModel();
+    searchModel = new TeamSearchModel().getCached();
     loading;
 
     constructor(teamQueryService: TeamQueryService, bindingEngine: BindingEngine) {

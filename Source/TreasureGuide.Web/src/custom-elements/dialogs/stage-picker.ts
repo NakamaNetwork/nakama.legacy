@@ -15,7 +15,7 @@ export class StagePicker {
     resultCount = 0;
     pages = 0;
 
-    searchModel = new StageSearchModel();
+    searchModel = new StageSearchModel().getCached();
     loading;
 
     constructor(stageQueryService: StageQueryService, controller: DialogController, bindingEngine: BindingEngine) {

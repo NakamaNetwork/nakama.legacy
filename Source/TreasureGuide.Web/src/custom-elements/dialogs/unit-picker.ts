@@ -15,7 +15,7 @@ export class UnitPicker {
     resultCount = 0;
     pages = 0;
 
-    searchModel = new UnitSearchModel();
+    searchModel = new UnitSearchModel().getCached();
     loading;
 
     constructor(unitQueryService: UnitQueryService, controller: DialogController, bindingEngine: BindingEngine) {

@@ -35,7 +35,7 @@ export class HttpEngine {
         return headers;
     };
 
-    private execute(endpoint: string, data: any, headers: Headers, method: string): Promise<any> {
+    private execute(endpoint: string, data: any, headers: Headers, method: string, debounce: boolean = false): Promise<any> {
         headers = headers || this.buildSecurityHeaders();
         headers.set('content-type', 'application/json');
         headers.set('Accept', 'application/json');
@@ -54,19 +54,19 @@ export class HttpEngine {
         });
     };
 
-    get(endpoint: string, headers?: Headers) {
-        return this.execute(endpoint, null, headers, 'GET');
+    get(endpoint: string, headers?: Headers, debounce?: boolean) {
+        return this.execute(endpoint, null, headers, 'GET', debounce);
     };
 
-    post(endpoint: string, data?: any, headers?: Headers) {
-        return this.execute(endpoint, data, headers, 'POST');
+    post(endpoint: string, data?: any, headers?: Headers, debounce?: boolean) {
+        return this.execute(endpoint, data, headers, 'POST', debounce);
     };
 
-    put(endpoint: string, data?: any, headers?: Headers) {
-        return this.execute(endpoint, data, headers, 'PUT');
+    put(endpoint: string, data?: any, headers?: Headers, debounce?: boolean) {
+        return this.execute(endpoint, data, headers, 'PUT', debounce);
     };
 
-    delete(endpoint: string, data?: any, headers?: Headers) {
-        return this.execute(endpoint, data, headers, 'PUT');
+    delete(endpoint: string, data?: any, headers?: Headers, debounce?: boolean) {
+        return this.execute(endpoint, data, headers, 'PUT', debounce);
     };
 }
