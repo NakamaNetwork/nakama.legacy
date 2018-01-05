@@ -1,19 +1,51 @@
 ﻿import { autoinject } from 'aurelia-framework';
+import { BindingEngine } from 'aurelia-binding';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { HttpEngine } from '../../tools/http-engine';
 import { AlertService } from '../../services/alert-service';
+import { ProfileSearchModel } from '../../services/query/profile-query-service';
+import { ProfileQueryService } from '../../services/query/profile-query-service';
 
 @autoinject
 export class AdminPage {
-    message = 'Admin Page';
     httpEngine;
     teamQueryService;
     alert;
+    bindingEngine;
+    profileQueryService;
 
-    constructor(httpEngine: HttpEngine, teamQueryService: TeamQueryService, alertService: AlertService) {
+    profiles = [];
+
+    resultCount = 0;
+    pages = 0;
+
+    searchModel = new ProfileSearchModel();
+    loading;
+
+    constructor(httpEngine: HttpEngine, teamQueryService: TeamQueryService, profileQueryService: ProfileQueryService, alertService: AlertService, bindingEngine: BindingEngine) {
         this.httpEngine = httpEngine;
         this.teamQueryService = teamQueryService;
+        this.profileQueryService = profileQueryService;
         this.alert = alertService;
+        this.bindingEngine = bindingEngine;
+        bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+            this.search(n);
+        });
+        this.search(this.searchModel.payload);
+    }
+
+    search(payload) {
+        if (this.teamQueryService) {
+            this.loading = true;
+            this.profileQueryService.search(payload).then(x => {
+                this.profiles = x.results;
+                this.resultCount = x.totalResults;
+                this.pages = Math.ceil(x.totalResults / payload.pageSize);
+                this.loading = false;
+            }).catch((e) => {
+                this.loading = false;
+            });
+        }
     }
 
     createTeam() {

@@ -1,4 +1,45 @@
 ﻿<template>
-    <h1>${title}</h1>
-    <button md-button md-waves click.delegate="createTeam()">Create a Fake Team</button>
+    <h1>Admin</h1>
+    <div class="row">
+        <h2>Tools</h2>
+        <button md-button md-waves click.delegate="createTeam()">Create a Random Team</button>
+    </div>
+    <div class="row">
+        <h2>User Management</h2>
+        <loading-area if.bind="loading"></loading-area>
+        <div if.bind="!loading">
+            <div class="row">
+                <search-pager search-model.bind="searchModel" result-count.bind="resultCount"></search-pager>
+            </div>
+            <div class="row" if.bind="profiles.length > 0">
+                <table class="_width100">
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Icon</th>
+                            <th>Teams</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="profile of profiles">
+                            <td>
+                                <a route-href="route: account; params.bind: {id: profile.id}">
+                                    ${profile.userName}
+                                </a>
+                            </td>
+                            <td>
+                                <unit-display unit-id.bind="profile.unitId" size="tiny"></unit-display>
+                            </td>
+                            <th>
+                                ${profile.teamCount}
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <search-pager search-model.bind="searchModel" result-count.bind="resultCount" bottom="true"></search-pager>
+            </div>
+        </div>
+    </div>
 </template>

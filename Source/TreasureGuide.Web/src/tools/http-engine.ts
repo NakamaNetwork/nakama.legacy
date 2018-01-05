@@ -14,7 +14,7 @@ export class HttpEngine {
         for (var property in params) {
             if (params.hasOwnProperty(property)) {
                 var value = params[property];
-                if (typeof (value) !== 'function' && value !== undefined && value !== null) {
+                if (typeof (value) !== 'function' && value && (!Array.isArray(value) || value.length > 0)) {
                     endpoint += first ? '?' : '&';
                     endpoint += encodeURIComponent(property);
                     endpoint += '=';
