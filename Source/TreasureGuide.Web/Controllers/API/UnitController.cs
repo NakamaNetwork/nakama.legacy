@@ -23,7 +23,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             results = SearchTerm(results, model.Term);
             results = SearchTypes(results, model.Types);
-            results = SearchClasses(results, model.Classes, model.ForceTypes);
+            results = SearchClasses(results, model.Classes, model.ForceClass);
             results = SearchGlobal(results, model.Global);
             results = SearchBox(results, model.MyBox);
             results = SearchFreeToPlay(results, model.FreeToPlay);
@@ -68,7 +68,8 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 if (force)
                 {
-                    results = results.Where(x => classes.All(y => x.Class.HasFlag(y)));
+                    var sum = classes.Sum(x => (int)x);
+                    results = results.Where(x => (int)x.Class == sum);
                 }
                 else
                 {

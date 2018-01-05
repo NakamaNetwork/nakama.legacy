@@ -306,7 +306,7 @@ export interface IUnitSearchModel extends ISearchModel{
     term: string;
     classes: UnitClass[];
     types: UnitType[];
-    forceTypes: boolean;
+    forceClass: boolean;
     freeToPlay: boolean;
     global: boolean;
     myBox: boolean;

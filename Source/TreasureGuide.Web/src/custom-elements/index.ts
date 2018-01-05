@@ -8,6 +8,7 @@
         './team-display',
         './team-search',
         './unit-class-picker',
-        './unit-display'
+        './unit-display',
+        './unit-type-picker'
     ]);
 }

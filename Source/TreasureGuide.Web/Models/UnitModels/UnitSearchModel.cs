@@ -8,7 +8,7 @@ namespace TreasureGuide.Web.Models.UnitModels
         public string Term { get; set; }
         public IEnumerable<UnitClass> Classes { get; set; }
         public IEnumerable<UnitType> Types { get; set; }
-        public bool ForceTypes { get; set; }
+        public bool ForceClass { get; set; }
         public bool FreeToPlay { get; set; }
 
         public bool Global { get; set; }

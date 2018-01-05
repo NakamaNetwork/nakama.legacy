@@ -39,23 +39,14 @@ export class UnitPicker {
     search(payload: UnitSearchModel) {
         if (this.unitQueryService) {
             this.loading = true;
-            if ((payload.classes && payload.classes.length > 0) ||
-                (payload.types && payload.types.length > 0) ||
-                payload.term || payload.myBox) {
-                this.unitQueryService.search(payload).then(x => {
-                    this.units = x.results;
-                    this.resultCount = x.totalResults;
-                    this.pages = Math.ceil(x.totalResults / payload.pageSize);
-                    this.loading = false;
-                }).catch((e) => {
-                    this.loading = false;
-                });
-            } else {
-                this.units = [];
-                this.resultCount = 0;
-                this.pages = 0;
+            this.unitQueryService.search(payload).then(x => {
+                this.units = x.results;
+                this.resultCount = x.totalResults;
+                this.pages = Math.ceil(x.totalResults / payload.pageSize);
                 this.loading = false;
-            }
+            }).catch((e) => {
+                this.loading = false;
+            });
         }
     }
 

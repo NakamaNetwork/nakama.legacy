@@ -1,5 +1,4 @@
-﻿import { computedFrom } from 'aurelia-framework';
-import { autoinject } from 'aurelia-framework';
+﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { IUnitSearchModel } from '../../models/imported';
@@ -32,7 +31,7 @@ export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
     term: string;
     classes: number[];
     types: number[];
-    forceTypes: boolean;
+    forceClass: boolean;
     myBox: boolean;
     global: boolean;
     freeToPlay: boolean;

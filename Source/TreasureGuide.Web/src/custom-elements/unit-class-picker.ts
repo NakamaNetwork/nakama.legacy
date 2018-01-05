@@ -4,7 +4,7 @@ import { UnitClass } from '../models/imported';
 
 @autoinject
 @customElement('unit-class-picker')
-export class UnitDisplay {
+export class UnitClassPicker {
     private element: Element;
 
     @bindable unitClass = 0;

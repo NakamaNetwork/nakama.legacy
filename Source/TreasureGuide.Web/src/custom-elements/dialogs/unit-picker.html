@@ -28,21 +28,18 @@
                                     Unit Class
                                 </label>
                                 <unit-class-picker id="classInput" unit-class.two-way="classes"></unit-class-picker>
+                                <label for="forceClassInput">
+                                    <input id="forceClassInput"
+                                           type="checkbox"
+                                           checked.two-way="forceClass" />
+                                    <span class="-label-body">Exclude Others</span>
+                                </label>
                             </div>
                             <div class="col m4">
                                 <label for="typeInput">
                                     Unit Type
                                 </label>
-                                <input id="typeInput"
-                                       placeholder="Type..."
-                                       type="number"
-                                       value.two-way="types" />
-                                <label for="forceTypeInput">
-                                    <input id="forceTypeInput"
-                                           type="checkbox"
-                                           checked.two-way="forceTypes" />
-                                    <span class="-label-body">Exclude Others</span>
-                                </label>
+                                <unit-type-picker id="typeInput" unit-type.two-way="types"></unit-type-picker>
                             </div>
                         </div>
                         <div class="row">
