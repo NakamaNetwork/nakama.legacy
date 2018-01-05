@@ -25,6 +25,7 @@ export class ProfileEditPage {
 
     title = 'Edit Profile';
     @bindable profile: IProfileEditorModel;
+    loading: boolean;
 
     constructor(profileQueryService: ProfileQueryService,
         router: Router,
@@ -49,11 +50,13 @@ export class ProfileEditPage {
     activate(params) {
         var id = params.id;
         if (id) {
+            this.loading = true;
             this.profileQueryService.editor(id).then(result => {
                 this.title = 'Edit Profile';
                 this.profile = Object.assign(this.profile, result);
                 this.controller.validate();
                 this.initialRoles = JSON.stringify(this.profile.userRoles);
+                this.loading = false;
             }).catch(error => {
                 this.router.navigateToRoute('error', { error: 'The requested profile could not be found for editing. It may not exist or you may not have permission to edit it.' });
             });

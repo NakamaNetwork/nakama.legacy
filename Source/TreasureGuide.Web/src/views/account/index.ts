@@ -9,6 +9,7 @@ export class ProfileDetailPage {
     private router: Router;
 
     profile: IProfileDetailModel;
+    loading: boolean;
 
     constructor(profileQueryService: ProfileQueryService, router: Router) {
         this.profileQueryService = profileQueryService;
@@ -16,8 +17,10 @@ export class ProfileDetailPage {
     }
 
     activate(params) {
+        this.loading = true;
         this.profileQueryService.detail(params.id).then(result => {
             this.profile = result;
+            this.loading = false;
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested account could not be found.' });
         });

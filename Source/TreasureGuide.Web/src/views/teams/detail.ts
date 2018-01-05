@@ -8,6 +8,7 @@ export class TeamDetailPage {
     private router: Router;
     
     team = [];
+    loading: boolean;
 
     constructor(teamQueryService: TeamQueryService, router: Router) {
         this.teamQueryService = teamQueryService;
@@ -17,8 +18,10 @@ export class TeamDetailPage {
     activate(params) {
         var id = params.id;
         if (id) {
+            this.loading = true;
             this.teamQueryService.detail(id).then(result => {
                 this.team = result;
+                this.loading = false;
             }).catch(error => {
                 this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });
             });

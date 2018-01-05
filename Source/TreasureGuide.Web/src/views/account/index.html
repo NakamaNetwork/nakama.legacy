@@ -1,5 +1,6 @@
 ﻿<template>
-    <div with.bind="profile">
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading" with.bind="profile">
         <h1>${userName}</h1>
         <a if.bind="canEdit" class="button _primary" route-href="route: accountEdit; params.bind: {id: id}">
             <i class="fa fa-fw fa-pencil"></i>

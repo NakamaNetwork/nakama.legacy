@@ -25,6 +25,7 @@ export class TeamEditPage {
 
     title = 'Create Team';
     @bindable team: ITeamEditorModel;
+    loading: boolean;
 
     constructor(teamQueryService: TeamQueryService,
         router: Router,
@@ -47,10 +48,12 @@ export class TeamEditPage {
     activate(params) {
         var id = params.id;
         if (id) {
+            this.loading = true;
             this.teamQueryService.editor(id).then(result => {
                 this.title = 'Edit Team';
                 this.team = Object.assign(this.team, result);
                 this.controller.validate();
+                this.loading = false;
             }).catch(error => {
                 this.router.navigateToRoute('error', { error: 'The requested team could not be found for editing. It may not exist or you may not have permission to edit it.' });
             });

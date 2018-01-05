@@ -1,6 +1,7 @@
 ﻿<template>
     <h1>${title}</h1>
-    <form with.bind="team">
+    <loading-area if.bind="loading"></loading-area>
+    <form if.bind="loading" with.bind="team">
         <div class="row">
             <fieldset>
                 <legend>Team Info</legend>

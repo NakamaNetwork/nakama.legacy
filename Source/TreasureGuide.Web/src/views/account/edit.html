@@ -1,6 +1,7 @@
 ﻿<template>
     <h1>${title}</h1>
-    <div with.bind="profile">
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading" with.bind="profile">
         <form>
             <div class="row">
                 <fieldset>

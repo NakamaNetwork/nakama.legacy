@@ -1,5 +1,6 @@
 ﻿<template>
-    <div with.bind="team">
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading" with.bind="team">
         <h1>${name}</h1>
         <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
             <i class="fa fa-fw fa-pencil"></i>
