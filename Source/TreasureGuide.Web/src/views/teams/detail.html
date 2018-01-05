@@ -36,7 +36,7 @@
             <a route-href="route: account; params.bind: {id: submittedById}">
                 <user-display name.bind="submittedByName" unit-id.bind="submittedByUnitId"></user-display>
             </a>
-            on ${editedDate}
+            on ${editedDate | dateTimeFormat}
         </div>
     </div>
 </template>

@@ -130,7 +130,9 @@
                         "name": "aurelia-plugins-pagination",
                         "path": "../node_modules/aurelia-plugins-pagination/dist/amd",
                         "main": "aurelia-plugins-pagination",
-                        "resources": [ "**/*.{js,html}" ]
+                        "resources": [
+                            "**/*.{js,html}"
+                        ]
                     },
                     "aurelia-polyfills",
                     "aurelia-route-recognizer",
@@ -159,6 +161,12 @@
                         "name": "aurelia-validation",
                         "main": "aurelia-validation",
                         "path": "../node_modules/aurelia-validation/dist/amd",
+                        "resources": []
+                    },
+                    {
+                        "name": "moment",
+                        "main": "./moment.js",
+                        "path": "../node_modules/moment",
                         "resources": []
                     }
                 ]

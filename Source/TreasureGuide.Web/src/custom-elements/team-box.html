@@ -11,7 +11,9 @@
             </div>
             <div class="row">
                 <user-display name.bind="team.submittedByName" unit-id.bind="team.submittedByUnitId"></user-display>
-                <span class="time">${team.editedDate}</span>
+                <span class="time">
+                    ${team.editedDate | ageFormat}
+                </span>
             </div>
         </fieldset>
     </a>

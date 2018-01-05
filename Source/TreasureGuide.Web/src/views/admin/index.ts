@@ -6,6 +6,7 @@ import { AlertService } from '../../services/alert-service';
 import { ProfileSearchModel } from '../../services/query/profile-query-service';
 import { ProfileQueryService } from '../../services/query/profile-query-service';
 import { AccountService } from '../../services/account-service';
+import * as moment from 'moment';
 
 @autoinject
 export class AdminPage {
@@ -53,7 +54,7 @@ export class AdminPage {
 
     createTeam() {
         var team = {
-            name: 'Random Team @' + new Date().toJSON(),
+            name: 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a'),
             description: '',
             guide: '',
             credits: '',

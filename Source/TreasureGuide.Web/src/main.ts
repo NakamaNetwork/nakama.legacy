@@ -23,6 +23,7 @@ export function configure(aurelia: Aurelia) {
         .feature('./custom-elements')
         .feature('./custom-elements/dialogs')
         .feature('./custom-elements/displays')
+        .feature('./value-converters')
         .globalResources([
             // CSS
             './css/site.css'
