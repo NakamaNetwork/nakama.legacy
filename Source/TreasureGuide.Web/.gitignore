@@ -11,3 +11,9 @@ test/unit/**/*.js.map
 
 // Templated Files
 *.tst.gen
+
+// Publish files
+Properties/PublishProfiles
+
+// Production Configs
+appsettings.production.json
