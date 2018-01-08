@@ -23,7 +23,7 @@ namespace TreasureGuide.Web.Helpers
 
         public static string ConcatErrors(this ModelStateDictionary modelState)
         {
-            return String.Join("; ", modelState.Select(x => String.Join(": ", x.Key, String.Join(", ", x.Value.Errors.Select(y => y.ErrorMessage)))));
+            return String.Join("; ", modelState.Select(x => String.Join(", ", x.Value.Errors.Select(y => y.ErrorMessage))));
         }
     }
 }

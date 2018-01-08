@@ -108,6 +108,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
             }
+            id = DefaultIfUnspecified(id, model.Id);
             if (!CanPost(id))
             {
                 return Unauthorized();
@@ -116,7 +117,6 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ModelState.ConcatErrors());
             }
-            id = DefaultIfUnspecified(id, model.Id);
             if (!IsUnspecified(id))
             {
                 var entities = FetchEntities(id);
