@@ -142,6 +142,7 @@ namespace TreasureGuide.Web.Controllers
 #if DEBUG
                         await _userManager.AddToRolesAsync(user, new[] { RoleConstants.Administrator, RoleConstants.Contributor, RoleConstants.Moderator });
 #endif
+                        await _userManager.AddToRolesAsync(user, new[] { RoleConstants.Contributor });
                         _entities.UserProfiles.Add(new UserProfile
                         {
                             Id = user.Id,

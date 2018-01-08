@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +28,23 @@ namespace TreasureGuide.Web.Configurations
                 {
                     options.User.RequireUniqueEmail = false;
                     options.User.AllowedUserNameCharacters += " ";
+                    options.Cookies.ApplicationCookie.AutomaticChallenge = false;
+                    options.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
+                    {
+                        OnRedirectToLogin = (ctx) =>
+                        {
+                            if (ctx.Request.Path.StartsWithSegments("/api"))
+                            {
+                                ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                                ctx.Response.WriteAsync($"{{\"error\": {ctx.Response.StatusCode}}}");
+                            }
+                            else
+                            {
+                                ctx.Response.Redirect(ctx.RedirectUri);
+                            }
+                            return Task.FromResult(0);
+                        }
+                    };
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
