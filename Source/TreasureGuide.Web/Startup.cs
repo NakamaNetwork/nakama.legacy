@@ -93,6 +93,18 @@ namespace TreasureGuide.Web
                 ClientSecret = Configuration["Authentication:Google:ClientSecret"]
             });
 
+            app.UseFacebookAuthentication(new FacebookOptions
+            {
+                ClientId = Configuration["Authentication:Facebook:ClientId"],
+                ClientSecret = Configuration["Authentication:Facebook:ClientSecret"]
+            });
+
+            app.UseTwitterAuthentication(new TwitterOptions
+            {
+                ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"],
+                ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"]
+            });
+
             RoleConfig.Configure(roleManager);
 
             app.UseMvc(routes =>
