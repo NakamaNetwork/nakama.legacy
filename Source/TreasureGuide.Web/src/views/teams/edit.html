@@ -55,6 +55,18 @@
                 </div>
             </fieldset>
         </div>
+        <div class="row" if.bind="id">
+            <fieldset>
+                <legend>Delete</legend>
+                <label for="deleteInput">
+                    <input type="checkbox" id="deleteInput" checked.bind="deleted" />
+                    <span class="-label-body">
+                        Delete this Team
+                    </span>
+                    <em class="_dangerText" auth-req="roles: Administrator, Moderator; inverse: true">(This cannot be undone!)</em>
+                </label>
+            </fieldset>
+        </div>
         <div class="row">
             <input type="submit" class="_primary _floatRight" click.delegate="submit()" />
         </div>

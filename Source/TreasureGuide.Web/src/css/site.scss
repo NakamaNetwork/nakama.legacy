@@ -33,7 +33,7 @@ ux-dialog-overlay.active {
     opacity: 0.5;
 }
 
-a {
+a, em, strong {
     padding: 0 3px;
 }
 
@@ -78,6 +78,26 @@ ux-dialog-container {
 
     ux-dialog {
         width: 100%;
+
+        &.small {
+            @media #{$medium-and-down} {
+                width: 90%;
+                max-width: 90%;
+                min-width: 90%;
+            }
+
+            @media #{$medium-and-up} {
+                width: 60%;
+                max-width: 60%;
+                min-width: 60%;
+            }
+
+            @media #{$large-and-up} {
+                width: 40%;
+                max-width: 40%;
+                min-width: 40%;
+            }
+        }
     }
 }
 

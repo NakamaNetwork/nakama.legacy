@@ -53,6 +53,15 @@ namespace TreasureGuide.Web.Controllers.API
             return await base.SingleGetTransform(single, id);
         }
 
+        protected override IQueryable<Team> Filter(IQueryable<Team> entities)
+        {
+            if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+            {
+                entities = entities.Where(x => !x.Deleted);
+            }
+            return base.Filter(entities);
+        }
+
         protected override bool CanPost(int? id)
         {
             return User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id);
@@ -80,6 +89,8 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override async Task<IQueryable<Team>> PerformSearch(IQueryable<Team> results, TeamSearchModel model)
         {
+            results = SearchDeleted(results, model.Deleted);
+            results = SearchReported(results, model.Reported);
             results = SearchStage(results, model.StageId);
             results = SearchTerm(results, model.Term);
             results = SearchSubmitter(results, model.SubmittedBy);
@@ -87,6 +98,28 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchGlobal(results, model.Global);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
             results = SearchBox(results, model.MyBox);
+            return results;
+        }
+
+        private IQueryable<Team> SearchDeleted(IQueryable<Team> results, bool modelDeleted)
+        {
+            if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+            {
+                results = results.Where(x => !x.Deleted);
+            }
+            else
+            {
+                results = results.Where(x => x.Deleted == modelDeleted);
+            }
+            return results;
+        }
+
+        private IQueryable<Team> SearchReported(IQueryable<Team> results, bool modelReported)
+        {
+            if (User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) && modelReported)
+            {
+                results = results.Where(x => x.TeamReports.Any(y => !y.AcknowledgedDate.HasValue));
+            }
             return results;
         }
 
@@ -103,7 +136,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (!String.IsNullOrEmpty(term))
             {
-                teams = teams.Where(x => x.SubmittingUser.UserName.Contains(term));
+                teams = teams.Where(x => x.SubmittedById == term || x.SubmittingUser.UserName.Contains(term));
             }
             return teams;
         }
@@ -188,6 +221,51 @@ namespace TreasureGuide.Web.Controllers.API
             await DbContext.SaveChangesAsync();
             var returnValue = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
             return Ok(returnValue);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("Report")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Report([FromBody] TeamReportModel model, int? id = null)
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
+            var teamId = id ?? model.TeamId;
+
+            DbContext.TeamReports.Add(new TeamReport
+            {
+                TeamId = teamId,
+                Reason = model.Reason
+            });
+            await DbContext.SaveChangesAsync();
+            return Ok(teamId);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("AcknowledgeReport")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> AcknowledgeReport(int? id = null)
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
+            if (!id.HasValue)
+            {
+                return BadRequest("Could not find report.");
+            }
+            var team = await DbContext.TeamReports.SingleOrDefaultAsync(x => x.Id == id);
+            if (team == null)
+            {
+                return BadRequest("Could not find report.");
+            }
+            team.AcknowledgedDate = DateTimeOffset.Now;
+            await DbContext.SaveChangesAsync();
+            return Ok(id.Value);
         }
     }
 }

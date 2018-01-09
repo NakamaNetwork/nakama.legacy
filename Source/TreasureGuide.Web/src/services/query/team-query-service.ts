@@ -1,7 +1,7 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel } from '../../models/imported';
+import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 
 @autoinject
@@ -18,6 +18,14 @@ export class TeamQueryService extends SearchableQueryService {
     vote(model: ITeamVoteModel): Promise<number> {
         return this.http.post(this.buildAddress('vote'), model);
     }
+
+    report(model: ITeamReportModel): Promise<number> {
+        return this.http.post(this.buildAddress('report'), model);
+    }
+
+    acknowledgeReport(teamId: number): Promise<number> {
+        return this.http.post(this.buildAddress('report/' + teamId));
+    }
 }
 
 export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
@@ -28,6 +36,8 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     myBox: boolean;
     global: boolean;
     freeToPlay: boolean;
+    deleted: boolean;
+    reported: boolean;
 
     getDefault(): TeamSearchModel {
         return new TeamSearchModel();
@@ -43,4 +53,5 @@ export class TeamEditorModel implements ITeamEditorModel {
     stageId: number;
     teamSockets: any[] = [];
     teamUnits: any[] = [];
+    deleted: boolean;
 };
