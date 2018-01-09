@@ -1,16 +1,32 @@
-import { bindable, customElement } from 'aurelia-framework';
+import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-framework';
-import {ITeamStubModel} from '../models/imported';
+import { ITeamStubModel } from '../models/imported';
+import { AccountService } from '../services/account-service';
+import { RoleConstants } from '../models/imported';
 
 @customElement('team-box')
 @autoinject
 export class TeamBox {
-    private element: Element;
+    private accountService: AccountService;
 
     @bindable
     team: ITeamStubModel;
 
-    constructor(element: Element) {
-        this.element = element;
+    constructor(accountService: AccountService) {
+        this.accountService = accountService;
+    }
+
+    @computedFrom('team', 'team.reported', 'team.deleted')
+    get teamClass() {
+        var className = '';
+        if (this.accountService.isInRoles([RoleConstants.Administrator, RoleConstants.Moderator])) {
+            if (this.team.reported) {
+                className += 'reported ';
+            }
+            if (this.team.deleted) {
+                className += 'deleted ';
+            }
+        }
+        return className;
     }
 }
