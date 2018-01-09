@@ -102,7 +102,7 @@ namespace TreasureGuide.Web.Controllers
             }
             if (result.IsLockedOut)
             {
-                return View(nameof(Lockout);
+                return View(nameof(Lockout));
             }
             else
             {
