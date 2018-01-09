@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -110,7 +111,8 @@ namespace TreasureGuide.Web.Controllers
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? "";
-                var name = email.Substring(0, email.IndexOf("@"));
+                var emailIndex = email.IndexOf("@");
+                var name = emailIndex <= 0 ? email : email.Substring(0, emailIndex);
                 return View(nameof(ExternalLoginConfirmation), new ExternalLoginConfirmationViewModel { UserName = name, Email = email });
             }
         }

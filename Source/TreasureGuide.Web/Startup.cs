@@ -102,7 +102,8 @@ namespace TreasureGuide.Web
             app.UseTwitterAuthentication(new TwitterOptions
             {
                 ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"],
-                ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"]
+                ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"],
+                RetrieveUserDetails = true
             });
 
             RoleConfig.Configure(roleManager);
