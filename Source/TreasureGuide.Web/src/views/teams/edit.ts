@@ -2,9 +2,9 @@
 import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
+import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { ITeamEditorModel } from '../../models/imported';
 import { TeamEditorModel } from '../../services/query/team-query-service';
-import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { AlertService } from '../../services/alert-service';
 import { TeamImportView } from '../../custom-elements/dialogs/team-import';
 import { DialogService } from 'aurelia-dialog';

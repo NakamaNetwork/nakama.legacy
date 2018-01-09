@@ -3,6 +3,7 @@
         './alert-dialog',
         './ship-picker',
         './stage-picker',
+        './report-dialog',
         './team-import',
         './unit-picker'
     ]);
