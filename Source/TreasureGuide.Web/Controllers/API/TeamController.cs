@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
@@ -244,20 +245,33 @@ namespace TreasureGuide.Web.Controllers.API
             return Ok(teamId);
         }
 
-        [HttpPost]
-        [Authorize]
-        [ActionName("AcknowledgeReport")]
+
+        [HttpGet]
+        [Authorize(Roles = RoleConstants.Administrator + "," + RoleConstants.Moderator)]
+        [ActionName("Reports")]
         [Route("[action]/{id?}")]
-        public async Task<IActionResult> AcknowledgeReport(int? id = null)
+        public async Task<IActionResult> Reports(int? id = null)
         {
             if (Throttled && !ThrottlingService.CanAccess(User, Request))
             {
                 return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
             }
-            if (!id.HasValue)
-            {
-                return BadRequest("Could not find report.");
-            }
+            var reports = await DbContext
+                .TeamReports
+                .Where(x => x.TeamId == id)
+                .OrderBy(x => x.AcknowledgedDate)
+                .ThenBy(x => x.TeamId)
+                .ProjectTo<TeamReportStubModel>(AutoMapper.ConfigurationProvider)
+                .ToArrayAsync();
+            return Ok(reports);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.Administrator + "," + RoleConstants.Moderator)]
+        [ActionName("AcknowledgeReport")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> AcknowledgeReport(int? id = null)
+        {
             var team = await DbContext.TeamReports.SingleOrDefaultAsync(x => x.Id == id);
             if (team == null)
             {
@@ -265,7 +279,7 @@ namespace TreasureGuide.Web.Controllers.API
             }
             team.AcknowledgedDate = DateTimeOffset.Now;
             await DbContext.SaveChangesAsync();
-            return Ok(id.Value);
+            return Ok(id);
         }
     }
 }

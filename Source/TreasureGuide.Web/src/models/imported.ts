@@ -211,6 +211,14 @@ export interface ITeamReportModel {
     
 }
 
+export interface ITeamReportStubModel {
+    id: number;
+    teamId: number;
+    reason: string;
+    acknowledged: boolean;
+    
+}
+
 
 export interface ITeamSearchModel extends ISearchModel{
     term: string;

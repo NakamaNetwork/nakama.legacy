@@ -1,13 +1,14 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
+import { ITeamDetailModel } from '../../models/imported';
 
 @autoinject
 export class TeamDetailPage {
     private teamQueryService: TeamQueryService;
     private router: Router;
-    
-    team = [];
+
+    team: ITeamDetailModel;
     loading: boolean;
 
     constructor(teamQueryService: TeamQueryService, router: Router) {

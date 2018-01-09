@@ -52,6 +52,9 @@ namespace TreasureGuide.Web.Configurations
                 user.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore());
 
                 user.EditorMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
+
+                var report = mapper.CreateMap<TeamReport, TeamReportStubModel>();
+                report.ForMember(x => x.Acknowledged, o => o.MapFrom(y => y.AcknowledgedDate.HasValue));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

@@ -218,3 +218,21 @@ team-box {
         @extend ._blackText;
     }
 }
+
+.team-reports {
+    .acknowledged {
+        text-decoration: line-through;
+    }
+
+    .unacknowledged {
+        border-bottom: 1px dotted;
+    }
+
+    li {
+        margin-bottom: 0;
+    }
+
+    ul {
+        margin-bottom: 0;
+    }
+}

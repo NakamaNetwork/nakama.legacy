@@ -2,6 +2,12 @@
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading" with.bind="team">
         <h1>${name}</h1>
+        <div class="row" auth-req="Moderator, Administrator">
+            <team-reports team.bind="team"></team-reports>
+            <div class="alert _danger" if.bind="deleted">
+                This team has been deleted.
+            </div>
+        </div>
         <div class="row" if.bind="canEdit">
             <a class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
                 <i class="fa fa-fw fa-pencil"></i>

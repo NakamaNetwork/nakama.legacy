@@ -3,6 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
+import {ITeamReportStubModel} from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -23,8 +24,12 @@ export class TeamQueryService extends SearchableQueryService {
         return this.http.post(this.buildAddress('report'), model);
     }
 
+    reports(teamId: number): Promise<ITeamReportStubModel[]> {
+        return this.http.get(this.buildAddress('reports/' + teamId));
+    }
+
     acknowledgeReport(teamId: number): Promise<number> {
-        return this.http.post(this.buildAddress('report/' + teamId));
+        return this.http.post(this.buildAddress('acknowledgeReport/' + teamId));
     }
 }
 
