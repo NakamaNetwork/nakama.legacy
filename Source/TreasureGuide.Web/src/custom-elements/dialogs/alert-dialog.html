@@ -1,13 +1,15 @@
 ﻿<template>
-    <ux-dialog>
+    <ux-dialog class="small">
         <ux-dialog-header>
             <div class="_floatRight">
                 <a click.delegate="dismiss()" class="button _flat modal-action">X</a>
             </div>
-            <h3>${viewModel.title}</h3>
+            <h3>
+                <i if.bind="viewModel.iconClass" class="fa fa-fw" class.bind="viewModel.iconClass"></i>
+                ${viewModel.title}
+            </h3>
         </ux-dialog-header>
-        <ux-dialog-body>
-            <i if.bind="viewModel.iconClass" class="fa fa-fw" class.bind="viewModel.iconClass"></i>
+        <ux-dialog-body class="_alignCenter">
             ${viewModel.message}
         </ux-dialog-body>
         <ux-dialog-footer>

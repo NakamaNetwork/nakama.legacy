@@ -38,7 +38,7 @@ export class ProfileDetailPage {
         this.profileQueryService.detail(params.id).then(result => {
             this.profile = result;
             this.loading = false;
-            this.teamSearchModel.submittedBy = result.userName;
+            this.teamSearchModel.submittedBy = result.id;
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested account could not be found.' });
         });

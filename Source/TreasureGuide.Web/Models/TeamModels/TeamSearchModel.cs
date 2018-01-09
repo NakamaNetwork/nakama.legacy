@@ -10,5 +10,8 @@
         public bool MyBox { get; set; }
         public bool Global { get; set; }
         public bool FreeToPlay { get; set; }
+
+        public bool Deleted { get; set; }
+        public bool Reported { get; set; }
     }
 }

@@ -6,4 +6,7 @@ import { TeamSearchModel } from "../services/query/team-query-service";
 export class TeamSearch {
     @bindable
     model: TeamSearchModel;
+
+    @bindable
+    userLocked: boolean;
 }

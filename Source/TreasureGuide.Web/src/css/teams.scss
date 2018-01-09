@@ -168,6 +168,15 @@ team-box {
         margin-top: -10px;
         margin-right: -5px;
     }
+
+    .deleted {
+        background-color: lighten($danger-color, 50) !important;
+        opacity: 0.4;
+    }
+
+    .reported {
+        background-color: lighten($warning-color, 50);
+    }
 }
 
 .score-container {
@@ -207,5 +216,23 @@ team-box {
 
     a:hover {
         @extend ._blackText;
+    }
+}
+
+.team-reports {
+    .acknowledged {
+        text-decoration: line-through;
+    }
+
+    .unacknowledged {
+        border-bottom: 1px dotted;
+    }
+
+    li {
+        margin-bottom: 0;
+    }
+
+    ul {
+        margin-bottom: 0;
     }
 }

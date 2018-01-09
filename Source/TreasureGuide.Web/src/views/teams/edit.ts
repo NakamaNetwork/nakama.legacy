@@ -2,12 +2,13 @@
 import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
+import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { ITeamEditorModel } from '../../models/imported';
 import { TeamEditorModel } from '../../services/query/team-query-service';
-import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { AlertService } from '../../services/alert-service';
 import { TeamImportView } from '../../custom-elements/dialogs/team-import';
 import { DialogService } from 'aurelia-dialog';
+import { AlertDialog } from '../../custom-elements/dialogs/alert-dialog';
 
 @autoinject
 export class TeamEditPage {
@@ -73,25 +74,43 @@ export class TeamEditPage {
     submit() {
         this.controller.validate().then(x => {
             if (x.valid) {
-                this.teamQueryService.save(this.team).then(results => {
-                    this.alert.success('Successfully saved ' + this.team.name + ' to server!');
-                    this.router.navigateToRoute('teamDetails', { id: results.id });
-                }).catch(response => {
-                    return response.text().then(msg => {
-                        if (msg) {
-                            this.alert.danger(msg);
-                        } else {
-                            this.alert.danger('An error has occurred. Please try again in a few moments.');
+                if (this.team.deleted) {
+                    var message = 'Are you sure you want to delete this team?';
+                    this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
+                        if (!x.wasCancelled) {
+                            this.doSubmit();
                         }
-                    }).catch(error => {
-                        this.alert.danger('An error has occurred. Please try again in a few moments.');
                     });
-                });
+                } else {
+                    this.doSubmit();
+                }
             } else {
                 x.results.filter(y => !y.valid && y.message).forEach(y => {
                     this.alert.danger(y.message);
                 });
             }
+        });
+    }
+
+    doSubmit() {
+        this.teamQueryService.save(this.team).then(results => {
+            if (this.team.deleted) {
+                this.alert.success('Successfully deleted ' + this.team.name + '.');
+                this.router.navigateToRoute('teams');
+            } else {
+                this.alert.success('Successfully saved ' + this.team.name + '!');
+                this.router.navigateToRoute('teamDetails', { id: results.id });
+            }
+        }).catch(response => {
+            return response.text().then(msg => {
+                if (msg) {
+                    this.alert.danger(msg);
+                } else {
+                    this.alert.danger('An error has occurred. Please try again in a few moments.');
+                }
+            }).catch(error => {
+                this.alert.danger('An error has occurred. Please try again in a few moments.');
+            });
         });
     }
 

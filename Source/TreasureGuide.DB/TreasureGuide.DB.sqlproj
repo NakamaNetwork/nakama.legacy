@@ -99,5 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Views\UserRoles.sql" />
+    <Build Include="dbo\Tables\Teams\TeamReports.sql" />
   </ItemGroup>
 </Project>

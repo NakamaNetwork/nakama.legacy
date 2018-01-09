@@ -1,21 +1,25 @@
 import { autoinject, bindable, computedFrom, customElement } from 'aurelia-framework';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { AlertService } from '../../services/alert-service';
+import { DialogService } from 'aurelia-dialog';
+import { ReportDialog } from '../dialogs/report-dialog';
 
 @autoinject
 @customElement('score-display')
 export class ScoreDisplay {
     private teamQueryService: TeamQueryService;
     private alertService: AlertService;
+    private dialogService: DialogService;
 
     @bindable score: number;
     @bindable teamId: number;
     @bindable myVote: number;
     @bindable votable: boolean;
 
-    constructor(teamQueryService: TeamQueryService, alertService: AlertService) {
+    constructor(teamQueryService: TeamQueryService, alertService: AlertService, dialogService: DialogService) {
         this.teamQueryService = teamQueryService;
         this.alertService = alertService;
+        this.dialogService = dialogService;
     }
 
     @computedFrom('score', 'myVote')
@@ -70,6 +74,20 @@ export class ScoreDisplay {
             err.text().then(msg => {
                 this.alertService.danger(msg);
             });
+        });
+    }
+
+    report() {
+        this.dialogService.open({ viewModel: ReportDialog, lock: true }).whenClosed(result => {
+            if (!result.wasCancelled) {
+                this.teamQueryService.report({ teamId: this.teamId, reason: <string>result.output }).then(result => {
+                    this.alertService.success('Thank you! Your report has been submitted.');
+                }).catch(err => {
+                    err.text().then(msg => {
+                        this.alertService.danger(msg);
+                    });
+                });
+            }
         });
     }
 }

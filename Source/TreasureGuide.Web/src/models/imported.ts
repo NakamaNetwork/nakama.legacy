@@ -164,6 +164,8 @@ export interface ITeamStubModel {
     global: boolean;
     shipId: number;
     stageId: number;
+    deleted: boolean;
+    reported: boolean;
     
 }
 
@@ -184,6 +186,8 @@ export interface ITeamDetailModel {
     shipId: number;
     stageId: number;
     canEdit: boolean;
+    deleted: boolean;
+    reported: boolean;
     
 }
 
@@ -196,6 +200,22 @@ export interface ITeamEditorModel {
     guide: string;
     shipId: number;
     stageId: number;
+    deleted: boolean;
+    
+}
+
+
+export interface ITeamReportModel {
+    teamId: number;
+    reason: string;
+    
+}
+
+export interface ITeamReportStubModel {
+    id: number;
+    teamId: number;
+    reason: string;
+    acknowledged: boolean;
     
 }
 
@@ -208,6 +228,8 @@ export interface ITeamSearchModel extends ISearchModel{
     myBox: boolean;
     global: boolean;
     freeToPlay: boolean;
+    deleted: boolean;
+    reported: boolean;
     
 }
 

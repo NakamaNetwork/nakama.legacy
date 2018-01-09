@@ -1,0 +1,33 @@
+﻿<template>
+    <ux-dialog class="small">
+        <ux-dialog-header>
+            <div class="_floatRight">
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+            </div>
+            <h3>
+                Submit Report
+            </h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <form with.bind="model">
+                <div class="form-group">
+                    <label for="reasonInput">Reason</label>
+                    <textarea id="reasonInput"
+                              class="_width100"
+                              value.bind="reason & validate"></textarea>
+                    <div class="field-length">${reasonLength}</div>
+                </div>
+            </form>
+            <em>
+                <small>
+                    Please only report teams for rule violations (i.e. vulgar language, spam, etc.)
+                    Teams should not be reported for being ineffective--that's what voting is for.
+                </small>
+            </em>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="okay()" class="button modal-action _primary">Submit</a>
+            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+        </ux-dialog-footer>
+    </ux-dialog>
+</template>

@@ -1,6 +1,6 @@
 <template>
     <a route-href="route: teamDetails; params.bind: {id: team.id}">
-        <fieldset>
+        <fieldset class.bind="teamClass">
             <legend>
                 ${team.name}
             </legend>

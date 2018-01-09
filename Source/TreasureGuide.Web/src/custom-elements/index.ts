@@ -8,6 +8,7 @@
         './stage-type-picker',
         './team-box',
         './team-display',
+        './team-reports',
         './team-search',
         './unit-class-picker',
         './unit-display',
