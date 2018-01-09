@@ -41,6 +41,24 @@
             </div>
         </fieldset>
     </div>
+    <div clas="row">
+        <fieldset>
+            <div class="form-group">
+                <label asp-for="ToS">
+                    <input asp-for="ToS" type="checkbox" />
+                    <span class="-label-body">I agree to the <a href="/#/tos" target="_blank">Terms of Service</a></span>
+                </label>
+                <span asp-validation-for="ToS"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Privacy">
+                    <input asp-for="Privacy" type="checkbox" />
+                    <span class="-label-body">I agree to the <a href="/#/tos" target="_blank">Privacy Policy</a></span>
+                </label>
+                <span asp-validation-for="Privacy"></span>
+            </div>
+        </fieldset>
+    </div>
     <div class="row">
         <button class="button _primary _floatRight" type="submit">
             Register

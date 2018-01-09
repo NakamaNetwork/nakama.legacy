@@ -14,5 +14,13 @@ namespace TreasureGuide.Web.Models.AccountViewModels
         [EmailAddress]
         [StringLength(256)]
         public string Email { get; set; }
+
+        [Required]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the Terms of Service.")]
+        public bool ToS { get; set; }
+
+        [Required]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the Privacy Policy.")]
+        public bool Privacy { get; set; }
     }
 }

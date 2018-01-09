@@ -25,6 +25,7 @@ export class App {
         config.addAuthorizeStep(AuthorizeStep);
         config.map([
             { route: ['', '/', '_=_', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
+            { route: 'news', name: 'news', title: 'News', moduleId: 'views/boring/news', nav: true, auth: false },
             { route: 'error', name: 'error', title: 'Error', moduleId: 'views/error', nav: false },
             { route: 'notfound', name: 'notfound', title: 'Not Found', moduleId: 'views/notfound', nav: false },
             { route: 'unauthorized', name: 'unauthorized', title: 'Unauthorized', moduleId: 'views/unauthorized', nav: false },
@@ -37,7 +38,10 @@ export class App {
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: 'Administrator' },
             // Account
             { route: 'account/:id?', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: false, auth: false },
-            { route: 'account/:id/edit', name: 'accountEdit', title: 'Account', moduleId: 'views/account/edit', nav: false, auth: true }
+            { route: 'account/:id/edit', name: 'accountEdit', title: 'Account', moduleId: 'views/account/edit', nav: false, auth: true },
+            // Boring
+            { route: 'privacy', name: 'privacy', title: 'Privacy Policy', moduleId: 'views/boring/privacy', nav: false, auth: false },
+            { route: 'tos', name: 'tos', title: 'Terms of Service', moduleId: 'views/boring/tos', nav: false, auth: false },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }
