@@ -56,6 +56,16 @@
           <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="Global" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="TeamReports">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="AcknowledgedDate" Type="datetimeoffset" Precision="7" />
+        </EntityType>
         <EntityType Name="Teams">
           <Key>
             <PropertyRef Name="Id" />
@@ -71,6 +81,7 @@
           <Property Name="EditedById" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Version" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamSockets">
           <Key>
@@ -146,6 +157,20 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <Association Name="FK_dbo_TeamReports_dbo_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamReports" Type="Self.TeamReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamReports">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Role="Ships" Type="Self.Ships" Multiplicity="1" />
           <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
@@ -338,6 +363,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="RoundUnits" EntityType="Self.RoundUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamReports" EntityType="Self.TeamReports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamSockets" EntityType="Self.TeamSockets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamUnits" EntityType="Self.TeamUnits" Schema="dbo" store:Type="Tables" />
@@ -350,6 +376,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
     [UserRoles].[Name] AS [Name]
     FROM [dbo].[UserRoles] AS [UserRoles]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_dbo_TeamReports_dbo_Teams" Association="Self.FK_dbo_TeamReports_dbo_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamReports" EntitySet="TeamReports" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="Self.FK_dbo_Teams_dbo_Ships">
             <End Role="Ships" EntitySet="Ships" />
             <End Role="Teams" EntitySet="Teams" />
@@ -483,6 +513,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_TeamVotes_dbo_UserProfiles" Association="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="TeamVote" EntitySet="TeamVotes" />
+          </AssociationSet>
+          <EntitySet Name="TeamReports" EntityType="tcdbModel.TeamReport" />
+          <AssociationSet Name="FK_dbo_TeamReports_dbo_Teams" Association="tcdbModel.FK_dbo_TeamReports_dbo_Teams">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamReport" EntitySet="TeamReports" />
           </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
@@ -788,6 +823,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamSockets" Relationship="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" FromRole="Team" ToRole="TeamSocket" />
           <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
           <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="Team" ToRole="TeamVote" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TeamReports" Relationship="tcdbModel.FK_dbo_TeamReports_dbo_Teams" FromRole="Team" ToRole="TeamReport" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
@@ -901,6 +938,31 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="TeamVote">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeamReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="Reason" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamReports_dbo_Teams" FromRole="TeamReport" ToRole="Team" />
+          <Property Name="SubmittedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="AcknowledgedDate" Type="DateTimeOffset" Precision="7" />
+        </EntityType>
+        <Association Name="FK_dbo_TeamReports_dbo_Teams">
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamReport" Role="TeamReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamReport">
+              <PropertyRef Name="TeamId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1033,6 +1095,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="tcdbModel.Team">
               <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
                 <ScalarProperty Name="EditedById" ColumnName="EditedById" />
@@ -1053,6 +1116,17 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamReports">
+            <EntityTypeMapping TypeName="tcdbModel.TeamReport">
+              <MappingFragment StoreEntitySet="TeamReports">
+                <ScalarProperty Name="AcknowledgedDate" ColumnName="AcknowledgedDate" />
+                <ScalarProperty Name="SubmittedDate" ColumnName="SubmittedDate" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

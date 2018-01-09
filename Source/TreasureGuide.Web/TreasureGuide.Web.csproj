@@ -77,6 +77,9 @@
       <None Update="src\models\generated\team-models.tst.gen">
         <CustomToolNamespace>Models\TeamModels\TeamModels.cs</CustomToolNamespace>
       </None>
+      <None Update="src\models\generated\team-report-model.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamReportModel.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\generated\team-search-model.tst.gen">
         <CustomToolNamespace>Models\TeamModels\TeamSearchModel.cs</CustomToolNamespace>
       </None>

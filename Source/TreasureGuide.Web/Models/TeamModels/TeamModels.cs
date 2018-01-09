@@ -17,6 +17,8 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Global { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
+        public bool Deleted { get; set; }
+        public bool Reported { get; set; }
 
         public IEnumerable<TeamUnitStubModel> TeamUnits { get; set; }
     }
@@ -37,6 +39,8 @@ namespace TreasureGuide.Web.Models.TeamModels
         public int ShipId { get; set; }
         public int? StageId { get; set; }
         public bool CanEdit { get; set; }
+        public bool Deleted { get; set; }
+        public bool Reported { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
@@ -56,6 +60,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string Guide { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
+        public bool Deleted { get; set; }
 
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
         public IEnumerable<TeamUnitEditorModel> TeamUnits { get; set; }
