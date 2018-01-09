@@ -9,41 +9,41 @@
         <div class="_floatRight" if.bind="unitId">
             <unit-display unit-id.bind="unitId"></unit-display>
         </div>
-        <div class="row" if.bind="friendId">
+        <div if.bind="friendId">
             <label for="friendId">Friend Id</label>
             <friend-id-display id="friendId" friend-id.bind="friendId" global.bind="global"></friend-id-display>
         </div>
-        <div class="row" if.bind="website">
+        <div if.bind="website">
             <label for="website">Website</label>
             <a id="website" href.bind="website" href="#" target="_blank">${website}</a>
         </div>
-        <div class="row">
-            <fieldset>
-                <legend>Roles</legend>
-                <ul>
-                    <li repeat.for="role of userRoles">${role}</li>
-                </ul>
-            </fieldset>
+        <div>
+            <label for="roles">Roles</label>
+            <ul id="roles">
+                <li repeat.for="role of userRoles">${role}</li>
+            </ul>
         </div>
-
+    </div>
+    <div>
+        <h2>Teams</h2>
         <div class="row">
-            <fieldset>
-                <legend>Teams</legend>
-                <loading-area if.bind="loadingTeams"></loading-area>
-                <div if.bind="!loadingTeams">
-                    <div class="row">
-                        <search-pager search-model.bind="teamSearchModel"></search-pager>
-                    </div>
-                    <div class="row team-collection" if.bind="teams.length > 0">
-                        <div class=" col m6" repeat.for="team of teams">
-                            <team-box team.bind="team"></team-box>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <search-pager search-model.bind="teamSearchModel" bottom="true"></search-pager>
+            <team-search model.two-way="teamSearchModel" user-locked="true"></team-search>
+        </div>
+        <div class="row">
+            <loading-area if.bind="loadingTeams"></loading-area>
+            <div if.bind="!loadingTeams">
+                <div class="row">
+                    <search-pager search-model.bind="teamSearchModel"></search-pager>
+                </div>
+                <div class="row team-collection" if.bind="teams.length > 0">
+                    <div class=" col m6" repeat.for="team of teams">
+                        <team-box team.bind="team"></team-box>
                     </div>
                 </div>
-            </fieldset>
+                <div class="row">
+                    <search-pager search-model.bind="teamSearchModel" bottom="true"></search-pager>
+                </div>
+            </div>
         </div>
     </div>
 </template>

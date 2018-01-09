@@ -4,29 +4,58 @@
             <legend>Search</legend>
             <div class="row">
                 <div class="col m8">
-                    <label for="termInput">Term</label>
-                    <input id="termInput" type="text" value.bind="term" placeholder="My Nakama..." />
-                    <label for="userInput">User Name</label>
-                    <input id="userInput" type="text" value.bind="submittedBy" placeholder="Luffy..." />
-                    <label for="stageInput">Stage</label>
-                    <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
+                    <div class="form-group">
+                        <label for="termInput">Term</label>
+                        <input id="termInput" type="text" value.bind="term" placeholder="My Nakama..." />
+                    </div>
+                    <div class="form-group" if.bind="!userLocked">
+                        <label for="userInput">User Name</label>
+                        <input id="userInput" type="text" value.bind="submittedBy" placeholder="Luffy..." />
+                    </div>
+                    <div class="form-group">
+                        <label for="stageInput">Stage</label>
+                        <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
+                    </div>
                 </div>
                 <div class="col m4">
-                    <label for="unitInput">Captain</label>
-                    <unit-display id="unitInput" unit-id.two-way="leaderId" editable="true"></unit-display>
-
-                    <label for="globalCheckbox">
-                        <input id="globalCheckbox" type="checkbox" checked.bind="global" />
-                        <span class="-label-body"> Global</span>
-                    </label>
-                    <label for="f2pCheckbox">
-                        <input id="f2pCheckbox" type="checkbox" checked.bind="freeToPlay" />
-                        <span class="-label-body">Free to Play</span>
-                    </label>
+                    <div class="form-group">
+                        <label for="unitInput">Captain</label>
+                        <unit-display id="unitInput" unit-id.two-way="leaderId" editable="true"></unit-display>
+                    </div>
+                    <div class="form-group">
+                        <label for="globalCheckbox">
+                            <input id="globalCheckbox" type="checkbox" checked.bind="global" />
+                            <span class="-label-body"> Global</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="f2pCheckbox">
+                            <input id="f2pCheckbox" type="checkbox" checked.bind="freeToPlay" />
+                            <span class="-label-body">Free to Play</span>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <button class="button _floatRight" click.trigger="reset()">Reset</button>
+                <div class="col m3">
+                    <div class="form-group">
+                        <label for="reportedCheckbox" auth-req="Moderator, Administrator">
+                            <input id="reportedCheckbox" type="checkbox" checked.bind="reported" />
+                            <span class="-label-body">Reported</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col m3">
+                    <div class="form-group">
+                        <label for="deletedCheckbox" auth-req="Moderator, Administrator">
+                            <input id="deletedCheckbox" type="checkbox" checked.bind="deleted" />
+                            <span class="-label-body">Deleted</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col m6">
+                    <button class="button _floatRight" click.trigger="reset()">Reset</button>
+                </div>
             </div>
         </fieldset>
     </form>
