@@ -94,7 +94,11 @@ export class ProfileEditPage {
             this.router.navigateToRoute('account', { id: results.id });
         }).catch(response => {
             return response.text().then(msg => {
-                this.alert.danger(msg);
+                if (msg) {
+                    this.alert.danger(msg);
+                } else {
+                    this.alert.danger('An error has occurred. Please try again in a few moments.');
+                }
             }).catch(error => {
                 this.alert.danger('An error has occurred. Please try again in a few moments.');
             });
