@@ -12,16 +12,3 @@ $extra-large-and-up: "only screen and (min-width : #{$large-screen-up})" !defaul
 $small-and-down: "only screen and (max-width : #{$small-screen})" !default;
 $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
 $medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
-
-// Colors
-$white-color: #FFFFFF;
-$background-color: #FFFFFF;
-$primary-color: #0B6C6C;
-$light-color: #9E9E9E;
-$dark-color: #585858;
-$danger-color: #B41313;
-$success-color: #76A811;
-$warning-color: #B45C13;
-$active-color: #6E6E6E;
-$info-color: #183579;
-$black-color: #000000;

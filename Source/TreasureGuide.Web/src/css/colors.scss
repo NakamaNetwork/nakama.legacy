@@ -1,17 +1,51 @@
 @import "_variables.scss";
 
+// Colors
+$white-color: #FFFFFF;
+$background-color: #FFFFFF;
+$primary-color: #0B6C6C;
+$light-color: #9E9E9E;
+$dark-color: #585858;
+$danger-color: #B41313;
+$success-color: #76A811;
+$warning-color: #B45C13;
+$active-color: #6E6E6E;
+$info-color: #183579;
+$black-color: #000000;
+
 body {
     background-color: $background-color;
 }
 
 @mixin color($name, $color) {
+    $dark: darken($color, 10%);
+
+    $text: #aaa;
+
+    @if lightness($color) >= 50 {
+        $text: #000;
+    }
+    @else {
+        $text: #fff;
+    }
+
     ._#{$name} {
-        border-color: darken($color, 10%) !important;
+        border-color: $dark !important;
         background-color: $color !important;
+        color: $text;
+
+        a {
+            color: $text;
+
+            &:hover {
+                color: $text;
+                opacity: 0.6;
+            }
+        }
     }
 
     ._#{$name}Text {
-        color: darken($color, 10%);
+        color: $dark;
     }
 }
 
@@ -33,16 +67,5 @@ a {
     &:hover {
         @extend ._primaryText;
         opacity: 0.6;
-    }
-}
-
-
-._dark {
-    a {
-        @extend ._lightText;
-
-        &:hover {
-            @extend ._lightText;
-        }
     }
 }
