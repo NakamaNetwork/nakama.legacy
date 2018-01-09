@@ -70,6 +70,10 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected bool OwnsTeam(int? id)
         {
+            if (!id.HasValue)
+            {
+                return true;
+            }
             var userId = User.GetId();
             return DbContext.Teams.Any(x => x.Id == id && x.SubmittedById == userId);
         }
