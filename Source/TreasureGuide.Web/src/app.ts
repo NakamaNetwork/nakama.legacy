@@ -24,7 +24,7 @@ export class App {
         config.title = 'Nakama Network';
         config.addAuthorizeStep(AuthorizeStep);
         config.map([
-            { route: ['', '/', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
+            { route: ['', '/', '_=_', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
             { route: 'error', name: 'error', title: 'Error', moduleId: 'views/error', nav: false },
             { route: 'notfound', name: 'notfound', title: 'Not Found', moduleId: 'views/notfound', nav: false },
             { route: 'unauthorized', name: 'unauthorized', title: 'Unauthorized', moduleId: 'views/unauthorized', nav: false },
