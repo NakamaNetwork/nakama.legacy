@@ -102,7 +102,7 @@ namespace TreasureGuide.Web.Controllers
             }
             if (result.IsLockedOut)
             {
-                return View("Lockout");
+                return View(nameof(Lockout);
             }
             else
             {
@@ -111,7 +111,7 @@ namespace TreasureGuide.Web.Controllers
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? "";
                 var name = email.Substring(0, email.IndexOf("@"));
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = name, Email = email });
+                return View(nameof(ExternalLoginConfirmation), new ExternalLoginConfirmationViewModel { UserName = name, Email = email });
             }
         }
 
@@ -128,7 +128,7 @@ namespace TreasureGuide.Web.Controllers
                 var info = await _signInManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    return View("ExternalLoginFailure");
+                    return View(nameof(ExternalLoginFailure));
                 }
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
@@ -163,7 +163,26 @@ namespace TreasureGuide.Web.Controllers
         //
         // GET /Account/AccessDenied
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        //
+        // GET /Account/ExternalLoginFailure
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ExternalLoginFailure()
+        {
+            return View();
+        }
+
+        //
+        // GET /Account/Lockout
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Lockout()
         {
             return View();
         }
