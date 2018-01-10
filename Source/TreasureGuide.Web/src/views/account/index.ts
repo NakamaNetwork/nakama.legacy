@@ -1,4 +1,4 @@
-﻿import { autoinject } from 'aurelia-framework';
+﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { ProfileQueryService } from '../../services/query/profile-query-service';
 import { TeamQueryService } from '../../services/query/team-query-service';
@@ -42,6 +42,14 @@ export class ProfileDetailPage {
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested account could not be found.' });
         });
+    }
+
+    @computedFrom('profile', 'profile.website')
+    get websiteParsed() {
+        if (!this.profile.website || this.profile.website.indexOf('//') >= 0) {
+            return this.profile.website;
+        }
+        return '//' + this.profile.website;
     }
 
     search(payload) {
