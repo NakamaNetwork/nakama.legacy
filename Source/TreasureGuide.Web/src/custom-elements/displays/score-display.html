@@ -7,7 +7,7 @@
         <a href="#" if.bind="votable" auth-req click.delegate="thumbsUp()" class="thumbs-up" title="Upvote">
             <i class="fa fa-fw" class.bind="thumbsUpIcon"></i>
         </a>
-        <a href="#"  if.bind="votable" class="report" title="Report" click.delegate="report()">
+        <a href="#"  if.bind="votable" auth-req class="report" title="Report" click.delegate="report()">
             <i class="fa fa-fw fa-warning"></i>
         </a>
     </div>

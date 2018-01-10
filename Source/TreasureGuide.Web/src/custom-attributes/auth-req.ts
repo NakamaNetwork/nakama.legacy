@@ -31,13 +31,10 @@ export class AuthReq {
     }
 
     private update() {
-        var visibility = this.accountService.isInRoles(this.roles, this.all);
+        var visibility = this.accountService.isInRoles(this.roles, this.all, true);
         if (this.inverse) {
             visibility = !visibility;
         }
-        (<any>this.element).style.visibility = visibility ? 'visible' : 'hidden';
-        (<any>this.element).style.height = visibility ? null : 0;
-        (<any>this.element).style.maxHeight = visibility ? null : 0;
-        (<any>this.element).style.minHeight = visibility ? null : 0;
+        (<any>this.element).style.display = visibility ? '' : 'none';
     }
 }
