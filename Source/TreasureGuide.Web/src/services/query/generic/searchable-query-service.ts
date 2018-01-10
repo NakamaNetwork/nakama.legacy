@@ -1,4 +1,4 @@
-﻿import { GenericApiQueryService } from './generic-query-service';
+﻿import { GenericApiQueryService } from './generic-api-query-service';
 import { HttpEngine } from '../../../tools/http-engine';
 
 export class SearchableQueryService extends GenericApiQueryService {

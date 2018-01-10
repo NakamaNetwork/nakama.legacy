@@ -21,6 +21,7 @@ namespace TreasureGuide.Entities
             this.EditedTeams = new HashSet<Team>();
             this.SubmittedTeams = new HashSet<Team>();
             this.TeamVotes = new HashSet<TeamVote>();
+            this.TeamVideos = new HashSet<TeamVideo>();
         }
     
         public string Id { get; set; }
@@ -38,5 +39,7 @@ namespace TreasureGuide.Entities
         public virtual ICollection<Team> SubmittedTeams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamVote> TeamVotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamVideo> TeamVideos { get; set; }
     }
 }

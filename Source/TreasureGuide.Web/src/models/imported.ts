@@ -174,6 +174,7 @@ export interface ITeamStubModel {
 export interface ITeamDetailModel {
     teamUnits: ITeamUnitDetailModel[];
     teamSockets: ITeamSocketStubModel[];
+    teamVideos: ITeamVideoModel[];
     id: number;
     name: string;
     submittedById: string;
@@ -275,6 +276,18 @@ export interface ITeamUnitEditorModel {
     position: number;
     specialLevel: number;
     sub: boolean;
+    
+}
+
+
+export interface ITeamVideoModel {
+    id: number;
+    teamId: number;
+    videoLink: string;
+    submittedDate: Date;
+    userId: string;
+    userName: string;
+    userUnitId: number;
     
 }
 

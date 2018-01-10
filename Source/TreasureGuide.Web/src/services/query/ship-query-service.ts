@@ -1,6 +1,6 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
-import { GenericApiQueryService } from './generic/generic-query-service';
+import { GenericApiQueryService } from './generic/generic-api-query-service';
 
 @autoinject
 export class ShipQueryService extends GenericApiQueryService {

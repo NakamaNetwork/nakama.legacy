@@ -38,5 +38,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamVote> TeamVotes { get; set; }
         public virtual DbSet<TeamReport> TeamReports { get; set; }
+        public virtual DbSet<TeamVideo> TeamVideos { get; set; }
     }
 }
