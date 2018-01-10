@@ -44,6 +44,7 @@ namespace TreasureGuide.Web.Models.TeamModels
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
+        public IEnumerable<TeamVideoModel> TeamVideos { get; set; }
     }
 
     public class TeamEditorModel : IIdItem<int?>

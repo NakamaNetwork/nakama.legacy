@@ -44,6 +44,10 @@ namespace TreasureGuide.Web.Controllers.API
             var detail = single as TeamDetailModel;
             if (detail != null)
             {
+                if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+                {
+                    detail.TeamVideos = detail.TeamVideos.Where(x => !x.Deleted);
+                }
                 var userId = User.GetId();
                 if (userId != null)
                 {
@@ -280,6 +284,44 @@ namespace TreasureGuide.Web.Controllers.API
             team.AcknowledgedDate = DateTimeOffset.Now;
             await DbContext.SaveChangesAsync();
             return Ok(id);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.Contributor)]
+        [ActionName("Video")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Video([FromBody] TeamVideoModel model, int? id = null)
+        {
+            var videoId = id ?? model.Id;
+            TeamVideo video = null;
+            if (videoId.HasValue)
+            {
+                video = await DbContext.TeamVideos.SingleOrDefaultAsync(x => x.Id == videoId);
+            }
+            var exists = video != null;
+            if (exists && !(await CanEditVideo(video.Id)))
+            {
+                return Unauthorized();
+            }
+            video = video ?? new TeamVideo();
+            video.UserId = User.GetId();
+            video.Deleted = model.Deleted;
+            video.SubmittedDate = DateTimeOffset.Now;
+            video.VideoLink = model.VideoLink;
+            video.TeamId = model.TeamId;
+            if (!exists)
+            {
+                DbContext.TeamVideos.Add(video);
+            }
+            await DbContext.SaveChangesAsync();
+            return Ok(video.Id);
+        }
+
+        private async Task<bool> CanEditVideo(int? videoId)
+        {
+            var userId = User.GetId();
+            return userId != null && User.IsInAnyRole(RoleConstants.Moderator, RoleConstants.Administrator) ||
+                   await DbContext.TeamVideos.AnyAsync(x => x.Id == videoId && x.UserId == userId);
         }
     }
 }

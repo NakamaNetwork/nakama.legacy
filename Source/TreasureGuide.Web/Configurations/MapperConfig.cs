@@ -24,6 +24,10 @@ namespace TreasureGuide.Web.Configurations
                 teamUnit.DetailMapping.ForMember(x => x.Level, o => o.MapFrom(y => (int)(y.Unit.MaxLevel ?? 1)));
                 var teamSocket = mapper.CreateControllerMapping<TeamSocket, TeamSocketDetailModel, TeamSocketStubModel, TeamSocketEditorModel>();
 
+                var teamVideo = mapper.CreateMap<TeamVideo, TeamVideoModel>();
+                teamVideo.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
+                teamVideo.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
+
                 var team = mapper.CreateControllerMapping<Team, TeamDetailModel, TeamStubModel, TeamEditorModel>();
                 team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
                 team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));

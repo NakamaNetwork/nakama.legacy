@@ -100,5 +100,6 @@
   <ItemGroup>
     <Build Include="dbo\Views\UserRoles.sql" />
     <Build Include="dbo\Tables\Teams\TeamReports.sql" />
+    <Build Include="dbo\Tables\Teams\TeamVideos.sql" />
   </ItemGroup>
 </Project>

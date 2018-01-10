@@ -45,71 +45,8 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
-      <None Update="src\models\generated\access-token-model.tst.gen">
-        <CustomToolNamespace>Models\ProfileModels\AccessTokenModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\external-login-confirmation-view-model.tst.gen">
-        <CustomToolNamespace>Models\AccountViewModels\ExternalLoginConfirmationViewModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\profile-models.tst.gen">
-        <CustomToolNamespace>Models\ProfileModels\ProfileModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\role-constants.tst.gen">
-        <CustomToolNamespace>Constants\RoleConstants.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\search-model.tst.gen">
-        <CustomToolNamespace>Models\SearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\ship-models.tst.gen">
-        <CustomToolNamespace>Models\ShipModels\ShipModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\socket-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\SocketType.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\stage-models.tst.gen">
-        <CustomToolNamespace>Models\StageModels\StageModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\stage-search-model.tst.gen">
-        <CustomToolNamespace>Models\StageModels\StageSearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\stage-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\StageType.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-models.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-report-model.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamReportModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-search-model.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamSearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-socket-models.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamSocketModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-unit-models.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamUnitModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-vote-m-odel.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamVoteMOdel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-vote-model.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamVoteModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\unit-class.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\UnitClass.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\unit-flag.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\UnitFlag.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\unit-models.tst.gen">
-        <CustomToolNamespace>Models\UnitModels\UnitModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\unit-search-model.tst.gen">
-        <CustomToolNamespace>Models\UnitModels\UnitSearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\unit-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\UnitType.cs</CustomToolNamespace>
+      <None Update="src\models\generated\team-video-models.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamVideoModels.cs</CustomToolNamespace>
       </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>

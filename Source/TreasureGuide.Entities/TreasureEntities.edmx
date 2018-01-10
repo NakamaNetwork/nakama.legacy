@@ -104,6 +104,17 @@
           <Property Name="SpecialLevel" Type="tinyint" />
           <Property Name="Sub" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="TeamVideos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="VideoLink" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+        </EntityType>
         <EntityType Name="TeamVotes">
           <Key>
             <PropertyRef Name="TeamId" />
@@ -329,6 +340,34 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_TeamVideos_dbo_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamVideos" Type="Self.TeamVideos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVideos">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamVideos_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamVideos" Type="Self.TeamVideos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVideos">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_TeamVotes_dbo_Teams">
           <End Role="Teams" Type="Self.Teams" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -367,6 +406,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamSockets" EntityType="Self.TeamSockets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamUnits" EntityType="Self.TeamUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamVideos" EntityType="Self.TeamVideos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
@@ -427,6 +467,14 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_TeamUnits_dbo_Units" Association="Self.FK_dbo_TeamUnits_dbo_Units">
             <End Role="Units" EntitySet="Units" />
             <End Role="TeamUnits" EntitySet="TeamUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamVideos_dbo_Teams" Association="Self.FK_dbo_TeamVideos_dbo_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamVideos" EntitySet="TeamVideos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamVideos_dbo_UserProfiles" Association="Self.FK_dbo_TeamVideos_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="TeamVideos" EntitySet="TeamVideos" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_TeamVotes_dbo_Teams" Association="Self.FK_dbo_TeamVotes_dbo_Teams">
             <End Role="Teams" EntitySet="Teams" />
@@ -518,6 +566,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_TeamReports_dbo_Teams" Association="tcdbModel.FK_dbo_TeamReports_dbo_Teams">
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamReport" EntitySet="TeamReports" />
+          </AssociationSet>
+          <EntitySet Name="TeamVideos" EntityType="tcdbModel.TeamVideo" />
+          <AssociationSet Name="FK_dbo_TeamVideos_dbo_Teams" Association="tcdbModel.FK_dbo_TeamVideos_dbo_Teams">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamVideo" EntitySet="TeamVideos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamVideos_dbo_UserProfiles" Association="tcdbModel.FK_dbo_TeamVideos_dbo_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="TeamVideo" EntitySet="TeamVideos" />
           </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
@@ -767,6 +824,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="EditedTeams" Relationship="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
           <NavigationProperty Name="SubmittedTeams" Relationship="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
           <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamVote" />
+          <NavigationProperty Name="TeamVideos" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamVideo" />
         </EntityType>
         <Association Name="FK_dbo_UserProfile_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
@@ -825,6 +883,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="Team" ToRole="TeamVote" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="TeamReports" Relationship="tcdbModel.FK_dbo_TeamReports_dbo_Teams" FromRole="Team" ToRole="TeamReport" />
+          <NavigationProperty Name="TeamVideos" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_Teams" FromRole="Team" ToRole="TeamVideo" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
@@ -963,6 +1022,47 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="TeamReport">
               <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeamVideo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="VideoLink" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="SubmittedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_Teams" FromRole="TeamVideo" ToRole="Team" />
+          <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_UserProfiles" FromRole="TeamVideo" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_dbo_TeamVideos_dbo_Teams">
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamVideo" Role="TeamVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVideo">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamVideos_dbo_UserProfiles">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamVideo" Role="TeamVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamVideo">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1125,6 +1225,18 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="AcknowledgedDate" ColumnName="AcknowledgedDate" />
                 <ScalarProperty Name="SubmittedDate" ColumnName="SubmittedDate" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamVideos">
+            <EntityTypeMapping TypeName="tcdbModel.TeamVideo">
+              <MappingFragment StoreEntitySet="TeamVideos">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SubmittedDate" ColumnName="SubmittedDate" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
