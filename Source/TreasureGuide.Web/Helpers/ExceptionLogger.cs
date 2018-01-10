@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Data.Entity.Validation;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace TreasureGuide.Web.Helpers
 {
@@ -27,8 +29,18 @@ namespace TreasureGuide.Web.Helpers
 
         public void OnException(ExceptionContext context)
         {
-            var eventId = new EventId();
-            _logger.LogError(eventId, context?.Exception, context?.Exception?.Message);
+            HandleException(context.Exception);
+        }
+
+        private void HandleException(Exception exception)
+        {
+            Serialize(exception);
+        }
+
+        private void Serialize(Exception exception)
+        {
+            var full = JsonConvert.SerializeObject(exception);
+            _logger.LogError(full);
         }
     }
 }

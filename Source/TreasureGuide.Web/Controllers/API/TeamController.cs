@@ -65,7 +65,7 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override bool CanPost(int? id)
         {
-            return User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id);
+            return User.GetId() != null && User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id);
         }
 
         protected override bool CanDelete(int? id)
