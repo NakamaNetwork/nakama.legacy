@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using AspNet.Security.OAuth.Reddit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -106,6 +107,12 @@ namespace TreasureGuide.Web
                 ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"],
                 ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"],
                 RetrieveUserDetails = true
+            });
+
+            app.UseRedditAuthentication(new RedditAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Reddit:ClientId"],
+                ClientSecret = Configuration["Authentication:Reddit:ClientSecret"]
             });
 
             RoleConfig.Configure(roleManager);
