@@ -285,6 +285,7 @@ export interface ITeamVideoModel {
     teamId: number;
     videoLink: string;
     submittedDate: Date;
+    deleted: boolean;
     userId: string;
     userName: string;
     userUnitId: number;

@@ -292,7 +292,7 @@ namespace TreasureGuide.Web.Controllers.API
             TeamVideo video = null;
             if (videoId.HasValue)
             {
-                video = await DbContext.TeamVideos.SingleOrDefaultAsync(x => x.Id == id);
+                video = await DbContext.TeamVideos.SingleOrDefaultAsync(x => x.Id == videoId);
             }
             var exists = video != null;
             video = video ?? new TeamVideo();

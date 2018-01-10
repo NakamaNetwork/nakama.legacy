@@ -1,4 +1,20 @@
 <template>
-    <span>${video.link}</span>
-    <span>${isOwner}</span>
+    <fieldset with.bind="video" class="video-display">
+        <button if.bind="canDelete" class="delete-button button _danger _xsmall" title="Delete Video" click.delegate="delete()">
+            <i class="fa fa-fw fa-times"></i>
+        </button>
+        <div class="row">
+            <video-embed video-id.bind="videoLink"></video-embed>
+        </div>
+        <div class="row">
+            <small class="_floatLeft">
+                <a route-href="route: account; params.bind: {id: userId}">
+                    <user-display name.bind="userName" unit-id.bind="userUnitId"></user-display>
+                </a>
+            </small>
+            <small class="_floatRight">
+                ${submittedDate | ageFormat}
+            </small>
+        </div>
+    </fieldset>
 </template>

@@ -236,3 +236,11 @@ team-box {
         margin-bottom: 0;
     }
 }
+
+.video-display {
+    .delete-button {
+        @extend ._floatRight;
+        margin-top: -10px;
+        margin-right: -5px;
+    }
+}

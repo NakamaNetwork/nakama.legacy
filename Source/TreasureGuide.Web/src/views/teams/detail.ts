@@ -6,6 +6,7 @@ import { CalcParser } from '../../tools/calc-parser';
 import { DialogService } from 'aurelia-dialog';
 import { VideoPicker } from '../../custom-elements/dialogs/video-picker';
 import { ITeamVideoModel } from '../../models/imported';
+import * as moment from 'moment';
 
 @autoinject
 export class TeamDetailPage {
@@ -32,9 +33,21 @@ export class TeamDetailPage {
         return '';
     }
 
-    @computedFrom('team', 'team.teamVideos')
+    @computedFrom('team', 'team.teamVideos', 'team.submittedById')
     get sortedVideos() {
-        return [];
+        return this.team.teamVideos.sort((a, b) => {
+            return moment(b.submittedDate).diff(moment(a.submittedDate));
+        });
+    }
+
+    @computedFrom('sortedVideos', 'team', 'team.submittedById')
+    get ownerVideos() {
+        return this.team.teamVideos.filter(x => x.userId === this.team.submittedById);
+    }
+
+    @computedFrom('sortedVideos', 'team', 'team.submittedById')
+    get otherVideos() {
+        return this.team.teamVideos.filter(x => x.userId !== this.team.submittedById);
     }
 
     submitVideo() {

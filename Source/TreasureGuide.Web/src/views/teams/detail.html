@@ -61,8 +61,19 @@
             <div if.bind="sortedVideos.length === 0" class="_alignCenter">
                 <h5>No videos for this team. Why not submit one?</h5>
             </div>
-            <div class="col m4" repeat.for="video of sortedVideos">
-                <video-display video.bind="video" user-id.bind="submittedById"></video-display>
+            <div class="row _alignCenter" if.bind="ownerVideos.length > 0">
+                <div>
+                    <div class="col m4" repeat.for="video of ownerVideos">
+                        <video-display video.bind="video"></video-display>
+                    </div>
+                </div>
+            </div>
+            <div class="row _alignCenter" if.bind="otherVideos.length > 0">
+                <div>
+                    <div class="col m3" repeat.for="video of otherVideos">
+                        <video-display video.bind="video"></video-display>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
