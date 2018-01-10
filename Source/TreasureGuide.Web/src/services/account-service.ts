@@ -22,12 +22,14 @@ export class AccountService {
     }
 
     isInRoles(authParams, all: boolean = false, req: boolean = false): boolean {
-        if (!req && (!authParams || (Array.isArray(authParams) && authParams.length === 0))) {
+        if (!req && !authParams || (Array.isArray(authParams) && authParams.length === 0)) {
             return true;
         }
-
         if (!this.isLoggedIn) {
             return false;
+        }
+        if (!authParams || (Array.isArray(authParams) && authParams.length === 0)) {
+            return true;
         }
         if (typeof (authParams) === 'string') {
             authParams = authParams.split(',');
