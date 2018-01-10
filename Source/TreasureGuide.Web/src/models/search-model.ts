@@ -9,9 +9,10 @@ export abstract class SearchModel implements ISearchModel {
     public cached: boolean = true;
 
     abstract getDefault(): SearchModel;
+    abstract getCacheKey(): string;
 
     getCached(): SearchModel {
-        var key = this.constructor.name;
+        var key = this.getCacheKey();
         var json = sessionStorage[key];
         var result = null;
         if (json) {

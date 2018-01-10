@@ -23,6 +23,10 @@ export class ProfileSearchModel extends SearchModel implements IProfileSearchMod
     public getDefault(): SearchModel {
         return new ProfileSearchModel();
     }
+
+    getCacheKey(): string {
+        return 'search-profile';
+    }
 }
 
 export class ProfileEditorModel implements IProfileEditorModel {

@@ -19,4 +19,8 @@ export class StageSearchModel extends SearchModel implements IStageSearchModel {
     getDefault(): SearchModel {
         return new StageSearchModel();
     }
+
+    getCacheKey(): string {
+        return 'search-stage';
+    }
 }

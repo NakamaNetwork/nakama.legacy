@@ -26,6 +26,7 @@ export class UnitQueryService extends SearchableQueryService {
 }
 
 export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
+
     term: string;
     classes: number[];
     types: number[];
@@ -36,5 +37,9 @@ export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
 
     public getDefault(): SearchModel {
         return new UnitSearchModel();
+    }
+
+    getCacheKey(): string {
+         return 'search-unit';
     }
 };

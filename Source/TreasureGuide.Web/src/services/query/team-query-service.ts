@@ -47,6 +47,10 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     getDefault(): TeamSearchModel {
         return new TeamSearchModel();
     }
+
+    getCacheKey(): string {
+         return 'search-team';
+    }
 };
 
 export class TeamEditorModel implements ITeamEditorModel {
