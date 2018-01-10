@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Text;
+using AspNet.Security.OAuth.Discord;
+using AspNet.Security.OAuth.Reddit;
+using AspNet.Security.OAuth.Twitch;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -106,6 +109,24 @@ namespace TreasureGuide.Web
                 ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"],
                 ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"],
                 RetrieveUserDetails = true
+            });
+
+            app.UseRedditAuthentication(new RedditAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Reddit:ClientId"],
+                ClientSecret = Configuration["Authentication:Reddit:ClientSecret"]
+            });
+
+            app.UseTwitchAuthentication(new TwitchAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Twitch:ClientId"],
+                ClientSecret = Configuration["Authentication:Twitch:ClientSecret"]
+            });
+
+            app.UseDiscordAuthentication(new DiscordAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Discord:ClientId"],
+                ClientSecret = Configuration["Authentication:Discord:ClientSecret"]
             });
 
             RoleConfig.Configure(roleManager);

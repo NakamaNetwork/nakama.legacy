@@ -111,8 +111,12 @@ namespace TreasureGuide.Web.Controllers
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? "";
-                var emailIndex = email.IndexOf("@");
-                var name = emailIndex <= 0 ? email : email.Substring(0, emailIndex);
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name) ?? "";
+                if (String.IsNullOrWhiteSpace(name))
+                {
+                    var emailIndex = email.IndexOf("@");
+                    name = emailIndex <= 0 ? email : email.Substring(0, emailIndex);
+                }
                 return View(nameof(ExternalLoginConfirmation), new ExternalLoginConfirmationViewModel { UserName = name, Email = email });
             }
         }
