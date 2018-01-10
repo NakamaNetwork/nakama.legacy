@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using TreasureGuide.Entities;
 using TreasureGuide.Web.Data;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
 
@@ -49,7 +50,11 @@ namespace TreasureGuide.Web.Configurations
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc(options => { options.Filters.Add(new RequireHttpsAttribute()); }).AddJsonOptions(json =>
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+                options.Filters.Add(new ExceptionLoggerAttribute());
+            }).AddJsonOptions(json =>
             {
                 json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });

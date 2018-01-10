@@ -46,6 +46,7 @@ namespace TreasureGuide.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddFile("logs/nakama-{Date}.txt");
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())

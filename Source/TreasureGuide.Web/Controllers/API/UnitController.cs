@@ -48,7 +48,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (myBox)
             {
-                // TODO: Box filtering
+                throw new System.NotImplementedException();
             }
             return results;
         }

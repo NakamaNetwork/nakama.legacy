@@ -17,3 +17,5 @@ Properties/PublishProfiles
 
 // Production Configs
 appsettings.production.json
+
+logs
