@@ -122,11 +122,12 @@ namespace TreasureGuide.Web
                 ClientId = Configuration["Authentication:Twitch:ClientId"],
                 ClientSecret = Configuration["Authentication:Twitch:ClientSecret"]
             });
-
+            
             app.UseDiscordAuthentication(new DiscordAuthenticationOptions
             {
                 ClientId = Configuration["Authentication:Discord:ClientId"],
-                ClientSecret = Configuration["Authentication:Discord:ClientSecret"]
+                ClientSecret = Configuration["Authentication:Discord:ClientSecret"],
+                Scope = { "identify", "email" }
             });
 
             RoleConfig.Configure(roleManager);
