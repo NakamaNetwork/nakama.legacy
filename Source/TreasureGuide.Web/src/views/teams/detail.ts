@@ -6,6 +6,7 @@ import { CalcParser } from '../../tools/calc-parser';
 import { DialogService } from 'aurelia-dialog';
 import { VideoPicker } from '../../custom-elements/dialogs/video-picker';
 import { ITeamVideoModel } from '../../models/imported';
+import { AlertService } from '../../services/alert-service';
 import * as moment from 'moment';
 
 @autoinject
@@ -14,15 +15,17 @@ export class TeamDetailPage {
     private router: Router;
     private calcParser: CalcParser;
     private dialogService: DialogService;
+    private alertService: AlertService;
 
     team: ITeamDetailModel;
     loading: boolean;
 
-    constructor(teamQueryService: TeamQueryService, router: Router, calcParser: CalcParser, dialogService: DialogService) {
+    constructor(teamQueryService: TeamQueryService, router: Router, calcParser: CalcParser, dialogService: DialogService, alertService: AlertService) {
         this.teamQueryService = teamQueryService;
         this.router = router;
         this.calcParser = calcParser;
         this.dialogService = dialogService;
+        this.alertService = alertService;
     }
 
     @computedFrom('team', 'team.teamUnits', 'team.teamShip')
@@ -57,7 +60,12 @@ export class TeamDetailPage {
                     teamId: this.team.id,
                     videoLink: result.output
                 };
-                this.teamQueryService.video(model);
+                this.teamQueryService.video(model).then(x => {
+                    this.alertService.success('Successfully uploaded a video!');
+                    this.reload(this.team.id);
+                }).catch(x => {
+                    this.alertService.success('Successfully deleted video.');
+                });
             }
         });
     }
@@ -65,15 +73,19 @@ export class TeamDetailPage {
     activate(params) {
         var id = params.id;
         if (id) {
-            this.loading = true;
-            this.teamQueryService.detail(id).then(result => {
-                this.team = result;
-                this.loading = false;
-            }).catch(error => {
-                this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });
-            });
+            this.reload(id);
         } else {
             this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });
         }
+    }
+
+    reload(id) {
+        this.loading = true;
+        this.teamQueryService.detail(id).then(result => {
+            this.team = result;
+            this.loading = false;
+        }).catch(error => {
+            this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });
+        });
     }
 }
