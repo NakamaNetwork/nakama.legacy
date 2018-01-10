@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using AspNet.Security.OAuth.Reddit;
+using AspNet.Security.OAuth.Twitch;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -113,6 +114,12 @@ namespace TreasureGuide.Web
             {
                 ClientId = Configuration["Authentication:Reddit:ClientId"],
                 ClientSecret = Configuration["Authentication:Reddit:ClientSecret"]
+            });
+
+            app.UseTwitchAuthentication(new TwitchAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Twitch:ClientId"],
+                ClientSecret = Configuration["Authentication:Twitch:ClientSecret"]
             });
 
             RoleConfig.Configure(roleManager);
