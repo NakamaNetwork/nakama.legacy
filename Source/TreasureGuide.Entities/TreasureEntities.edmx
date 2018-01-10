@@ -108,7 +108,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="VideoLink" Type="nvarchar" MaxLength="12" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
@@ -1029,7 +1029,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <Property Name="VideoLink" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />

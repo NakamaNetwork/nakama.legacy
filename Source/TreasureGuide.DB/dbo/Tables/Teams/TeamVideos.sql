@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[TeamVideos]
 (
-    [Id] INT NOT NULL,
+    [Id] INT NOT NULL IDENTITY(1,1),
     [TeamId] INT NOT NULL,
     [VideoLink] NVARCHAR(12) NOT NULL, 
     [Deleted] BIT NOT NULL,

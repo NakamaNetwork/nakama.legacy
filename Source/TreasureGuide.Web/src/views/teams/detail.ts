@@ -5,6 +5,7 @@ import { ITeamDetailModel } from '../../models/imported';
 import { CalcParser } from '../../tools/calc-parser';
 import { DialogService } from 'aurelia-dialog';
 import { VideoPicker } from '../../custom-elements/dialogs/video-picker';
+import { ITeamVideoModel } from '../../models/imported';
 
 @autoinject
 export class TeamDetailPage {
@@ -39,7 +40,11 @@ export class TeamDetailPage {
     submitVideo() {
         this.dialogService.open({ viewModel: VideoPicker, lock: true }).whenClosed(result => {
             if (!result.wasCancelled) {
-                console.log(result.output);
+                var model = <ITeamVideoModel>{
+                    teamId: this.team.id,
+                    videoLink: result.output
+                };
+                this.teamQueryService.video(model);
             }
         });
     }

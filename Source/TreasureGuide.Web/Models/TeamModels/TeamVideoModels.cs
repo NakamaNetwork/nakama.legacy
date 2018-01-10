@@ -9,6 +9,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public int TeamId { get; set; }
         public string VideoLink { get; set; }
         public DateTimeOffset SubmittedDate { get; set; }
+        public bool Deleted { get; set; }
 
         public string UserId { get; set; }
         public string UserName { get; set; }

@@ -4,6 +4,7 @@ import { SearchableQueryService } from './generic/searchable-query-service';
 import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 import { ITeamReportStubModel } from '../../models/imported';
+import {ITeamVideoModel} from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -30,6 +31,10 @@ export class TeamQueryService extends SearchableQueryService {
 
     acknowledgeReport(teamId: number): Promise<number> {
         return this.http.post(this.buildAddress('acknowledgeReport/' + teamId));
+    }
+
+    video(model: ITeamVideoModel): Promise<number> {
+        return this.http.post(this.buildAddress('video'), model);
     }
 }
 

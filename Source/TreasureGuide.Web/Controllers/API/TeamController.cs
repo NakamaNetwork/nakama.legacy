@@ -281,5 +281,32 @@ namespace TreasureGuide.Web.Controllers.API
             await DbContext.SaveChangesAsync();
             return Ok(id);
         }
+
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.Contributor)]
+        [ActionName("Video")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Video([FromBody] TeamVideoModel model, int? id = null)
+        {
+            var videoId = id ?? model.Id;
+            TeamVideo video = null;
+            if (videoId.HasValue)
+            {
+                video = await DbContext.TeamVideos.SingleOrDefaultAsync(x => x.Id == id);
+            }
+            var exists = video != null;
+            video = video ?? new TeamVideo();
+            video.UserId = User.GetId();
+            video.Deleted = model.Deleted;
+            video.SubmittedDate = DateTimeOffset.Now;
+            video.VideoLink = model.VideoLink;
+            video.TeamId = model.TeamId;
+            if (!exists)
+            {
+                DbContext.TeamVideos.Add(video);
+            }
+            await DbContext.SaveChangesAsync();
+            return Ok(video.Id);
+        }
     }
 }
