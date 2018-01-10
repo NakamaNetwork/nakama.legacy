@@ -37,7 +37,7 @@ export class VideoDisplay {
     @computedFrom('video', 'video.userName', 'video.deleted', 'accountService.userProfile')
     get canDelete(): boolean {
         return !this.video.deleted && (this.accountService.isInRoles([RoleConstants.Administrator, RoleConstants.Moderator]) ||
-            this.accountService.userProfile.userName === this.video.userName);
+            (this.accountService.userProfile.userName === this.video.userName));
     }
 
     delete() {
@@ -48,8 +48,10 @@ export class VideoDisplay {
                 lock: true
             }).whenClosed(result => {
                 if (!result.wasCancelled) {
-                    this.video.deleted = true;
-                    this.teamQueryService.video(this.video).then(x => {
+                    var clone = Object.assign({}, this.video);
+                    clone.deleted = true;
+                    this.teamQueryService.video(clone).then(x => {
+                        this.video.deleted = true;
                         this.alertService.success('Successfully deleted video.');
                     }).catch(x => {
                         this.alertService.danger('Could not delete video. Please try again.');
