@@ -28,7 +28,7 @@ namespace TreasureGuide.Web.Helpers
         public void OnException(ExceptionContext context)
         {
             var eventId = new EventId();
-            _logger.LogCritical(eventId, context?.Exception, context?.Exception?.Message);
+            _logger.LogError(eventId, context?.Exception, context?.Exception?.Message);
         }
     }
 }

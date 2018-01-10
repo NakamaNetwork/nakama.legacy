@@ -47,6 +47,7 @@ namespace TreasureGuide.Web
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddFile("logs/nakama-{Date}.txt");
+            loggerFactory.AddFile("logs/nakama-errors-{Date}.txt", LogLevel.Error);
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
