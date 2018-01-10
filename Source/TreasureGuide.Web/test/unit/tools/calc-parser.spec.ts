@@ -1,4 +1,5 @@
 import { CalcParser } from '../../../src/tools/calc-parser';
+import { ITeamDetailModel } from '../../../src/models/imported';
 describe('calc parser', () => {
     var parser = new CalcParser();
 
@@ -123,5 +124,49 @@ describe('calc parser', () => {
                 }
             ];
             check_parsed(results, expected);
+        });
+
+    it('can export teams',
+        () => {
+            var expected = 'http://optc-db.github.io/damage/#/transfer/D1362:5,1362:7,!,1:5,408:56,418:99C4,10B0D0E0Q0L0G0R0S100H';
+            var team = {
+                teamUnits: [
+                    {
+                        unitId: 1362,
+                        level: 5,
+                        position: 0,
+                        specialLevel: 0,
+                        sub: false
+                    }, {
+                        unitId: 1362,
+                        level: 7,
+                        position: 1,
+                        specialLevel: 0,
+                        sub: false
+                    }, {
+                        unitId: 1,
+                        level: 5,
+                        position: 3,
+                        specialLevel: 0,
+                        sub: false
+                    }, {
+                        unitId: 408,
+                        level: 56,
+                        position: 4,
+                        specialLevel: 0,
+                        sub: false
+                    }, {
+                        unitId: 418,
+                        level: 99,
+                        position: 5,
+                        specialLevel: 0,
+                        sub: false
+                    }
+                ],
+                shipId: 4
+            };
+
+            var parsed = parser.export(<ITeamDetailModel>team);
+            expect(parsed).toBe(expected);
         });
 });

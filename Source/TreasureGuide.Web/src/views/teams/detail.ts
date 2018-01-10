@@ -1,19 +1,30 @@
-﻿import { autoinject } from 'aurelia-framework';
+﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ITeamDetailModel } from '../../models/imported';
+import { CalcParser } from '../../tools/calc-parser';
 
 @autoinject
 export class TeamDetailPage {
     private teamQueryService: TeamQueryService;
     private router: Router;
+    private calcParser: CalcParser;
 
     team: ITeamDetailModel;
     loading: boolean;
 
-    constructor(teamQueryService: TeamQueryService, router: Router) {
+    constructor(teamQueryService: TeamQueryService, router: Router, calcParser: CalcParser) {
         this.teamQueryService = teamQueryService;
         this.router = router;
+        this.calcParser = calcParser;
+    }
+
+    @computedFrom('team', 'team.teamUnits', 'team.teamShip')
+    get calcLink() {
+        if (this.team) {
+            return this.calcParser.export(this.team);
+        }
+        return '';
     }
 
     activate(params) {

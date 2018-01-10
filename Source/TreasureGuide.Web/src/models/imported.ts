@@ -9,6 +9,8 @@ export interface IAccessTokenModel {
 export interface IExternalLoginConfirmationViewModel {
     userName: string;
     email: string;
+    toS: boolean;
+    privacy: boolean;
     
 }
 
@@ -261,6 +263,7 @@ export interface ITeamUnitStubModel {
 
 export interface ITeamUnitDetailModel {
     unitId: number;
+    level: number;
     position: number;
     specialLevel: number;
     sub: boolean;

@@ -26,6 +26,11 @@
             <div class="_alignCenter">
                 <team-display team.bind="teamUnits"></team-display>
                 <ship-display ship-id.two-way="shipId"></ship-display>
+                <br />
+                <a href.bind="calcLink" target="_blank" href="#" class="button _small _active">
+                    <i class="fa fa-fw fa-calculator"></i>
+                    Open in Damage Calculator
+                </a>
             </div>
         </div>
         <div class="row" if.bind="teamSockets && teamSockets.length > 0">
@@ -43,7 +48,7 @@
             <p>${credits}</p>
         </div>
         <div class="row _alignRight">
-            Created by
+            Submitted by
             <a route-href="route: account; params.bind: {id: submittedById}">
                 <user-display name.bind="submittedByName" unit-id.bind="submittedByUnitId"></user-display>
             </a>

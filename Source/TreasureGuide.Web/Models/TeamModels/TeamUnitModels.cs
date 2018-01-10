@@ -11,6 +11,7 @@ namespace TreasureGuide.Web.Models.TeamModels
     public class TeamUnitDetailModel
     {
         public int UnitId { get; set; }
+        public int Level { get; set; }
         public byte Position { get; set; }
         public byte? SpecialLevel { get; set; }
         public bool Sub { get; set; }
