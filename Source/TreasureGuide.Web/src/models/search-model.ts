@@ -12,7 +12,7 @@ export abstract class SearchModel implements ISearchModel {
 
     getCached(): SearchModel {
         var key = this.constructor.name;
-        var json = localStorage[key];
+        var json = sessionStorage[key];
         var result = null;
         if (json) {
             result = JSON.parse(json);
@@ -32,7 +32,7 @@ export abstract class SearchModel implements ISearchModel {
     get payload() {
         if (this.cached) {
             var key = this.constructor.name;
-            localStorage[key] = this.json;
+            sessionStorage[key] = this.json;
         }
         return JSON.parse(this.json);
     }
