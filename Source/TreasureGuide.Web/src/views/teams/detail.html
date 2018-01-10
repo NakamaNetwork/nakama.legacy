@@ -2,49 +2,46 @@
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading" with.bind="team">
         <h1>${name}</h1>
-        <div class="row" auth-req="Moderator, Administrator">
+        <div auth-req="Moderator, Administrator">
             <team-reports team.bind="team"></team-reports>
             <div class="alert _danger" if.bind="deleted">
                 This team has been deleted.
             </div>
         </div>
-        <div class="row" if.bind="canEdit">
-            <a class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
+        <div>
+            <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
                 <i class="fa fa-fw fa-pencil"></i>
                 Edit Team
             </a>
-        </div>
-        <div class="row" if.bind="stageId">
-            <h2>Stage</h2>
-            <stage-display stage-id.bind="stageId"></stage-display>
-        </div>
-        <div class="row">
             <div class="_floatRight">
                 <score-display team-id.bind="id" score.bind="score" my-vote.two-way="myVote" votable="true"></score-display>
             </div>
-            <h2>Team</h2>
-            <div class="_alignCenter">
-                <team-display team.bind="teamUnits"></team-display>
-                <ship-display ship-id.two-way="shipId"></ship-display>
-                <br />
-                <a href.bind="calcLink" target="_blank" href="#" class="button _small _active">
-                    <i class="fa fa-fw fa-calculator"></i>
-                    Open in Damage Calculator
-                </a>
-            </div>
         </div>
-        <div class="row" if.bind="teamSockets && teamSockets.length > 0">
+        <div if.bind="stageId">
+            <h2>Stage</h2>
+            <stage-display stage-id.bind="stageId"></stage-display>
+        </div>
+        <div class="_alignCenter">
+            <team-display team.bind="teamUnits"></team-display>
+            <ship-display ship-id.two-way="shipId"></ship-display>
+            <br />
+            <a href.bind="calcLink" target="_blank" href="#" class="button _small _active">
+                <i class="fa fa-fw fa-calculator"></i>
+                Open in Damage Calculator
+            </a>
+        </div>
+        <div if.bind="teamSockets && teamSockets.length > 0">
             <h2>Sockets</h2>
             <div class="_alignCenter">
                 <socket-picker sockets.two-way="teamSockets"></socket-picker>
             </div>
         </div>
-        <div class="row" if.bind="guide">
-            <h2>Guide</h2>
+        <div if.bind="guide">
+            <h4>Guide</h4>
             <p>${guide}</p>
         </div>
-        <div class="row" if.bind="credits">
-            <h2>Credits</h2>
+        <div if.bind="credits">
+            <h4>Credits</h4>
             <p>${credits}</p>
         </div>
         <div class="row _alignRight">
@@ -53,6 +50,20 @@
                 <user-display name.bind="submittedByName" unit-id.bind="submittedByUnitId"></user-display>
             </a>
             on ${editedDate | dateTimeFormat}
+        </div>
+        <hr />
+        <div>
+            <button auth-req="Contributor" class="button _primary _floatRight" click.delegate="submitVideo()">
+                <i class="fa fa-fw fa-youtube"></i>
+                Submit Video
+            </button>
+            <h4>Videos</h4>
+            <div if.bind="sortedVideos.length === 0" class="_alignCenter">
+                <h5>No videos for this team. Why not submit one?</h5>
+            </div>
+            <div class="col m4" repeat.for="video of sortedVideos">
+                <video-display video.bind="video" user-id.bind="submittedById"></video-display>
+            </div>
         </div>
     </div>
 </template>

@@ -5,6 +5,7 @@
         './stage-picker',
         './report-dialog',
         './team-import',
-        './unit-picker'
+        './unit-picker',
+        './video-picker'
     ]);
 }

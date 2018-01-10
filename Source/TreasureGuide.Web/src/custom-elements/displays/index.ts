@@ -4,6 +4,8 @@
         './global-display',
         './score-display',
         './stage-type-display',
-        './user-display'
+        './user-display',
+        './video-display',
+        './video-embed'
     ]);
 }

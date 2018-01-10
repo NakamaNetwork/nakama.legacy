@@ -3,20 +3,24 @@ import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ITeamDetailModel } from '../../models/imported';
 import { CalcParser } from '../../tools/calc-parser';
+import { DialogService } from 'aurelia-dialog';
+import { VideoPicker } from '../../custom-elements/dialogs/video-picker';
 
 @autoinject
 export class TeamDetailPage {
     private teamQueryService: TeamQueryService;
     private router: Router;
     private calcParser: CalcParser;
+    private dialogService: DialogService;
 
     team: ITeamDetailModel;
     loading: boolean;
 
-    constructor(teamQueryService: TeamQueryService, router: Router, calcParser: CalcParser) {
+    constructor(teamQueryService: TeamQueryService, router: Router, calcParser: CalcParser, dialogService: DialogService) {
         this.teamQueryService = teamQueryService;
         this.router = router;
         this.calcParser = calcParser;
+        this.dialogService = dialogService;
     }
 
     @computedFrom('team', 'team.teamUnits', 'team.teamShip')
@@ -25,6 +29,19 @@ export class TeamDetailPage {
             return this.calcParser.export(this.team);
         }
         return '';
+    }
+
+    @computedFrom('team', 'team.teamVideos')
+    get sortedVideos() {
+        return [];
+    }
+
+    submitVideo() {
+        this.dialogService.open({ viewModel: VideoPicker, lock: true }).whenClosed(result => {
+            if (!result.wasCancelled) {
+                console.log(result.output);
+            }
+        });
     }
 
     activate(params) {
