@@ -11,6 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="1.0.0-rc2-final" />
         <PackageReference Include="AspNet.Security.OAuth.Reddit" Version="1.0.0-rc2-final" />
         <PackageReference Include="AspNet.Security.OAuth.Twitch" Version="1.0.0-rc2-final" />
         <PackageReference Include="AutoMapper" Version="6.1.1" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using AspNet.Security.OAuth.Discord;
 using AspNet.Security.OAuth.Reddit;
 using AspNet.Security.OAuth.Twitch;
 using Microsoft.AspNetCore.Builder;
@@ -120,6 +121,12 @@ namespace TreasureGuide.Web
             {
                 ClientId = Configuration["Authentication:Twitch:ClientId"],
                 ClientSecret = Configuration["Authentication:Twitch:ClientSecret"]
+            });
+
+            app.UseDiscordAuthentication(new DiscordAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Discord:ClientId"],
+                ClientSecret = Configuration["Authentication:Discord:ClientSecret"]
             });
 
             RoleConfig.Configure(roleManager);
