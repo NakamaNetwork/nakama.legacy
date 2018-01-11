@@ -29,14 +29,9 @@ namespace TreasureGuide.Web.Helpers
 
         public void OnException(ExceptionContext context)
         {
-            HandleException(context.Exception);
+            Serialize(context.Exception);
         }
-
-        private void HandleException(Exception exception)
-        {
-            Serialize(exception);
-        }
-
+        
         private void Serialize(Exception exception)
         {
             var full = JsonConvert.SerializeObject(exception);
