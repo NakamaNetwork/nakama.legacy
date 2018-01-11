@@ -1,6 +1,8 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +72,10 @@ namespace TreasureGuide.Web.Configurations
                 options.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             });
 
+            var builder = services.AddDataProtection();
+            var store = Directory.GetCurrentDirectory() + "/keys";
+            builder.PersistKeysToFileSystem(new DirectoryInfo(store));
+            builder.SetApplicationName("NakamaNetwork");
 
             services.AddScoped(x => new TreasureEntities(configuration.GetConnectionString("TreasureEntities")));
             services.AddScoped<IAuthExportService, AuthExportService>();
