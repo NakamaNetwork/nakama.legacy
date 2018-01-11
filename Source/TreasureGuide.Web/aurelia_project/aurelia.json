@@ -170,6 +170,20 @@
                         "main": "./moment.js",
                         "path": "../node_modules/moment",
                         "resources": []
+                    },
+                    {
+                        "name": "aurelia-markdown",
+                        "path": "../node_modules/aurelia-markdown/dist/amd",
+                        "main": "aurelia-markdown"
+                    },
+                    "showdown",
+                    {
+                        "name": "prismjs",
+                        "path": "../node_modules/prismjs",
+                        "main": "prism",
+                        "resources": [
+                            "themes/prism.css"
+                        ]
                     }
                 ]
             }
