@@ -351,7 +351,7 @@ namespace TreasureGuide.Web.Controllers.API
                 DbContext.TeamCredits.Add(credit);
             }
 
-            var videos = model.Videos.Select(x => new TeamVideo
+            var videos = model.Videos.Where(x => !String.IsNullOrWhiteSpace(x.VideoLink)).Select(x => new TeamVideo
             {
                 Team = team,
                 SubmittedDate = now,

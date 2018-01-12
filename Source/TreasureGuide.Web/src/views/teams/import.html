@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr repeat.for="import of imports" class.bind="submitted ? '_success' : failed ? '_danger' : ''">
+            <tr repeat.for="import of imports" class.bind="import.submitted ? '_success' : import.failed ? '_danger' : ''">
                 <td>
                     <input type="text" value.bind="import.name" class="_width100" placeholder="Name" />
                 </td>

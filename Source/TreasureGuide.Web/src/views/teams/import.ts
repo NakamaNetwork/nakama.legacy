@@ -46,21 +46,31 @@ export class TeamImportPage {
         if (lines.length % 8 !== 0) {
             return;
         }
+        var things = new Array<TeamImportLineModel>();
         for (var i = 0; i < lines.length; i += 8) {
+            var stage = parseInt(lines[i + 2]);
+            if (Number.isNaN(stage)) {
+                stage = null;
+            }
+            var type = parseInt(lines[i + 7]);
+            if (Number.isNaN(type)) {
+                type = 0;
+            }
             var model = <TeamImportLineModel>{
                 name: lines[i],
                 calc: lines[i + 1],
-                stage: parseInt(lines[i + 2]),
+                stage: stage,
                 desc: lines[i + 3],
                 credit: lines[i + 4],
                 videos: lines[i + 5],
                 ref: lines[i + 6],
-                type: parseInt(lines[i + 7]),
+                type: type,
                 submitted: false,
                 failed: false
             };
-            this.imports.push(model);
+            things.push(model);
         }
+        this.imports = (things);
     }
 
     createModel(value: TeamImportLineModel): ITeamImportModel {

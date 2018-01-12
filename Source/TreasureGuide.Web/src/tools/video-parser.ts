@@ -4,8 +4,10 @@
     static parse(link: string) {
         if (link) {
             var matches = link.match(VideoParser.YoutubeRegex);
-            var last = matches[matches.length - 1];
-            return last;
+            if (matches) {
+                var last = matches[matches.length - 1];
+                return last;
+            }
         }
         return '';
     }
