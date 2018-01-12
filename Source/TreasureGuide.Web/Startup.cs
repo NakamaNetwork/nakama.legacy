@@ -60,7 +60,7 @@ namespace TreasureGuide.Web
             }
             else
             {
-                app.UseExceptionHandler("/#/error");
+                app.UseStatusCodePages();
             }
 
             app.UseStaticFiles();
