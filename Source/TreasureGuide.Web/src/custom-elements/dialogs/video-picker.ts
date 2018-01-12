@@ -2,10 +2,10 @@
 import { DialogController } from 'aurelia-dialog';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
+import {VideoParser} from '../../tools/video-parser';
 
 @autoinject
 export class VideoPicker {
-    static YoutubeRegex: RegExp = /(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|[a-zA-Z0-9_\-]+\?v=)([^#\&\?\n<>\'\"]*)/i;
     private controller: DialogController;
     private validController: ValidationController;
 
@@ -20,12 +20,7 @@ export class VideoPicker {
 
     @computedFrom('model', 'model.link')
     get videoId() {
-        if (this.model.link) {
-            var matches = this.model.link.match(VideoPicker.YoutubeRegex);
-            var last = matches[matches.length - 1];
-            return last;
-        }
-        return '';
+        return VideoParser.parse(this.model.link);
     }
 
     okay() {
@@ -48,6 +43,6 @@ export class VideoDialogViewModel {
 ValidationRules
     .ensure((x: VideoDialogViewModel) => x.link)
     .required()
-    .matches(VideoPicker.YoutubeRegex)
+    .matches(VideoParser.YoutubeRegex)
     .withMessage('Please input a valid YouTube link.')
     .on(VideoDialogViewModel);

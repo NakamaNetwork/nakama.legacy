@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using TreasureGuide.Entities;
 using TreasureGuide.Web.Data;
@@ -59,7 +60,13 @@ namespace TreasureGuide.Web.Configurations
             }).AddJsonOptions(json =>
             {
                 json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
+            var defaultJson = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+            JsonConvert.DefaultSettings = () => defaultJson;
 
             var jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions));
 

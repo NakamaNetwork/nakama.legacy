@@ -325,5 +325,44 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         public const string ImportId = "112cf4e4-cb26-4293-afa2-e663785fd276";
+
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.Administrator)]
+        [ActionName("Import")]
+        [Route("[action]")]
+        public async Task<IActionResult> Import([FromBody] TeamImportModel model)
+        {
+            var now = DateTimeOffset.Now;
+            var team = AutoMapper.Map<Team>(model.Team);
+            team.SubmittedDate = now;
+            team.SubmittedById = ImportId;
+            team.EditedDate = now;
+            team.EditedById = ImportId;
+            DbContext.Teams.Add(team);
+
+            if (!String.IsNullOrWhiteSpace(model.Credit.Credit))
+            {
+                var credit = new TeamCredit
+                {
+                    Team = team,
+                    Credit = model.Credit.Credit,
+                    Type = model.Credit.Type
+                };
+                DbContext.TeamCredits.Add(credit);
+            }
+
+            var videos = model.Videos.Select(x => new TeamVideo
+            {
+                Team = team,
+                SubmittedDate = now,
+                UserId = ImportId,
+                VideoLink = x.VideoLink
+            }).ToList();
+            DbContext.TeamVideos.AddRange(videos);
+
+            await DbContext.SaveChangesAsync();
+
+            return Ok(team.Id);
+        }
     }
 }
