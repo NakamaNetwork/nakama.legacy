@@ -11,37 +11,43 @@
                 <th>Videos</th>
                 <th>Original</th>
                 <th>Type</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr repeat.for="import of imports" with.bind="import" class.bind="submitted ? '_success' : failed ? '_danger' : ''">
+            <tr repeat.for="import of imports" class.bind="submitted ? '_success' : failed ? '_danger' : ''">
                 <td>
-                    <input type="text" value.bind="name" class="_width100" placeholder="Name" />
+                    <input type="text" value.bind="import.name" class="_width100" placeholder="Name" />
                 </td>
                 <td>
-                    <input type="text" value.bind="calc" class="_width100" placeholder="OPTC-DB Export Link" />
+                    <input type="text" value.bind="import.calc" class="_width100" placeholder="OPTC-DB Export Link" />
                 </td>
                 <td>
-                    <stage-display stage-id.two-way="stage" editable="true"></stage-display>
+                    <stage-display stage-id.two-way="import.stage" editable="true"></stage-display>
                 </td>
                 <td>
-                    <textarea type="text" value.bind="desc" class="_width100" placeholder="Description"></textarea>
+                    <textarea type="text" value.bind="import.desc" class="_width100" placeholder="Description"></textarea>
                 </td>
                 <td>
-                    <textarea type="text" value.bind="credit" class="_width100" placeholder="Credits"></textarea>
+                    <textarea type="text" value.bind="import.credit" class="_width100" placeholder="Credits"></textarea>
                 </td>
                 <td>
-                    <textarea type="text" value.bind="videos" class="_width100" placeholder="Comma-delimited"></textarea>
+                    <textarea type="text" value.bind="import.videos" class="_width100" placeholder="Comma-delimited"></textarea>
                 </td>
                 <td>
-                    <input type="text" value.bind="ref" class="_width100" placeholder="Reference for credit" />
+                    <input type="text" value.bind="import.ref" class="_width100" placeholder="Reference for credit" />
                 </td>
                 <td>
-                    <input type="text" value.bind="type" class="_width100" placeholder="Type of Reference" />
+                    <input type="text" value.bind="import.type" class="_width100" placeholder="Type of Reference" />
+                </td>
+                <td>
+                    <button class="button _danger _xsmall" click.delegate="remove(import)">
+                        <i class="fa fa-fw fa-times"></i>
+                    </button>
                 </td>
             </tr>
             <tr class="_light">
-                <td colspan="8" class="_alignRight">
+                <td colspan="9" class="_alignRight">
                     <button class="button _success _width100" click.delegate="add()">
                         <i class="fa fa-fw fa-plus"></i>
                         Add Row

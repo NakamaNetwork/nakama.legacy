@@ -21,6 +21,13 @@ export class TeamImportPage {
         this.imports.push(new TeamImportLineModel());
     }
 
+    remove(team) {
+        var index = this.imports.indexOf(team);
+        if (index >= 0) {
+            this.imports = this.imports.filter((x, i) => i !== index);
+        }
+    }
+
     submit() {
         this.imports.filter(x => x.name && !x.submitted).forEach(o => {
             var model = this.createModel(o);
