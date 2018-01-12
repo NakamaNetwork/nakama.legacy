@@ -12,6 +12,7 @@ $warning-color: #B45C13;
 $active-color: #6E6E6E;
 $info-color: #183579;
 $black-color: #000000;
+$grey-color: #D1D1D1;
 
 body {
     background-color: $background-color;
@@ -32,7 +33,7 @@ body {
     ._#{$name} {
         border-color: $dark !important;
         background-color: $color !important;
-        color: $text;
+        color: $text !important;
 
         a {
             color: $text;
@@ -60,6 +61,7 @@ body {
 @include color("warning",$warning-color);
 @include color("white",$white-color);
 @include color("black",$black-color);
+@include color("grey",$grey-color);
 
 a {
     @extend ._primaryText;
