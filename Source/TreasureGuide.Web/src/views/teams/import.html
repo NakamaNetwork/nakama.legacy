@@ -1,0 +1,74 @@
+﻿<template>
+    <h1>Import Teams</h1>
+    <table class="_width100 import-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Calc Link</th>
+                <th>Stage</th>
+                <th>Description</th>
+                <th>Credit</th>
+                <th>Videos</th>
+                <th>Original</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="import of imports" class.bind="import.submitted ? '_success' : import.failed ? '_danger' : ''">
+                <td>
+                    <input type="text" value.bind="import.name" class="_width100" placeholder="Name" />
+                </td>
+                <td>
+                    <input type="text" value.bind="import.calc" class="_width100" placeholder="OPTC-DB Export Link" />
+                </td>
+                <td>
+                    <stage-display stage-id.two-way="import.stage" editable="true"></stage-display>
+                </td>
+                <td>
+                    <textarea type="text" value.bind="import.desc" class="_width100" placeholder="Description"></textarea>
+                </td>
+                <td>
+                    <textarea type="text" value.bind="import.credit" class="_width100" placeholder="Credits"></textarea>
+                </td>
+                <td>
+                    <textarea type="text" value.bind="import.videos" class="_width100" placeholder="Comma-delimited"></textarea>
+                </td>
+                <td>
+                    <input type="text" value.bind="import.ref" class="_width100" placeholder="Reference for credit" />
+                </td>
+                <td>
+                    <input type="text" value.bind="import.type" class="_width100" placeholder="Type of Reference" />
+                </td>
+                <td>
+                    <button class="button _danger _xsmall" click.delegate="remove(import)">
+                        <i class="fa fa-fw fa-times"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr class="_light">
+                <td colspan="9" class="_alignRight">
+                    <button class="button _success _width100" click.delegate="add()">
+                        <i class="fa fa-fw fa-plus"></i>
+                        Add Row
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col m6">
+            <textarea class="_width100" value.bind="strings" placeholder="Strings..."></textarea>
+        </div>
+        <div class="col m4">
+            <button class="button _primary" click.delegate="convertStrings()">
+                Convert
+            </button>
+        </div>
+        <div class="col m2">
+            <button class="_floatRight button _primary" click.delegate="submit()">
+                Submit
+            </button>
+        </div>
+    </div>
+</template>

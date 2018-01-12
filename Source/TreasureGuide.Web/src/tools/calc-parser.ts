@@ -1,4 +1,5 @@
 ﻿import { ITeamDetailModel } from '../models/imported';
+import { ITeamUnitEditorModel } from '../models/imported';
 
 export class CalcParser {
     private unitMatchRegex = /[D,]{1}(\d+?):/ig;
@@ -33,9 +34,9 @@ export class CalcParser {
         return { units: units, ship: ship };
     }
 
-    convert(ids: number[]) {
+    convert(ids: number[]): ITeamUnitEditorModel[] {
         return ids.map((x, i) => {
-            return {
+            return <ITeamUnitEditorModel>{
                 unitId: x,
                 position: i < 6 ? i : null,
                 specialLevel: 0,

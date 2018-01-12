@@ -37,6 +37,8 @@
         <EntityTypeShape EntityType="tcdbModel.TeamVideo" Width="1.5" PointX="11.5" PointY="8" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVideos_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVideos_dbo_UserProfiles" />
+        <EntityTypeShape EntityType="tcdbModel.TeamCredit" Width="1.5" PointX="9.5" PointY="13.625" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamCredits_dbo_Teams" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

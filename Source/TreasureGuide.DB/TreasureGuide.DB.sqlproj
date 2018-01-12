@@ -101,5 +101,7 @@
     <Build Include="dbo\Views\UserRoles.sql" />
     <Build Include="dbo\Tables\Teams\TeamReports.sql" />
     <Build Include="dbo\Tables\Teams\TeamVideos.sql" />
+    <None Include="PostDeploy\AuthData.sql" />
+    <Build Include="dbo\Tables\Teams\TeamCredits.sql" />
   </ItemGroup>
 </Project>

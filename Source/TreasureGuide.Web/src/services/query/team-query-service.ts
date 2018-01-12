@@ -1,10 +1,8 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel } from '../../models/imported';
+import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel, ITeamImportModel, ITeamVideoModel, ITeamReportStubModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
-import { ITeamReportStubModel } from '../../models/imported';
-import {ITeamVideoModel} from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -35,6 +33,10 @@ export class TeamQueryService extends SearchableQueryService {
 
     video(model: ITeamVideoModel): Promise<number> {
         return this.http.post(this.buildAddress('video'), model);
+    }
+
+    import(model: ITeamImportModel): Promise<number> {
+        return this.http.post(this.buildAddress('import'), model);
     }
 }
 
