@@ -154,6 +154,31 @@ export enum StageType {
 }
 
 
+export interface ITeamCreditModel {
+    credit: string;
+    type: TeamCreditType;
+    
+}
+
+
+export enum TeamCreditType { 
+    Unknown = 0,
+    Reddit = 1,
+    YouTube = 2,
+    Twitter = 3,
+    Slefty = 4,
+    Irving = 5
+}
+
+
+export interface ITeamImportModel {
+    team: ITeamEditorModel;
+    credit: ITeamCreditModel;
+    videos: ITeamVideoModel[];
+    
+}
+
+
 export interface ITeamStubModel {
     teamUnits: ITeamUnitStubModel[];
     id: number;

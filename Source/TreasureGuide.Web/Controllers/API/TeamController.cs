@@ -323,5 +323,7 @@ namespace TreasureGuide.Web.Controllers.API
             return userId != null && User.IsInAnyRole(RoleConstants.Moderator, RoleConstants.Administrator) ||
                    await DbContext.TeamVideos.AnyAsync(x => x.Id == videoId && x.UserId == userId);
         }
+
+        public const string ImportId = "112cf4e4-cb26-4293-afa2-e663785fd276";
     }
 }

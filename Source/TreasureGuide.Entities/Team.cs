@@ -51,5 +51,6 @@ namespace TreasureGuide.Entities
         public virtual ICollection<TeamReport> TeamReports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamVideo> TeamVideos { get; set; }
+        public virtual TeamCredit TeamCredit { get; set; }
     }
 }
