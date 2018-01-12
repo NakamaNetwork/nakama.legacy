@@ -166,6 +166,11 @@
                         "resources": []
                     },
                     {
+                        "name": "marked",
+                        "main": "marked.js",
+                        "path": "../node_modules/marked/lib"
+                    },
+                    {
                         "name": "moment",
                         "main": "./moment.js",
                         "path": "../node_modules/moment",

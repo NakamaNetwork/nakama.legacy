@@ -38,11 +38,11 @@
         </div>
         <div if.bind="guide">
             <h4>Guide</h4>
-            <p>${guide}</p>
+            <markdown value.bind="guide"></markdown>
         </div>
         <div if.bind="credits">
             <h4>Credits</h4>
-            <p>${credits}</p>
+            <markdown value.bind="credits"></markdown>
         </div>
         <div class="row _alignRight">
             Submitted by

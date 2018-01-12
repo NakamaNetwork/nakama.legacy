@@ -38,6 +38,16 @@ select[multiple] {
     margin-top: -2px;
 }
 
+markdown.preview {
+    @extend ._grey;
+    min-height: 65px;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    display: block;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
 .alert-area {
     @extend ._width100;
     position: fixed;
