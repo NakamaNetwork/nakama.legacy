@@ -17,7 +17,7 @@ export class SearchableQueryService extends GenericApiQueryService {
                 var endpoint = this.buildAddress('search');
                 endpoint = this.http.parameterize(endpoint, model);
                 resolve(this.http.get(endpoint));
-            }, 500);
+            }, 100);
         });
         return promise;
     }

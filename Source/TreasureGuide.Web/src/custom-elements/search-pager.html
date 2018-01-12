@@ -1,6 +1,6 @@
 <template>
     <div class="_floatLeft" show.bind="hasPages">
-        <aup-pagination current-page.bind="searchModel.page" page-size.bind="searchModel.pageSize" page-sizes.bind="pageSizes" total-items.bind="searchModel.totalResults"></aup-pagination>
+        <aup-pagination current-page.two-way="searchModel.page" page-size.two-way="searchModel.pageSize" page-sizes.bind="pageSizes" total-items.bind="searchModel.totalResults"></aup-pagination>
     </div>
     <div class="_floatRight" show.bind="hasResults">
         <p>${startIndex} - ${endIndex} of ${searchModel.totalResults}</p>

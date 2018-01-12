@@ -6,11 +6,11 @@
                 <div class="col m8">
                     <div class="form-group">
                         <label for="termInput">Term</label>
-                        <input id="termInput" type="text" value.bind="term" placeholder="My Nakama..." />
+                        <input id="termInput" type="text" value.bind="term & debounce" placeholder="My Nakama..." />
                     </div>
                     <div class="form-group" if.bind="!userLocked">
                         <label for="userInput">User Name</label>
-                        <input id="userInput" type="text" value.bind="submittedBy" placeholder="Luffy..." />
+                        <input id="userInput" type="text" value.bind="submittedBy & debounce" placeholder="Luffy..." />
                     </div>
                     <div class="form-group">
                         <label for="stageInput">Stage</label>

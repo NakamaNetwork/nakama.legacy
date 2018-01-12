@@ -6,7 +6,6 @@ export abstract class SearchModel implements ISearchModel {
     public pageSize: number = 25;
 
     public totalResults: number = 0;
-    public cached: boolean = true;
 
     abstract getDefault(): SearchModel;
     abstract getCacheKey(): string;
@@ -24,17 +23,12 @@ export abstract class SearchModel implements ISearchModel {
 
     get json() {
         var ified = Object.assign({}, this);
-        ified.cached = null;
         ified.totalResults = null;
         return JSON.stringify(ified);
     }
 
     @computedFrom('json')
     get payload() {
-        if (this.cached) {
-            var key = this.constructor.name;
-            sessionStorage[key] = this.json;
-        }
         return JSON.parse(this.json);
     }
 
@@ -56,4 +50,16 @@ export abstract class SearchModel implements ISearchModel {
             this[x] = newItem[x];
         });
     }
+
+    assign(params) {
+        for (var myProp in this) {
+            if (this.hasOwnProperty(myProp) && params.hasOwnProperty(myProp)) {
+                var prop = params[myProp];
+                this[myProp] = SearchModel.isNumber(prop) ? Number.parseInt(prop) : prop;
+            }
+        }
+        return this;
+    }
+
+    static isNumber(n): boolean { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
 }
