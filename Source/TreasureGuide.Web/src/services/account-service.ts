@@ -58,7 +58,10 @@ export class AccountService {
 
     @computedFrom('userProfile')
     private get lowerRoles() {
-        return this.userProfile.userRoles.map(r => r.toLowerCase());
+        if (this.userProfile) {
+            return this.userProfile.userRoles.map(r => r.toLowerCase());
+        }
+        return [];
     }
 
     public logout() {
