@@ -50,6 +50,7 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     freeToPlay: boolean;
     deleted: boolean;
     reported: boolean;
+    draft: boolean;
 
     getDefault(): TeamSearchModel {
         return new TeamSearchModel();
@@ -70,4 +71,5 @@ export class TeamEditorModel implements ITeamEditorModel {
     teamSockets: any[] = [];
     teamUnits: any[] = [];
     deleted: boolean;
+    draft: boolean;
 };

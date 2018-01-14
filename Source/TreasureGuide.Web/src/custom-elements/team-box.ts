@@ -26,6 +26,9 @@ export class TeamBox {
             if (this.team.deleted) {
                 className += 'deleted ';
             }
+            if (this.team.draft) {
+                className += 'draft ';
+            }
         }
         return className;
     }

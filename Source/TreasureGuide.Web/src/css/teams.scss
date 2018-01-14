@@ -177,6 +177,11 @@ team-box {
     .reported {
         background-color: lighten($warning-color, 50);
     }
+
+    .draft {
+        background-color: $grey-color;
+        border: 2px dashed darken($grey-color, 40);
+    }
 }
 
 .score-container {

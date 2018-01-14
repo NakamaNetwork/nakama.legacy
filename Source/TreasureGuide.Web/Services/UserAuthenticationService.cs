@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.Options;
+using TreasureGuide.Entities;
 using TreasureGuide.Web.Configurations;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models.ProfileModels;
@@ -13,16 +16,20 @@ namespace TreasureGuide.Web.Services
     public interface IAuthExportService
     {
         Task<AccessTokenModel> Get(ClaimsPrincipal user);
-        ProfileAuthExportModel GetUserInfo(ClaimsPrincipal identity);
+        Task<ProfileDetailModel> GetUserInfo(ClaimsPrincipal identity);
     }
 
     public class AuthExportService : IAuthExportService
     {
         private readonly JwtIssuerOptions _jwtOptions;
+        private readonly TreasureEntities _context;
+        private readonly IMapper _mapper;
 
-        public AuthExportService(IOptions<JwtIssuerOptions> jwtOptions)
+        public AuthExportService(IOptions<JwtIssuerOptions> jwtOptions, TreasureEntities context, IMapper mapper)
         {
             _jwtOptions = jwtOptions.Value;
+            _context = context;
+            _mapper = mapper;
         }
 
         public async Task<AccessTokenModel> Get(ClaimsPrincipal identity)
@@ -61,7 +68,7 @@ namespace TreasureGuide.Web.Services
             return response;
         }
 
-        public ProfileAuthExportModel GetUserInfo(ClaimsPrincipal identity)
+        public async Task<ProfileDetailModel> GetUserInfo(ClaimsPrincipal identity)
         {
             if (!identity.IsAuthenticated())
             {
@@ -69,12 +76,17 @@ namespace TreasureGuide.Web.Services
             }
             var name = identity.FindFirstValue(ClaimTypes.Name);
             var roles = identity.FindAll(ClaimTypes.Role).Select(x => x.Value);
-            var model = new ProfileAuthExportModel
+            var id = identity.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!String.IsNullOrEmpty(id))
             {
-                UserName = name,
-                Roles = roles
-            };
-            return model;
+                var item = await _context.UserProfiles.SingleOrDefaultAsync(x => x.Id == id);
+                if (item != null)
+                {
+                    var casted = _mapper.Map<ProfileDetailModel>(item);
+                    return casted;
+                }
+            }
+            return null;
         }
 
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>

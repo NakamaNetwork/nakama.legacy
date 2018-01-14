@@ -55,14 +55,25 @@
         </div>
         <div class="row" if.bind="id">
             <fieldset>
-                <legend>Delete</legend>
-                <label for="deleteInput">
-                    <input type="checkbox" id="deleteInput" checked.bind="deleted" />
-                    <span class="-label-body">
-                        Delete this Team
-                    </span>
+                <legend>Options</legend>
+                <div class="col m6">
+                    <label for="draftInput">
+                        <input type="checkbox" id="draftInput" checked.bind="draft" />
+                        <span class="-label-body">
+                            Save as Draft
+                        </span>
+                    </label>
+                    <em>(Saves team to server without allowing others to see it.)</em>
+                </div>
+                <div class="col m6">
+                    <label for="deleteInput">
+                        <input type="checkbox" id="deleteInput" checked.bind="deleted" />
+                        <span class="-label-body">
+                            Delete Team
+                        </span>
+                    </label>
                     <em class="_dangerText" auth-req="roles: Administrator, Moderator; inverse: true">(This cannot be undone!)</em>
-                </label>
+                </div>
             </fieldset>
         </div>
         <div class="row">

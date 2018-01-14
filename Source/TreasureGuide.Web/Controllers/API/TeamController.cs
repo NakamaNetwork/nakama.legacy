@@ -60,9 +60,10 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override IQueryable<Team> Filter(IQueryable<Team> entities)
         {
+            var userId = User.GetId();
             if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
             {
-                entities = entities.Where(x => !x.Deleted);
+                entities = entities.Where(x => !x.Deleted && (!x.Draft || x.SubmittedById == userId));
             }
             return base.Filter(entities);
         }
@@ -95,6 +96,7 @@ namespace TreasureGuide.Web.Controllers.API
         protected override async Task<IQueryable<Team>> PerformSearch(IQueryable<Team> results, TeamSearchModel model)
         {
             results = SearchDeleted(results, model.Deleted);
+            results = SearchDrafts(results, model.Draft);
             results = SearchReported(results, model.Reported);
             results = SearchStage(results, model.StageId);
             results = SearchTerm(results, model.Term);
@@ -115,6 +117,19 @@ namespace TreasureGuide.Web.Controllers.API
             else
             {
                 results = results.Where(x => x.Deleted == modelDeleted);
+            }
+            return results;
+        }
+
+        private IQueryable<Team> SearchDrafts(IQueryable<Team> results, bool modelDraft)
+        {
+            if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+            {
+                results = results.Where(x => !x.Draft);
+            }
+            else
+            {
+                results = results.Where(x => x.Draft == modelDraft);
             }
             return results;
         }
@@ -338,6 +353,7 @@ namespace TreasureGuide.Web.Controllers.API
             team.SubmittedById = ImportId;
             team.EditedDate = now;
             team.EditedById = ImportId;
+            team.Draft = true;
             DbContext.Teams.Add(team);
 
             if (!String.IsNullOrWhiteSpace(model.Credit.Credit))

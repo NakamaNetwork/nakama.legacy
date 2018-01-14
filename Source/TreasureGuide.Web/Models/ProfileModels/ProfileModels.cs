@@ -3,12 +3,6 @@ using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.ProfileModels
 {
-    public class ProfileAuthExportModel
-    {
-        public string UserName { get; set; }
-        public IEnumerable<string> Roles { get; set; }
-    }
-
     public class ProfileStubModel : IIdItem<string>
     {
         public string Id { get; set; }

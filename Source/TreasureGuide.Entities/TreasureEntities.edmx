@@ -89,6 +89,7 @@
           <Property Name="EditedById" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Version" Type="int" Nullable="false" />
+          <Property Name="Draft" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamSockets">
@@ -917,6 +918,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamReports" Relationship="tcdbModel.FK_dbo_TeamReports_dbo_Teams" FromRole="Team" ToRole="TeamReport" />
           <NavigationProperty Name="TeamVideos" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_Teams" FromRole="Team" ToRole="TeamVideo" />
           <NavigationProperty Name="TeamCredit" Relationship="tcdbModel.FK_dbo_TeamCredits_dbo_Teams" FromRole="Team" ToRole="TeamCredit" />
+          <Property Name="Draft" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
@@ -1259,6 +1261,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="tcdbModel.Team">
               <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="Draft" ColumnName="Draft" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />

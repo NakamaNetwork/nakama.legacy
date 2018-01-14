@@ -1,12 +1,12 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { IProfileAuthExportModel } from '../models/imported';
+import { IProfileDetailModel } from '../models/imported';
 import { RoleConstants } from '../models/imported';
 
 @autoinject
 export class AccountService {
     private router: Router;
-    public userProfile: IProfileAuthExportModel;
+    public userProfile: IProfileDetailModel;
 
     constructor(router: Router) {
         this.router = router;
@@ -48,7 +48,7 @@ export class AccountService {
         return this.lowerRoles.indexOf(role.toLowerCase()) > -1;
     }
 
-    @computedFrom('userInfo')
+    @computedFrom('userProfile')
     get isLoggedIn(): boolean {
         if (this.userProfile) {
             return true;
@@ -56,9 +56,9 @@ export class AccountService {
         return false;
     }
 
-    @computedFrom('userInfo')
+    @computedFrom('userProfile')
     private get lowerRoles() {
-        return this.userProfile.roles.map(r => r.toLowerCase());
+        return this.userProfile.userRoles.map(r => r.toLowerCase());
     }
 
     public logout() {

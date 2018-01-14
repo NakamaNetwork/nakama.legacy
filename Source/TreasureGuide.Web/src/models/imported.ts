@@ -15,12 +15,6 @@ export interface IExternalLoginConfirmationViewModel {
 }
 
 
-export interface IProfileAuthExportModel {
-    userName: string;
-    roles: string[];
-    
-}
-
 export interface IProfileStubModel {
     id: string;
     userName: string;
@@ -193,6 +187,7 @@ export interface ITeamStubModel {
     stageId: number;
     deleted: boolean;
     reported: boolean;
+    draft: boolean;
     
 }
 
@@ -216,6 +211,7 @@ export interface ITeamDetailModel {
     canEdit: boolean;
     deleted: boolean;
     reported: boolean;
+    draft: boolean;
     
 }
 
@@ -229,6 +225,7 @@ export interface ITeamEditorModel {
     shipId: number;
     stageId: number;
     deleted: boolean;
+    draft: boolean;
     
 }
 
@@ -257,6 +254,7 @@ export interface ITeamSearchModel extends ISearchModel{
     global: boolean;
     freeToPlay: boolean;
     deleted: boolean;
+    draft: boolean;
     reported: boolean;
     
 }

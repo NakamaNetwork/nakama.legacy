@@ -37,7 +37,15 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col m3">
+                <div class="col m2">
+                    <div class="form-group">
+                        <label for="draftCheckbox" if.bind="canDraft">
+                            <input id="draftCheckbox" type="checkbox" checked.bind="draft" />
+                            <span class="-label-body">Drafts</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col m2">
                     <div class="form-group">
                         <label for="reportedCheckbox" auth-req="Moderator, Administrator">
                             <input id="reportedCheckbox" type="checkbox" checked.bind="reported" />
@@ -45,7 +53,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="col m3">
+                <div class="col m2">
                     <div class="form-group">
                         <label for="deletedCheckbox" auth-req="Moderator, Administrator">
                             <input id="deletedCheckbox" type="checkbox" checked.bind="deleted" />

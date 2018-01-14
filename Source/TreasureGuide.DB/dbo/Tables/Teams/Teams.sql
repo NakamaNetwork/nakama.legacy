@@ -11,6 +11,7 @@
     [EditedById] NVARCHAR(450) NOT NULL,
     [EditedDate] DATETIMEOFFSET(7) NOT NULL CONSTRAINT [DF_dbo.Teams_EditedDate] DEFAULT SYSDATETIMEOFFSET(),
     [Version] INT NOT NULL CONSTRAINT [DF_dbo.Teams_Version] DEFAULT 0,
+    [Draft] BIT NOT NULL CONSTRAINT [DF_dbo.Teams_Draft] DEFAULT 0,
     [Deleted] BIT NOT NULL CONSTRAINT [DF_dbo.Teams_Deleted] DEFAULT 0,
     CONSTRAINT [PK_dbo.Teams] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK.dbo_Teams_dbo.Stages] FOREIGN KEY([StageId]) REFERENCES [dbo].[Stages]([Id]) ON DELETE SET NULL,

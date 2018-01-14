@@ -7,6 +7,9 @@
             <div class="alert _danger" if.bind="deleted">
                 This team has been deleted.
             </div>
+            <div class="alert _dark" if.bind="draft">
+                This team is saved as a draft--it is not yet visible to the public.
+            </div>
         </div>
         <div>
             <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">

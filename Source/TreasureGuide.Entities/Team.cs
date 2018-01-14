@@ -36,6 +36,7 @@ namespace TreasureGuide.Entities
         public System.DateTimeOffset EditedDate { get; set; }
         public int Version { get; set; }
         public bool Deleted { get; set; }
+        public bool Draft { get; set; }
     
         public virtual Ship Ship { get; set; }
         public virtual Stage Stage { get; set; }
