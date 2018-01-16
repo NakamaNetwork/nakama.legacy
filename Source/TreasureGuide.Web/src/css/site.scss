@@ -34,7 +34,7 @@ ux-dialog-overlay.active {
 }
 
 a, em, strong {
-    padding: 0 3px;
+    margin: 0 0.2em;
 }
 
 .dialog-header-content {
@@ -160,4 +160,17 @@ iframe {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.home-box {
+    img {
+        border-radius: 16px;
+        background-color: $background-color;
+    }
+
+    p {
+        max-width: 70%;
+        margin: auto;
+        height: 6em;
+    }
 }
