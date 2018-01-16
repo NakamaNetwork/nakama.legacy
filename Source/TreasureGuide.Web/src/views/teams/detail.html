@@ -26,7 +26,7 @@
         </div>
         <div class="_alignCenter">
             <team-display team.bind="teamUnits"></team-display>
-            <ship-display ship-id.two-way="shipId"></ship-display>
+            <ship-display ship-id.bind="shipId"></ship-display>
             <br />
             <a href.bind="calcLink" target="_blank" href="#" class="button _small _active">
                 <i class="fa fa-fw fa-calculator"></i>
@@ -35,9 +35,7 @@
         </div>
         <div if.bind="teamSockets && teamSockets.length > 0">
             <h2>Sockets</h2>
-            <div class="_alignCenter">
-                <socket-picker sockets.two-way="teamSockets"></socket-picker>
-            </div>
+            <socket-display sockets.bind="teamSockets"></socket-display>
         </div>
         <div if.bind="guide">
             <h4>Guide</h4>
