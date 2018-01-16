@@ -653,17 +653,17 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 </EnumType>
                 <EnumType Name="SocketType" UnderlyingType="Byte">
                     <Member Name="Unknown" />
-                    <Member Name="DamageReduction" />
-                    <Member Name="ChargeSpecials" />
-                    <Member Name="BindResistance" />
-                    <Member Name="DespairResistance" />
-                    <Member Name="AutoHeal" />
-                    <Member Name="RCVBoost" />
-                    <Member Name="SlotRateBoost" />
-                    <Member Name="PoisonResistance" />
-                    <Member Name="MapDamageResistance" />
-                    <Member Name="Resilience" />
-                </EnumType>
+          <Member Name="DamageReduction" />
+          <Member Name="RCVBoost" />
+          <Member Name="ChargeSpecials" />
+          <Member Name="SlotRateBoost" />
+          <Member Name="BindResistance" />
+          <Member Name="PoisonResistance" />
+          <Member Name="DespairResistance" />
+          <Member Name="MapDamageResistance" />
+          <Member Name="AutoHeal" />
+          <Member Name="Resilience" />
+        </EnumType>
                 <EntityType Name="TeamSocket">
                     <Key>
                         <PropertyRef Name="TeamId" />

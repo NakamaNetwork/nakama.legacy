@@ -26,12 +26,13 @@
         </div>
         <div class="_alignCenter">
             <team-display team.bind="teamUnits"></team-display>
-            <ship-display ship-id.two-way="shipId"></ship-display>
+            <ship-display ship-id.bind="shipId"></ship-display>
             <br />
             <a href.bind="calcLink" target="_blank" href="#" class="button _small _active">
                 <i class="fa fa-fw fa-calculator"></i>
                 Open in Damage Calculator
             </a>
+            <socket-display sockets.bind="teamSockets"></socket-display>
         </div>
         <div if.bind="teamSockets && teamSockets.length > 0">
             <h2>Sockets</h2>

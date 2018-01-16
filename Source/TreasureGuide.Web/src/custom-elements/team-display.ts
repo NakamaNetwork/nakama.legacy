@@ -4,15 +4,9 @@ import { autoinject } from 'aurelia-framework';
 @customElement('team-display')
 @autoinject
 export class TeamDisplay {
-    private element: Element;
-
     @bindable team: any[] = [];
     @bindable editable = false;
-
-    constructor(element: Element) {
-        this.element = element;
-    }
-
+    
     @computedFrom('team')
     get teamSlots() {
         if (!this.team) {

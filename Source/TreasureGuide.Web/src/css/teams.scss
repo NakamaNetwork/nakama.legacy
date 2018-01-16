@@ -259,3 +259,61 @@ team-box {
 .import-table {
     font-size: 0.5em !important;
 }
+
+.socket-collection {
+    @extend ._alignLeft;
+    margin: 20px auto;
+
+    @media #{$medium-and-down} {
+        width: 80%;
+    }
+
+    @media #{$small-and-down} {
+        width: 100%;
+    }
+
+    @media #{$large-and-up} {
+        width: 60%;
+    }
+
+    .col {
+        padding: 5px;
+    }
+
+    img {
+        width: 2em;
+        height: 2em;
+    }
+
+    label {
+        @extend .truncate;
+        padding: 0 5px;
+        max-width: 60%;
+    }
+
+    strong, input {
+        @extend ._floatRight;
+        max-width: 20%;
+    }
+
+    .socket-box {
+        border-radius: 12px;
+        padding: 6px;
+
+        * {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+        &.active {
+            @extend ._primary;
+            border: 2px solid;
+        }
+
+        &.inactive {
+            @extend ._grey;
+            margin: 1px;
+        }
+    }
+}

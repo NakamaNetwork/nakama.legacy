@@ -4,6 +4,7 @@
         './loading-area',
         './search-pager',
         './ship-display',
+        './socket-display',
         './stage-display',
         './stage-type-picker',
         './team-box',
