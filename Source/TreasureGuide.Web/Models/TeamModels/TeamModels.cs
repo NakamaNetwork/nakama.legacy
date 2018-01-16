@@ -15,6 +15,10 @@ namespace TreasureGuide.Web.Models.TeamModels
         public DateTimeOffset EditedDate { get; set; }
         public int Score { get; set; }
         public bool Global { get; set; }
+        public bool F2P { get; set; }
+        public bool F2PC { get; set; }
+        public bool HasVideos { get; set; }
+
         public int ShipId { get; set; }
         public int? StageId { get; set; }
         public bool Deleted { get; set; }
@@ -37,6 +41,8 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string Guide { get; set; }
         public string Credits { get; set; }
         public bool Global { get; set; }
+        public bool F2P { get; set; }
+        public bool F2PC { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
         public bool CanEdit { get; set; }

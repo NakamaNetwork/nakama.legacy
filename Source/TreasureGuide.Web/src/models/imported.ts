@@ -183,6 +183,9 @@ export interface ITeamStubModel {
     editedDate: Date;
     score: number;
     global: boolean;
+    f2P: boolean;
+    f2PC: boolean;
+    hasVideos: boolean;
     shipId: number;
     stageId: number;
     deleted: boolean;
@@ -206,6 +209,8 @@ export interface ITeamDetailModel {
     guide: string;
     credits: string;
     global: boolean;
+    f2P: boolean;
+    f2PC: boolean;
     shipId: number;
     stageId: number;
     canEdit: boolean;

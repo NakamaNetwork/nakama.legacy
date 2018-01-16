@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using AutoMapper;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Models.ProfileModels;
 using TreasureGuide.Web.Models.ShipModels;
 using TreasureGuide.Web.Models.StageModels;
@@ -30,10 +31,27 @@ namespace TreasureGuide.Web.Configurations
 
                 var team = mapper.CreateControllerMapping<Team, TeamDetailModel, TeamStubModel, TeamEditorModel>();
                 team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
+
+                team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
                 team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
                 team.StubMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UnitId : null));
                 team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
                 team.StubMapping.ForMember(x => x.Reported, o => o.MapFrom(y => y.TeamReports.Any(z => !z.AcknowledgedDate.HasValue)));
+                team.StubMapping.ForMember(x => x.HasVideos, o => o.MapFrom(y => y.TeamVideos.Any(z => !z.Deleted)));
+                team.StubMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnits.All(z =>
+                    z.Sub ||
+                    z.Position == 0 ||
+                    !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
+                )));
+                team.StubMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnits.All(z =>
+                    z.Sub ||
+                    z.Position == 0 ||
+                    !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
+                )));
+                team.StubMapping.ForMember(x => x.F2PC, o => o.MapFrom(y => y.TeamUnits.All(z =>
+                    z.Sub ||
+                    z.Position < 2 || !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
+                )));
 
                 team.DetailMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
                 team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
@@ -43,6 +61,15 @@ namespace TreasureGuide.Web.Configurations
                 team.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.MyVote, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.TeamSockets, o => o.MapFrom(y => y.TeamSockets.Where(z => z.Level > 0)));
+                team.DetailMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnits.All(z =>
+                    z.Sub ||
+                    z.Position == 0 ||
+                    !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
+                )));
+                team.DetailMapping.ForMember(x => x.F2PC, o => o.MapFrom(y => y.TeamUnits.All(z =>
+                    z.Sub ||
+                    z.Position < 2 || !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
+                )));
 
                 var stage = mapper.CreateControllerMapping<Stage, StageDetailModel, StageStubModel, StageEditorModel>();
                 stage.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count));

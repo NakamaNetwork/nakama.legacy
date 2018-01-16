@@ -170,6 +170,26 @@ team-box {
         margin-right: -5px;
     }
 
+    .flags {
+        @extend ._floatLeft;
+        @extend ._infoLight;
+        margin-left: -25px;
+        padding: 2px;
+        position: absolute;
+        font-size: medium;
+        border-radius: 6px;
+
+        * {
+            display: block;
+            margin: 0 auto;
+            padding: 1px 0;
+        }
+
+        .fa-credit-card, .fa-credit-card-alt {
+            font-size: smaller;
+        }
+    }
+
     .deleted {
         background-color: lighten($danger-color, 50) !important;
         opacity: 0.4;

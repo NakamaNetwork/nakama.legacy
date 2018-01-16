@@ -50,18 +50,24 @@ body {
     }
 }
 
-@include color("active",$active-color);
-@include color("background",$background-color);
-@include color("danger",$danger-color);
-@include color("dark",$dark-color);
-@include color("info",$info-color);
-@include color("light",$light-color);
-@include color("primary",$primary-color);
-@include color("success",$success-color);
-@include color("warning",$warning-color);
-@include color("white",$white-color);
-@include color("black",$black-color);
-@include color("grey",$grey-color);
+@mixin makeColor($name, $color) {
+    @include color($name,$color);
+    @include color("#{$name}Light", desaturate(lighten($color, 60%), 20%) );
+    @include color("#{$name}Dight", saturate(darken($color, 60%), 20%) );
+}
+
+@include makeColor("active",$active-color);
+@include makeColor("background",$background-color);
+@include makeColor("danger",$danger-color);
+@include makeColor("dark",$dark-color);
+@include makeColor("info",$info-color);
+@include makeColor("light",$light-color);
+@include makeColor("primary",$primary-color);
+@include makeColor("success",$success-color);
+@include makeColor("warning",$warning-color);
+@include makeColor("white",$white-color);
+@include makeColor("black",$black-color);
+@include makeColor("grey",$grey-color);
 
 a {
     @extend ._primaryText;

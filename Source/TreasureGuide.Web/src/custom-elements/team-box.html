@@ -5,14 +5,15 @@
                 ${team.name}
             </legend>
             <score-display score.bind="team.score" team-id.bind="team.id"></score-display>
+            <flag-display team.bind="team"></flag-display>
             <div class="row team">
                 <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
             </div>
-            <div class="row ship-stage">
-                <stage-display stage-id.bind="team.stageId"></stage-display>
+            <div class="row">
                 <ship-display ship-id.bind="team.shipId"></ship-display>
+                <stage-display stage-id.bind="team.stageId"></stage-display>
             </div>
-            <div class="row credits">
+            <div class="row">
                 <user-display name.bind="team.submittedByName" unit-id.bind="team.submittedByUnitId"></user-display>
                 <span class="time">
                     ${team.editedDate | ageFormat}
