@@ -28,7 +28,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             var userId = User.GetId();
             var now = DateTimeOffset.Now;
-            if (entity.Version == 0)
+            if (entity.Version == 0 || entity.SubmittedById == null)
             {
                 entity.SubmittedById = userId;
                 entity.SubmittedDate = now;

@@ -36,8 +36,8 @@ export class VideoDisplay {
 
     @computedFrom('video', 'video.userName', 'video.deleted', 'accountService.userProfile')
     get canDelete(): boolean {
-        return !this.video.deleted && (this.accountService.isInRoles([RoleConstants.Administrator, RoleConstants.Moderator]) ||
-            (this.accountService.userProfile.userName === this.video.userName));
+        return !this.video.deleted && this.accountService.userProfile && (this.accountService.isInRoles([RoleConstants.Administrator, RoleConstants.Moderator]) ||
+            this.accountService.userProfile.id === this.video.userId);
     }
 
     delete() {
