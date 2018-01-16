@@ -131,7 +131,7 @@ ux-dialog-footer {
 }
 
 .col {
-    padding: 0 10px;
+    padding: 10px;
 }
 
 .tooltip {
@@ -173,4 +173,29 @@ iframe {
         margin: auto;
         height: 6em;
     }
+}
+
+.news {
+    max-width: 70%;
+    margin: auto;
+    font-size: small;
+
+    ul {
+        @extend ._alignLeft;
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+.beta {
+    @extend ._warningLightText;
+    position: absolute;
+    font-weight: bolder;
+    margin-left: -24px;
+    margin-top: 12px;
+    pointer-events: none;
+
+    transform: rotate(-10deg);
 }

@@ -25,7 +25,6 @@ export class App {
         config.addAuthorizeStep(AuthorizeStep);
         config.map([
             { route: ['', '/', '_=_', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
-            { route: 'news', name: 'news', title: 'News', moduleId: 'views/boring/news', nav: true, auth: false },
             { route: 'error', name: 'error', title: 'Error', moduleId: 'views/error', nav: false },
             { route: 'notfound', name: 'notfound', title: 'Not Found', moduleId: 'views/notfound', nav: false },
             { route: 'unauthorized', name: 'unauthorized', title: 'Unauthorized', moduleId: 'views/unauthorized', nav: false },

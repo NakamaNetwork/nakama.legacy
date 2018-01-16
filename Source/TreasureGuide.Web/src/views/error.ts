@@ -1,6 +1,6 @@
 ﻿export class ErrorPage {
     title = 'Error';
-    message = 'An error has occurred.';
+    message = 'Sorry! An error has occurred. Please try again.';
 
     activate(params) {
         if (params.error) {

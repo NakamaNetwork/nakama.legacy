@@ -2,7 +2,7 @@
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading" with.bind="team">
         <h1>${name}</h1>
-        <div auth-req="Moderator, Administrator">
+        <div class="row" auth-req="Moderator, Administrator">
             <team-reports team.bind="team"></team-reports>
             <div class="alert _danger" if.bind="deleted">
                 This team has been deleted.
@@ -11,7 +11,7 @@
                 This team is saved as a draft--it is not yet visible to the public.
             </div>
         </div>
-        <div>
+        <div class="row">
             <a if.bind="canEdit" class="button _primary" route-href="route: teamEdit; params.bind: {id: id}">
                 <i class="fa fa-fw fa-pencil"></i>
                 Edit Team
@@ -20,11 +20,11 @@
                 <score-display team-id.bind="id" score.bind="score" my-vote.two-way="myVote" votable="true"></score-display>
             </div>
         </div>
-        <div if.bind="stageId">
+        <div class="row" if.bind="stageId">
             <h2>Stage</h2>
             <stage-display stage-id.bind="stageId"></stage-display>
         </div>
-        <div class="_alignCenter">
+        <div class="row _alignCenter">
             <team-display team.bind="teamUnits"></team-display>
             <ship-display ship-id.bind="shipId"></ship-display>
             <br />
@@ -33,15 +33,15 @@
                 Open in Damage Calculator
             </a>
         </div>
-        <div if.bind="teamSockets && teamSockets.length > 0">
+        <div class="row" if.bind="teamSockets && teamSockets.length > 0">
             <h2>Sockets</h2>
             <socket-display sockets.bind="teamSockets"></socket-display>
         </div>
-        <div if.bind="guide">
+        <div class="row" if.bind="guide">
             <h4>Guide</h4>
             <markdown value.bind="guide"></markdown>
         </div>
-        <div if.bind="credits">
+        <div class="row" if.bind="credits">
             <h4>Credits</h4>
             <markdown value.bind="credits"></markdown>
         </div>
