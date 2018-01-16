@@ -3,6 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel, ITeamImportModel, ITeamVideoModel, ITeamReportStubModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
+import { FreeToPlayStatus } from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -47,7 +48,7 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     stageId: number;
     myBox: boolean;
     global: boolean;
-    freeToPlay: boolean;
+    freeToPlay: FreeToPlayStatus = FreeToPlayStatus.None;
     deleted: boolean;
     reported: boolean;
     draft: boolean;
@@ -59,6 +60,18 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     getCacheKey(): string {
         return 'search-team';
     }
+
+    static freeToPlayOptions = [
+        {
+            value: FreeToPlayStatus.None,
+            name: '-----'
+        }, {
+            value: FreeToPlayStatus.All,
+            name: 'All'
+        }, {
+            value: FreeToPlayStatus.Crew,
+            name: 'Crew'
+        }];
 };
 
 export class TeamEditorModel implements ITeamEditorModel {

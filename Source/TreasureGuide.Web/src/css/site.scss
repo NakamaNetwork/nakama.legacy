@@ -127,7 +127,11 @@ ux-dialog-footer {
 }
 
 .row {
-    margin-bottom: 0.6em;
+    margin: 10px 0;
+}
+
+.col {
+    padding: 0 10px;
 }
 
 .tooltip {

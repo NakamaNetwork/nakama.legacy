@@ -3,41 +3,45 @@
         <fieldset>
             <legend>Search</legend>
             <div class="row">
-                <div class="col m8">
+                <div class="col d6">
                     <div class="form-group">
                         <label for="termInput">Term</label>
-                        <input id="termInput" type="text" value.bind="term & debounce" placeholder="My Nakama..." />
+                        <input id="termInput" type="text" class="_width100" value.bind="term & debounce" placeholder="My Nakama..." />
                     </div>
                     <div class="form-group" if.bind="!userLocked">
                         <label for="userInput">User Name</label>
-                        <input id="userInput" type="text" value.bind="submittedBy & debounce" placeholder="Luffy..." />
+                        <input id="userInput" type="text" class="_width100" value.bind="submittedBy & debounce" placeholder="Luffy..." />
                     </div>
                     <div class="form-group">
                         <label for="stageInput">Stage</label>
-                        <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
+                        <stage-display id="stageInput" class="_width100" editable="true" stage-id.two-way="stageId"></stage-display>
                     </div>
                 </div>
-                <div class="col m4">
-                    <div class="form-group">
-                        <label for="unitInput">Captain</label>
-                        <unit-display id="unitInput" unit-id.two-way="leaderId" editable="true"></unit-display>
+                <div class="col d6">
+                    <div class="col f6">
+                        <div class="form-group">
+                            <label for="unitInput">Captain</label>
+                            <unit-display id="unitInput" unit-id.two-way="leaderId" editable="true"></unit-display>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="globalCheckbox">
-                            <input id="globalCheckbox" type="checkbox" checked.bind="global" />
-                            <span class="-label-body"> Global</span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="f2pCheckbox">
-                            <input id="f2pCheckbox" type="checkbox" checked.bind="freeToPlay" />
-                            <span class="-label-body">Free to Play</span>
-                        </label>
+                    <div class="col f6">
+                        <div class="form-group">
+                            <label for="f2pSelect">Free to Play</label>
+                            <select name="f2pSelect" class="_width100" value.bind="freeToPlay">
+                                <option repeat.for="option of freeToPlayOptions" model.bind="option.value">${option.name}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="globalCheckbox">
+                                <input id="globalCheckbox" type="checkbox" checked.bind="global" />
+                                <span class="-label-body"> Global</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col m2">
+                <div class="col m3">
                     <div class="form-group">
                         <label for="draftCheckbox" if.bind="canDraft">
                             <input id="draftCheckbox" type="checkbox" checked.bind="draft" />
@@ -45,7 +49,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="col m2">
+                <div class="col m3">
                     <div class="form-group">
                         <label for="reportedCheckbox" auth-req="Moderator, Administrator">
                             <input id="reportedCheckbox" type="checkbox" checked.bind="reported" />
@@ -53,7 +57,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="col m2">
+                <div class="col m3">
                     <div class="form-group">
                         <label for="deletedCheckbox" auth-req="Moderator, Administrator">
                             <input id="deletedCheckbox" type="checkbox" checked.bind="deleted" />
@@ -61,7 +65,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="col m6">
+                <div class="col m3">
                     <button class="button _floatRight" click.trigger="reset()">Reset</button>
                 </div>
             </div>

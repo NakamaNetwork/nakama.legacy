@@ -197,11 +197,18 @@ namespace TreasureGuide.Web.Controllers.API
             return teams;
         }
 
-        private IQueryable<Team> SearchFreeToPlay(IQueryable<Team> results, bool freeToPlay, int? leaderId)
+        private IQueryable<Team> SearchFreeToPlay(IQueryable<Team> results, FreeToPlayStatus status, int? leaderId)
         {
-            if (freeToPlay)
+            if (status != FreeToPlayStatus.None)
             {
-                results = results.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.UnitId == leaderId || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))));
+                results = results.Where(x => x.TeamUnits.All(y =>
+                    y.Sub || // Ignore subs
+                    y.Position == 0 || // Ignore friends
+                    y.UnitId == leaderId || // Ignore searched captain
+                    ( // Ignore leaders if only searching crew
+                        (status == FreeToPlayStatus.Crew && y.Position < 2) || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))
+                    )
+                ));
             }
             return results;
         }

@@ -252,11 +252,17 @@ export interface ITeamSearchModel extends ISearchModel{
     stageId: number;
     myBox: boolean;
     global: boolean;
-    freeToPlay: boolean;
+    freeToPlay: FreeToPlayStatus;
     deleted: boolean;
     draft: boolean;
     reported: boolean;
     
+}
+
+export enum FreeToPlayStatus { 
+    None = 0,
+    All = 1,
+    Crew = 2
 }
 
 
