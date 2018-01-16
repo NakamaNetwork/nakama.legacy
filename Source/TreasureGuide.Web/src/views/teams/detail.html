@@ -32,13 +32,10 @@
                 <i class="fa fa-fw fa-calculator"></i>
                 Open in Damage Calculator
             </a>
-            <socket-display sockets.bind="teamSockets"></socket-display>
         </div>
         <div if.bind="teamSockets && teamSockets.length > 0">
             <h2>Sockets</h2>
-            <div class="_alignCenter">
-                <socket-picker sockets.two-way="teamSockets"></socket-picker>
-            </div>
+            <socket-display sockets.bind="teamSockets"></socket-display>
         </div>
         <div if.bind="guide">
             <h4>Guide</h4>

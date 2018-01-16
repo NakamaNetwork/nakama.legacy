@@ -31,6 +31,8 @@
                         <i class="fa fa-fw fa-cloud-download"></i>
                         Import from OPTC-DB
                     </button>
+                    <br />
+                    <br />
                     <socket-display sockets.two-way="teamSockets" editable="true"></socket-display>
                 </div>
             </fieldset>
@@ -41,15 +43,15 @@
                 <div class="form-group">
                     <label for="guideInput">Guide</label>
                     <markdown-editor id="guideInput"
-                              placeholder="In-depth details on how to use the team..."
-                              value.two-way="guide & validate"></markdown-editor>
+                                     placeholder="In-depth details on how to use the team..."
+                                     value.two-way="guide & validate"></markdown-editor>
                     <div class="field-length">${guideLength}</div>
                 </div>
                 <div class="form-group">
                     <label for="creditInput">Credits</label>
                     <markdown-editor id="creditInput"
-                              placeholder="Credits, videos, and other supplemental materials."
-                              value.two-way="credits & validate"></markdown-editor>
+                                     placeholder="Credits, videos, and other supplemental materials."
+                                     value.two-way="credits & validate"></markdown-editor>
                     <div class="field-length">${creditLength}</div>
                 </div>
             </fieldset>

@@ -262,7 +262,7 @@ team-box {
 
 .socket-collection {
     @extend ._alignLeft;
-    margin: 20px auto;
+    margin: 0 auto;
 
     @media #{$medium-and-down} {
         width: 80%;
