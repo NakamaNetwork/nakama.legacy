@@ -174,7 +174,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (leaderId.HasValue)
             {
-                teams = teams.Where(x => x.TeamUnits.Any(y => y.UnitId == leaderId && y.Position < 2));
+                teams = teams.Where(x => x.TeamUnits.Any(y => y.UnitId == leaderId && y.Position == 2));
             }
             return teams;
         }
