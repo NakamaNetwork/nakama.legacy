@@ -23,7 +23,10 @@ namespace TreasureGuide.Web.Helpers
 
         public static string ConcatErrors(this ModelStateDictionary modelState)
         {
-            return String.Join(" ", modelState.Select(x => String.Join(", ", x.Value.Errors.Select(y => y.ErrorMessage))));
+            var all = modelState.Values.SelectMany(v => v.Errors.Select(b => String.IsNullOrWhiteSpace(b.ErrorMessage)
+            ? b.Exception.Message.Split(new[] { "Path" }, StringSplitOptions.None).FirstOrDefault() ?? ""
+            : b.ErrorMessage));
+            return String.Join(", ", all);
         }
     }
 }

@@ -310,7 +310,7 @@ team-box {
         @extend .truncate;
         padding: 0 5px;
         max-width: 60%;
-        
+
         @media #{$medium-and-down} {
             max-width: 40%;
         }
@@ -318,7 +318,11 @@ team-box {
 
     strong, input {
         @extend ._floatRight;
-        max-width: 33%;
+        max-width: 25%;
+
+        @media #{$medium-and-down} {
+            max-width: 33%;
+        }
     }
 
     .socket-box {

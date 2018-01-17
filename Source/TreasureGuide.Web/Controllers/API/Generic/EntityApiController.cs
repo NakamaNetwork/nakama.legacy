@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -108,14 +110,15 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
             }
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ConcatErrors();
+                return StatusCode((int)HttpStatusCode.BadRequest, errors);
+            }
             id = DefaultIfUnspecified(id, model.Id);
             if (!CanPost(id))
             {
                 return Unauthorized();
-            }
-            if (!ModelState.IsValid)
-            {
-                return StatusCode((int)HttpStatusCode.BadRequest, ModelState.ConcatErrors());
             }
             if (!IsUnspecified(id))
             {

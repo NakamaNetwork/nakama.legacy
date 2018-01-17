@@ -15,7 +15,8 @@ namespace TreasureGuide.Web.Services
 
     public class ThrottleService : IThrottleService
     {
-        public const string Message = "Slow down!";
+        public const double Seconds = 15;
+        public const string Message = "Please wait a few seconds before submitting again.";
         private readonly IMemoryCache _cache;
 
         public ThrottleService(IMemoryCache cache)
@@ -59,7 +60,7 @@ namespace TreasureGuide.Web.Services
 
         private DateTimeOffset GenerateTimeout(HttpRequest request)
         {
-            return DateTimeOffset.Now.AddSeconds(15);
+            return DateTimeOffset.Now.AddSeconds(Seconds);
         }
     }
 }
