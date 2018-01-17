@@ -13,6 +13,7 @@ aup-pagination {
             a {
                 @extend .button;
                 @extend ._small;
+                padding: 7px !important;
             }
 
             input {
