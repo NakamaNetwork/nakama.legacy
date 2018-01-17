@@ -8,7 +8,8 @@ import { TeamEditorModel } from '../../services/query/team-query-service';
 import { AlertService } from '../../services/alert-service';
 import { TeamImportView } from '../../custom-elements/dialogs/team-import';
 import { DialogService } from 'aurelia-dialog';
-import { AlertDialog } from '../../custom-elements/dialogs/alert-dialog';
+import { AlertDialog, AlertDialogViewModel } from '../../custom-elements/dialogs/alert-dialog';
+import { AccountService } from '../../services/account-service';
 
 @autoinject
 export class TeamEditPage {
@@ -21,22 +22,26 @@ export class TeamEditPage {
     private router: Router;
     private alert: AlertService;
     private dialogService: DialogService;
+    private accountService: AccountService;
 
     public controller: ValidationController;
 
     title = 'Create Team';
     @bindable team: ITeamEditorModel;
     loading: boolean;
+    saved: boolean;
 
     constructor(teamQueryService: TeamQueryService,
         router: Router,
         alertService: AlertService,
         dialogService: DialogService,
-        validFactory: ValidationControllerFactory
+        validFactory: ValidationControllerFactory,
+        accountService: AccountService
     ) {
         this.controller = validFactory.createForCurrentScope();
         this.controller.addRenderer(new BeauterValidationFormRenderer());
         this.dialogService = dialogService;
+        this.accountService = accountService;
 
         this.teamQueryService = teamQueryService;
         this.router = router;
@@ -60,6 +65,27 @@ export class TeamEditPage {
             });
         }
         this.controller.validate();
+    }
+
+    canDeactivate() {
+        return new Promise((resolve, reject) => {
+            if (!this.checkDirty()) {
+                return resolve();
+            }
+            this.dialogService.open({
+                viewModel: AlertDialog,
+                model: <AlertDialogViewModel>{
+                    message: 'Are you sure you want to leave this page? Any unsaved changes will be lost!',
+                    cancelable: true
+                },
+                lock: true
+            }).whenClosed(result => {
+                if (!result.wasCancelled) {
+                    return resolve();
+                }
+                return reject();
+            });
+        });
     }
 
     openImport() {
@@ -92,8 +118,16 @@ export class TeamEditPage {
         });
     }
 
+    checkDirty() {
+        if (!this.accountService.isLoggedIn || this.saved) {
+            return false;
+        }
+        return true;
+    }
+
     doSubmit() {
         this.teamQueryService.save(this.team).then(results => {
+            this.saved = true;
             if (this.team.deleted) {
                 this.alert.success('Successfully deleted ' + this.team.name + '.');
                 this.router.navigateToRoute('teams');
