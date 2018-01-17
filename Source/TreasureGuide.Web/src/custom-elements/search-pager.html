@@ -1,5 +1,5 @@
 <template>
-    <div class="_floatLeft" show.bind="hasPages">
+    <div class="_floatLeft" show.bind="hasResults">
         <aup-pagination current-page.two-way="searchModel.page" page-size.two-way="searchModel.pageSize" page-sizes.bind="pageSizes" total-items.bind="searchModel.totalResults"></aup-pagination>
     </div>
     <div class="_floatRight" show.bind="hasResults">
