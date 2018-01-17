@@ -43,7 +43,10 @@ export class AlertService {
     dismiss(id: number) {
         var alert = this.alerts.findIndex(x => x.id === id);
         if (alert >= 0) {
-            this.alerts.splice(alert, 1);
+            this.alerts[alert].disappearing = true;
+            setTimeout(() => {
+                this.alerts.splice(alert, 1);
+            }, 1000);
         }
     }
 }
@@ -52,15 +55,17 @@ export class Alert {
     public id: number;
     public message: string;
     public type: AlertType;
+    public disappearing: boolean;
 
     constructor(id: number, message: string, type: AlertType) {
         this.id = id;
         this.message = message;
         this.type = type;
+        this.disappearing = false;
     }
 
     @computedFrom('type', 'disappearing')
     get class() {
-        return '_' + AlertType[this.type].toLowerCase();
+        return '_' + AlertType[this.type].toLowerCase() + (this.disappearing ? ' disappearing' : '');
     }
 }

@@ -99,7 +99,8 @@
                     "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
                     "node_modules/requirejs/require.js",
                     "node_modules/babel-polyfill/dist/polyfill.js",
-                    "node_modules/whatwg-fetch/fetch.js"
+                    "node_modules/whatwg-fetch/fetch.js",
+                    "node_modules/@outboxcraft/beauter/src/beauter.js"
                 ],
                 "dependencies": [
                     "aurelia-binding",

@@ -22,6 +22,9 @@ export abstract class SearchModel implements ISearchModel {
     }
 
     get json() {
+        if (this.totalResults > 0 && this.totalResults < ((this.page - 1) * this.pageSize) + 1) {
+            this.page = 1;
+        }
         var ified = Object.assign({}, this);
         ified.totalResults = null;
         return JSON.stringify(ified);
