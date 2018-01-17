@@ -316,7 +316,7 @@ team-box {
         }
     }
 
-    strong, input {
+    .number {
         @extend ._floatRight;
         max-width: 25%;
 
@@ -342,7 +342,7 @@ team-box {
 
         &.inactive {
             @extend ._grey;
-            margin: 1px;
+            margin: 2px;
         }
     }
 }

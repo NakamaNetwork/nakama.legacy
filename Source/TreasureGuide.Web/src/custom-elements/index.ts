@@ -2,6 +2,7 @@
     config.globalResources([
         './alert-area',
         './loading-area',
+        './number-dropdown',
         './search-pager',
         './ship-display',
         './socket-display',

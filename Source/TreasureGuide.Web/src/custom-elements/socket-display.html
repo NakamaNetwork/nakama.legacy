@@ -5,8 +5,10 @@
                 <div class="socket-box" class.bind="match.level > 0 ? 'active' : 'inactive'">
                     <img src="${image}" title="${name}" />
                     <label for="${element}">${name}</label>
-                    <strong if.bind="!editable" id="${element}">${match.level}</strong>
-                    <input if.bind="editable" type="number" id="${element}" min="0" max="${max}" value.bind="match.level" />
+                    <span class="number">
+                        <strong if.bind="!editable" id="${element}">${match.level}</strong>
+                        <number-dropdown if.bind="editable" id="${element}" min="0" max="${max}" value.two-way="match.level"></number-dropdown>
+                    </span>
                 </div>
             </div>
         </div>
