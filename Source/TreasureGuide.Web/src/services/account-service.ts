@@ -2,14 +2,18 @@
 import { Router } from 'aurelia-router';
 import { IProfileDetailModel } from '../models/imported';
 import { RoleConstants } from '../models/imported';
+import { DialogService } from 'aurelia-dialog';
+import { AlertDialog, AlertDialogViewModel } from '../custom-elements/dialogs/alert-dialog';
 
 @autoinject
 export class AccountService {
     private router: Router;
+    private dialog: DialogService;
     public userProfile: IProfileDetailModel;
 
-    constructor(router: Router) {
+    constructor(router: Router, dialog: DialogService) {
         this.router = router;
+        this.dialog = dialog;
         this.loadProfile();
     }
 
@@ -64,9 +68,32 @@ export class AccountService {
         return [];
     }
 
+    public login() {
+        var loc = '/Account/Login';
+        var instruction = window.location.hash;
+        if (instruction) {
+            loc += ('?returnUrl=' + encodeURIComponent('/' + instruction));
+        }
+        window.location.href = loc;
+    }
+
     public logout() {
-        sessionStorage.clear();
-        window.location.href = '/Account/Logout';
+        this.dialog.open({
+            viewModel: AlertDialog,
+            model: <AlertDialogViewModel>{
+                message: 'Are you sure you want to log out?',
+                title: 'Logout',
+                cancelable: true,
+                okayMessage: 'Yes',
+                cancelMessage: 'No'
+            },
+            lock: true
+        }).whenClosed(result => {
+            if (!result.wasCancelled) {
+                sessionStorage.clear();
+                window.location.href = '/Account/Logout';
+            }
+        });
     }
 
     public static allRoles: string[] = [

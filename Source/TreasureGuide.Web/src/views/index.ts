@@ -4,6 +4,7 @@
             header: '01/17/18',
             lines: [
                 'Updated Alert, Home Page, Socket, and Pagination UI.',
+                'Added better login and logout flow.',
             ]
         }, {
             header: '01/16/18',
