@@ -115,7 +115,6 @@ team-display {
 .team-collection {
     .col {
         line-height: 0;
-        padding: 12px 6px;
     }
 }
 
@@ -127,6 +126,8 @@ team-box {
 
     fieldset {
         padding-bottom: 0;
+        min-width: 100% !important;
+        max-width: 100% !important;
     }
 
     fieldset:hover {
@@ -148,20 +149,32 @@ team-box {
         padding-top: 4px;
     }
 
+    stage-display, ship-display, .submission {
+        display: block;
+        max-width: 100%;
+        min-width: 100%;
+    }
+
     stage-display {
-        @extend ._floatRight;
-    }
-
-    ship-display {
         @extend ._floatLeft;
+        text-align: left;
     }
 
-    user-display {
-        @extend ._floatLeft;
+    ship-display, stage-display {
+        span {
+            @extend .truncate;
+            display: block;
+        }
     }
 
-    .time {
+    .submission {
         @extend ._floatRight;
+        text-align: right;
+        font-size: smaller;
+
+        user-display {
+            padding: 0 5px;
+        }
     }
 
     score-display {
