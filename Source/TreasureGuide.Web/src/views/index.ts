@@ -5,6 +5,7 @@
             lines: [
                 'Updated Alert, Home Page, Socket, and Pagination UI.',
                 'Added better login and logout flow.',
+                'Added heartbeat to ensure the user has not lost their login session.',
             ]
         }, {
             header: '01/16/18',

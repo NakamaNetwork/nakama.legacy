@@ -4,16 +4,23 @@ import { IProfileDetailModel } from '../models/imported';
 import { RoleConstants } from '../models/imported';
 import { DialogService } from 'aurelia-dialog';
 import { AlertDialog, AlertDialogViewModel } from '../custom-elements/dialogs/alert-dialog';
+import { HeartbeatQueryService } from './query/heartbeat-query-service';
 
 @autoinject
 export class AccountService {
     private router: Router;
     private dialog: DialogService;
+    private heartbeat: HeartbeatQueryService;
+
+    private heartbeatTimeout;
+
     public userProfile: IProfileDetailModel;
 
-    constructor(router: Router, dialog: DialogService) {
+    constructor(router: Router, dialog: DialogService, heartbeat: HeartbeatQueryService) {
         this.router = router;
         this.dialog = dialog;
+        this.heartbeat = heartbeat;
+
         this.loadProfile();
     }
 
@@ -22,6 +29,9 @@ export class AccountService {
         if (info) {
             var deserialized = JSON.parse(info);
             this.userProfile = deserialized;
+            if (this.userProfile) {
+                this.startHeartbeat();
+            }
         }
     }
 
@@ -77,14 +87,15 @@ export class AccountService {
         window.location.href = loc;
     }
 
-    public logout() {
+    public logout(force?: boolean) {
+        this.stopHeartbeat();
         this.dialog.open({
             viewModel: AlertDialog,
             model: <AlertDialogViewModel>{
-                message: 'Are you sure you want to log out?',
+                message: force ? 'You have been logged out.' : 'Are you sure you want to log out?',
                 title: 'Logout',
-                cancelable: true,
-                okayMessage: 'Yes',
+                cancelable: !force,
+                okayMessage: force ? 'Okay' : 'Yes',
                 cancelMessage: 'No'
             },
             lock: true
@@ -92,8 +103,28 @@ export class AccountService {
             if (!result.wasCancelled) {
                 sessionStorage.clear();
                 window.location.href = '/Account/Logout';
+            } else {
+                this.startHeartbeat();
             }
         });
+    }
+
+    private startHeartbeat(): void {
+        this.stopHeartbeat();
+        this.doHeartbeat();
+        this.heartbeatTimeout = setInterval(() => this.doHeartbeat(), 120000);
+    }
+
+    private doHeartbeat(): void {
+        this.heartbeat.heartbeat().catch(x => {
+            this.logout(true);
+        });
+    }
+
+    private stopHeartbeat(): void {
+        if (this.heartbeatTimeout) {
+            clearInterval(this.heartbeatTimeout);
+        }
     }
 
     public static allRoles: string[] = [
