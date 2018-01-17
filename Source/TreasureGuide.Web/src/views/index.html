@@ -7,10 +7,10 @@
         <div class="row">
             <div class="col m6">
                 <div class="card _white">
-                    <img src="/content/home/search.png" title="Search Teams"/>
+                    <img src="/content/home/search.png" title="Search Teams" />
                     <div class="-content">
                         <p>
-                            Browse, search, submit, and rate teams<br/>
+                            Browse, search, submit, and rate teams<br />
                             for <a href="http://onepiece-treasurecruise.com/en/" target="_blank">One Piece Treasure Cruise.</a>
                         </p>
                     </div>
@@ -18,10 +18,10 @@
             </div>
             <div class="col m6">
                 <div class="card _white">
-                    <img src="/content/home/calculator.png" title="Damage Calculator Import/Export"/>
+                    <img src="/content/home/calculator.png" title="Damage Calculator Import/Export" />
                     <div class="-content">
                         <p>
-                            Import teams directly from<br/>
+                            Import teams directly from<br />
                             <a href="http://optc-db.github.io/damage/#/" target="_blank">OPTC-db's Damage Calculator.</a>
                         </p>
                     </div>
@@ -29,10 +29,10 @@
             </div>
             <div class="col m6">
                 <div class="card _white">
-                    <img src="/content/home/videos.png" title="Submit YouTube Videos"/>
+                    <img src="/content/home/videos.png" title="Submit YouTube Videos" />
                     <div class="-content">
                         <p>
-                            Share your <a href="https://youtube.com" target="_blank">YouTube</a> videos<br/>
+                            Share your <a href="https://youtube.com" target="_blank">YouTube</a> videos<br />
                             to show off your teams in action!
                         </p>
                     </div>
@@ -40,10 +40,10 @@
             </div>
             <div class="col m6">
                 <div class="card _white">
-                    <img src="/content/home/register.png" title="Social Media OAuth Login"/>
+                    <img src="/content/home/register.png" title="Social Media OAuth Login" />
                     <div class="-content">
                         <p>
-                            <a href="/Account/Login">Register</a> quickly with a social media account.<br/>
+                            <a href="/Account/Login">Register</a> quickly with a social media account.<br />
                             No passwords required!
                         </p>
                     </div>
@@ -51,52 +51,21 @@
             </div>
         </div>
         <div class="row">
-            <hr/>
+            <hr />
             <p>
-                Special thanks to the folks at <a href="https://optc-db.github.io/" target="_blank">OPTC-db</a> whose constant effort<br/>
+                Special thanks to the folks at <a href="https://optc-db.github.io/" target="_blank">OPTC-db</a> whose constant effort<br />
                 to document every aspect of One Piece: Treasure Cruise power Nakama Network!
             </p>
         </div>
     </div>
     <div class="jumbo news">
         <h4>Updates</h4>
-        <h5>01/17/18</h5>
-        <ul>
-            <li>Updated Alert, Home Page, and Pagination UI.</li>
-        </ul>
-        <hr />
-        <h5>01/16/18</h5>
-        <ul>
-            <li>Added support for sockets on teams.</li>
-            <li>Expanded "Free to Play" team search capabilities.</li>
-            <li>Fixed Captain search to only apply to the Captain slot instead of Friend Captain and Captain.</li>
-            <li>Added team flags to the team search views.</li>
-        </ul>
-        <hr />
-        <h5>01/13/18</h5>
-        <ul>
-            <li>Added a 'draft' option for teams, allowing you to save a team without making it public.</li>
-        </ul>
-        <hr />
-        <h5>01/11/18</h5>
-        <ul>
-            <li>Added support for markdown in guides and credits.</li>
-        </ul>
-        <hr />
-        <h5>01/10/18</h5>
-        <ul>
-            <li>Added better error logging for server-side issues.</li>
-            <li>Fixed an issue with search model caching.</li>
-            <li>Fixed an issue where unauthorized users could try and submit teams.</li>
-            <li>Fixed some issues with querying on different browsers.</li>
-            <li>Added calculator export button on Team Detail page.</li>
-            <li>Contributors can now add videos to teams. Videos uploaded by the team owner will be emphasized. Videos uploaded by other users will be smaller.</li>
-            <li>Added Reddit, Discord, and Twitch login integration.</li>
-        </ul>
-        <hr />
-        <h5>01/09/18</h5>
-        <ul>
-            <li>First release candidate has been launched!</li>
-        </ul>
+        <div repeat.for="news of news" with.bind="news">
+            <hr />
+            <h5>${header}</h5>
+            <ul>
+                <li repeat.for="line of lines">${line}</li>
+            </ul>
+        </div>
     </div>
 </template>
