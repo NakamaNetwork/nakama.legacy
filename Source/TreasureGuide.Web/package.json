@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@outboxcraft/beauter": "^0.2.4",
+    "@outboxcraft/beauter": "^0.3.0",
     "aurelia-animator-css": "^1.0.1",
     "aurelia-autocomplete": "^2.2.4",
     "aurelia-bootstrapper": "^2.1.0",
