@@ -64,6 +64,7 @@ namespace TreasureGuide.Web
             }
 
             app.UseStaticFiles();
+            app.UseResponseCompression();
 
             app.UseIdentity();
 
@@ -122,7 +123,7 @@ namespace TreasureGuide.Web
                 ClientId = Configuration["Authentication:Twitch:ClientId"],
                 ClientSecret = Configuration["Authentication:Twitch:ClientSecret"]
             });
-            
+
             app.UseDiscordAuthentication(new DiscordAuthenticationOptions
             {
                 ClientId = Configuration["Authentication:Discord:ClientId"],
