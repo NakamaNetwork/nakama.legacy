@@ -7,6 +7,15 @@ export class HttpEngine {
 
     constructor(http: HttpClient) {
         this.http = http;
+        this.http.configure(config => {
+            config.withDefaults({
+                headers: {
+                    'content-type': 'application/json',
+                    'accept-encoding': 'application/gzip',
+                    'Accept': 'application/json'
+                }
+            });
+        });
     }
 
     parameterize(endpoint: string, params: any) {
@@ -37,8 +46,6 @@ export class HttpEngine {
 
     private execute(endpoint: string, data: any, headers: Headers, method: string, debounce: boolean = false): Promise<any> {
         headers = headers || this.buildSecurityHeaders();
-        headers.set('content-type', 'application/json');
-        headers.set('Accept', 'application/json');
         var options = {
             method: method || 'GET',
             headers: headers
