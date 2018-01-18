@@ -33,6 +33,7 @@ export class AccountService {
             this.userProfile = deserialized;
             if (this.userProfile) {
                 this.startHeartbeat();
+                this.doHeartbeat();
             }
         }
     }
