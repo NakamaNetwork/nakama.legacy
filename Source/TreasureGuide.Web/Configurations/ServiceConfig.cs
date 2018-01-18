@@ -86,7 +86,7 @@ namespace TreasureGuide.Web.Configurations
                 options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
                 options.Subject = jwtAppSettingOptions[nameof(JwtIssuerOptions.Subject)];
                 options.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-                options.ValidFor = TimeSpan.MaxValue;
+                options.ValidFor = TimeSpan.FromDays(3);
             });
             services.Configure<GzipCompressionProviderOptions>(options =>
             {
