@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity.Validation;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -29,13 +30,24 @@ namespace TreasureGuide.Web.Helpers
 
         public void OnException(ExceptionContext context)
         {
-            Serialize(context.Exception);
+            LogException(context.Exception);
         }
-        
-        private void Serialize(Exception exception)
+
+        private void LogException(Exception contextException)
         {
-            var full = JsonConvert.SerializeObject(exception);
-            _logger.LogError(full);
+            var validation = contextException as DbEntityValidationException;
+            if (validation != null)
+            {
+                var errorMessages = validation.EntityValidationErrors
+                    .SelectMany(x => x.ValidationErrors)
+                    .Select(x => x.ErrorMessage);
+
+                var fullErrorMessage = string.Join("; ", errorMessages);
+
+                var exceptionMessage = String.Concat(validation.Message, " The validation errors are: ", fullErrorMessage);
+                contextException = new DbEntityValidationException(exceptionMessage, validation.EntityValidationErrors);
+            }
+            _logger.LogError(contextException.ToString());
         }
     }
 }
