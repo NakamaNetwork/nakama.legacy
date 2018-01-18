@@ -28,11 +28,6 @@ namespace TreasureGuide.Web.Configurations
     {
         public static void Configure(IServiceCollection services, IConfigurationRoot configuration, SecurityKey securityKey)
         {
-            services.AddResponseCompression(options =>
-            {
-                options.Providers.Add<GzipCompressionProvider>();
-            });
-
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("TreasureEntities")));
@@ -88,6 +83,12 @@ namespace TreasureGuide.Web.Configurations
                 options.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
                 options.ValidFor = TimeSpan.FromDays(3);
             });
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+                options.EnableForHttps = true;
+            });
+
             services.Configure<GzipCompressionProviderOptions>(options =>
             {
                 options.Level = CompressionLevel.Fastest;

@@ -63,8 +63,8 @@ namespace TreasureGuide.Web
                 app.UseStatusCodePages();
             }
 
-            app.UseStaticFiles();
             app.UseResponseCompression();
+            app.UseStaticFiles();
 
             app.UseIdentity();
 
