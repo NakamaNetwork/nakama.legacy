@@ -14,7 +14,7 @@ export class AccountService {
 
     private heartbeatTimeout;
     private heartbeatFailures = 0;
-    private heartbeatFailMax = 5;
+    private heartbeatFailMax = 3;
 
     public userProfile: IProfileDetailModel;
 
