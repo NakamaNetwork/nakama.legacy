@@ -13,6 +13,8 @@ export class AccountService {
     private heartbeat: HeartbeatQueryService;
 
     private heartbeatTimeout;
+    private heartbeatFailures = 0;
+    private heartbeatFailMax = 5;
 
     public userProfile: IProfileDetailModel;
 
@@ -111,13 +113,18 @@ export class AccountService {
 
     private startHeartbeat(): void {
         this.stopHeartbeat();
-        this.doHeartbeat();
-        this.heartbeatTimeout = setInterval(() => this.doHeartbeat(), 120000);
+        this.heartbeatTimeout = setInterval(() => this.doHeartbeat(), this.heartbeatFailures === 0 ? 60000 : 10000);
     }
 
     private doHeartbeat(): void {
-        this.heartbeat.heartbeat().catch(x => {
-            this.logout(true);
+        this.heartbeat.heartbeat().then(x => {
+            this.heartbeatFailures = 0;
+            this.startHeartbeat();
+        }).catch(x => {
+            this.heartbeatFailures++;
+            if (this.heartbeatFailures >= this.heartbeatFailMax) {
+                this.logout(true);
+            }
         });
     }
 
