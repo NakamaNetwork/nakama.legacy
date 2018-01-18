@@ -124,6 +124,8 @@ export class AccountService {
             this.heartbeatFailures++;
             if (this.heartbeatFailures >= this.heartbeatFailMax) {
                 this.logout(true);
+            } else {
+                this.startHeartbeat();
             }
         });
     }
