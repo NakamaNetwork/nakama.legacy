@@ -213,6 +213,47 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
+        [HttpGet]
+        [ActionName("Trending")]
+        [Route("[action]")]
+        public async Task<IActionResult> Trending()
+        {
+            var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(3));
+            var top = await DbContext.Teams
+                .Where(x => !x.Deleted && !x.Draft)
+                .Select(x => new
+                {
+                    team = x,
+                    trendScore = x.TeamVotes
+                        .Where(y => y.SubmittedDate > threshold)
+                        .Select(y => (int)y.Value)
+                        .DefaultIfEmpty()
+                        .Sum()
+                })
+                .Where(x => x.trendScore > 0)
+                .OrderByDescending(x => x.trendScore)
+                .Take(5)
+                .Select(x => x.team)
+                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider)
+                .ToListAsync();
+            return Ok(top);
+        }
+
+        [HttpGet]
+        [ActionName("Latest")]
+        [Route("[action]")]
+        public async Task<IActionResult> Latest()
+        {
+            var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(3));
+            var top = await DbContext.Teams
+                .Where(x => !x.Deleted && !x.Draft && x.SubmittedDate > threshold)
+                .OrderByDescending(x => x.SubmittedDate)
+                .Take(5)
+                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider)
+                .ToListAsync();
+            return Ok(top);
+        }
+
         [HttpPost]
         [Authorize]
         [ActionName("Vote")]
@@ -230,21 +271,15 @@ namespace TreasureGuide.Web.Controllers.API
             vote = vote ?? new TeamVote
             {
                 TeamId = teamId,
-                UserId = userId
+                UserId = userId,
+                SubmittedDate = DateTimeOffset.Now
             };
             var value = model.Up.HasValue ? (model.Up ?? true) ? 1 : -1 : 0;
-            if (model.Up.HasValue)
+            if (!exists)
             {
-                if (!exists)
-                {
-                    DbContext.TeamVotes.Add(vote);
-                }
-                vote.Value = (short)value;
+                DbContext.TeamVotes.Add(vote);
             }
-            else if (exists)
-            {
-                DbContext.TeamVotes.Remove(vote);
-            }
+            vote.Value = (short)value;
             await DbContext.SaveChangesAsync();
             var returnValue = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
             return Ok(returnValue);
