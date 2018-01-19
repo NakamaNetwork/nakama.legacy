@@ -20,17 +20,23 @@ To run the app locally you'll need to set your user secrets. To do so, right-cli
 
 ````
 {
-    "Authentication:Jwt:Key": "<Insert key for JWT access keys>",
-    "Authentication:Google:ClientID": "<Client ID for Google Login>",
-    "Authentication:Google:ClientSecret": "<Client Secret>",
-    "Authentication:Facebook:ClientID": "<Client ID for Facebook Login",
-    "Authentication:Facebook:ClientSecret": "<Client Secret>",
-    "Authentication:Twitter:ConsumerKey": "<Consumer Key for Twitter Login>",
-    "Authentication:Twitter:ConsumerSecret": "<Consumer Secret>"
+    "Authentication:Jwt:Key": "<Write random long gibberish here.>",
+    "Authentication:Google:ClientID": "",
+    "Authentication:Google:ClientSecret": "",
+    "Authentication:Facebook:ClientID": "",
+    "Authentication:Facebook:ClientSecret": "",
+    "Authentication:Twitter:ConsumerKey": "",
+    "Authentication:Twitter:ConsumerSecret": "",
+    "Authentication:Reddit:ClientID": "",
+    "Authentication:Reddit:ClientSecret": "",
+    "Authentication:Twitch:ClientID": "",
+    "Authentication:Twitch:ClientSecret": "",
+    "Authentication:Discord:ClientID": "",
+    "Authentication:Discord:ClientSecret": ""
 }
 ````
 
-You only need one application to test locally with. The oauth redirect is https://<your app url>/signin-<client> (i.e. /signin-facebook, /signin-google, etc)
+You only need one application to test locally with, but all the entries must be there. The oauth redirect is https://<your app url>/signin-<client> (i.e. /signin-facebook, /signin-google, etc)
 
 # Chrome Debugging
 
