@@ -1,71 +1,26 @@
 ﻿<template>
-    <div class="jumbo _info home-box">
-        <div class="row">
-            <h1>Welcome to Nakama Network!</h1>
-            <hr />
+    <div class="jumbo">
+        <div class="jumbo _info">
+            <h1>Nakama Network</h1>
+            <p>One Piece: Treasure Cruise's Premiere Team Database</p>
         </div>
         <div class="row">
             <div class="col m6">
-                <div class="card _white">
-                    <img src="/content/home/search.png" title="Search Teams" />
-                    <div class="-content">
-                        <p>
-                            Browse, search, submit, and rate teams<br />
-                            for <a href="http://onepiece-treasurecruise.com/en/" target="_blank">One Piece Treasure Cruise.</a>
-                        </p>
-                    </div>
+                <h4>Trending Teams</h4>
+                <loading-area if.bind="trendLoading"></loading-area>
+                <div if.bind="!trendLoading">
+                    <h6 if.bind="trendingTeams.length === 0">Nothing trending at the moment.</h6>
+                    <team-box repeat.for="team of trendingTeams" team.bind="team"></team-box>
                 </div>
             </div>
             <div class="col m6">
-                <div class="card _white">
-                    <img src="/content/home/calculator.png" title="Damage Calculator Import/Export" />
-                    <div class="-content">
-                        <p>
-                            Import teams directly from<br />
-                            <a href="http://optc-db.github.io/damage/#/" target="_blank">OPTC-db's Damage Calculator.</a>
-                        </p>
-                    </div>
+                <h4>New Teams</h4>
+                <loading-area if.bind="newLoading"></loading-area>
+                <div if.bind="!newLoading">
+                    <h6 if.bind="newTeams.length === 0">Nothing new at the moment.</h6>
+                    <team-box repeat.for="team of newTeams" team.bind="team"></team-box>
                 </div>
             </div>
-            <div class="col m6">
-                <div class="card _white">
-                    <img src="/content/home/videos.png" title="Submit YouTube Videos" />
-                    <div class="-content">
-                        <p>
-                            Share your <a href="https://youtube.com" target="_blank">YouTube</a> videos<br />
-                            to show off your teams in action!
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col m6">
-                <div class="card _white">
-                    <img src="/content/home/register.png" title="Social Media OAuth Login" />
-                    <div class="-content">
-                        <p>
-                            <a href="/Account/Login">Register</a> quickly with a social media account.<br />
-                            No passwords required!
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <hr />
-            <p>
-                Special thanks to the folks at <a href="https://optc-db.github.io/" target="_blank">OPTC-db</a> whose constant effort<br />
-                to document every aspect of One Piece: Treasure Cruise power Nakama Network!
-            </p>
-        </div>
-    </div>
-    <div class="jumbo news">
-        <h4>Updates</h4>
-        <div repeat.for="news of news" with.bind="news">
-            <hr />
-            <h5>${header}</h5>
-            <ul>
-                <li repeat.for="line of lines">${line}</li>
-            </ul>
         </div>
     </div>
 </template>

@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li class="_floatRight" if.bind="accountService.isLoggedIn">
-                    <a route-href="route: account">
+                    <a route-href="route: account" class="${accountIsActive ? 'active' : ''}">
                         ${accountService.userProfile.userName}
                     </a>
                 </li>

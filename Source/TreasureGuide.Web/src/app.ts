@@ -24,7 +24,8 @@ export class App {
         config.title = 'Nakama Network';
         config.addAuthorizeStep(AuthorizeStep);
         config.map([
-            { route: ['', '/', '_=_', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: true },
+            { route: ['', '/', '_=_', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: false },
+            { route: 'news', name: 'news', title: 'News', moduleId: 'views/boring/news', nav: true },
             { route: 'error', name: 'error', title: 'Error', moduleId: 'views/error', nav: false },
             { route: 'notfound', name: 'notfound', title: 'Not Found', moduleId: 'views/notfound', nav: false },
             { route: 'unauthorized', name: 'unauthorized', title: 'Unauthorized', moduleId: 'views/unauthorized', nav: false },
@@ -42,6 +43,7 @@ export class App {
             // Boring
             { route: 'privacy', name: 'privacy', title: 'Privacy Policy', moduleId: 'views/boring/privacy', nav: false, auth: false },
             { route: 'tos', name: 'tos', title: 'Terms of Service', moduleId: 'views/boring/tos', nav: false, auth: false },
+            { route: 'about', name: 'about', title: 'About', moduleId: 'views/boring/intro', nav: true },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }
@@ -52,8 +54,17 @@ export class App {
         this.navToggled = !this.navToggled;
     }
 
+    @computedFrom('navToggled')
     get topnavCss() {
         return 'topnav' + (this.navToggled ? ' responsive' : '');
+    }
+
+    @computedFrom('router', 'router.currentInstruction', 'router.currentInstruction.fragment')
+    get accountIsActive() {
+        if (this.router && this.router.currentInstruction) {
+            return this.router.currentInstruction.fragment === '/account';
+        }
+        return false;
     }
 
     @computedFrom('router.navigation', 'accountService.userProfile')
