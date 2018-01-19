@@ -5,7 +5,7 @@
             <i class.bind="iconClass" if.bind="!unitId"></i>
         </button>
     </div>
-    <a if.bind="info" class="button _info _xsmall unit-link" href.bind="link" target="_blank">
+    <a if.bind="info && unitId" class="button _info _xsmall unit-link" href.bind="link" target="_blank">
         <i class="fa fa-fw fa-info-circle"></i>
     </a>
 </template>

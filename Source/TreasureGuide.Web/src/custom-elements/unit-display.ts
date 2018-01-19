@@ -15,7 +15,7 @@ export class UnitDisplay {
     @bindable name: string;
     @bindable editable = false;
     @bindable clickable = false;
-    @bindable info = true;
+    @bindable info = false;
 
     constructor(unitQueryService: UnitQueryService, dialogService: DialogService, element: Element) {
         this.unitQueryService = unitQueryService;
