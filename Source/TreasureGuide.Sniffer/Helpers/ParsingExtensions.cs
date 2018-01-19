@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using TreasureGuide.Entities;
 
@@ -67,14 +66,63 @@ namespace TreasureGuide.Sniffer.Helpers
             return UnitType.Unknown;
         }
 
-        public static UnitClassType ToUnitClass(this string input)
+        public static StageType ToStageType(this string value)
         {
-            UnitClassType value;
-            if (UnitClassType.TryParse(input, out value))
+            switch (value.ToLower())
+            {
+                case "story island":
+                    return StageType.Story;
+                case "weekly island":
+                    return StageType.Weekly;
+                case "fortnight":
+                    return StageType.Fortnight;
+                case "raid":
+                    return StageType.Raid;
+                case "special":
+                    return StageType.Special;
+                case "coliseum":
+                    return StageType.Coliseum;
+                case "training forest":
+                    return StageType.TrainingForest;
+                case "treasure map":
+                    return StageType.TreasureMap;
+                default:
+                    return StageType.Unknown;
+            }
+        }
+
+        public static UnitFlag ToFlagType(this string value)
+        {
+            switch (value.ToLower())
+            {
+                case "global":
+                    return UnitFlag.Global;
+                case "rr":
+                    return UnitFlag.RareRecruit;
+                case "rro":
+                case "orr":
+                    return UnitFlag.RareRecruitExclusive;
+                case "rrl":
+                case "lrr":
+                    return UnitFlag.RareRecruitLimited;
+                case "promo":
+                case "special":
+                    return UnitFlag.Promotional;
+                case "shop":
+                    return UnitFlag.Shop;
+                default:
+                    return UnitFlag.Unknown;
+            }
+        }
+
+        public static UnitClass ToUnitClass(this string input)
+        {
+            UnitClass value;
+            if (UnitClass.TryParse(input.Replace(" ", ""), out value))
             {
                 return value;
             }
-            return UnitClassType.Unknown;
+            return UnitClass.Unknown;
         }
 
         public static TValue GetSafe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue fallback = default(TValue))

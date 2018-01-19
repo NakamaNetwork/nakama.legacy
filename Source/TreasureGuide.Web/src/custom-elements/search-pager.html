@@ -1,0 +1,9 @@
+<template>
+    <div class="_floatLeft" show.bind="hasResults">
+        <aup-pagination current-page.two-way="searchModel.page" page-size.two-way="searchModel.pageSize" page-sizes.bind="pageSizes" total-items.bind="searchModel.totalResults"></aup-pagination>
+    </div>
+    <div class="_floatRight" show.bind="hasResults">
+        <p>${startIndex} - ${endIndex} of ${searchModel.totalResults}</p>
+    </div>
+    <h3 class="_alignCenter" show.bind="!bottom && !hasResults">Search yielded no results!</h3>
+</template>

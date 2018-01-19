@@ -1,14 +1,63 @@
 <template>
-    <div>
-        <ul>
-            <li repeat.for="nav of router.navigation">
-                <a href.bind="nav.href" class="${row.isActive ? 'active' : ''}">
-                    ${nav.title}
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <router-view></router-view>
-    </div>
+    <alert-area></alert-area>
+    <header>
+        <div>
+            <ul class.bind="topnavCss">
+                <li class="brand">
+                    <a route-href="route: home" class="brand-logo">
+                        ${router.title}
+                        <span class="beta">BETA</span>
+                    </a>
+                </li>
+                <li repeat.for="nav of authorizedRoutes">
+                    <a href.bind="nav.href" class="${nav.isActive ? 'active' : ''}">
+                        ${nav.title}
+                    </a>
+                </li>
+                <li class="_floatRight" if.bind="!accountService.isLoggedIn">
+                    <a href="#" click.trigger="accountService.login()">
+                        Login
+                    </a>
+                </li>
+                <li class="_floatRight" if.bind="accountService.isLoggedIn">
+                    <a href="#" click.trigger="accountService.logout()">
+                        Logout
+                    </a>
+                </li>
+                <li class="_floatRight" if.bind="accountService.isLoggedIn">
+                    <a route-href="route: account" class="${accountIsActive ? 'active' : ''}">
+                        ${accountService.userProfile.userName}
+                    </a>
+                </li>
+                <li class="-icon">
+                    <a click.trigger="toggleDropdown()">
+                        <i class="fa fa-fw fa-bars"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <router-view></router-view>
+        </div>
+    </main>
+    <footer>
+        <div class="jumbo _dark footer">
+            <a route-href="route: tos">Terms of Service</a>
+            |
+            <a route-href="route: privacy">Privacy Policy</a>
+            <br />
+            Developed by <a href="http://robocafaz.com" target="_blank">RoboCafaz</a>
+            <br />
+            <a class="button _small _info" href="https://github.com/RoboCafaz/TreasureGuide">
+                <i class="fa fa-fw fa-github"></i>View on GitHub
+            </a>
+            <a class="button _small _info" href="https://discord.gg/vtAeMas">
+                <img src="/content/Discord-Logo-White.svg" class="fa fa-fw" />Join the Discord
+            </a>
+            <br />
+            Game data sourced from <a href="https://optc-db.github.io/" target="_blank">OPTC-db</a>
+        </div>
+    </footer>
 </template>

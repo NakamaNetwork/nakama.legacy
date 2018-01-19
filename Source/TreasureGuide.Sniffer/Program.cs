@@ -34,7 +34,9 @@ namespace TreasureGuide.Sniffer
             var parsers = new ITreasureParser[]
             {
                 new UnitParser(context),
-                new UnitFlagParser(context)
+                new UnitFlagParser(context),
+                new StageParser(context),
+                new ShipParser(context),
             };
             ParsersRunning = parsers.Count();
 

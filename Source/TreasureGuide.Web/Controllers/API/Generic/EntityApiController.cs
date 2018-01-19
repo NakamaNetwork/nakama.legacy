@@ -1,70 +1,93 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
+using TreasureGuide.Web.Constants;
+using TreasureGuide.Web.Services;
+using System.Net;
 using TreasureGuide.Web.Helpers;
+using TreasureGuide.Web.Models;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
-    public class EntityApiController<TKey, TEntity, TStubModel, TDetailModel, TEditorModel> : GenericApiController<TKey, TEntity, TStubModel, TDetailModel, TEditorModel>
-        where TKey : struct
-        where TEntity : class, IIdItem<TKey>
-        where TEditorModel : IIdItem<TKey?>
+    public class EntityApiController<TEntityKey, TEntity, TKey, TStubModel, TDetailModel, TEditorModel> : GenericApiController<TKey, TStubModel, TDetailModel, TEditorModel>
+        where TEntity : class, IIdItem<TEntityKey>
+        where TEditorModel : IIdItem<TKey>
     {
         protected readonly TreasureEntities DbContext;
         protected readonly IMapper AutoMapper;
+        protected readonly IThrottleService ThrottlingService;
 
-        public EntityApiController(TreasureEntities dbContext, IMapper autoMapper)
+        public bool Throttled { get; set; }
+
+        public EntityApiController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService)
         {
             DbContext = dbContext;
             AutoMapper = autoMapper;
+            ThrottlingService = throttlingService;
         }
 
-        protected override IActionResult Get<TModel>(TKey? id = null)
+        protected override async Task<IActionResult> Get<TModel>(TKey id = default(TKey), bool required = false)
         {
-            return Do(() => PerformGet<TModel>(id));
+            var result = await PerformGet<TModel>(id, required);
+            return result as IActionResult ?? Ok(result); ;
         }
 
-        protected override IActionResult Post(TEditorModel model, TKey? id = null)
+        protected override async Task<IActionResult> Post(TEditorModel model, TKey id = default(TKey))
         {
-            return Do(() => PerformPost(model, id));
+            var result = await PerformPost(model, id);
+            return result as IActionResult ?? Ok(result); ;
         }
 
-        protected override IActionResult Delete(TKey? id = null)
+        protected override async Task<IActionResult> Delete(TKey id = default(TKey))
         {
-            return Do(() => PerformDelete(id));
+            var result = await PerformDelete(id);
+            return result as IActionResult ?? Ok(result); ;
         }
 
-        protected virtual IActionResult Do(Func<object> function)
+        protected virtual async Task<object> PerformGet<TModel>(TKey id = default(TKey), bool required = false)
         {
-            var result = function.Invoke();
-            return (result as IActionResult) ?? Ok(result);
-        }
-
-        protected virtual object PerformGet<TModel>(TKey? id = null)
-        {
+            if (required && IsUnspecified(id))
+            {
+                return BadRequest("Must specify an Id.");
+            }
+            if (!CanGet(id))
+            {
+                return Unauthorized();
+            }
             var entities = FetchEntities(id);
             var transformed = typeof(TModel) == typeof(TEntity) ? entities.Cast<TModel>() : Project<TModel>(entities);
-            if (id.HasValue)
+            if (!IsUnspecified(id))
             {
-                var single = transformed.SingleOrDefault();
+                var single = await transformed.SingleOrDefaultAsync();
                 if (single != null)
                 {
+                    single = await SingleGetTransform(single, id);
                     return single;
                 }
                 return NotFound(id);
             }
-            return transformed;
+            return await transformed.ToListAsync();
         }
 
-        protected virtual IQueryable<TEntity> FetchEntities(TKey? id = null)
+        protected virtual bool CanGet(TKey id)
+        {
+            return true;
+        }
+
+        protected virtual IQueryable<TEntity> FetchEntities(TKey id = default(TKey))
         {
             var queryable = DbContext.Set<TEntity>().AsQueryable();
-            if (id.HasValue)
+            if (!IsUnspecified(id))
             {
                 queryable = queryable.FindId(id);
             }
@@ -72,35 +95,71 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return queryable;
         }
 
-        protected virtual object PerformPost(TEditorModel model, TKey? id = null)
+        protected virtual async Task<TModel> SingleGetTransform<TModel>(TModel single, TKey id = default(TKey))
         {
-            if (id.HasValue)
+            if (typeof(ICanEdit).IsAssignableFrom(typeof(TModel)))
+            {
+                ((ICanEdit)single).CanEdit = CanPost(id);
+            }
+            return single;
+        }
+
+        protected virtual async Task<object> PerformPost(TEditorModel model, TKey id = default(TKey))
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ConcatErrors();
+                return StatusCode((int)HttpStatusCode.BadRequest, errors);
+            }
+            id = DefaultIfUnspecified(id, model.Id);
+            if (!CanPost(id))
+            {
+                return Unauthorized();
+            }
+            if (!IsUnspecified(id))
             {
                 var entities = FetchEntities(id);
                 var single = entities.SingleOrDefault();
                 if (single != null)
                 {
-                    return CreateOrUpdate(model, single);
+                    return await CreateOrUpdate(model, single);
                 }
-                return NotFound(id);
             }
-            return BadRequest("No item specified.");
+            return await CreateOrUpdate(model);
         }
 
-        protected virtual object PerformDelete(TKey? id)
+        protected virtual bool CanPost(TKey id)
         {
-            if (id.HasValue)
+            return User.IsInRole(RoleConstants.Administrator);
+        }
+
+        protected virtual async Task<object> PerformDelete(TKey id)
+        {
+            if (!CanDelete(id))
+            {
+                return Unauthorized();
+            }
+            if (!IsUnspecified(id))
             {
                 var entities = FetchEntities(id);
                 var target = entities.SingleOrDefault();
-                return Remove(target);
+                return await Remove(target);
             }
             return BadRequest("No item specified.");
         }
 
-        protected virtual async Task<object> CreateOrUpdate(TEditorModel model, TEntity entity)
+        protected virtual bool CanDelete(TKey id)
         {
-            model = PreProcess(model);
+            return User.IsInRole(RoleConstants.Administrator);
+        }
+
+        protected virtual async Task<object> CreateOrUpdate(TEditorModel model, TEntity entity = null)
+        {
+            model = await PreProcess(model);
             var newItem = entity == null;
             if (newItem)
             {
@@ -111,15 +170,16 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 entity = Update(model, entity);
             }
-            entity = PostProcess(entity);
-            await DbContext.SaveChangesAsync();
-            return entity.Id;
+            entity = await PostProcess(entity);
+            await SaveChangesAsync();
+            return new IdResponse<TEntityKey> { Id = entity.Id };
         }
 
         protected virtual async Task<object> Remove(TEntity single)
         {
+            throw new NotImplementedException();
             DbContext.Set<TEntity>().Remove(single);
-            await DbContext.SaveChangesAsync();
+            await SaveChangesAsync();
             return true;
         }
 
@@ -143,14 +203,37 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             return entities;
         }
 
-        private TEditorModel PreProcess(TEditorModel model)
+        protected virtual async Task<TEditorModel> PreProcess(TEditorModel model)
         {
             return model;
         }
 
-        private TEntity PostProcess(TEntity entity)
+        protected virtual async Task<TEntity> PostProcess(TEntity entity)
         {
             return entity;
+        }
+
+        protected virtual async Task SaveChangesAsync()
+        {
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        var message = $"{validationErrors.Entry.Entity}:{validationError.ErrorMessage}";
+                        // raise a new exception nesting
+                        // the current instance as InnerException
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
         }
     }
 }

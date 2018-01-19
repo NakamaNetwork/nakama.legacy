@@ -1,0 +1,5 @@
+﻿<template>
+    <select class="_width100" value.bind="unitType">
+        <option repeat.for="unitType of unitTypes" model.bind="unitType.id">${unitType.name}</option>
+    </select>
+</template>

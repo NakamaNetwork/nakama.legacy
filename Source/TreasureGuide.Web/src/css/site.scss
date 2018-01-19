@@ -1,0 +1,213 @@
+﻿@import "../../node_modules/@outboxcraft/beauter/src/beauter";
+@import "_variables.scss";
+@import "colors.scss";
+@import "forms.scss";
+@import "pagination.scss";
+@import "teams.scss";
+
+body {
+    overflow-y: scroll;
+}
+
+.scrollbar-measure {
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: -9999px;
+}
+
+.aurelia-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    padding: 20px 0;
+}
+
+ux-dialog-overlay.active {
+    background-color: black;
+    opacity: 0.5;
+}
+
+a, em, strong {
+    margin: 0 0.2em;
+}
+
+.dialog-header-content {
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .modal-action {
+        margin-top: 6px;
+        margin-right: -20px;
+    }
+}
+
+ux-dialog-container {
+    overflow-y: scroll;
+
+    & > div {
+        @media #{$medium-and-down} {
+            padding: 2px;
+        }
+    }
+
+    & > div > div {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+
+        @media #{$large-and-up} {
+            width: 90%;
+            max-width: 90%;
+            min-width: 90%;
+        }
+
+        @media #{$extra-large-and-up} {
+            width: 80%;
+            max-width: 80%;
+            min-width: 80%;
+        }
+    }
+
+    ux-dialog {
+        width: 100%;
+
+        &.small {
+            @media #{$medium-and-down} {
+                width: 90%;
+                max-width: 90%;
+                min-width: 90%;
+            }
+
+            @media #{$medium-and-up} {
+                width: 60%;
+                max-width: 60%;
+                min-width: 60%;
+            }
+
+            @media #{$large-and-up} {
+                width: 40%;
+                max-width: 40%;
+                min-width: 40%;
+            }
+        }
+    }
+}
+
+.button,
+button,
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+    margin-bottom: unset;
+
+    &._unclickable {
+        @extend ._disabled;
+        cursor: default;
+        opacity: 1.0;
+        pointer-events: none;
+    }
+}
+
+._flat {
+    border: none !important;
+}
+
+ux-dialog-footer {
+    .button {
+        margin-left: 5px;
+    }
+}
+
+.row {
+    margin: 10px 0;
+}
+
+.col {
+    padding: 10px;
+}
+
+.tooltip {
+    border-bottom: unset;
+}
+
+
+.tooltiptext {
+    padding: 6px;
+    pointer-events: none;
+
+    .-tooltip-top & {
+        bottom: 100%;
+    }
+}
+
+.footer {
+    padding: 20px 0;
+}
+
+iframe {
+    width: 100%;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.home-box {
+    img {
+        border-radius: 16px;
+        background-color: $background-color;
+    }
+
+    p {
+        max-width: 70%;
+        margin: auto;
+        height: 6em;
+    }
+}
+
+.news {
+    max-width: 70%;
+    margin: auto;
+    font-size: small;
+
+    ul {
+        @extend ._alignLeft;
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+.beta {
+    @extend ._warningLightText;
+    position: absolute;
+    font-weight: bolder;
+    margin-left: -24px;
+    margin-top: 12px;
+    pointer-events: none;
+    transform: rotate(-10deg);
+}
+
+.button {
+    img {
+        vertical-align: middle;
+        height: 1em;
+    }
+}
+
+.footer {
+    .button {
+        margin: 0 3px;
+    }
+}

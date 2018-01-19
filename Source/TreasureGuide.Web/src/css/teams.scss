@@ -1,0 +1,361 @@
+@import "_variables.scss";
+
+$tiny-unit-size: 20px;
+$tiny-unit-margin: 1px;
+
+$small-unit-size: 48px;
+$small-unit-margin: 2px;
+
+$medium-unit-size: 64px;
+$medium-unit-margin: 3px;
+
+$large-unit-size: 96px;
+$large-unit-margin: 4px;
+
+$huge-unit-size: 112px;
+$huge-unit-margin: 5px;
+
+$default-unit-size: $huge-unit-size;
+$default-unit-margin: $huge-unit-margin;
+
+.unit-collection {
+    .unit-button {
+        @media #{$medium-and-down} {
+            height: $small-unit-size;
+            width: $small-unit-size;
+            margin: $small-unit-margin;
+        }
+
+        @media #{$large-and-up} {
+            height: $medium-unit-size;
+            width: $medium-unit-size;
+            margin: $medium-unit-margin;
+        }
+    }
+}
+
+.unit-button {
+    height: $default-unit-size;
+    width: $default-unit-size;
+    margin: $default-unit-margin;
+    padding: 0;
+    line-height: 0;
+    background-position: center;
+    background-size: 120%;
+    vertical-align: middle;
+
+    img {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    &[size="tiny"],
+    [size="tiny"] & {
+        height: $tiny-unit-size;
+        width: $tiny-unit-size;
+        margin: $tiny-unit-margin;
+        font-size: 0.45em;
+    }
+
+    &[size="small"],
+    [size="small"] & {
+        height: $small-unit-size;
+        width: $small-unit-size;
+        margin: $small-unit-margin;
+    }
+
+    &[size="medium"],
+    [size="medium"] & {
+        height: $medium-unit-size;
+        width: $medium-unit-size;
+        margin: $medium-unit-margin;
+    }
+
+    &[size="large"],
+    [size="large"] & {
+        height: $large-unit-size;
+        width: $large-unit-size;
+        margin: $large-unit-margin;
+    }
+
+    &[size="huge"],
+    [size="huge"] & {
+        height: $huge-unit-size;
+        width: $huge-unit-size;
+        margin: $huge-unit-margin;
+    }
+}
+
+team-display {
+    overflow: hidden;
+    white-space: nowrap;
+
+    &[in-line] {
+        ship-display {
+            display: none;
+        }
+    }
+
+    &:not([in-line]) {
+        unit-display:nth-of-type(2n):after {
+            content: "";
+            display: block;
+        }
+
+        ship-display:after {
+            content: "";
+            display: block;
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.team-collection {
+    .col {
+        line-height: 0;
+    }
+}
+
+team-box {
+    a {
+        text-decoration: none;
+        color: unset;
+    }
+
+    fieldset {
+        padding-bottom: 0;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    fieldset:hover {
+        opacity: 0.6;
+    }
+
+    h1 {
+        font-size: 1.4em;
+        margin-top: -2.2em;
+    }
+
+    .row {
+        @extend ._alignCenter;
+        line-height: 1.6em;
+        margin: 0;
+    }
+
+    .team {
+        padding-top: 4px;
+    }
+
+    stage-display, ship-display, .submission {
+        display: block;
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    stage-display {
+        @extend ._floatLeft;
+        text-align: left;
+    }
+
+    ship-display, stage-display {
+        span {
+            @extend .truncate;
+            display: block;
+        }
+    }
+
+    .submission {
+        @extend ._floatRight;
+        text-align: right;
+        font-size: smaller;
+
+        user-display {
+            padding: 0 5px;
+        }
+    }
+
+    score-display {
+        @extend ._floatRight;
+        margin-top: -10px;
+        margin-right: -5px;
+    }
+
+    .flags {
+        @extend ._floatLeft;
+        @extend ._infoLight;
+        margin-left: -25px;
+        padding: 2px;
+        position: absolute;
+        font-size: medium;
+        border-radius: 6px;
+
+        * {
+            display: block;
+            margin: 0 auto;
+            padding: 1px 0;
+        }
+
+        .fa-credit-card, .fa-credit-card-alt {
+            font-size: smaller;
+        }
+    }
+
+    .deleted {
+        background-color: lighten($danger-color, 50) !important;
+        opacity: 0.4;
+    }
+
+    .reported {
+        background-color: lighten($warning-color, 50);
+    }
+
+    .draft {
+        background-color: $grey-color;
+        border: 2px dashed darken($grey-color, 40);
+    }
+}
+
+.score-container {
+    background-color: $background-color;
+    display: inline;
+    font-weight: bold;
+    border: 1px solid;
+    border-radius: 12px;
+    padding: 3px 8px;
+}
+
+.score-text {
+    margin: 1px;
+
+    span {
+        @extend ._alignCenter;
+        min-width: 24px;
+        display: inline-block;
+    }
+
+    &.positive {
+        @extend ._successText;
+    }
+
+    &.negative {
+        @extend ._dangerText;
+    }
+
+    &.my-vote {
+        border: 2px solid;
+        margin: 0px;
+    }
+
+    a {
+        @extend ._blackText;
+    }
+
+    a:hover {
+        @extend ._blackText;
+    }
+}
+
+.team-reports {
+    .acknowledged {
+        text-decoration: line-through;
+    }
+
+    .unacknowledged {
+        border-bottom: 1px dotted;
+    }
+
+    li {
+        margin-bottom: 0;
+    }
+
+    ul {
+        margin-bottom: 0;
+    }
+}
+
+.video-display {
+    .delete-button {
+        @extend ._floatRight;
+        margin-top: -10px;
+        margin-right: -5px;
+    }
+
+    &.deleted {
+        background-color: lighten($danger-color, 50) !important;
+        opacity: 0.4;
+        padding-top: 15px;
+    }
+}
+
+.import-table {
+    font-size: 0.5em !important;
+}
+
+.socket-collection {
+    @extend ._alignLeft;
+    margin: 0 auto;
+
+    @media #{$medium-and-down} {
+        width: 80%;
+    }
+
+    @media #{$small-and-down} {
+        width: 100%;
+    }
+
+    @media #{$large-and-up} {
+        width: 60%;
+    }
+
+    .col {
+        padding: 5px;
+    }
+
+    img {
+        width: 2em;
+        height: 2em;
+    }
+
+    label {
+        @extend .truncate;
+        padding: 0 5px;
+        max-width: 60%;
+
+        @media #{$medium-and-down} {
+            max-width: 40%;
+        }
+    }
+
+    .number {
+        @extend ._floatRight;
+        max-width: 25%;
+
+        @media #{$medium-and-down} {
+            max-width: 33%;
+        }
+    }
+
+    .socket-box {
+        border-radius: 12px;
+        padding: 6px;
+
+        * {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+        &.active {
+            @extend ._primary;
+            border: 2px solid;
+        }
+
+        &.inactive {
+            @extend ._grey;
+            margin: 2px;
+        }
+    }
+}

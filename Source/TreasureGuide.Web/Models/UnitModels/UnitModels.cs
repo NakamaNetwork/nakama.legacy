@@ -8,19 +8,18 @@ namespace TreasureGuide.Web.Models.UnitModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
+        
+        public UnitClass Class { get; set; }
         public UnitType Type { get; set; }
-        public IEnumerable<UnitClassType> UnitClasses { get; set; }
+        public UnitFlag Flags { get; set; }
     }
 
     public class UnitStubModel : UnitModel
     {
-        public bool Global { get; set; }
     }
 
     public class UnitDetailModel : UnitModel
     {
-        public IEnumerable<UnitFlagType> UnitFlags { get; set; }
     }
 
     public class UnitEditorModel : IIdItem<int?>

@@ -11,13 +11,14 @@ namespace TreasureGuide.Entities
 {
     using System;
     
-    public enum UnitType : byte
+    [Flags]
+    public enum UnitType : short
     {
         Unknown = 0,
         STR = 1,
         DEX = 2,
-        QCK = 3,
-        INT = 4,
-        PSY = 5
+        QCK = 4,
+        INT = 8,
+        PSY = 16
     }
 }

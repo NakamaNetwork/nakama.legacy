@@ -1,0 +1,16 @@
+﻿<template>
+    <div class="socket-collection">
+        <div class="row">
+            <div class="col f6" repeat.for="socket of socketEntries" with.bind="socket">
+                <div class="socket-box" class.bind="match.level > 0 ? 'active' : 'inactive'">
+                    <img src="${image}" title="${name}" />
+                    <label for="${element}">${name}</label>
+                    <span class="number">
+                        <strong if.bind="!editable" id="${element}">${match.level}</strong>
+                        <number-dropdown if.bind="editable" id="${element}" min="0" max="${max}" value.two-way="match.level"></number-dropdown>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

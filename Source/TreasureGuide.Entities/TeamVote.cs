@@ -15,8 +15,11 @@ namespace TreasureGuide.Entities
     public partial class TeamVote
     {
         public int TeamId { get; set; }
-        public string UserHash { get; set; }
+        public string UserId { get; set; }
+        public short Value { get; set; }
+        public System.DateTimeOffset SubmittedDate { get; set; }
     
         public virtual Team Team { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

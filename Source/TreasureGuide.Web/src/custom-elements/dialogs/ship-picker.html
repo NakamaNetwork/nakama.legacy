@@ -1,0 +1,25 @@
+﻿<template>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="_floatRight">
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+            </div>
+            <h3>Select a Ship</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <div class="row" if.bind="ships.length > 0">
+                <ul class="listnav">
+                    <li repeat.for="ship of ships" class="${(shipId === ship.id ? 'active' : '')}">
+                        <a href="#" click.delegate="clicked(ship.id)">
+                            <i class="fa fa-fw fa-ship"></i>
+                            ${ship.name}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+        </ux-dialog-footer>
+    </ux-dialog>
+</template>

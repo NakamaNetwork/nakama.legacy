@@ -9,4 +9,12 @@ namespace TreasureGuide.Web.Services
     {
         Task SendEmailAsync(string email, string subject, string message);
     }
+
+    public class EmailSender : IEmailSender
+    {
+        public async Task SendEmailAsync(string email, string subject, string message)
+        {
+            System.Diagnostics.Debug.WriteLine("I don't know how to do this yet.");
+        }
+    }
 }

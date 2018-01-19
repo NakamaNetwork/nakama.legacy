@@ -1,0 +1,50 @@
+﻿<template>
+    <h1>${title}</h1>
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading" with.bind="profile">
+        <form>
+            <div class="row">
+                <fieldset>
+                    <legend>User Details</legend>
+                    <div class="form-group">
+                        <label for="accountInput">Friend Id</label>
+                        <input id="accountInput" class="_width100" type="text" value.bind="friendId & validate" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="globalInput">
+                            <input id="globalInput" type="checkbox" checked.bind="global" />
+                            <span class="-label-body">Global</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="webInput">Website</label>
+                        <input id="webInput" class="_width100" type="text" value.bind="website & validate" />
+                        <div class="field-length">${webLength}</div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Avatar</legend>
+                    <unit-display unit-id.two-way="unitId" editable="true"></unit-display>
+                </fieldset>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Roles</legend>
+                    <select auth-req="Administrator" class="_width100" multiple value.bind="userRoles">
+                        <option repeat.for="role of allRoles" model.bind="role">${role}</option>
+                    </select>
+                    <ul auth-req="roles: Administrator; inverse: true">
+                        <li repeat.for="role of userRoles">${role}</li>
+                    </ul>
+                </fieldset>
+            </div>
+            <div class="row">
+                <input type="submit" class="_primary _floatRight" click.delegate="submit()" />
+            </div>
+        </form>
+    </div>
+</template>

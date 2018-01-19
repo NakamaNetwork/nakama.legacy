@@ -1,0 +1,25 @@
+﻿<template>
+    <h1>${title}</h1>
+    <div auth-req="Contributor">
+        <a class="button _info _xlarge _width100" route-href="route: teamCreate">
+            <i class="fa fa-fw fa-plus"></i> Submit a Team
+        </a>
+    </div>
+    <div class="row">
+        <team-search model.bind="searchModel"></team-search>
+    </div>
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading">
+        <div class="row">
+            <search-pager search-model.bind="searchModel"></search-pager>
+        </div>
+        <div class="row team-collection" if.bind="teams.length > 0">
+            <div class=" col d6" repeat.for="team of teams">
+                <team-box team.bind="team"></team-box>
+            </div>
+        </div>
+        <div class="row">
+            <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
+        </div>
+    </div>
+</template>

@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Text;
+using AspNet.Security.OAuth.Discord;
+using AspNet.Security.OAuth.Reddit;
+using AspNet.Security.OAuth.Twitch;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using TreasureGuide.Web.Configurations;
-using TreasureGuide.Web.Data;
-using TreasureGuide.Web.Models;
-using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web
 {
@@ -18,55 +21,123 @@ namespace TreasureGuide.Web
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
 
             if (env.IsDevelopment())
             {
-                // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets<Startup>();
             }
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            var secretKey = Configuration["Authentication:Jwt:Key"];
+            SigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
         }
 
         public IConfigurationRoot Configuration { get; }
+        public SymmetricSecurityKey SigningKey { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ServiceManager.RegisterServices(services, Configuration);
+            ServiceConfig.Configure(services, Configuration, SigningKey);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddFile("logs/nakama-{Date}.txt");
+            loggerFactory.AddFile("logs/nakama-errors-{Date}.txt", LogLevel.Error);
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePages();
             }
 
+            app.UseResponseCompression();
             app.UseStaticFiles();
 
             app.UseIdentity();
 
-            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = SigningKey,
+
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
+
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
+
+            app.UseGoogleAuthentication(new GoogleOptions
+            {
+                ClientId = Configuration["Authentication:Google:ClientId"],
+                ClientSecret = Configuration["Authentication:Google:ClientSecret"]
+            });
+
+            app.UseFacebookAuthentication(new FacebookOptions
+            {
+                ClientId = Configuration["Authentication:Facebook:ClientId"],
+                ClientSecret = Configuration["Authentication:Facebook:ClientSecret"]
+            });
+
+            app.UseTwitterAuthentication(new TwitterOptions
+            {
+                ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"],
+                ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"],
+                RetrieveUserDetails = true
+            });
+
+            app.UseRedditAuthentication(new RedditAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Reddit:ClientId"],
+                ClientSecret = Configuration["Authentication:Reddit:ClientSecret"]
+            });
+
+            app.UseTwitchAuthentication(new TwitchAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Twitch:ClientId"],
+                ClientSecret = Configuration["Authentication:Twitch:ClientSecret"]
+            });
+
+            app.UseDiscordAuthentication(new DiscordAuthenticationOptions
+            {
+                ClientId = Configuration["Authentication:Discord:ClientId"],
+                ClientSecret = Configuration["Authentication:Discord:ClientSecret"],
+                Scope = { "identify", "email" }
+            });
+
+            RoleConfig.Configure(roleManager);
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

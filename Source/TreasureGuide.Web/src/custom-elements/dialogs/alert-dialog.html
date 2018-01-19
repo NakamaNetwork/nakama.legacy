@@ -1,0 +1,20 @@
+﻿<template>
+    <ux-dialog class="small">
+        <ux-dialog-header>
+            <div class="_floatRight">
+                <a click.delegate="dismiss()" class="button _flat modal-action">X</a>
+            </div>
+            <h3>
+                <i if.bind="viewModel.iconClass" class="fa fa-fw" class.bind="viewModel.iconClass"></i>
+                ${viewModel.title}
+            </h3>
+        </ux-dialog-header>
+        <ux-dialog-body class="_alignCenter">
+            ${viewModel.message}
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="okay()" class="button modal-action _primary">${viewModel.okayMessage}</a>
+            <a if.bind="viewModel.cancelable" click.delegate="cancel()" class="button modal-action">${viewModel.cancelMessage}</a>
+        </ux-dialog-footer>
+    </ux-dialog>
+</template>

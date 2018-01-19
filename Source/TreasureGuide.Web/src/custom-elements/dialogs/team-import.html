@@ -1,0 +1,34 @@
+﻿<template>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="_floatRight">
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+            </div>
+            <h3>Import from optc-db</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <form>
+                <fieldset>
+                    <legend>Import</legend>
+                    <a href="http://optc-db.github.io/damage/#/" class="button _success _xlarge _width100" target="_blank">
+                        <i class="fa fa-fw fa-external-link"></i>
+                        optc-db
+                    </a>
+                    Click the green "Export URL" button at the bottom of the calculator page and paste the code below.
+                    <label for="linkInput">Team Export URL</label>
+                    <input type="text" id="linkInput" class="validate _width100" value.bind="input" />
+                </fieldset>
+                <fieldset>
+                    <legend>Preview</legend>
+                    <div class="_alignCenter">
+                        <team-display team.bind="team" ship.bind="ship"></team-display>
+                    </div>
+                </fieldset>
+            </form>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="submit()" class="button _primary modal-action">Accept</a>
+            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+        </ux-dialog-footer>
+    </ux-dialog>
+</template>

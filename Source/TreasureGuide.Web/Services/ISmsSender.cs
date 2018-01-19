@@ -9,4 +9,12 @@ namespace TreasureGuide.Web.Services
     {
         Task SendSmsAsync(string number, string message);
     }
+
+    public class SmsSender : ISmsSender
+    {
+        public async Task SendSmsAsync(string number, string message)
+        {
+            System.Diagnostics.Debug.WriteLine("I don't know how to do this yet either.");
+        }
+    }
 }

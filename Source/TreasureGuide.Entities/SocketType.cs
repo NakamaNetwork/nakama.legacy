@@ -15,14 +15,14 @@ namespace TreasureGuide.Entities
     {
         Unknown = 0,
         DamageReduction = 1,
-        ChargeSpecials = 2,
-        BindResistance = 3,
-        DespairResistance = 4,
-        AutoHeal = 5,
-        RCVBoost = 6,
-        SlotRateBoost = 7,
-        PoisonResistance = 8,
-        MapDamageResistance = 9,
+        RCVBoost = 2,
+        ChargeSpecials = 3,
+        SlotRateBoost = 4,
+        BindResistance = 5,
+        PoisonResistance = 6,
+        DespairResistance = 7,
+        MapDamageResistance = 8,
+        AutoHeal = 9,
         Resilience = 10
     }
 }

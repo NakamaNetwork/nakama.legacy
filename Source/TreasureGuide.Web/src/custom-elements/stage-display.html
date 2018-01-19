@@ -1,0 +1,10 @@
+﻿<template>
+    <button if.bind="editable" click.delegate="clicked()">
+        <i class.bind="iconClass"></i>
+        ${stageId ? stage.name : 'Select Stage'}
+    </button>
+    <span if.bind="!editable">
+        <i class.bind="iconClass"></i>
+        ${stageId ? stage.name : 'Any Stage'}
+    </span>
+</template>

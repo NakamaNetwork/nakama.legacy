@@ -1,0 +1,79 @@
+@import "_variables.scss";
+
+// Colors
+$white-color: #FFFFFF;
+$background-color: #FFFFFF;
+$primary-color: #0B6C6C;
+$light-color: #9E9E9E;
+$dark-color: #585858;
+$danger-color: #B41313;
+$success-color: #76A811;
+$warning-color: #B45C13;
+$active-color: #6E6E6E;
+$info-color: #183579;
+$black-color: #000000;
+$grey-color: #D1D1D1;
+
+body {
+    background-color: $background-color;
+}
+
+@mixin color($name, $color) {
+    $dark: darken($color, 10%);
+
+    $text: #aaa;
+
+    @if lightness($color) >= 50 {
+        $text: #000;
+    }
+    @else {
+        $text: #fff;
+    }
+
+    ._#{$name} {
+        border-color: $dark !important;
+        background-color: $color !important;
+        color: $text !important;
+
+        a {
+            color: $text;
+
+            &:hover {
+                color: $text;
+                opacity: 0.6;
+            }
+        }
+    }
+
+    ._#{$name}Text {
+        color: $dark;
+    }
+}
+
+@mixin makeColor($name, $color) {
+    @include color($name,$color);
+    @include color("#{$name}Light", desaturate(lighten($color, 60%), 20%) );
+    @include color("#{$name}Dight", saturate(darken($color, 60%), 20%) );
+}
+
+@include makeColor("active",$active-color);
+@include makeColor("background",$background-color);
+@include makeColor("danger",$danger-color);
+@include makeColor("dark",$dark-color);
+@include makeColor("info",$info-color);
+@include makeColor("light",$light-color);
+@include makeColor("primary",$primary-color);
+@include makeColor("success",$success-color);
+@include makeColor("warning",$warning-color);
+@include makeColor("white",$white-color);
+@include makeColor("black",$black-color);
+@include makeColor("grey",$grey-color);
+
+a {
+    @extend ._primaryText;
+
+    &:hover {
+        @extend ._primaryText;
+        opacity: 0.6;
+    }
+}

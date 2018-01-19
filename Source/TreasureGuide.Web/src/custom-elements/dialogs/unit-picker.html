@@ -1,0 +1,96 @@
+﻿<template>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="_floatRight">
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+            </div>
+            <h3>Select a Unit</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <form with.bind="searchModel">
+                <div class="row">
+                    <fieldset>
+                        <legend>
+                            Search
+                        </legend>
+                        <div class="row">
+                            <div class="col m4">
+                                <label for="termInput">
+                                    Unit Name
+                                </label>
+                                <input id="termInput"
+                                       type="text"
+                                       placeholder="Unit name..."
+                                       value.two-way="term & debounce" />
+                            </div>
+                            <div class="col m4">
+                                <label for="classInput">
+                                    Unit Class
+                                </label>
+                                <unit-class-picker id="classInput" unit-class.two-way="classes"></unit-class-picker>
+                                <label for="forceClassInput">
+                                    <input id="forceClassInput"
+                                           type="checkbox"
+                                           checked.two-way="forceClass" />
+                                    <span class="-label-body">Exclude Others</span>
+                                </label>
+                            </div>
+                            <div class="col m4">
+                                <label for="typeInput">
+                                    Unit Type
+                                </label>
+                                <unit-type-picker id="typeInput" unit-type.two-way="types"></unit-type-picker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col m4">
+                                <label for="globalInput">
+                                    <input type="checkbox" checked.two-way="global" />
+                                    <span class="-label-body">Global</span>
+                                </label>
+                            </div>
+                            <div class="col m4">
+                                <label for="freeToPlayInput">
+                                    <input type="checkbox" checked.two-way="freeToPlay" />
+                                    <span class="-label-body">F2P</span>
+                                </label>
+                            </div>
+                            <div class="col m4">
+                                <!--<label for="myBoxInput">
+                                    <input id="myBoxInput"
+                                           type="checkbox"
+                                           checked.two-way="myBox" />
+                                    <span class="-label-body">My Box</span>
+                                </label>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="button _floatRight" click.trigger="reset()">Reset</button>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+            <loading-area if.bind="loading"></loading-area>
+            <div if.bind="!loading">
+                <div class="row">
+                    <search-pager search-model.bind="searchModel"></search-pager>
+                </div>
+                <div class="row _alignCenter">
+                    <div class="unit-collection">
+                        <unit-display repeat.for="unit of units" unit-id.bind="unit.id" name.bind="unit.name" size="medium" click.delegate="clicked(unit.id)" clickable="true"></unit-display>
+                    </div>
+                </div>
+                <div class="row">
+                    <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
+                </div>
+            </div>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="clicked(null)" class="button _danger modal-action">
+                <i class="fa fa-fw fa-user-times"></i>
+                Unset
+            </a>
+            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+        </ux-dialog-footer>
+    </ux-dialog>
+</template>

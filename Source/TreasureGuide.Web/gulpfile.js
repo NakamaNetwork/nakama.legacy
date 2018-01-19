@@ -1,4 +1,4 @@
-/// <binding AfterBuild='build-dev' ProjectOpened='build-dev' />
+/// <binding />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
@@ -10,12 +10,14 @@ var shell = require('gulp-shell');
 gulp.task('build-dev', shell.task(['au build --env dev']));
 gulp.task('build-prod', shell.task(['au build --env prod']));
 gulp.task('build-stage', shell.task(['au build --env stage']));
-gulp.task('watch', shell.task(['au run --watch']));
+gulp.task('run', shell.task(['au run']));
+gulp.task('run watch', shell.task(['au run --watch']));
 gulp.task('test', shell.task(['au test']));
+gulp.task('test watch', shell.task(['au test --watch']));
 
 console.log('--- NOTICE ---'
     + '\n'
-    + 'If these tasks fail due to an error "Error: spawn au build --env dev ENOENT", go to "Tools > Options > Projects and Solutions > External Web Tools" '
+    + 'If these tasks fail due to an error "Error: spawn au build --env dev ENOENT", go to "Tools > Options > Web Package Management > Projects and Solutions > External Web Tools" '
     + 'and move your $(PATH) entry above the $(VSINSTALLDIR) entries.'
     + '\n\n'
     + 'Visual Studio comes bundled with an old version of node which does not support the spawning of the aurelia build task.'

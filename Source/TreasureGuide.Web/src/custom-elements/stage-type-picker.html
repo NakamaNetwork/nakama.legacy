@@ -1,0 +1,5 @@
+﻿<template>
+    <select class="_width100" value.bind="stageType">
+        <option repeat.for="stageType of stageTypes" model.bind="stageType.id">${stageType.name}</option>
+    </select>
+</template>

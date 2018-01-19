@@ -1,0 +1,13 @@
+﻿<#@ template language="C#" hostspecific="True" #>
+<#@ output filename="index" extension=".ts" #>
+<#@ import namespace="System.IO" #>
+<#
+    string path = Host.ResolvePath("generated");
+    string[] files = Directory.GetFiles(path);
+    foreach(var file in files) {
+        if(file.EndsWith(".tst.gen")) {
+            var contents = File.ReadAllText(file);
+            this.Write(contents); 
+        }
+    }
+#>

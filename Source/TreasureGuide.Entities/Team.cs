@@ -17,25 +17,41 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Team()
         {
-            this.TeamVotes = new HashSet<TeamVote>();
-            this.StageDifficulties = new HashSet<StageDifficulty>();
             this.TeamSockets = new HashSet<TeamSocket>();
             this.TeamUnits = new HashSet<TeamUnit>();
+            this.TeamVotes = new HashSet<TeamVote>();
+            this.TeamReports = new HashSet<TeamReport>();
+            this.TeamVideos = new HashSet<TeamVideo>();
         }
     
         public int Id { get; set; }
-        public string SubmittedById { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string Guide { get; set; }
         public string Credits { get; set; }
+        public Nullable<int> StageId { get; set; }
+        public int ShipId { get; set; }
+        public string SubmittedById { get; set; }
+        public System.DateTimeOffset SubmittedDate { get; set; }
+        public string EditedById { get; set; }
+        public System.DateTimeOffset EditedDate { get; set; }
+        public int Version { get; set; }
+        public bool Deleted { get; set; }
+        public bool Draft { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamVote> TeamVotes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StageDifficulty> StageDifficulties { get; set; }
+        public virtual Ship Ship { get; set; }
+        public virtual Stage Stage { get; set; }
+        public virtual UserProfile EditingUser { get; set; }
+        public virtual UserProfile SubmittingUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamSocket> TeamSockets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamVote> TeamVotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamReport> TeamReports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamVideo> TeamVideos { get; set; }
+        public virtual TeamCredit TeamCredit { get; set; }
     }
 }
