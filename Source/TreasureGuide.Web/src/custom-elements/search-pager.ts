@@ -5,7 +5,7 @@ import { SearchModel } from '../models/search-model';
 export class SearchPager {
     @bindable searchModel: SearchModel;
     @bindable bottom = false;
-    pageSizes = [10, 25, 50, 100];
+    pageSizes = [10, 20, 50, 100];
 
     @computedFrom('searchModel.page', 'searchModel.pageSize', 'searchModel.totalResults')
     get startIndex() {
