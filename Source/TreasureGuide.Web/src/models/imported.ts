@@ -296,10 +296,9 @@ export interface ITeamUnitStubModel {
     
 }
 
-export interface ITeamUnitDetailModel {
-    unitId: number;
+export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
+    name: string;
     level: number;
-    position: number;
     specialLevel: number;
     sub: boolean;
     

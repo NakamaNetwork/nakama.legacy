@@ -142,6 +142,7 @@ ux-dialog-footer {
 .tooltiptext {
     padding: 6px;
     pointer-events: none;
+    white-space: initial;
 
     .-tooltip-top & {
         bottom: 100%;

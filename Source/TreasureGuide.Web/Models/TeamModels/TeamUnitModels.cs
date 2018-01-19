@@ -1,6 +1,4 @@
-﻿using TreasureGuide.Web.Models.UnitModels;
-
-namespace TreasureGuide.Web.Models.TeamModels
+﻿namespace TreasureGuide.Web.Models.TeamModels
 {
     public class TeamUnitStubModel
     {
@@ -8,11 +6,10 @@ namespace TreasureGuide.Web.Models.TeamModels
         public byte Position { get; set; }
     }
 
-    public class TeamUnitDetailModel
+    public class TeamUnitDetailModel : TeamUnitStubModel
     {
-        public int UnitId { get; set; }
+        public string Name { get; set; }
         public int Level { get; set; }
-        public byte Position { get; set; }
         public byte? SpecialLevel { get; set; }
         public bool Sub { get; set; }
     }
