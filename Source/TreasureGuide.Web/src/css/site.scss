@@ -196,6 +196,18 @@ iframe {
     margin-left: -24px;
     margin-top: 12px;
     pointer-events: none;
-
     transform: rotate(-10deg);
+}
+
+.button {
+    img {
+        vertical-align: middle;
+        height: 1em;
+    }
+}
+
+.footer {
+    .button {
+        margin: 0 3px;
+    }
 }
