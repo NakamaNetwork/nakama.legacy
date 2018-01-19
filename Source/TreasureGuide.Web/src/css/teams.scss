@@ -112,6 +112,22 @@ team-display {
     }
 }
 
+unit-display {
+    .unit-link {
+        position: relative;
+        display: inline-block;
+        vertical-align: bottom;
+        margin-left: -32px;
+
+        &[size="tiny"],
+        [size="tiny"] &,
+        &[size="small"],
+        [size="small"] & {
+            display: none;
+        }
+    }
+}
+
 .team-collection {
     .col {
         line-height: 0;

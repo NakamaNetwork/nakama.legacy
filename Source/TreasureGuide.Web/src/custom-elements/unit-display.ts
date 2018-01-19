@@ -15,6 +15,7 @@ export class UnitDisplay {
     @bindable name: string;
     @bindable editable = false;
     @bindable clickable = false;
+    @bindable info = true;
 
     constructor(unitQueryService: UnitQueryService, dialogService: DialogService, element: Element) {
         this.unitQueryService = unitQueryService;
@@ -43,6 +44,11 @@ export class UnitDisplay {
             return 'background-image: url(\'' + this.imageUrl + '\'), url(\'https://onepiece-treasurecruise.com/wp-content/themes/onepiece-treasurecruise/images/noimage.png\')';
         }
         return '';
+    }
+
+    @computedFrom('unitId')
+    get link() {
+        return 'http://optc-db.github.io/characters/#/view/' + this.unitId;
     }
 
     clicked() {
