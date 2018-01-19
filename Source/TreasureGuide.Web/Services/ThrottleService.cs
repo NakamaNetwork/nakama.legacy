@@ -34,11 +34,7 @@ namespace TreasureGuide.Web.Services
             var key = GenerateKey(request);
             DateTimeOffset? timestamp = null;
             var cached = _cache.TryGetValue(key, out timestamp);
-            if (cached)
-            {
-                _cache.Remove(key);
-            }
-            else
+            if (!cached)
             {
                 var timeout = GenerateTimeout(request);
                 _cache.Set(key, now, timeout);

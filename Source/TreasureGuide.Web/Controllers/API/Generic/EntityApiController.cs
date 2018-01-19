@@ -27,7 +27,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         protected readonly IMapper AutoMapper;
         protected readonly IThrottleService ThrottlingService;
 
-        public bool Throttled { get; set; }
+        public bool Throttled { get; set; } = true;
 
         public EntityApiController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService)
         {
