@@ -131,6 +131,7 @@
           </Key>
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Value" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Units">
@@ -1006,6 +1007,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Value" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" FromRole="TeamVote" ToRole="Team" />
           <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles" FromRole="TeamVote" ToRole="UserProfile" />
+          <Property Name="SubmittedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
         </EntityType>
         <Association Name="FK_dbo_TeamVotes_dbo_Teams">
           <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
@@ -1280,6 +1282,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySetMapping Name="TeamVotes">
             <EntityTypeMapping TypeName="tcdbModel.TeamVote">
               <MappingFragment StoreEntitySet="TeamVotes">
+                <ScalarProperty Name="SubmittedDate" ColumnName="SubmittedDate" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />

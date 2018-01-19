@@ -1,0 +1,12 @@
+﻿<template>
+    <div class="jumbo news">
+        <h4>Updates</h4>
+        <div repeat.for="news of news" with.bind="news">
+            <hr />
+            <h5>${header}</h5>
+            <ul>
+                <li repeat.for="line of lines">${line}</li>
+            </ul>
+        </div>
+    </div>
+</template>

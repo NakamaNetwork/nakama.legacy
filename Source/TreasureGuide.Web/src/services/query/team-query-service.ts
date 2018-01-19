@@ -1,9 +1,8 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel, ITeamImportModel, ITeamVideoModel, ITeamReportStubModel } from '../../models/imported';
+import { ITeamStubModel, ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel, ITeamImportModel, ITeamVideoModel, ITeamReportStubModel, FreeToPlayStatus } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
-import { FreeToPlayStatus } from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -14,6 +13,14 @@ export class TeamQueryService extends SearchableQueryService {
     save(model: TeamEditorModel, id?): Promise<any> {
         model.teamUnits = model.teamUnits.filter(x => x.unitId);
         return super.save(model, id);
+    }
+
+    trending(): Promise<ITeamStubModel[]> {
+        return this.http.get(this.buildAddress('trending'));
+    }
+
+    latest(): Promise<ITeamStubModel[]> {
+        return this.http.get(this.buildAddress('latest'));
     }
 
     vote(model: ITeamVoteModel): Promise<number> {

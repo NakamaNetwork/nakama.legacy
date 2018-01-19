@@ -17,6 +17,7 @@ namespace TreasureGuide.Entities
         public int TeamId { get; set; }
         public string UserId { get; set; }
         public short Value { get; set; }
+        public System.DateTimeOffset SubmittedDate { get; set; }
     
         public virtual Team Team { get; set; }
         public virtual UserProfile UserProfile { get; set; }
