@@ -3,7 +3,7 @@ import { ISearchModel } from './imported';
 
 export abstract class SearchModel implements ISearchModel {
     public page: number = 1;
-    public pageSize: number = 30;
+    public pageSize: number = 20;
 
     public totalResults: number = 0;
 
