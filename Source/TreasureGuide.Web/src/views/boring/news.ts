@@ -1,5 +1,13 @@
 ﻿export class NewsPage {
     news: NewsEntry[] = [{
+        header: '01/19/18 - Hotfix #1',
+        lines: [
+            'Fixed privacy policy on registration page linking to ToS',
+            'Reduced minimum username length to 5 characters.',
+            'Updated forms throughout the site to have better flow control with the enter key.',
+            'Updated a few checkboxes to have larger cursor targets.'
+        ]
+    }, {
         header: '01/19/18',
         lines: [
             'Added links to OPTC-db for unit details.',

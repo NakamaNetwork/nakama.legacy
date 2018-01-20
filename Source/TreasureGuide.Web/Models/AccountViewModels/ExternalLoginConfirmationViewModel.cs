@@ -6,7 +6,7 @@ namespace TreasureGuide.Web.Models.AccountViewModels
     {
         [Required]
         [Display(Name = "User Name")]
-        [StringLength(256, MinimumLength = 8)]
+        [StringLength(48, MinimumLength = 5)]
         [RegularExpression(@"^[A-Za-z0-9-\._@\+ ]*$", ErrorMessage = "Only alphanumeric characters are allowed.")]
         public string UserName { get; set; }
 

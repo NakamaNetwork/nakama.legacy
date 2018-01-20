@@ -1,7 +1,7 @@
 ﻿<template>
     <div class="tooltip -tooltip-top">
         <strong class="tooltiptext _shadow _noDelay _small" if.bind="name">${name}</strong>
-        <button class.bind="buttonClass" click.delegate="clicked()" style.bind="backgroundStyle">
+        <button type="button" class.bind="buttonClass" click.delegate="clicked()" style.bind="backgroundStyle">
             <i class.bind="iconClass" if.bind="!unitId"></i>
         </button>
     </div>

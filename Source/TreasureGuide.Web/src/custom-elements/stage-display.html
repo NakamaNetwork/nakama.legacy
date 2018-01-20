@@ -1,5 +1,5 @@
 ﻿<template>
-    <button if.bind="editable" click.delegate="clicked()">
+    <button type="button" if.bind="editable" click.delegate="clicked()">
         <i class.bind="iconClass"></i>
         ${stageId ? stage.name : 'Select Stage'}
     </button>

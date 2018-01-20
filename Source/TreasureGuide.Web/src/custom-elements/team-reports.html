@@ -4,7 +4,7 @@
         <ul>
             <li repeat.for="report of reports" class.bind="report.acknowledged ? 'acknowledged' : 'unacknowledged'">
                 ${report.reason}
-                <button if.bind="!report.acknowledged" class="button _xsmall _light _floatRight" click.delegate="acknowledge(report.id)">
+                <button type="button" if.bind="!report.acknowledged" class="button _xsmall _light _floatRight" click.delegate="acknowledge(report.id)">
                     <i class="fa fa-fw fa-check"></i>
                     Acknowledge
                 </button>
