@@ -104,5 +104,6 @@
     <None Include="PostDeploy\AuthData.sql" />
     <Build Include="dbo\Tables\Teams\TeamCredits.sql" />
     <Build Include="dbo\Tables\Units\UnitAliases.sql" />
+    <None Include="PostDeploy\UnitAliasData.sql" />
   </ItemGroup>
 </Project>
