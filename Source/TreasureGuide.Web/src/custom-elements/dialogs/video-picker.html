@@ -1,29 +1,29 @@
 ﻿<template>
-    <ux-dialog class="small">
-        <ux-dialog-header>
-            <div class="_floatRight">
-                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
-            </div>
-            <h3>
-                Submit Video
-            </h3>
-        </ux-dialog-header>
-        <ux-dialog-body>
-            <div if.bind="videoId">
-                <video-embed video-id.bind="videoId"></video-embed>
-            </div>
-            <form with.bind="model">
+    <form with.bind="model">
+        <ux-dialog class="small">
+            <ux-dialog-header>
+                <div class="_floatRight">
+                    <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+                </div>
+                <h3>
+                    Submit Video
+                </h3>
+            </ux-dialog-header>
+            <ux-dialog-body>
+                <div if.bind="videoId">
+                    <video-embed video-id.bind="videoId"></video-embed>
+                </div>
                 <div class="form-group">
                     <label for="linkInput">Link</label>
                     <input id="linkInput" type="text"
                            class="_width100"
                            value.bind="link & validate" />
                 </div>
-            </form>
-        </ux-dialog-body>
-        <ux-dialog-footer>
-            <a click.delegate="okay()" class="button modal-action _primary">Submit</a>
-            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
-        </ux-dialog-footer>
-    </ux-dialog>
+            </ux-dialog-body>
+            <ux-dialog-footer>
+                <input type="submit" click.delegate="okay()" class="button modal-action _primary" name="Submit" />
+                <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+            </ux-dialog-footer>
+        </ux-dialog>
+    </form>
 </template>

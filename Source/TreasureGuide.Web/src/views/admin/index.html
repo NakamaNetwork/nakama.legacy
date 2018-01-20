@@ -2,7 +2,7 @@
     <h1>Admin</h1>
     <div class="row">
         <h2>Tools</h2>
-        <button md-button md-waves click.delegate="createTeam()">Create a Random Team</button>
+        <button type="button" click.delegate="createTeam()">Create a Random Team</button>
     </div>
     <h2>User Management</h2>
     <form with.bind="searchModel">
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="row">
-                <button class="button _floatRight" click.trigger="reset()">Reset</button>
+                <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
             </div>
         </fieldset>
     </form>

@@ -1,7 +1,7 @@
 <template>
     <fieldset with.bind="video" class.bind="videoClass">
         <div class="row">
-            <button if.bind="canDelete" class="delete-button button _danger _xsmall" title="Delete Video" click.delegate="delete()">
+            <button type="button" if.bind="canDelete" class="delete-button button _danger _xsmall" title="Delete Video" click.delegate="delete()">
                 <i class="fa fa-fw fa-times"></i>
             </button>
             <video-embed video-id.bind="videoLink"></video-embed>

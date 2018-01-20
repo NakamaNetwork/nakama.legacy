@@ -41,14 +41,14 @@
                     <input type="text" value.bind="import.type" class="_width100" placeholder="Type of Reference" />
                 </td>
                 <td>
-                    <button class="button _danger _xsmall" click.delegate="remove(import)">
+                    <button type="button" class="button _danger _xsmall" click.delegate="remove(import)">
                         <i class="fa fa-fw fa-times"></i>
                     </button>
                 </td>
             </tr>
             <tr class="_light">
                 <td colspan="9" class="_alignRight">
-                    <button class="button _success _width100" click.delegate="add()">
+                    <button type="button" class="button _success _width100" click.delegate="add()">
                         <i class="fa fa-fw fa-plus"></i>
                         Add Row
                     </button>
@@ -61,12 +61,12 @@
             <textarea class="_width100" value.bind="strings" placeholder="Strings..."></textarea>
         </div>
         <div class="col m4">
-            <button class="button _primary" click.delegate="convertStrings()">
+            <button type="button" class="button _primary" click.delegate="convertStrings()">
                 Convert
             </button>
         </div>
         <div class="col m2">
-            <button class="_floatRight button _primary" click.delegate="submit()">
+            <button type="submit" class="_floatRight button _primary" click.delegate="submit()">
                 Submit
             </button>
         </div>

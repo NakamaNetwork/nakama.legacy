@@ -1,13 +1,13 @@
 ﻿<template>
-    <ux-dialog>
-        <ux-dialog-header>
-            <div class="_floatRight">
-                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
-            </div>
-            <h3>Select a Stage</h3>
-        </ux-dialog-header>
-        <ux-dialog-body>
-            <form with.bind="searchModel">
+    <form with.bind="searchModel">
+        <ux-dialog>
+            <ux-dialog-header>
+                <div class="_floatRight">
+                    <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+                </div>
+                <h3>Select a Stage</h3>
+            </ux-dialog-header>
+            <ux-dialog-body>
                 <div class="row">
                     <div class="col m8">
                         <label for="termInput">Term</label>
@@ -26,36 +26,36 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button class="button _floatRight" click.trigger="reset()">Reset</button>
+                    <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
                 </div>
-            </form>
-            <loading-area if.bind="loading"></loading-area>
-            <div if.bind="!loading">
-                <div class="row">
-                    <search-pager search-model.bind="searchModel"></search-pager>
+                <loading-area if.bind="loading"></loading-area>
+                <div if.bind="!loading">
+                    <div class="row">
+                        <search-pager search-model.bind="searchModel"></search-pager>
+                    </div>
+                    <div class="row" if.bind="stages.length > 0">
+                        <ul class="listnav">
+                            <li repeat.for="stage of stages" class="${(stageId === stage.id ? 'active' : '')}">
+                                <a href="#" click.delegate="clicked(stage.id)">
+                                    <global-display global.bind="stage.global"></global-display>
+                                    ${stage.name}
+                                    <stage-type-display type.bind="stage.type" class="_floatRight"></stage-type-display>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
+                    </div>
                 </div>
-                <div class="row" if.bind="stages.length > 0">
-                    <ul class="listnav">
-                        <li repeat.for="stage of stages" class="${(stageId === stage.id ? 'active' : '')}">
-                            <a href="#" click.delegate="clicked(stage.id)">
-                                <global-display global.bind="stage.global"></global-display>
-                                ${stage.name}
-                                <stage-type-display type.bind="stage.type" class="_floatRight"></stage-type-display>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="row">
-                    <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
-                </div>
-            </div>
-        </ux-dialog-body>
-        <ux-dialog-footer>
-            <a click.delegate="clicked(null)" class="button _danger modal-action">
-                <i class="fa fa-fw fa-map-o"></i>
-                Unset
-            </a>
-            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
-        </ux-dialog-footer>
-    </ux-dialog>
+            </ux-dialog-body>
+            <ux-dialog-footer>
+                <a click.delegate="clicked(null)" class="button _danger modal-action">
+                    <i class="fa fa-fw fa-map-o"></i>
+                    Unset
+                </a>
+                <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+            </ux-dialog-footer>
+        </ux-dialog>
+    </form>
 </template>
