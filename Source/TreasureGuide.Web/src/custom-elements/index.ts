@@ -7,6 +7,7 @@
         './ship-display',
         './socket-display',
         './stage-display',
+        './stage-search',
         './stage-type-picker',
         './team-box',
         './team-display',

@@ -1,0 +1,24 @@
+<template>
+    <form with.bind="searchModel">
+        <div class="row">
+            <div class="col m8">
+                <label for="termInput">Term</label>
+                <input id="termInput" type="text" value.two-way="term & debounce" placeholder="Water Seven..." />
+
+                <label for="checkInput">
+                    <input id="checkInput" type="checkbox" checked.two-way="global" />
+                    <span class="-label-body">Global</span>
+                </label>
+            </div>
+            <div class="col m4">
+                <label for="typeInput">
+                    Stage Type
+                </label>
+                <stage-type-picker id="typeInput" stage-type.two-way="type"></stage-type-picker>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
+        </div>
+    </form>
+</template>
