@@ -35,6 +35,9 @@ export class App {
             { route: 'teams/:id/edit', name: 'teamEdit', title: 'Edit Team', moduleId: 'views/teams/edit', nav: false, auth: 'Contributor' },
             { route: 'teams/:id/details', name: 'teamDetails', title: 'Team Details', moduleId: 'views/teams/detail', nav: false },
             { route: 'teams/import', name: 'teamImport', title: 'Import', moduleId: 'views/teams/import', nav: true, auth: 'Administrator' },
+            // Stages
+            { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
+            { route: 'stages/:id/details', name: 'stageDetails', title: 'Stage Details', moduleId: 'views/stages/detail', nav: false },
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: 'Administrator' },
             // Account
