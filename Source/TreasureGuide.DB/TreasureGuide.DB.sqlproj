@@ -103,5 +103,6 @@
     <Build Include="dbo\Tables\Teams\TeamVideos.sql" />
     <None Include="PostDeploy\AuthData.sql" />
     <Build Include="dbo\Tables\Teams\TeamCredits.sql" />
+    <Build Include="dbo\Tables\Units\UnitAliases.sql" />
   </ItemGroup>
 </Project>
