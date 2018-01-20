@@ -1,5 +1,10 @@
 ﻿export class NewsPage {
     news: NewsEntry[] = [{
+        header: '01/20/18',
+        lines: [
+            'Added "stages" section so users can easily find teams for each stage.',
+        ]
+    }, {
         header: '01/19/18 - Hotfix #1',
         lines: [
             'Fixed privacy policy on registration page linking to ToS',

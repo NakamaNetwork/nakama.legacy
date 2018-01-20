@@ -1,0 +1,51 @@
+﻿<template>
+    <h1>${title}</h1>
+    <div class="row">
+        <stage-search search-model.two-way="searchModel"></stage-search>
+    </div>
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading">
+        <div class="row">
+            <search-pager search-model.bind="searchModel"></search-pager>
+        </div>
+        <div class="row stage-collection" if.bind="stages.length > 0">
+            <table class="_width100">
+                <thead>
+                    <tr>
+                        <th class="_alignCenter">
+                            <global-display global="true"></global-display>
+                        </th>
+                        <th>
+                            Stage
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Teams
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="stage of stages">
+                        <td class="_alignCenter">
+                            <global-display global.bind="stage.global"></global-display>
+                        </td>
+                        <td>
+                            <a route-href="route: stageDetails; params.bind: {id: stage.id}">${stage.name}</a>
+                        </td>
+                        <td>
+                            <stage-type-display type.bind="stage.type"></stage-type-display>
+                        </td>
+                        <td>
+                            ${stage.teamCount}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
+        </div>
+    </div>
+</template>

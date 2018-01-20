@@ -1,0 +1,34 @@
+﻿<template>
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading" with.bind="stage">
+        <h1>
+            <global-display global.bind="global"></global-display>
+            ${name}
+        </h1>
+        <h4>
+            <stage-type-display type.bind="type"></stage-type-display>
+        </h4>
+    </div>
+    <div>
+        <h2>Teams</h2>
+        <div class="row">
+            <team-search model.two-way="teamSearchModel" stage-locked="true"></team-search>
+        </div>
+        <div class="row">
+            <loading-area if.bind="loadingTeams"></loading-area>
+            <div if.bind="!loadingTeams">
+                <div class="row">
+                    <search-pager search-model.bind="teamSearchModel"></search-pager>
+                </div>
+                <div class="row team-collection" if.bind="teams.length > 0">
+                    <div class=" col m6" repeat.for="team of teams">
+                        <team-box team.bind="team"></team-box>
+                    </div>
+                </div>
+                <div class="row">
+                    <search-pager search-model.bind="teamSearchModel" bottom="true"></search-pager>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
