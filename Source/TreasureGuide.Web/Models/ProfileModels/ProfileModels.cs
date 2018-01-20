@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.ProfileModels
@@ -24,6 +25,8 @@ namespace TreasureGuide.Web.Models.ProfileModels
     public class ProfileEditorModel : IIdItem<string>
     {
         public string Id { get; set; }
+
+        [StringLength(48, MinimumLength = 5)]
         public string UserName { get; set; }
         public int? UnitId { get; set; }
         public decimal? FriendId { get; set; }
