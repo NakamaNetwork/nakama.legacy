@@ -108,7 +108,6 @@ export interface IStageStubModel {
 }
 
 export interface IStageDetailModel {
-    teams: ITeamStubModel[];
     id: number;
     stamina: number;
     name: string;

@@ -933,7 +933,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Guide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Credits" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Credits" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="StageId" Type="Int32" />
           <Property Name="ShipId" Type="Int32" Nullable="false" />
           <Property Name="SubmittedById" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />

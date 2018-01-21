@@ -62,10 +62,10 @@ namespace TreasureGuide.Web.Models.TeamModels
         [StringLength(250, MinimumLength = 10)]
         public string Name { get; set; }
 
-        [StringLength(1000)]
+        [StringLength(2000)]
         public string Credits { get; set; }
 
-        [StringLength(10000)]
+        [StringLength(40000)]
         public string Guide { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }

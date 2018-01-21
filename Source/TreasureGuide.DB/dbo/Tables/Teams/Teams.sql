@@ -3,7 +3,7 @@
     [Id] INT NOT NULL IDENTITY(1,1),
     [Name] NVARCHAR(250) NOT NULL,
     [Guide] NVARCHAR(MAX) NULL,
-    [Credits] NVARCHAR(1000) NULL,
+    [Credits] NVARCHAR(2000) NULL,
     [StageId] INT NULL,
     [ShipId] INT NOT NULL CONSTRAINT [DF_dbo.Teams_ShipId] DEFAULT 0, 
     [SubmittedById] NVARCHAR(450) NOT NULL,
