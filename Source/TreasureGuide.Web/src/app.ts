@@ -3,6 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { RouterConfiguration, Router } from 'aurelia-router';
 import { AccountService } from './services/account-service';
 import { AuthorizeStep } from './tools/authorize-step';
+import { NewsService } from './services/news-service';
 
 @autoinject
 export class App {
@@ -10,13 +11,19 @@ export class App {
     public message = 'Shukko da!';
     public accountService: AccountService;
     private ea: EventAggregator;
+    private newsService: NewsService;
 
-    constructor(accountService: AccountService, eventAggregator: EventAggregator) {
+    constructor(accountService: AccountService, eventAggregator: EventAggregator, newsService: NewsService) {
         this.accountService = accountService;
         this.ea = eventAggregator;
         this.ea.subscribe('router:navigation:complete', response => {
             this.navToggled = false;
         });
+        this.newsService = newsService;
+    }
+
+    activate() {
+        this.newsService.show();
     }
 
     configureRouter(config: RouterConfiguration, router: Router): void {

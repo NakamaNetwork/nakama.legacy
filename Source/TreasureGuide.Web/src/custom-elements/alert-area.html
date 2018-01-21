@@ -4,7 +4,10 @@
             <span class="-close" click.trigger="alertService.dismiss(alert.id)">
                 <i class="fa fa-fw fa-times"></i>
             </span>
-            ${alert.message}
+            <span if.bind="!alert.html">
+                ${alert.message}
+            </span>
+            <span if.bind="alert.html" innerhtml.bind="alert.message"></span>
         </div>
     </div>
 </template>
