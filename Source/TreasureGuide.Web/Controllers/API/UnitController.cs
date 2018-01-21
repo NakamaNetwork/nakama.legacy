@@ -92,7 +92,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (!String.IsNullOrEmpty(term))
             {
-                results = results.Where(x => x.Name.Contains(term));
+                results = results.Where(x => x.Name.Contains(term) || x.UnitAliases.Any(y => y.Name.Contains(term)));
             }
             return results;
         }
