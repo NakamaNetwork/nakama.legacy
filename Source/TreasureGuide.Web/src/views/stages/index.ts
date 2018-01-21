@@ -2,7 +2,6 @@
 import { autoinject } from 'aurelia-framework';
 import { StageQueryService, StageSearchModel } from '../../services/query/stage-query-service';
 import { Router } from 'aurelia-router';
-import {SearchModel} from '../../models/search-model';
 
 @autoinject
 export class StageIndexPage {
@@ -24,7 +23,7 @@ export class StageIndexPage {
     }
 
     activate(params) {
-        this.searchModel = <StageSearchModel>new StageSearchModel().getCached();
+        this.searchModel = new StageSearchModel();
         if (params) {
             this.searchModel = this.searchModel.assign(params);
         }

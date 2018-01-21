@@ -2,8 +2,10 @@
 import { ISearchModel } from './imported';
 
 export abstract class SearchModel implements ISearchModel {
+    public static pageSizeKey: string = 'PageSize';
+
     public page: number = 1;
-    public pageSize: number = 20;
+    public pageSize: number = SearchModel.isNumber(sessionStorage[SearchModel.pageSizeKey]) ? Number.parseInt(sessionStorage[SearchModel.pageSizeKey]) : 20;
 
     public totalResults: number = 0;
 
@@ -32,7 +34,10 @@ export abstract class SearchModel implements ISearchModel {
 
     @computedFrom('json')
     get payload() {
-        return JSON.parse(this.json);
+        var payload = JSON.parse(this.json);
+        sessionStorage.setItem(this.getCacheKey(), this.json);
+        sessionStorage.setItem(SearchModel.pageSizeKey, payload.pageSize.toString());
+        return payload;
     }
 
     reset(newItem = null) {
@@ -55,8 +60,8 @@ export abstract class SearchModel implements ISearchModel {
     }
 
     assign(params) {
-        for (var myProp in this) {
-            if (this.hasOwnProperty(myProp) && params.hasOwnProperty(myProp)) {
+        for (var myProp in params) {
+            if (params.hasOwnProperty(myProp)) {
                 var prop = params[myProp];
                 this[myProp] = SearchModel.isNumber(prop) ? Number.parseInt(prop) : prop;
             }
