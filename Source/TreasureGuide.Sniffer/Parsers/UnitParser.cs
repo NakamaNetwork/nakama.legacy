@@ -49,7 +49,7 @@ namespace TreasureGuide.Sniffer.Parsers
                 };
                 return unit;
             });
-            return models;
+            return models.Where(x => !String.IsNullOrWhiteSpace(x.Name));
         }
 
         protected override async Task Save(IEnumerable<Unit> units)

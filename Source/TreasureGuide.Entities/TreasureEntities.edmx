@@ -134,6 +134,14 @@
           <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Value" Type="smallint" Nullable="false" />
         </EntityType>
+        <EntityType Name="UnitAliases">
+          <Key>
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <EntityType Name="Units">
           <Key>
             <PropertyRef Name="Id" />
@@ -420,6 +428,20 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_UnitAliasess_dbo_Units">
+          <End Role="Units" Type="Self.Units" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UnitAliases" Type="Self.UnitAliases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitAliases">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="tcdbModelStoreContainer">
           <EntitySet Name="Rounds" EntityType="Self.Rounds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoundUnitBehavior" EntityType="Self.RoundUnitBehavior" Schema="dbo" store:Type="Tables" />
@@ -433,6 +455,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="TeamUnits" EntityType="Self.TeamUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamVideos" EntityType="Self.TeamVideos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitAliases" EntityType="Self.UnitAliases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" store:Type="Views" store:Schema="dbo">
@@ -512,6 +535,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_TeamVotes_dbo_UserProfiles" Association="Self.FK_dbo_TeamVotes_dbo_UserProfiles">
             <End Role="UserProfiles" EntitySet="UserProfiles" />
             <End Role="TeamVotes" EntitySet="TeamVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UnitAliasess_dbo_Units" Association="Self.FK_dbo_UnitAliasess_dbo_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="UnitAliases" EntitySet="UnitAliases" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -609,6 +636,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_TeamCredits_dbo_Teams" Association="tcdbModel.FK_dbo_TeamCredits_dbo_Teams">
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamCredit" EntitySet="TeamCredits" />
+          </AssociationSet>
+          <EntitySet Name="UnitAliases" EntityType="tcdbModel.UnitAlias" />
+          <AssociationSet Name="FK_dbo_UnitAliasess_dbo_Units" Association="tcdbModel.FK_dbo_UnitAliasess_dbo_Units">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitAlias" EntitySet="UnitAliases" />
           </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
@@ -766,6 +798,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="Flags" Type="tcdbModel.UnitFlag" Nullable="false" />
                     <NavigationProperty Name="RoundUnits" Relationship="tcdbModel.FK_dbo_RoundUnits_dbo_Units" FromRole="Unit" ToRole="RoundUnit" />
                     <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="Unit" ToRole="TeamUnit" />
+          <NavigationProperty Name="UnitAliases" Relationship="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" FromRole="Unit" ToRole="UnitAlias" />
                 </EntityType>
                 <Association Name="FK_dbo_RoundUnits_dbo_Units">
                     <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
@@ -1134,6 +1167,29 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="Slefty" />
           <Member Name="Irving" />
         </EnumType>
+        <EntityType Name="UnitAlias">
+          <Key>
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" FromRole="UnitAlias" ToRole="Unit" />
+        </EntityType>
+        <Association Name="FK_dbo_UnitAliasess_dbo_Units">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.UnitAlias" Role="UnitAlias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitAlias">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -1318,6 +1374,14 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Credit" ColumnName="Credit" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitAliases">
+            <EntityTypeMapping TypeName="tcdbModel.UnitAlias">
+              <MappingFragment StoreEntitySet="UnitAliases">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

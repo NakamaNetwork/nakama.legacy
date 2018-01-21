@@ -1,5 +1,13 @@
 ﻿export class NewsPage {
     news: NewsEntry[] = [{
+        header: '01/20/18 - Update #2',
+        lines: [
+            'Added unit aliases from OPTC-db to make searching easier. (i.e. you can now find Golden Pound Usopp by searching "GPU")',
+            'Synced units and ships with the latest data from OPTC-db.',
+            'Updated nakama.network to redirect to www.nakama.network to prevent login issues.',
+            'Updated nakama.network to redirect to www.nakama.network to prevent login issues.',
+        ]
+    }, {
         header: '01/20/18',
         lines: [
             'Added "stages" section so users can easily find teams for each stage.',
