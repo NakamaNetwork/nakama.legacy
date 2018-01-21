@@ -121,6 +121,9 @@
     <Compile Include="Unit.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="UnitAlias.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="UnitClass.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>

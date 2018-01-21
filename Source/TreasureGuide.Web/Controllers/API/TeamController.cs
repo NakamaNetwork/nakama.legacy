@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -32,6 +33,15 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 entity.SubmittedById = userId;
                 entity.SubmittedDate = now;
+                entity.TeamVotes = new List<TeamVote>
+                {
+                    new TeamVote
+                    {
+                        SubmittedDate = now,
+                        UserId = userId,
+                        Value = 1
+                    }
+                };
             }
             entity.EditedById = userId;
             entity.EditedDate = now;

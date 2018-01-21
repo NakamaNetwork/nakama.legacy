@@ -15,8 +15,8 @@ import { AccountService } from '../../services/account-service';
 export class TeamEditPage {
     public static nameMinLength = 10;
     public static nameMaxLength = 250;
-    public static guideMaxLength = 10000;
-    public static creditMaxLength = 1000;
+    public static guideMaxLength = 40000;
+    public static creditMaxLength = 2000;
 
     private teamQueryService: TeamQueryService;
     private router: Router;

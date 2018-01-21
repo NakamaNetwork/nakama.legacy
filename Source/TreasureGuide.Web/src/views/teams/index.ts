@@ -2,7 +2,6 @@
 import { autoinject } from 'aurelia-framework';
 import { TeamQueryService, TeamSearchModel } from '../../services/query/team-query-service';
 import { Router } from 'aurelia-router';
-import {SearchModel} from '../../models/search-model';
 
 @autoinject
 export class TeamIndexPage {
@@ -20,11 +19,10 @@ export class TeamIndexPage {
         this.teamQueryService = teamQueryService;
         this.bindingEngine = bindingEngine;
         this.router = router;
-
     }
 
     activate(params) {
-        this.searchModel = <TeamSearchModel>new TeamSearchModel().getCached();
+        this.searchModel = new TeamSearchModel();
         if (params) {
             this.searchModel = this.searchModel.assign(params);
         }

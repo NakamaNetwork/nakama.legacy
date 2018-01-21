@@ -35,6 +35,7 @@ namespace TreasureGuide.Sniffer
             {
                 new UnitParser(context),
                 new UnitFlagParser(context),
+                new UnitAliasParser(context),
                 new StageParser(context),
                 new ShipParser(context),
             };

@@ -18,24 +18,28 @@ export class AlertService {
     }
 
     info(message: string) {
-        this.show(message, 4000, AlertType.Info);
+        this.show(message, 4000, AlertType.Info, false);
     }
 
     warning(message: string) {
-        this.show(message, 4000, AlertType.Warning);
+        this.show(message, 4000, AlertType.Warning, false);
     }
 
     danger(message: string) {
-        this.show(message, 5000, AlertType.Danger);
+        this.show(message, 5000, AlertType.Danger, false);
     }
 
     success(message: string) {
-        this.show(message, 3000, AlertType.Success);
+        this.show(message, 3000, AlertType.Success, false);
     }
 
-    show(message: string, duration: number, type: AlertType) {
+    news(message: string) {
+        this.show(message, 20000, AlertType.Info, true);
+    }
+
+    show(message: string, duration: number, type: AlertType, html: boolean) {
         var id = ++this.count;
-        var alert = new Alert(id, message, type);
+        var alert = new Alert(id, message, type, html);
         setTimeout(() => this.dismiss(id), duration);
         this.alerts.unshift(alert);
     }
@@ -56,12 +60,14 @@ export class Alert {
     public message: string;
     public type: AlertType;
     public disappearing: boolean;
+    public html: boolean;
 
-    constructor(id: number, message: string, type: AlertType) {
+    constructor(id: number, message: string, type: AlertType, html: boolean) {
         this.id = id;
         this.message = message;
         this.type = type;
         this.disappearing = false;
+        this.html = html;
     }
 
     @computedFrom('type', 'disappearing')

@@ -3,6 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { RouterConfiguration, Router } from 'aurelia-router';
 import { AccountService } from './services/account-service';
 import { AuthorizeStep } from './tools/authorize-step';
+import { NewsService } from './services/news-service';
 
 @autoinject
 export class App {
@@ -10,13 +11,19 @@ export class App {
     public message = 'Shukko da!';
     public accountService: AccountService;
     private ea: EventAggregator;
+    private newsService: NewsService;
 
-    constructor(accountService: AccountService, eventAggregator: EventAggregator) {
+    constructor(accountService: AccountService, eventAggregator: EventAggregator, newsService: NewsService) {
         this.accountService = accountService;
         this.ea = eventAggregator;
         this.ea.subscribe('router:navigation:complete', response => {
             this.navToggled = false;
         });
+        this.newsService = newsService;
+    }
+
+    activate() {
+        this.newsService.show();
     }
 
     configureRouter(config: RouterConfiguration, router: Router): void {
@@ -47,6 +54,7 @@ export class App {
             { route: 'privacy', name: 'privacy', title: 'Privacy Policy', moduleId: 'views/boring/privacy', nav: false, auth: false },
             { route: 'tos', name: 'tos', title: 'Terms of Service', moduleId: 'views/boring/tos', nav: false, auth: false },
             { route: 'about', name: 'about', title: 'About', moduleId: 'views/boring/intro', nav: true },
+            { route: 'markdown', name: 'markdown', title: 'Markdown', moduleId: 'views/boring/markdown', nav: false },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }

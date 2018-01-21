@@ -1,7 +1,9 @@
-﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
+﻿import { autoinject, bindable, customElement } from 'aurelia-framework';
 
+@autoinject
 @customElement('markdown-editor')
 export class MarkdownEditor {
+
     @bindable value;
     @bindable placeholder: string;
     @bindable editing: boolean = true;
