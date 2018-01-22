@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.Net.Http.Headers;
 
 namespace TreasureGuide.Web.Helpers
 {
@@ -27,6 +29,36 @@ namespace TreasureGuide.Web.Helpers
             ? b.Exception.Message.Split(new[] { "Path" }, StringSplitOptions.None).FirstOrDefault() ?? ""
             : b.ErrorMessage));
             return String.Join(", ", all);
+        }
+    }
+
+    public class RedirectWwwRule : IRule
+    {
+        public int StatusCode { get; } = (int)HttpStatusCode.MovedPermanently;
+        public bool ExcludeLocalhost { get; set; } = true;
+
+        public void ApplyRule(RewriteContext context)
+        {
+            var request = context.HttpContext.Request;
+            var host = request.Host;
+            if (host.Host.StartsWith("www", StringComparison.OrdinalIgnoreCase))
+            {
+                context.Result = RuleResult.ContinueRules;
+                return;
+            }
+
+            if (ExcludeLocalhost && string.Equals(host.Host, "localhost", StringComparison.OrdinalIgnoreCase))
+            {
+                context.Result = RuleResult.ContinueRules;
+                return;
+            }
+
+            var newPath = request.Scheme + "://www." + host.Value + request.PathBase + request.Path + request.QueryString;
+
+            var response = context.HttpContext.Response;
+            response.StatusCode = StatusCode;
+            response.Headers[HeaderNames.Location] = newPath;
+            context.Result = RuleResult.EndResponse;
         }
     }
 }
