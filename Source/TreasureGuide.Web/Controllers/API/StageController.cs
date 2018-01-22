@@ -52,7 +52,7 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
-        protected override IQueryable<Stage> OrderSearchResults(IQueryable<Stage> results)
+        protected override IQueryable<Stage> OrderSearchResults(IQueryable<Stage> results, StageSearchModel model)
         {
             return results.OrderBy(x => x.Name);
         }
