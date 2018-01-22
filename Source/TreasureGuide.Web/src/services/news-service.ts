@@ -7,6 +7,13 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
+            header: '01/22/18',
+            lines: [
+                'Added sorting features to Stage and Team searches.',
+                'Updated search recalling logic to be a little more intuitive.'
+            ]
+        },
+        {
             header: '01/21/18',
             lines: [
                 'Added unit aliases from OPTC-db to make searching easier. (i.e. you can now find Golden Pound Usopp by searching "GPU")',
