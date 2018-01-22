@@ -116,6 +116,7 @@ export enum SocketType {
 
 export interface IStageStubModel {
     id: number;
+    unitId: number;
     stamina: number;
     name: string;
     global: boolean;
@@ -126,6 +127,7 @@ export interface IStageStubModel {
 
 export interface IStageDetailModel {
     id: number;
+    unitId: number;
     stamina: number;
     name: string;
     global: boolean;

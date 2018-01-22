@@ -26,10 +26,12 @@ namespace TreasureGuide.Entities
         public Nullable<byte> Stamina { get; set; }
         public StageType Type { get; set; }
         public bool Global { get; set; }
+        public Nullable<int> UnitId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Round> Rounds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Teams { get; set; }
+        public virtual Unit Unit { get; set; }
     }
 }

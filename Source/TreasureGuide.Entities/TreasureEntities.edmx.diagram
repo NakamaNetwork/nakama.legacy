@@ -41,6 +41,7 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamCredits_dbo_Teams" />
         <EntityTypeShape EntityType="tcdbModel.UnitAlias" Width="1.5" PointX="5" PointY="0.75" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Stages_dbo_Units" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
