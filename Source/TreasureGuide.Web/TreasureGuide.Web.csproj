@@ -49,9 +49,6 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
-      <None Update="src\models\generated\stage-models.tst.gen">
-        <CustomToolNamespace>Models\StageModels\StageModels.cs</CustomToolNamespace>
-      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

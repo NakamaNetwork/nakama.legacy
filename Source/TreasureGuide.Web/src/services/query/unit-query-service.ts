@@ -34,12 +34,9 @@ export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
     myBox: boolean;
     global: boolean;
     freeToPlay: boolean;
+    cacheKey: string = 'search-unit';
 
     public getDefault(): SearchModel {
         return new UnitSearchModel();
-    }
-
-    getCacheKey(): string {
-         return 'search-unit';
     }
 };

@@ -58,9 +58,26 @@ export class RoleConstants {
 }
 
 
+export class SearchConstants {
+    public static SortId: string = "Id";
+    public static SortName: string = "Name";
+    public static SortType: string = "Type";
+    public static SortStage: string = "Stage";
+    public static SortClass: string = "Class";
+    public static SortCount: string = "Count";
+    public static SortScore: string = "Score";
+    public static SortLeader: string = "Leader";
+    public static SortDate: string = "Date";
+    public static SortUser: string = "User";
+    
+}
+
+
 export interface ISearchModel {
     page: number;
     pageSize: number;
+    sortBy: string;
+    sortDesc: boolean;
     
 }
 

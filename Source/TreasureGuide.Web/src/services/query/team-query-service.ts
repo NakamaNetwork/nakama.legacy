@@ -3,6 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { ITeamStubModel, ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel, ITeamImportModel, ITeamVideoModel, ITeamReportStubModel, FreeToPlayStatus } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
+import {SearchConstants} from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -59,13 +60,19 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     deleted: boolean;
     reported: boolean;
     draft: boolean;
+    cacheKey: string = 'search-team';
+
+    sortables: string[] = [
+        SearchConstants.SortDate,
+        SearchConstants.SortName,
+        SearchConstants.SortScore,
+        SearchConstants.SortStage,
+        SearchConstants.SortLeader,
+        SearchConstants.SortUser
+    ];
 
     getDefault(): TeamSearchModel {
         return new TeamSearchModel();
-    }
-
-    getCacheKey(): string {
-        return 'search-team';
     }
 
     static freeToPlayOptions = [

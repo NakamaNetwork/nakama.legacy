@@ -2,7 +2,6 @@ import { autoinject, bindable, computedFrom, customElement } from 'aurelia-frame
 import { TeamSearchModel } from "../services/query/team-query-service";
 import { AccountService } from '../services/account-service';
 import { RoleConstants } from '../models/imported';
-import { FreeToPlayStatus } from '../models/imported';
 
 @autoinject
 @customElement('team-search')

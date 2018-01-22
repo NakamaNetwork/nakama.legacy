@@ -6,19 +6,23 @@ export abstract class SearchModel implements ISearchModel {
 
     public page: number = 1;
     public pageSize: number = SearchModel.isNumber(sessionStorage[SearchModel.pageSizeKey]) ? Number.parseInt(sessionStorage[SearchModel.pageSizeKey]) : 20;
+    public sortBy: string;
+    public sortDesc: boolean;
 
     public totalResults: number = 0;
+    public sortables: string[] = [];
+    public cacheKey: string;
 
     abstract getDefault(): SearchModel;
-    abstract getCacheKey(): string;
 
     getCached(): SearchModel {
-        var key = this.getCacheKey();
-        var json = sessionStorage[key];
-        var result = null;
-        if (json) {
-            result = JSON.parse(json);
-            this.reset(result);
+        if (this.cacheKey) {
+            var json = sessionStorage[this.cacheKey];
+            var result = null;
+            if (json) {
+                result = JSON.parse(json);
+                this.reset(result);
+            }
         }
         return this;
     }
@@ -28,19 +32,24 @@ export abstract class SearchModel implements ISearchModel {
             this.page = 1;
         }
         var ified = Object.assign({}, this);
-        ified.totalResults = null;
+        ified.totalResults = undefined;
+        ified.sortables = undefined;
+        ified.cacheKey = undefined;
         return JSON.stringify(ified);
     }
 
     @computedFrom('json')
     get payload() {
         var payload = JSON.parse(this.json);
-        sessionStorage.setItem(this.getCacheKey(), this.json);
+        if (this.cacheKey) {
+            sessionStorage.setItem(this.cacheKey, this.json);
+        }
         sessionStorage.setItem(SearchModel.pageSizeKey, payload.pageSize.toString());
         return payload;
     }
 
     reset(newItem = null) {
+        var reset = !newItem;
         newItem = newItem || <any>this.getDefault();
 
         var properties = [];
@@ -54,19 +63,26 @@ export abstract class SearchModel implements ISearchModel {
                 properties.push(yourProp);
             }
         }
-        properties.filter(x => x !== 'totalResults' && x !== 'cached').forEach(x => {
-            this[x] = newItem[x];
+        properties.filter(x => x !== 'totalResults' && x !== 'cached' && x !== 'sortables' && x !== 'cacheKey').forEach(x => {
+            var value = newItem[x];
+            if (reset || value !== undefined) {
+                this[x] = newItem[x];
+            }
         });
     }
 
     assign(params) {
-        for (var myProp in params) {
-            if (params.hasOwnProperty(myProp)) {
-                var prop = params[myProp];
-                this[myProp] = SearchModel.isNumber(prop) ? Number.parseInt(prop) : prop;
+        var success = false;
+        if (params) {
+            for (var myProp in params) {
+                if (params.hasOwnProperty(myProp)) {
+                    success = true;
+                    var prop = params[myProp];
+                    this[myProp] = SearchModel.isNumber(prop) ? Number.parseInt(prop) : prop;
+                }
             }
         }
-        return this;
+        return success;
     }
 
     static isNumber(n): boolean { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }

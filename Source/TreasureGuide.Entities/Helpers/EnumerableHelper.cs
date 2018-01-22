@@ -24,5 +24,14 @@ namespace TreasureGuide.Entities.Helpers
                     arg);
             return queryable.Where(predicate);
         }
+
+        public static IOrderedQueryable<T> OrderBy<T, TKey>(this IQueryable<T> queryable, Expression<Func<T, TKey>> selector, bool desc)
+        {
+            if (desc)
+            {
+                return queryable.OrderByDescending(selector);
+            }
+            return queryable.OrderBy(selector);
+        }
     }
 }
