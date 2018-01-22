@@ -91,7 +91,25 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override IQueryable<Team> OrderSearchResults(IQueryable<Team> results, TeamSearchModel model)
         {
-            return results.OrderByDescending(x => x.EditedDate);
+            switch (model.SortBy ?? "")
+            {
+                case SearchConstants.SortId:
+                    return results.OrderBy(x => x.Id, model.SortDesc);
+                case SearchConstants.SortName:
+                    return results.OrderBy(x => x.Name, model.SortDesc);
+                case SearchConstants.SortStage:
+                    return results.OrderBy(x => x.Stage != null ? x.Stage.Name : "", model.SortDesc);
+                case SearchConstants.SortLeader:
+                    return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault());
+                case SearchConstants.SortScore:
+                    return results.OrderBy(x => x.TeamVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), model.SortDesc);
+                case SearchConstants.SortDate:
+                    return results.OrderBy(x => x.EditedDate, model.SortDesc);
+                case SearchConstants.SortUser:
+                    return results.OrderBy(x => x.SubmittingUser.UserName, model.SortDesc);
+                default:
+                    return results.OrderBy(x => x.EditedDate, true);
+            }
         }
 
         protected bool OwnsTeam(int? id)

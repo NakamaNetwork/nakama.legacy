@@ -29,9 +29,9 @@ namespace TreasureGuide.Entities.Helpers
         {
             if (desc)
             {
-                return queryable.OrderBy(selector);
+                return queryable.OrderByDescending(selector);
             }
-            return queryable.OrderByDescending(selector);
+            return queryable.OrderBy(selector);
         }
     }
 }

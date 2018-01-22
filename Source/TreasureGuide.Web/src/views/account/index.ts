@@ -26,6 +26,7 @@ export class ProfileDetailPage {
         this.router = router;
         this.teamQueryService = teamQueryService;
         this.teamSearchModel = new TeamSearchModel();
+        this.teamSearchModel.cacheKey = 'search-team-user';
 
         bindingEngine.propertyObserver(this.teamSearchModel, 'payload').subscribe((n, o) => {
             this.search(n);

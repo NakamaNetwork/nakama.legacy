@@ -32,3 +32,13 @@ aup-pagination {
         font-size: 8em;
     }
 }
+
+.sort-buttons {
+    @extend ._alignCenter;
+
+    .sort-button {
+        margin: 0 4px;
+        @extend .button;
+        @extend ._small;
+    }
+}

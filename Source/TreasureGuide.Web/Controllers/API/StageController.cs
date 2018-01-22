@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
+using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.StageModels;
 using TreasureGuide.Web.Services;
@@ -54,7 +56,19 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override IQueryable<Stage> OrderSearchResults(IQueryable<Stage> results, StageSearchModel model)
         {
-            return results.OrderBy(x => x.Name);
+            switch (model.SortBy ?? "")
+            {
+                case SearchConstants.SortId:
+                    return results.OrderBy(x => x.Id, model.SortDesc);
+                case SearchConstants.SortName:
+                    return results.OrderBy(x => x.Name, model.SortDesc);
+                case SearchConstants.SortType:
+                    return results.OrderBy(x => x.Type, model.SortDesc);
+                case SearchConstants.SortCount:
+                    return results.OrderBy(x => x.Teams.Count(y => !y.Deleted && !y.Draft), model.SortDesc);
+                default:
+                    return results.OrderBy(x => x.Name, false);
+            }
         }
     }
 }
