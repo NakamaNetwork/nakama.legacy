@@ -1,0 +1,10 @@
+<template>
+    <div class="sort-buttons">
+        <button type="button" repeat.for="sort of searchModel.sortables"
+                class="sort-button" class.bind="searchModel.sortBy === sort ? '_active' : ''"
+                click.delegate="click(sort)">
+            ${sort}
+            <i class="fa fa-fw" class.bind="searchModel.sortBy === sort ? searchModel.sortDesc ? 'fa-sort-asc' : 'fa-sort-desc' : 'fa-sort'"></i>
+        </button>
+    </div>
+</template>

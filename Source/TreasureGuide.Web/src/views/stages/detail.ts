@@ -23,6 +23,7 @@ export class StageDetailPage {
         this.router = router;
 
         this.teamSearchModel = new TeamSearchModel();
+        this.teamSearchModel.cacheKey = 'search-team-detail';
 
         bindingEngine.propertyObserver(this.teamSearchModel, 'payload').subscribe((n, o) => {
             this.search(n);

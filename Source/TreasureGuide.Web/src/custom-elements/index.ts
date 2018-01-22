@@ -6,6 +6,7 @@
         './search-pager',
         './ship-display',
         './socket-display',
+        './sort-buttons',
         './stage-display',
         './stage-search',
         './stage-type-picker',

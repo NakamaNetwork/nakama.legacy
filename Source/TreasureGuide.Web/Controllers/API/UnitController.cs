@@ -30,7 +30,7 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
-        protected override IQueryable<Unit> OrderSearchResults(IQueryable<Unit> results)
+        protected override IQueryable<Unit> OrderSearchResults(IQueryable<Unit> results, UnitSearchModel model)
         {
             return results.OrderBy(x => x.Id);
         }

@@ -31,7 +31,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             var entities = FetchEntities();
             entities = (await PerformSearch(entities, model)).AsQueryable();
             var resultCount = await entities.CountAsync();
-            entities = OrderSearchResults(entities);
+            entities = OrderSearchResults(entities, model);
             entities = entities.Skip(model.PageSize * (model.Page - 1)).Take(model.PageSize);
             var output = entities.ProjectTo<TStubModel>(AutoMapper.ConfigurationProvider);
             var results = await output.ToListAsync();
@@ -44,7 +44,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected abstract Task<IQueryable<TEntity>> PerformSearch(IQueryable<TEntity> results, TSearchModel model);
 
-        protected virtual IQueryable<TEntity> OrderSearchResults(IQueryable<TEntity> results)
+        protected virtual IQueryable<TEntity> OrderSearchResults(IQueryable<TEntity> results, TSearchModel model)
         {
             return results.OrderByDescending(x => x.Id);
         }

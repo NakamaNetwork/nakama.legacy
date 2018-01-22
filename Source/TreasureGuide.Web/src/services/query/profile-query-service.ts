@@ -19,13 +19,10 @@ export class ProfileQueryService extends SearchableQueryService {
 export class ProfileSearchModel extends SearchModel implements IProfileSearchModel {
     term: string = '';
     roles: string[] = [];
+    cacheKey: string = 'search-profile';
 
     public getDefault(): SearchModel {
         return new ProfileSearchModel();
-    }
-
-    getCacheKey(): string {
-        return 'search-profile';
     }
 }
 

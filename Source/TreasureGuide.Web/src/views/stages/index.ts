@@ -24,8 +24,8 @@ export class StageIndexPage {
 
     activate(params) {
         this.searchModel = new StageSearchModel();
-        if (params) {
-            this.searchModel = this.searchModel.assign(params);
+        if (!this.searchModel.assign(params)) {
+            this.searchModel = <StageSearchModel>this.searchModel.getCached();
         }
         this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
