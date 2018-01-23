@@ -1,0 +1,12 @@
+<template>
+    <div class="team-slot-container">
+        <div class="team-unit" repeat.for="unit of teamSlot">
+            <unit-display if.bind="unit.unitId" unit-id.bind="unit.unitId" unit-name.bind="unit.unitName" editable.bind="editable"></unit-display>
+        </div>
+        <div class="team-subs">
+            <div class="team-unit" if.bind="editable">
+                <unit-display size="small" editable.bind="editable"></unit-display>
+            </div>
+        </div>
+    </div>
+</template>

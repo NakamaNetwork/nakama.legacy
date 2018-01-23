@@ -88,30 +88,6 @@ $default-unit-margin: $huge-unit-margin;
     }
 }
 
-team-display {
-    overflow: hidden;
-    white-space: nowrap;
-
-    &[in-line] {
-        ship-display {
-            display: none;
-        }
-    }
-
-    &:not([in-line]) {
-        unit-display:nth-of-type(2n):after {
-            content: "";
-            display: block;
-        }
-
-        ship-display:after {
-            content: "";
-            display: block;
-            margin-bottom: 5px;
-        }
-    }
-}
-
 unit-display {
     .unit-link {
         position: relative;
@@ -131,6 +107,51 @@ unit-display {
 .team-collection {
     .col {
         line-height: 0;
+    }
+}
+
+team-display {
+    overflow: hidden;
+    white-space: nowrap;
+
+    team-slot {
+        display: inline;
+
+        .team-slot-container, .team-subs, .team-unit {
+            display: inline-block;
+        }
+
+        .team-subs {
+            max-width: 60%;
+            overflow-wrap: break-word;
+            white-space: normal;
+            vertical-align: bottom;
+            margin-bottom: 5px;
+        }
+
+        .team-slot-container {
+            width: 50%;
+            text-align: left;
+        }
+
+        &:nth-of-type(2n) {
+            &:after {
+                content: "\A";
+                white-space: pre;
+            }
+        }
+
+        &:nth-of-type(2n-1) {
+            .team-slot-container {
+                transform: scaleX(-1);
+                -webkit-transform: scaleX(-1);
+
+                .team-unit {
+                    transform: scaleX(-1);
+                    -webkit-transform: scaleX(-1);
+                }
+            }
+        }
     }
 }
 

@@ -183,6 +183,40 @@ export enum TeamCreditType {
 }
 
 
+export interface ITeamGenericSlotStubModel {
+    role: UnitRole;
+    type: UnitType;
+    class: UnitClass;
+    position: number;
+    
+}
+
+export interface ITeamGenericSlotDetailModel extends ITeamGenericSlotStubModel{
+    combo: number;
+    
+}
+
+export interface ITeamGenericSlotEditorModel extends ITeamGenericSlotDetailModel{
+    
+}
+
+
+export interface ITeamGenericUnitStubModel {
+    role: number;
+    position: number;
+    
+}
+
+export interface ITeamGenericUnitDetailModel extends ITeamGenericUnitStubModel{
+    combo: number;
+    
+}
+
+export interface ITeamGenericUnitEditorModel extends ITeamGenericUnitDetailModel{
+    
+}
+
+
 export interface ITeamImportModel {
     team: ITeamEditorModel;
     credit: ITeamCreditModel;
@@ -193,6 +227,7 @@ export interface ITeamImportModel {
 
 export interface ITeamStubModel {
     teamUnits: ITeamUnitStubModel[];
+    teamGenericSlots: ITeamGenericSlotStubModel[];
     id: number;
     name: string;
     submittedById: string;
@@ -214,6 +249,7 @@ export interface ITeamStubModel {
 
 export interface ITeamDetailModel {
     teamUnits: ITeamUnitDetailModel[];
+    teamGenericSlots: ITeamGenericSlotDetailModel[];
     teamSockets: ITeamSocketStubModel[];
     teamVideos: ITeamVideoModel[];
     id: number;
@@ -241,6 +277,7 @@ export interface ITeamDetailModel {
 export interface ITeamEditorModel {
     teamSockets: ITeamSocketEditorModel[];
     teamUnits: ITeamUnitEditorModel[];
+    teamGenericSlots: ITeamGenericSlotEditorModel[];
     id: number;
     name: string;
     credits: string;
@@ -397,6 +434,21 @@ export interface IUnitDetailModel extends IUnitModel{
 export interface IUnitEditorModel {
     id: number;
     
+}
+
+
+export enum UnitRole { 
+    Unknown = 0,
+    Beatstick = 1,
+    DamageReducer = 2,
+    DefenseReducer = 4,
+    Delayer = 8,
+    AttackBooster = 16,
+    OrbBooster = 32,
+    FixedDamage = 64,
+    HealthCutter = 128,
+    OrbShuffler = 256,
+    Healer = 512
 }
 
 

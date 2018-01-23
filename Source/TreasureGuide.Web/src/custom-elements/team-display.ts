@@ -1,37 +1,25 @@
 ﻿import { bindable, computedFrom, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-framework';
+import { ITeamDetailModel, ITeamUnitEditorModel } from '../models/imported';
 
 @customElement('team-display')
 @autoinject
 export class TeamDisplay {
-    @bindable team: any[] = [];
+    @bindable team: ITeamDetailModel;
     @bindable editable = false;
-    
+
     @computedFrom('team')
-    get teamSlots() {
-        if (!this.team) {
-            this.team = [];
-        }
-        var mainUnits = this.team.filter(x => {
-            return !x.sub;
-        });
+    get slots() {
         var slots = [];
         for (var i = 0; i < 6; i++) {
-            var unit = mainUnits.find(x => {
-                return x.position === i;
+            var units = this.team.teamUnits.filter(x => x.position === i);
+            var generic = this.team.teamGenericSlots.filter(x => x.position === i);
+
+            var slot = <any[]>units.concat(<any[]>generic).sort((a, b) => {
+                return (a.sub ? 1 : -1) - (b.sub ? 1 : -1);
             });
-            if (!unit) {
-                unit = { unitId: 0, position: i };
-                this.team.push(unit);
-            }
-            slots.push(unit);
+            slots.push(slot);
         }
         return slots;
     }
-
-    private getSlot(id: number) {
-        return this.team.filter(unit => {
-            return unit.position === id;
-        });
-    };
 }
