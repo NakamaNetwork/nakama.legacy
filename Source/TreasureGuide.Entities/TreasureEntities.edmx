@@ -1270,8 +1270,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </Key>
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <Property Name="Position" Type="Byte" Nullable="false" />
-          <Property Name="Type" Type="Int16" />
-          <Property Name="Class" Type="Int16" />
+          <Property Name="Type" Type="tcdbModel.UnitType" />
+          <Property Name="Class" Type="tcdbModel.UnitClass" />
           <Property Name="Role" Type="tcdbModel.UnitRole" />
           <Property Name="Combo" Type="Byte" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" FromRole="TeamGenericSlot" ToRole="Team" />
