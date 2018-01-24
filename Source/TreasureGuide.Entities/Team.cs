@@ -23,6 +23,7 @@ namespace TreasureGuide.Entities
             this.TeamReports = new HashSet<TeamReport>();
             this.TeamVideos = new HashSet<TeamVideo>();
             this.TeamGenericSlots = new HashSet<TeamGenericSlot>();
+            this.TeamUnitSummaries = new HashSet<TeamUnitSummary>();
         }
     
         public int Id { get; set; }
@@ -56,5 +57,7 @@ namespace TreasureGuide.Entities
         public virtual TeamCredit TeamCredit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamGenericSlot> TeamGenericSlots { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamUnitSummary> TeamUnitSummaries { get; set; }
     }
 }
