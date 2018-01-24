@@ -2,7 +2,7 @@
     <div class="team-slot-container">
         <div class="team-unit">
             <unit-display if.bind="main" unit-id.two-way="main.unitId" name.two-way="main.name" editable.bind="editable" selected.delegate="checkRemoved($event, false)" info.bind="!editable"></unit-display>
-            <unit-display if.bind="canAddMain" editable="true" selected.delegate="addUnit($event, false)"></unit-display>
+            <unit-display if.bind="!hasMain" editable.bind="editable" selected.delegate="addUnit($event, false)"></unit-display>
         </div>
         <div class="team-subs">
             <div class="team-unit" repeat.for="sub of subs">
