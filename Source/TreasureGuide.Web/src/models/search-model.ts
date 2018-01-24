@@ -35,7 +35,7 @@ export abstract class SearchModel implements ISearchModel {
         ified.totalResults = undefined;
         ified.sortables = undefined;
         ified.cacheKey = undefined;
-        return JSON.stringify(ified);
+        return JSON.stringify(ified, SearchModel.removeEmpties);
     }
 
     @computedFrom('json')
@@ -86,4 +86,7 @@ export abstract class SearchModel implements ISearchModel {
     }
 
     static isNumber(n): boolean { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
+    static removeEmpties(key, value) {
+        return value ? value : undefined;
+    }
 }

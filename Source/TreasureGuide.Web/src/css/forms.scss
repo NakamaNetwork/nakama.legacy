@@ -101,3 +101,20 @@ markdown.preview {
         transform: translateY(-50%);
     }
 }
+
+.bit-button {
+    padding: 0 !important;
+    border: unset;
+    margin: 2px;
+    width: 32px;
+    height: 32px;
+
+    img {
+        height: unset !important;
+    }
+
+    &.off {
+        -webkit-filter: brightness(70%) grayscale(70%);
+        filter: brightness(70%) grayscale(70%);
+    }
+}

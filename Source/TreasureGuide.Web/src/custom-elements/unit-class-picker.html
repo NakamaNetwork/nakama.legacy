@@ -1,5 +1,5 @@
 ﻿<template>
-    <select multiple class="_width100" value.bind="unitClass">
-        <option repeat.for="unitClass of unitClasses" model.bind="unitClass.id">${unitClass.name}</option>
-    </select>
+    <bit-button repeat.for="unit of unitClasses" value.two-way="unitClass" model.bind="unit.id">
+        <img src="/content/classes/${unit.id}.png" title.bind="unit.name" />
+    </bit-button>
 </template>
