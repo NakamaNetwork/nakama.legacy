@@ -8,6 +8,7 @@ var gulp = require('gulp');
 var shell = require('gulp-shell');
 
 gulp.task('build-dev', shell.task(['au build --env dev']));
+gulp.task('build-dev watch', shell.task(['au build --env dev --watch']));
 gulp.task('build-prod', shell.task(['au build --env prod']));
 gulp.task('build-stage', shell.task(['au build --env stage']));
 gulp.task('run', shell.task(['au run']));
