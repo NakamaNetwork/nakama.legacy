@@ -18,6 +18,7 @@
         './team-slot',
         './unit-class-picker',
         './unit-display',
+        './unit-search',
         './unit-type-picker'
     ]);
 }
