@@ -62,28 +62,27 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
-        private IQueryable<Unit> SearchClasses(IQueryable<Unit> results, IEnumerable<UnitClass> classes, bool force)
+        private IQueryable<Unit> SearchClasses(IQueryable<Unit> results, UnitClass? classes, bool force)
         {
-            if (classes?.Any() ?? false)
+            if (classes.HasValue && classes != UnitClass.Unknown)
             {
                 if (force)
                 {
-                    var sum = classes.Sum(x => (int)x);
-                    results = results.Where(x => (int)x.Class == sum);
+                    results = results.Where(x => x.Class == classes);
                 }
                 else
                 {
-                    results = results.Where(x => classes.Any(y => x.Class.HasFlag(y)));
+                    results = results.Where(x => (x.Class & classes) != 0);
                 }
             }
             return results;
         }
 
-        private IQueryable<Unit> SearchTypes(IQueryable<Unit> results, IEnumerable<UnitType> types)
+        private IQueryable<Unit> SearchTypes(IQueryable<Unit> results, UnitType? types)
         {
-            if (types?.Any() ?? false)
+            if (types.HasValue && types != UnitType.Unknown)
             {
-                results = results.Where(x => types.Contains(x.Type));
+                results = results.Where(x => (x.Type & types) != 0);
             }
             return results;
         }
