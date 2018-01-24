@@ -13,17 +13,15 @@ import * as moment from 'moment';
 export class TeamDetailPage {
     private teamQueryService: TeamQueryService;
     private router: Router;
-    private calcParser: CalcParser;
     private dialogService: DialogService;
     private alertService: AlertService;
 
     team: ITeamDetailModel;
     loading: boolean;
 
-    constructor(teamQueryService: TeamQueryService, router: Router, calcParser: CalcParser, dialogService: DialogService, alertService: AlertService) {
+    constructor(teamQueryService: TeamQueryService, router: Router, dialogService: DialogService, alertService: AlertService) {
         this.teamQueryService = teamQueryService;
         this.router = router;
-        this.calcParser = calcParser;
         this.dialogService = dialogService;
         this.alertService = alertService;
     }
@@ -31,7 +29,7 @@ export class TeamDetailPage {
     @computedFrom('team', 'team.teamUnits', 'team.teamShip')
     get calcLink() {
         if (this.team) {
-            return this.calcParser.export(this.team);
+            return CalcParser.export(this.team);
         }
         return '';
     }

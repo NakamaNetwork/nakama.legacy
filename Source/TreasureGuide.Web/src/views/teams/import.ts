@@ -7,14 +7,12 @@ import { VideoParser } from '../../tools/video-parser';
 @autoinject
 export class TeamImportPage {
     private teamQueryService: TeamQueryService;
-    private calcParser: CalcParser;
 
     imports: TeamImportLineModel[] = [];
     strings: string = '';
 
-    constructor(teamQueryService: TeamQueryService, calcParser: CalcParser) {
+    constructor(teamQueryService: TeamQueryService) {
         this.teamQueryService = teamQueryService;
-        this.calcParser = calcParser;
     }
 
     add() {
@@ -83,8 +81,8 @@ export class TeamImportPage {
 
 
     createTeam(value: TeamImportLineModel): ITeamEditorModel {
-        var teamIds = this.calcParser.parse(value.calc);
-        var teamUnits = this.calcParser.convert(teamIds.units);
+        var teamIds = CalcParser.parse(value.calc);
+        var teamUnits = CalcParser.convert(teamIds.units);
         var item = <ITeamEditorModel>{
             name: value.name,
             guide: value.desc,

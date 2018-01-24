@@ -6,20 +6,18 @@ import { TeamEditorModel } from '../../services/query/team-query-service';
 @autoinject
 export class TeamImportView {
     private controller: DialogController;
-    private calcParser: CalcParser;
 
     @bindable input = '';
 
     team = new TeamEditorModel();
 
-    constructor(calcParser: CalcParser, controller: DialogController) {
+    constructor(controller: DialogController) {
         this.controller = controller;
-        this.calcParser = calcParser;
     }
 
     inputChanged(newValue: string, oldValue: string) {
-        var teamIds = this.calcParser.parse(this.input);
-        var teamSet = this.calcParser.convert(teamIds.units);
+        var teamIds = CalcParser.parse(this.input);
+        var teamSet = CalcParser.convert(teamIds.units);
         this.team.teamUnits = teamSet;
         this.team.shipId = teamIds.ship;
     }

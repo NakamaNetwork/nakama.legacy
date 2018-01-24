@@ -1,8 +1,7 @@
 import { CalcParser } from '../../../src/tools/calc-parser';
 import { ITeamDetailModel } from '../../../src/models/imported';
-describe('calc parser', () => {
-    var parser = new CalcParser();
 
+describe('calc parser', () => {
     var check_parsed = (results: any[], expected: any[]) => {
         expect(results.length).toBe(expected.length);
         for (var i = 0; i < expected.length; i++) {
@@ -17,7 +16,7 @@ describe('calc parser', () => {
     }
 
     it('parses out unit ids', () => {
-        var results = parser.parse(
+        var results = CalcParser.parse(
             'http://optc-db.github.io/damage/#/transfer/D1:5,2:20,3:18:0:36:0,4:99:74:32:80,5:20,6:35C3,10B5454D0E66Q0L0G0R0S100H');
         var expected = [1, 2, 3, 4, 5, 6];
 
@@ -27,15 +26,26 @@ describe('calc parser', () => {
         }
     });
 
+    it('parses out gaps properly', () => {
+        var results = CalcParser.parse(
+            'http://optc-db.github.io/damage/#/transfer/D12:99,13:20,7:50,9:20,!,8:99C1,10B0D0E0Q0L0G0R0S100H');
+        var expected = [12, 13, 7, 9, null, 8];
+
+        expect(results.units.length).toBe(expected.length);
+        for (var i = 0; i < expected.length; i++) {
+            expect(results.units[i]).toBe(expected[i]);
+        }
+    });
+
     it('parses out ship id', () => {
-        var results = parser.parse(
+        var results = CalcParser.parse(
             'http://optc-db.github.io/damage/#/transfer/D1:5,2:20,3:18:0:36:0,4:99:74:32:80,5:20,6:35C31,10B5454D0E66Q0L0G0R0S100H');
         expect(results.ship).toBe(31);
     });
 
     it('parses team members',
         () => {
-            var results = parser.convert([12, 23, 34, 45, 56, 67]);
+            var results = CalcParser.convert([12, 23, 34, 45, 56, 67]);
             var expected = [
                 {
                     unitId: 12,
@@ -74,7 +84,7 @@ describe('calc parser', () => {
 
     it('makes extra units subs',
         () => {
-            var results = parser.convert([12, 23, 34, 45, 56, 67, 12, 54, 32]);
+            var results = CalcParser.convert([12, 23, 34, 45, 56, 67, 12, 54, 32]);
             var expected = [
                 {
                     unitId: 12,
@@ -125,7 +135,7 @@ describe('calc parser', () => {
             ];
             check_parsed(results, expected);
         });
-
+    
     it('can export teams',
         () => {
             var expected = 'http://optc-db.github.io/damage/#/transfer/D1362:5,1362:7,!,1:5,408:56,418:99C4,10B0D0E0Q0L0G0R0S100H';
@@ -166,7 +176,7 @@ describe('calc parser', () => {
                 shipId: 4
             };
 
-            var parsed = parser.export(<ITeamDetailModel>team);
+            var parsed = CalcParser.export(<ITeamDetailModel>team);
             expect(parsed).toBe(expected);
         });
 });
