@@ -19,6 +19,6 @@ export class UnitTypePicker {
         id: undefined,
         name: 'Any'
     }].concat(Object.keys(UnitType).map((k) => {
-        return { id: UnitType[k], name: StringHelper.prettifyEnum(k) };
+        return { id: UnitType[k], name: k };
     }).filter(x => !Number.isNaN(Number(x.id))).filter(x => x.id !== 0));
 }
