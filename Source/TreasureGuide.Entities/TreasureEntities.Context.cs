@@ -42,5 +42,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<TeamCredit> TeamCredits { get; set; }
         public virtual DbSet<UnitAlias> UnitAliases { get; set; }
         public virtual DbSet<TeamGenericSlot> TeamGenericSlots { get; set; }
+        public virtual DbSet<TeamUnitSummary> TeamUnitSummaries { get; set; }
     }
 }

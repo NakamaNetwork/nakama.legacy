@@ -106,5 +106,6 @@
     <Build Include="dbo\Tables\Units\UnitAliases.sql" />
     <None Include="PostDeploy\UnitAliasData.sql" />
     <Build Include="dbo\Tables\Teams\TeamGenericSlots.sql" />
+    <Build Include="dbo\Views\TeamUnitSummaries.sql" />
   </ItemGroup>
 </Project>

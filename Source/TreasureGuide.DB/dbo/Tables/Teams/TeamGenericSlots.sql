@@ -6,6 +6,7 @@
     [Class] SMALLINT NULL,
     [Role] SMALLINT NULL,
     [Combo] TINYINT NULL,
+    [Sub] BIT NOT NULL CONSTRAINT [DF_dbo.TeamGenericSlots_Sub] DEFAULT 0,
     CONSTRAINT [PK_dbo.TeamGenericSlots] PRIMARY KEY CLUSTERED ([TeamId] ASC, [Position] ASC),
     CONSTRAINT [CK_dbo.TeamGenericSlots_Position] CHECK ([Position] >= 0 AND [Position] < 7),
     CONSTRAINT [FK_dbo.TeamGenericSlots_dbo.Teams] FOREIGN KEY([TeamId]) REFERENCES [dbo].[Teams] ([Id]) ON DELETE CASCADE

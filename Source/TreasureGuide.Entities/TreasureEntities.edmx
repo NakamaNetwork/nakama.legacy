@@ -76,6 +76,7 @@
           <Property Name="Class" Type="smallint" />
           <Property Name="Role" Type="smallint" />
           <Property Name="Combo" Type="tinyint" />
+          <Property Name="Sub" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamReports">
           <Key>
@@ -188,6 +189,23 @@
           <Property Name="Website" Type="nvarchar" MaxLength="200" />
           <Property Name="UnitId" Type="int" />
           <Property Name="Global" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'tcdb.dbo.TeamUnitSummaries' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TeamUnitSummaries">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="Position" />
+            <PropertyRef Name="Sub" />
+            <PropertyRef Name="Flags" />
+          </Key>
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="UnitId" Type="int" />
+          <Property Name="Position" Type="tinyint" Nullable="false" />
+          <Property Name="Sub" Type="bit" Nullable="false" />
+          <Property Name="Flags" Type="int" Nullable="false" />
+          <Property Name="Class" Type="smallint" />
+          <Property Name="Type" Type="smallint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -498,6 +516,17 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="UnitAliases" EntityType="Self.UnitAliases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamUnitSummaries" EntityType="Self.TeamUnitSummaries" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TeamUnitSummaries].[TeamId] AS [TeamId], 
+    [TeamUnitSummaries].[UnitId] AS [UnitId], 
+    [TeamUnitSummaries].[Position] AS [Position], 
+    [TeamUnitSummaries].[Sub] AS [Sub], 
+    [TeamUnitSummaries].[Flags] AS [Flags], 
+    [TeamUnitSummaries].[Class] AS [Class], 
+    [TeamUnitSummaries].[Type] AS [Type]
+    FROM [dbo].[TeamUnitSummaries] AS [TeamUnitSummaries]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [UserRoles].[Id] AS [Id], 
@@ -699,6 +728,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamGenericSlot" EntitySet="TeamGenericSlots" />
           </AssociationSet>
+          <EntitySet Name="TeamUnitSummaries" EntityType="tcdbModel.TeamUnitSummary" />
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -1275,6 +1305,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Role" Type="tcdbModel.UnitRole" />
           <Property Name="Combo" Type="Byte" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" FromRole="TeamGenericSlot" ToRole="Team" />
+          <Property Name="Sub" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_TeamGenericSlots_dbo_Teams">
           <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
@@ -1303,6 +1334,21 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="OrbShuffler" Value="256" />
           <Member Name="Healer" Value="512" />
         </EnumType>
+        <EntityType Name="TeamUnitSummary">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="Position" />
+            <PropertyRef Name="Sub" />
+            <PropertyRef Name="Flags" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="UnitId" Type="Int32" />
+          <Property Name="Position" Type="Byte" Nullable="false" />
+          <Property Name="Sub" Type="Boolean" Nullable="false" />
+          <Property Name="Flags" Type="Int32" Nullable="false" />
+          <Property Name="Class" Type="Int16" />
+          <Property Name="Type" Type="Int16" />
+        </EntityType>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -1502,11 +1548,25 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySetMapping Name="TeamGenericSlots">
             <EntityTypeMapping TypeName="tcdbModel.TeamGenericSlot">
               <MappingFragment StoreEntitySet="TeamGenericSlots">
+                <ScalarProperty Name="Sub" ColumnName="Sub" />
                 <ScalarProperty Name="Combo" ColumnName="Combo" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Class" ColumnName="Class" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamUnitSummaries">
+            <EntityTypeMapping TypeName="tcdbModel.TeamUnitSummary">
+              <MappingFragment StoreEntitySet="TeamUnitSummaries">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="Sub" ColumnName="Sub" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
               </MappingFragment>
             </EntityTypeMapping>
