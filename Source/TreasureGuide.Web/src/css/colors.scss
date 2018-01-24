@@ -53,7 +53,7 @@ body {
 @mixin makeColor($name, $color) {
     @include color($name,$color);
     @include color("#{$name}Light", desaturate(lighten($color, 60%), 20%) );
-    @include color("#{$name}Dight", saturate(darken($color, 60%), 20%) );
+    @include color("#{$name}Dark", saturate(darken($color, 60%), 20%) );
 }
 
 @include makeColor("active",$active-color);

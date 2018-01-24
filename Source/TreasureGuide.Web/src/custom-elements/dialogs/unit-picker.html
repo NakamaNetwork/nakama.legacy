@@ -1,36 +1,77 @@
 ﻿<template>
-    <form with.bind="searchModel">
-        <ux-dialog>
-            <ux-dialog-header>
-                <div class="_floatRight">
-                    <a click.delegate="cancel()" class="button _flat modal-action">X</a>
-                </div>
-                <h3>Select a Unit</h3>
-            </ux-dialog-header>
-            <ux-dialog-body>
-                <unit-search model.two-way="searchModel"></unit-search>
-                <loading-area if.bind="loading"></loading-area>
-                <div if.bind="!loading">
-                    <div class="row">
-                        <search-pager search-model.bind="searchModel"></search-pager>
-                    </div>
-                    <div class="row _alignCenter">
-                        <div class="unit-collection">
-                            <unit-display repeat.for="unit of units" unit-id.bind="unit.id" name.bind="unit.name" click.delegate="clicked(unit.id)" clickable="true"></unit-display>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="_floatRight">
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+            </div>
+            <h3>Select a Unit</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <div class="tab" if.bind="allowGenerics">
+                <button type="button" class="tablinks" class.bind="!generic ? '_active' : ''" click.delegate="showUnits()">Specific Units</button>
+                <button type="button" class="tablinks" class.bind="generic ? '_active' : ''" click.delegate="showGeneric()">Generic Slots</button>
+            </div>
+            <div class="row">
+                <div if.bind="!generic">
+                    <unit-search model.two-way="searchModel"></unit-search>
+                    <loading-area if.bind="loading"></loading-area>
+                    <div if.bind="!loading">
+                        <div class="row">
+                            <search-pager search-model.bind="searchModel"></search-pager>
+                        </div>
+                        <div class="row _alignCenter">
+                            <div class="unit-collection">
+                                <unit-display repeat.for="unit of units"
+                                              model.bind="unit"
+                                              click.delegate="clicked(unit.id)">
+                                </unit-display>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
                         </div>
                     </div>
-                    <div class="row">
-                        <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
-                    </div>
                 </div>
-            </ux-dialog-body>
-            <ux-dialog-footer>
-                <a click.delegate="clicked(null)" class="button _danger modal-action">
-                    <i class="fa fa-fw fa-user-times"></i>
-                    Unset
-                </a>
-                <a click.delegate="cancel()" class="button modal-action">Cancel</a>
-            </ux-dialog-footer>
-        </ux-dialog>
-    </form>
+                <div if.bind="generic">
+                    <fieldset>
+                        <legend>Specifications</legend>
+                        <form with.bind="genericBuilder" class="_alignCenter">
+                            <div class="form-group">
+                                <label for="classInput">
+                                    Class
+                                </label>
+                                <unit-class-picker id="classInput" unit-class.two-way="class"></unit-class-picker>
+                            </div>
+                            <div class="form-group">
+                                <label for="typeInput">
+                                    Type
+                                </label>
+                                <unit-type-picker id="typeInput" unit-type.two-way="type"></unit-type-picker>
+                            </div>
+                            <div class="form-group">
+                                <label for="roleInput">
+                                    Role
+                                </label>
+                                <unit-role-picker id="roleInput" unit-role.two-way="roles"></unit-role-picker>
+                            </div>
+                        </form>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Output (Click to Select)</legend>
+                        <div class="_alignCenter">
+                            <unit-display size="massive" model.bind="genericBuilder" click.delegate="clicked(genericBuilder)">
+                            </unit-display>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <a click.delegate="clicked(null)" class="button _danger modal-action">
+                <i class="fa fa-fw fa-user-times"></i>
+                Unset
+            </a>
+            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+        </ux-dialog-footer>
+    </ux-dialog>
 </template>

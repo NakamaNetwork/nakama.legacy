@@ -2,7 +2,9 @@
 import { autoinject } from 'aurelia-framework';
 import { UnitQueryService } from '../services/query/unit-query-service';
 import { DialogService } from 'aurelia-dialog';
+import { NumberHelper } from '../tools/number-helper';
 import { UnitPicker } from './dialogs/unit-picker';
+import { UnitPickerParams } from './dialogs/unit-picker';
 
 @autoinject
 @customElement('unit-display')
@@ -11,11 +13,10 @@ export class UnitDisplay {
     private unitQueryService: UnitQueryService;
     private dialogService: DialogService;
 
-    @bindable unitId = 0;
-    @bindable name: string;
-    @bindable editable = false;
-    @bindable clickable = false;
-    @bindable info = false;
+    @bindable model: any;
+    @bindable editable: boolean;
+    @bindable allowGenerics: boolean;
+    @bindable info: boolean;
 
     constructor(unitQueryService: UnitQueryService, dialogService: DialogService, element: Element) {
         this.unitQueryService = unitQueryService;
@@ -23,42 +24,66 @@ export class UnitDisplay {
         this.dialogService = dialogService;
     }
 
-    @computedFrom('unitId')
-    get imageUrl() {
-        return UnitQueryService.getIcon(this.unitId);
+    @computedFrom('model')
+    get unit() {
+        return this.model ? (NumberHelper.isNumber(this.model) ? Number(this.model) : (this.model.unitId || this.model.id || false)) : false;
     }
 
-    @computedFrom('unitId', 'editable')
+    @computedFrom('model')
+    get generic() {
+        return this.model ? (this.model.roles !== undefined) : false;
+    }
+
+    @computedFrom('unit', 'generic', 'editable')
     get iconClass() {
-        return 'fa fa-fw fa-2x fa-' + (this.unitId ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
+        return 'fa fa-fw fa-2x fa-' + ((this.unit || this.generic) ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
     }
 
-    @computedFrom('editable', 'clickable')
-    get buttonClass() {
-        return 'unit-button ' + (this.editable || this.clickable ? '' : '_unclickable');
+    @computedFrom('info', 'editable', 'unit')
+    get link() {
+        return (this.info && !this.editable && this.unit)
+            ? ('http://optc-db.github.io/characters/#/view/' + this.unit)
+            : null;
     }
 
-    @computedFrom('unitId', 'imageUrl')
+    @computedFrom('generic')
+    get genericTypes() {
+        return [];
+    }
+
+    @computedFrom('generic')
+    get genericClasses() {
+        return [];
+    }
+
+    @computedFrom('generic')
+    get genericRoles() {
+        return [];
+    }
+
+    @computedFrom('unit', 'generic')
     get backgroundStyle() {
-        if (this.unitId) {
-            return 'background-image: url(\'' + this.imageUrl + '\'), url(\'https://onepiece-treasurecruise.com/wp-content/themes/onepiece-treasurecruise/images/noimage.png\')';
+        if (this.unit || this.generic) {
+            var style = 'background-image: url(\'';
+            if (this.unit) {
+                style += UnitQueryService.getIcon(this.unit);
+            } else if (this.generic) {
+                style += '/content/empty.png';
+            }
+            style += '\'), url(\'https://onepiece-treasurecruise.com/wp-content/themes/onepiece-treasurecruise/images/noimage.png\')';
+            return style;
         }
         return '';
     }
 
-    @computedFrom('unitId')
-    get link() {
-        return 'http://optc-db.github.io/characters/#/view/' + this.unitId;
-    }
-
     clicked() {
         if (this.editable) {
-            this.dialogService.open({ viewModel: UnitPicker, model: { unitId: this.unitId }, lock: true }).whenClosed(result => {
+            this.dialogService.open({ viewModel: UnitPicker, model: <UnitPickerParams>{ model: this.model, allowGenerics: this.allowGenerics }, lock: true }).whenClosed(result => {
                 if (!result.wasCancelled) {
-                    var oldId = this.unitId;
-                    this.unitId = result.output;
+                    var oldModel = this.model;
+                    this.model = result.output;
                     var event = new CustomEvent('selected', {
-                        detail: { unitId: result.output, oldUnitId: oldId, viewModel: this },
+                        detail: { newValue: result.output, oldValue: oldModel, viewModel: this },
                         bubbles: true
                     });
                     this.element.dispatchEvent(event);
@@ -66,4 +91,5 @@ export class UnitDisplay {
             });
         }
     }
+
 }

@@ -1,63 +1,65 @@
 <template>
-    <fieldset with.bind="model">
-        <legend>
-            Search
-        </legend>
-        <div class="row">
-            <div class="col m4">
-                <label for="termInput">
-                    Unit Name
-                </label>
-                <input id="termInput"
-                       type="text"
-                       class="_width100"
-                       placeholder="Luffy..."
-                       focus="true"
-                       value.two-way="term & debounce" />
+    <form with.bind="model">
+        <fieldset>
+            <legend>
+                Search
+            </legend>
+            <div class="row">
+                <div class="col m4">
+                    <label for="termInput">
+                        Unit Name
+                    </label>
+                    <input id="termInput"
+                           type="text"
+                           class="_width100"
+                           placeholder="Luffy..."
+                           focus="true"
+                           value.two-way="term & debounce" />
+                </div>
+                <div class="col m5">
+                    <label for="classInput">
+                        Class
+                    </label>
+                    <unit-class-picker id="classInput" unit-class.two-way="classes"></unit-class-picker>
+                    <label for="forceClassInput">
+                        <input id="forceClassInput"
+                               type="checkbox"
+                               checked.two-way="forceClass" />
+                        <span class="-label-body">Exclude Others</span>
+                    </label>
+                </div>
+                <div class="col m3">
+                    <label for="typeInput">
+                        Type
+                    </label>
+                    <unit-type-picker id="typeInput" unit-type.two-way="types"></unit-type-picker>
+                </div>
             </div>
-            <div class="col m5">
-                <label for="classInput">
-                    Class
-                </label>
-                <unit-class-picker id="classInput" unit-class.two-way="classes"></unit-class-picker>
-                <label for="forceClassInput">
-                    <input id="forceClassInput"
-                           type="checkbox"
-                           checked.two-way="forceClass" />
-                    <span class="-label-body">Exclude Others</span>
-                </label>
+            <div class="row">
+                <div class="col m3">
+                    <label for="globalInput">
+                        <input id="globalInput" type="checkbox" checked.two-way="global" />
+                        <span class="-label-body">Global</span>
+                    </label>
+                </div>
+                <div class="col m3">
+                    <label for="freeToPlayInput">
+                        <input id="freeToPlayInput" type="checkbox" checked.two-way="freeToPlay" />
+                        <span class="-label-body">F2P</span>
+                    </label>
+                </div>
+                <div class="col m3">
+                    <!--<label for="myBoxInput">
+                        <input id="myBoxInput"
+                               type="checkbox"
+                               checked.two-way="myBox"/>
+                        <span class="-label-body">My Box</span>
+                    </label>-->
+                </div>
+                <div class="col m3">
+                    <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
+                </div>
             </div>
-            <div class="col m3">
-                <label for="typeInput">
-                    Type
-                </label>
-                <unit-type-picker id="typeInput" unit-type.two-way="types"></unit-type-picker>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col m3">
-                <label for="globalInput">
-                    <input id="globalInput" type="checkbox" checked.two-way="global" />
-                    <span class="-label-body">Global</span>
-                </label>
-            </div>
-            <div class="col m3">
-                <label for="freeToPlayInput">
-                    <input id="freeToPlayInput" type="checkbox" checked.two-way="freeToPlay" />
-                    <span class="-label-body">F2P</span>
-                </label>
-            </div>
-            <div class="col m3">
-                <!--<label for="myBoxInput">
-                    <input id="myBoxInput"
-                           type="checkbox"
-                           checked.two-way="myBox" />
-                    <span class="-label-body">My Box</span>
-                </label>-->
-            </div>
-            <div class="col m3">
-                <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
-            </div>
-        </div>
-    </fieldset>
+        </fieldset>
+    </form>
 </template>

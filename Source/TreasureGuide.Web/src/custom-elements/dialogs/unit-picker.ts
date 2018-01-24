@@ -2,18 +2,22 @@
 import { DialogController } from 'aurelia-dialog';
 import { BindingEngine } from 'aurelia-binding';
 import { UnitQueryService, UnitSearchModel } from '../../services/query/unit-query-service';
+import { IUnitEditorModel } from '../../models/imported';
+import { ITeamGenericSlotEditorModel } from '../../models/imported';
+import { IUnitStubModel } from '../../models/imported';
 
 @autoinject
 export class UnitPicker {
     private controller: DialogController;
     private unitQueryService: UnitQueryService;
-    @bindable unitId = 0;
 
-    unit;
-    units: any[];
+    private allowGenerics: boolean;
+    private generic: boolean;
+    private units: IUnitStubModel[] = [];
+    private searchModel = new UnitSearchModel().getCached();
+    private loading: boolean;
 
-    searchModel = new UnitSearchModel().getCached();
-    loading;
+    private genericBuilder: ITeamGenericSlotEditorModel;
 
     constructor(unitQueryService: UnitQueryService, controller: DialogController, bindingEngine: BindingEngine) {
         this.controller = controller;
@@ -25,12 +29,9 @@ export class UnitPicker {
         this.search(this.searchModel.payload);
     }
 
-    activate(viewModel) {
-        this.unitId = viewModel.unitId;
-    }
-
-    onPageChanged(e) {
-        this.searchModel.page = e.detail;
+    activate(viewModel: UnitPickerParams) {
+        this.allowGenerics = viewModel.allowGenerics;
+        this.genericBuilder = viewModel.generic || <ITeamGenericSlotEditorModel>{};
     }
 
     search(payload: UnitSearchModel) {
@@ -46,20 +47,29 @@ export class UnitPicker {
         }
     }
 
-    submit() {
-        this.controller.ok(this.unitId);
-    };
+    showGeneric() {
+        this.generic = true;
+    }
+
+    showUnits() {
+        this.generic = false;
+    }
 
     cancel() {
         this.controller.cancel();
     };
 
-    clicked(unitId) {
-        this.unitId = unitId;
-        this.submit();
+    clicked(model) {
+        this.controller.ok(model);
     }
 
     getIcon(id: number) {
         return UnitQueryService.getIcon(id);
     }
+}
+
+export class UnitPickerParams {
+    model: IUnitEditorModel;
+    generic: ITeamGenericSlotEditorModel;
+    allowGenerics: boolean;
 }

@@ -19,6 +19,7 @@
         './unit-class-picker',
         './unit-display',
         './unit-search',
+        './unit-role-picker',
         './unit-type-picker'
     ]);
 }

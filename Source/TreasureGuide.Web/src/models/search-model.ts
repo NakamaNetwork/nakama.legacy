@@ -1,11 +1,12 @@
 ﻿import { computedFrom } from 'aurelia-framework';
 import { ISearchModel } from './imported';
+import { NumberHelper } from '../tools/number-helper';
 
 export abstract class SearchModel implements ISearchModel {
     public static pageSizeKey: string = 'PageSize';
 
     public page: number = 1;
-    public pageSize: number = SearchModel.isNumber(sessionStorage[SearchModel.pageSizeKey]) ? Number.parseInt(sessionStorage[SearchModel.pageSizeKey]) : 20;
+    public pageSize: number = NumberHelper.isNumber(sessionStorage[SearchModel.pageSizeKey]) ? Number.parseInt(sessionStorage[SearchModel.pageSizeKey]) : 20;
     public sortBy: string;
     public sortDesc: boolean;
 
@@ -78,14 +79,13 @@ export abstract class SearchModel implements ISearchModel {
                 if (params.hasOwnProperty(myProp)) {
                     success = true;
                     var prop = params[myProp];
-                    this[myProp] = SearchModel.isNumber(prop) ? Number.parseInt(prop) : prop;
+                    this[myProp] = NumberHelper.isNumber(prop) ? Number.parseInt(prop) : prop;
                 }
             }
         }
         return success;
     }
 
-    static isNumber(n): boolean { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
     static removeEmpties(key, value) {
         return value ? value : undefined;
     }

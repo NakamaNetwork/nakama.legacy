@@ -18,6 +18,9 @@ $large-unit-margin: 4px;
 $huge-unit-size: 112px;
 $huge-unit-margin: 5px;
 
+$massive-unit-size: 224px;
+$massive-unit-margin: 10px;
+
 $default-unit-size: $huge-unit-size;
 $default-unit-margin: $huge-unit-margin;
 
@@ -90,6 +93,13 @@ $default-unit-margin: $huge-unit-margin;
         width: $huge-unit-size;
         margin: $huge-unit-margin;
     }
+
+    &[size="massive"],
+    [size="massive"] & {
+        height: $massive-unit-size;
+        width: $massive-unit-size;
+        margin: $massive-unit-margin;
+    }
 }
 
 unit-display {
@@ -112,8 +122,10 @@ unit-display {
     }
 }
 
-team-inline{
-
+team-inline {
+    .unit-button {
+        pointer-events: none;
+    }
 }
 
 team-display {
