@@ -55,7 +55,13 @@ export class UnitDisplay {
         if (this.editable) {
             this.dialogService.open({ viewModel: UnitPicker, model: { unitId: this.unitId }, lock: true }).whenClosed(result => {
                 if (!result.wasCancelled) {
+                    var oldId = this.unitId;
                     this.unitId = result.output;
+                    var event = new CustomEvent('selected', {
+                        detail: { unitId: result.output, oldUnitId: oldId, viewModel: this },
+                        bubbles: true
+                    });
+                    this.element.dispatchEvent(event);
                 }
             });
         }

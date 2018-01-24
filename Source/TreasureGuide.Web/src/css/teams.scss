@@ -3,6 +3,9 @@
 $tiny-unit-size: 20px;
 $tiny-unit-margin: 1px;
 
+$xsmall-unit-size: 32px;
+$xsmall-unit-margin: 2px;
+
 $small-unit-size: 48px;
 $small-unit-margin: 2px;
 
@@ -34,7 +37,8 @@ $default-unit-margin: $huge-unit-margin;
     }
 }
 
-.unit-button {
+.unit-button,
+.unit-picker-button {
     height: $default-unit-size;
     width: $default-unit-size;
     margin: $default-unit-margin;
@@ -121,12 +125,46 @@ team-display {
             display: inline-block;
         }
 
+        .unit-button {
+            height: $huge-unit-size;
+            width: $huge-unit-size;
+            margin: $huge-unit-margin;
+
+            @media #{$medium-and-down} {
+                height: $large-unit-size;
+                width: $large-unit-size;
+                margin: $large-unit-margin;
+            }
+        }
+
         .team-subs {
             max-width: 60%;
             overflow-wrap: break-word;
             white-space: normal;
             vertical-align: bottom;
             margin-bottom: 5px;
+
+            @media #{$small-and-down} {
+                max-width: 40%;
+            }
+
+            .unit-button {
+                height: $small-unit-size;
+                width: $small-unit-size;
+                margin: $small-unit-margin;
+
+                @media #{$medium-and-down} {
+                    height: $xsmall-unit-size;
+                    width: $xsmall-unit-size;
+                    margin: $xsmall-unit-margin;
+                }
+
+                @media #{$small-and-down} {
+                    height: $tiny-unit-size;
+                    width: $tiny-unit-size;
+                    margin: $tiny-unit-margin;
+                }
+            }
         }
 
         .team-slot-container {
