@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace TreasureGuide.Entities.Helpers
 {
@@ -32,6 +33,14 @@ namespace TreasureGuide.Entities.Helpers
                 return queryable.OrderByDescending(selector);
             }
             return queryable.OrderBy(selector);
+        }
+
+        private static readonly Regex AlphaNumericRegex = new Regex(@"/[^\w\d]/");
+        private static readonly char[] Splitters = { ' ' };
+
+        public static IEnumerable<string> SplitSearchTerms(this string term)
+        {
+            return AlphaNumericRegex.Replace(term, " ").Split(Splitters, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

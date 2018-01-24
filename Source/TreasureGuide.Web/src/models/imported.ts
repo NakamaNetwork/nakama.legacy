@@ -455,8 +455,8 @@ export enum UnitRole {
 
 export interface IUnitSearchModel extends ISearchModel{
     term: string;
-    classes: UnitClass[];
-    types: UnitType[];
+    classes: UnitClass;
+    types: UnitType;
     forceClass: boolean;
     freeToPlay: boolean;
     global: boolean;

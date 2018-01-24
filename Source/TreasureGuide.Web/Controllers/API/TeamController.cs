@@ -176,7 +176,8 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (!String.IsNullOrEmpty(term))
             {
-                teams = teams.Where(x => x.Name.Contains(term));
+                var terms = term.SplitSearchTerms();
+                teams = teams.Where(x => terms.Any(t => x.Name.Contains(t) || (x.Stage != null && x.Stage.Name.Contains(t))));
             }
             return teams;
         }

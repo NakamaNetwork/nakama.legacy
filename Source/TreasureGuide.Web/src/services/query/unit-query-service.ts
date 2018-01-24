@@ -1,7 +1,7 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { IUnitSearchModel } from '../../models/imported';
+import { IUnitSearchModel, UnitClass, UnitType } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 
 @autoinject
@@ -28,8 +28,8 @@ export class UnitQueryService extends SearchableQueryService {
 export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
 
     term: string;
-    classes: number[];
-    types: number[];
+    classes: UnitClass;
+    types: UnitType;
     forceClass: boolean;
     myBox: boolean;
     global: boolean;
