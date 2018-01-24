@@ -130,7 +130,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchStage(results, model.StageId);
             results = SearchTerm(results, model.Term);
             results = SearchSubmitter(results, model.SubmittedBy);
-            results = SearchLead(results, model.LeaderId);
+            results = SearchLead(results, model.LeaderId, model.NoHelp);
             results = SearchGlobal(results, model.Global);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
             results = SearchBox(results, model.MyBox);
@@ -199,11 +199,11 @@ namespace TreasureGuide.Web.Controllers.API
             return teams;
         }
 
-        private IQueryable<Team> SearchLead(IQueryable<Team> teams, int? leaderId)
+        private IQueryable<Team> SearchLead(IQueryable<Team> teams, int? leaderId, bool noHelper)
         {
             if (leaderId.HasValue)
             {
-                teams = teams.Where(x => x.TeamUnits.Any(y => y.UnitId == leaderId && y.Position == 1));
+                teams = teams.Where(x => x.TeamUnits.Any(y => y.UnitId == leaderId && (noHelper ? y.Position == 1 : y.Position < 2) && !y.Sub));
             }
             return teams;
         }

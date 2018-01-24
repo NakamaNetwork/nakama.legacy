@@ -5,6 +5,7 @@
         public string Term { get; set; }
         public string SubmittedBy { get; set; }
         public int? LeaderId { get; set; }
+        public bool NoHelp { get; set; }
         public int? StageId { get; set; }
 
         public bool MyBox { get; set; }

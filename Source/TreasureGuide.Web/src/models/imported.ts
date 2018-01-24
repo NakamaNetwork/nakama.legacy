@@ -309,6 +309,7 @@ export interface ITeamSearchModel extends ISearchModel{
     term: string;
     submittedBy: string;
     leaderId: number;
+    noHelp: boolean;
     stageId: number;
     myBox: boolean;
     global: boolean;

@@ -56,6 +56,7 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     term: string;
     submittedBy: string;
     leaderId: number;
+    noHelp: boolean;
     stageId: number;
     myBox: boolean;
     global: boolean;
