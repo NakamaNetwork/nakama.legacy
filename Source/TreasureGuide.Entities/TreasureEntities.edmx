@@ -72,10 +72,9 @@
           </Key>
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="Position" Type="tinyint" Nullable="false" />
-          <Property Name="Type" Type="smallint" />
-          <Property Name="Class" Type="smallint" />
-          <Property Name="Role" Type="smallint" />
-          <Property Name="Combo" Type="tinyint" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+          <Property Name="Class" Type="smallint" Nullable="false" />
+          <Property Name="Role" Type="smallint" Nullable="false" />
           <Property Name="Sub" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamReports">
@@ -124,7 +123,7 @@
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="Position" Type="tinyint" Nullable="false" />
-          <Property Name="SpecialLevel" Type="tinyint" />
+          <Property Name="Special" Type="bit" Nullable="false" />
           <Property Name="Sub" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamVideos">
@@ -198,14 +197,16 @@ warning 6002: The table/view 'tcdb.dbo.TeamUnitSummaries' does not have a primar
             <PropertyRef Name="Position" />
             <PropertyRef Name="Sub" />
             <PropertyRef Name="Flags" />
+            <PropertyRef Name="Class" />
+            <PropertyRef Name="Type" />
           </Key>
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="UnitId" Type="int" />
           <Property Name="Position" Type="tinyint" Nullable="false" />
           <Property Name="Sub" Type="bit" Nullable="false" />
           <Property Name="Flags" Type="int" Nullable="false" />
-          <Property Name="Class" Type="smallint" />
-          <Property Name="Type" Type="smallint" />
+          <Property Name="Class" Type="smallint" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -723,11 +724,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Unit" EntitySet="Units" />
             <End Role="Stage" EntitySet="Stages" />
           </AssociationSet>
-          <EntitySet Name="TeamGenericSlots" EntityType="tcdbModel.TeamGenericSlot" />
-          <AssociationSet Name="FK_dbo_TeamGenericSlots_dbo_Teams" Association="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams">
-            <End Role="Team" EntitySet="Teams" />
-            <End Role="TeamGenericSlot" EntitySet="TeamGenericSlots" />
-          </AssociationSet>
           <EntitySet Name="TeamUnitSummaries" EntityType="tcdbModel.TeamUnitSummary" />
           <AssociationSet Name="TeamTeamUnitSummary" Association="tcdbModel.TeamTeamUnitSummary">
             <End Role="Team" EntitySet="Teams" />
@@ -736,6 +732,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="UnitTeamUnitSummary" Association="tcdbModel.UnitTeamUnitSummary">
             <End Role="Unit" EntitySet="Units" />
             <End Role="TeamUnitSummary" EntitySet="TeamUnitSummaries" />
+          </AssociationSet>
+          <EntitySet Name="TeamGenericSlots" EntityType="tcdbModel.TeamGenericSlot" />
+          <AssociationSet Name="FK_dbo_TeamGenericSlots_dbo_Teams" Association="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamGenericSlot" EntitySet="TeamGenericSlots" />
           </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
@@ -957,10 +958,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="TeamId" Type="Int32" Nullable="false" />
                     <Property Name="UnitId" Type="Int32" Nullable="false" />
                     <Property Name="Position" Type="Byte" Nullable="false" />
-                    <Property Name="SpecialLevel" Type="Byte" />
                     <Property Name="Sub" Type="Boolean" Nullable="false" />
                     <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="TeamUnit" ToRole="Unit" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="TeamUnit" ToRole="Team" />
+          <Property Name="Special" Type="Boolean" Nullable="false" />
                 </EntityType>
                 <Association Name="FK_dbo_TeamUnits_dbo_Units">
                     <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
@@ -1052,8 +1053,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamVideos" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_Teams" FromRole="Team" ToRole="TeamVideo" />
           <NavigationProperty Name="TeamCredit" Relationship="tcdbModel.FK_dbo_TeamCredits_dbo_Teams" FromRole="Team" ToRole="TeamCredit" />
           <Property Name="Draft" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="TeamGenericSlots" Relationship="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" FromRole="Team" ToRole="TeamGenericSlot" />
           <NavigationProperty Name="TeamUnitSummaries" Relationship="tcdbModel.TeamTeamUnitSummary" FromRole="Team" ToRole="TeamUnitSummary" />
+          <NavigationProperty Name="TeamGenericSlots" Relationship="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" FromRole="Team" ToRole="TeamGenericSlot" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
@@ -1303,34 +1304,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TeamGenericSlot">
-          <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="Position" />
-          </Key>
-          <Property Name="TeamId" Type="Int32" Nullable="false" />
-          <Property Name="Position" Type="Byte" Nullable="false" />
-          <Property Name="Type" Type="tcdbModel.UnitType" />
-          <Property Name="Class" Type="tcdbModel.UnitClass" />
-          <Property Name="Role" Type="tcdbModel.UnitRole" />
-          <Property Name="Combo" Type="Byte" />
-          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" FromRole="TeamGenericSlot" ToRole="Team" />
-          <Property Name="Sub" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_dbo_TeamGenericSlots_dbo_Teams">
-          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="tcdbModel.TeamGenericSlot" Role="TeamGenericSlot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Team">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TeamGenericSlot">
-              <PropertyRef Name="TeamId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EnumType Name="UnitRole" UnderlyingType="Int16" IsFlags="true">
           <Member Name="Unknown" Value="0" />
           <Member Name="Beatstick" Value="1" />
@@ -1350,14 +1323,16 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <PropertyRef Name="Position" />
             <PropertyRef Name="Sub" />
             <PropertyRef Name="Flags" />
+            <PropertyRef Name="Class" />
+            <PropertyRef Name="Type" />
           </Key>
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <Property Name="UnitId" Type="Int32" />
           <Property Name="Position" Type="Byte" Nullable="false" />
           <Property Name="Sub" Type="Boolean" Nullable="false" />
           <Property Name="Flags" Type="tcdbModel.UnitFlag" Nullable="false" />
-          <Property Name="Class" Type="tcdbModel.UnitClass" />
-          <Property Name="Type" Type="tcdbModel.UnitType" />
+          <Property Name="Class" Type="tcdbModel.UnitClass" Nullable="false" />
+          <Property Name="Type" Type="tcdbModel.UnitClass" Nullable="false" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.TeamTeamUnitSummary" FromRole="TeamUnitSummary" ToRole="Team" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.UnitTeamUnitSummary" FromRole="TeamUnitSummary" ToRole="Unit" />
         </EntityType>
@@ -1382,6 +1357,33 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="TeamUnitSummary">
               <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeamGenericSlot">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="Position" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="Position" Type="Byte" Nullable="false" />
+          <Property Name="Type" Type="tcdbModel.UnitType" Nullable="false" />
+          <Property Name="Class" Type="tcdbModel.UnitClass" Nullable="false" />
+          <Property Name="Role" Type="tcdbModel.UnitRole" Nullable="false" />
+          <Property Name="Sub" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" FromRole="TeamGenericSlot" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_dbo_TeamGenericSlots_dbo_Teams">
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamGenericSlot" Role="TeamGenericSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamGenericSlot">
+              <PropertyRef Name="TeamId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1484,8 +1486,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <EntitySetMapping Name="TeamUnits">
                         <EntityTypeMapping TypeName="tcdbModel.TeamUnit">
                             <MappingFragment StoreEntitySet="TeamUnits">
-                                <ScalarProperty Name="Sub" ColumnName="Sub" />
-                                <ScalarProperty Name="SpecialLevel" ColumnName="SpecialLevel" />
+                                <ScalarProperty Name="Special" ColumnName="Special" />
+                <ScalarProperty Name="Sub" ColumnName="Sub" />
                                 <ScalarProperty Name="Position" ColumnName="Position" />
                                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
@@ -1581,19 +1583,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TeamGenericSlots">
-            <EntityTypeMapping TypeName="tcdbModel.TeamGenericSlot">
-              <MappingFragment StoreEntitySet="TeamGenericSlots">
-                <ScalarProperty Name="Sub" ColumnName="Sub" />
-                <ScalarProperty Name="Combo" ColumnName="Combo" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="Class" ColumnName="Class" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TeamUnitSummaries">
             <EntityTypeMapping TypeName="tcdbModel.TeamUnitSummary">
               <MappingFragment StoreEntitySet="TeamUnitSummaries">
@@ -1603,6 +1592,18 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="Sub" ColumnName="Sub" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamGenericSlots">
+            <EntityTypeMapping TypeName="tcdbModel.TeamGenericSlot">
+              <MappingFragment StoreEntitySet="TeamGenericSlots">
+                <ScalarProperty Name="Sub" ColumnName="Sub" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
               </MappingFragment>
             </EntityTypeMapping>

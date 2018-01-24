@@ -13,7 +13,6 @@ using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Services;
 
