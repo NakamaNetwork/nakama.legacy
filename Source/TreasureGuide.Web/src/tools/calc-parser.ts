@@ -40,7 +40,7 @@ export class CalcParser {
             return <ITeamUnitEditorModel>{
                 unitId: x,
                 position: i < 6 ? i : null,
-                specialLevel: 0,
+                special: 0,
                 sub: !(i < 6)
             };
         });

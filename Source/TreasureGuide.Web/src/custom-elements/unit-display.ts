@@ -78,9 +78,10 @@ export class UnitDisplay {
 
     clicked() {
         if (this.editable) {
-            this.dialogService.open({ viewModel: UnitPicker, model: <UnitPickerParams>{ model: this.model, allowGenerics: this.allowGenerics }, lock: true }).whenClosed(result => {
+            var model = this.model;
+            this.dialogService.open({ viewModel: UnitPicker, model: <UnitPickerParams>{ model: model, allowGenerics: this.allowGenerics }, lock: true }).whenClosed(result => {
                 if (!result.wasCancelled) {
-                    var oldModel = this.model;
+                    var oldModel = model;
                     this.model = result.output;
                     var event = new CustomEvent('selected', {
                         detail: { newValue: result.output, oldValue: oldModel, viewModel: this },

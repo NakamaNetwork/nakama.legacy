@@ -192,7 +192,7 @@ export interface ITeamGenericSlotStubModel {
 }
 
 export interface ITeamGenericSlotDetailModel extends ITeamGenericSlotStubModel{
-    combo: number;
+    sub: boolean;
     
 }
 
@@ -355,7 +355,7 @@ export interface ITeamUnitStubModel {
 export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
     name: string;
     level: number;
-    specialLevel: number;
+    special: number;
     sub: boolean;
     
 }
@@ -363,7 +363,7 @@ export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
 export interface ITeamUnitEditorModel {
     unitId: number;
     position: number;
-    specialLevel: number;
+    special: number;
     sub: boolean;
     
 }

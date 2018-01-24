@@ -6,12 +6,12 @@
                           editable.bind="editable"
                           info="true"
                           allow-generics="true"
-                          selected.delegate="swapUnit($event, false)">
+                          selected.delegate="unitAdded($event, false)">
             </unit-display>
             <unit-display if.bind="!hasMain"
                           editable.bind="editable"
                           allow-generics="true"
-                          selected.delegate="addUnit($event, false)">
+                          selected.delegate="unitAdded($event, false)">
             </unit-display>
         </div>
         <div class="team-subs">
@@ -20,14 +20,14 @@
                               editable.bind="editable"
                               info="true"
                               allow-generics="true"
-                              selected.delegate="swapUnit($event, true)">
+                              selected.delegate="unitAdded($event, true)">
                 </unit-display>
             </div>
             <div class="team-unit" if.bind="canAddSubs">
                 <unit-display editable="true"
                               info="true"
                               allow-generics="true"
-                              selected.delegate="addUnit($event, true)">
+                              selected.delegate="unitAdded($event, true, true)">
                 </unit-display>
             </div>
         </div>
