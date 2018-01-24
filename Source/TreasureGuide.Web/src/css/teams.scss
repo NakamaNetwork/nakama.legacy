@@ -93,18 +93,16 @@ $default-unit-margin: $huge-unit-margin;
 }
 
 unit-display {
-    .unit-link {
+    .tooltip {
         position: relative;
-        display: inline-block;
-        vertical-align: bottom;
-        margin-left: -32px;
+    }
 
-        &[size="tiny"],
-        [size="tiny"] &,
-        &[size="small"],
-        [size="small"] & {
-            display: none;
-        }
+    .unit-link {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
     }
 }
 
