@@ -8,13 +8,13 @@ var gulp = require('gulp');
 var shell = require('gulp-shell');
 
 gulp.task('build-dev', shell.task(['au build --env dev']));
-gulp.task('build-dev watch', shell.task(['au build --env dev --watch']));
+gulp.task('build-dev_watch', shell.task(['au build --env dev --watch']));
 gulp.task('build-prod', shell.task(['au build --env prod']));
 gulp.task('build-stage', shell.task(['au build --env stage']));
 gulp.task('run', shell.task(['au run']));
-gulp.task('run watch', shell.task(['au run --watch']));
+gulp.task('run_watch', shell.task(['au run --watch']));
 gulp.task('test', shell.task(['au test']));
-gulp.task('test watch', shell.task(['au test --watch']));
+gulp.task('test_watch', shell.task(['au test --watch']));
 
 console.log('--- NOTICE ---'
     + '\n'
