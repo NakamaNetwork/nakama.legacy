@@ -18,6 +18,17 @@ let buildTask = gulp.series(
     writeBundles
 );
 
+let timer;
+
+let queueBuild = () => {
+    if (timer) {
+        clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+        buildTask();
+    }, 1000);
+}
+
 function readProjectConfiguration() {
     return build.src(project);
 }
@@ -31,9 +42,9 @@ function onChange(path) {
 }
 
 let watch = function () {
-    gulp.watch(project.transpiler.source, buildTask).on('change', onChange);
-    gulp.watch(project.markupProcessor.source, buildTask).on('change', onChange);
-    gulp.watch(project.cssProcessor.source, buildTask).on('change', onChange)
+    gulp.watch(project.transpiler.source, queueBuild).on('change', onChange);
+    gulp.watch(project.markupProcessor.source, queueBuild).on('change', onChange);
+    gulp.watch(project.cssProcessor.source, queueBuild).on('change', onChange)
 }
 
 let task;
