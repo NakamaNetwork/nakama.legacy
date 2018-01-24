@@ -11,9 +11,7 @@ export class TeamSlot {
 
     @computedFrom('team', 'team.teamUnits', 'index', 'lastUpdated')
     get units() {
-        var units = this.team.teamUnits.filter(x => x.position === this.index && x.unitId);
-        console.log(units);
-        return units;
+        return this.team.teamUnits.filter(x => x.position === this.index && x.unitId);
     }
 
     @computedFrom('units')

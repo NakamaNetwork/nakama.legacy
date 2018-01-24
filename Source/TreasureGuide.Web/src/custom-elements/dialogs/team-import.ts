@@ -1,6 +1,7 @@
 ﻿import { autoinject, bindable } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { CalcParser } from '../../tools/calc-parser';
+import { TeamEditorModel } from '../../services/query/team-query-service';
 
 @autoinject
 export class TeamImportView {
@@ -9,8 +10,7 @@ export class TeamImportView {
 
     @bindable input = '';
 
-    team = new Array(6);
-    ship = 1;
+    team = new TeamEditorModel();
 
     constructor(calcParser: CalcParser, controller: DialogController) {
         this.controller = controller;
@@ -19,12 +19,13 @@ export class TeamImportView {
 
     inputChanged(newValue: string, oldValue: string) {
         var teamIds = this.calcParser.parse(this.input);
-        this.team = this.calcParser.convert(teamIds.units);
-        this.ship = teamIds.ship;
+        var teamSet = this.calcParser.convert(teamIds.units);
+        this.team.teamUnits = teamSet;
+        this.team.shipId = teamIds.ship;
     }
 
     submit() {
-        this.controller.ok({ team: this.team, ship: this.ship });
+        this.controller.ok({ team: this.team.teamUnits, ship: this.team.shipId });
     };
 
     cancel() {
