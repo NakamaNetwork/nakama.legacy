@@ -25,6 +25,8 @@ namespace TreasureGuide.Web.Configurations
                 teamUnit.DetailMapping.ForMember(x => x.Name, o => o.MapFrom(y => y.Unit.Name));
                 teamUnit.DetailMapping.ForMember(x => x.Level, o => o.MapFrom(y => (int)(y.Unit.MaxLevel ?? 1)));
 
+                var teamGenericUnit = mapper.CreateControllerMapping<TeamGenericSlot, TeamGenericSlotDetailModel, TeamGenericSlotStubModel, TeamGenericSlotEditorModel>();
+
                 var teamSocket = mapper.CreateControllerMapping<TeamSocket, TeamSocketDetailModel, TeamSocketStubModel, TeamSocketEditorModel>();
 
                 var teamVideo = mapper.CreateMap<TeamVideo, TeamVideoModel>();

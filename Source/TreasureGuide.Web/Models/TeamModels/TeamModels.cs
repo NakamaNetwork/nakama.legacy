@@ -26,6 +26,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Draft { get; set; }
 
         public IEnumerable<TeamUnitStubModel> TeamUnits { get; set; }
+        public IEnumerable<TeamGenericSlotStubModel> TeamGenericSlots { get; set; }
     }
 
     public class TeamDetailModel : IIdItem<int>, ICanEdit
@@ -51,6 +52,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Draft { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
+        public IEnumerable<TeamGenericSlotDetailModel> TeamGenericSlots { get; set; }
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
         public IEnumerable<TeamVideoModel> TeamVideos { get; set; }
     }
@@ -74,5 +76,6 @@ namespace TreasureGuide.Web.Models.TeamModels
 
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
         public IEnumerable<TeamUnitEditorModel> TeamUnits { get; set; }
+        public IEnumerable<TeamGenericSlotEditorModel> TeamGenericSlots { get; set; }
     }
 }

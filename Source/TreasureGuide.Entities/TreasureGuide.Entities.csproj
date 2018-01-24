@@ -88,6 +88,9 @@
     <Compile Include="TeamCreditType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="TeamGenericSlot.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="TeamReport.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
@@ -128,6 +131,9 @@
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitFlag.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitRole.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitType.cs">

@@ -1,9 +1,12 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { ITeamStubModel, ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel, ITeamImportModel, ITeamVideoModel, ITeamReportStubModel, FreeToPlayStatus } from '../../models/imported';
+import {
+    ITeamStubModel, ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel,
+    ITeamImportModel, ITeamVideoModel, ITeamReportStubModel, FreeToPlayStatus, SearchConstants,
+    ITeamSocketEditorModel, ITeamUnitEditorModel, ITeamGenericSlotEditorModel
+} from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
-import {SearchConstants} from '../../models/imported';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -95,8 +98,9 @@ export class TeamEditorModel implements ITeamEditorModel {
     guide: string;
     shipId: number = 1;
     stageId: number;
-    teamSockets: any[] = [];
-    teamUnits: any[] = [];
+    teamSockets: ITeamSocketEditorModel[] = [];
+    teamUnits: ITeamUnitEditorModel[] = [];
+    teamGenericSlots: ITeamGenericSlotEditorModel[] = [];
     deleted: boolean;
     draft: boolean;
 };
