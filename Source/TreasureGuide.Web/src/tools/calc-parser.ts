@@ -2,7 +2,7 @@
 import { ITeamUnitEditorModel } from '../models/imported';
 
 export class CalcParser {
-    private unitMatchRegex = /[D,]{1}(\d+?):/ig;
+    private unitMatchRegex = /[D,]{1}(\d*?)[:!]/ig;
     private shipMatchRegex = /C(\d+?),/ig;
 
     parse(link: string) {
@@ -12,11 +12,13 @@ export class CalcParser {
             var match;
             do {
                 match = this.unitMatchRegex.exec(link);
-                if (Array.isArray(match) && match.length >= 2) {
-                    match = match[1];
-                    var number = Number.parseInt(match);
+                if (Array.isArray(match) && match.length >= 1) {
+                    var matched = match[1];
+                    var number = Number.parseInt(matched);
                     if (!Number.isNaN(number)) {
                         units.push(number);
+                    } else {
+                        units.push(null);
                     }
                 }
             } while (match);

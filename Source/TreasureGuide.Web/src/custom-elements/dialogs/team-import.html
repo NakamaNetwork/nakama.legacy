@@ -21,7 +21,8 @@
                 <fieldset>
                     <legend>Preview</legend>
                     <div class="_alignCenter">
-                        <team-display team.bind="team" ship.bind="ship"></team-display>
+                        <team-display team.bind="team"></team-display>
+                        <ship-display ship-id.bind="team.shipId"></ship-display>
                     </div>
                 </fieldset>
             </ux-dialog-body>
