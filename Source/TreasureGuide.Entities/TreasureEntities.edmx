@@ -1355,15 +1355,23 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="UnitId" Type="Int32" />
           <Property Name="Position" Type="Byte" Nullable="false" />
           <Property Name="Sub" Type="Boolean" Nullable="false" />
-          <Property Name="Flags" Type="Int32" Nullable="false" />
-          <Property Name="Class" Type="Int16" />
-          <Property Name="Type" Type="Int16" />
+          <Property Name="Flags" Type="tcdbModel.UnitFlag" Nullable="false" />
+          <Property Name="Class" Type="tcdbModel.UnitClass" />
+          <Property Name="Type" Type="tcdbModel.UnitType" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.TeamTeamUnitSummary" FromRole="TeamUnitSummary" ToRole="Team" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.UnitTeamUnitSummary" FromRole="TeamUnitSummary" ToRole="Unit" />
         </EntityType>
         <Association Name="TeamTeamUnitSummary">
           <End Type="tcdbModel.Team" Role="Team" Multiplicity="1" />
           <End Type="tcdbModel.TeamUnitSummary" Role="TeamUnitSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamUnitSummary">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="UnitTeamUnitSummary">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />

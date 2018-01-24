@@ -13,6 +13,7 @@ namespace TreasureGuide.Web.Models.TeamModels
     public class TeamGenericSlotDetailModel : TeamGenericSlotStubModel
     {
         public byte? Combo { get; set; }
+        public bool Sub { get; set; }
     }
 
 

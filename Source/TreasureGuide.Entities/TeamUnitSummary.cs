@@ -18,9 +18,9 @@ namespace TreasureGuide.Entities
         public Nullable<int> UnitId { get; set; }
         public byte Position { get; set; }
         public bool Sub { get; set; }
-        public int Flags { get; set; }
-        public Nullable<short> Class { get; set; }
-        public Nullable<short> Type { get; set; }
+        public UnitFlag Flags { get; set; }
+        public Nullable<UnitClass> Class { get; set; }
+        public Nullable<UnitType> Type { get; set; }
     
         public virtual Team Team { get; set; }
         public virtual Unit Unit { get; set; }
