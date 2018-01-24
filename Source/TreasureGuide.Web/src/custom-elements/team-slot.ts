@@ -27,13 +27,13 @@ export class TeamSlot {
     }
 
     @computedFrom('main', 'edtiable')
-    get canAddMain() {
-        return this.editable && !this.main;
+    get hasMain() {
+        return this.main;
     }
 
-    @computedFrom('main', 'subs', 'editable')
+    @computedFrom('hasMain', 'editable', 'subs')
     get canAddSubs() {
-        return this.editable && this.main && this.subs.length < 4;
+        return this.editable && this.hasMain && this.subs.length < 4;
     }
 
     addUnit(event: CustomEvent, sub: boolean) {

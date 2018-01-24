@@ -12,6 +12,7 @@
         './stage-type-picker',
         './team-box',
         './team-display',
+        './team-inline',
         './team-reports',
         './team-search',
         './team-slot',
