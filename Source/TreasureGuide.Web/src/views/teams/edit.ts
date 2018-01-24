@@ -178,7 +178,7 @@ ValidationRules
     .satisfies((x: any[], m: TeamEditorModel) => x.filter(y => !y.sub && y.unitId).length > 3)
     .withMessage('Please include at least 4 non-substitute units on your team!')
     .satisfies((x: any[], m: TeamEditorModel) => {
-        var sets = x.map(y => y.position + ':' + y.unitId);
+        var sets = x.filter(y => y.unitId).map(y => y.position + ':' + y.unitId);
         return sets.every((y, i) => sets.indexOf(y) === i);
     })
     .withMessage('You have two of the same unit in a single slot. Please check your substitutes.')
