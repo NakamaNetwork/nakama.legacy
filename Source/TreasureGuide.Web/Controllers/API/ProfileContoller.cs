@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
@@ -93,7 +94,8 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (!String.IsNullOrWhiteSpace(modelTerm))
             {
-                results = results.Where(x => x.UserName.Contains(modelTerm));
+                var terms = modelTerm.SplitSearchTerms();
+                results = results.Where(x => terms.Any(t => x.UserName.Contains(t)));
             }
             return results;
         }
