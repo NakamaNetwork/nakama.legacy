@@ -4,7 +4,7 @@ describe('number helper', () => {
     it('can split enums', () => {
         var enums = [UnitType.DEX, UnitType.STR, UnitType.QCK];
         var value = enums.reduce((x, y) => x |= y);
-        var split = NumberHelper.splitEnum(value, UnitType);
+        var split = NumberHelper.splitEnum(value, UnitType).map(x => x.id);
         enums.forEach(x => {
             expect(split).toContain(x);
         });

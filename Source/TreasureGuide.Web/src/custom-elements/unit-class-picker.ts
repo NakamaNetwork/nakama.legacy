@@ -1,16 +1,14 @@
 ﻿import { bindable, customElement } from 'aurelia-framework';
 import { autoinject } from 'aurelia-framework';
 import { UnitClass } from '../models/imported';
-import { StringHelper } from '../tools/string-helper';
+import { NumberHelper } from '../tools/number-helper';
 
 @autoinject
 @customElement('unit-class-picker')
 export class UnitClassPicker {
     @bindable unitClass: UnitClass = 0;
 
-    unitClasses = Object.keys(UnitClass).map((k) => {
-        return { id: UnitClass[k], name: StringHelper.prettifyEnum(k) };
-    }).filter(x => !Number.isNaN(Number(x.id))).filter(x => x.id !== 0);
+    unitClasses = NumberHelper.getPairs(UnitClass, true);
 
     maximum = this.unitClasses.map(x => x.id).reduce((acc, val) => acc += val);
 }

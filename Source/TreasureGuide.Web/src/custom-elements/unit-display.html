@@ -7,11 +7,11 @@
                 <div class="generic-types">
                     <img repeat.for="item of genericTypes" src="/content/types/${item.id}.png" title="${item.name}" />
                 </div>
+                <div class="generic-roles">
+                    <img repeat.for="item of genericRoles" style.bind="genericRoleScale" src="/content/roles/${item.id}.png" title="${item.name}" />
+                </div>
                 <div class="generic-classes">
                     <img repeat.for="item of genericClasses" src="/content/classes/${item.id}.png" title="${item.name}" />
-                </div>
-                <div class="generic-roles">
-                    <img repeat.for="item of genericRoless" src="/content/roles/${item.id}.png" title="${item.name}" />
                 </div>
             </div>
         </button>

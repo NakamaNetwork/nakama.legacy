@@ -37,29 +37,29 @@
                         <legend>Specifications</legend>
                         <form with.bind="genericBuilder" class="_alignCenter">
                             <div class="form-group">
-                                <label for="classInput">
-                                    Class
-                                </label>
-                                <unit-class-picker id="classInput" unit-class.two-way="class"></unit-class-picker>
-                            </div>
-                            <div class="form-group">
                                 <label for="typeInput">
-                                    Type
+                                    Types
                                 </label>
                                 <unit-type-picker id="typeInput" unit-type.two-way="type"></unit-type-picker>
                             </div>
                             <div class="form-group">
-                                <label for="roleInput">
-                                    Role
+                                <label for="classInput">
+                                    Classes
                                 </label>
-                                <unit-role-picker id="roleInput" unit-role.two-way="roles"></unit-role-picker>
+                                <unit-class-picker id="classInput" unit-class.two-way="class"></unit-class-picker>
+                            </div>
+                            <div class="form-group">
+                                <label for="roleInput">
+                                    Roles
+                                </label>
+                                <unit-role-picker id="roleInput" unit-role.two-way="role"></unit-role-picker>
                             </div>
                         </form>
                     </fieldset>
                     <fieldset>
                         <legend>Output (Click to Select)</legend>
                         <div class="_alignCenter">
-                            <unit-display size="massive" model.bind="genericBuilder" click.delegate="clicked(genericBuilder)">
+                            <unit-display size="large" model.bind="genericBuilder" click.delegate="clicked(genericBuilder)">
                             </unit-display>
                         </div>
                     </fieldset>

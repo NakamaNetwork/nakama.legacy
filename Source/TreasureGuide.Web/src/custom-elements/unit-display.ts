@@ -6,6 +6,9 @@ import { NumberHelper } from '../tools/number-helper';
 import { UnitPicker } from './dialogs/unit-picker';
 import { UnitPickerParams } from './dialogs/unit-picker';
 import { IUnitEditorModel } from '../models/imported';
+import { UnitType } from '../models/imported';
+import { UnitClass } from '../models/imported';
+import { UnitRole } from '../models/imported';
 
 @autoinject
 @customElement('unit-display')
@@ -54,7 +57,7 @@ export class UnitDisplay {
 
     @computedFrom('model')
     get generic() {
-        return this.model ? (this.model.roles !== undefined) : false;
+        return this.model ? (this.model.role !== undefined) : false;
     }
 
     @computedFrom('unit', 'generic', 'editable')
@@ -69,19 +72,42 @@ export class UnitDisplay {
             : null;
     }
 
-    @computedFrom('generic')
+    @computedFrom('generic', 'model.type')
     get genericTypes() {
+        if (this.generic) {
+            return NumberHelper.splitEnum(this.model.type, UnitType);
+        }
         return [];
     }
 
-    @computedFrom('generic')
+    @computedFrom('generic', 'model.class')
     get genericClasses() {
+        if (this.generic) {
+            return NumberHelper.splitEnum(this.model.class, UnitClass, true);
+        }
         return [];
     }
 
-    @computedFrom('generic')
+    @computedFrom('generic', 'model.role')
     get genericRoles() {
+        if (this.generic) {
+            return NumberHelper.splitEnum(this.model.role, UnitRole, true);
+        }
         return [];
+    }
+
+    @computedFrom('genericRoles')
+    get genericRoleScale() {
+        var sMin = 28;
+        var sMax = 60;
+        var mMin = -3;
+        var mMax = -10;
+        var count = this.genericRoles.length;
+
+        var scale = (10 - count) / 10;
+        var size = Math.ceil(((sMax - sMin) * scale) + sMin);
+        var margin = Math.ceil(((mMax - mMin) * scale) + mMin);
+        return 'width: ' + size + '%; height: ' + size + '%; margin: ' + margin + 'px;';
     }
 
     @computedFrom('unit', 'generic')
