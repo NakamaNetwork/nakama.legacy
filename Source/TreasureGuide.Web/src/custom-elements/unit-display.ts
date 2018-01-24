@@ -5,6 +5,7 @@ import { DialogService } from 'aurelia-dialog';
 import { NumberHelper } from '../tools/number-helper';
 import { UnitPicker } from './dialogs/unit-picker';
 import { UnitPickerParams } from './dialogs/unit-picker';
+import { IUnitEditorModel } from '../models/imported';
 
 @autoinject
 @customElement('unit-display')
@@ -13,6 +14,7 @@ export class UnitDisplay {
     private unitQueryService: UnitQueryService;
     private dialogService: DialogService;
 
+    @bindable unitId: number;
     @bindable model: any;
     @bindable editable: boolean;
     @bindable allowGenerics: boolean;
@@ -26,7 +28,28 @@ export class UnitDisplay {
 
     @computedFrom('model')
     get unit() {
-        return this.model ? (NumberHelper.isNumber(this.model) ? Number(this.model) : (this.model.unitId || this.model.id || false)) : false;
+        if (this.model) {
+            var id;
+            if (NumberHelper.isNumber(this.model)) {
+                id = Number(this.model);
+            } else {
+                id = this.model.unitId || this.model.id || null;
+            }
+            this.unitId = id;
+            return id;
+
+        }
+        return null;
+    }
+
+    unitIdChanged(newValue, oldValue) {
+        if (this.unit != newValue) {
+            if (newValue) {
+                this.model = <IUnitEditorModel>{ id: newValue };
+            } else {
+                this.model = null;
+            }
+        }
     }
 
     @computedFrom('model')
