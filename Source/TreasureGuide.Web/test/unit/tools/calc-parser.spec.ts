@@ -50,32 +50,32 @@ describe('calc parser', () => {
                 {
                     unitId: 12,
                     position: 0,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 23,
                     position: 1,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 34,
                     position: 2,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 45,
                     position: 3,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 56,
                     position: 4,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 67,
                     position: 5,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }
             ];
@@ -89,47 +89,47 @@ describe('calc parser', () => {
                 {
                     unitId: 12,
                     position: 0,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 23,
                     position: 1,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 34,
                     position: 2,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 45,
                     position: 3,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 56,
                     position: 4,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 67,
                     position: 5,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 12,
                     position: null,
-                    specialLevel: 0,
+                    special: 0,
                     sub: true
                 }, {
                     unitId: 54,
                     position: null,
-                    specialLevel: 0,
+                    special: 0,
                     sub: true
                 }, {
                     unitId: 32,
                     position: null,
-                    specialLevel: 0,
+                    special: 0,
                     sub: true
                 }
             ];
@@ -145,31 +145,31 @@ describe('calc parser', () => {
                         unitId: 1362,
                         level: 5,
                         position: 0,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }, {
                         unitId: 1362,
                         level: 7,
                         position: 1,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }, {
                         unitId: 1,
                         level: 5,
                         position: 3,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }, {
                         unitId: 408,
                         level: 56,
                         position: 4,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }, {
                         unitId: 418,
                         level: 99,
                         position: 5,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }
                 ],
