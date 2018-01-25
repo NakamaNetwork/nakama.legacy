@@ -17,7 +17,7 @@ export class UnitPicker {
     private searchModel = new UnitSearchModel().getCached();
     private loading: boolean;
 
-    private genericBuilder: ITeamGenericSlotEditorModel;
+    private genericBuilder: ITeamGenericSlotEditorModel = <ITeamGenericSlotEditorModel>{};
 
     constructor(unitQueryService: UnitQueryService, controller: DialogController, bindingEngine: BindingEngine) {
         this.controller = controller;
@@ -31,7 +31,10 @@ export class UnitPicker {
 
     activate(viewModel: UnitPickerParams) {
         this.allowGenerics = viewModel.allowGenerics;
-        this.genericBuilder = viewModel.generic || <ITeamGenericSlotEditorModel>{};
+        if (this.allowGenerics && viewModel.model && !viewModel.model.unitId) {
+            this.generic = true;
+            this.genericBuilder = viewModel.model;
+        }
     }
 
     search(payload: UnitSearchModel) {
@@ -69,7 +72,6 @@ export class UnitPicker {
 }
 
 export class UnitPickerParams {
-    model: IUnitEditorModel;
-    generic: ITeamGenericSlotEditorModel;
+    model: any;
     allowGenerics: boolean;
 }
