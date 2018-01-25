@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TreasureGuide.Entities.Interfaces;
+using TreasureGuide.Web.Helpers.Validators;
 
 namespace TreasureGuide.Web.Models.TeamModels
 {
@@ -57,6 +58,8 @@ namespace TreasureGuide.Web.Models.TeamModels
         public IEnumerable<TeamVideoModel> TeamVideos { get; set; }
     }
 
+    [NotTooManyUnits(5)]
+    [EnoughUnits(4)]
     public class TeamEditorModel : IIdItem<int?>
     {
         public int? Id { get; set; }
@@ -75,7 +78,14 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Draft { get; set; }
 
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
+
+        [EnoughNonSubs(2)]
+        [OnlyOneNonSub]
+        [NoDuplicateUnits]
         public IEnumerable<TeamUnitEditorModel> TeamUnits { get; set; }
+
+        [OnlyOneNonSub]
+        [NoDuplicateGenerics]
         public IEnumerable<TeamGenericSlotEditorModel> TeamGenericSlots { get; set; }
     }
 }

@@ -50,6 +50,12 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\team-generic-slot-models.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamGenericSlotModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-unit-models.tst.gen">
+        <CustomToolNamespace>Models\TeamModels\TeamUnitModels.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

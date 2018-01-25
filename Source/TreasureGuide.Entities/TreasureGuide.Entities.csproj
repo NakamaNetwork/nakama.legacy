@@ -57,6 +57,7 @@
     <Compile Include="InterfaceDefinitions.cs" />
     <Compile Include="Interfaces\ICanEdit.cs" />
     <Compile Include="Interfaces\IIdItem.cs" />
+    <Compile Include="Interfaces\ISubItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Round.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
