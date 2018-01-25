@@ -1335,7 +1335,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Sub" Type="Boolean" Nullable="false" />
           <Property Name="Flags" Type="tcdbModel.UnitFlag" Nullable="false" />
           <Property Name="Class" Type="tcdbModel.UnitClass" Nullable="false" />
-          <Property Name="Type" Type="tcdbModel.UnitClass" Nullable="false" />
+          <Property Name="Type" Type="tcdbModel.UnitType" Nullable="false" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.TeamTeamUnitSummary" FromRole="TeamUnitSummary" ToRole="Team" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.UnitTeamUnitSummary" FromRole="TeamUnitSummary" ToRole="Unit" />
         </EntityType>

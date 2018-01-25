@@ -2,82 +2,83 @@
     <form with.bind="model">
         <fieldset>
             <legend>Search</legend>
-            <div class="row">
-                <div class="col d6">
-                    <div class="form-group">
-                        <label for="termInput">Team Name</label>
-                        <input id="termInput" type="text" class="_width100" value.bind="term & debounce" focus="true" placeholder="Urouge Colo..." />
-                    </div>
-                    <div class="form-group" if.bind="!userLocked">
-                        <label for="userInput">User Name</label>
-                        <input id="userInput" type="text" class="_width100" value.bind="submittedBy & debounce" placeholder="Luffy..." />
-                    </div>
-                    <div class="form-group" if.bind="!stageLocked">
-                        <label for="stageInput">Stage</label>
-                        <stage-display id="stageInput" class="_width100" editable="true" stage-id.two-way="stageId"></stage-display>
-                    </div>
-                </div>
-                <div class="col d6">
-                    <div class="col f5 _noPadding">
-                        <div class="form-group">
-                            <label for="unitInput">Captain</label>
-                            <unit-display id="unitInput"
-                                          unit-id.two-way="leaderId"
-                                          editable="true">
-                            </unit-display>
-                        </div>
-                        <div class="form-group">
-                            <label for="noHelpCheckbox">
-                                <input id="noHelpCheckbox" type="checkbox" checked.bind="noHelp" />
-                                <span class="-label-body"> No Friends</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col f7 _noPadding">
-                        <div class="form-group">
-                            <label for="f2pSelect">Free to Play</label>
-                            <select id="f2pSelect" class="_width100" value.bind="freeToPlay">
-                                <option repeat.for="option of freeToPlayOptions" model.bind="option.value">${option.name}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="globalCheckbox">
-                                <input id="globalCheckbox" type="checkbox" checked.bind="global" />
-                                <span class="-label-body"> Global</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="termInput">Team Name</label>
+                <input id="termInput" type="text" class="_width100" value.bind="term & debounce" focus="true" placeholder="Urouge Colo..." />
             </div>
-            <div class="row">
-                <div class="col m3">
-                    <div class="form-group">
-                        <label for="draftCheckbox" if.bind="canDraft">
-                            <input id="draftCheckbox" type="checkbox" checked.bind="draft" />
-                            <span class="-label-body">Drafts</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col m3">
-                    <div class="form-group">
-                        <label for="reportedCheckbox" auth-req="Moderator, Administrator">
-                            <input id="reportedCheckbox" type="checkbox" checked.bind="reported" />
-                            <span class="-label-body">Reported</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col m3">
-                    <div class="form-group">
-                        <label for="deletedCheckbox" auth-req="Moderator, Administrator">
-                            <input id="deletedCheckbox" type="checkbox" checked.bind="deleted" />
-                            <span class="-label-body">Deleted</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col m3">
-                    <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
-                </div>
+            <div class="form-group" if.bind="!userLocked">
+                <label for="userInput">User Name</label>
+                <input id="userInput" type="text" class="_width100" value.bind="submittedBy & debounce" placeholder="Luffy..." />
             </div>
+            <div class="form-group" if.bind="!stageLocked">
+                <label for="stageInput">Stage</label>
+                <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
+            </div>
+            <div class="form-group">
+                <label for="unitInput">Captain</label>
+                <unit-display id="unitInput"
+                              unit-id.two-way="leaderId"
+                              editable="true">
+                </unit-display>
+            </div>
+            <div class="form-group">
+                <label for="noHelpCheckbox">
+                    <input id="noHelpCheckbox" type="checkbox" checked.bind="noHelp" />
+                    <span class="-label-body"> No Friends</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="f2pSelect">Free to Play</label>
+                <select id="f2pSelect" class="_width100" value.bind="freeToPlay">
+                    <option repeat.for="option of freeToPlayOptions" model.bind="option.value">${option.name}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="globalCheckbox">
+                    <input id="globalCheckbox" type="checkbox" checked.bind="global" />
+                    <span class="-label-body"> Global</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="draftCheckbox" if.bind="canDraft">
+                    <input id="draftCheckbox" type="checkbox" checked.bind="draft" />
+                    <span class="-label-body">Drafts</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="reportedCheckbox" auth-req="Moderator, Administrator">
+                    <input id="reportedCheckbox" type="checkbox" checked.bind="reported" />
+                    <span class="-label-body">Reported</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="deletedCheckbox" auth-req="Moderator, Administrator">
+                    <input id="deletedCheckbox" type="checkbox" checked.bind="deleted" />
+                    <span class="-label-body">Deleted</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="unitTypeInput">Unit Types</label>
+                <unit-type-picker id="unitTypeInput"
+                                  value.two-way="types">
+                </unit-type-picker>
+            </div>
+
+            <div class="form-group">
+                <label for="unitClassInput">Unit Classes</label>
+                <unit-class-picker id="unitClassInput"
+                                   value.two-way="classes"
+                                   editable="true">
+                </unit-class-picker>
+            </div>
+
+
+            <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
+
         </fieldset>
     </form>
 </template>

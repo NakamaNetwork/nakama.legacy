@@ -55,6 +55,8 @@ export class TeamQueryService extends SearchableQueryService {
 }
 
 export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
+    classes: UnitClass;
+    types: UnitType;
     term: string;
     submittedBy: string;
     leaderId: number;
@@ -62,7 +64,7 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     stageId: number;
     myBox: boolean;
     global: boolean;
-    freeToPlay: FreeToPlayStatus = FreeToPlayStatus.None;
+    freeToPlay: FreeToPlayStatus;
     deleted: boolean;
     reported: boolean;
     draft: boolean;

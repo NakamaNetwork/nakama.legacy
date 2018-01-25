@@ -132,6 +132,9 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchLead(results, model.LeaderId, model.NoHelp);
             results = SearchGlobal(results, model.Global);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
+            results = SearchTypes(results, model.Types);
+            results = SearchClasses(results, model.Classes);
+            results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
             results = SearchBox(results, model.MyBox);
             return results;
         }
@@ -238,6 +241,24 @@ namespace TreasureGuide.Web.Controllers.API
                         (status == FreeToPlayStatus.Crew && y.Position < 2) || !EnumerableHelper.PayToPlay.Any(z => y.Flags.HasFlag(z))
                     )
                 ));
+            }
+            return results;
+        }
+
+        private IQueryable<Team> SearchTypes(IQueryable<Team> results, UnitType modelTypes)
+        {
+            if (modelTypes != UnitType.Unknown)
+            {
+                results = results.Where(x => x.TeamUnitSummaries.All(y => y.Sub || y.Type == UnitType.Unknown || (y.Type & modelTypes) != 0));
+            }
+            return results;
+        }
+
+        private IQueryable<Team> SearchClasses(IQueryable<Team> results, UnitClass modelClasses)
+        {
+            if (modelClasses != UnitClass.Unknown)
+            {
+                results = results.Where(x => x.TeamUnitSummaries.All(y => y.Sub || y.Class == UnitClass.Unknown || (y.Class & modelClasses) != 0));
             }
             return results;
         }

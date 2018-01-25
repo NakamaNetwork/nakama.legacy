@@ -314,6 +314,8 @@ export interface ITeamSearchModel extends ISearchModel{
     myBox: boolean;
     global: boolean;
     freeToPlay: FreeToPlayStatus;
+    classes: UnitClass;
+    types: UnitType;
     deleted: boolean;
     draft: boolean;
     reported: boolean;
@@ -360,9 +362,7 @@ export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
     
 }
 
-export interface ITeamUnitEditorModel {
-    unitId: number;
-    position: number;
+export interface ITeamUnitEditorModel extends ITeamUnitStubModel{
     special: number;
     sub: boolean;
     

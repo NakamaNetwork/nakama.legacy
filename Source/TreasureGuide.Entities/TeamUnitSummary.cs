@@ -20,7 +20,7 @@ namespace TreasureGuide.Entities
         public bool Sub { get; set; }
         public UnitFlag Flags { get; set; }
         public UnitClass Class { get; set; }
-        public UnitClass Type { get; set; }
+        public UnitType Type { get; set; }
     
         public virtual Team Team { get; set; }
         public virtual Unit Unit { get; set; }
