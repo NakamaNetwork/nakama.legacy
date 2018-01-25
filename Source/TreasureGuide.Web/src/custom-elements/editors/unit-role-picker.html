@@ -1,5 +1,5 @@
 ﻿<template>
-    <bit-button repeat.for="unit of unitRoles" value.two-way="unitRole" model.bind="unit.id">
+    <bit-button repeat.for="unit of values" value.two-way="value" model.bind="unit.id">
         <img src="/content/roles/${unit.id}.png" title.bind="unit.name" />
         ${unit.name}
     </bit-button>

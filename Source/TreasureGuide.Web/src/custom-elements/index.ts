@@ -16,10 +16,7 @@
         './team-reports',
         './team-search',
         './team-slot',
-        './unit-class-picker',
         './unit-display',
-        './unit-search',
-        './unit-role-picker',
-        './unit-type-picker'
+        './unit-search'
     ]);
 }

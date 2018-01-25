@@ -14,4 +14,15 @@ export class NumberHelper {
             return { id: enumerable[k], name: prettify ? StringHelper.prettifyEnum(k) : k };
         }).filter(x => !Number.isNaN(Number(x.id)) && (includeZero || x.id !== 0));
     }
+
+    static combine(n: number[]) {
+        var sum = 0;
+        n.forEach(x => sum += x);
+        return sum;
+    }
+
+    static forceNumber(input) {
+        var number = Number(input);
+        return Number.isNaN(number) ? 0 : number;
+    }
 }
