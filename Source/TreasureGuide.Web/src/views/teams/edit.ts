@@ -92,6 +92,7 @@ export class TeamEditPage {
         this.dialogService.open({ viewModel: TeamImportView, lock: true }).whenClosed(result => {
             if (!result.wasCancelled) {
                 this.team.teamUnits = result.output.team;
+                this.team.teamGenericSlots = [];
                 this.team.shipId = result.output.ship;
             }
         });

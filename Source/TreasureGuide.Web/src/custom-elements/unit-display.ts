@@ -96,20 +96,6 @@ export class UnitDisplay {
         return [];
     }
 
-    @computedFrom('genericRoles')
-    get genericRoleScale() {
-        var sMin = 28;
-        var sMax = 60;
-        var mMin = -3;
-        var mMax = -10;
-        var count = this.genericRoles.length;
-
-        var scale = (10 - count) / 10;
-        var size = Math.ceil(((sMax - sMin) * scale) + sMin);
-        var margin = Math.ceil(((mMax - mMin) * scale) + mMin);
-        return 'width: ' + size + '%; height: ' + size + '%; margin: ' + margin + 'px;';
-    }
-
     @computedFrom('unit', 'generic')
     get backgroundStyle() {
         if (this.unit || this.generic) {
