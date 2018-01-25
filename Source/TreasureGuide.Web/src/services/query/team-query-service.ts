@@ -8,6 +8,7 @@ import {
     UnitRole, UnitClass
 } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
+import { NumberHelper } from '../../tools/number-helper';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -16,8 +17,8 @@ export class TeamQueryService extends SearchableQueryService {
     }
 
     save(model: TeamEditorModel, id?): Promise<any> {
-        model.teamUnits = model.teamUnits.filter(x => x.unitId);
-        return super.save(model, id);
+        var payload = model.getPayload();
+        return super.save(payload, id);
     }
 
     trending(): Promise<ITeamStubModel[]> {
@@ -105,6 +106,42 @@ export class TeamEditorModel implements ITeamEditorModel {
     teamGenericSlots: ITeamGenericSlotEditorModel[] = [];
     deleted: boolean;
     draft: boolean;
+
+    getPayload(): ITeamEditorModel {
+        return <ITeamEditorModel>{
+            id: NumberHelper.forceNumber(this.id),
+            name: this.name,
+            credits: this.credits,
+            guide: this.guide,
+            shipId: this.shipId,
+            stageId: this.stageId,
+            deleted: this.deleted,
+            draft: this.draft,
+            teamSockets: this.teamSockets
+                .map(x => <ITeamSocketEditorModel>{
+                    level: NumberHelper.forceNumber(x.level),
+                    socketType: NumberHelper.forceNumber(x.socketType)
+                })
+                .filter(x => x.level),
+            teamUnits: this.teamUnits
+                .map(x => <ITeamUnitEditorModel>{
+                    position: NumberHelper.forceNumber(x.position),
+                    special: NumberHelper.forceNumber(x.special),
+                    sub: x.sub,
+                    unitId: NumberHelper.forceNumber(x.unitId)
+                })
+                .filter(x => x.unitId),
+            teamGenericSlots: this.teamGenericSlots
+                .map(x => <ITeamGenericSlotEditorModel>{
+                    class: NumberHelper.forceNumber(x.class),
+                    position: NumberHelper.forceNumber(x.position),
+                    role: NumberHelper.forceNumber(x.role),
+                    sub: x.sub,
+                    type: NumberHelper.forceNumber(x.type)
+                })
+                .filter(x => x.role + x.class + x.type)
+        };
+    }
 };
 
 export class TeamGenericSlotEditorModel implements ITeamGenericSlotEditorModel {

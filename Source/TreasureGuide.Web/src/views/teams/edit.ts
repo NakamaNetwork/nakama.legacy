@@ -27,7 +27,7 @@ export class TeamEditPage {
     private controller: ValidationController;
 
     title = 'Create Team';
-    @bindable team: ITeamEditorModel;
+    @bindable team: TeamEditorModel;
     loading: boolean;
     saved: boolean;
 
