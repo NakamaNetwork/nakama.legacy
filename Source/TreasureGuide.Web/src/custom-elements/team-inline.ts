@@ -11,7 +11,9 @@ export class TeamDisplay {
     get slots() {
         var slots = [];
         for (var i = 0; i < 6; i++) {
-            var slot = this.team.teamUnits.find(x => x.position === i && !x.sub);
+            var slot =
+                this.team.teamUnits.find(x => x.position === i && !x.sub) ||
+                this.team.teamGenericSlots.find(x => x.position === i && !x.sub);
             slots.push(slot);
         }
         return slots;
