@@ -57,7 +57,7 @@
                         </form>
                     </fieldset>
                     <fieldset>
-                        <legend>Output (Click to Select)</legend>
+                        <legend>Output</legend>
                         <div class="_alignCenter">
                             <unit-display size="large" model.bind="genericBuilder" click.delegate="clicked(genericBuilder)">
                             </unit-display>
@@ -67,11 +67,14 @@
             </div>
         </ux-dialog-body>
         <ux-dialog-footer>
-            <a click.delegate="clicked(null)" class="button _danger modal-action">
-                <i class="fa fa-fw fa-user-times"></i>
-                Unset
-            </a>
-            <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+            <div class="_floatLeft">
+                <button type="button" click.delegate="clicked(null)" class="button _danger modal-action">
+                    <i class="fa fa-fw fa-user-times"></i>
+                    Unset
+                </button>
+            </div>
+            <button type="button" if.bind="generic" click.delegate="clicked(genericBuilder)" class="button _primary modal-action">Accept</button>
+            <button type="button" click.delegate="cancel()" class="button modal-action">Cancel</button>
         </ux-dialog-footer>
     </ux-dialog>
 </template>
