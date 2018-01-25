@@ -1367,6 +1367,9 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Key>
             <PropertyRef Name="TeamId" />
             <PropertyRef Name="Position" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="Class" />
+            <PropertyRef Name="Role" />
           </Key>
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <Property Name="Position" Type="Byte" Nullable="false" />
