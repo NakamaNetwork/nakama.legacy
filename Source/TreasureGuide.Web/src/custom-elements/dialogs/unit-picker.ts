@@ -76,7 +76,7 @@ export class UnitPicker {
     };
 
     clicked(model) {
-        if (model && !model.unitId) {
+        if (model && !model.id) {
             this.validController.validate().then(x => {
                 if (x.valid) {
                     this.controller.ok(model);
