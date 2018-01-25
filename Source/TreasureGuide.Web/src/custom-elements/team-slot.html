@@ -1,15 +1,34 @@
 <template>
     <div class="team-slot-container">
         <div class="team-unit">
-            <unit-display if.bind="main" unit-id.two-way="main.unitId" name.two-way="main.name" editable.bind="editable" selected.delegate="checkRemoved($event, false)" info.bind="!editable"></unit-display>
-            <unit-display if.bind="!hasMain" editable.bind="editable" selected.delegate="addUnit($event, false)"></unit-display>
+            <unit-display if.bind="main"
+                          model.bind="main"
+                          editable.bind="editable"
+                          info="true"
+                          allow-generics="true"
+                          selected.delegate="unitAdded($event, false)">
+            </unit-display>
+            <unit-display if.bind="!hasMain"
+                          editable.bind="editable"
+                          allow-generics="true"
+                          selected.delegate="unitAdded($event, false)">
+            </unit-display>
         </div>
         <div class="team-subs">
             <div class="team-unit" repeat.for="sub of subs">
-                <unit-display unit-id.two-way="sub.unitId" name.two-way="sub.name" editable.bind="editable" selected.delegate="checkRemoved($event, true)" info.bind="!editable"></unit-display>
+                <unit-display model.bind="sub"
+                              editable.bind="editable"
+                              info="true"
+                              allow-generics="true"
+                              selected.delegate="unitAdded($event, true)">
+                </unit-display>
             </div>
             <div class="team-unit" if.bind="canAddSubs">
-                <unit-display editable="true" selected.delegate="addUnit($event, true)" name="Suggest a Substitute"></unit-display>
+                <unit-display editable="true"
+                              info="true"
+                              allow-generics="true"
+                              selected.delegate="unitAdded($event, true, true)">
+                </unit-display>
             </div>
         </div>
     </div>

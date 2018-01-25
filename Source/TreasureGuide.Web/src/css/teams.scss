@@ -18,6 +18,9 @@ $large-unit-margin: 4px;
 $huge-unit-size: 112px;
 $huge-unit-margin: 5px;
 
+$massive-unit-size: 224px;
+$massive-unit-margin: 10px;
+
 $default-unit-size: $huge-unit-size;
 $default-unit-margin: $huge-unit-margin;
 
@@ -90,6 +93,13 @@ $default-unit-margin: $huge-unit-margin;
         width: $huge-unit-size;
         margin: $huge-unit-margin;
     }
+
+    &[size="massive"],
+    [size="massive"] & {
+        height: $massive-unit-size;
+        width: $massive-unit-size;
+        margin: $massive-unit-margin;
+    }
 }
 
 unit-display {
@@ -104,6 +114,64 @@ unit-display {
         width: 100%;
         height: 100%;
     }
+
+    .generic-container {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        white-space: normal;
+
+        > div {
+            position: absolute;
+            width: 100%;
+        }
+
+        img {
+            width: 30%;
+            height: 30%;
+        }
+
+        .generic-types {
+            vertical-align: top;
+            text-align: left;
+            top: 0;
+            left: 0;
+
+            img {
+                padding: 1px;
+            }
+        }
+
+        .generic-roles {
+            vertical-align: middle;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+
+            img {
+                width: 70%;
+                height: 70%;
+            }
+        }
+
+        .generic-classes {
+            vertical-align: bottom;
+            text-align: right;
+            bottom: 0;
+            right: 0;
+            transform: scaleY(-1);
+            -webkit-transform: scaleY(-1);
+
+            img {
+                transform: scaleY(-1);
+                -webkit-transform: scaleY(-1);
+            }
+        }
+    }
 }
 
 .team-collection {
@@ -112,8 +180,10 @@ unit-display {
     }
 }
 
-team-inline{
-
+team-inline {
+    .unit-button {
+        pointer-events: none;
+    }
 }
 
 team-display {

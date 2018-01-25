@@ -16,8 +16,7 @@
         './team-reports',
         './team-search',
         './team-slot',
-        './unit-class-picker',
         './unit-display',
-        './unit-type-picker'
+        './unit-search'
     ]);
 }

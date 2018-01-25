@@ -50,32 +50,32 @@ describe('calc parser', () => {
                 {
                     unitId: 12,
                     position: 0,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 23,
                     position: 1,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 34,
                     position: 2,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 45,
                     position: 3,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 56,
                     position: 4,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 67,
                     position: 5,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }
             ];
@@ -89,53 +89,53 @@ describe('calc parser', () => {
                 {
                     unitId: 12,
                     position: 0,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 23,
                     position: 1,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 34,
                     position: 2,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 45,
                     position: 3,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 56,
                     position: 4,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 67,
                     position: 5,
-                    specialLevel: 0,
+                    special: 0,
                     sub: false
                 }, {
                     unitId: 12,
                     position: null,
-                    specialLevel: 0,
+                    special: 0,
                     sub: true
                 }, {
                     unitId: 54,
                     position: null,
-                    specialLevel: 0,
+                    special: 0,
                     sub: true
                 }, {
                     unitId: 32,
                     position: null,
-                    specialLevel: 0,
+                    special: 0,
                     sub: true
                 }
             ];
             check_parsed(results, expected);
         });
-    
+
     it('can export teams',
         () => {
             var expected = 'http://optc-db.github.io/damage/#/transfer/D1362:5,1362:7,!,1:5,408:56,418:99C4,10B0D0E0Q0L0G0R0S100H';
@@ -145,35 +145,80 @@ describe('calc parser', () => {
                         unitId: 1362,
                         level: 5,
                         position: 0,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }, {
                         unitId: 1362,
                         level: 7,
                         position: 1,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }, {
                         unitId: 1,
                         level: 5,
                         position: 3,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }, {
                         unitId: 408,
                         level: 56,
                         position: 4,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }, {
                         unitId: 418,
                         level: 99,
                         position: 5,
-                        specialLevel: 0,
+                        special: 0,
                         sub: false
                     }
                 ],
                 shipId: 4
+            };
+
+            var parsed = CalcParser.export(<ITeamDetailModel>team);
+            expect(parsed).toBe(expected);
+        });
+
+
+    it('can ignores subs on export',
+        () => {
+            var expected = 'http://optc-db.github.io/damage/#/transfer/D1362:5,1362:7,!,1:5,!,!C7,10B0D0E0Q0L0G0R0S100H';
+            var team = {
+                teamUnits: [
+                    {
+                        unitId: 1362,
+                        level: 5,
+                        position: 0,
+                        special: 0,
+                        sub: false
+                    }, {
+                        unitId: 1362,
+                        level: 7,
+                        position: 1,
+                        special: 0,
+                        sub: false
+                    }, {
+                        unitId: 1,
+                        level: 5,
+                        position: 3,
+                        special: 0,
+                        sub: false
+                    }, {
+                        unitId: 408,
+                        level: 56,
+                        position: 4,
+                        special: 0,
+                        sub: true
+                    }, {
+                        unitId: 418,
+                        level: 99,
+                        position: 5,
+                        special: 0,
+                        sub: true
+                    }
+                ],
+                shipId: 7
             };
 
             var parsed = CalcParser.export(<ITeamDetailModel>team);

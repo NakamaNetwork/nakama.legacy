@@ -10,7 +10,7 @@
     {
         public string Name { get; set; }
         public int Level { get; set; }
-        public byte? SpecialLevel { get; set; }
+        public byte? Special { get; set; }
         public bool Sub { get; set; }
     }
 
@@ -18,7 +18,7 @@
     {
         public int UnitId { get; set; }
         public byte Position { get; set; }
-        public byte? SpecialLevel { get; set; }
+        public byte? Special { get; set; }
         public bool Sub { get; set; }
     }
 }

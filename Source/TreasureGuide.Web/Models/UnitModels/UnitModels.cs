@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TreasureGuide.Entities;
+﻿using TreasureGuide.Entities;
 using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.UnitModels

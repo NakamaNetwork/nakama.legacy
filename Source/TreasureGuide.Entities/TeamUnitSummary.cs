@@ -12,15 +12,17 @@ namespace TreasureGuide.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class TeamUnit
+    public partial class TeamUnitSummary
     {
         public int TeamId { get; set; }
-        public int UnitId { get; set; }
+        public Nullable<int> UnitId { get; set; }
         public byte Position { get; set; }
         public bool Sub { get; set; }
-        public bool Special { get; set; }
+        public UnitFlag Flags { get; set; }
+        public UnitClass Class { get; set; }
+        public UnitClass Type { get; set; }
     
-        public virtual Unit Unit { get; set; }
         public virtual Team Team { get; set; }
+        public virtual Unit Unit { get; set; }
     }
 }

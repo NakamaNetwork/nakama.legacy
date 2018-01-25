@@ -1,23 +1,40 @@
-﻿import { autoinject, bindable } from 'aurelia-framework';
+﻿import { autoinject } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { BindingEngine } from 'aurelia-binding';
 import { UnitQueryService, UnitSearchModel } from '../../services/query/unit-query-service';
+import { IUnitStubModel } from '../../models/imported';
+import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
+import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
+import { AlertService } from '../../services/alert-service';
+import { TeamGenericSlotEditorModel } from '../../services/query/team-query-service';
 
 @autoinject
 export class UnitPicker {
     private controller: DialogController;
     private unitQueryService: UnitQueryService;
-    @bindable unitId = 0;
+    private validController: ValidationController;
+    private alert: AlertService;
 
-    unit;
-    units: any[];
+    private allowGenerics: boolean;
+    private generic: boolean;
+    private units: IUnitStubModel[] = [];
+    private searchModel = new UnitSearchModel().getCached();
+    private loading: boolean;
 
-    searchModel = new UnitSearchModel().getCached();
-    loading;
+    private genericBuilder: TeamGenericSlotEditorModel = new TeamGenericSlotEditorModel();
 
-    constructor(unitQueryService: UnitQueryService, controller: DialogController, bindingEngine: BindingEngine) {
+    constructor(unitQueryService: UnitQueryService,
+        controller: DialogController,
+        bindingEngine: BindingEngine,
+        validFactory: ValidationControllerFactory,
+        alertService: AlertService) {
+        this.alert = alertService;
         this.controller = controller;
         this.unitQueryService = unitQueryService;
+
+        this.validController = validFactory.createForCurrentScope();
+        this.validController.addRenderer(new BeauterValidationFormRenderer());
+        this.validController.addObject(this.genericBuilder);
 
         bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
@@ -25,12 +42,12 @@ export class UnitPicker {
         this.search(this.searchModel.payload);
     }
 
-    activate(viewModel) {
-        this.unitId = viewModel.unitId;
-    }
-
-    onPageChanged(e) {
-        this.searchModel.page = e.detail;
+    activate(viewModel: UnitPickerParams) {
+        this.allowGenerics = viewModel.allowGenerics;
+        if (this.allowGenerics && viewModel.model && !viewModel.model.unitId) {
+            this.generic = true;
+            Object.assign(this.genericBuilder, viewModel.model);
+        }
     }
 
     search(payload: UnitSearchModel) {
@@ -46,20 +63,46 @@ export class UnitPicker {
         }
     }
 
-    submit() {
-        this.controller.ok(this.unitId);
-    };
+    showGeneric() {
+        this.generic = true;
+    }
+
+    showUnits() {
+        this.generic = false;
+    }
 
     cancel() {
         this.controller.cancel();
     };
 
-    clicked(unitId) {
-        this.unitId = unitId;
-        this.submit();
+    clicked(model) {
+        if (model && !model.unitId) {
+            this.validController.validate().then(x => {
+                if (x.valid) {
+                    this.controller.ok(model);
+                } else {
+                    x.results.filter(y => !y.valid && y.message).forEach(y => {
+                        this.alert.danger(y.message);
+                    });
+                }
+            });
+        } else {
+            this.controller.ok(model);
+        }
     }
 
     getIcon(id: number) {
         return UnitQueryService.getIcon(id);
     }
 }
+
+export class UnitPickerParams {
+    model: any;
+    allowGenerics: boolean;
+}
+
+ValidationRules
+    .ensure((x: TeamGenericSlotEditorModel) => x.position)
+    .satisfies((x: number, m: TeamGenericSlotEditorModel) => m.class + m.role + m.type > 0)
+    .withMessage('You must specify something about this generic unit. Please add a class, type, or role.')
+    .on(TeamGenericSlotEditorModel);

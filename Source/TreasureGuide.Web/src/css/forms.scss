@@ -103,18 +103,20 @@ markdown.preview {
 }
 
 .bit-button {
-    padding: 0 !important;
-    border: unset;
-    margin: 2px;
-    width: 32px;
-    height: 32px;
+    margin: 0.2em !important;
+    padding: 0.8em !important;
 
     img {
-        height: unset !important;
+        height: 3em !important;
     }
 
     &.off {
-        -webkit-filter: brightness(70%) grayscale(70%);
-        filter: brightness(70%) grayscale(70%);
+        -webkit-filter: brightness(60%) grayscale(80%);
+        filter: brightness(60%) grayscale(80%);
+        @extend ._greyDark;
+    }
+
+    &.on {
+        @extend ._infoLight;
     }
 }

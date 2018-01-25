@@ -3,7 +3,7 @@ import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
-import { ITeamEditorModel } from '../../models/imported';
+import { ITeamEditorModel, ITeamUnitEditorModel, ITeamGenericSlotEditorModel } from '../../models/imported';
 import { TeamEditorModel } from '../../services/query/team-query-service';
 import { AlertService } from '../../services/alert-service';
 import { TeamImportView } from '../../custom-elements/dialogs/team-import';
@@ -24,7 +24,7 @@ export class TeamEditPage {
     private dialogService: DialogService;
     private accountService: AccountService;
 
-    public controller: ValidationController;
+    private controller: ValidationController;
 
     title = 'Create Team';
     @bindable team: ITeamEditorModel;
@@ -92,6 +92,7 @@ export class TeamEditPage {
         this.dialogService.open({ viewModel: TeamImportView, lock: true }).whenClosed(result => {
             if (!result.wasCancelled) {
                 this.team.teamUnits = result.output.team;
+                this.team.teamGenericSlots = [];
                 this.team.shipId = result.output.ship;
             }
         });
@@ -175,11 +176,22 @@ ValidationRules
     .maxLength(TeamEditPage.guideMaxLength)
     .ensure((x: TeamEditorModel) => x.teamUnits)
     .required()
-    .satisfies((x: any[], m: TeamEditorModel) => x.filter(y => !y.sub && y.unitId).length > 3)
-    .withMessage('Please include at least 4 non-substitute units on your team!')
-    .satisfies((x: any[], m: TeamEditorModel) => {
+    .satisfies((x: ITeamUnitEditorModel[], m: TeamEditorModel) => x.filter(y => !y.sub && y.unitId).length > 1)
+    .withMessage('Please include at least 2 non-generic and non-substitute units on your team!')
+    .satisfies((x: ITeamUnitEditorModel[], m: TeamEditorModel) => {
         var sets = x.filter(y => y.unitId).map(y => y.position + ':' + y.unitId);
         return sets.every((y, i) => sets.indexOf(y) === i);
     })
     .withMessage('You have two of the same unit in a single slot. Please check your substitutes.')
+    .satisfies((x: ITeamUnitEditorModel[], m: TeamEditorModel) => {
+        return x.filter(y => !y.sub).length + m.teamGenericSlots.filter(y => !y.sub).length > 3;
+    })
+    .withMessage('You must have at least four non-substitute units on your team.')
+    .ensure((x: TeamEditorModel) => x.teamGenericSlots)
+    .required()
+    .satisfies((x: ITeamGenericSlotEditorModel[], m: TeamEditorModel) => {
+        var sets = x.map(y => y.position + ':' + y.role + ':' + y.type + ':' + y.class);
+        return sets.every((y, i) => sets.indexOf(y) === i);
+    })
+    .withMessage('You have two of the same generic unit in a single slot. Please check your substitutes.')
     .on(TeamEditorModel);

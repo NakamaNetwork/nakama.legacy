@@ -100,6 +100,9 @@
     <Compile Include="TeamUnit.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="TeamUnitSummary.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="TeamVideo.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>

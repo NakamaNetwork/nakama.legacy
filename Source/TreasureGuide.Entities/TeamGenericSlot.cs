@@ -16,10 +16,10 @@ namespace TreasureGuide.Entities
     {
         public int TeamId { get; set; }
         public byte Position { get; set; }
-        public Nullable<UnitType> Type { get; set; }
-        public Nullable<UnitClass> Class { get; set; }
-        public Nullable<UnitRole> Role { get; set; }
-        public Nullable<byte> Combo { get; set; }
+        public UnitType Type { get; set; }
+        public UnitClass Class { get; set; }
+        public UnitRole Role { get; set; }
+        public bool Sub { get; set; }
     
         public virtual Team Team { get; set; }
     }

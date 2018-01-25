@@ -34,6 +34,8 @@ namespace TreasureGuide.Web.Configurations
                 teamVideo.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
 
                 var team = mapper.CreateControllerMapping<Team, TeamDetailModel, TeamStubModel, TeamEditorModel>();
+                team.EntityMapping.ForMember(x => x.TeamUnitSummaries, o => o.Ignore()); // Handle this manually.
+
                 team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
 
                 team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
@@ -66,12 +68,12 @@ namespace TreasureGuide.Web.Configurations
                 team.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.MyVote, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.TeamSockets, o => o.MapFrom(y => y.TeamSockets.Where(z => z.Level > 0)));
-                team.DetailMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnits.All(z =>
+                team.DetailMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnitSummaries.All(z =>
                     z.Sub ||
                     z.Position == 0 ||
                     !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
                 )));
-                team.DetailMapping.ForMember(x => x.F2PC, o => o.MapFrom(y => y.TeamUnits.All(z =>
+                team.DetailMapping.ForMember(x => x.F2PC, o => o.MapFrom(y => y.TeamUnitSummaries.All(z =>
                     z.Sub ||
                     z.Position < 2 || !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
                 )));

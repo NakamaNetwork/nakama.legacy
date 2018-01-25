@@ -13,7 +13,6 @@ using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Services;
 
@@ -204,7 +203,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (leaderId.HasValue)
             {
-                teams = teams.Where(x => x.TeamUnits.Any(y => y.UnitId == leaderId && (noHelper ? y.Position == 1 : y.Position < 2) && !y.Sub));
+                teams = teams.Where(x => x.TeamUnitSummaries.Any(y => y.UnitId == leaderId && (noHelper ? y.Position == 1 : y.Position < 2) && !y.Sub));
             }
             return teams;
         }
@@ -213,7 +212,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (global)
             {
-                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.Flags.HasFlag(UnitFlag.Global)));
+                teams = teams.Where(x => x.TeamUnitSummaries.All(y => y.Sub || y.Flags.HasFlag(UnitFlag.Global)));
             }
             return teams;
         }
@@ -231,12 +230,12 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (status != FreeToPlayStatus.None)
             {
-                results = results.Where(x => x.TeamUnits.All(y =>
+                results = results.Where(x => x.TeamUnitSummaries.All(y =>
                     y.Sub || // Ignore subs
                     y.Position == 0 || // Ignore friends
                     y.UnitId == leaderId || // Ignore searched captain
                     ( // Ignore leaders if only searching crew
-                        (status == FreeToPlayStatus.Crew && y.Position < 2) || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))
+                        (status == FreeToPlayStatus.Crew && y.Position < 2) || !EnumerableHelper.PayToPlay.Any(z => y.Flags.HasFlag(z))
                     )
                 ));
             }
