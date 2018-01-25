@@ -24,7 +24,7 @@ export class TeamEditPage {
     private dialogService: DialogService;
     private accountService: AccountService;
 
-    public controller: ValidationController;
+    private controller: ValidationController;
 
     title = 'Create Team';
     @bindable team: ITeamEditorModel;

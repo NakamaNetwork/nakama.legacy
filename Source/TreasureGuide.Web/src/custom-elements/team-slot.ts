@@ -13,8 +13,8 @@ export class TeamSlot {
 
     @computedFrom('team', 'team.teamUnits.length', 'team.teamGenericSlots.length', 'index')
     get units() {
-        var units = this.team.teamUnits.filter(x => x.position === this.index && x.unitId);
-        var generics = this.team.teamGenericSlots.filter(x => x.position === this.index && (x.class || x.type || x.role));
+        var units = this.team.teamUnits.filter(x => x.position === this.index);
+        var generics = this.team.teamGenericSlots.filter(x => x.position === this.index);
         var all = <any>units.concat(<any>generics);
         all.forEach((x: any) => x.editorKey = x.editorKey || ++TeamSlot.editorCounter);
         return all;

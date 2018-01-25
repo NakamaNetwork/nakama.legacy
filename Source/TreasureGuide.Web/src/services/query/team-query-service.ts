@@ -4,7 +4,8 @@ import { SearchableQueryService } from './generic/searchable-query-service';
 import {
     ITeamStubModel, ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel,
     ITeamImportModel, ITeamVideoModel, ITeamReportStubModel, FreeToPlayStatus, SearchConstants,
-    ITeamSocketEditorModel, ITeamUnitEditorModel, ITeamGenericSlotEditorModel
+    ITeamSocketEditorModel, ITeamUnitEditorModel, ITeamGenericSlotEditorModel, UnitType,
+    UnitRole, UnitClass
 } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 
@@ -105,3 +106,11 @@ export class TeamEditorModel implements ITeamEditorModel {
     deleted: boolean;
     draft: boolean;
 };
+
+export class TeamGenericSlotEditorModel implements ITeamGenericSlotEditorModel {
+    public sub: boolean;
+    public role: UnitRole;
+    public type: UnitType;
+    public class: UnitClass;
+    public position: number;
+}
