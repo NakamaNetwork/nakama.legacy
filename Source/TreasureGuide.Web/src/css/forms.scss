@@ -11,6 +11,21 @@
     }
 }
 
+input[type=checkbox] {
+    width: 1.6em;
+    height: 1.6em;
+    margin: unset;
+}
+
+label {
+    white-space: nowrap;
+
+    span.-label-body {
+        margin: 0.2em;
+        vertical-align: top;
+    }
+}
+
 input.input-validation-error {
     border-color: $danger-color !important;
     font-style: unset;
@@ -104,10 +119,10 @@ markdown.preview {
 
 .bit-button {
     margin: 0.2em !important;
-    padding: 0.8em !important;
+    padding: 0.4em !important;
 
     img {
-        height: 3em !important;
+        height: 2.6em !important;
     }
 
     &.off {

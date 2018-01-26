@@ -2,30 +2,41 @@
     <form with.bind="model">
         <fieldset>
             <legend>Search</legend>
+
             <div class="row">
-                <div class="col d6">
+                <div class="col m12">
                     <div class="form-group">
                         <label for="termInput">Team Name</label>
                         <input id="termInput" type="text" class="_width100" value.bind="term & debounce" focus="true" placeholder="Urouge Colo..." />
                     </div>
+                </div>
+                <div class="col m6">
+                    <div class="form-group" if.bind="!stageLocked">
+                        <label for="stageInput">Stage</label>
+                        <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
+                    </div>
+                </div>
+                <div class="col m6">
                     <div class="form-group" if.bind="!userLocked">
                         <label for="userInput">User Name</label>
                         <input id="userInput" type="text" class="_width100" value.bind="submittedBy & debounce" placeholder="Luffy..." />
                     </div>
-                    <div class="form-group" if.bind="!stageLocked">
-                        <label for="stageInput">Stage</label>
-                        <stage-display id="stageInput" class="_width100" editable="true" stage-id.two-way="stageId"></stage-display>
-                    </div>
                 </div>
-                <div class="col d6">
-                    <div class="col f5 _noPadding">
+            </div>
+
+            <div class="row">
+                <div class="col m2">
+                    <div class="row">
                         <div class="form-group">
                             <label for="unitInput">Captain</label>
                             <unit-display id="unitInput"
+                                          size="large"
                                           unit-id.two-way="leaderId"
                                           editable="true">
                             </unit-display>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group">
                             <label for="noHelpCheckbox">
                                 <input id="noHelpCheckbox" type="checkbox" checked.bind="noHelp" />
@@ -33,22 +44,48 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col f7 _noPadding">
-                        <div class="form-group">
-                            <label for="f2pSelect">Free to Play</label>
-                            <select id="f2pSelect" class="_width100" value.bind="freeToPlay">
-                                <option repeat.for="option of freeToPlayOptions" model.bind="option.value">${option.name}</option>
-                            </select>
+                </div>
+                <div class="col m10">
+                    <div class="row">
+                        <div class="col m8">
+                            <div class="form-group">
+                                <label for="unitTypeInput">Unit Types</label>
+                                <unit-type-picker id="unitTypeInput"
+                                                  value.two-way="types">
+                                </unit-type-picker>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="globalCheckbox">
-                                <input id="globalCheckbox" type="checkbox" checked.bind="global" />
-                                <span class="-label-body"> Global</span>
-                            </label>
+                        <div class="col m4">
+                            <div class="form-group">
+                                <label for="globalCheckbox">
+                                    <input id="globalCheckbox" type="checkbox" checked.bind="global" />
+                                    <span class="-label-body"> Global</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m8">
+                            <div class="form-group">
+                                <label for="unitClassInput">Unit Classes</label>
+                                <unit-class-picker id="unitClassInput"
+                                                   value.two-way="classes"
+                                                   editable="true">
+                                </unit-class-picker>
+                            </div>
+                        </div>
+                        <div class="col m4">
+                            <div class="form-group">
+                                <label for="f2pSelect">Free to Play</label>
+                                <select id="f2pSelect" class="_width100" value.bind="freeToPlay">
+                                    <option repeat.for="option of freeToPlayOptions" model.bind="option.value">${option.name}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col m3">
                     <div class="form-group">
@@ -58,6 +95,7 @@
                         </label>
                     </div>
                 </div>
+
                 <div class="col m3">
                     <div class="form-group">
                         <label for="reportedCheckbox" auth-req="Moderator, Administrator">
@@ -66,6 +104,7 @@
                         </label>
                     </div>
                 </div>
+
                 <div class="col m3">
                     <div class="form-group">
                         <label for="deletedCheckbox" auth-req="Moderator, Administrator">
@@ -74,6 +113,7 @@
                         </label>
                     </div>
                 </div>
+
                 <div class="col m3">
                     <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
                 </div>
