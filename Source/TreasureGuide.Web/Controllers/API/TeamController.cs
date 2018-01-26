@@ -81,7 +81,8 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override bool CanPost(int? id)
         {
-            return User.GetId() != null && User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id);
+            var userId = User.GetId();
+            return !String.IsNullOrWhiteSpace(userId) && (User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id, userId));
         }
 
         protected override bool CanDelete(int? id)
@@ -112,13 +113,12 @@ namespace TreasureGuide.Web.Controllers.API
             }
         }
 
-        protected bool OwnsTeam(int? id)
+        protected bool OwnsTeam(int? id, string userId)
         {
-            if (!id.HasValue)
+            if (!id.HasValue || id == 0)
             {
                 return true;
             }
-            var userId = User.GetId();
             return DbContext.Teams.Any(x => x.Id == id && x.SubmittedById == userId);
         }
 
