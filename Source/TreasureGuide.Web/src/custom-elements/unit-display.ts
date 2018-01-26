@@ -9,6 +9,7 @@ import { IUnitEditorModel } from '../models/imported';
 import { UnitType } from '../models/imported';
 import { UnitClass } from '../models/imported';
 import { UnitRole } from '../models/imported';
+import { StringHelper } from '../tools/string-helper';
 
 @autoinject
 @customElement('unit-display')
@@ -22,6 +23,7 @@ export class UnitDisplay {
     @bindable editable: boolean;
     @bindable allowGenerics: boolean;
     @bindable info: boolean;
+    @bindable tooltip: boolean;
 
     constructor(unitQueryService: UnitQueryService, dialogService: DialogService, element: Element) {
         this.unitQueryService = unitQueryService;
@@ -43,6 +45,32 @@ export class UnitDisplay {
 
         }
         return null;
+    }
+
+    @computedFrom('model')
+    get name() {
+        if (this.model) {
+            if (this.model.name) {
+                return this.model.name;
+            } else if (this.model.class + this.model.role + this.model.type) {
+                var c = NumberHelper.splitEnum(this.model.class, UnitClass).map(x => StringHelper.prettifyEnum(x.name));
+                var r = NumberHelper.splitEnum(this.model.role, UnitRole).map(x => StringHelper.prettifyEnum(x.name));
+                var t = NumberHelper.splitEnum(this.model.type, UnitType).map(x => x.name);
+
+                var name = '';
+                if (t.length > 0) {
+                    name += ' ' + t.join(' or ');
+                }
+                if (c.length > 0) {
+                    name += ' ' + c.join('/');
+                }
+                if (r.length > 0) {
+                    name += ' ' + r.join(' and ');
+                }
+                return name;
+            }
+        }
+        return '';
     }
 
     unitIdChanged(newValue, oldValue) {

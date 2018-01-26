@@ -21,10 +21,13 @@
             </div>
         </div>
         <div class="row" if.bind="stageId">
-            <h2>Stage</h2>
-            <stage-display stage-id.bind="stageId"></stage-display>
+            <h4>Stage</h4>
+            <a route-href="route: stageDetails; params.bind: { id: stageId }">
+                <stage-display stage-id.bind="stageId"></stage-display>
+            </a>
         </div>
         <div class="row _alignCenter">
+            <h4>Team</h4>
             <team-display team.bind="team"></team-display>
             <ship-display ship-id.bind="shipId"></ship-display>
             <br />
@@ -60,7 +63,7 @@
             </button>
             <h4>Videos</h4>
             <div if.bind="sortedVideos.length === 0" class="_alignCenter">
-                <h5>No videos for this team. Why not submit one?</h5>
+                <h5>No videos for this team yet. Why not submit one?</h5>
             </div>
             <div class="row _alignCenter" if.bind="ownerVideos.length > 0">
                 <div>
