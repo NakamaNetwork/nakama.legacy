@@ -102,9 +102,9 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortLeader:
                     return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault());
                 case SearchConstants.SortScore:
-                    return results.OrderBy(x => x.TeamVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), model.SortDesc);
+                    return results.OrderBy(x => x.TeamVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), !model.SortDesc);
                 case SearchConstants.SortDate:
-                    return results.OrderBy(x => x.EditedDate, model.SortDesc);
+                    return results.OrderBy(x => x.EditedDate, !model.SortDesc);
                 case SearchConstants.SortUser:
                     return results.OrderBy(x => x.SubmittingUser.UserName, model.SortDesc);
                 default:
