@@ -283,7 +283,7 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Trending()
         {
-            var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(3));
+            var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(1.5));
             var top = await DbContext.Teams
                 .Where(x => !x.Deleted && !x.Draft)
                 .Select(x => new
