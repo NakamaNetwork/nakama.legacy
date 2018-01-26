@@ -65,6 +65,7 @@ namespace TreasureGuide.Web.Configurations
             {
                 json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                json.SerializerSettings.Converters.Add(new StringTrimmingJsonConverter());
             });
             var defaultJson = new JsonSerializerSettings
             {
