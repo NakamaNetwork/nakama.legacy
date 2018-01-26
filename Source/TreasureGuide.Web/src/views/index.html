@@ -20,7 +20,7 @@
                 <loading-area if.bind="newLoading"></loading-area>
                 <div if.bind="!newLoading" class="team-collection _alignLeft">
                     <h6 if.bind="newTeams.length === 0">Nothing new at the moment.</h6>
-                    <div class="col m12" repeat.for="team of trendingTeams">
+                    <div class="col m12" repeat.for="team of newTeams">
                         <team-box team.bind="team"></team-box>
                     </div>
                 </div>
