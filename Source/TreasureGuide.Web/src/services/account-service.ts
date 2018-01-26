@@ -140,6 +140,7 @@ export class AccountService {
     public static allRoles: string[] = [
         RoleConstants.Administrator,
         RoleConstants.Moderator,
+        RoleConstants.BetaTester,
         RoleConstants.Contributor
     ];
 }

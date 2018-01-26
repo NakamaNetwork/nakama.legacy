@@ -4,8 +4,29 @@ import { autoinject } from 'aurelia-framework';
 @autoinject
 export class NewsService {
     static seenKey: string = 'LatestNewsSeen';
+    static cap: number = 5;
 
     static news: NewsEntry[] = [
+        {
+            header: '01/26/18',
+            lines: [
+                'Users can now bookmark teams.',
+                'Added new "generic unit" feature for teams, allowing users to suggest a class/type/role instead of having to pick a unit.',
+                'Added unit search parameters to teams. These will also apply to generic units.',
+                'Made name searching "fuzzy" to make things easier to find.',
+                'Leader searching will now extend to friend captain as well. This can be disabled.',
+                'Updated search interfaces to use game icons instead of text.',
+                'Removed info button from unit portraits. Clicking the portrait will now go to their DB page instead.',
+                'Updated valdation rules for teams.',
+                'Removed team search caching. This may be re-added in the future.',
+                'Fixed an issue where importing from the calculator could put units in the wrong slots.',
+                'Fixed an issue where users could not save a new team as a draft.',
+                'Fixed an issue where users could not view their drafts.',
+                'Fixed an issue where alerts might not be dismissed automatically.',
+                'Strings will now be trimmed when submitted to the server.',
+                'Added "Beta Tester" role and some features that only appear to people in it. ;)',
+            ]
+        },
         {
             header: '01/22/18',
             lines: [
@@ -111,8 +132,12 @@ export class NewsService {
             var news = NewsService.news[0];
             var message = '<small><h6>News: ' + news.header + '</h6>';
             message += '<ul>';
-            for (var i = 0; i < news.lines.length; i++) {
+            var length = Math.min(news.lines.length, NewsService.cap);
+            for (var i = 0; i < length; i++) {
                 message += '<li>' + news.lines[i] + '</li>';
+            }
+            if (news.lines.length > NewsService.cap) {
+                message += '<li><em><a href="/#/news">Read More...</a></em></li>';
             }
             message += '</ul></small>';
             this.alertService.news(message);

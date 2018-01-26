@@ -23,7 +23,7 @@
                               selected.delegate="unitAdded($event, true)">
                 </unit-display>
             </div>
-            <div class="team-unit" if.bind="canAddSubs">
+            <div class="team-unit" auth-req="BetaTester" if.bind="canAddSubs">
                 <unit-display editable="true"
                               info="true"
                               allow-generics="true"

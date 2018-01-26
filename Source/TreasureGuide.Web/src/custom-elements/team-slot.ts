@@ -1,6 +1,5 @@
 import { bindable, computedFrom, customElement } from "aurelia-framework";
 import { ITeamEditorModel } from '../models/imported';
-import { ITeamUnitEditorModel } from '../models/imported';
 
 @customElement('team-slot')
 export class TeamSlot {

@@ -53,6 +53,7 @@ export interface IProfileSearchModel extends ISearchModel{
 export class RoleConstants {
     public static Administrator: string = "Administrator";
     public static Moderator: string = "Moderator";
+    public static BetaTester: string = "BetaTester";
     public static Contributor: string = "Contributor";
     
 }
@@ -260,6 +261,7 @@ export interface ITeamDetailModel {
     editedDate: Date;
     score: number;
     myVote: number;
+    myBookmark: boolean;
     guide: string;
     credits: string;
     global: boolean;
