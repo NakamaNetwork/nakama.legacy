@@ -24,6 +24,7 @@ export class NewsService {
                 'Fixed an issue where users could not view their drafts.',
                 'Fixed an issue where alerts might not be dismissed automatically.',
                 'Strings will now be trimmed when submitted to the server.',
+                'Added "Beta Tester" role and some features that only appear to people in it. ;)',
             ]
         },
         {
