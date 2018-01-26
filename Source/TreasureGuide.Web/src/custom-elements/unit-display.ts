@@ -66,6 +66,8 @@ export class UnitDisplay {
                 }
                 if (r.length > 0) {
                     name += ' ' + r.join(' and ');
+                } else {
+                    name += ' Unit';
                 }
                 return name;
             }
