@@ -87,34 +87,43 @@
             </div>
 
             <div class="row">
-                <div class="col m3">
-                    <div class="form-group">
-                        <label for="draftCheckbox" if.bind="canDraft">
+                <div class="col m2">
+                    <div class="form-group" auth-req>
+                        <label for="bookmarkCheckbox">
+                            <input id="bookmarkCheckbox" type="checkbox" checked.bind="bookmark" />
+                            <span class="-label-body">Bookmarked</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col m2">
+                    <div class="form-group" if.bind="canDraft">
+                        <label for="draftCheckbox">
                             <input id="draftCheckbox" type="checkbox" checked.bind="draft" />
                             <span class="-label-body">Drafts</span>
                         </label>
                     </div>
                 </div>
 
-                <div class="col m3">
-                    <div class="form-group">
-                        <label for="reportedCheckbox" auth-req="Moderator, Administrator">
+                <div class="col m2">
+                    <div class="form-group" auth-req="Moderator, Administrator">
+                        <label for="reportedCheckbox">
                             <input id="reportedCheckbox" type="checkbox" checked.bind="reported" />
                             <span class="-label-body">Reported</span>
                         </label>
                     </div>
                 </div>
 
-                <div class="col m3">
-                    <div class="form-group">
-                        <label for="deletedCheckbox" auth-req="Moderator, Administrator">
+                <div class="col m2">
+                    <div class="form-group" auth-req="Moderator, Administrator">
+                        <label for="deletedCheckbox">
                             <input id="deletedCheckbox" type="checkbox" checked.bind="deleted" />
                             <span class="-label-body">Deleted</span>
                         </label>
                     </div>
                 </div>
 
-                <div class="col m3">
+                <div class="col m4">
                     <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
                 </div>
             </div>

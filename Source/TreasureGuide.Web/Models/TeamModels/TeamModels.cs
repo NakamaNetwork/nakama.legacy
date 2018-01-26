@@ -40,6 +40,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public DateTimeOffset EditedDate { get; set; }
         public int Score { get; set; }
         public int MyVote { get; set; }
+        public bool MyBookmark { get; set; }
         public string Guide { get; set; }
         public string Credits { get; set; }
         public bool Global { get; set; }

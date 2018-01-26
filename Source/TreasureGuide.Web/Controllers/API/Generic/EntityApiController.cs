@@ -74,7 +74,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                     single = await SingleGetTransform(single, id);
                     return single;
                 }
-                return NotFound(id);
+                return BadRequest("Could not find item with Id '" + id + "'.");
             }
             return await transformed.ToListAsync();
         }

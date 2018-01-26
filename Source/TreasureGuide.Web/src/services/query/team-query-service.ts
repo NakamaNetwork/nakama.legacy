@@ -29,6 +29,10 @@ export class TeamQueryService extends SearchableQueryService {
         return this.http.get(this.buildAddress('latest'));
     }
 
+    bookmark(teamId: number): Promise<boolean> {
+        return this.http.post(this.buildAddress('bookmark/' + teamId));
+    }
+
     vote(model: ITeamVoteModel): Promise<number> {
         return this.http.post(this.buildAddress('vote'), model);
     }
@@ -66,6 +70,7 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     global: boolean;
     freeToPlay: FreeToPlayStatus;
     deleted: boolean;
+    bookmark: boolean;
     reported: boolean;
     draft: boolean;
     cacheKey: string = 'search-team';

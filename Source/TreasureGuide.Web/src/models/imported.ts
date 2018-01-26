@@ -319,6 +319,7 @@ export interface ITeamSearchModel extends ISearchModel{
     deleted: boolean;
     draft: boolean;
     reported: boolean;
+    bookmark: boolean;
     
 }
 

@@ -47,6 +47,7 @@
         <AssociationConnector Association="tcdbModel.UnitTeamUnitSummary" />
         <EntityTypeShape EntityType="tcdbModel.TeamGenericSlot" Width="1.5" PointX="9.5" PointY="16.625" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" />
+        <AssociationConnector Association="tcdbModel.TeamBookmarks" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -67,6 +67,7 @@ namespace TreasureGuide.Web.Configurations
                 team.DetailMapping.ForMember(x => x.Reported, o => o.MapFrom(y => y.TeamReports.Any(z => !z.AcknowledgedDate.HasValue)));
                 team.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.MyVote, o => o.Ignore()); // Handle this manually
+                team.DetailMapping.ForMember(x => x.MyBookmark, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.TeamSockets, o => o.MapFrom(y => y.TeamSockets.Where(z => z.Level > 0)));
                 team.DetailMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnitSummaries.All(z =>
                     z.Sub ||

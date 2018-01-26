@@ -7,6 +7,8 @@ import { ProfileSearchModel } from '../../services/query/profile-query-service';
 import { ProfileQueryService } from '../../services/query/profile-query-service';
 import { AccountService } from '../../services/account-service';
 import * as moment from 'moment';
+import { TeamEditorModel } from '../../services/query/team-query-service';
+import { ITeamUnitEditorModel } from '../../models/imported';
 
 @autoinject
 export class AdminPage {
@@ -17,7 +19,7 @@ export class AdminPage {
     profileQueryService;
 
     profiles = [];
-    
+
     searchModel = new ProfileSearchModel().getCached();
     loading;
 
@@ -49,44 +51,18 @@ export class AdminPage {
     }
 
     createTeam() {
-        var team = {
-            name: 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a'),
-            description: '',
-            guide: '',
-            credits: '',
-            teamUnits: [
-                {
-                    unitId: Math.floor(Math.random() * 5) + 1,
-                    position: 0,
-                    sub: false
-                },
-                {
-                    unitId: Math.floor(Math.random() * 5) + 1,
-                    position: 1,
-                    sub: false
-                },
-                {
-                    unitId: Math.floor(Math.random() * 1000) + 1,
-                    position: 2,
-                    sub: false
-                },
-                {
-                    unitId: Math.floor(Math.random() * 1000) + 1,
-                    position: 3,
-                    sub: false
-                },
-                {
-                    unitId: Math.floor(Math.random() * 1000) + 1,
-                    position: 4,
-                    sub: false
-                },
-                {
-                    unitId: Math.floor(Math.random() * 1000) + 1,
-                    position: 5,
-                    sub: false
-                }
-            ],
-            teamSockets: []
+        var team = new TeamEditorModel();
+        team.name = 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a');
+        team.guide = '';
+        team.guide = '';
+        team.credits = '';
+        for (var i = 0; i < 6; i++) {
+            var unit = <ITeamUnitEditorModel>{
+                unitId: Math.floor(Math.random() * 1000) + 1,
+                position: i,
+                sub: false
+            };
+            team.teamUnits.push(unit);
         };
         this.teamQueryService.save(team).then(x => {
             this.alert.success('Successfully created team \'' + team.name + '\'.');

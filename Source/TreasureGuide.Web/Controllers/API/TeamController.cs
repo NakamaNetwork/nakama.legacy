@@ -61,8 +61,9 @@ namespace TreasureGuide.Web.Controllers.API
                 var userId = User.GetId();
                 if (userId != null)
                 {
-                    var vote = await DbContext.TeamVotes.SingleOrDefaultAsync(x => x.TeamId == id && x.UserId == userId);
-                    detail.MyVote = vote?.Value ?? 0;
+                    var user = DbContext.UserProfiles.Where(x => x.Id == userId);
+                    detail.MyVote = await user.SelectMany(x => x.TeamVotes.Where(y => y.TeamId == id).Select(y => y.Value)).SingleOrDefaultAsync();
+                    detail.MyBookmark = await user.SelectMany(x => x.BookmarkedTeams.Where(y => y.Id == id).Select(y => true)).SingleOrDefaultAsync();
                 }
             }
             return await base.SingleGetTransform(single, id);
@@ -126,6 +127,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchDeleted(results, model.Deleted);
             results = SearchDrafts(results, model.Draft);
             results = SearchReported(results, model.Reported);
+            results = SearchBookmarks(results, model.Bookmark);
             results = SearchStage(results, model.StageId);
             results = SearchTerm(results, model.Term);
             results = SearchSubmitter(results, model.SubmittedBy);
@@ -170,6 +172,19 @@ namespace TreasureGuide.Web.Controllers.API
             if (User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) && modelReported)
             {
                 results = results.Where(x => x.TeamReports.Any(y => !y.AcknowledgedDate.HasValue));
+            }
+            return results;
+        }
+
+        private IQueryable<Team> SearchBookmarks(IQueryable<Team> results, bool bookmarked)
+        {
+            if (bookmarked)
+            {
+                var userId = User.GetId();
+                if (!String.IsNullOrWhiteSpace(userId))
+                {
+                    results = results.Where(x => x.BookmarkedUsers.Any(y => y.Id == userId));
+                }
             }
             return results;
         }
@@ -333,6 +348,41 @@ namespace TreasureGuide.Web.Controllers.API
             await DbContext.SaveChangesAsync();
             var returnValue = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
             return Ok(returnValue);
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("Bookmark")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Bookmark(int? id = null)
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
+            var team = await DbContext.Teams.SingleOrDefaultAsync(x => x.Id == id);
+            if (team == null)
+            {
+                return BadRequest("Could not find team.");
+            }
+            var userId = User.GetId();
+            var profile = await DbContext.UserProfiles.SingleOrDefaultAsync(x => x.Id == userId);
+            if (profile == null)
+            {
+                return Unauthorized();
+            }
+            var existed = team.BookmarkedUsers.Any(x => x.Id == userId);
+            if (existed)
+            {
+                team.BookmarkedUsers.Remove(profile);
+            }
+            else
+            {
+                team.BookmarkedUsers.Add(profile);
+            }
+            await DbContext.SaveChangesAsync();
+            return Ok(!existed);
         }
 
         [HttpPost]

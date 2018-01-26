@@ -57,6 +57,14 @@
           <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="Global" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="TeamBookmarks">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+        </EntityType>
         <EntityType Name="TeamCredits">
           <Key>
             <PropertyRef Name="TeamId" />
@@ -363,6 +371,34 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_TeamBookmarks_dbo_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamBookmarks" Type="Self.TeamBookmarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamBookmarks">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TeamBookmarks_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamBookmarks" Type="Self.TeamBookmarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamBookmarks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_TeamCredits_dbo_Teams">
           <End Role="Teams" Type="Self.Teams" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -509,6 +545,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="RoundUnits" EntityType="Self.RoundUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamBookmarks" EntityType="Self.TeamBookmarks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamCredits" EntityType="Self.TeamCredits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamGenericSlots" EntityType="Self.TeamGenericSlots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamReports" EntityType="Self.TeamReports" Schema="dbo" store:Type="Tables" />
@@ -580,6 +617,14 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_RoundUnits_dbo_Units" Association="Self.FK_dbo_RoundUnits_dbo_Units">
             <End Role="Units" EntitySet="Units" />
             <End Role="RoundUnits" EntitySet="RoundUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamBookmarks_dbo_Teams" Association="Self.FK_dbo_TeamBookmarks_dbo_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamBookmarks" EntitySet="TeamBookmarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamBookmarks_dbo_UserProfiles" Association="Self.FK_dbo_TeamBookmarks_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="TeamBookmarks" EntitySet="TeamBookmarks" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_TeamCredits_dbo_Teams" Association="Self.FK_dbo_TeamCredits_dbo_Teams">
             <End Role="Teams" EntitySet="Teams" />
@@ -740,6 +785,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_TeamGenericSlots_dbo_Teams" Association="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams">
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamGenericSlot" EntitySet="TeamGenericSlots" />
+          </AssociationSet>
+          <AssociationSet Name="TeamBookmarks" Association="tcdbModel.TeamBookmarks">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
@@ -995,6 +1044,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="SubmittedTeams" Relationship="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="Team" />
           <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamVote" />
           <NavigationProperty Name="TeamVideos" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamVideo" />
+          <NavigationProperty Name="BookmarkedTeams" Relationship="tcdbModel.TeamBookmarks" FromRole="UserProfile" ToRole="Team" />
         </EntityType>
         <Association Name="FK_dbo_UserProfile_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
@@ -1058,6 +1108,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Draft" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="TeamUnitSummaries" Relationship="tcdbModel.TeamTeamUnitSummary" FromRole="Team" ToRole="TeamUnitSummary" />
           <NavigationProperty Name="TeamGenericSlots" Relationship="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" FromRole="Team" ToRole="TeamGenericSlot" />
+          <NavigationProperty Name="BookmarkedUsers" Relationship="tcdbModel.TeamBookmarks" FromRole="Team" ToRole="UserProfile" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
@@ -1393,6 +1444,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="TeamBookmarks">
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+        </Association>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -1614,6 +1669,14 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="TeamBookmarks" TypeName="tcdbModel.TeamBookmarks" StoreEntitySet="TeamBookmarks">
+            <EndProperty Name="UserProfile">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Team">
+              <ScalarProperty Name="Id" ColumnName="TeamId" />
+            </EndProperty>
+          </AssociationSetMapping>
                 </EntityContainerMapping>
             </Mapping>
         </edmx:Mappings>
