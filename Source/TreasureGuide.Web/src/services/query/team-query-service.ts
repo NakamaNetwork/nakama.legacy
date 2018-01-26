@@ -89,10 +89,10 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
             name: '-----'
         }, {
             value: FreeToPlayStatus.All,
-            name: 'All'
+            name: 'F2P Team'
         }, {
             value: FreeToPlayStatus.Crew,
-            name: 'Crew'
+            name: 'F2P Crew'
         }];
 };
 
