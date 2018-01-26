@@ -7,7 +7,7 @@
             <score-display score.bind="team.score" team-id.bind="team.id"></score-display>
             <flag-display team.bind="team"></flag-display>
             <div class="row team">
-                <team-display team.bind="team.teamUnits" size="small" in-line></team-display>
+                <team-inline team.bind="team" size="small"></team-inline>
             </div>
             <div class="row">
                 <ship-display ship-id.bind="team.shipId"></ship-display>

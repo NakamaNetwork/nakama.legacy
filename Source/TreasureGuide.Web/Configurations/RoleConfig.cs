@@ -12,6 +12,7 @@ namespace TreasureGuide.Web.Configurations
             await AddIfNotExists(roleManager, RoleConstants.Administrator);
             await AddIfNotExists(roleManager, RoleConstants.Moderator);
             await AddIfNotExists(roleManager, RoleConstants.Contributor);
+            await AddIfNotExists(roleManager, RoleConstants.BetaTester);
         }
 
         private static async Task AddIfNotExists(RoleManager<IdentityRole> roleManager, string role)

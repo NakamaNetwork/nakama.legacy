@@ -45,11 +45,12 @@ export class AlertService {
     }
 
     dismiss(id: number) {
-        var alert = this.alerts.findIndex(x => x.id === id);
-        if (alert >= 0) {
-            this.alerts[alert].disappearing = true;
+        var alert = this.alerts.find(x => x.id === id);
+        if (alert) {
+            alert.disappearing = true;
             setTimeout(() => {
-                this.alerts.splice(alert, 1);
+                var index = this.alerts.findIndex(x => x.id === id);
+                this.alerts.splice(index, 1);
             }, 1000);
         }
     }

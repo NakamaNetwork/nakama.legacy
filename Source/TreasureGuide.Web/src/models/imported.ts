@@ -53,6 +53,7 @@ export interface IProfileSearchModel extends ISearchModel{
 export class RoleConstants {
     public static Administrator: string = "Administrator";
     public static Moderator: string = "Moderator";
+    public static BetaTester: string = "BetaTester";
     public static Contributor: string = "Contributor";
     
 }
@@ -116,6 +117,7 @@ export enum SocketType {
 
 export interface IStageStubModel {
     id: number;
+    unitId: number;
     stamina: number;
     name: string;
     global: boolean;
@@ -126,6 +128,7 @@ export interface IStageStubModel {
 
 export interface IStageDetailModel {
     id: number;
+    unitId: number;
     stamina: number;
     name: string;
     global: boolean;
@@ -181,6 +184,40 @@ export enum TeamCreditType {
 }
 
 
+export interface ITeamGenericSlotStubModel {
+    role: UnitRole;
+    type: UnitType;
+    class: UnitClass;
+    position: number;
+    
+}
+
+export interface ITeamGenericSlotDetailModel extends ITeamGenericSlotStubModel{
+    sub: boolean;
+    
+}
+
+export interface ITeamGenericSlotEditorModel extends ITeamGenericSlotDetailModel{
+    
+}
+
+
+export interface ITeamGenericUnitStubModel {
+    role: number;
+    position: number;
+    
+}
+
+export interface ITeamGenericUnitDetailModel extends ITeamGenericUnitStubModel{
+    combo: number;
+    
+}
+
+export interface ITeamGenericUnitEditorModel extends ITeamGenericUnitDetailModel{
+    
+}
+
+
 export interface ITeamImportModel {
     team: ITeamEditorModel;
     credit: ITeamCreditModel;
@@ -191,6 +228,7 @@ export interface ITeamImportModel {
 
 export interface ITeamStubModel {
     teamUnits: ITeamUnitStubModel[];
+    teamGenericSlots: ITeamGenericSlotStubModel[];
     id: number;
     name: string;
     submittedById: string;
@@ -212,6 +250,7 @@ export interface ITeamStubModel {
 
 export interface ITeamDetailModel {
     teamUnits: ITeamUnitDetailModel[];
+    teamGenericSlots: ITeamGenericSlotDetailModel[];
     teamSockets: ITeamSocketStubModel[];
     teamVideos: ITeamVideoModel[];
     id: number;
@@ -222,6 +261,7 @@ export interface ITeamDetailModel {
     editedDate: Date;
     score: number;
     myVote: number;
+    myBookmark: boolean;
     guide: string;
     credits: string;
     global: boolean;
@@ -239,6 +279,7 @@ export interface ITeamDetailModel {
 export interface ITeamEditorModel {
     teamSockets: ITeamSocketEditorModel[];
     teamUnits: ITeamUnitEditorModel[];
+    teamGenericSlots: ITeamGenericSlotEditorModel[];
     id: number;
     name: string;
     credits: string;
@@ -270,13 +311,17 @@ export interface ITeamSearchModel extends ISearchModel{
     term: string;
     submittedBy: string;
     leaderId: number;
+    noHelp: boolean;
     stageId: number;
     myBox: boolean;
     global: boolean;
     freeToPlay: FreeToPlayStatus;
+    classes: UnitClass;
+    types: UnitType;
     deleted: boolean;
     draft: boolean;
     reported: boolean;
+    bookmark: boolean;
     
 }
 
@@ -315,15 +360,13 @@ export interface ITeamUnitStubModel {
 export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
     name: string;
     level: number;
-    specialLevel: number;
+    special: number;
     sub: boolean;
     
 }
 
-export interface ITeamUnitEditorModel {
-    unitId: number;
-    position: number;
-    specialLevel: number;
+export interface ITeamUnitEditorModel extends ITeamUnitStubModel{
+    special: number;
     sub: boolean;
     
 }
@@ -398,10 +441,25 @@ export interface IUnitEditorModel {
 }
 
 
+export enum UnitRole { 
+    Unknown = 0,
+    Beatstick = 1,
+    DamageReducer = 2,
+    DefenseReducer = 4,
+    Delayer = 8,
+    AttackBooster = 16,
+    OrbBooster = 32,
+    FixedDamage = 64,
+    HealthCutter = 128,
+    OrbShuffler = 256,
+    Healer = 512
+}
+
+
 export interface IUnitSearchModel extends ISearchModel{
     term: string;
-    classes: UnitClass[];
-    types: UnitType[];
+    classes: UnitClass;
+    types: UnitType;
     forceClass: boolean;
     freeToPlay: boolean;
     global: boolean;

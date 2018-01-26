@@ -29,7 +29,7 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" />
-        <EntityTypeShape EntityType="tcdbModel.TeamVote" Width="1.5" PointX="7.25" PointY="8.375" />
+        <EntityTypeShape EntityType="tcdbModel.TeamVote" Width="1.5" PointX="7.25" PointY="11.25" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVotes_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles" />
         <EntityTypeShape EntityType="tcdbModel.TeamReport" Width="1.5" PointX="9.625" PointY="4.625" />
@@ -41,6 +41,13 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamCredits_dbo_Teams" />
         <EntityTypeShape EntityType="tcdbModel.UnitAlias" Width="1.5" PointX="5" PointY="0.75" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Stages_dbo_Units" />
+        <EntityTypeShape EntityType="tcdbModel.TeamUnitSummary" Width="1.5" PointX="12.375" PointY="0.75" />
+        <AssociationConnector Association="tcdbModel.TeamTeamUnitSummary" />
+        <AssociationConnector Association="tcdbModel.UnitTeamUnitSummary" />
+        <EntityTypeShape EntityType="tcdbModel.TeamGenericSlot" Width="1.5" PointX="9.5" PointY="16.625" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" />
+        <AssociationConnector Association="tcdbModel.TeamBookmarks" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

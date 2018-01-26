@@ -21,13 +21,14 @@
                 <fieldset>
                     <legend>Preview</legend>
                     <div class="_alignCenter">
-                        <team-display team.bind="team" ship.bind="ship"></team-display>
+                        <team-display team.bind="team"></team-display>
+                        <ship-display ship-id.bind="team.shipId"></ship-display>
                     </div>
                 </fieldset>
             </ux-dialog-body>
             <ux-dialog-footer>
                 <input type="submit" click.delegate="submit()" class="button _primary modal-action" name="Accept" />
-                <a click.delegate="cancel()" class="button modal-action">Cancel</a>
+                <button type="button" click.delegate="cancel()" class="button modal-action">Cancel</button>
             </ux-dialog-footer>
         </ux-dialog>
     </form>

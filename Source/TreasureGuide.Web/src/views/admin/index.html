@@ -35,8 +35,7 @@
                 <table class="_width100">
                     <thead>
                         <tr>
-                            <th>User Name</th>
-                            <th>Icon</th>
+                            <th>User</th>
                             <th>Teams</th>
                         </tr>
                     </thead>
@@ -44,11 +43,8 @@
                         <tr repeat.for="profile of profiles">
                             <td>
                                 <a route-href="route: account; params.bind: {id: profile.id}">
-                                    ${profile.userName}
+                                    <user-display name.bind="profile.userName" unit-id.bind="profile.unitId"></user-display>
                                 </a>
-                            </td>
-                            <td>
-                                <unit-display unit-id.bind="profile.unitId" size="tiny"></unit-display>
                             </td>
                             <th>
                                 ${profile.teamCount}

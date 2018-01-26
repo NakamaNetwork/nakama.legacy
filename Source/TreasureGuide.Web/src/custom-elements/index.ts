@@ -12,10 +12,11 @@
         './stage-type-picker',
         './team-box',
         './team-display',
+        './team-inline',
         './team-reports',
         './team-search',
-        './unit-class-picker',
+        './team-slot',
         './unit-display',
-        './unit-type-picker'
+        './unit-search'
     ]);
 }

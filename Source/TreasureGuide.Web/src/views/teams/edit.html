@@ -24,7 +24,7 @@
             <fieldset>
                 <legend>Units</legend>
                 <div class="form-group _alignCenter">
-                    <team-display team.two-way="teamUnits" editable="true"></team-display>
+                    <team-display team.two-way="team" editable="true"></team-display>
                     <ship-display ship-id.two-way="shipId" editable="true"></ship-display>
                     <br />
                     <button type="button" class="_xsmall _active" click.delegate="openImport()">
@@ -56,7 +56,7 @@
                 </div>
             </fieldset>
         </div>
-        <div class="row" if.bind="id">
+        <div class="row">
             <fieldset>
                 <legend>Options</legend>
                 <div class="col m6">
@@ -68,7 +68,7 @@
                     </label>
                     <em>(Saves team to server without allowing others to see it.)</em>
                 </div>
-                <div class="col m6">
+                <div class="col m6" if.bind="id">
                     <label for="deleteInput">
                         <input type="checkbox" id="deleteInput" checked.bind="deleted" />
                         <span class="-label-body">

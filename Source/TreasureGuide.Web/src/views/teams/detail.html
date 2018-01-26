@@ -17,15 +17,18 @@
                 Edit Team
             </a>
             <div class="_floatRight">
-                <score-display team-id.bind="id" score.bind="score" my-vote.two-way="myVote" votable="true"></score-display>
+                <score-display team-id.bind="id" score.bind="score" my-vote.two-way="myVote" my-bookmark.two-way="myBookmark" votable="true"></score-display>
             </div>
         </div>
         <div class="row" if.bind="stageId">
-            <h2>Stage</h2>
-            <stage-display stage-id.bind="stageId"></stage-display>
+            <h4>Stage</h4>
+            <a route-href="route: stageDetails; params.bind: { id: stageId }">
+                <stage-display stage-id.bind="stageId"></stage-display>
+            </a>
         </div>
         <div class="row _alignCenter">
-            <team-display team.bind="teamUnits"></team-display>
+            <h4>Team</h4>
+            <team-display team.bind="team"></team-display>
             <ship-display ship-id.bind="shipId"></ship-display>
             <br />
             <a href.bind="calcLink" target="_blank" href="#" class="button _small _active">
@@ -60,7 +63,7 @@
             </button>
             <h4>Videos</h4>
             <div if.bind="sortedVideos.length === 0" class="_alignCenter">
-                <h5>No videos for this team. Why not submit one?</h5>
+                <h5>No videos for this team yet. Why not submit one?</h5>
             </div>
             <div class="row _alignCenter" if.bind="ownerVideos.length > 0">
                 <div>

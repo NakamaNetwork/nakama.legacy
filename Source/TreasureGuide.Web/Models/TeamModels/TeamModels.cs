@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TreasureGuide.Entities.Interfaces;
+using TreasureGuide.Web.Helpers.Validators;
 
 namespace TreasureGuide.Web.Models.TeamModels
 {
@@ -26,6 +27,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Draft { get; set; }
 
         public IEnumerable<TeamUnitStubModel> TeamUnits { get; set; }
+        public IEnumerable<TeamGenericSlotStubModel> TeamGenericSlots { get; set; }
     }
 
     public class TeamDetailModel : IIdItem<int>, ICanEdit
@@ -38,6 +40,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public DateTimeOffset EditedDate { get; set; }
         public int Score { get; set; }
         public int MyVote { get; set; }
+        public bool MyBookmark { get; set; }
         public string Guide { get; set; }
         public string Credits { get; set; }
         public bool Global { get; set; }
@@ -51,10 +54,13 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Draft { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
+        public IEnumerable<TeamGenericSlotDetailModel> TeamGenericSlots { get; set; }
         public IEnumerable<TeamSocketStubModel> TeamSockets { get; set; }
         public IEnumerable<TeamVideoModel> TeamVideos { get; set; }
     }
 
+    [NotTooManyUnits(5)]
+    [EnoughUnits(4)]
     public class TeamEditorModel : IIdItem<int?>
     {
         public int? Id { get; set; }
@@ -73,6 +79,14 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Draft { get; set; }
 
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
+
+        [EnoughNonSubs(2)]
+        [OnlyOneNonSub]
+        [NoDuplicateUnits]
         public IEnumerable<TeamUnitEditorModel> TeamUnits { get; set; }
+
+        [OnlyOneNonSub]
+        [NoDuplicateGenerics]
+        public IEnumerable<TeamGenericSlotEditorModel> TeamGenericSlots { get; set; }
     }
 }

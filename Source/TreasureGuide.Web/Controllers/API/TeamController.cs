@@ -13,7 +13,6 @@ using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Services;
 
@@ -62,8 +61,9 @@ namespace TreasureGuide.Web.Controllers.API
                 var userId = User.GetId();
                 if (userId != null)
                 {
-                    var vote = await DbContext.TeamVotes.SingleOrDefaultAsync(x => x.TeamId == id && x.UserId == userId);
-                    detail.MyVote = vote?.Value ?? 0;
+                    var user = DbContext.UserProfiles.Where(x => x.Id == userId);
+                    detail.MyVote = await user.SelectMany(x => x.TeamVotes.Where(y => y.TeamId == id).Select(y => y.Value)).SingleOrDefaultAsync();
+                    detail.MyBookmark = await user.SelectMany(x => x.BookmarkedTeams.Where(y => y.Id == id).Select(y => true)).SingleOrDefaultAsync();
                 }
             }
             return await base.SingleGetTransform(single, id);
@@ -81,7 +81,8 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override bool CanPost(int? id)
         {
-            return User.GetId() != null && User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id);
+            var userId = User.GetId();
+            return !String.IsNullOrWhiteSpace(userId) && (User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) || OwnsTeam(id, userId));
         }
 
         protected override bool CanDelete(int? id)
@@ -102,9 +103,9 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortLeader:
                     return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault());
                 case SearchConstants.SortScore:
-                    return results.OrderBy(x => x.TeamVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), model.SortDesc);
+                    return results.OrderBy(x => x.TeamVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), !model.SortDesc);
                 case SearchConstants.SortDate:
-                    return results.OrderBy(x => x.EditedDate, model.SortDesc);
+                    return results.OrderBy(x => x.EditedDate, !model.SortDesc);
                 case SearchConstants.SortUser:
                     return results.OrderBy(x => x.SubmittingUser.UserName, model.SortDesc);
                 default:
@@ -112,13 +113,12 @@ namespace TreasureGuide.Web.Controllers.API
             }
         }
 
-        protected bool OwnsTeam(int? id)
+        protected bool OwnsTeam(int? id, string userId)
         {
-            if (!id.HasValue)
+            if (!id.HasValue || id == 0)
             {
                 return true;
             }
-            var userId = User.GetId();
             return DbContext.Teams.Any(x => x.Id == id && x.SubmittedById == userId);
         }
 
@@ -127,11 +127,15 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchDeleted(results, model.Deleted);
             results = SearchDrafts(results, model.Draft);
             results = SearchReported(results, model.Reported);
+            results = SearchBookmarks(results, model.Bookmark);
             results = SearchStage(results, model.StageId);
             results = SearchTerm(results, model.Term);
             results = SearchSubmitter(results, model.SubmittedBy);
-            results = SearchLead(results, model.LeaderId);
+            results = SearchLead(results, model.LeaderId, model.NoHelp);
             results = SearchGlobal(results, model.Global);
+            results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
+            results = SearchTypes(results, model.Types);
+            results = SearchClasses(results, model.Classes);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
             results = SearchBox(results, model.MyBox);
             return results;
@@ -172,11 +176,25 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
+        private IQueryable<Team> SearchBookmarks(IQueryable<Team> results, bool bookmarked)
+        {
+            if (bookmarked)
+            {
+                var userId = User.GetId();
+                if (!String.IsNullOrWhiteSpace(userId))
+                {
+                    results = results.Where(x => x.BookmarkedUsers.Any(y => y.Id == userId));
+                }
+            }
+            return results;
+        }
+
         private IQueryable<Team> SearchTerm(IQueryable<Team> teams, string term)
         {
             if (!String.IsNullOrEmpty(term))
             {
-                teams = teams.Where(x => x.Name.Contains(term));
+                var terms = term.SplitSearchTerms();
+                teams = teams.Where(x => terms.Any(t => x.Name.Contains(t) || (x.Stage != null && x.Stage.Name.Contains(t))));
             }
             return teams;
         }
@@ -199,11 +217,11 @@ namespace TreasureGuide.Web.Controllers.API
             return teams;
         }
 
-        private IQueryable<Team> SearchLead(IQueryable<Team> teams, int? leaderId)
+        private IQueryable<Team> SearchLead(IQueryable<Team> teams, int? leaderId, bool noHelper)
         {
             if (leaderId.HasValue)
             {
-                teams = teams.Where(x => x.TeamUnits.Any(y => y.UnitId == leaderId && y.Position == 1));
+                teams = teams.Where(x => x.TeamUnitSummaries.Any(y => y.UnitId == leaderId && (noHelper ? y.Position == 1 : y.Position < 2) && !y.Sub));
             }
             return teams;
         }
@@ -212,7 +230,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (global)
             {
-                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.Flags.HasFlag(UnitFlag.Global)));
+                teams = teams.Where(x => x.TeamUnitSummaries.All(y => y.Sub || y.Flags.HasFlag(UnitFlag.Global)));
             }
             return teams;
         }
@@ -230,14 +248,32 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (status != FreeToPlayStatus.None)
             {
-                results = results.Where(x => x.TeamUnits.All(y =>
+                results = results.Where(x => x.TeamUnitSummaries.All(y =>
                     y.Sub || // Ignore subs
                     y.Position == 0 || // Ignore friends
                     y.UnitId == leaderId || // Ignore searched captain
                     ( // Ignore leaders if only searching crew
-                        (status == FreeToPlayStatus.Crew && y.Position < 2) || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))
+                        (status == FreeToPlayStatus.Crew && y.Position < 2) || !EnumerableHelper.PayToPlay.Any(z => y.Flags.HasFlag(z))
                     )
                 ));
+            }
+            return results;
+        }
+
+        private IQueryable<Team> SearchTypes(IQueryable<Team> results, UnitType modelTypes)
+        {
+            if (modelTypes != UnitType.Unknown)
+            {
+                results = results.Where(x => x.TeamUnitSummaries.All(y => y.Sub || y.Type == UnitType.Unknown || (y.Type & modelTypes) != 0));
+            }
+            return results;
+        }
+
+        private IQueryable<Team> SearchClasses(IQueryable<Team> results, UnitClass modelClasses)
+        {
+            if (modelClasses != UnitClass.Unknown)
+            {
+                results = results.Where(x => x.TeamUnitSummaries.All(y => y.Sub || y.Class == UnitClass.Unknown || (y.Class & modelClasses) != 0));
             }
             return results;
         }
@@ -247,7 +283,7 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Trending()
         {
-            var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(3));
+            var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(1.5));
             var top = await DbContext.Teams
                 .Where(x => !x.Deleted && !x.Draft)
                 .Select(x => new
@@ -312,6 +348,41 @@ namespace TreasureGuide.Web.Controllers.API
             await DbContext.SaveChangesAsync();
             var returnValue = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
             return Ok(returnValue);
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("Bookmark")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Bookmark(int? id = null)
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
+            var team = await DbContext.Teams.SingleOrDefaultAsync(x => x.Id == id);
+            if (team == null)
+            {
+                return BadRequest("Could not find team.");
+            }
+            var userId = User.GetId();
+            var profile = await DbContext.UserProfiles.SingleOrDefaultAsync(x => x.Id == userId);
+            if (profile == null)
+            {
+                return Unauthorized();
+            }
+            var existed = team.BookmarkedUsers.Any(x => x.Id == userId);
+            if (existed)
+            {
+                team.BookmarkedUsers.Remove(profile);
+            }
+            else
+            {
+                team.BookmarkedUsers.Add(profile);
+            }
+            await DbContext.SaveChangesAsync();
+            return Ok(!existed);
         }
 
         [HttpPost]

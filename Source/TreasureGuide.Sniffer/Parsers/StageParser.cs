@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -35,6 +36,7 @@ namespace TreasureGuide.Sniffer.Parsers
                 var stageType = datum.Key.ToStageType();
                 stages.AddRange(datum.Value.SelectMany(child =>
                 {
+
                     var name = child["name"]?.ToString() ?? "Unknown";
                     if (stageType == StageType.Coliseum)
                     {
@@ -45,18 +47,26 @@ namespace TreasureGuide.Sniffer.Parsers
                         name = "Treasure Map: " + name;
                     }
                     var global = child["global"]?.ToString().ToBoolean() ?? false;
-                    return new[] { HandleSingle(name, global, stageType) };
+                    int? thumb = null;
+                    int thumbParse;
+                    if (Int32.TryParse(child["thumb"]?.ToString() ?? "", out thumbParse))
+                    {
+                        thumb = thumbParse;
+                    }
+                    var output = HandleSingle(name, thumb, global, stageType);
+                    return new[] { output };
                 }));
             }
 
             return stages;
         }
 
-        private Stage HandleSingle(string name, bool global, StageType stageType)
+        private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType)
         {
             return new Stage
             {
                 Id = IdMaker.FromString(name, (int)(stageType) * 1000000),
+                UnitId = thumb,
                 Name = name,
                 Global = global,
                 Type = stageType
@@ -86,7 +96,7 @@ namespace TreasureGuide.Sniffer.Parsers
             var units = all.Join(Context.Units, x => x.Item1, y => y.Id,
                 (stage, unit) => Tuple.Create(unit, stage.Item2));
             var colo = units.Select(x =>
-                    HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2}",
+                    HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2}", x.Item1.Id,
                         x.Item1.Flags.HasFlag(UnitFlag.Global), stageType))
                 .ToList();
             return colo;

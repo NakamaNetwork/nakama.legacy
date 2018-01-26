@@ -23,12 +23,12 @@ export class TeamBox {
             if (this.team.reported) {
                 className += 'reported ';
             }
-            if (this.team.deleted) {
-                className += 'deleted ';
-            }
-            if (this.team.draft) {
-                className += 'draft ';
-            }
+        }
+        if (this.team.deleted) {
+            className += 'deleted ';
+        }
+        if (this.team.draft) {
+            className += 'draft ';
         }
         return className;
     }

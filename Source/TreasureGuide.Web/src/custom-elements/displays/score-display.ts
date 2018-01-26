@@ -14,6 +14,7 @@ export class ScoreDisplay {
     @bindable score: number;
     @bindable teamId: number;
     @bindable myVote: number;
+    @bindable myBookmark: boolean;
     @bindable votable: boolean;
 
     constructor(teamQueryService: TeamQueryService, alertService: AlertService, dialogService: DialogService) {
@@ -49,6 +50,14 @@ export class ScoreDisplay {
         return 'fa-thumbs-o-down';
     }
 
+    @computedFrom('myBookmark')
+    get bookmarkIcon() {
+        if (this.myBookmark) {
+            return 'fa-heart _dangerText';
+        }
+        return 'fa-heart-o';
+    }
+
     thumbsUp() {
         if (this.myVote > 0) {
             this.vote(null);
@@ -70,6 +79,18 @@ export class ScoreDisplay {
             this.alertService.success('Your vote has been recorded!');
             this.score = result;
             this.myVote = score != null ? score ? 1 : -1 : 0;
+        }).catch(err => {
+            err.text().then(msg => {
+                this.alertService.danger(msg);
+            });
+        });
+    }
+
+    bookmark() {
+        this.teamQueryService.bookmark(this.teamId).then(result => {
+            this.myBookmark = result;
+            var message = result ? 'This team has been bookmarked.' : 'Removed team bookmark.';
+            this.alertService.success(message);
         }).catch(err => {
             err.text().then(msg => {
                 this.alertService.danger(msg);

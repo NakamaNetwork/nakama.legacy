@@ -1,9 +1,14 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { ITeamStubModel, ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel, ITeamImportModel, ITeamVideoModel, ITeamReportStubModel, FreeToPlayStatus } from '../../models/imported';
+import {
+    ITeamStubModel, ITeamEditorModel, ITeamSearchModel, ITeamVoteModel, ITeamReportModel,
+    ITeamImportModel, ITeamVideoModel, ITeamReportStubModel, FreeToPlayStatus, SearchConstants,
+    ITeamSocketEditorModel, ITeamUnitEditorModel, ITeamGenericSlotEditorModel, UnitType,
+    UnitRole, UnitClass
+} from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
-import {SearchConstants} from '../../models/imported';
+import { NumberHelper } from '../../tools/number-helper';
 
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
@@ -12,8 +17,8 @@ export class TeamQueryService extends SearchableQueryService {
     }
 
     save(model: TeamEditorModel, id?): Promise<any> {
-        model.teamUnits = model.teamUnits.filter(x => x.unitId);
-        return super.save(model, id);
+        var payload = model.getPayload();
+        return super.save(payload, id);
     }
 
     trending(): Promise<ITeamStubModel[]> {
@@ -22,6 +27,10 @@ export class TeamQueryService extends SearchableQueryService {
 
     latest(): Promise<ITeamStubModel[]> {
         return this.http.get(this.buildAddress('latest'));
+    }
+
+    bookmark(teamId: number): Promise<boolean> {
+        return this.http.post(this.buildAddress('bookmark/' + teamId));
     }
 
     vote(model: ITeamVoteModel): Promise<number> {
@@ -50,14 +59,18 @@ export class TeamQueryService extends SearchableQueryService {
 }
 
 export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
+    classes: UnitClass;
+    types: UnitType;
     term: string;
     submittedBy: string;
     leaderId: number;
+    noHelp: boolean;
     stageId: number;
     myBox: boolean;
     global: boolean;
-    freeToPlay: FreeToPlayStatus = FreeToPlayStatus.None;
+    freeToPlay: FreeToPlayStatus;
     deleted: boolean;
+    bookmark: boolean;
     reported: boolean;
     draft: boolean;
     cacheKey: string = 'search-team';
@@ -81,10 +94,10 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
             name: '-----'
         }, {
             value: FreeToPlayStatus.All,
-            name: 'All'
+            name: 'F2P Team'
         }, {
             value: FreeToPlayStatus.Crew,
-            name: 'Crew'
+            name: 'F2P Crew'
         }];
 };
 
@@ -95,8 +108,53 @@ export class TeamEditorModel implements ITeamEditorModel {
     guide: string;
     shipId: number = 1;
     stageId: number;
-    teamSockets: any[] = [];
-    teamUnits: any[] = [];
+    teamSockets: ITeamSocketEditorModel[] = [];
+    teamUnits: ITeamUnitEditorModel[] = [];
+    teamGenericSlots: ITeamGenericSlotEditorModel[] = [];
     deleted: boolean;
     draft: boolean;
+
+    getPayload(): ITeamEditorModel {
+        return <ITeamEditorModel>{
+            id: NumberHelper.forceNumber(this.id),
+            name: this.name,
+            credits: this.credits,
+            guide: this.guide,
+            shipId: this.shipId,
+            stageId: this.stageId,
+            deleted: this.deleted,
+            draft: this.draft,
+            teamSockets: this.teamSockets
+                .map(x => <ITeamSocketEditorModel>{
+                    level: NumberHelper.forceNumber(x.level),
+                    socketType: NumberHelper.forceNumber(x.socketType)
+                })
+                .filter(x => x.level),
+            teamUnits: this.teamUnits
+                .map(x => <ITeamUnitEditorModel>{
+                    position: NumberHelper.forceNumber(x.position),
+                    special: NumberHelper.forceNumber(x.special),
+                    sub: x.sub,
+                    unitId: NumberHelper.forceNumber(x.unitId)
+                })
+                .filter(x => x.unitId),
+            teamGenericSlots: this.teamGenericSlots
+                .map(x => <ITeamGenericSlotEditorModel>{
+                    class: NumberHelper.forceNumber(x.class),
+                    position: NumberHelper.forceNumber(x.position),
+                    role: NumberHelper.forceNumber(x.role),
+                    sub: x.sub,
+                    type: NumberHelper.forceNumber(x.type)
+                })
+                .filter(x => x.role + x.class + x.type)
+        };
+    }
 };
+
+export class TeamGenericSlotEditorModel implements ITeamGenericSlotEditorModel {
+    public sub: boolean;
+    public role: UnitRole;
+    public type: UnitType;
+    public class: UnitClass;
+    public position: number;
+}

@@ -1,0 +1,35 @@
+<template>
+    <div class="team-slot-container">
+        <div class="team-unit">
+            <unit-display if.bind="main"
+                          model.bind="main"
+                          editable.bind="editable"
+                          info="true"
+                          allow-generics="true"
+                          selected.delegate="unitAdded($event, false)">
+            </unit-display>
+            <unit-display if.bind="!hasMain"
+                          editable.bind="editable"
+                          allow-generics="true"
+                          selected.delegate="unitAdded($event, false)">
+            </unit-display>
+        </div>
+        <div class="team-subs">
+            <div class="team-unit" repeat.for="sub of subs">
+                <unit-display model.bind="sub"
+                              editable.bind="editable"
+                              info="true"
+                              allow-generics="true"
+                              selected.delegate="unitAdded($event, true)">
+                </unit-display>
+            </div>
+            <div class="team-unit" auth-req="BetaTester" if.bind="canAddSubs">
+                <unit-display editable="true"
+                              info="true"
+                              allow-generics="true"
+                              selected.delegate="unitAdded($event, true, true)">
+                </unit-display>
+            </div>
+        </div>
+    </div>
+</template>

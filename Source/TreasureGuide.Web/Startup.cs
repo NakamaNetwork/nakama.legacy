@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Text;
 using AspNet.Security.OAuth.Discord;
 using AspNet.Security.OAuth.Reddit;
@@ -7,11 +8,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using TreasureGuide.Web.Configurations;
+using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web
 {
@@ -62,6 +65,10 @@ namespace TreasureGuide.Web
             {
                 app.UseStatusCodePages();
             }
+
+            app.UseRewriter(new RewriteOptions()
+                .AddRedirectToHttpsPermanent()
+                .Add(new RedirectWwwRule()));
 
             app.UseResponseCompression();
             app.UseStaticFiles();

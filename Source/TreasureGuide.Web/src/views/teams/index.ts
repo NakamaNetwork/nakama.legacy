@@ -23,9 +23,7 @@ export class TeamIndexPage {
 
     activate(params) {
         this.searchModel = new TeamSearchModel();
-        if (!this.searchModel.assign(params)) {
-            this.searchModel = <TeamSearchModel>this.searchModel.getCached();
-        }
+        this.searchModel.assign(params);
         this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
         });

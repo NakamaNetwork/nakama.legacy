@@ -1,11 +1,20 @@
 ﻿<template>
     <div class="tooltip -tooltip-top">
         <strong class="tooltiptext _shadow _noDelay _small" if.bind="name">${name}</strong>
-        <button type="button" class.bind="buttonClass" click.delegate="clicked()" style.bind="backgroundStyle">
-            <i class.bind="iconClass" if.bind="!unitId"></i>
+        <button type="button" class="unit-button" click.delegate="clicked()" style.bind="backgroundStyle">
+            <i class.bind="iconClass" if.bind="!model"></i>
+            <div class="generic-container" if.bind="generic">
+                <div class="generic-types">
+                    <img repeat.for="item of genericTypes" src="/content/types/${item.id}.png" title="${item.name}" />
+                </div>
+                <div class="generic-roles">
+                    <img repeat.for="item of genericRoles" src="/content/roles/${item.id}.png" title="${item.name}" />
+                </div>
+                <div class="generic-classes">
+                    <img repeat.for="item of genericClasses" src="/content/classes/${item.id}.png" title="${item.name}" />
+                </div>
+            </div>
         </button>
+        <a if.bind="link" class="unit-link" href.bind="link" target="_blank"></a>
     </div>
-    <a if.bind="info && unitId" class="button _info _xsmall unit-link" href.bind="link" target="_blank">
-        <i class="fa fa-fw fa-info-circle"></i>
-    </a>
 </template>

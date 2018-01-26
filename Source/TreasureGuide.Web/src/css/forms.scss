@@ -11,6 +11,15 @@
     }
 }
 
+label {
+    white-space: nowrap;
+
+    span.-label-body {
+        margin: 0.2em;
+        vertical-align: top;
+    }
+}
+
 input.input-validation-error {
     border-color: $danger-color !important;
     font-style: unset;
@@ -99,5 +108,24 @@ markdown.preview {
         -webkit-transform: translateY(-50%);
         -ms-transform: translateY(-50%);
         transform: translateY(-50%);
+    }
+}
+
+.bit-button {
+    margin: 0.2em !important;
+    padding: 0.4em !important;
+
+    img {
+        height: 2.6em !important;
+    }
+
+    &.off {
+        -webkit-filter: brightness(60%) grayscale(80%);
+        filter: brightness(60%) grayscale(80%);
+        @extend ._greyDark;
+    }
+
+    &.on {
+        @extend ._infoLight;
     }
 }
