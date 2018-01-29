@@ -4,4 +4,11 @@ export class StringHelper {
             .replace(/^./, str => str.toUpperCase())
             .trim();
     }
+
+    static truncate(text: string, length: number) {
+        if (text && text.length > length) {
+            text = text.substr(0, length - 3) + '...';
+        }
+        return text;
+    }
 }
