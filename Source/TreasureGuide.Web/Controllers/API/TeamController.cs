@@ -194,7 +194,7 @@ namespace TreasureGuide.Web.Controllers.API
             if (!String.IsNullOrEmpty(term))
             {
                 var terms = term.SplitSearchTerms();
-                teams = teams.Where(x => terms.Any(t => x.Name.Contains(t) || (x.Stage != null && x.Stage.Name.Contains(t))));
+                teams = teams.Where(x => terms.All(t => x.Name.Contains(t) || (x.Stage != null && x.Stage.Name.Contains(t))));
             }
             return teams;
         }

@@ -95,7 +95,7 @@ namespace TreasureGuide.Web.Controllers.API
             if (!String.IsNullOrWhiteSpace(modelTerm))
             {
                 var terms = modelTerm.SplitSearchTerms();
-                results = results.Where(x => terms.Any(t => x.UserName.Contains(t)));
+                results = results.Where(x => terms.All(t => x.UserName.Contains(t)));
             }
             return results;
         }
