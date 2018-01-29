@@ -9,6 +9,11 @@ body {
     overflow-y: scroll;
 }
 
+.container {
+    overflow-wrap: break-word;
+    text-wrap: normal;
+}
+
 .scrollbar-measure {
     width: 100px;
     height: 100px;
@@ -106,7 +111,7 @@ button,
 input[type='submit'],
 input[type='reset'],
 input[type='button'] {
-    margin-bottom: unset;
+    margin-bottom: inherit;
 
     &._unclickable {
         @extend ._disabled;
@@ -135,7 +140,7 @@ ux-dialog-footer {
 }
 
 .tooltip {
-    border-bottom: unset;
+    border-bottom: inherit;
 }
 
 
@@ -173,6 +178,18 @@ iframe {
         max-width: 70%;
         margin: auto;
         height: 6em;
+    }
+
+    h2, h3 {
+        letter-spacing: initial;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    h3 {
+        font-size: initial;
     }
 }
 

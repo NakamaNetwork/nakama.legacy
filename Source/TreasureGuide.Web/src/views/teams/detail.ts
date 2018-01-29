@@ -8,6 +8,7 @@ import { VideoPicker } from '../../custom-elements/dialogs/video-picker';
 import { ITeamVideoModel } from '../../models/imported';
 import { AlertService } from '../../services/alert-service';
 import * as moment from 'moment';
+import { MetaService } from '../../services/meta-service';
 
 @autoinject
 export class TeamDetailPage {
@@ -15,15 +16,17 @@ export class TeamDetailPage {
     private router: Router;
     private dialogService: DialogService;
     private alertService: AlertService;
+    private metaService: MetaService;
 
     team: ITeamDetailModel;
     loading: boolean;
 
-    constructor(teamQueryService: TeamQueryService, router: Router, dialogService: DialogService, alertService: AlertService) {
+    constructor(teamQueryService: TeamQueryService, router: Router, dialogService: DialogService, alertService: AlertService, metaService: MetaService) {
         this.teamQueryService = teamQueryService;
         this.router = router;
         this.dialogService = dialogService;
         this.alertService = alertService;
+        this.metaService = metaService;
     }
 
     @computedFrom('team', 'team.teamUnits', 'team.teamShip')
@@ -82,6 +85,8 @@ export class TeamDetailPage {
         this.teamQueryService.detail(id).then(result => {
             this.team = result;
             this.loading = false;
+            this.metaService.setTitle(this.team.name);
+            this.metaService.setDescription(this.team.guide);
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });
         });

@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.SqlServer.Server;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
+using TreasureGuide.Entities.Interfaces;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
@@ -29,10 +31,26 @@ namespace TreasureGuide.Web.Controllers.API
             _userManager = userManager;
         }
 
+        protected override IQueryable<UserProfile> FetchEntities(string id = null)
+        {
+            var queryable = DbContext.UserProfiles.Where(x => x.Id == id || x.UserName == id);
+            queryable = Filter(queryable);
+            return queryable;
+        }
+
         protected override async Task<object> PerformGet<TModel>(string id = null, bool required = false)
         {
             id = DefaultIfUnspecified(id, User.GetId());
             return await base.PerformGet<TModel>(id);
+        }
+
+        protected override async Task<TModel> SingleGetTransform<TModel>(TModel single, string id = null)
+        {
+            if (typeof(ICanEdit).IsAssignableFrom(typeof(TModel)))
+            {
+                ((ICanEdit)single).CanEdit = CanPost(((IIdItem<string>)single).Id);
+            }
+            return single;
         }
 
         protected override bool CanPost(string id)
@@ -95,7 +113,7 @@ namespace TreasureGuide.Web.Controllers.API
             if (!String.IsNullOrWhiteSpace(modelTerm))
             {
                 var terms = modelTerm.SplitSearchTerms();
-                results = results.Where(x => terms.Any(t => x.UserName.Contains(t)));
+                results = results.Where(x => terms.All(t => x.UserName.Contains(t)));
             }
             return results;
         }

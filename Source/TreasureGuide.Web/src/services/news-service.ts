@@ -8,6 +8,15 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
+            header: '01/29/18',
+            lines: [
+                'Updated the look-and-feel of Team Boxes to resolve a few display bugs and make better use of the space.',
+                'Turned down the "fuzziness" of name searching to make it easier to find specific things.',
+                'Document titles and meta tags will now update for each page, making link sharing better.',
+                'User profile links are now based on user name rather than Id to make profile sharing easier.',
+            ]
+        },
+        {
             header: '01/26/18',
             lines: [
                 'Users can now bookmark teams.',
