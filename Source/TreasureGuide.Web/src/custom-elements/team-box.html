@@ -1,27 +1,32 @@
 <template>
+    <div class="backdrop" class.bind="teamClass"></div>
     <a route-href="route: teamDetails; params.bind: {id: team.id}">
-        <fieldset class.bind="teamClass">
-            <legend>
-                ${team.name}
-            </legend>
-            <score-display score.bind="team.score" team-id.bind="team.id"></score-display>
-            <flag-display team.bind="team"></flag-display>
-            <div class="row team">
-                <team-inline team.bind="team" size="small"></team-inline>
+        <flag-display team.bind="team"></flag-display>
+        <div class="row">
+            <div class="col f10">
+                <h2>
+                    ${team.name}
+                </h2>
             </div>
-            <div class="row">
-                <ship-display ship-id.bind="team.shipId"></ship-display>
+            <div class="col f2 _alignRight">
+                <score-display score.bind="team.score" team-id.bind="team.id"></score-display>
             </div>
-            <div class="row">
+        </div>
+        <div class="row">
+            <team-inline team.bind="team" size="small"></team-inline>
+        </div>
+        <div class="row">
+            <div class="col m6 _alignLeft">
                 <stage-display stage-id.bind="team.stageId"></stage-display>
             </div>
-            <div class="row">
-                <div class="submission">
-                    -
-                    <user-display name.bind="team.submittedByName" unit-id.bind="team.submittedByUnitId"></user-display>
-                    ${team.editedDate | ageFormat}
-                </div>
+            <div class="col m6 _alignRight">
+                <ship-display ship-id.bind="team.shipId"></ship-display>
             </div>
-        </fieldset>
+        </div>
+        <div class="row _alignRight submission">
+            -
+            <user-display name.bind="team.submittedByName" unit-id.bind="team.submittedByUnitId"></user-display>
+            ${team.editedDate | ageFormat}
+        </div>
     </a>
 </template>

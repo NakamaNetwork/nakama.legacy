@@ -9,6 +9,11 @@ body {
     overflow-y: scroll;
 }
 
+.container {
+    overflow-wrap: break-word;
+    text-wrap: normal;
+}
+
 .scrollbar-measure {
     width: 100px;
     height: 100px;
