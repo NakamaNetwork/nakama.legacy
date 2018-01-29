@@ -106,7 +106,7 @@ button,
 input[type='submit'],
 input[type='reset'],
 input[type='button'] {
-    margin-bottom: unset;
+    margin-bottom: inherit;
 
     &._unclickable {
         @extend ._disabled;
@@ -135,7 +135,7 @@ ux-dialog-footer {
 }
 
 .tooltip {
-    border-bottom: unset;
+    border-bottom: inherit;
 }
 
 

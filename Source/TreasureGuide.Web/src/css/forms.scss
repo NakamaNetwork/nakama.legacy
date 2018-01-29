@@ -6,8 +6,8 @@
 
     input {
         border-color: $danger-color !important;
-        font-style: unset;
-        color: unset;
+        font-style: initial;
+        color: initial;
     }
 }
 
@@ -22,8 +22,8 @@ label {
 
 input.input-validation-error {
     border-color: $danger-color !important;
-    font-style: unset;
-    color: unset;
+    font-style: initial;
+    color: initial;
 }
 
 .field-validation-error {

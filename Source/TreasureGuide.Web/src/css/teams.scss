@@ -6,7 +6,7 @@ $tiny-unit-margin: 1px;
 $xsmall-unit-size: 32px;
 $xsmall-unit-margin: 2px;
 
-$small-unit-size: 48px;
+$small-unit-size: 42px;
 $small-unit-margin: 2px;
 
 $medium-unit-size: 64px;
@@ -181,8 +181,33 @@ unit-display {
 }
 
 team-inline {
-    .unit-button {
-        pointer-events: none;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+
+    unit-display {
+        display: inline-block;
+        width: 15%;
+        margin: 0.5%;
+
+        div {
+            width: 100%;
+            position: relative;
+            padding-bottom: 100%;
+
+            .unit-button {
+                pointer-events: none;
+                width: 100% !important;
+                height: 100% !important;
+                max-width: $medium-unit-size;
+                max-height: $medium-unit-size;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+        }
     }
 }
 
@@ -268,7 +293,7 @@ team-display {
 team-box {
     a {
         text-decoration: none;
-        color: unset;
+        color: initial;
     }
 
     fieldset {
