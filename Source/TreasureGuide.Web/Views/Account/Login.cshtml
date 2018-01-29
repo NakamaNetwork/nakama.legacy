@@ -14,7 +14,7 @@
             <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="_width100 _alignCenter">
                 @foreach (var provider in loginProviders.OrderBy(x => x.DisplayName))
                 {
-                    <div class="col m4">
+                    <div class="col d4">
                         <button type="submit" class="button _primary _large _width100" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">
                             <i class="fa fa-fw fa-@provider.AuthenticationScheme.ToLower()"></i>
                             @provider.DisplayName
