@@ -201,6 +201,10 @@ team-inline {
                 right: 0;
                 top: 0;
                 bottom: 0;
+
+                .generic-roles {
+                    top: 100%;
+                }
             }
         }
     }
@@ -360,6 +364,8 @@ team-box {
 
         user-display {
             padding: 0 5px;
+            min-height: $tiny-unit-size + ($tiny-unit-margin*2);
+            display: inline-block;
         }
     }
 
