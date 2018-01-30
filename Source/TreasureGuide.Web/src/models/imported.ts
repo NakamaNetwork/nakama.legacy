@@ -15,6 +15,13 @@ export interface IExternalLoginConfirmationViewModel {
 }
 
 
+export interface IMetaResultModel {
+    title: string;
+    description: string;
+    
+}
+
+
 export interface IProfileStubModel {
     id: string;
     userName: string;

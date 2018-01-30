@@ -201,6 +201,10 @@ team-inline {
                 right: 0;
                 top: 0;
                 bottom: 0;
+
+                .generic-roles {
+                    top: 100%;
+                }
             }
         }
     }
@@ -324,6 +328,7 @@ team-box {
     a {
         margin-left: 10px;
         text-decoration: none;
+        color: initial;
     }
 
     .col {
@@ -360,6 +365,8 @@ team-box {
 
         user-display {
             padding: 0 5px;
+            min-height: $tiny-unit-size + ($tiny-unit-margin*2);
+            display: inline-block;
         }
     }
 
@@ -466,7 +473,7 @@ team-box {
     margin: 0 auto;
 
     @media #{$medium-and-down} {
-        width: 80%;
+        width: 90%;
     }
 
     @media #{$small-and-down} {
@@ -474,7 +481,7 @@ team-box {
     }
 
     @media #{$large-and-up} {
-        width: 60%;
+        width: 80%;
     }
 
     .col {
@@ -508,6 +515,7 @@ team-box {
     .socket-box {
         border-radius: 12px;
         padding: 6px;
+        white-space: nowrap;
 
         * {
             display: inline-block;

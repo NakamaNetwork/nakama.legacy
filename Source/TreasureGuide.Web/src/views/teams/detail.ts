@@ -86,7 +86,6 @@ export class TeamDetailPage {
             this.team = result;
             this.loading = false;
             this.metaService.setTitle(this.team.name);
-            this.metaService.setDescription(this.team.guide);
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });
         });

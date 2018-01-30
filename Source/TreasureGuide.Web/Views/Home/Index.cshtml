@@ -3,7 +3,7 @@
       xmlns:fb="http://ogp.me/ns/fb#">
 <head>
     @{ Html.RenderPartial("_HeaderPartial"); }
-    <title>Nakama Network</title>
+    <base href="/">
 </head>
 <body>
     @{ Html.RenderPartial("_CssPartial"); }
@@ -26,6 +26,6 @@
             </style>
         </div>
     </div>
-    <script src="~/scripts/vendor-bundle-4689ebe6c7.js" data-main="aurelia-bootstrapper"></script>
+    <script src="~/scripts/vendor-bundle.js" data-main="aurelia-bootstrapper"></script>
 </body>
 </html>

@@ -30,6 +30,7 @@ export class App {
         this.router = router;
         config.title = 'Nakama Network';
         config.addAuthorizeStep(AuthorizeStep);
+        config.options.pushState = true;
         config.map([
             { route: ['', '/', '_=_', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: false },
             { route: 'news', name: 'news', title: 'News', moduleId: 'views/boring/news', nav: true },
