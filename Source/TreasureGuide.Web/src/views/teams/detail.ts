@@ -8,7 +8,6 @@ import { VideoPicker } from '../../custom-elements/dialogs/video-picker';
 import { ITeamVideoModel } from '../../models/imported';
 import { AlertService } from '../../services/alert-service';
 import * as moment from 'moment';
-import { MetaService } from '../../services/meta-service';
 import {MetaTool} from '../../tools/meta-tool';
 
 @autoinject
@@ -17,17 +16,15 @@ export class TeamDetailPage {
     private router: Router;
     private dialogService: DialogService;
     private alertService: AlertService;
-    private metaService: MetaService;
 
     team: ITeamDetailModel;
     loading: boolean;
 
-    constructor(teamQueryService: TeamQueryService, router: Router, dialogService: DialogService, alertService: AlertService, metaService: MetaService) {
+    constructor(teamQueryService: TeamQueryService, router: Router, dialogService: DialogService, alertService: AlertService) {
         this.teamQueryService = teamQueryService;
         this.router = router;
         this.dialogService = dialogService;
         this.alertService = alertService;
-        this.metaService = metaService;
     }
 
     @computedFrom('team', 'team.teamUnits', 'team.teamShip')
