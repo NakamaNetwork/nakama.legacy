@@ -1,11 +1,22 @@
-﻿<!-- Icons -->
+﻿@using TreasureGuide.Web.Models
+@using TreasureGuide.Web.Services
+@inject IMetadataService MetadataService
+<!-- Content -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta property="og:image" content="https://www.nakama.network/content/icons/apple-icon.png" />
-<meta property="og:site_name" content="Nakama Network" />
-<meta property="og:description" content="The premiere team-building and sharing website for One Piece: Treasure Cruise.">
-<meta name="description" content="The premiere team-building and sharing website for One Piece: Treasure Cruise.">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<!-- SEO and OpenGraph -->
+@{
+    object url = null;
+    Context.Items.TryGetValue(MetaResultModel.StateKey, out url);
+    var metadata = await MetadataService.GetMetadata(url?.ToString());
+}
+<title>@metadata.Title</title>
+<meta property="og:image" content="https://www.nakama.network/content/icons/apple-icon.png" />
+<meta property="og:site_name" content="@metadata.Title" />
+<meta property="og:description" content="@metadata.Description">
+<meta name="description" content="@metadata.Description">
+<!-- Icons -->
 <link rel="apple-touch-icon" sizes="57x57" href="~/content/icons/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="~/content/icons/apple-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="~/content/icons/apple-icon-72x72.png">

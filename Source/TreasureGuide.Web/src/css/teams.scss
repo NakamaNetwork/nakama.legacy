@@ -328,6 +328,7 @@ team-box {
     a {
         margin-left: 10px;
         text-decoration: none;
+        color: initial;
     }
 
     .col {
@@ -472,7 +473,7 @@ team-box {
     margin: 0 auto;
 
     @media #{$medium-and-down} {
-        width: 80%;
+        width: 90%;
     }
 
     @media #{$small-and-down} {
@@ -480,7 +481,7 @@ team-box {
     }
 
     @media #{$large-and-up} {
-        width: 60%;
+        width: 80%;
     }
 
     .col {
@@ -514,6 +515,7 @@ team-box {
     .socket-box {
         border-radius: 12px;
         padding: 6px;
+        white-space: nowrap;
 
         * {
             display: inline-block;

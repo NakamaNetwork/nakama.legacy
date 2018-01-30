@@ -107,6 +107,7 @@ namespace TreasureGuide.Web.Configurations
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ISmsSender, SmsSender>();
             services.AddTransient<IThrottleService, ThrottleService>();
+            services.AddTransient<IMetadataService, MetadataService>();
 
             services.AddSingleton(x => MapperConfig.Create());
         }
