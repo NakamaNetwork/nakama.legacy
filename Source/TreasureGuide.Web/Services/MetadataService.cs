@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using HeyRed.MarkdownSharp;
 using TreasureGuide.Entities;
 using TreasureGuide.Web.Models;
 
@@ -18,6 +19,8 @@ namespace TreasureGuide.Web.Services
         private static readonly Regex TeamRegex = new Regex("teams/(.+)/details");
         private static readonly Regex StageRegex = new Regex("stages/(.+)/details");
         private static readonly Regex AccountRegex = new Regex("account/(.+)");
+
+        private static readonly Regex TagRegex = new Regex("<[^>]*>");
 
         private readonly TreasureEntities _dbContext;
 
@@ -78,11 +81,37 @@ namespace TreasureGuide.Web.Services
             {
                 model.Title = MetaResultModel.DefaultTitle;
             }
+            else
+            {
+                model.Title = Trim(model.Title, 80);
+                model.Title += " | Nakama Network";
+            }
             if (String.IsNullOrWhiteSpace(model.Description))
             {
                 model.Description = MetaResultModel.DefaultDescription;
             }
+            else
+            {
+                model.Description = CleanMarkdown(model.Description, 600);
+            }
             return model;
+        }
+
+        private string Trim(string title, int length)
+        {
+            if (title.Length > length)
+            {
+                title = title.Substring(0, length - 3) + "...";
+            }
+            return title;
+        }
+
+        private string CleanMarkdown(string desc, int length)
+        {
+            var markdown = new Markdown();
+            var output = markdown.Transform(desc);
+            output = TagRegex.Replace(output, "");
+            return Trim(output, 500);
         }
 
         private int? GetId(Match match)
