@@ -150,6 +150,7 @@ namespace TreasureGuide.Web
                 {
                     context.Items[MetaResultModel.StateKey] = context.Request.Path.Value;
                     context.Request.Path = "/";
+                    context.Response.StatusCode = 200;
                     await next();
                 }
             });
