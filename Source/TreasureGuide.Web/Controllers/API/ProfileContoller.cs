@@ -33,7 +33,11 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override IQueryable<UserProfile> FetchEntities(string id = null)
         {
-            var queryable = DbContext.UserProfiles.Where(x => x.Id == id || x.UserName == id);
+            var queryable = DbContext.UserProfiles.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                queryable = queryable.Where(x => x.Id == id || x.UserName == id);
+            }
             queryable = Filter(queryable);
             return queryable;
         }
