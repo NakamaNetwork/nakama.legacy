@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using AspNet.Security.OAuth.Discord;
@@ -140,6 +141,16 @@ namespace TreasureGuide.Web
 
             RoleConfig.Configure(roleManager);
 
+            app.Use(async (context, next) =>
+            {
+                await next();
+
+                if (context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api"))
+                {
+                    context.Request.Path = "/";
+                    await next();
+                }
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
