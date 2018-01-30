@@ -1,6 +1,7 @@
-import { Aurelia } from 'aurelia-framework'
+import { Aurelia, Container } from 'aurelia-framework'
 import environment from './environment';
 import * as marked from 'marked';
+import { MetaService } from './services/meta-service';
 
 export function configure(aurelia: Aurelia) {
     aurelia.use
@@ -32,7 +33,12 @@ export function configure(aurelia: Aurelia) {
         sanitize: true
     });
 
-    aurelia.start().then(() => aurelia.setRoot());
+    aurelia.start().then((app) => {
+        var service = Container.instance.get(MetaService);
+        return service.getSEOMetaData().then(() => {
+            return app.setRoot()
+        });
+    });
 }
 
 export class CustomMarkedRenderer extends marked.Renderer {

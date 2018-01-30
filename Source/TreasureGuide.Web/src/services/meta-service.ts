@@ -1,13 +1,37 @@
 import { autoinject } from 'aurelia-framework';
-import { NavModel } from 'aurelia-router';
-import {StringHelper} from '../tools/string-helper';
+import { StringHelper } from '../tools/string-helper';
+import { MetaQueryService } from './query/meta-query-service';
+import { IMetaResultModel } from '../models/imported';
 
 @autoinject
 export class MetaService {
-    private navModel: NavModel;
+    private metaQuery: MetaQueryService;
 
-    constructor(navModel: NavModel) {
-        this.navModel = navModel;
+    constructor(metaQuery: MetaQueryService) {
+        this.metaQuery = metaQuery;
+    }
+
+    public getSEOMetaData(): Promise<IMetaResultModel> {
+        return new Promise<IMetaResultModel>((resolve) => {
+            var hash = window.location.hash;
+            if (hash) {
+                this.metaQuery.get(window.location.hash).then(result => {
+                    if (result) {
+                        if (result.title) {
+                            this.setTitle(result.title);
+                        }
+                        if (result.description) {
+                            this.setDescription(result.description);
+                        }
+                    }
+                    resolve(result);
+                }).catch(() => {
+                    resolve(null);
+                });
+            } else {
+                resolve(null);
+            }
+        });
     }
 
     public setTitle(title: string) {
