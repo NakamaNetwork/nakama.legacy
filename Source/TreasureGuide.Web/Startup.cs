@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using TreasureGuide.Web.Configurations;
 using TreasureGuide.Web.Helpers;
+using TreasureGuide.Web.Models;
 
 namespace TreasureGuide.Web
 {
@@ -147,6 +148,7 @@ namespace TreasureGuide.Web
 
                 if (context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api"))
                 {
+                    context.Items[MetaResultModel.StateKey] = context.Request.Path.Value;
                     context.Request.Path = "/";
                     await next();
                 }
