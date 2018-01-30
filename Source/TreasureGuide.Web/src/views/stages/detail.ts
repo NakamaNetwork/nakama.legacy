@@ -3,8 +3,7 @@ import { Router } from 'aurelia-router';
 import { StageQueryService } from '../../services/query/stage-query-service';
 import { TeamQueryService, TeamSearchModel } from '../../services/query/team-query-service';
 import { IStageDetailModel } from '../../models/imported';
-import { MetaService } from '../../services/meta-service';
-import {MetaTool} from '../../tools/meta-tool';
+import { MetaTool } from '../../tools/meta-tool';
 
 @autoinject
 export class StageDetailPage {
