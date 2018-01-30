@@ -9,6 +9,7 @@ import { ITeamVideoModel } from '../../models/imported';
 import { AlertService } from '../../services/alert-service';
 import * as moment from 'moment';
 import { MetaService } from '../../services/meta-service';
+import {MetaTool} from '../../tools/meta-tool';
 
 @autoinject
 export class TeamDetailPage {
@@ -85,7 +86,7 @@ export class TeamDetailPage {
         this.teamQueryService.detail(id).then(result => {
             this.team = result;
             this.loading = false;
-            this.metaService.setTitle(this.team.name);
+            MetaTool.setTitle(this.team.name);
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });
         });

@@ -4,13 +4,13 @@ import { StageQueryService } from '../../services/query/stage-query-service';
 import { TeamQueryService, TeamSearchModel } from '../../services/query/team-query-service';
 import { IStageDetailModel } from '../../models/imported';
 import { MetaService } from '../../services/meta-service';
+import {MetaTool} from '../../tools/meta-tool';
 
 @autoinject
 export class StageDetailPage {
     private stageQueryService: StageQueryService;
     private teamQueryService: TeamQueryService;
     private router: Router;
-    private metaService: MetaService;
 
     stage: IStageDetailModel;
     loading: boolean;
@@ -19,11 +19,10 @@ export class StageDetailPage {
     teamSearchModel: TeamSearchModel;
     teams: any[] = [];
 
-    constructor(stageQueryService: StageQueryService, teamQueryService: TeamQueryService, router: Router, bindingEngine: BindingEngine, metaService: MetaService) {
+    constructor(stageQueryService: StageQueryService, teamQueryService: TeamQueryService, router: Router, bindingEngine: BindingEngine) {
         this.stageQueryService = stageQueryService;
         this.teamQueryService = teamQueryService;
         this.router = router;
-        this.metaService = metaService;
 
         this.teamSearchModel = new TeamSearchModel();
         this.teamSearchModel.cacheKey = 'search-team-detail';
@@ -48,7 +47,7 @@ export class StageDetailPage {
             this.stage = result;
             this.loading = false;
             this.teamSearchModel.stageId = result.id;
-            this.metaService.setTitle(this.stage.name);
+            MetaTool.setTitle(this.stage.name);
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested stage could not be found.' });
         });

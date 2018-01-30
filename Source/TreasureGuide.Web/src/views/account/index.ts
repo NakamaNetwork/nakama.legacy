@@ -7,6 +7,7 @@ import { TeamSearchModel } from '../../services/query/team-query-service';
 import { AccountService } from '../../services/account-service';
 import { BindingEngine } from 'aurelia-binding';
 import { MetaService } from '../../services/meta-service';
+import {MetaTool} from '../../tools/meta-tool';
 
 @autoinject
 export class ProfileDetailPage {
@@ -42,7 +43,7 @@ export class ProfileDetailPage {
             this.profile = result;
             this.loading = false;
             this.teamSearchModel.submittedBy = result.id;
-            this.metaService.setTitle(this.profile.userName);
+            MetaTool.setTitle(this.profile.userName);
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested account could not be found.' });
         });
