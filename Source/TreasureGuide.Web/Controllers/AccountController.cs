@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,7 +12,6 @@ using TreasureGuide.Web.Models.AccountViewModels;
 
 namespace TreasureGuide.Web.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -39,7 +37,6 @@ namespace TreasureGuide.Web.Controllers
         //
         // GET: /Account/Login
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
@@ -62,7 +59,6 @@ namespace TreasureGuide.Web.Controllers
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
@@ -75,7 +71,6 @@ namespace TreasureGuide.Web.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
             if (remoteError != null)
@@ -124,7 +119,6 @@ namespace TreasureGuide.Web.Controllers
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
         {
@@ -169,7 +163,6 @@ namespace TreasureGuide.Web.Controllers
         //
         // GET /Account/AccessDenied
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult AccessDenied()
         {
             return View();
@@ -178,7 +171,6 @@ namespace TreasureGuide.Web.Controllers
         //
         // GET /Account/ExternalLoginFailure
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult ExternalLoginFailure()
         {
             return View();
@@ -187,7 +179,6 @@ namespace TreasureGuide.Web.Controllers
         //
         // GET /Account/Lockout
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Lockout()
         {
             return View();
