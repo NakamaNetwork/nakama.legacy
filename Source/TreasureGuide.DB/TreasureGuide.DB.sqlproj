@@ -65,6 +65,7 @@
     <Folder Include="dbo\Tables\Teams" />
     <Folder Include="dbo\Tables\Stages" />
     <Folder Include="dbo\Tables\Accounts" />
+    <Folder Include="dbo\Tables\Boxes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Units\Ships.sql" />
@@ -89,6 +90,8 @@
     <None Include="PostDeploy\dbo.Ships.Table.sql" />
     <None Include="PostDeploy\dbo.Stages.Table.sql" />
     <None Include="PostDeploy\dbo.UnitAliases.Table.sql" />
+    <Build Include="dbo\Tables\Boxes\Boxes.sql" />
+    <Build Include="dbo\Tables\Boxes\BoxUnits.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
