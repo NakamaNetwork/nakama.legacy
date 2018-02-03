@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using RedditSharp;
+using RedditSharp.Things;
 using TreasureGuide.Entities;
 using TreasureGuide.Sniffer.Helpers;
 using TreasureGuide.Sniffer.TeamImporters.Models;
@@ -49,7 +50,7 @@ namespace TreasureGuide.Sniffer.TeamImporters
         {
             var teams = new List<TeamEntry>();
             var reddit = new Reddit(WebAgent, false);
-            foreach (var thread in _thread.Threads)
+            foreach (var thread in _thread.Threads.Distinct())
             {
                 teams.AddRange(FindTeamComments(thread, reddit));
             }
@@ -59,14 +60,23 @@ namespace TreasureGuide.Sniffer.TeamImporters
         private IEnumerable<TeamEntry> FindTeamComments(string thread, Reddit reddit)
         {
             var teams = new List<TeamEntry>();
-            var post = reddit.GetPost(thread.GetThreadUri());
+            Post post = null;
+            try
+            {
+                post = reddit.GetPost(thread.GetThreadUri());
+            }
+            catch
+            {
+                // ... eat it
+            }
             if (post != null)
             {
                 teams.AddRange(GetTeamsFromComment(_thread.Name, _thread.StageId, post.AuthorName, post.SelfText, post.Shortlink));
                 var comments = post.Comments;
                 foreach (var comment in comments)
                 {
-                    teams.AddRange(GetTeamsFromComment(_thread.Name, _thread.StageId, comment.AuthorName, comment.Body, comment.Shortlink));
+                    teams.AddRange(GetTeamsFromComment(_thread.Name, _thread.StageId, comment.AuthorName,
+                        comment.Body, comment.Shortlink));
                 }
             }
             return teams;
