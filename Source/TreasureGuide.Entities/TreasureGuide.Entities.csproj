@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Box.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityConstructor.cs" />
     <Compile Include="Helpers\ContextExtensions.cs" />
     <Compile Include="Helpers\EnumerableHelper.cs" />

@@ -5,6 +5,25 @@
         <!-- SSDL content -->
         <edmx:StorageModels>
         <Schema Namespace="tcdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Boxes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FriendId" Type="numeric" Precision="9" Scale="0" />
+          <Property Name="Global" Type="bit" />
+          <Property Name="Public" Type="bit" />
+        </EntityType>
+        <EntityType Name="BoxUnits">
+          <Key>
+            <PropertyRef Name="BoxId" />
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="BoxId" Type="int" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Rounds">
           <Key>
             <PropertyRef Name="Id" />
@@ -229,6 +248,48 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <Association Name="FK_dbo_Boxes_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Boxes" Type="Self.Boxes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Boxes">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BoxUnits_dbo_Boxes">
+          <End Role="Boxes" Type="Self.Boxes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BoxUnits" Type="Self.BoxUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boxes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoxUnits">
+              <PropertyRef Name="BoxId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BoxUnits_dbo_Units">
+          <End Role="Units" Type="Self.Units" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BoxUnits" Type="Self.BoxUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoxUnits">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Stages_dbo_Units">
           <End Role="Units" Type="Self.Units" Multiplicity="0..1" />
           <End Role="Stages" Type="Self.Stages" Multiplicity="*" />
@@ -540,6 +601,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="tcdbModelStoreContainer">
+          <EntitySet Name="Boxes" EntityType="Self.Boxes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BoxUnits" EntityType="Self.BoxUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rounds" EntityType="Self.Rounds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoundUnitBehavior" EntityType="Self.RoundUnitBehavior" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoundUnits" EntityType="Self.RoundUnits" Schema="dbo" store:Type="Tables" />
@@ -574,6 +637,18 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
     [UserRoles].[Name] AS [Name]
     FROM [dbo].[UserRoles] AS [UserRoles]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_dbo_Boxes_dbo_UserProfiles" Association="Self.FK_dbo_Boxes_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="Boxes" EntitySet="Boxes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BoxUnits_dbo_Boxes" Association="Self.FK_dbo_BoxUnits_dbo_Boxes">
+            <End Role="Boxes" EntitySet="Boxes" />
+            <End Role="BoxUnits" EntitySet="BoxUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BoxUnits_dbo_Units" Association="Self.FK_dbo_BoxUnits_dbo_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="BoxUnits" EntitySet="BoxUnits" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Stages_dbo_Units" Association="Self.FK_dbo_Stages_dbo_Units">
             <End Role="Units" EntitySet="Units" />
             <End Role="Stages" EntitySet="Stages" />
@@ -790,6 +865,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Team" EntitySet="Teams" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
+          <EntitySet Name="Boxes" EntityType="tcdbModel.Box" />
+          <AssociationSet Name="FK_dbo_Boxes_dbo_UserProfiles" Association="tcdbModel.FK_dbo_Boxes_dbo_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Box" EntitySet="Boxes" />
+          </AssociationSet>
+          <AssociationSet Name="BoxUnits" Association="tcdbModel.BoxUnits">
+            <End Role="Box" EntitySet="Boxes" />
+            <End Role="Unit" EntitySet="Units" />
+          </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -949,6 +1033,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="UnitAliases" Relationship="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" FromRole="Unit" ToRole="UnitAlias" />
           <NavigationProperty Name="Stages" Relationship="tcdbModel.FK_dbo_Stages_dbo_Units" FromRole="Unit" ToRole="Stage" />
           <NavigationProperty Name="TeamUnitSummaries" Relationship="tcdbModel.UnitTeamUnitSummary" FromRole="Unit" ToRole="TeamUnitSummary" />
+          <NavigationProperty Name="Boxes" Relationship="tcdbModel.BoxUnits" FromRole="Unit" ToRole="Box" />
                 </EntityType>
                 <Association Name="FK_dbo_RoundUnits_dbo_Units">
                     <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
@@ -1045,6 +1130,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamVotes" Relationship="tcdbModel.FK_dbo_TeamVotes_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamVote" />
           <NavigationProperty Name="TeamVideos" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamVideo" />
           <NavigationProperty Name="BookmarkedTeams" Relationship="tcdbModel.TeamBookmarks" FromRole="UserProfile" ToRole="Team" />
+          <NavigationProperty Name="Boxes" Relationship="tcdbModel.FK_dbo_Boxes_dbo_UserProfiles" FromRole="UserProfile" ToRole="Box" />
         </EntityType>
         <Association Name="FK_dbo_UserProfile_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
@@ -1448,6 +1534,37 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
           <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <EntityType Name="Box">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FriendId" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="Global" Type="Boolean" />
+          <Property Name="Public" Type="Boolean" />
+          <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_Boxes_dbo_UserProfiles" FromRole="Box" ToRole="UserProfile" />
+          <NavigationProperty Name="Units" Relationship="tcdbModel.BoxUnits" FromRole="Box" ToRole="Unit" />
+        </EntityType>
+        <Association Name="FK_dbo_Boxes_dbo_UserProfiles">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.Box" Role="Box" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Box">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BoxUnits">
+          <End Type="tcdbModel.Box" Role="Box" Multiplicity="*" />
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="*" />
+        </Association>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -1675,6 +1792,26 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </EndProperty>
             <EndProperty Name="Team">
               <ScalarProperty Name="Id" ColumnName="TeamId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Boxes">
+            <EntityTypeMapping TypeName="tcdbModel.Box">
+              <MappingFragment StoreEntitySet="Boxes">
+                <ScalarProperty Name="Public" ColumnName="Public" />
+                <ScalarProperty Name="Global" ColumnName="Global" />
+                <ScalarProperty Name="FriendId" ColumnName="FriendId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BoxUnits" TypeName="tcdbModel.BoxUnits" StoreEntitySet="BoxUnits">
+            <EndProperty Name="Unit">
+              <ScalarProperty Name="Id" ColumnName="UnitId" />
+            </EndProperty>
+            <EndProperty Name="Box">
+              <ScalarProperty Name="Id" ColumnName="BoxId" />
             </EndProperty>
           </AssociationSetMapping>
                 </EntityContainerMapping>
