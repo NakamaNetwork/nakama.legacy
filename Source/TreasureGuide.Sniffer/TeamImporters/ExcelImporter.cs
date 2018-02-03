@@ -10,6 +10,7 @@ namespace TreasureGuide.Sniffer.TeamImporters
     public class ExcelImporter : TeamImporter
     {
         private static readonly Regex DigitRegex = new Regex("\\d");
+        protected override string Output { get; } = "Excel";
 
         protected override async Task<IEnumerable<TeamEntry>> GetTeams()
         {
@@ -26,16 +27,16 @@ namespace TreasureGuide.Sniffer.TeamImporters
             {
                 for (var y = 1; y <= columns; y++)
                 {
-                    string value = range.Cells[x, y].Value?.ToString().Replace("|", ";");
+                    string value = range.Cells[x, y]?.ToString().Replace("|", ";");
                     if (value != null)
                     {
-                        string leader = range.Cells[1, y].Value?.ToString();
+                        string leader = range.Cells[1, y]?.ToString();
                         leader = leader.Replace("|", ";");
                         leader = DigitRegex.Replace(leader, "");
-                        string content = range.Cells[x, 1].Value?.ToString();
+                        string content = range.Cells[x, 1]?.ToString();
                         content = content.Replace("|", ";");
                         content = DigitRegex.Replace(content, "");
-                        string stage = range.Cells[x, 2].Value?.ToString();
+                        string stage = range.Cells[x, 2]?.ToString();
                         if (x > 1 && y > 2)
                         {
                             if (value.Contains("[") && !value.Contains("[V"))

@@ -1,19 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TreasureGuide.DB", "Source\TreasureGuide.DB\TreasureGuide.DB.sqlproj", "{D7EDB441-E679-412B-924C-303463A61847}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Entities", "Source\TreasureGuide.Entities\TreasureGuide.Entities.csproj", "{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Sniffer", "Source\TreasureGuide.Sniffer\TreasureGuide.Sniffer.csproj", "{4F12E99A-BB46-406F-9AFB-65192FB587E0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreasureGuide.Web", "Source\TreasureGuide.Web\TreasureGuide.Web.csproj", "{A753C845-B465-4EEA-90D0-A0C38E098324}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Web.Test", "Source\TreasureGuide.Web.Test\TreasureGuide.Web.Test.csproj", "{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Parser", "Source\TreasureGuide.Parser\TreasureGuide.Parser.csproj", "{175A1275-68C7-494E-9864-24B779088E66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreasureGuide.Sniffer", "Source\TreasureGuide.Sniffer\TreasureGuide.Sniffer.csproj", "{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F12E99A-BB46-406F-9AFB-65192FB587E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F12E99A-BB46-406F-9AFB-65192FB587E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F12E99A-BB46-406F-9AFB-65192FB587E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F12E99A-BB46-406F-9AFB-65192FB587E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,10 +37,10 @@ Global
 		{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2B7FB73-744C-4B62-9F23-0A8B5ECB420D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{175A1275-68C7-494E-9864-24B779088E66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{175A1275-68C7-494E-9864-24B779088E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{175A1275-68C7-494E-9864-24B779088E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{175A1275-68C7-494E-9864-24B779088E66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

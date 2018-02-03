@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using TreasureGuide.Entities;
 using TreasureGuide.Sniffer.DataParser;
+using TreasureGuide.Sniffer.TeamImporters;
 
 namespace TreasureGuide.Sniffer
 {
@@ -13,9 +16,15 @@ namespace TreasureGuide.Sniffer
 
         public static void Main(string[] args)
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            var configuration = builder.Build();
+
             var context = new TreasureEntities();
             AssureContextOpen(context);
-            RunParsers(context);
+            RunParsers(context, configuration);
             while (ParsersRunning > 0)
             {
                 // ...
@@ -29,15 +38,16 @@ namespace TreasureGuide.Sniffer
             Debug.WriteLine("Success!");
         }
 
-        private static void RunParsers(TreasureEntities context)
+        private static void RunParsers(TreasureEntities context, IConfigurationRoot configuration)
         {
             var parsers = new IParser[]
             {
-                new UnitParser(context),
-                new UnitFlagParser(context),
-                new UnitAliasParser(context),
-                new StageParser(context),
-                new ShipParser(context),
+                new RedditImporter(configuration), 
+                //new UnitParser(context),
+                //new UnitFlagParser(context),
+                //new UnitAliasParser(context),
+                //new StageParser(context),
+                //new ShipParser(context),
             };
             ParsersRunning = parsers.Count();
 
