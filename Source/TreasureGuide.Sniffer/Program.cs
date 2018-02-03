@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using TreasureGuide.Entities;
-using TreasureGuide.Sniffer.Parsers;
+using TreasureGuide.Sniffer.DataParser;
 
 namespace TreasureGuide.Sniffer
 {
@@ -31,7 +31,7 @@ namespace TreasureGuide.Sniffer
 
         private static void RunParsers(TreasureEntities context)
         {
-            var parsers = new ITreasureParser[]
+            var parsers = new IParser[]
             {
                 new UnitParser(context),
                 new UnitFlagParser(context),

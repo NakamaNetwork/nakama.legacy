@@ -7,7 +7,7 @@ using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Sniffer.Helpers;
 
-namespace TreasureGuide.Sniffer.Parsers
+namespace TreasureGuide.Sniffer.DataParser
 {
     public class UnitParser : TreasureParser<IEnumerable<Unit>>
     {

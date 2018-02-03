@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
+using TreasureGuide.Sniffer.TeamImporters.Models;
 
-namespace TreasureGuide.Parser
+namespace TreasureGuide.Sniffer.TeamImporters
 {
-    public static class Program
+    public class ExcelImporter : TeamImporter
     {
-        private static Regex DigitRegex = new Regex("\\d");
+        private static readonly Regex DigitRegex = new Regex("\\d");
 
-        public static void Main(string[] args)
+        protected override async Task<IEnumerable<TeamEntry>> GetTeams()
         {
             var excelApp = new Application();
             var book = excelApp.Workbooks.Open(@"C:\Users\robocafaz\Documents\clear rates.xlsx");
@@ -22,7 +21,7 @@ namespace TreasureGuide.Parser
             var rows = range.Rows.Count;
             var columns = range.Columns.Count;
 
-            var data = new List<Entry>();
+            var data = new List<TeamEntry>();
             for (var x = 1; x <= rows; x++)
             {
                 for (var y = 1; y <= columns; y++)
@@ -43,7 +42,7 @@ namespace TreasureGuide.Parser
                             {
                                 int stageId;
                                 var parsed = Int32.TryParse(stage, out stageId);
-                                var entry = new Entry { Content = content, Leader = leader, Data = value, StageId = parsed ? stageId : (int?)null };
+                                var entry = new TeamEntry { Content = content, Leader = leader, CalcLink = value, Desc = value, StageId = parsed ? stageId : (int?)null };
                                 if (value.Contains("yout"))
                                 {
                                     entry.Video = value;
@@ -54,31 +53,7 @@ namespace TreasureGuide.Parser
                     }
                 }
             }
-            var output = String.Join("|", data.Select(x => x.ParseOut()));
-            Debug.WriteLine(output);
-        }
-    }
-
-    public class Entry
-    {
-        public string Content { get; set; }
-        public string Leader { get; set; }
-        public string Data { get; set; }
-        public string Video { get; set; }
-        public int? StageId { get; set; }
-
-        public string ParseOut()
-        {
-            return String.Join("|",
-                $"{Leader} vs. {Content}", // name
-                Data, // calc
-                StageId, // stage
-                Data, // desc
-                "Referenced from the [/r/OnePieceTC](http://reddit.com/r/onepiecetc) [Global Clear Rates Spreadsheet](https://docs.google.com/spreadsheets/d/1Hhgy6RqsjD-vkL5_HsMsyZrI3weva4tLAvECBlpEDEc/edit?usp=sharing).", // credit
-                Video, // videos
-                "", // ref
-                "" // type
-            );
+            return data;
         }
     }
 }
