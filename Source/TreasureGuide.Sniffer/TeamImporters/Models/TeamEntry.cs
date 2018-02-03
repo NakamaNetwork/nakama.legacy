@@ -25,7 +25,7 @@ namespace TreasureGuide.Sniffer.TeamImporters.Models
                 Credit, // credit
                 Video, // videos
                 CreditReference, // ref
-                CreditType // type
+                (int)CreditType // type
             );
         }
     }

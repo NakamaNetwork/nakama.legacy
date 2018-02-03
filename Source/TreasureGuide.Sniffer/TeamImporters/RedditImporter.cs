@@ -103,10 +103,5 @@ namespace TreasureGuide.Sniffer.TeamImporters
                 $"Team submitted to [/r/OnePieceTC](http://www.reddit.com/r/onepiecetc) by user [/u/{author}](http://www.reddit.com/u/{author})\n\n" +
                 $"[Click here for the original comment.]({commentShortlink.Replace("oauth", "www")})";
         }
-
-        private string FindYouTube(string body)
-        {
-            return body;
-        }
     }
 }
