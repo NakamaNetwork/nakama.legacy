@@ -18,11 +18,12 @@ namespace TreasureGuide.Sniffer
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("redditthreads.json", optional: true, reloadOnChange: true);
 
             var configuration = builder.Build();
 
-            var context = new TreasureEntities();
+            var context = new TreasureEntities(configuration.GetConnectionString("TreasureEntities"));
             AssureContextOpen(context);
             RunParsers(context, configuration);
             while (ParsersRunning > 0)

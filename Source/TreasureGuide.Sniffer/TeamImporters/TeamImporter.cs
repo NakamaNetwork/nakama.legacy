@@ -17,8 +17,8 @@ namespace TreasureGuide.Sniffer.TeamImporters
         {
             var teams = await GetTeams();
             var teamStrings = teams.Select(x => x.ParseOut());
-            var output = String.Join("|", teamStrings);
-            var filename = $"{DateTime.Now.ToFileTime()}_{Output}.txt";
+            var output = String.Join("Ξ", teamStrings);
+            var filename = $"{Environment.CurrentDirectory}/{DateTime.Now.ToFileTime()}_{Output}.txt";
             File.WriteAllText(filename, output);
         }
     }

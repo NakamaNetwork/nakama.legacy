@@ -17,7 +17,7 @@ namespace TreasureGuide.Sniffer.TeamImporters.Models
 
         public string ParseOut()
         {
-            return String.Join("|",
+            return String.Join("Ξ",
                 $"{Leader} vs. {Content}", // name
                 CalcLink, // calc
                 StageId, // stage
