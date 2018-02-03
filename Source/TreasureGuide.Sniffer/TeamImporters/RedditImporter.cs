@@ -84,9 +84,8 @@ namespace TreasureGuide.Sniffer.TeamImporters
 
         private IEnumerable<TeamEntry> GetTeamsFromComment(string name, int? stageId, string author, string body, string link)
         {
-            if (author == "optclinkbot")
+            if (author == "optclinkbot" || NotConfident(body))
             {
-                // Don't pull bot links.
                 return Enumerable.Empty<TeamEntry>();
             }
             var links = body.GetCalcLinks();
@@ -102,6 +101,12 @@ namespace TreasureGuide.Sniffer.TeamImporters
                 Video = String.Join(",", body.GetYouTubeLinks())
             });
             return teams;
+        }
+
+        private bool NotConfident(string body)
+        {
+            var lower = body.ToLower();
+            return lower.Contains("?") || lower.Contains("help") || lower.Contains("think") || lower.Contains(" try") || lower.Contains("should");
         }
 
         private string CreateCredit(string author, string commentShortlink)

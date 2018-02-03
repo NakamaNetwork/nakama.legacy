@@ -150,7 +150,7 @@ namespace TreasureGuide.Sniffer.Helpers
             return links;
         }
 
-        private static readonly Regex VidRegex = new Regex(@"(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|[a-zA-Z0-9_\-]+\?v=)([^#\&\?\n<>\'\""\s]*)", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static readonly Regex VidRegex = new Regex(@"(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|[a-zA-Z0-9_\-]+\?v=)([^#\&\?\n<>\'\""\s\)]*)", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public static IEnumerable<string> GetYouTubeLinks(this string body)
         {

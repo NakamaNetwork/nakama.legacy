@@ -35,9 +35,9 @@ namespace TreasureGuide.Sniffer
 
         private static void AssureContextOpen(TreasureEntities context)
         {
-            Debug.WriteLine("Checking if database is accessible.");
-            Debug.WriteLine("There are " + context.Units.Count() + " unit(s) in the database right now.");
-            Debug.WriteLine("Success!");
+            Console.WriteLine("Checking if database is accessible.");
+            Console.WriteLine("There are " + context.Units.Count() + " unit(s) in the database right now.");
+            Console.WriteLine("Success!");
         }
 
         private static void RunParsers(TreasureEntities context, IConfigurationRoot configuration)
@@ -60,19 +60,19 @@ namespace TreasureGuide.Sniffer
                     var name = parser.GetType().Name;
                     try
                     {
-                        Debug.WriteLine($"Running {name}.");
+                        Console.WriteLine($"Running {name}.");
                         await parser.Execute();
-                        Debug.WriteLine($"{name} Succeeded!");
+                        Console.WriteLine($"{name} Succeeded!");
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine($"{name} Failed!");
-                        Debug.WriteLine(e);
+                        Console.WriteLine($"{name} Failed!");
+                        Console.WriteLine(e);
                     }
                     finally
                     {
                         ParsersRunning--;
-                        Debug.WriteLine($"{ParsersRunning} Parser(s) Remain");
+                        Console.WriteLine($"{ParsersRunning} Parser(s) Remain");
                     }
                     GC.Collect();
                 }
