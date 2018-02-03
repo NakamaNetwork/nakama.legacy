@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TreasureGuide.Entities;
 
 namespace TreasureGuide.Sniffer.Helpers
@@ -133,6 +134,38 @@ namespace TreasureGuide.Sniffer.Helpers
                 return value;
             }
             return fallback;
+        }
+
+        private static readonly Regex CalcRegex = new Regex("transfer/(.+?)H", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+
+        public static IEnumerable<string> GetCalcLinks(this string body)
+        {
+            var matches = CalcRegex.Matches(body);
+            var links = new List<string>();
+            for (var i = 0; i < matches.Count; i++)
+            {
+                var match = matches[i];
+                links.Add($"http://optc-db.github.io/damage/#/{match.Value}");
+            }
+            return links;
+        }
+
+        private static readonly Regex VidRegex = new Regex(@"(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|[a-zA-Z0-9_\-]+\?v=)([^#\&\?\n<>\'\""\s\)]*)", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        public static IEnumerable<string> GetYouTubeLinks(this string body)
+        {
+            var matches = VidRegex.Matches(body);
+            var links = new List<string>();
+            for (var i = 0; i < matches.Count; i++)
+            {
+                var match = matches[i].Value;
+                var start = Math.Max(0, match.LastIndexOf("/") + 1);
+                var end = Math.Max(0, match.IndexOf(" "));
+                var length = (end == 0 ? match.Length : end) - start;
+                var value = length > 0 ? match.Substring(start, length) : match;
+                links.Add($"http://youtu.be/{value}");
+            }
+            return links;
         }
     }
 }

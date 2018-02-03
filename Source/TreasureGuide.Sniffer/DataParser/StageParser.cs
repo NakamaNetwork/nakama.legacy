@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -9,7 +8,7 @@ using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Sniffer.Helpers;
 
-namespace TreasureGuide.Sniffer.Parsers
+namespace TreasureGuide.Sniffer.DataParser
 {
     public class StageParser : TreasureParser<IEnumerable<Stage>>
     {

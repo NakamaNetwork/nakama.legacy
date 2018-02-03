@@ -1,19 +1,13 @@
-﻿using System.Collections;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TreasureGuide.Entities;
 
-namespace TreasureGuide.Sniffer.Parsers
+namespace TreasureGuide.Sniffer.DataParser
 {
-    public interface ITreasureParser
-    {
-        Task Execute();
-    }
-
-    public abstract class TreasureParser<T> : ITreasureParser
+    public abstract class TreasureParser<T> : IParser
     {
         protected static readonly Regex FunctionRegex = new Regex("function(.|\r|\n)+?}");
         protected static readonly Regex SingleCommentRegex = new Regex("//(.+)");
