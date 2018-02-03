@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using RedditSharp;
-using RedditSharp.Things;
 using TreasureGuide.Entities;
 using TreasureGuide.Sniffer.Helpers;
 using TreasureGuide.Sniffer.TeamImporters.Models;
@@ -35,47 +33,47 @@ namespace TreasureGuide.Sniffer.TeamImporters
             }
         }
 
-        protected override string Output { get; } = "Reddit";
+        private string _title;
+        private RedditThread _thread;
 
-        public RedditImporter(IConfigurationRoot configuration)
+        protected override string Output => _title;
+
+        public RedditImporter(RedditThread thread, IConfigurationRoot configuration)
         {
             _configuration = configuration;
+            _title = thread.Name.Replace(" ", "_");
+            _thread = thread;
         }
 
         protected override async Task<IEnumerable<TeamEntry>> GetTeams()
         {
             var teams = new List<TeamEntry>();
-            var section = _configuration.GetSection("RedditThreads").Get<RedditThread[]>();
             var reddit = new Reddit(WebAgent, false);
-            foreach (var stage in section)
+            foreach (var thread in _thread.Threads)
             {
-                if (stage.Threads != null)
+                teams.AddRange(FindTeamComments(thread, reddit));
+            }
+            return teams;
+        }
+
+        private IEnumerable<TeamEntry> FindTeamComments(string thread, Reddit reddit)
+        {
+            var teams = new List<TeamEntry>();
+            var post = reddit.GetPost(thread.GetThreadUri());
+            if (post != null)
+            {
+                teams.AddRange(GetTeamsFromComment(_thread.Name, _thread.StageId, post.AuthorName, post.SelfText, post.Shortlink));
+                var comments = post.Comments;
+                foreach (var comment in comments)
                 {
-                    foreach (var thread in stage.Threads)
-                    {
-                        teams.AddRange(FindTeamComments(thread, stage, reddit));
-                    }
+                    teams.AddRange(GetTeamsFromComment(_thread.Name, _thread.StageId, comment.AuthorName, comment.Body, comment.Shortlink));
                 }
             }
             return teams;
         }
 
-        private IEnumerable<TeamEntry> FindTeamComments(string thread, RedditThread stage, Reddit reddit)
+        private IEnumerable<TeamEntry> GetTeamsFromComment(string name, int? stageId, string author, string body, string link)
         {
-            var teams = new List<TeamEntry>();
-            var post = reddit.GetPost(thread.GetThreadUri());
-            var comments = post.Comments;
-            foreach (var comment in comments)
-            {
-                teams.AddRange(GetTeamsFromComment(comment, stage));
-            }
-            return teams;
-        }
-
-        private IEnumerable<TeamEntry> GetTeamsFromComment(Comment comment, RedditThread stage)
-        {
-            var author = comment.AuthorName;
-            var body = comment.Body;
             if (author == "optclinkbot")
             {
                 // Don't pull bot links.
@@ -84,14 +82,13 @@ namespace TreasureGuide.Sniffer.TeamImporters
             var links = body.GetCalcLinks();
             var teams = links.Select(x => new TeamEntry
             {
+                Name = $"/u/{author}'s {name} Team",
                 CalcLink = x,
-                Content = stage.Name,
-                Leader = author,
-                Credit = CreateCredit(author, comment.Shortlink),
+                Credit = CreateCredit(author, link),
                 CreditReference = author,
                 CreditType = TeamCreditType.Reddit,
                 Desc = body,
-                StageId = stage.StageId,
+                StageId = stageId,
                 Video = String.Join(",", body.GetYouTubeLinks())
             });
             return teams;
@@ -102,6 +99,12 @@ namespace TreasureGuide.Sniffer.TeamImporters
             return
                 $"Team submitted to [/r/OnePieceTC](http://www.reddit.com/r/onepiecetc) by user [/u/{author}](http://www.reddit.com/u/{author})\n\n" +
                 $"[Click here for the original comment.]({commentShortlink.Replace("oauth", "www")})";
+        }
+
+        public static IEnumerable<RedditImporter> GetThreads(IConfigurationRoot config)
+        {
+            var section = config.GetSection("RedditThreads").Get<RedditThread[]>();
+            return section.Select(x => new RedditImporter(x, config));
         }
     }
 }

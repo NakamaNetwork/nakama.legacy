@@ -43,7 +43,7 @@ namespace TreasureGuide.Sniffer.TeamImporters
                             {
                                 int stageId;
                                 var parsed = Int32.TryParse(stage, out stageId);
-                                var entry = new TeamEntry { Content = content, Leader = leader, CalcLink = value, Desc = value, StageId = parsed ? stageId : (int?)null };
+                                var entry = new TeamEntry { Name = $"{leader} vs {content}", CalcLink = value, Desc = value, StageId = parsed ? stageId : (int?)null };
                                 if (value.Contains("yout"))
                                 {
                                     entry.Video = value;

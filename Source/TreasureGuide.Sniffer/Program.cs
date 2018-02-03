@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -41,15 +42,15 @@ namespace TreasureGuide.Sniffer
 
         private static void RunParsers(TreasureEntities context, IConfigurationRoot configuration)
         {
-            var parsers = new IParser[]
+            IEnumerable<IParser> parsers = new IParser[]
             {
-                new RedditImporter(configuration), 
                 //new UnitParser(context),
                 //new UnitFlagParser(context),
                 //new UnitAliasParser(context),
                 //new StageParser(context),
                 //new ShipParser(context),
             };
+            parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             ParsersRunning = parsers.Count();
 
             Task.Run(async () =>

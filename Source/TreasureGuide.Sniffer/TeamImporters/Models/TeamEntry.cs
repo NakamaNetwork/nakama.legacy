@@ -5,8 +5,7 @@ namespace TreasureGuide.Sniffer.TeamImporters.Models
 {
     public class TeamEntry
     {
-        public string Leader { get; set; }
-        public string Content { get; set; }
+        public string Name { get; set; }
         public string CalcLink { get; set; }
         public string Desc { get; set; }
         public string Credit { get; set; }
@@ -18,7 +17,7 @@ namespace TreasureGuide.Sniffer.TeamImporters.Models
         public string ParseOut()
         {
             return String.Join("Ξ",
-                $"{Leader} vs. {Content}", // name
+                Name, // name
                 CalcLink, // calc
                 StageId, // stage
                 Desc, // desc
