@@ -1,8 +1,13 @@
 ﻿<template>
     <h1>Admin</h1>
+    <h2>Tools</h2>
     <div class="row">
-        <h2>Tools</h2>
-        <button type="button" click.delegate="createTeam()">Create a Random Team</button>
+        <div class="col m6">
+            <button type="button" click.delegate="createTeam(false)">Random Team</button>
+        </div>
+        <div class="col m6">
+            <button type="button" click.delegate="createTeam(true)">Super Random Team</button>
+        </div>
     </div>
     <h2>User Management</h2>
     <form with.bind="searchModel">

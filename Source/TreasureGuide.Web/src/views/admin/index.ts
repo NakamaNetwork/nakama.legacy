@@ -50,15 +50,16 @@ export class AdminPage {
         }
     }
 
-    createTeam() {
+    createTeam(suuuper: boolean) {
         var team = new TeamEditorModel();
         team.name = 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a');
         team.guide = '';
         team.guide = '';
         team.credits = '';
         for (var i = 0; i < 6; i++) {
+            var randomLimit = suuuper ? 1000 : i < 3 ? 4 : 20;
             var unit = <ITeamUnitEditorModel>{
-                unitId: Math.floor(Math.random() * 1000) + 1,
+                unitId: Math.floor(Math.random() * randomLimit) + 1,
                 position: i,
                 sub: false
             };
