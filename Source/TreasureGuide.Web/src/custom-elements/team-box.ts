@@ -12,6 +12,9 @@ export class TeamBox {
     @bindable
     team: ITeamStubModel;
 
+    @bindable
+    target: string = '';
+
     constructor(accountService: AccountService) {
         this.accountService = accountService;
     }

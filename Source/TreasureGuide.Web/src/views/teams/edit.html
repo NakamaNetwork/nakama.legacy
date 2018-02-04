@@ -56,6 +56,16 @@
                 </div>
             </fieldset>
         </div>
+        <div class="row" if.bind="similar.length > 0">
+            <fieldset>
+                <legend>Similar Teams</legend>
+                <div class="similar-section">
+                    <div class="col m4" repeat.for="team of similar">
+                        <team-box team.bind="team" target="_blank"></team-box>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
         <div class="row">
             <fieldset>
                 <legend>Options</legend>
@@ -66,7 +76,7 @@
                             Save as Draft
                         </span>
                     </label>
-                    <em>(Saves team to server without allowing others to see it.)</em>
+                    <em><small>(Saves team to server without allowing others to see it.)</small></em>
                 </div>
                 <div class="col m6" if.bind="id">
                     <label for="deleteInput">
@@ -75,7 +85,7 @@
                             Delete Team
                         </span>
                     </label>
-                    <em class="_dangerText" auth-req="roles: Administrator, Moderator; inverse: true">(This cannot be undone!)</em>
+                    <em class="_dangerText" auth-req="roles: Administrator, Moderator; inverse: true"><small>(This cannot be undone!)</small></em>
                 </div>
             </fieldset>
         </div>

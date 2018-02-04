@@ -65,11 +65,9 @@
     <Folder Include="dbo\Tables\Teams" />
     <Folder Include="dbo\Tables\Stages" />
     <Folder Include="dbo\Tables\Accounts" />
+    <Folder Include="dbo\Functions" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PostDeploy\StageData.sql" />
-    <None Include="PostDeploy\CharacterData.sql" />
-    <None Include="PostDeploy\ShipData.sql" />
     <Build Include="dbo\Tables\Units\Ships.sql" />
     <Build Include="dbo\Tables\Units\Units.sql" />
     <Build Include="dbo\Tables\Teams\Teams.sql" />
@@ -88,6 +86,13 @@
     <Build Include="dbo\Tables\Accounts\AspNetUsers.sql" />
     <Build Include="dbo\Tables\Accounts\AspNetUserTokens.sql" />
     <Build Include="dbo\Tables\Accounts\UserProfiles.sql" />
+    <None Include="PostDeploy\dbo.Units.Table.sql" />
+    <None Include="PostDeploy\dbo.Ships.Table.sql" />
+    <None Include="PostDeploy\dbo.Stages.Table.sql" />
+    <None Include="PostDeploy\dbo.UnitAliases.Table.sql" />
+    <Build Include="dbo\Views\TeamMinis.sql" />
+    <Build Include="dbo\Functions\SimilarTeams.sql" />
+    <Build Include="dbo\Functions\SimilarTeamsId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
@@ -104,7 +109,6 @@
     <None Include="PostDeploy\AuthData.sql" />
     <Build Include="dbo\Tables\Teams\TeamCredits.sql" />
     <Build Include="dbo\Tables\Units\UnitAliases.sql" />
-    <None Include="PostDeploy\UnitAliasData.sql" />
     <Build Include="dbo\Tables\Teams\TeamGenericSlots.sql" />
     <Build Include="dbo\Views\TeamUnitSummaries.sql" />
     <Build Include="dbo\Tables\Teams\TeamBookmarks.sql" />

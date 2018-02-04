@@ -8,6 +8,12 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
+            header: '02/03/18',
+            lines: [
+                'Added functionality to show similar teams when editing or creating teams to hopefully cut down on duplicates.'
+            ]
+        },
+        {
             header: '01/29/18',
             lines: [
                 'Updated the look-and-feel of Team Boxes to resolve a few display bugs and make better use of the space.',

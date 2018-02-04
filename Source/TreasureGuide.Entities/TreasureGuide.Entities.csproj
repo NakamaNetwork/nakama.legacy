@@ -71,6 +71,12 @@
     <Compile Include="Ship.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="SimilarTeamsId_Result.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SimilarTeams_Result.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="SocketType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
