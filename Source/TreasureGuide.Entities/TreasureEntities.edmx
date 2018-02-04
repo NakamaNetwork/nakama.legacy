@@ -540,6 +540,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </ReferentialConstraint>
         </Association>
         <Function Name="SimilarTeams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teamId" Type="int" Mode="In" />
           <Parameter Name="stageId" Type="int" Mode="In" />
           <Parameter Name="unit1" Type="int" Mode="In" />
           <Parameter Name="unit2" Type="int" Mode="In" />
@@ -821,6 +822,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
           <FunctionImport Name="SimilarTeams" IsComposable="true" ReturnType="Collection(tcdbModel.SimilarTeams_Result)">
+            <Parameter Name="teamId" Mode="In" Type="Int32" />
             <Parameter Name="stageId" Mode="In" Type="Int32" />
             <Parameter Name="unit1" Mode="In" Type="Int32" />
             <Parameter Name="unit2" Mode="In" Type="Int32" />

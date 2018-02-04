@@ -283,23 +283,24 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("{id}/[action]")]
         public async Task<IActionResult> Similar(int? id)
         {
-            var similar = DbContext.SimilarTeamsId(id).Take(10);
+            var similar = DbContext.SimilarTeamsId(id).OrderBy(x => x.Matches).Take(10);
             return await TrimDownSimilar(similar);
         }
 
         [HttpGet]
         [ActionName("Similar")]
         [Route("[action]")]
-        public async Task<IActionResult> Similar(int? stageId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
+        public async Task<IActionResult> Similar(int? teamId, int? stageId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
         {
-            var similar = DbContext.SimilarTeams(stageId, unit1, unit2, unit3, unit4, unit5, unit6).Take(10);
+            var similar = DbContext.SimilarTeams(teamId, stageId, unit1, unit2, unit3, unit4, unit5, unit6).OrderByDescending(x => x.Matches).Take(10);
             return await TrimDownSimilar(similar);
         }
 
-        private async Task<IActionResult> TrimDownSimilar(SimilarTeamsResult similar)
+        private async Task<IActionResult> TrimDownSimilar(IQueryable<SimilarTeams_Result> similar)
         {
-            var teams = await DbContext.Teams.Join(similar, x => x.Id, y => y.TeamId, (x, y) => x).ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
-            return teams;
+            var teamIds = await similar.Select(x => x.TeamId).ToListAsync();
+            var teams = await DbContext.Teams.Join(teamIds, x => x.Id, y => y, (x, y) => x).ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+            return Ok(teams);
         }
 
         [HttpGet]

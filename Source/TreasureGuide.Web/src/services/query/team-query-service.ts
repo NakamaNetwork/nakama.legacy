@@ -56,6 +56,15 @@ export class TeamQueryService extends SearchableQueryService {
     import(model: ITeamImportModel): Promise<number> {
         return this.http.post(this.buildAddress('import'), model);
     }
+
+    similarId(id: number): Promise<ITeamStubModel[]> {
+        return this.http.get(this.buildAddress(id + '/similar'));
+    }
+
+    similar(payload): Promise<ITeamStubModel[]> {
+        var endpoint = this.http.parameterize(this.buildAddress('similar'), payload);
+        return this.http.get(endpoint);
+    }
 }
 
 export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
