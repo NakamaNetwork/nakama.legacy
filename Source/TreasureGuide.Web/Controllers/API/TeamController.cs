@@ -279,6 +279,30 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         [HttpGet]
+        [ActionName("Similar")]
+        [Route("{id}/[action]")]
+        public async Task<IActionResult> Similar(int? id)
+        {
+            var similar = DbContext.SimilarTeamsId(id).Take(10);
+            return await TrimDownSimilar(similar);
+        }
+
+        [HttpGet]
+        [ActionName("Similar")]
+        [Route("[action]")]
+        public async Task<IActionResult> Similar(int? stageId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
+        {
+            var similar = DbContext.SimilarTeams(stageId, unit1, unit2, unit3, unit4, unit5, unit6).Take(10);
+            return await TrimDownSimilar(similar);
+        }
+
+        private async Task<IActionResult> TrimDownSimilar(SimilarTeamsResult similar)
+        {
+            var teams = await DbContext.Teams.Join(similar, x => x.Id, y => y.TeamId, (x, y) => x).ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+            return teams;
+        }
+
+        [HttpGet]
         [ActionName("Trending")]
         [Route("[action]")]
         public async Task<IActionResult> Trending()
