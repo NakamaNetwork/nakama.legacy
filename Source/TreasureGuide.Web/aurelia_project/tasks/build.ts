@@ -1,4 +1,5 @@
 import * as gulp from 'gulp';
+import cleanScripts from './clean-scripts';
 import transpile from './transpile';
 import processMarkup from './process-markup';
 import processCSS from './process-css';
@@ -9,6 +10,7 @@ import { CLIOptions } from 'aurelia-cli';
 
 let buildTask = gulp.series(
     readProjectConfiguration,
+    cleanScripts,
     gulp.parallel(
         transpile,
         processMarkup,
