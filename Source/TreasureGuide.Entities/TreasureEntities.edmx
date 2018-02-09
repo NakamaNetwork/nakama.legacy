@@ -14,6 +14,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="FriendId" Type="numeric" Precision="9" Scale="0" />
           <Property Name="Global" Type="bit" />
+          <Property Name="Blacklist" Type="bit" />
           <Property Name="Public" Type="bit" />
         </EntityType>
         <EntityType Name="BoxUnits">
@@ -1587,6 +1588,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="FriendId" Type="Decimal" Precision="9" Scale="0" />
           <Property Name="Global" Type="Boolean" />
+          <Property Name="Blacklist" Type="Boolean" />
           <Property Name="Public" Type="Boolean" />
           <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_Boxes_dbo_UserProfiles" FromRole="Box" ToRole="UserProfile" />
           <NavigationProperty Name="Units" Relationship="tcdbModel.BoxUnits" FromRole="Box" ToRole="Unit" />
@@ -1846,6 +1848,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySetMapping Name="Boxes">
             <EntityTypeMapping TypeName="tcdbModel.Box">
               <MappingFragment StoreEntitySet="Boxes">
+                <ScalarProperty Name="Blacklist" ColumnName="Blacklist" />
                 <ScalarProperty Name="Public" ColumnName="Public" />
                 <ScalarProperty Name="Global" ColumnName="Global" />
                 <ScalarProperty Name="FriendId" ColumnName="FriendId" />
