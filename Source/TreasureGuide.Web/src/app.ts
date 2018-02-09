@@ -94,7 +94,7 @@ export class App {
 
     @computedFrom('fragment')
     get boxIsActive() {
-        return this.fragment === '/box' ? 'active' : '';
+        return this.fragment === '/boxes' ? 'active' : '';
     }
 
     @computedFrom('boxService', 'boxService.currentBox')
