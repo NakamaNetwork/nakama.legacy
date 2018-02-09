@@ -1,9 +1,9 @@
-﻿import { autoinject, bindable, computedFrom } from 'aurelia-framework';
+﻿import { autoinject, bindable, computedFrom, BindingEngine } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
-import { ITeamEditorModel, ITeamUnitEditorModel, ITeamGenericSlotEditorModel } from '../../models/imported';
+import { ITeamEditorModel, ITeamUnitEditorModel, ITeamGenericSlotEditorModel, ITeamStubModel } from '../../models/imported';
 import { TeamEditorModel } from '../../services/query/team-query-service';
 import { AlertService } from '../../services/alert-service';
 import { TeamImportView } from '../../custom-elements/dialogs/team-import';
@@ -25,23 +25,29 @@ export class TeamEditPage {
     private accountService: AccountService;
 
     private controller: ValidationController;
+    private bindingEngine: BindingEngine;
 
     title = 'Create Team';
     @bindable team: TeamEditorModel;
     loading: boolean;
     saved: boolean;
 
+    similarLoading: boolean;
+    similar: ITeamStubModel[] = [];
+
     constructor(teamQueryService: TeamQueryService,
         router: Router,
         alertService: AlertService,
         dialogService: DialogService,
         validFactory: ValidationControllerFactory,
-        accountService: AccountService
+        accountService: AccountService,
+        bindingEngine: BindingEngine
     ) {
         this.controller = validFactory.createForCurrentScope();
         this.controller.addRenderer(new BeauterValidationFormRenderer());
         this.dialogService = dialogService;
         this.accountService = accountService;
+        this.bindingEngine = bindingEngine;
 
         this.teamQueryService = teamQueryService;
         this.router = router;
@@ -65,6 +71,9 @@ export class TeamEditPage {
             });
         }
         this.controller.validate();
+        this.bindingEngine.propertyObserver(this, 'similarModel').subscribe((n, o) => {
+            this.getSimilar(n);
+        });
     }
 
     canDeactivate() {
@@ -147,6 +156,32 @@ export class TeamEditPage {
                 this.alert.danger('An error has occurred. Please try again in a few moments.');
             });
         });
+    }
+
+    get similarModel() {
+        var similar = { stageId: this.team.stageId, teamId: this.team.id };
+        for (var i = 0; i < 6; i++) {
+            var unit = this.team.teamUnits.find(x => x.position === i && !x.sub);
+            similar['unit' + i] = unit ? unit.unitId : null;
+        }
+        return similar;
+    }
+
+    lastSimilar: string;
+
+    getSimilar(model) {
+        var json = JSON.stringify(model);
+        if (this.lastSimilar !== json) {
+            this.lastSimilar = json;
+            this.similarLoading = true;
+            this.teamQueryService.similar(model).then(x => {
+                    this.similar = x;
+                    this.similarLoading = false;
+                }).catch(x => {
+                    this.similar = [];
+                    this.similarLoading = false;
+                });
+        }
     }
 
     @computedFrom('team.name')

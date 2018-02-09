@@ -65,6 +65,7 @@
     <Folder Include="dbo\Tables\Teams" />
     <Folder Include="dbo\Tables\Stages" />
     <Folder Include="dbo\Tables\Accounts" />
+    <Folder Include="dbo\Functions" />
     <Folder Include="dbo\Tables\Boxes" />
   </ItemGroup>
   <ItemGroup>

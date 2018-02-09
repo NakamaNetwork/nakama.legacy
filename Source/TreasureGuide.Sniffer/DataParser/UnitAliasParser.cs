@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 
-namespace TreasureGuide.Sniffer.Parsers
+namespace TreasureGuide.Sniffer.DataParser
 {
     public class UnitAliasParser : TreasureParser<IEnumerable<UnitAlias>>
     {

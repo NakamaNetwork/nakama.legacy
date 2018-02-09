@@ -1,6 +1,6 @@
 <template>
     <div class="backdrop" class.bind="teamClass"></div>
-    <a route-href="route: teamDetails; params.bind: {id: team.id}">
+    <a route-href="route: teamDetails; params.bind: {id: team.id}" target.bind="target">
         <flag-display team.bind="team"></flag-display>
         <div class="row">
             <div class="col f10">

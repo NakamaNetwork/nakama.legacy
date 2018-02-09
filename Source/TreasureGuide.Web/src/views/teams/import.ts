@@ -3,16 +3,19 @@ import { TeamQueryService } from '../../services/query/team-query-service';
 import { ITeamEditorModel, ITeamVideoModel, ITeamCreditModel, ITeamImportModel } from '../../models/imported';
 import { CalcParser } from '../../tools/calc-parser';
 import { VideoParser } from '../../tools/video-parser';
+import { AlertService } from '../../services/alert-service';
 
 @autoinject
 export class TeamImportPage {
     private teamQueryService: TeamQueryService;
+    private alertService: AlertService;
 
     imports: TeamImportLineModel[] = [];
     strings: string = '';
 
-    constructor(teamQueryService: TeamQueryService) {
+    constructor(teamQueryService: TeamQueryService, alertService: AlertService) {
         this.teamQueryService = teamQueryService;
+        this.alertService = alertService;
     }
 
     add() {
@@ -40,11 +43,15 @@ export class TeamImportPage {
     }
 
     convertStrings() {
-        var lines = this.strings.split('|');
+        var lines = this.strings.split('Ξ');
         if (lines.length % 8 !== 0) {
+            this.alertService.danger('Could not import text. Had ' +
+                lines.length +
+                ' fields. Needs to be a multiple of 8.');
             return;
         }
         var things = new Array<TeamImportLineModel>();
+        this.alertService.info('Processing rows...');
         for (var i = 0; i < lines.length; i += 8) {
             var stage = parseInt(lines[i + 2]);
             if (Number.isNaN(stage)) {
@@ -68,7 +75,10 @@ export class TeamImportPage {
             };
             things.push(model);
         }
+        this.alertService.info('Setting fields...');
         this.imports = (things);
+        this.alertService.success('Ready for review.');
+        this.strings = '';
     }
 
     createModel(value: TeamImportLineModel): ITeamImportModel {

@@ -600,6 +600,37 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SimilarTeams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teamId" Type="int" Mode="In" />
+          <Parameter Name="stageId" Type="int" Mode="In" />
+          <Parameter Name="unit1" Type="int" Mode="In" />
+          <Parameter Name="unit2" Type="int" Mode="In" />
+          <Parameter Name="unit3" Type="int" Mode="In" />
+          <Parameter Name="unit4" Type="int" Mode="In" />
+          <Parameter Name="unit5" Type="int" Mode="In" />
+          <Parameter Name="unit6" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TeamId" Type="int" />
+                <Property Name="StageId" Type="int" />
+                <Property Name="Matches" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="SimilarTeamsId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teamId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TeamId" Type="int" />
+                <Property Name="StageId" Type="int" />
+                <Property Name="Matches" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="tcdbModelStoreContainer">
           <EntitySet Name="Boxes" EntityType="Self.Boxes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoxUnits" EntityType="Self.BoxUnits" Schema="dbo" store:Type="Tables" />
@@ -874,6 +905,19 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Box" EntitySet="Boxes" />
             <End Role="Unit" EntitySet="Units" />
           </AssociationSet>
+          <FunctionImport Name="SimilarTeams" IsComposable="true" ReturnType="Collection(tcdbModel.SimilarTeams_Result)">
+            <Parameter Name="teamId" Mode="In" Type="Int32" />
+            <Parameter Name="stageId" Mode="In" Type="Int32" />
+            <Parameter Name="unit1" Mode="In" Type="Int32" />
+            <Parameter Name="unit2" Mode="In" Type="Int32" />
+            <Parameter Name="unit3" Mode="In" Type="Int32" />
+            <Parameter Name="unit4" Mode="In" Type="Int32" />
+            <Parameter Name="unit5" Mode="In" Type="Int32" />
+            <Parameter Name="unit6" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SimilarTeamsId" IsComposable="true" ReturnType="Collection(tcdbModel.SimilarTeams_Result)">
+            <Parameter Name="teamId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -1565,6 +1609,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <End Type="tcdbModel.Box" Role="Box" Multiplicity="*" />
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="*" />
         </Association>
+        <ComplexType Name="SimilarTeams_Result">
+            <Property Type="Int32" Name="TeamId" Nullable="true" />
+            <Property Type="Int32" Name="StageId" Nullable="true" />
+            <Property Type="Int32" Name="Matches" Nullable="true" />
+        </ComplexType>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -1814,6 +1863,24 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               <ScalarProperty Name="Id" ColumnName="BoxId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="SimilarTeams" FunctionName="tcdbModel.Store.SimilarTeams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="tcdbModel.SimilarTeams_Result">
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="Matches" ColumnName="Matches" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SimilarTeamsId" FunctionName="tcdbModel.Store.SimilarTeamsId">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="tcdbModel.SimilarTeams_Result">
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="Matches" ColumnName="Matches" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
                 </EntityContainerMapping>
             </Mapping>
         </edmx:Mappings>
