@@ -25,7 +25,15 @@
                     </a>
                 </li>
                 <li class="_floatRight" if.bind="accountService.isLoggedIn">
-                    <a route-href="route: account; params.bind: { id: accountService.userProfile.userName }" class="${accountIsActive ? 'active' : ''}">
+                    <a route-href="route: boxes"
+                       title.bind="boxTitle"
+                       class.bind="boxesIsActive">
+                        <i class="fa fa-fw" class.bind="boxIcon"></i>
+                    </a>
+                </li>
+                <li class="_floatRight" if.bind="accountService.isLoggedIn">
+                    <a route-href="route: account; params.bind: { id: accountService.userProfile.userName }"
+                       class.bind="accountIsActive">
                         ${accountService.userProfile.userName}
                     </a>
                 </li>

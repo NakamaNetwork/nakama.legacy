@@ -6,6 +6,47 @@ export interface IAccessTokenModel {
 }
 
 
+export interface IBoxStubModel {
+    id: number;
+    name: string;
+    friendId: number;
+    global: boolean;
+    public: boolean;
+    blacklist: boolean;
+    
+}
+
+export interface IBoxDetailModel extends IBoxStubModel{
+    unitIds: number[];
+    
+}
+
+export interface IBoxEditorModel {
+    id: number;
+    name: string;
+    friendId: number;
+    global: boolean;
+    public: boolean;
+    blacklist: boolean;
+    
+}
+
+
+export interface IBoxSearchModel extends ISearchModel{
+    userId: string;
+    blacklist: boolean;
+    
+}
+
+
+export interface IBoxUpdateModel {
+    id: number;
+    unitId: number;
+    add: boolean;
+    
+}
+
+
 export interface IExternalLoginConfirmationViewModel {
     userName: string;
     email: string;

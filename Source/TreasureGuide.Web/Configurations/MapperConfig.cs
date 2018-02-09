@@ -2,6 +2,7 @@
 using AutoMapper;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
+using TreasureGuide.Web.Models.BoxModels;
 using TreasureGuide.Web.Models.ProfileModels;
 using TreasureGuide.Web.Models.ShipModels;
 using TreasureGuide.Web.Models.StageModels;
@@ -96,6 +97,9 @@ namespace TreasureGuide.Web.Configurations
 
                 var report = mapper.CreateMap<TeamReport, TeamReportStubModel>();
                 report.ForMember(x => x.Acknowledged, o => o.MapFrom(y => y.AcknowledgedDate.HasValue));
+
+                var box = mapper.CreateControllerMapping<Box, BoxDetailModel, BoxStubModel, BoxEditorModel>();
+                box.DetailMapping.ForMember(x => x.UnitIds, o => o.MapFrom(y => y.Units.Select(z => z.Id)));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

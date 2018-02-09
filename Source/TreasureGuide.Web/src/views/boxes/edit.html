@@ -1,0 +1,97 @@
+﻿<template>
+    <h1>${title}</h1>
+    <loading-area if.bind="loading"></loading-area>
+    <form if.bind="!loading" with.bind="team">
+        <div class="row">
+            <fieldset>
+                <legend>Team Info</legend>
+                <div class="form-group">
+                    <label for="nameInput">Name</label>
+                    <input id="nameInput"
+                           class="_width100"
+                           type="text"
+                           placeholder="Name"
+                           value.bind="name & validate" />
+                    <div class="field-length">${nameLength}</div>
+                </div>
+                <div class="form-group">
+                    <label for="stageInput">Stage</label>
+                    <stage-display id="stageInput" editable="true" stage-id.two-way="stageId"></stage-display>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <fieldset>
+                <legend>Units</legend>
+                <div class="form-group _alignCenter">
+                    <team-display team.two-way="team" editable="true"></team-display>
+                    <ship-display ship-id.two-way="shipId" editable="true"></ship-display>
+                    <br />
+                    <button type="button" class="_xsmall _active" click.delegate="openImport()">
+                        <i class="fa fa-fw fa-cloud-download"></i>
+                        Import from OPTC-DB
+                    </button>
+                    <br />
+                    <br />
+                    <socket-display sockets.two-way="teamSockets" editable="true"></socket-display>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <fieldset>
+                <legend>Write-Ups</legend>
+                <div class="form-group">
+                    <label for="guideInput">Guide</label>
+                    <markdown-editor id="guideInput"
+                                     placeholder="In-depth details on how to use the team..."
+                                     value.two-way="guide & validate"></markdown-editor>
+                    <div class="field-length">${guideLength}</div>
+                </div>
+                <div class="form-group">
+                    <label for="creditInput">Credits</label>
+                    <markdown-editor id="creditInput"
+                                     placeholder="Credits, videos, and other supplemental materials."
+                                     value.two-way="credits & validate"></markdown-editor>
+                    <div class="field-length">${creditLength}</div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row" if.bind="similar.length > 0">
+            <fieldset>
+                <legend>Similar Teams</legend>
+                <div class="similar-section">
+                    <div class="col m4" repeat.for="team of similar">
+                        <team-box team.bind="team" target="_blank"></team-box>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <fieldset>
+                <legend>Options</legend>
+                <div class="col m6">
+                    <label for="draftInput">
+                        <input type="checkbox" id="draftInput" checked.bind="draft" />
+                        <span class="-label-body">
+                            Save as Draft
+                        </span>
+                    </label>
+                    <em><small>(Saves team to server without allowing others to see it.)</small></em>
+                </div>
+                <div class="col m6" if.bind="id">
+                    <label for="deleteInput">
+                        <input type="checkbox" id="deleteInput" checked.bind="deleted" />
+                        <span class="-label-body">
+                            Delete Team
+                        </span>
+                    </label>
+                    <em class="_dangerText" auth-req="roles: Administrator, Moderator; inverse: true"><small>(This cannot be undone!)</small></em>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <em>Want to upload a video? Submit your team then check out the videos section of your new guide!</em>
+            <input type="submit" class="_primary _floatRight" click.delegate="submit()" />
+        </div>
+    </form>
+</template>
