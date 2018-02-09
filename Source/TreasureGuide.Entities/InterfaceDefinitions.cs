@@ -16,6 +16,8 @@ namespace TreasureGuide.Entities
 
     public partial class UserProfile : IIdItem<string> { }
 
+    public partial class Box : IIdItem<int> { }
+
     public partial class TeamUnit : ISubItem { }
 
     public partial class TeamGenericSlot : ISubItem { }
