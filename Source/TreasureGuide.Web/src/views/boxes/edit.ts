@@ -50,11 +50,7 @@ export class BoxEditPage {
                 this.controller.validate();
                 this.loading = false;
             }).catch(error => {
-                this.router.navigateToRoute('error',
-                    {
-                        error:
-                        'The requested team could not be found for editing. It may not exist or you may not have permission to edit it.'
-                    });
+                this.router.navigateToRoute('error', { error: 'The requested box could not be found for editing. It may not exist or you may not have permission to edit it.' });
             });
         }
         this.controller.validate();
@@ -95,10 +91,23 @@ export class BoxEditPage {
     }
 
     doDelete() {
-        var message = 'Are you sure you want to delete this box?';
+        var message = 'Are you sure you want to delete this box? This cannot be undone!';
         this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
             if (!x.wasCancelled) {
-                this.boxQueryService.delete(this.box.id);
+                this.boxQueryService.delete(this.box.id).then(results => {
+                    this.alertService.success('Successfully deleted box.');
+                    this.router.navigateToRoute('boxes');
+                }).catch(response => {
+                    return response.text().then(msg => {
+                        if (msg) {
+                            this.alertService.danger(msg);
+                        } else {
+                            this.alertService.danger('An error has occurred. Please try again in a few moments.');
+                        }
+                    }).catch(error => {
+                        this.alertService.danger('An error has occurred. Please try again in a few moments.');
+                    });
+                });
             }
         });
     }
