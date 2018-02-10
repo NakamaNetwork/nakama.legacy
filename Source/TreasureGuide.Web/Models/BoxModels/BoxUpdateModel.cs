@@ -1,9 +1,11 @@
-﻿namespace TreasureGuide.Web.Models.BoxModels
+﻿using System.Collections.Generic;
+
+namespace TreasureGuide.Web.Models.BoxModels
 {
     public class BoxUpdateModel
     {
         public int Id { get; set; }
-        public int UnitId { get; set; }
-        public bool Add { get; set; }
+        public IEnumerable<int> Added { get; set; }
+        public IEnumerable<int> Removed { get; set; }
     }
 }

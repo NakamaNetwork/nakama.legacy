@@ -6,4 +6,7 @@ import { UnitSearchModel } from "../services/query/unit-query-service";
 export class UnitSearch {
     @bindable
     model: UnitSearchModel;
+
+    @bindable
+    boxLocked: boolean;
 }

@@ -44,8 +44,8 @@ export interface IBoxSearchModel extends ISearchModel{
 
 export interface IBoxUpdateModel {
     id: number;
-    unitId: number;
-    add: boolean;
+    added: number[];
+    removed: number[];
     
 }
 
@@ -249,22 +249,6 @@ export interface ITeamGenericSlotEditorModel extends ITeamGenericSlotDetailModel
 }
 
 
-export interface ITeamGenericUnitStubModel {
-    role: number;
-    position: number;
-    
-}
-
-export interface ITeamGenericUnitDetailModel extends ITeamGenericUnitStubModel{
-    combo: number;
-    
-}
-
-export interface ITeamGenericUnitEditorModel extends ITeamGenericUnitDetailModel{
-    
-}
-
-
 export interface ITeamImportModel {
     team: ITeamEditorModel;
     credit: ITeamCreditModel;
@@ -360,7 +344,7 @@ export interface ITeamSearchModel extends ISearchModel{
     leaderId: number;
     noHelp: boolean;
     stageId: number;
-    myBox: boolean;
+    box: number;
     global: boolean;
     freeToPlay: FreeToPlayStatus;
     classes: UnitClass;
@@ -510,7 +494,7 @@ export interface IUnitSearchModel extends ISearchModel{
     forceClass: boolean;
     freeToPlay: boolean;
     global: boolean;
-    myBox: boolean;
+    box: number;
     
 }
 

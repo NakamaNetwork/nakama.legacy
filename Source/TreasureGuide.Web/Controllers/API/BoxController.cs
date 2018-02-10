@@ -100,21 +100,16 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 return BadRequest("Box not found.");
             }
-            var seeked = await DbContext.Units.SingleOrDefaultAsync(x => x.Id == model.UnitId);
-            if (seeked == null)
+            if (model.Added?.Any() ?? false)
             {
-                return BadRequest("Unit not found.");
+                var commands = model.Added.Select(x => $"INSERT INTO [dbo].[BoxUnits]([BoxId],[UnitId]) VALUES ({model.Id},{x})");
+                var addCommand = String.Join(";", commands);
+                await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, addCommand);
             }
-            if (model.Add)
+            if (model.Removed?.Any() ?? false)
             {
-                if (!box.Units.Contains(seeked))
-                {
-                    box.Units.Add(seeked);
-                }
-            }
-            else if (box.Units.Contains(seeked))
-            {
-                box.Units.Remove(seeked);
+                var removeCommand = $"DELETE FROM [dbo].[BoxUnits] WHERE [BoxId] = {model.Id} AND [UnitId] IN ({String.Join(",", model.Removed)})";
+                await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, removeCommand);
             }
             return Ok(1);
         }

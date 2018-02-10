@@ -16,8 +16,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Friend Id</th>
-                        <th>Public</th>
-                        <th>Blacklist</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -26,16 +24,12 @@
                         <td>
                             <a route-href="route: boxDetails; params.bind: { id: box.id }">
                                 ${box.name}
-                            </a>
+                            </a>                
+                            <i class="fa fa-fw fa-users" title="Public" if.bind="box.public"></i>
+                            <i class="fa fa-fw fa-times-rectangle-o" title="Blacklist" if.bind="box.blacklist"></i>
                         </td>
                         <td>
-                            <friend-id-display friend-id.bind="friendId" global.bind="global"></friend-id-display>
-                        </td>
-                        <td>
-                            ${box.blacklist}
-                        </td>
-                        <td>
-                            ${box.public}
+                            <friend-id-display friend-id.bind="box.friendId" global.bind="box.global"></friend-id-display>
                         </td>
                         <td>
                             <button if.bind="boxService.currentBox.id !== box.id" type="button" class="button _primary">
