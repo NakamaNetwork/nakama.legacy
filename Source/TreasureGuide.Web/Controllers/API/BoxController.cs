@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,6 +27,13 @@ namespace TreasureGuide.Web.Controllers.API
             var userId = User.GetId();
             entities = entities.Where(x => x.Public == true || x.UserId == userId);
             return base.Filter(entities);
+        }
+
+
+        protected override async Task<Box> PostProcess(Box entity)
+        {
+            entity.UserId = User.GetId();
+            return await base.PostProcess(entity);
         }
 
         protected override bool CanPost(int? id)

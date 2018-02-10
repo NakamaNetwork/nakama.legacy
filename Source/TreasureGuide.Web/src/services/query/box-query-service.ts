@@ -1,7 +1,7 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { IBoxSearchModel } from '../../models/imported';
+import { IBoxEditorModel, IBoxSearchModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 
 @autoinject
@@ -18,4 +18,15 @@ export class BoxSearchModel extends SearchModel implements IBoxSearchModel {
     public getDefault(): SearchModel {
         return new BoxSearchModel();
     }
+}
+
+export class BoxEditorModel implements IBoxEditorModel {
+    id: number;
+    name: string;
+    friendId: number;
+    global: boolean = false;
+    public: boolean = true;
+    blacklist: boolean = false;
+
+    deleted: boolean = false;
 }
