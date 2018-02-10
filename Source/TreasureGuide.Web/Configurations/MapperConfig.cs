@@ -100,6 +100,8 @@ namespace TreasureGuide.Web.Configurations
 
                 var box = mapper.CreateControllerMapping<Box, BoxDetailModel, BoxStubModel, BoxEditorModel>();
                 box.DetailMapping.ForMember(x => x.UnitIds, o => o.MapFrom(y => y.Units.Select(z => z.Id)));
+                box.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
+                box.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

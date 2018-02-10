@@ -17,6 +17,9 @@ export interface IBoxStubModel {
 }
 
 export interface IBoxDetailModel extends IBoxStubModel{
+    userId: string;
+    userName: string;
+    userUnitId: number;
     unitIds: number[];
     
 }

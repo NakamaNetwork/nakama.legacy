@@ -16,6 +16,9 @@ namespace TreasureGuide.Web.Models.BoxModels
 
     public class BoxDetailModel : BoxStubModel
     {
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public int? UserUnitId { get; set; }
         public IEnumerable<int> UnitIds { get; set; }
     }
 

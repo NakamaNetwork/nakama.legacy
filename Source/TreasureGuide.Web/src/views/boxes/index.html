@@ -24,7 +24,9 @@
                 <tbody>
                     <tr repeat.for="box of boxes">
                         <td>
-                            ${box.name}
+                            <a route-href="route: boxDetails; params.bind: { id: box.id }">
+                                ${box.name}
+                            </a>
                         </td>
                         <td>
                             <friend-id-display friend-id.bind="friendId" global.bind="global"></friend-id-display>
