@@ -51,57 +51,6 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
-      <None Update="src\models\generated\box-models.tst.gen">
-        <CustomToolNamespace>Models\BoxModels\BoxModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\box-search-model.tst.gen">
-        <CustomToolNamespace>Models\BoxModels\BoxSearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\box-update-model.tst.gen">
-        <CustomToolNamespace>Models\BoxModels\BoxUpdateModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\meta-result-model.tst.gen">
-        <CustomToolNamespace>Models\MetaResultModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\profile-models.tst.gen">
-        <CustomToolNamespace>Models\ProfileModels\ProfileModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\role-constants.tst.gen">
-        <CustomToolNamespace>Constants\RoleConstants.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\search-constants.tst.gen">
-        <CustomToolNamespace>Constants\SearchConstants.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\search-model.tst.gen">
-        <CustomToolNamespace>Models\SearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\socket-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\SocketType.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\stage-models.tst.gen">
-        <CustomToolNamespace>Models\StageModels\StageModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-generic-slot-models.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamGenericSlotModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-models.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-search-model.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamSearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-unit-models.tst.gen">
-        <CustomToolNamespace>Models\TeamModels\TeamUnitModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\unit-role.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\UnitRole.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\unit-search-model.tst.gen">
-        <CustomToolNamespace>Models\UnitModels\UnitSearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\user-preference-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\UserPreferenceType.cs</CustomToolNamespace>
-      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
