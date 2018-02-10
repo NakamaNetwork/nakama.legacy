@@ -8,12 +8,13 @@
 
                 <div class="form-group">
                     <label for="nameInput">Box Name</label>
-                    <input id="nameInput" class="_width100" type="text" value.bind="name & validate" />
+                    <input id="nameInput" class="_width100" type="text" placeholder="Name" value.bind="name & validate" />
+                    <div class="field-length">${nameLength}</div>
                 </div>
 
                 <div class="form-group">
                     <label for="friendInput">Friend Id</label>
-                    <input id="friendInput" class="_width100" type="text" value.bind="friendId & validate" />
+                    <input id="friendInput" class="_width100" type="text" placeholder="000-000-000" value.bind="friendId & validate" />
                 </div>
 
                 <div class="form-group">

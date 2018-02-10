@@ -9,6 +9,7 @@ import { AlertDialog } from '../../custom-elements/dialogs/alert-dialog';
 
 @autoinject
 export class BoxEditPage {
+    public static nameMinLength = 5;
     public static nameMaxLength = 250;
 
     private dialogService: DialogService;
@@ -59,6 +60,11 @@ export class BoxEditPage {
         this.controller.validate();
     }
 
+    @computedFrom('box.name')
+    get nameLength() {
+        return (this.box.name || '').length + '/' + BoxEditPage.nameMaxLength;
+    }
+
     submit() {
         if (this.box.deleted) {
             this.doDelete();
@@ -100,6 +106,8 @@ export class BoxEditPage {
 
 ValidationRules
     .ensure((x: BoxEditorModel) => x.name)
+    .required()
+    .minLength(BoxEditPage.nameMinLength)
     .maxLength(BoxEditPage.nameMaxLength)
     .ensure((x: BoxEditorModel) => x.friendId)
     .satisfies(x => x ? x.toString().replace(/\D/g, '').length === 9 : true)

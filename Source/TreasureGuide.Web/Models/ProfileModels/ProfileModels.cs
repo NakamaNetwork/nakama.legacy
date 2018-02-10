@@ -15,10 +15,8 @@ namespace TreasureGuide.Web.Models.ProfileModels
 
     public class ProfileDetailModel : ProfileStubModel, ICanEdit
     {
-        public decimal? FriendId { get; set; }
         public string Website { get; set; }
         public IEnumerable<string> UserRoles { get; set; }
-        public bool? Global { get; set; }
         public bool CanEdit { get; set; }
     }
 
@@ -29,10 +27,8 @@ namespace TreasureGuide.Web.Models.ProfileModels
         [StringLength(48, MinimumLength = 5)]
         public string UserName { get; set; }
         public int? UnitId { get; set; }
-        public decimal? FriendId { get; set; }
         public string Website { get; set; }
         public IEnumerable<string> UserRoles { get; set; }
-        public bool? Global { get; set; }
     }
 
     public class ProfileSearchModel : SearchModel

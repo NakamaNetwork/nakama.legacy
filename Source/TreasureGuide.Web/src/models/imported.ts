@@ -72,10 +72,8 @@ export interface IProfileStubModel {
 }
 
 export interface IProfileDetailModel extends IProfileStubModel{
-    friendId: number;
     website: string;
     userRoles: string[];
-    global: boolean;
     canEdit: boolean;
     
 }
@@ -84,10 +82,8 @@ export interface IProfileEditorModel {
     id: string;
     userName: string;
     unitId: number;
-    friendId: number;
     website: string;
     userRoles: string[];
-    global: boolean;
     
 }
 

@@ -14,9 +14,8 @@
             <table class="_width100">
                 <thead>
                     <tr>
-                        <th>Global</th>
-                        <th>Account Id</th>
                         <th>Name</th>
+                        <th>Friend Id</th>
                         <th>Public</th>
                         <th>Blacklist</th>
                         <th></th>
@@ -25,13 +24,10 @@
                 <tbody>
                     <tr repeat.for="box of boxes">
                         <td>
-                            <global-display global.bind="box.global"></global-display>
-                        </td>
-                        <td>
-                            ${box.friendId}
-                        </td>
-                        <td>
                             ${box.name}
+                        </td>
+                        <td>
+                            <friend-id-display friend-id.bind="friendId" global.bind="global"></friend-id-display>
                         </td>
                         <td>
                             ${box.blacklist}

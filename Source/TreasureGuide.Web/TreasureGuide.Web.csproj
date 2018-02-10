@@ -57,6 +57,9 @@
       <None Update="src\models\generated\box-search-model.tst.gen">
         <CustomToolNamespace>Models\BoxModels\BoxSearchModel.cs</CustomToolNamespace>
       </None>
+      <None Update="src\models\generated\profile-models.tst.gen">
+        <CustomToolNamespace>Models\ProfileModels\ProfileModels.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

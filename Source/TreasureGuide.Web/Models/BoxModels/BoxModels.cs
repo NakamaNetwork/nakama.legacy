@@ -23,7 +23,7 @@ namespace TreasureGuide.Web.Models.BoxModels
     {
         public int? Id { get; set; }
 
-        [StringLength(250)]
+        [StringLength(250, MinimumLength = 5)]
         public string Name { get; set; }
 
         public decimal? FriendId { get; set; }
