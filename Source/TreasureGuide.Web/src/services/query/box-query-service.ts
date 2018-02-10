@@ -1,13 +1,17 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { IBoxEditorModel, IBoxSearchModel } from '../../models/imported';
+import { IBoxEditorModel, IBoxSearchModel, IBoxUpdateModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 
 @autoinject
 export class BoxQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
         super('box', http, true);
+    }
+
+    update(model: IBoxUpdateModel): Promise<any> {
+        return this.http.post(this.buildAddress('/update'), model);
     }
 }
 

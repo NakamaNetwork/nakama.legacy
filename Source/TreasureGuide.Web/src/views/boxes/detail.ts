@@ -7,6 +7,7 @@ import { IBoxDetailModel, IUnitStubModel } from '../../models/imported';
 import { Router } from 'aurelia-router';
 import { AccountService } from '../../services/account-service';
 import { UnitSearchModel, UnitQueryService } from '../../services/query/unit-query-service';
+import { BoxService } from '../../services/box-service';
 
 @autoinject
 export class BoxDetailPage {
@@ -20,6 +21,7 @@ export class BoxDetailPage {
     private router: Router;
     private accountService: AccountService;
     private bindingEngine: BindingEngine;
+    private boxService: BoxService;
 
     private box: IBoxDetailModel;
     private loading: boolean;
@@ -34,7 +36,8 @@ export class BoxDetailPage {
         accountService: AccountService,
         dialogService: DialogService,
         router: Router,
-        bindingEngine: BindingEngine
+        bindingEngine: BindingEngine,
+        boxService: BoxService
     ) {
         this.alertService = alertService;
         this.accountService = accountService;
@@ -42,6 +45,7 @@ export class BoxDetailPage {
         this.dialogService = dialogService;
         this.router = router;
         this.bindingEngine = bindingEngine;
+        this.boxService = boxService;
 
         this.boxQueryService = boxQueryService;
         this.searchModel = new UnitSearchModel();
@@ -75,6 +79,12 @@ export class BoxDetailPage {
             }).catch((e) => {
                 this.unitsLoading = false;
             });
+        }
+    }
+
+    clicked(unit: IUnitStubModel) {
+        if (this.canEdit) {
+            this.boxService.toggle(unit.id);
         }
     }
 

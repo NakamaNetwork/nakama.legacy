@@ -1,24 +1,26 @@
 ﻿<template>
     <loading-area if.bind="loading"></loading-area>
-    <div if.bind="!loading" with.bind="box">
-        <h1>${name}</h1>
-        <div class="row">
-            <a if.bind="canEdit" class="button _primary" route-href="route: boxEdit; params.bind: {id: id}">
-                <i class="fa fa-fw fa-pencil"></i>
-                Edit Box Details
-            </a>
-        </div>
-        <div class="row">
-            <div class="col m6">
-                <friend-id-display friend-id.bind="friendId" global.bind="global"></friend-id-display>
-            </div>
-            <div class="col m6 _alignRight">
-                Maintained by <a route-href="route: account; params.bind: { id: userName }">
-                    <user-display name.bind="userName" unit-id.bind="userUnitId"></user-display>
+    <div if.bind="!loading">
+        <div with.bind="box">
+            <h1>${name}</h1>
+            <div class="row">
+                <a if.bind="canEdit" class="button _primary" route-href="route: boxEdit; params.bind: {id: id}">
+                    <i class="fa fa-fw fa-pencil"></i>
+                    Edit Box Details
                 </a>
             </div>
+            <div class="row">
+                <div class="col m6">
+                    <friend-id-display friend-id.bind="friendId" global.bind="global"></friend-id-display>
+                </div>
+                <div class="col m6 _alignRight">
+                    Maintained by <a route-href="route: account; params.bind: { id: userName }">
+                        <user-display name.bind="userName" unit-id.bind="userUnitId"></user-display>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="row">
+        <div>
             <h4>Units</h4>
             <unit-search model.two-way="searchModel" box-locked="true"></unit-search>
             <loading-area if.bind="unitLoading"></loading-area>
