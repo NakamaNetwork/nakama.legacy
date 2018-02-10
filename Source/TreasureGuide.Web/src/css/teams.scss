@@ -100,6 +100,11 @@ $default-unit-margin: $huge-unit-margin;
         width: $massive-unit-size;
         margin: $massive-unit-margin;
     }
+
+    &.no-own {
+        filter: grayscale(50%) brightness(50%);
+        -webkit-filter: grayscale(50%) brightness(50%);
+    }
 }
 
 unit-display {
@@ -171,6 +176,14 @@ unit-display {
                 -webkit-transform: scaleY(-1);
             }
         }
+    }
+
+    .in-box {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 25%;
+        height: 25%;
     }
 }
 

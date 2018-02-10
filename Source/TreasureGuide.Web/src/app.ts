@@ -27,6 +27,9 @@ export class App {
 
     activate() {
         this.newsService.show();
+        window.onbeforeunload = (e) => {
+            this.boxService.save();
+        };
     }
 
     configureRouter(config: RouterConfiguration, router: Router): void {

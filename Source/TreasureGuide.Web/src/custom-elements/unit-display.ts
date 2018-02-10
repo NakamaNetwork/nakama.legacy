@@ -10,13 +10,15 @@ import { UnitType } from '../models/imported';
 import { UnitClass } from '../models/imported';
 import { UnitRole } from '../models/imported';
 import { StringHelper } from '../tools/string-helper';
+import { BoxService } from '../services/box-service';
 
 @autoinject
 @customElement('unit-display')
 export class UnitDisplay {
-    private element: Element;
     private unitQueryService: UnitQueryService;
     private dialogService: DialogService;
+    private boxService: BoxService;
+    private element: Element;
 
     @bindable unitId: number;
     @bindable model: any;
@@ -24,11 +26,15 @@ export class UnitDisplay {
     @bindable allowGenerics: boolean;
     @bindable info: boolean;
     @bindable tooltip: boolean;
+    @bindable showBox: boolean = true;
 
-    constructor(unitQueryService: UnitQueryService, dialogService: DialogService, element: Element) {
+    inBox: boolean;
+
+    constructor(unitQueryService: UnitQueryService, dialogService: DialogService, boxService: BoxService, element: Element) {
         this.unitQueryService = unitQueryService;
-        this.element = element;
         this.dialogService = dialogService;
+        this.boxService = boxService;
+        this.element = element;
     }
 
     @computedFrom('model')
@@ -90,6 +96,34 @@ export class UnitDisplay {
         return this.model ? (this.model.role !== undefined) : false;
     }
 
+    @computedFrom('showBox', 'unitId', 'boxService.currentBox')
+    get showBoxInput() {
+        return this.showBox && this.unitId && this.boxService.currentBox;
+    }
+
+    @computedFrom('showBoxInput', 'boxService.currentBox.unitIds', 'boxService.currentBox.unitIds.length', 'unitId')
+    get hasUnit() {
+        return this.showBoxInput &&
+            this.boxService.currentBox.unitIds.indexOf(this.unitId) > -1;
+    }
+
+    set hasUnit(value) {
+        if (this.hasUnit !== value) {
+            this.boxService.toggle(this.unitId);
+        }
+    }
+
+    @computedFrom('showBoxInput', 'hasUnit')
+    get unitOwnerClass() {
+        return (this.showBoxInput && !this.hasUnit) ? 'no-own' : '';
+    }
+
+    @computedFrom('hasUnit', 'boxService.currentBox', 'boxService.currentBox.name')
+    get boxTitle() {
+        var boxName = this.boxService.currentBox ? this.boxService.currentBox.name : 'uhhh';
+        return (this.hasUnit ? 'In' : 'Not in') + ' box "' + boxName + '"';
+    }
+
     @computedFrom('unit', 'generic', 'editable')
     get iconClass() {
         return 'fa fa-fw fa-2x fa-' + ((this.unit || this.generic) ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
@@ -144,17 +178,27 @@ export class UnitDisplay {
     clicked() {
         if (this.editable) {
             var model = this.model;
-            this.dialogService.open({ viewModel: UnitPicker, model: <UnitPickerParams>{ model: model, allowGenerics: this.allowGenerics }, lock: true }).whenClosed(result => {
+            this.dialogService.open({
+                viewModel: UnitPicker,
+                model: <UnitPickerParams>{ model: model, allowGenerics: this.allowGenerics },
+                lock: true
+            }).whenClosed(result => {
                 if (!result.wasCancelled) {
                     var oldModel = model;
                     this.model = result.output;
-                    var event = new CustomEvent('selected', {
+                    var bubble = new CustomEvent('selected', {
                         detail: { newValue: result.output, oldValue: oldModel, viewModel: this },
                         bubbles: true
                     });
-                    this.element.dispatchEvent(event);
+                    this.element.dispatchEvent(bubble);
                 }
             });
+        } else {
+            var bubble = new CustomEvent('selected', {
+                detail: { newValue: this.model, viewModel: this },
+                bubbles: true
+            });
+            this.element.dispatchEvent(bubble);
         }
     }
 

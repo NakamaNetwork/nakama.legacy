@@ -20,11 +20,13 @@ export class BoxService {
         this.alertService = alertService;
         this.accountService = accountService;
 
-        this.setBox(this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId], true);
+        if (this.accountService.userProfile) {
+            this.setBox(this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId], true);
+        }
     }
 
     setBox(boxId, bypass: boolean = false) {
-        this.save().then(x => {
+        this.save(false).then(x => {
             if (boxId) {
                 var query;
                 if (bypass) {
@@ -49,16 +51,16 @@ export class BoxService {
 
     private timer;
 
-    queueSave() {
+    queueSave(messages: boolean = true) {
         if (this.timer) {
             clearTimeout(this.timer);
         }
         this.timer = setTimeout(() => {
-            this.save();
-        }, 15000);
+            this.save(messages);
+        }, 10000);
     }
 
-    save() {
+    save(messages: boolean = true) {
         if (this.timer) {
             clearTimeout(this.timer);
         }
@@ -73,6 +75,7 @@ export class BoxService {
                     this.added = [];
                     this.removed = [];
                     resolve();
+                    this.alertService.success('Your box units have been saved!');
                 }).catch(x => {
                     reject(x);
                 });
@@ -87,18 +90,16 @@ export class BoxService {
         if (this.currentBox) {
             var index = this.currentBox.unitIds.indexOf(unitId);
             if (index > -1) {
-                var addIndex = this.added.indexOf(unitId);
-                if (addIndex > -1) {
-                    this.added.slice(addIndex, 1);
+                this.added = this.added.filter(x => x !== unitId);
+                this.currentBox.unitIds = this.currentBox.unitIds.filter(x => x !== unitId);
+                if (this.removed.indexOf(unitId) === -1) {
+                    this.removed.push(unitId);
                 }
-                this.removed.push(unitId);
-                this.currentBox.unitIds.slice(index, 1);
             } else {
-                var removeIndex = this.removed.indexOf(unitId);
-                if (removeIndex > -1) {
-                    this.removed.slice(removeIndex, 1);
+                this.removed.filter(x => x !== unitId);
+                if (this.added.indexOf(unitId) === -1) {
+                    this.added.push(unitId);
                 }
-                this.added.push(unitId);
                 this.currentBox.unitIds.push(unitId);
             }
             this.queueSave();

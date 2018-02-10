@@ -239,7 +239,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (boxId.HasValue)
             {
-                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.Boxes.Any(z => z.Id == boxId && !z.Blacklist)));
+                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.Boxes.Any(z => z.Id == boxId && !z.Blacklist)));
             }
             return teams;
         }
