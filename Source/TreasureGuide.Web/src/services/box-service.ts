@@ -60,12 +60,16 @@ export class BoxService {
         }, 10000);
     }
 
+    get dirty() {
+        return this.currentBox && (this.added.length > 0 || this.removed.length > 0);
+    }
+
     save(messages: boolean = true) {
         if (this.timer) {
             clearTimeout(this.timer);
         }
         var promise = new Promise<void>((resolve, reject) => {
-            if (this.currentBox && (this.added.length > 0 || this.removed.length > 0)) {
+            if (this.dirty) {
                 var model = <IBoxUpdateModel>{
                     id: this.currentBox.id,
                     added: this.added,

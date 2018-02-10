@@ -26,7 +26,7 @@ export class UnitDisplay {
     @bindable allowGenerics: boolean;
     @bindable info: boolean;
     @bindable tooltip: boolean;
-    @bindable showBox: boolean = true;
+    @bindable showBox: boolean;
 
     inBox: boolean;
 
