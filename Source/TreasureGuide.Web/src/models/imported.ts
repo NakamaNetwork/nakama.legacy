@@ -81,6 +81,11 @@ export interface IProfileDetailModel extends IProfileStubModel{
     
 }
 
+export interface IMyProfileModel extends IProfileDetailModel{
+    userPreferences: { [key: number]: string; };
+    
+}
+
 export interface IProfileEditorModel {
     id: string;
     userName: string;
@@ -506,5 +511,11 @@ export enum UnitType {
     QCK = 4,
     INT = 8,
     PSY = 16
+}
+
+
+export enum UserPreferenceType { 
+    Unknown = 0,
+    BoxId = 1
 }
 

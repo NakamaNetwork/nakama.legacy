@@ -209,6 +209,15 @@
           <Property Name="GrowthRate" Type="decimal" Precision="2" Scale="1" />
           <Property Name="Flags" Type="smallint" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserPreferences">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Key" Type="int" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="UserProfiles">
           <Key>
             <PropertyRef Name="Id" />
@@ -362,6 +371,20 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="Teams">
               <PropertyRef Name="SubmittedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserPreferences_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserPreferences" Type="Self.UserPreferences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPreferences">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -651,6 +674,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitAliases" EntityType="Self.UnitAliases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamUnitSummaries" EntityType="Self.TeamUnitSummaries" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -704,6 +728,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_Teams_SubmittedById_dbo_UserProfiles" Association="Self.FK_dbo_Teams_SubmittedById_dbo_UserProfiles">
             <End Role="UserProfiles" EntitySet="UserProfiles" />
             <End Role="Teams" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserPreferences_dbo_UserProfiles" Association="Self.FK_dbo_UserPreferences_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="UserPreferences" EntitySet="UserPreferences" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_UserProfile_dbo_Units" Association="Self.FK_dbo_UserProfile_dbo_Units">
             <End Role="Units" EntitySet="Units" />
@@ -919,6 +947,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <FunctionImport Name="SimilarTeamsId" IsComposable="true" ReturnType="Collection(tcdbModel.SimilarTeams_Result)">
           <Parameter Name="teamId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="UserPreferences" EntityType="tcdbModel.UserPreference" />
+          <AssociationSet Name="FK_dbo_UserPreferences_dbo_UserProfiles" Association="tcdbModel.FK_dbo_UserPreferences_dbo_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="UserPreference" EntitySet="UserPreferences" />
+          </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -1176,6 +1209,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamVideos" Relationship="tcdbModel.FK_dbo_TeamVideos_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamVideo" />
           <NavigationProperty Name="BookmarkedTeams" Relationship="tcdbModel.TeamBookmarks" FromRole="UserProfile" ToRole="Team" />
           <NavigationProperty Name="Boxes" Relationship="tcdbModel.FK_dbo_Boxes_dbo_UserProfiles" FromRole="UserProfile" ToRole="Box" />
+          <NavigationProperty Name="UserPreferences" Relationship="tcdbModel.FK_dbo_UserPreferences_dbo_UserProfiles" FromRole="UserProfile" ToRole="UserPreference" />
         </EntityType>
         <Association Name="FK_dbo_UserProfile_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
@@ -1616,6 +1650,34 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <Property Type="Int32" Name="StageId" Nullable="true" />
             <Property Type="Int32" Name="Matches" Nullable="true" />
         </ComplexType>
+        <EntityType Name="UserPreference">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Key" Type="tcdbModel.UserPreferenceType" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_UserPreferences_dbo_UserProfiles" FromRole="UserPreference" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_dbo_UserPreferences_dbo_UserProfiles">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.UserPreference" Role="UserPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPreference">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="UserPreferenceType">
+          <Member Name="Unknown" />
+          <Member Name="BoxId" />
+        </EnumType>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -1884,6 +1946,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="UserPreferences">
+            <EntityTypeMapping TypeName="tcdbModel.UserPreference">
+              <MappingFragment StoreEntitySet="UserPreferences">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
                 </EntityContainerMapping>
             </Mapping>
         </edmx:Mappings>

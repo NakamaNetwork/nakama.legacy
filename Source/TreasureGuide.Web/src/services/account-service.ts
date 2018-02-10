@@ -1,7 +1,6 @@
 ﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { IProfileDetailModel } from '../models/imported';
-import { RoleConstants } from '../models/imported';
+import { IMyProfileModel, IProfileDetailModel, RoleConstants } from '../models/imported';
 import { DialogService } from 'aurelia-dialog';
 import { AlertDialog, AlertDialogViewModel } from '../custom-elements/dialogs/alert-dialog';
 import { HeartbeatQueryService } from './query/heartbeat-query-service';
@@ -16,7 +15,7 @@ export class AccountService {
     private heartbeatFailures = 0;
     private heartbeatFailMax = 3;
 
-    public userProfile: IProfileDetailModel;
+    public userProfile: IMyProfileModel;
 
     constructor(router: Router, dialog: DialogService, heartbeat: HeartbeatQueryService) {
         this.router = router;

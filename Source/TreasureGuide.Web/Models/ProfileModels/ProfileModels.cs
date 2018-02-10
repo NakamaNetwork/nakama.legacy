@@ -20,6 +20,11 @@ namespace TreasureGuide.Web.Models.ProfileModels
         public bool CanEdit { get; set; }
     }
 
+    public class MyProfileModel : ProfileDetailModel
+    {
+        public IDictionary<int, string> UserPreferences { get; set; }
+    }
+
     public class ProfileEditorModel : IIdItem<string>
     {
         public string Id { get; set; }

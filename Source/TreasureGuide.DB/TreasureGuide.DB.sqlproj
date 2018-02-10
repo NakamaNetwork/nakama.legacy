@@ -96,6 +96,7 @@
     <Build Include="dbo\Functions\SimilarTeams.sql" />
     <Build Include="dbo\Functions\SimilarTeamsId.sql" />
     <Build Include="dbo\Views\TeamMinis.sql" />
+    <Build Include="dbo\Tables\Accounts\UserPreferences.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

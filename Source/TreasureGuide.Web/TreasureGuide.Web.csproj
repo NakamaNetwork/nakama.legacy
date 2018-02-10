@@ -99,6 +99,9 @@
       <None Update="src\models\generated\unit-search-model.tst.gen">
         <CustomToolNamespace>Models\UnitModels\UnitSearchModel.cs</CustomToolNamespace>
       </None>
+      <None Update="src\models\generated\user-preference-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\UserPreferenceType.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

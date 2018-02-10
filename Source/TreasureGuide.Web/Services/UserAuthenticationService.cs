@@ -74,15 +74,13 @@ namespace TreasureGuide.Web.Services
             {
                 return null;
             }
-            var name = identity.FindFirstValue(ClaimTypes.Name);
-            var roles = identity.FindAll(ClaimTypes.Role).Select(x => x.Value);
             var id = identity.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!String.IsNullOrEmpty(id))
             {
                 var item = await _context.UserProfiles.SingleOrDefaultAsync(x => x.Id == id);
                 if (item != null)
                 {
-                    var casted = _mapper.Map<ProfileDetailModel>(item);
+                    var casted = _mapper.Map<MyProfileModel>(item);
                     return casted;
                 }
             }

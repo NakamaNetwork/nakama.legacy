@@ -51,6 +51,8 @@
         <EntityTypeShape EntityType="tcdbModel.Box" Width="1.5" PointX="7.25" PointY="15" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Boxes_dbo_UserProfiles" />
         <AssociationConnector Association="tcdbModel.BoxUnits" />
+        <EntityTypeShape EntityType="tcdbModel.UserPreference" Width="1.5" PointX="7.25" PointY="19.5" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_UserPreferences_dbo_UserProfiles" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

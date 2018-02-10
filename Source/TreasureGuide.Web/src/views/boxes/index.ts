@@ -28,6 +28,10 @@ export class BoxIndexPage {
         this.search(this.searchModel.payload);
     }
 
+    clicked(box: IBoxStubModel) {
+        this.boxService.setBox(box.id);
+    }
+
     search(payload) {
         if (this.boxQueryService) {
             this.loading = true;

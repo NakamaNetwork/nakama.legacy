@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,8 +17,11 @@ namespace TreasureGuide.Web.Controllers.API
     [Route("api/box")]
     public class BoxController : SearchableApiController<int, Box, int?, BoxStubModel, BoxDetailModel, BoxEditorModel, BoxSearchModel>
     {
-        public BoxController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
+        private readonly IPreferenceService _preferenceService;
+
+        public BoxController(IPreferenceService preferenceService, TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
+            _preferenceService = preferenceService;
         }
 
         protected override IQueryable<Box> Filter(IQueryable<Box> entities)
@@ -83,6 +85,16 @@ namespace TreasureGuide.Web.Controllers.API
                 results = results.Where(x => x.UserId == userId);
             }
             return results;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("Focus")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Focus(int? id)
+        {
+            await _preferenceService.SetPreference(User.GetId(), UserPreferenceType.BoxId, id?.ToString());
+            return await Detail(id);
         }
 
         [HttpPost]

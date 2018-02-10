@@ -32,7 +32,7 @@
                             <friend-id-display friend-id.bind="box.friendId" global.bind="box.global"></friend-id-display>
                         </td>
                         <td>
-                            <button if.bind="boxService.currentBox.id !== box.id" type="button" class="button _primary">
+                            <button if.bind="boxService.currentBox.id !== box.id" type="button" class="button _primary" click.delegate="clicked(box)">
                                 Make Current Box
                             </button>
                         </td>

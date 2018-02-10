@@ -2,33 +2,48 @@ import { autoinject } from 'aurelia-framework';
 import { AlertService } from './alert-service';
 import { IBoxDetailModel, IBoxUpdateModel } from '../models/imported';
 import { BoxQueryService } from './query/box-query-service';
+import { AccountService } from './account-service';
+import { UserPreferenceType } from '../models/imported';
 
 @autoinject
 export class BoxService {
     private boxQueryService: BoxQueryService;
     private alertService: AlertService;
+    private accountService: AccountService;
 
     public currentBox: IBoxDetailModel = null;
     private added: number[] = [];
     private removed: number[] = [];
 
-    constructor(boxQueryService: BoxQueryService, alertService: AlertService) {
+    constructor(boxQueryService: BoxQueryService, alertService: AlertService, accountService: AccountService) {
         this.boxQueryService = boxQueryService;
         this.alertService = alertService;
+        this.accountService = accountService;
+
+        this.setBox(this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId], true);
     }
 
-    setBox(boxId: number) {
+    setBox(boxId, bypass: boolean = false) {
         this.save().then(x => {
-            this.boxQueryService.detail(boxId).then(y => {
-                this.currentBox = y;
-                this.alertService.info('You\'ve switched to box "' + y.name + '".');
-            }).catch(y => {
-                this.alertService.danger('There was an error switching boxes. Please try again in a moment.');
-                this.currentBox = null;
-            });
+            if (boxId) {
+                var query;
+                if (bypass) {
+                    query = this.boxQueryService.detail(boxId);
+                } else {
+                    query = this.boxQueryService.focus(boxId);
+                }
+                query.then(y => {
+                    this.currentBox = y;
+                    if (!bypass) {
+                        this.alertService.info('You\'ve switched to box "' + y.name + '".');
+                    }
+                    this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId] = '' + boxId;
+                }).catch(y => {
+                    this.alertService.danger('There was an error loading your box. Please try again in a moment.');
+                });
+            }
         }).catch(x => {
             this.alertService.danger('There was an error switching boxes. Please try again in a moment.');
-            this.currentBox = null;
         });
     }
 

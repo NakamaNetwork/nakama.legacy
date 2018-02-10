@@ -95,6 +95,12 @@ namespace TreasureGuide.Web.Configurations
 
                 user.EditorMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
 
+                var myUser = mapper.CreateMap<UserProfile, MyProfileModel>();
+                myUser.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.SubmittedTeams.Count(x => !x.Deleted && !x.Draft)));
+                myUser.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
+                myUser.ForMember(x => x.CanEdit, o => o.MapFrom(y => true));
+                myUser.ForMember(x => x.UserPreferences, o => o.MapFrom(y => y.UserPreferences.ToDictionary(z => z.Key, z => z.Value)));
+
                 var report = mapper.CreateMap<TeamReport, TeamReportStubModel>();
                 report.ForMember(x => x.Acknowledged, o => o.MapFrom(y => y.AcknowledgedDate.HasValue));
 

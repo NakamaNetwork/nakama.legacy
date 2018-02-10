@@ -24,6 +24,7 @@ namespace TreasureGuide.Entities
             this.TeamVideos = new HashSet<TeamVideo>();
             this.BookmarkedTeams = new HashSet<Team>();
             this.Boxes = new HashSet<Box>();
+            this.UserPreferences = new HashSet<UserPreference>();
         }
     
         public string Id { get; set; }
@@ -47,5 +48,7 @@ namespace TreasureGuide.Entities
         public virtual ICollection<Team> BookmarkedTeams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Box> Boxes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserPreference> UserPreferences { get; set; }
     }
 }
