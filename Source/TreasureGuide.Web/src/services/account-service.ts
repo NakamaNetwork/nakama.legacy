@@ -140,6 +140,8 @@ export class AccountService {
         RoleConstants.Administrator,
         RoleConstants.Moderator,
         RoleConstants.BetaTester,
-        RoleConstants.Contributor
+        RoleConstants.Contributor,
+        RoleConstants.BoxUser,
+        RoleConstants.MultiBoxUser
     ];
 }

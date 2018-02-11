@@ -41,12 +41,22 @@ namespace TreasureGuide.Web.Controllers.API
         protected override bool CanPost(int? id)
         {
             var userId = User.GetId();
-            return !String.IsNullOrWhiteSpace(userId) && User.IsInRole(RoleConstants.Contributor) && OwnsBox(id, userId);
+            return !String.IsNullOrWhiteSpace(userId) &&
+                (User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator)
+                || (User.IsInRole(RoleConstants.BoxUser) && (id.HasValue ? OwnsBox(id, userId) : UnderBoxLimit(userId))));
         }
 
         protected override bool CanDelete(int? id)
         {
             return CanPost(id);
+        }
+
+        private bool UnderBoxLimit(string userId)
+        {
+            var limit = User.IsInRole(RoleConstants.MultiBoxUser)
+                ? BoxConstants.MultiBoxUserLimit
+                : BoxConstants.BoxUserLimit;
+            return DbContext.Boxes.Count(x => x.UserId == userId) < limit;
         }
 
         private bool OwnsBox(int? id, string userId)
@@ -88,17 +98,25 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = RoleConstants.BoxUser)]
         [ActionName("Focus")]
         [Route("[action]/{id?}")]
         public async Task<IActionResult> Focus(int? id)
         {
-            await _preferenceService.SetPreference(User.GetId(), UserPreferenceType.BoxId, id?.ToString());
-            return await Detail(id);
+            if (id.HasValue)
+            {
+                await _preferenceService.SetPreference(User.GetId(), UserPreferenceType.BoxId, id?.ToString());
+                return await Detail(id);
+            }
+            else
+            {
+                await _preferenceService.ClearPreference(User.GetId(), UserPreferenceType.BoxId);
+                return Ok(1);
+            }
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = RoleConstants.BoxUser)]
         [ActionName("Update")]
         [Route("[action]")]
         public async Task<IActionResult> Update([FromBody] BoxUpdateModel model)
@@ -107,7 +125,7 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = RoleConstants.BoxUser)]
         [ActionName("Set")]
         [Route("[action]")]
         public async Task<IActionResult> Set([FromBody] BoxUpdateModel model)

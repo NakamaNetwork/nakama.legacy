@@ -6,6 +6,8 @@ import { DialogService } from 'aurelia-dialog';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { Router } from 'aurelia-router';
 import { AlertDialog } from '../../custom-elements/dialogs/alert-dialog';
+import { AccountService } from '../../services/account-service';
+import { BoxService } from '../../services/box-service';
 
 @autoinject
 export class BoxEditPage {
@@ -17,6 +19,7 @@ export class BoxEditPage {
     private router: Router;
     private boxQueryService: BoxQueryService;
     private controller: ValidationController;
+    private boxService: BoxService;
 
     private title: string = 'Create Box';
     private box: BoxEditorModel;
@@ -26,13 +29,15 @@ export class BoxEditPage {
         router: Router,
         alertService: AlertService,
         dialogService: DialogService,
-        validFactory: ValidationControllerFactory
+        validFactory: ValidationControllerFactory,
+        boxService: BoxService
     ) {
         this.controller = validFactory.createForCurrentScope();
         this.controller.addRenderer(new BeauterValidationFormRenderer());
         this.router = router;
         this.alertService = alertService;
         this.dialogService = dialogService;
+        this.boxService = boxService;
 
         this.boxQueryService = boxQueryService;
         this.box = new BoxEditorModel();
@@ -52,6 +57,10 @@ export class BoxEditPage {
             }).catch(error => {
                 this.router.navigateToRoute('error', { error: 'The requested box could not be found for editing. It may not exist or you may not have permission to edit it.' });
             });
+        } else {
+            if (this.boxService.reachedLimit) {
+                this.router.navigateToRoute('error', { error: 'You have reached the maximum number of boxes allowed on this account (' + this.boxService.boxLimit + ').' });
+            }
         }
         this.controller.validate();
     }
@@ -74,7 +83,14 @@ export class BoxEditPage {
     }
 
     doSubmit() {
+        var updating = this.box.id;
         this.boxQueryService.save(this.box).then(results => {
+            if (!updating) {
+                this.boxService.boxCount++;
+                if (this.boxService.currentBox == null) {
+                    this.boxService.setBox(results.id);
+                }
+            }
             this.alertService.success('Successfully saved ' + this.box.name + '!');
             this.router.navigateToRoute('boxDetails', { id: results.id });
         }).catch(response => {
@@ -94,21 +110,32 @@ export class BoxEditPage {
         var message = 'Are you sure you want to delete this box? This cannot be undone!';
         this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
             if (!x.wasCancelled) {
-                this.boxQueryService.delete(this.box.id).then(results => {
-                    this.alertService.success('Successfully deleted box.');
-                    this.router.navigateToRoute('boxes');
-                }).catch(response => {
-                    return response.text().then(msg => {
-                        if (msg) {
-                            this.alertService.danger(msg);
-                        } else {
+                if (this.boxService.currentBox && this.boxService.currentBox.id === this.box.id) {
+                    this.boxService.setBox(null, true)
+                        .then(x => this.finalizeDelete())
+                        .catch(x => {
                             this.alertService.danger('An error has occurred. Please try again in a few moments.');
-                        }
-                    }).catch(error => {
-                        this.alertService.danger('An error has occurred. Please try again in a few moments.');
-                    });
-                });
+                        });
+                }
             }
+        });
+    }
+
+    finalizeDelete() {
+        return this.boxQueryService.delete(this.box.id).then(results => {
+            this.alertService.success('Successfully deleted box.');
+            this.router.navigateToRoute('boxes');
+            this.boxService.boxCount--;
+        }).catch(response => {
+            return response.text().then(msg => {
+                if (msg) {
+                    this.alertService.danger(msg);
+                } else {
+                    this.alertService.danger('An error has occurred. Please try again in a few moments.');
+                }
+            }).catch(error => {
+                this.alertService.danger('An error has occurred. Please try again in a few moments.');
+            });
         });
     }
 }

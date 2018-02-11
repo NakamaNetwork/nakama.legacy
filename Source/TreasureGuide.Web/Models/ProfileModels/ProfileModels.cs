@@ -23,6 +23,7 @@ namespace TreasureGuide.Web.Models.ProfileModels
     public class MyProfileModel : ProfileDetailModel
     {
         public IDictionary<int, string> UserPreferences { get; set; }
+        public int BoxCount { get; set; }
     }
 
     public class ProfileEditorModel : IIdItem<string>

@@ -6,6 +6,13 @@ export interface IAccessTokenModel {
 }
 
 
+export class BoxConstants {
+    public static BoxUserLimit: number = 1;
+    public static MultiBoxUserLimit: number = 5;
+    
+}
+
+
 export interface IBoxStubModel {
     id: number;
     name: string;
@@ -83,6 +90,7 @@ export interface IProfileDetailModel extends IProfileStubModel{
 
 export interface IMyProfileModel extends IProfileDetailModel{
     userPreferences: { [key: number]: string; };
+    boxCount: number;
     
 }
 
@@ -107,6 +115,8 @@ export class RoleConstants {
     public static Moderator: string = "Moderator";
     public static BetaTester: string = "BetaTester";
     public static Contributor: string = "Contributor";
+    public static BoxUser: string = "BoxUser";
+    public static MultiBoxUser: string = "MultiBoxUser";
     
 }
 
@@ -250,6 +260,22 @@ export interface ITeamGenericSlotDetailModel extends ITeamGenericSlotStubModel{
 }
 
 export interface ITeamGenericSlotEditorModel extends ITeamGenericSlotDetailModel{
+    
+}
+
+
+export interface ITeamGenericUnitStubModel {
+    role: number;
+    position: number;
+    
+}
+
+export interface ITeamGenericUnitDetailModel extends ITeamGenericUnitStubModel{
+    combo: number;
+    
+}
+
+export interface ITeamGenericUnitEditorModel extends ITeamGenericUnitDetailModel{
     
 }
 

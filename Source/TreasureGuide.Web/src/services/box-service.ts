@@ -1,9 +1,11 @@
-import { autoinject } from 'aurelia-framework';
+import { autoinject, computedFrom } from 'aurelia-framework';
 import { AlertService } from './alert-service';
 import { IBoxDetailModel, IBoxUpdateModel } from '../models/imported';
 import { BoxQueryService } from './query/box-query-service';
 import { AccountService } from './account-service';
 import { UserPreferenceType } from '../models/imported';
+import { RoleConstants } from '../models/imported';
+import { BoxConstants } from '../models/imported';
 
 @autoinject
 export class BoxService {
@@ -21,31 +23,67 @@ export class BoxService {
         this.accountService = accountService;
 
         if (this.accountService.userProfile) {
-            this.setBox(this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId], true);
+            var boxId = this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId];
+            if (boxId) {
+                this.setBox(boxId, true);
+            }
         }
     }
 
+    get boxCount() {
+        return this.accountService.userProfile.boxCount;
+    }
+
+    set boxCount(value) {
+        this.accountService.userProfile.boxCount = value;
+    }
+
+    @computedFrom('accountService.userProfile', 'accountService.userProfile.roles.length')
+    get boxLimit() {
+        if (this.accountService.isInRoles([RoleConstants.Administrator, RoleConstants.Moderator])) {
+            return 999;
+        } else if (this.accountService.isInRoles(RoleConstants.MultiBoxUser)) {
+            return BoxConstants.MultiBoxUserLimit;
+        } else if (this.accountService.isInRoles(RoleConstants.BoxUser)) {
+            return BoxConstants.BoxUserLimit;
+        }
+        return 0;
+    }
+
+    @computedFrom('boxCount', 'boxLimit')
+    get reachedLimit() {
+        return this.boxCount >= this.boxLimit;
+    }
+
     setBox(boxId, bypass: boolean = false) {
-        this.doSave(false).then(x => {
-            if (boxId) {
-                var query;
-                if (bypass) {
-                    query = this.boxQueryService.detail(boxId);
-                } else {
-                    query = this.boxQueryService.focus(boxId);
-                }
-                query.then(y => {
-                    this.currentBox = y;
-                    if (!bypass) {
-                        this.alertService.info('You\'ve switched to box "' + y.name + '".');
+        if (boxId) {
+            return this.doSave(false).then(x => {
+                if (boxId) {
+                    var query;
+                    if (bypass) {
+                        query = this.boxQueryService.detail(boxId);
+                    } else {
+                        query = this.boxQueryService.focus(boxId);
                     }
-                    this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId] = '' + boxId;
-                }).catch(y => {
-                    this.alertService.danger('There was an error loading your box. Please try again in a moment.');
-                });
-            }
-        }).catch(x => {
-            this.alertService.danger('There was an error switching boxes. Please try again in a moment.');
+                    return query.then(y => {
+                        this.currentBox = y;
+                        if (!bypass) {
+                            this.alertService.info('You\'ve switched to box "' + y.name + '".');
+                        }
+                        this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId] = '' + boxId;
+                    }).catch(y => {
+                        this.alertService.danger('There was an error loading your box. Please try again in a moment.');
+                    });
+                }
+            }).catch(x => {
+                this.alertService.danger('There was an error switching boxes. Please try again in a moment.');
+            });
+        }
+        return this.boxQueryService.focus(null).then(y => {
+            this.currentBox = null;
+            this.alertService.info('Box closed. You can open another via the Box menu.');
+        }).catch(y => {
+            this.alertService.danger('There was an error closing your box. Please try again in a moment.');
         });
     }
 

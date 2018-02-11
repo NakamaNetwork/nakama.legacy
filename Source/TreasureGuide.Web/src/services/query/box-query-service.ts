@@ -20,7 +20,7 @@ export class BoxQueryService extends SearchableQueryService {
     }
 
     focus(id: number): Promise<IBoxDetailModel> {
-        return this.http.post(this.buildAddress('focus/' + id));
+        return this.http.post(this.buildAddress('focus' + (id ? '/' + id : '')));
     }
 }
 
