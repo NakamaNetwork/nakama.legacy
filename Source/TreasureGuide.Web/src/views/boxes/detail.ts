@@ -57,7 +57,7 @@ export class BoxDetailPage {
     activate(params) {
         var id = params.id;
         if (id) {
-            this.searchModel.box = id;
+            this.searchModel.boxId = id;
             this.refresh(id);
         }
     }

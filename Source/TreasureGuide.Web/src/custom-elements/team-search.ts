@@ -24,6 +24,21 @@ export class TeamSearch {
         this.accountService = accountService;
     }
 
+    bind() {
+        if (this.model) {
+            if (this.userLocked) {
+                this.model.lockedFields.push('submittedBy');
+            }
+            if (this.stageLocked) {
+                this.model.lockedFields.push('stageId');
+            }
+            if (this.boxLocked) {
+                this.model.lockedFields.push('boxId');
+                this.model.lockedFields.push('blacklist');
+            }
+        }
+    }
+
     freeToPlayOptions = TeamSearchModel.freeToPlayOptions;
 
     @computedFrom('model', 'model.submittedBy', 'accountService.userProfile', 'accountService.userProfile.id')

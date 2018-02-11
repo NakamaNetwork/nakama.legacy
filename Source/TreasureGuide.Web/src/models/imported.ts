@@ -375,7 +375,8 @@ export interface ITeamSearchModel extends ISearchModel{
     leaderId: number;
     noHelp: boolean;
     stageId: number;
-    box: number;
+    boxId: number;
+    blacklist: boolean;
     global: boolean;
     freeToPlay: FreeToPlayStatus;
     classes: UnitClass;
@@ -525,7 +526,8 @@ export interface IUnitSearchModel extends ISearchModel{
     forceClass: boolean;
     freeToPlay: boolean;
     global: boolean;
-    box: number;
+    boxId: number;
+    blacklist: boolean;
     
 }
 

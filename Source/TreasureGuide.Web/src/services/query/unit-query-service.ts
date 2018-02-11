@@ -31,7 +31,8 @@ export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
     classes: UnitClass;
     types: UnitType;
     forceClass: boolean;
-    box: number;
+    boxId: number;
+    blacklist: boolean;
     global: boolean;
     freeToPlay: boolean;
     cacheKey: string = 'search-unit';

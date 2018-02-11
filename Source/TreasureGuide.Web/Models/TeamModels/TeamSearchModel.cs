@@ -10,7 +10,8 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool NoHelp { get; set; }
         public int? StageId { get; set; }
 
-        public int? Box { get; set; }
+        public int? BoxId { get; set; }
+        public bool? Blacklist { get; set; }
         public bool Global { get; set; }
         public FreeToPlayStatus FreeToPlay { get; set; }
         public UnitClass Classes { get; set; }

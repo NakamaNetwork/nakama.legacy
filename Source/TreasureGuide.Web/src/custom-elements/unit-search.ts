@@ -9,4 +9,13 @@ export class UnitSearch {
 
     @bindable
     boxLocked: boolean;
+
+    bind() {
+        if (this.model) {
+            if (this.boxLocked) {
+                this.model.lockedFields.push('boxId');
+                this.model.lockedFields.push('blacklist');
+            }
+        }
+    }
 }

@@ -11,6 +11,7 @@ namespace TreasureGuide.Web.Models.UnitModels
         public bool FreeToPlay { get; set; }
 
         public bool Global { get; set; }
-        public int? Box { get; set; }
+        public int? BoxId { get; set; }
+        public bool? Blacklist { get; set; }
     }
 }

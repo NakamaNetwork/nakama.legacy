@@ -137,7 +137,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchTypes(results, model.Types);
             results = SearchClasses(results, model.Classes);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
-            results = SearchBox(results, model.Box);
+            results = SearchBox(results, model.BoxId, model.Blacklist);
             return results;
         }
 
@@ -235,11 +235,18 @@ namespace TreasureGuide.Web.Controllers.API
             return teams;
         }
 
-        private IQueryable<Team> SearchBox(IQueryable<Team> teams, int? boxId)
+        private IQueryable<Team> SearchBox(IQueryable<Team> teams, int? boxId, bool? blacklist)
         {
             if (boxId.HasValue)
             {
-                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.Boxes.Any(z => z.Id == boxId && !z.Blacklist)));
+                if (blacklist ?? false)
+                {
+                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || !y.Unit.Boxes.Any(z => z.Id == boxId && z.Blacklist)));
+                }
+                else
+                {
+                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.Boxes.Any(z => z.Id == boxId && !z.Blacklist)));
+                }
             }
             return teams;
         }

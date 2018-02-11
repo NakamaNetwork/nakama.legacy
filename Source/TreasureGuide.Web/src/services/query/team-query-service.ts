@@ -75,7 +75,8 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     leaderId: number;
     noHelp: boolean;
     stageId: number;
-    box: number;
+    boxId: number;
+    blacklist: boolean;
     global: boolean;
     freeToPlay: FreeToPlayStatus;
     deleted: boolean;
