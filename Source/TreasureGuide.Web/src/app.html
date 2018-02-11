@@ -27,8 +27,11 @@
                 <li class="_floatRight" auth-req="BoxUser">
                     <a route-href="route: boxes"
                        title.bind="boxTitle"
-                       class.bind="boxIsActive">
-                        <i class="fa fa-fw" class.bind="boxIcon"></i>
+                       class.bind="boxClass">
+                        <span class="fa-stack">
+                            <i class="fa fa-square-o fa-stack-2x"></i>
+                            <i class="fa fa-stack-1x fa-users" if.bind="hasBox"></i>
+                        </span>
                     </a>
                 </li>
                 <li class="_floatRight" auth-req>

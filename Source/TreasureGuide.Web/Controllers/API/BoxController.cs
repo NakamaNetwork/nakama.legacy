@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +22,7 @@ namespace TreasureGuide.Web.Controllers.API
 
         public BoxController(IPreferenceService preferenceService, TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
+            Throttled = true;
             _preferenceService = preferenceService;
         }
 
@@ -105,6 +107,10 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (id.HasValue && User.IsInRole(RoleConstants.BoxUser))
             {
+                if (Throttled && !ThrottlingService.CanAccess(User, Request))
+                {
+                    return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                }
                 await _preferenceService.SetPreference(User.GetId(), UserPreferenceType.BoxId, id?.ToString());
                 return await Detail(id);
             }

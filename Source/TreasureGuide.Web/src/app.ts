@@ -101,19 +101,19 @@ export class App {
         return this.fragment === '/account' ? 'active' : '';
     }
 
-    @computedFrom('fragment')
-    get boxIsActive() {
-        return this.fragment === '/boxes' ? 'active' : '';
+    @computedFrom('boxService', 'boxService.currentBox')
+    get hasBox() {
+        return this.boxService && this.boxService.currentBox;
     }
 
-    @computedFrom('boxService', 'boxService.currentBox')
-    get boxIcon() {
-        return (this.boxService && this.boxService.currentBox) ? 'fa-address-book' : 'fa-address-book-o';
+    @computedFrom('fragment', 'hasBox')
+    get boxClass() {
+        return (this.fragment === '/boxes' ? 'active' : '') + ' ' + (this.hasBox ? '' : '_danger');
     }
 
-    @computedFrom('boxService', 'boxService.currentBox')
+    @computedFrom('hasBox')
     get boxTitle() {
-        return (this.boxService && this.boxService.currentBox) ? this.boxService.currentBox.name : 'Select a Box';
+        return this.hasBox ? 'Current Box: "' + this.boxService.currentBox.name + '"' : 'Select a Box';
     }
 
     @computedFrom('router.navigation', 'accountService.userProfile')
