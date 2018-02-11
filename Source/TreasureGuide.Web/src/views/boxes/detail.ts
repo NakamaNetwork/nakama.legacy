@@ -9,6 +9,7 @@ import { AccountService } from '../../services/account-service';
 import { UnitSearchModel, UnitQueryService } from '../../services/query/unit-query-service';
 import { BoxService } from '../../services/box-service';
 import { BoxBulkDialog, BulkDialogResultModel, BulkDialogAction } from '../../custom-elements/dialogs/box-bulk-dialog';
+import { BoxUnitsDialog } from '../../custom-elements/dialogs/box-units-dialog';
 
 @autoinject
 export class BoxDetailPage {
@@ -56,18 +57,22 @@ export class BoxDetailPage {
         var id = params.id;
         if (id) {
             this.searchModel.box = id;
-            this.loading = true;
-            this.boxQueryService.detail(id).then(result => {
-                this.box = result;
-                this.loading = false;
-                this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-                    this.search(n);
-                });
-                this.search(this.searchModel.payload);
-            }).catch(error => {
-                this.router.navigateToRoute('error', { error: 'The requested box could not be found. It may not exist or you may not have permission to view it.' });
-            });
+            this.refresh(id);
         }
+    }
+
+    refresh(id) {
+        this.loading = true;
+        return this.boxQueryService.detail(id).then(result => {
+            this.box = result;
+            this.loading = false;
+            this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+                this.search(n);
+            });
+            this.search(this.searchModel.payload);
+        }).catch(error => {
+            this.router.navigateToRoute('error', { error: 'The requested box could not be found. It may not exist or you may not have permission to view it.' });
+        });
     }
 
     search(payload: UnitSearchModel) {
@@ -88,46 +93,21 @@ export class BoxDetailPage {
         return this.box.userId === this.accountService.userProfile.id;
     }
 
-    bulk() {
+    openUnits() {
         if (this.canEdit) {
-            this.dialogService.open({ viewModel: BoxBulkDialog, lock: true }).whenClosed(result => {
-                if (!result.wasCancelled) {
-                    var returnValue = result.output as BulkDialogResultModel;
-                    var action;
-                    var model = <IBoxUpdateModel>{ id: this.box.id, added: [], removed: [] };
-                    switch (returnValue.action) {
-                        case BulkDialogAction.Add:
-                            model.added = returnValue.ids;
-                            if (model.added.length === 0) {
-                                return;
-                            }
-                            action = this.boxQueryService.update(model);
-                            break;
-                        case BulkDialogAction.Remove:
-                            model.removed = returnValue.ids;
-                            if (model.removed.length === 0) {
-                                return;
-                            }
-                            action = this.boxQueryService.update(model);
-                            break;
-                        case BulkDialogAction.Set:
-                            model.added = returnValue.ids;
-                            action = this.boxQueryService.set(model);
-                            break;
-                    }
-                    if (action) {
-                        this.loading = true;
-                        action.then(x => {
-                            this.units = [];
-                            this.search(this.searchModel);
-                            this.alertService.success('The box operation has completed successfully!');
-                            this.loading = false;
-                        }).catch(x => {
-                            this.alertService.danger('There was an error performing the box operation. Please try again later.');
-                            this.loading = false;
-                        });
-                    }
+            this.dialogService.open({ viewModel: BoxUnitsDialog, model: this.box, lock: true }).whenClosed(x => {
+                if (!x.wasCancelled) {
+                    this.refresh(this.box.id);
+                }
+            });
+        }
+    }
 
+    openBulk() {
+        if (this.canEdit) {
+            this.dialogService.open({ viewModel: BoxBulkDialog, model: this.box, lock: true }).whenClosed(result => {
+                if (!result.wasCancelled) {
+                    this.search(this.searchModel);
                 }
             });
         }

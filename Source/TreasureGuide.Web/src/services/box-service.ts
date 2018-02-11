@@ -94,23 +94,31 @@ export class BoxService {
         return promise;
     }
 
-    toggle(unitId: number) {
-        if (this.currentBox) {
-            var index = this.currentBox.unitIds.indexOf(unitId);
+    toggle(unitId: number, box: IBoxDetailModel) {
+        var myBox = !box;
+        box = box || this.currentBox;
+        if (box) {
+            var index = box.unitIds.indexOf(unitId);
             if (index > -1) {
-                this.added = this.added.filter(x => x !== unitId);
-                this.currentBox.unitIds = this.currentBox.unitIds.filter(x => x !== unitId);
-                if (this.removed.indexOf(unitId) === -1) {
-                    this.removed.push(unitId);
+                if (myBox) {
+                    this.added = this.added.filter(x => x !== unitId);
+                    if (this.removed.indexOf(unitId) === -1) {
+                        this.removed.push(unitId);
+                    }
                 }
+                box.unitIds = box.unitIds.filter(x => x !== unitId);
             } else {
-                this.removed.filter(x => x !== unitId);
-                if (this.added.indexOf(unitId) === -1) {
-                    this.added.push(unitId);
+                if (myBox) {
+                    this.removed.filter(x => x !== unitId);
+                    if (this.added.indexOf(unitId) === -1) {
+                        this.added.push(unitId);
+                    }
                 }
-                this.currentBox.unitIds.push(unitId);
+                box.unitIds.push(unitId);
             }
-            this.queueSave();
+            if (myBox) {
+                this.queueSave();
+            }
         }
     }
 }

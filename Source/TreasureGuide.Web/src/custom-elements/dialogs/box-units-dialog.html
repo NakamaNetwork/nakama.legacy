@@ -1,18 +1,40 @@
 ﻿<template>
-    <ux-dialog class="small">
+    <ux-dialog>
         <ux-dialog-header>
             <div class="_floatRight">
                 <a click.delegate="cancel()" class="button _flat modal-action">X</a>
             </div>
-            <h3>
-                Select Box Units
-            </h3>
+            <h3>Select a Unit</h3>
         </ux-dialog-header>
-        <ux-dialog-body class="_alignCenter">
-            
+        <ux-dialog-body>
+            <div class="tab" if.bind="allowGenerics">
+                <button type="button" class="tablinks" class.bind="!generic ? '_active' : ''" click.delegate="showUnits()">Specific Units</button>
+                <button type="button" class="tablinks" class.bind="generic ? '_active' : ''" click.delegate="showGeneric()">Generic Slots</button>
+            </div>
+            <div class="row">
+                <unit-search model.two-way="searchModel" box-locked="true"></unit-search>
+                <loading-area if.bind="loading"></loading-area>
+                <div if.bind="!loading">
+                    <div class="row">
+                        <search-pager search-model.bind="searchModel"></search-pager>
+                    </div>
+                    <div class="row _alignCenter">
+                        <div class="unit-collection">
+                            <unit-display repeat.for="unit of units"
+                                          model.bind="unit"
+                                          show-box="true"
+                                          box.bind="box">
+                            </unit-display>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
+                    </div>
+                </div>
+            </div>
         </ux-dialog-body>
         <ux-dialog-footer>
-            <button type="button" click.delegate="okay()" class="button modal-action _primary">Submit</button>
+            <button type="button" click.delegate="submit()" class="button _primary modal-action">Submit</button>
             <button type="button" click.delegate="cancel()" class="button modal-action">Cancel</button>
         </ux-dialog-footer>
     </ux-dialog>

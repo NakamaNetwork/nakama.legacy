@@ -8,7 +8,7 @@ import { UnitPickerParams } from './dialogs/unit-picker';
 import { IUnitEditorModel } from '../models/imported';
 import { UnitType } from '../models/imported';
 import { UnitClass } from '../models/imported';
-import { UnitRole } from '../models/imported';
+import { UnitRole, IBoxDetailModel } from '../models/imported';
 import { StringHelper } from '../tools/string-helper';
 import { BoxService } from '../services/box-service';
 
@@ -27,6 +27,7 @@ export class UnitDisplay {
     @bindable info: boolean;
     @bindable tooltip: boolean;
     @bindable showBox: boolean;
+    @bindable box: IBoxDetailModel;
 
     inBox: boolean;
 
@@ -91,25 +92,30 @@ export class UnitDisplay {
         }
     }
 
+    @computedFrom('boxService.currentBox', 'box')
+    get assignedBox() {
+        return this.box || this.boxService.currentBox;
+    }
+
     @computedFrom('model')
     get generic() {
         return this.model ? (this.model.role !== undefined) : false;
     }
 
-    @computedFrom('showBox', 'unitId', 'boxService.currentBox')
+    @computedFrom('showBox', 'unitId', 'assignedBox')
     get showBoxInput() {
-        return this.showBox && this.unitId && this.boxService.currentBox;
+        return this.showBox && this.unitId && this.assignedBox;
     }
 
-    @computedFrom('showBoxInput', 'boxService.currentBox.unitIds', 'boxService.currentBox.unitIds.length', 'unitId')
+    @computedFrom('showBoxInput', 'assignedBox.unitIds', 'assignedBox.unitIds.length', 'unitId')
     get hasUnit() {
         return this.showBoxInput &&
-            this.boxService.currentBox.unitIds.indexOf(this.unitId) > -1;
+            this.assignedBox.unitIds.indexOf(this.unitId) > -1;
     }
 
     set hasUnit(value) {
         if (this.hasUnit !== value) {
-            this.boxService.toggle(this.unitId);
+            this.boxService.toggle(this.unitId, this.assignedBox);
         }
     }
 
@@ -118,9 +124,9 @@ export class UnitDisplay {
         return (this.showBoxInput && !this.hasUnit) ? 'no-own' : '';
     }
 
-    @computedFrom('hasUnit', 'boxService.currentBox', 'boxService.currentBox.name')
+    @computedFrom('hasUnit', 'assignedBox', 'assignedBox.name')
     get boxTitle() {
-        var boxName = this.boxService.currentBox ? this.boxService.currentBox.name : 'uhhh';
+        var boxName = this.assignedBox ? this.assignedBox.name : 'uhhh';
         return (this.hasUnit ? 'In' : 'Not in') + ' box "' + boxName + '"';
     }
 
