@@ -27,6 +27,21 @@ export class TeamSearch {
         this.boxService = boxService;
     }
 
+    bind() {
+        if (this.model) {
+            if (this.userLocked) {
+                this.model.lockedFields.push('submittedBy');
+            }
+            if (this.stageLocked) {
+                this.model.lockedFields.push('stageId');
+            }
+            if (this.boxLocked) {
+                this.model.lockedFields.push('boxId');
+                this.model.lockedFields.push('blacklist');
+            }
+        }
+    }
+
     @computedFrom('model.boxId')
     get myBox() {
         return this.model.boxId !== undefined;
@@ -41,19 +56,14 @@ export class TeamSearch {
         }
     }
 
-    bind() {
-        if (this.model) {
-            if (this.userLocked) {
-                this.model.lockedFields.push('submittedBy');
-            }
-            if (this.stageLocked) {
-                this.model.lockedFields.push('stageId');
-            }
-            if (this.boxLocked) {
-                this.model.lockedFields.push('boxId');
-                this.model.lockedFields.push('blacklist');
-            }
-        }
+    @computedFrom('boxService.currentBox')
+    get myBoxDisabled() {
+        return this.boxService.currentBox ? '' : 'disabled';
+    }
+
+    @computedFrom('boxService.currentBox')
+    get myBoxTitle() {
+        return this.boxService.currentBox ? 'Filter results based on your current box.' : 'You must open a box first.';
     }
 
     freeToPlayOptions = TeamSearchModel.freeToPlayOptions;

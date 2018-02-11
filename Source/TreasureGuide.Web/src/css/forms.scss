@@ -26,6 +26,10 @@ input.input-validation-error {
     color: initial;
 }
 
+input[disabled], textarea[disabled], select[disabled], button[disabled] {
+    cursor: not-allowed;
+}
+
 .field-validation-error {
     @extend ._dangerText;
     margin-left: 0.5em;

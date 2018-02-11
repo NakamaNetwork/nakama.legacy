@@ -17,6 +17,15 @@ export class UnitSearch {
         this.boxService = boxService;
     }
 
+    bind() {
+        if (this.model) {
+            if (this.boxLocked) {
+                this.model.lockedFields.push('boxId');
+                this.model.lockedFields.push('blacklist');
+            }
+        }
+    }
+
     @computedFrom('model.boxId')
     get myBox() {
         return this.model.boxId !== undefined;
@@ -31,12 +40,13 @@ export class UnitSearch {
         }
     }
 
-    bind() {
-        if (this.model) {
-            if (this.boxLocked) {
-                this.model.lockedFields.push('boxId');
-                this.model.lockedFields.push('blacklist');
-            }
-        }
+    @computedFrom('boxService.currentBox')
+    get myBoxDisabled() {
+        return this.boxService.currentBox ? '' : 'disabled';
+    }
+
+    @computedFrom('boxService.currentBox')
+    get myBoxTitle() {
+        return this.boxService.currentBox ? 'Filter results based on your current box.' : 'You must open a box first.';
     }
 }

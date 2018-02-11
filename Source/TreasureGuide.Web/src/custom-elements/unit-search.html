@@ -49,11 +49,12 @@
                     </label>
                 </div>
                 <div class="col m3">
-                    <label for="myBoxInput" if.bind="!boxLocked">
+                    <label for="myBoxInput" if.bind="!boxLocked" title.bind="myBoxTitle">
                         <input id="myBoxInput"
                                type="checkbox"
-                               checked.two-way="myBox"/>
-                        <span class="-label-body">In my Box</span>
+                               checked.two-way="myBox"
+                               disabled.bind="myBoxDisabled" />
+                        <span class="-label-body">Box Filter</span>
                     </label>
                 </div>
                 <div class="col m3">
