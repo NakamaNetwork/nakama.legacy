@@ -102,8 +102,8 @@ $default-unit-margin: $huge-unit-margin;
     }
 
     &.no-own {
-        filter: grayscale(50%) brightness(50%);
-        -webkit-filter: grayscale(50%) brightness(50%);
+        filter: grayscale(40%) brightness(40%) contrast(110%);
+        -webkit-filter: grayscale(40%) brightness(40%) contrast(110%);
     }
 }
 
