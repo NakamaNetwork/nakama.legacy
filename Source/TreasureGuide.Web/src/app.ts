@@ -20,12 +20,6 @@ export class App {
         this.newsService = newsService;
         this.boxService = boxService;
         this.ea = eventAggregator;
-        this.ea.subscribe('router:navigation:processing', response => {
-            this.boxService.save();
-        });
-        this.ea.subscribe('router:navigation:complete', response => {
-            this.navToggled = false;
-        });
     }
 
     activate() {
@@ -35,6 +29,12 @@ export class App {
                 this.boxService.save();
                 e.returnValue = true;
             }
+        });
+        this.ea.subscribe('router:navigation:processing', response => {
+            this.boxService.save();
+        });
+        this.ea.subscribe('router:navigation:complete', response => {
+            this.navToggled = false;
         });
     }
 
@@ -59,7 +59,7 @@ export class App {
             { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
             { route: 'stages/:id/details', name: 'stageDetails', title: 'Stage Details', moduleId: 'views/stages/detail', nav: false },
             // Boxes
-            { route: 'boxes', name: 'boxes', title: 'Boxes', moduleId: 'views/boxes/index', nav: false },
+            { route: 'boxes', name: 'boxes', title: 'Boxes', moduleId: 'views/boxes/index', nav: false, auth: 'BoxUser' },
             { route: 'boxes/create', name: 'boxCreate', title: 'Create Box', moduleId: 'views/boxes/edit', nav: false, auth: 'BoxUser' },
             { route: 'boxes/:id/edit', name: 'boxEdit', title: 'Edit Box', moduleId: 'views/boxes/edit', nav: false, auth: 'BoxUser' },
             { route: 'boxes/:id/details', name: 'boxDetails', title: 'Box Details', moduleId: 'views/boxes/detail', nav: false },

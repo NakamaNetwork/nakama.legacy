@@ -89,19 +89,23 @@ export class BoxService {
 
     private timer;
 
-    queueSave(messages: boolean = true) {
-        this.save(messages, 10000);
-    }
-
-    save(messages: boolean = true, delay: number = 100) {
+    queueSave(messages: boolean = true, delay: number = 10000) {
         if (this.timer) {
             clearTimeout(this.timer);
         }
         this.timer = setTimeout(() => {
             this.doSave(messages);
-        }, 100);
+        }, delay);
     }
 
+    save(messages: boolean = true) {
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+        this.doSave(messages);
+    }
+
+    @computedFrom('currentBox', 'added.length', 'removed.length')
     get dirty() {
         return this.currentBox && (this.added.length > 0 || this.removed.length > 0);
     }

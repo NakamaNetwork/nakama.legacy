@@ -1,15 +1,17 @@
 ﻿<template>
     <h1>${title}</h1>
-    <div auth-req="Contributor">
-        <a class="button _info _xlarge _width100" route-href="route: boxCreate">
+    <div class="row">
+        <div class="alert _infoLight">
+            You have used ${boxService.boxCount} of ${boxService.boxLimit} available boxes.
+        </div>
+    </div>
+    <div class="row">
+        <a class="button _info _xlarge _width100" class.bind="boxService.reachedLimit ? '_disabled' : ''" route-href="route: boxCreate">
             <i class="fa fa-fw fa-plus"></i> Create a New Box
         </a>
     </div>
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading">
-        <div class="row">
-            <search-pager search-model.bind="searchModel"></search-pager>
-        </div>
         <div class="row box-collection" if.bind="boxes.length > 0">
             <table class="_width100">
                 <thead>
@@ -24,7 +26,7 @@
                         <td>
                             <a route-href="route: boxDetails; params.bind: { id: box.id }">
                                 ${box.name}
-                            </a>                
+                            </a>
                             <i class="fa fa-fw fa-users" title="Public" if.bind="box.public"></i>
                             <i class="fa fa-fw fa-times-rectangle-o" title="Blacklist" if.bind="box.blacklist"></i>
                         </td>
@@ -39,9 +41,6 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="row">
-            <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
         </div>
     </div>
 </template>

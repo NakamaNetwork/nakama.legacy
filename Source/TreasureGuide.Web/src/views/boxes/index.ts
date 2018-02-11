@@ -10,7 +10,7 @@ export class BoxIndexPage {
     private bindingEngine: BindingEngine;
 
     title: string = 'My Boxes';
-    searchModel: BoxSearchModel = new BoxSearchModel();
+    searchModel: BoxSearchModel;
     boxes: IBoxStubModel[] = [];
     loading: boolean;
 

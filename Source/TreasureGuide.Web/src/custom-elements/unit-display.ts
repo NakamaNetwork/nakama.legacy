@@ -115,7 +115,7 @@ export class UnitDisplay {
 
     set hasUnit(value) {
         if (this.hasUnit !== value) {
-            this.boxService.toggle(this.unitId, this.assignedBox);
+            this.boxService.toggle(this.unitId, this.box);
         }
     }
 

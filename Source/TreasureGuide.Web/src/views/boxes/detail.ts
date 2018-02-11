@@ -10,6 +10,7 @@ import { UnitSearchModel, UnitQueryService } from '../../services/query/unit-que
 import { BoxService } from '../../services/box-service';
 import { BoxBulkDialog, BulkDialogResultModel, BulkDialogAction } from '../../custom-elements/dialogs/box-bulk-dialog';
 import { BoxUnitsDialog } from '../../custom-elements/dialogs/box-units-dialog';
+import { RoleConstants } from '../../models/imported';
 
 @autoinject
 export class BoxDetailPage {
@@ -64,6 +65,9 @@ export class BoxDetailPage {
     refresh(id) {
         this.loading = true;
         return this.boxQueryService.detail(id).then(result => {
+            if (this.boxService.currentBox && this.boxService.currentBox.id === result.id) {
+                this.boxService.currentBox = result;
+            }
             this.box = result;
             this.loading = false;
             this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
@@ -90,7 +94,7 @@ export class BoxDetailPage {
 
     @computedFrom('box', 'box.userId', 'accountService.userProfile', 'accountService.userProfile.id')
     get canEdit() {
-        return this.box.userId === this.accountService.userProfile.id;
+        return this.box.userId === this.accountService.userProfile.id && this.accountService.isInRoles(RoleConstants.BoxUser);
     }
 
     openUnits() {
