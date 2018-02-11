@@ -29,7 +29,11 @@ export class BoxIndexPage {
     }
 
     clicked(box: IBoxStubModel) {
-        this.boxService.setBox(box.id);
+        if (this.boxService.currentBox && this.boxService.currentBox.id === box.id) {
+            this.boxService.setBox(null);
+        } else {
+            this.boxService.setBox(box.id);
+        }
     }
 
     search(payload) {

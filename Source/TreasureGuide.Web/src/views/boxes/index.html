@@ -35,7 +35,10 @@
                         </td>
                         <td>
                             <button if.bind="boxService.currentBox.id !== box.id" type="button" class="button _primary" click.delegate="clicked(box)">
-                                Make Current Box
+                                Open Box
+                            </button>
+                            <button if.bind="boxService.currentBox.id === box.id" type="button" class="button" click.delegate="clicked(box)">
+                                Close Box
                             </button>
                         </td>
                     </tr>
