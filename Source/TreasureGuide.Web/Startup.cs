@@ -55,12 +55,12 @@ namespace TreasureGuide.Web
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddFile("logs/nakama-errors-{Date}.txt", LogLevel.Error);
+            loggerFactory.AddFile("logs/nakama-{Date}.txt", LogLevel.Warning);
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                loggerFactory.AddFile("logs/nakama-{Date}.txt");
                 loggerFactory.AddDebug();
             }
             else
