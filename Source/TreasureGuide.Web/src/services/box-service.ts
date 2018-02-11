@@ -71,20 +71,14 @@ export class BoxService {
                             this.alertService.info('You\'ve switched to box "' + y.name + '".');
                         }
                         this.accountService.userProfile.userPreferences[UserPreferenceType.BoxId] = '' + boxId;
-                    }).catch(y => {
-                        this.alertService.danger('There was an error loading your box. Please try again in a moment.');
-                    });
+                    }).catch(response => this.alertService.reportError(response, 'There was an error loading your box. Please try again in a few moments.'));
                 }
-            }).catch(x => {
-                this.alertService.danger('There was an error switching boxes. Please try again in a moment.');
-            });
+            }).catch(response => this.alertService.reportError(response, 'There was an error switching boxes. Please try again in a few moments.'));
         }
         return this.boxQueryService.focus(null).then(y => {
             this.currentBox = null;
             this.alertService.info('Box closed. You can open another via the Box menu.');
-        }).catch(y => {
-            this.alertService.danger('There was an error closing your box. Please try again in a moment.');
-        });
+        }).catch(response => this.alertService.reportError(response, 'There was an error closing your box. Please try again in a few moments.'));
     }
 
     private timer;

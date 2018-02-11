@@ -70,8 +70,6 @@ export class BoxUnitsDialog {
         this.boxQueryService.set(model).then(x => {
             this.alertService.success('Successfully updated the box!');
             this.controller.ok(this.box);
-        }).catch(x => {
-            this.alertService.danger('There was an error updating the box. Please try again in a few moments.');
-        });
+        }).catch(response => this.alertService.reportError(response));
     }
 }

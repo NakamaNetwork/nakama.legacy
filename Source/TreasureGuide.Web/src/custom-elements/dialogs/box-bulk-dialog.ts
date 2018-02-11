@@ -78,6 +78,7 @@ export class BoxBulkDialog {
             case BulkDialogAction.Add:
                 model.added = result.ids;
                 if (model.added.length === 0) {
+                    this.controller.ok(model);
                     return;
                 }
                 action = this.boxQueryService.update(model);
@@ -85,6 +86,7 @@ export class BoxBulkDialog {
             case BulkDialogAction.Remove:
                 model.removed = result.ids;
                 if (model.removed.length === 0) {
+                    this.controller.ok(model);
                     return;
                 }
                 action = this.boxQueryService.update(model);
@@ -98,9 +100,7 @@ export class BoxBulkDialog {
             action.then(x => {
                 this.alertService.success('The box operation has completed successfully!');
                 this.controller.ok(model);
-            }).catch(x => {
-                this.alertService.danger('There was an error performing the box operation. Please try again later.');
-            });
+            }).catch(response => this.alertService.reportError(response));
         }
     }
 

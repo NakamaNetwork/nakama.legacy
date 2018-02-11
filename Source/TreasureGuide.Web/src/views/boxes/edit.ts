@@ -77,6 +77,10 @@ export class BoxEditPage {
             this.controller.validate().then(x => {
                 if (x.valid) {
                     this.doSubmit();
+                } else {
+                    x.results.filter(y => !y.valid && y.message).forEach(y => {
+                        this.alertService.danger(y.message);
+                    });
                 }
             });
         }
@@ -93,17 +97,7 @@ export class BoxEditPage {
             }
             this.alertService.success('Successfully saved ' + this.box.name + '!');
             this.router.navigateToRoute('boxDetails', { id: results.id });
-        }).catch(response => {
-            return response.text().then(msg => {
-                if (msg) {
-                    this.alertService.danger(msg);
-                } else {
-                    this.alertService.danger('An error has occurred. Please try again in a few moments.');
-                }
-            }).catch(error => {
-                this.alertService.danger('An error has occurred. Please try again in a few moments.');
-            });
-        });
+        }).catch(response => this.alertService.reportError(response));
     }
 
     doDelete() {
@@ -113,9 +107,7 @@ export class BoxEditPage {
                 if (this.boxService.currentBox && this.boxService.currentBox.id === this.box.id) {
                     this.boxService.setBox(null, true)
                         .then(x => this.finalizeDelete())
-                        .catch(x => {
-                            this.alertService.danger('An error has occurred. Please try again in a few moments.');
-                        });
+                        .catch(response => this.alertService.reportError(response));
                 }
             }
         });
@@ -126,17 +118,7 @@ export class BoxEditPage {
             this.alertService.success('Successfully deleted box.');
             this.router.navigateToRoute('boxes');
             this.boxService.boxCount--;
-        }).catch(response => {
-            return response.text().then(msg => {
-                if (msg) {
-                    this.alertService.danger(msg);
-                } else {
-                    this.alertService.danger('An error has occurred. Please try again in a few moments.');
-                }
-            }).catch(error => {
-                this.alertService.danger('An error has occurred. Please try again in a few moments.');
-            });
-        });
+        }).catch(response => this.alertService.reportError(response));
     }
 }
 

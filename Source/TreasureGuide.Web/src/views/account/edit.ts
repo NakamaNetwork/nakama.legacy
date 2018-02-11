@@ -91,17 +91,7 @@ export class ProfileEditPage {
         this.profileQueryService.save(item).then(results => {
             this.alert.success('Successfully updated profile information!');
             this.router.navigateToRoute('account', { id: results.id });
-        }).catch(response => {
-            return response.text().then(msg => {
-                if (msg) {
-                    this.alert.danger(msg);
-                } else {
-                    this.alert.danger('An error has occurred. Please try again in a few moments.');
-                }
-            }).catch(error => {
-                this.alert.danger('An error has occurred. Please try again in a few moments.');
-            });
-        });
+        }).catch(response => this.alert.reportError(response));
     }
 
     @computedFrom('profile.website')
