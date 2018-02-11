@@ -22,6 +22,39 @@
         </div>
     </div>
     <div>
+        <h2>Boxes</h2>
+        <loading-area if.bind="loadingBoxes"></loading-area>
+        <div if.bind="!loadingBoxes">
+            <div class="row box-collection" if.bind="boxes.length > 0">
+                <table class="_width100">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Friend Id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="box of boxes">
+                            <td>
+                                <a route-href="route: boxDetails; params.bind: { id: box.id }">
+                                    ${box.name}
+                                </a>
+                                <i class="fa fa-fw fa-users" title="Public" if.bind="box.public"></i>
+                                <i class="fa fa-fw fa-times-rectangle-o" title="Blacklist" if.bind="box.blacklist"></i>
+                            </td>
+                            <td>
+                                <friend-id-display friend-id.bind="box.friendId" global.bind="box.global"></friend-id-display>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" if.bind="boxes.length === 0">
+                <h4>This user is not sharing any boxes.</h4>
+            </div>
+        </div>
+    </div>
+    <div>
         <h2>Teams</h2>
         <div class="row">
             <team-search model.two-way="teamSearchModel" user-locked="true"></team-search>
