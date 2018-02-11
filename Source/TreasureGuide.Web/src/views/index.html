@@ -7,8 +7,8 @@
         <div class="row">
             <div class="col m6">
                 <h4>Trending Teams</h4>
-                <loading-area if.bind="trendLoading"></loading-area>
-                <div if.bind="!trendLoading" class="team-collection _alignLeft">
+                <loading-area if.bind="trendingLoading"></loading-area>
+                <div if.bind="!trendingLoading" class="team-collection _alignLeft">
                     <h6 if.bind="trendingTeams.length === 0">Nothing trending at the moment.</h6>
                     <div class="col m12" repeat.for="team of trendingTeams">
                         <team-box team.bind="team"></team-box>
