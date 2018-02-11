@@ -18,6 +18,7 @@ namespace TreasureGuide.Web.Services
     {
         private static readonly Regex TeamRegex = new Regex("teams/(.+)/details");
         private static readonly Regex StageRegex = new Regex("stages/(.+)/details");
+        private static readonly Regex BoxRegex = new Regex("boxes/(.+)/details");
         private static readonly Regex AccountRegex = new Regex("account/(.+)");
 
         private static readonly Regex TagRegex = new Regex("<[^>]*>");
@@ -72,6 +73,19 @@ namespace TreasureGuide.Web.Services
                             .Select(x => new MetaResultModel
                             {
                                 Title = x.UserName
+                            }).SingleOrDefaultAsync();
+                    }
+                }
+                else if ((match = BoxRegex.Match(route)).Success)
+                {
+                    var box = GetId(match);
+                    if (box.HasValue)
+                    {
+                        model = await _dbContext.Boxes
+                            .Where(x => x.Id == box && x.Public == true)
+                            .Select(x => new MetaResultModel
+                            {
+                                Title = x.Name
                             }).SingleOrDefaultAsync();
                     }
                 }
