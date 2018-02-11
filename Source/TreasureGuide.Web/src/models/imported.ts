@@ -6,6 +6,57 @@ export interface IAccessTokenModel {
 }
 
 
+export class BoxConstants {
+    public static BoxUserLimit: number = 1;
+    public static MultiBoxUserLimit: number = 5;
+    
+}
+
+
+export interface IBoxStubModel {
+    id: number;
+    name: string;
+    friendId: number;
+    global: boolean;
+    public: boolean;
+    blacklist: boolean;
+    
+}
+
+export interface IBoxDetailModel extends IBoxStubModel{
+    userId: string;
+    userName: string;
+    userUnitId: number;
+    unitIds: number[];
+    
+}
+
+export interface IBoxEditorModel {
+    id: number;
+    name: string;
+    friendId: number;
+    global: boolean;
+    public: boolean;
+    blacklist: boolean;
+    
+}
+
+
+export interface IBoxSearchModel extends ISearchModel{
+    userId: string;
+    blacklist: boolean;
+    
+}
+
+
+export interface IBoxUpdateModel {
+    id: number;
+    added: number[];
+    removed: number[];
+    
+}
+
+
 export interface IExternalLoginConfirmationViewModel {
     userName: string;
     email: string;
@@ -31,11 +82,15 @@ export interface IProfileStubModel {
 }
 
 export interface IProfileDetailModel extends IProfileStubModel{
-    friendId: number;
     website: string;
     userRoles: string[];
-    global: boolean;
     canEdit: boolean;
+    
+}
+
+export interface IMyProfileModel extends IProfileDetailModel{
+    userPreferences: { [key: number]: string; };
+    boxCount: number;
     
 }
 
@@ -43,10 +98,8 @@ export interface IProfileEditorModel {
     id: string;
     userName: string;
     unitId: number;
-    friendId: number;
     website: string;
     userRoles: string[];
-    global: boolean;
     
 }
 
@@ -62,6 +115,8 @@ export class RoleConstants {
     public static Moderator: string = "Moderator";
     public static BetaTester: string = "BetaTester";
     public static Contributor: string = "Contributor";
+    public static BoxUser: string = "BoxUser";
+    public static MultiBoxUser: string = "MultiBoxUser";
     
 }
 
@@ -320,7 +375,7 @@ export interface ITeamSearchModel extends ISearchModel{
     leaderId: number;
     noHelp: boolean;
     stageId: number;
-    myBox: boolean;
+    box: number;
     global: boolean;
     freeToPlay: FreeToPlayStatus;
     classes: UnitClass;
@@ -470,7 +525,7 @@ export interface IUnitSearchModel extends ISearchModel{
     forceClass: boolean;
     freeToPlay: boolean;
     global: boolean;
-    myBox: boolean;
+    box: number;
     
 }
 
@@ -482,5 +537,11 @@ export enum UnitType {
     QCK = 4,
     INT = 8,
     PSY = 16
+}
+
+
+export enum UserPreferenceType { 
+    Unknown = 0,
+    BoxId = 1
 }
 

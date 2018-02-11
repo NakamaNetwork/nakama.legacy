@@ -1,7 +1,7 @@
 ﻿<template>
     <div class="tooltip -tooltip-top">
         <strong class="tooltiptext _shadow _noDelay _small" if.bind="name">${name}</strong>
-        <button type="button" class="unit-button" click.delegate="clicked()" style.bind="backgroundStyle">
+        <button type="button" class="unit-button" class.bind="unitOwnerClass" click.delegate="clicked()" style.bind="backgroundStyle">
             <i class.bind="iconClass" if.bind="!model"></i>
             <div class="generic-container" if.bind="generic">
                 <div class="generic-types">
@@ -16,5 +16,6 @@
             </div>
         </button>
         <a if.bind="link" class="unit-link" href.bind="link" target="_blank"></a>
+        <input if.bind="showBoxInput" type="checkbox" checked.bind="hasUnit" title.bind="boxTitle" class="in-box" />
     </div>
 </template>

@@ -75,6 +75,14 @@ export class UnitPicker {
         this.controller.cancel();
     };
 
+    eventClicked(event: CustomEvent) {
+        if (event && event.detail) {
+            this.clicked(event.detail.newValue);
+        } else {
+            this.clicked(null);
+        }
+    }
+
     clicked(model) {
         if (model && !model.id) {
             this.validController.validate().then(x => {

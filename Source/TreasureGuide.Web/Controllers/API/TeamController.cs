@@ -137,7 +137,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchTypes(results, model.Types);
             results = SearchClasses(results, model.Classes);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
-            results = SearchBox(results, model.MyBox);
+            results = SearchBox(results, model.Box);
             return results;
         }
 
@@ -235,11 +235,11 @@ namespace TreasureGuide.Web.Controllers.API
             return teams;
         }
 
-        private IQueryable<Team> SearchBox(IQueryable<Team> teams, bool myBox)
+        private IQueryable<Team> SearchBox(IQueryable<Team> teams, int? boxId)
         {
-            if (myBox)
+            if (boxId.HasValue)
             {
-                throw new System.NotImplementedException();
+                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.Boxes.Any(z => z.Id == boxId && !z.Blacklist)));
             }
             return teams;
         }

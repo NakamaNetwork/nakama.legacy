@@ -49,12 +49,12 @@
                     </label>
                 </div>
                 <div class="col m3">
-                    <!--<label for="myBoxInput">
+                    <label for="myBoxInput" if.bind="!boxLocked">
                         <input id="myBoxInput"
                                type="checkbox"
                                checked.two-way="myBox"/>
-                        <span class="-label-body">My Box</span>
-                    </label>-->
+                        <span class="-label-body">In my Box</span>
+                    </label>
                 </div>
                 <div class="col m3">
                     <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>

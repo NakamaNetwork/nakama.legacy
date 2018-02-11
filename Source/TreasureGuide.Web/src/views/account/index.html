@@ -10,10 +10,6 @@
             <unit-display unit-id.bind="unitId">
             </unit-display>
         </div>
-        <div if.bind="friendId">
-            <label for="friendId">Friend Id</label>
-            <friend-id-display id="friendId" friend-id.bind="friendId" global.bind="global"></friend-id-display>
-        </div>
         <div if.bind="website">
             <label for="website">Website</label>
             <a id="website" href.bind="websiteParsed" href="#" target="_blank">${website}</a>

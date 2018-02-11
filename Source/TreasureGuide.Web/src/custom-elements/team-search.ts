@@ -17,6 +17,9 @@ export class TeamSearch {
     @bindable
     stageLocked: boolean;
 
+    @bindable
+    boxLocked: boolean;
+
     constructor(accountService: AccountService) {
         this.accountService = accountService;
     }

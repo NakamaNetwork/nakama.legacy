@@ -54,14 +54,14 @@ namespace TreasureGuide.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddFile("logs/nakama-{Date}.txt");
             loggerFactory.AddFile("logs/nakama-errors-{Date}.txt", LogLevel.Error);
-            loggerFactory.AddDebug();
+            loggerFactory.AddFile("logs/nakama-{Date}.txt", LogLevel.Warning);
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                loggerFactory.AddDebug();
             }
             else
             {

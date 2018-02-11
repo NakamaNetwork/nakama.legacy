@@ -88,7 +88,6 @@ export class ProfileEditPage {
 
     doSubmit() {
         var item = this.profile;
-        item.friendId = item.friendId ? parseInt(item.friendId.toString().replace(/\D/g, '')) : item.friendId;
         this.profileQueryService.save(item).then(results => {
             this.alert.success('Successfully updated profile information!');
             this.router.navigateToRoute('account', { id: results.id });
@@ -114,9 +113,6 @@ export class ProfileEditPage {
 }
 
 ValidationRules
-    .ensure((x: ProfileEditorModel) => x.friendId)
-    .satisfies(x => x ? x.toString().replace(/\D/g, '').length === 9 : true)
-    .withMessage('Friend Id must be a valid 9-digit number!')
     .ensure((x: ProfileEditorModel) => x.website)
     .maxLength(ProfileEditPage.websiteMaxLength)
     .on(ProfileEditorModel);

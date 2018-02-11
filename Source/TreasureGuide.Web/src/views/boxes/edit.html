@@ -1,0 +1,54 @@
+﻿<template>
+    <h1>${title}</h1>
+    <loading-area if.bind="loading"></loading-area>
+    <form if.bind="!loading" with.bind="box">
+        <div class="row">
+            <fieldset>
+                <legend>Box Details</legend>
+
+                <div class="form-group">
+                    <label for="nameInput">Box Name</label>
+                    <input id="nameInput" class="_width100" type="text" placeholder="Name" value.bind="name & validate" />
+                    <div class="field-length">${nameLength}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="friendInput">Friend Id</label>
+                    <input id="friendInput" class="_width100" type="text" placeholder="000-000-000" value.bind="friendId & validate" />
+                </div>
+
+                <div class="form-group">
+                    <label for="globalInput">
+                        <input id="globalInput" type="checkbox" checked.bind="global" />
+                        <span class="-label-body">Global</span>
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <fieldset>
+                <legend>Options</legend>
+                <div class="col m6">
+                    <label for="publicInput">
+                        <input id="publicInput" type="checkbox" checked.bind="public" />
+                        <span class="-label-body">Public</span>
+                    </label>
+                    <em><small>(Users will be able to see this box on your profile.)</small></em>
+                </div>
+                <div class="col m6" if.bind="id">
+                    <label for="deleteInput">
+                        <input type="checkbox" id="deleteInput" checked.bind="deleted" />
+                        <span class="-label-body">
+                            Delete Box
+                        </span>
+                    </label>
+                    <em class="_dangerText"><small>(This cannot be undone!)</small></em>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <em>You can add and remove units from the box once the box has been saved.</em>
+            <input type="submit" class="_primary _floatRight" click.delegate="submit()" />
+        </div>
+    </form>
+</template>

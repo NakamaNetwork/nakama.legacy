@@ -1,0 +1,26 @@
+﻿<template>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="_floatRight">
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+            </div>
+            <h3>
+                Box Bulk Operations
+            </h3>
+        </ux-dialog-header>
+        <ux-dialog-body class="_alignCenter">
+            <div class="row">
+                <textarea class="_width100" value.bind="text" placeholder="Unit Ids..."></textarea>
+            </div>
+            <div class="row" if.bind="parsed.length > 0">
+                <unit-display repeat.for="id of parsed" unit-id.bind="id" size="small"></unit-display>
+            </div>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <button type="button" click.delegate="add()" class="button modal-action _primary">Add Units</button>
+            <button type="button" click.delegate="remove()" class="button modal-action _danger">Remove Units</button>
+            <button type="button" click.delegate="set()" class="button modal-action _warning">Set Units</button>
+            <button type="button" click.delegate="cancel()" class="button modal-action">Cancel</button>
+        </ux-dialog-footer>
+    </ux-dialog>
+</template>

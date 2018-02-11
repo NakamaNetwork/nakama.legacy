@@ -4,26 +4,38 @@ import { RouterConfiguration, Router } from 'aurelia-router';
 import { AccountService } from './services/account-service';
 import { AuthorizeStep } from './tools/authorize-step';
 import { NewsService } from './services/news-service';
+import { BoxService } from './services/box-service';
 
 @autoinject
 export class App {
     public router: Router;
     public message = 'Shukko da!';
     public accountService: AccountService;
+    private boxService: BoxService;
     private ea: EventAggregator;
     private newsService: NewsService;
 
-    constructor(accountService: AccountService, eventAggregator: EventAggregator, newsService: NewsService) {
+    constructor(accountService: AccountService, eventAggregator: EventAggregator, newsService: NewsService, boxService: BoxService) {
         this.accountService = accountService;
-        this.ea = eventAggregator;
-        this.ea.subscribe('router:navigation:complete', response => {
-            this.navToggled = false;
-        });
         this.newsService = newsService;
+        this.boxService = boxService;
+        this.ea = eventAggregator;
     }
 
     activate() {
         this.newsService.show();
+        window.addEventListener('beforeunload', (e) => {
+            if (this.boxService.dirty) {
+                this.boxService.save();
+                e.returnValue = true;
+            }
+        });
+        this.ea.subscribe('router:navigation:processing', response => {
+            this.boxService.save();
+        });
+        this.ea.subscribe('router:navigation:complete', response => {
+            this.navToggled = false;
+        });
     }
 
     configureRouter(config: RouterConfiguration, router: Router): void {
@@ -46,6 +58,11 @@ export class App {
             // Stages
             { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
             { route: 'stages/:id/details', name: 'stageDetails', title: 'Stage Details', moduleId: 'views/stages/detail', nav: false },
+            // Boxes
+            { route: 'boxes', name: 'boxes', title: 'Boxes', moduleId: 'views/boxes/index', nav: false, auth: 'BoxUser' },
+            { route: 'boxes/create', name: 'boxCreate', title: 'Create Box', moduleId: 'views/boxes/edit', nav: false, auth: 'BoxUser' },
+            { route: 'boxes/:id/edit', name: 'boxEdit', title: 'Edit Box', moduleId: 'views/boxes/edit', nav: false, auth: 'BoxUser' },
+            { route: 'boxes/:id/details', name: 'boxDetails', title: 'Box Details', moduleId: 'views/boxes/detail', nav: false },
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: 'Administrator' },
             // Account
@@ -72,11 +89,31 @@ export class App {
     }
 
     @computedFrom('router', 'router.currentInstruction', 'router.currentInstruction.fragment')
-    get accountIsActive() {
+    get fragment() {
         if (this.router && this.router.currentInstruction) {
-            return this.router.currentInstruction.fragment === '/account';
+            return this.router.currentInstruction.fragment;
         }
-        return false;
+        return '';
+    }
+
+    @computedFrom('fragment')
+    get accountIsActive() {
+        return this.fragment === '/account' ? 'active' : '';
+    }
+
+    @computedFrom('fragment')
+    get boxIsActive() {
+        return this.fragment === '/boxes' ? 'active' : '';
+    }
+
+    @computedFrom('boxService', 'boxService.currentBox')
+    get boxIcon() {
+        return (this.boxService && this.boxService.currentBox) ? 'fa-address-book' : 'fa-address-book-o';
+    }
+
+    @computedFrom('boxService', 'boxService.currentBox')
+    get boxTitle() {
+        return (this.boxService && this.boxService.currentBox) ? this.boxService.currentBox.name : 'Select a Box';
     }
 
     @computedFrom('router.navigation', 'accountService.userProfile')

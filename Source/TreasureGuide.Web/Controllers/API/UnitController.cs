@@ -25,7 +25,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchTypes(results, model.Types);
             results = SearchClasses(results, model.Classes, model.ForceClass);
             results = SearchGlobal(results, model.Global);
-            results = SearchBox(results, model.MyBox);
+            results = SearchBox(results, model.Box);
             results = SearchFreeToPlay(results, model.FreeToPlay);
             return results;
         }
@@ -44,11 +44,11 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
-        private IQueryable<Unit> SearchBox(IQueryable<Unit> results, bool myBox)
+        private IQueryable<Unit> SearchBox(IQueryable<Unit> results, int? boxId)
         {
-            if (myBox)
+            if (boxId.HasValue)
             {
-                throw new System.NotImplementedException();
+                results = results.Where(x => x.Boxes.Any(y => y.Id == boxId && !y.Blacklist));
             }
             return results;
         }

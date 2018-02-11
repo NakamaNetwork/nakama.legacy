@@ -8,15 +8,17 @@ import { UnitPickerParams } from './dialogs/unit-picker';
 import { IUnitEditorModel } from '../models/imported';
 import { UnitType } from '../models/imported';
 import { UnitClass } from '../models/imported';
-import { UnitRole } from '../models/imported';
+import { UnitRole, IBoxDetailModel } from '../models/imported';
 import { StringHelper } from '../tools/string-helper';
+import { BoxService } from '../services/box-service';
 
 @autoinject
 @customElement('unit-display')
 export class UnitDisplay {
-    private element: Element;
     private unitQueryService: UnitQueryService;
     private dialogService: DialogService;
+    private boxService: BoxService;
+    private element: Element;
 
     @bindable unitId: number;
     @bindable model: any;
@@ -24,11 +26,16 @@ export class UnitDisplay {
     @bindable allowGenerics: boolean;
     @bindable info: boolean;
     @bindable tooltip: boolean;
+    @bindable showBox: boolean;
+    @bindable box: IBoxDetailModel;
 
-    constructor(unitQueryService: UnitQueryService, dialogService: DialogService, element: Element) {
+    inBox: boolean;
+
+    constructor(unitQueryService: UnitQueryService, dialogService: DialogService, boxService: BoxService, element: Element) {
         this.unitQueryService = unitQueryService;
-        this.element = element;
         this.dialogService = dialogService;
+        this.boxService = boxService;
+        this.element = element;
     }
 
     @computedFrom('model')
@@ -85,9 +92,42 @@ export class UnitDisplay {
         }
     }
 
+    @computedFrom('boxService.currentBox', 'box')
+    get assignedBox() {
+        return this.box || this.boxService.currentBox;
+    }
+
     @computedFrom('model')
     get generic() {
         return this.model ? (this.model.role !== undefined) : false;
+    }
+
+    @computedFrom('showBox', 'unitId', 'assignedBox')
+    get showBoxInput() {
+        return this.showBox && this.unitId && this.assignedBox;
+    }
+
+    @computedFrom('showBoxInput', 'assignedBox.unitIds', 'assignedBox.unitIds.length', 'unitId')
+    get hasUnit() {
+        return this.showBoxInput &&
+            this.assignedBox.unitIds.indexOf(this.unitId) > -1;
+    }
+
+    set hasUnit(value) {
+        if (this.hasUnit !== value) {
+            this.boxService.toggle(this.unitId, this.box);
+        }
+    }
+
+    @computedFrom('showBoxInput', 'hasUnit')
+    get unitOwnerClass() {
+        return (this.showBoxInput && !this.hasUnit) ? 'no-own' : '';
+    }
+
+    @computedFrom('hasUnit', 'assignedBox', 'assignedBox.name')
+    get boxTitle() {
+        var boxName = this.assignedBox ? this.assignedBox.name : 'uhhh';
+        return (this.hasUnit ? 'In' : 'Not in') + ' box "' + boxName + '"';
     }
 
     @computedFrom('unit', 'generic', 'editable')
@@ -144,17 +184,27 @@ export class UnitDisplay {
     clicked() {
         if (this.editable) {
             var model = this.model;
-            this.dialogService.open({ viewModel: UnitPicker, model: <UnitPickerParams>{ model: model, allowGenerics: this.allowGenerics }, lock: true }).whenClosed(result => {
+            this.dialogService.open({
+                viewModel: UnitPicker,
+                model: <UnitPickerParams>{ model: model, allowGenerics: this.allowGenerics },
+                lock: true
+            }).whenClosed(result => {
                 if (!result.wasCancelled) {
                     var oldModel = model;
                     this.model = result.output;
-                    var event = new CustomEvent('selected', {
+                    var bubble = new CustomEvent('selected', {
                         detail: { newValue: result.output, oldValue: oldModel, viewModel: this },
                         bubbles: true
                     });
-                    this.element.dispatchEvent(event);
+                    this.element.dispatchEvent(bubble);
                 }
             });
+        } else {
+            var bubble = new CustomEvent('selected', {
+                detail: { newValue: this.model, viewModel: this },
+                bubbles: true
+            });
+            this.element.dispatchEvent(bubble);
         }
     }
 

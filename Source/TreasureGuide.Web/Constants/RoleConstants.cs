@@ -6,5 +6,7 @@
         public const string Moderator = "Moderator";
         public const string BetaTester = "BetaTester";
         public const string Contributor = "Contributor";
+        public const string BoxUser = "BoxUser";
+        public const string MultiBoxUser = "MultiBoxUser";
     }
 }

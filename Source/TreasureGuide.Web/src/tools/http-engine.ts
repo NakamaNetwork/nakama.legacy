@@ -76,6 +76,6 @@ export class HttpEngine {
     };
 
     delete(endpoint: string, data?: any, headers?: Headers, debounce?: boolean) {
-        return this.execute(endpoint, data, headers, 'PUT', debounce);
+        return this.execute(endpoint, data, headers, 'DELETE', debounce);
     };
 }

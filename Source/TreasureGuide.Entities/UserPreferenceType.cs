@@ -11,10 +11,9 @@ namespace TreasureGuide.Entities
 {
     using System;
     
-    public partial class SimilarTeamsId_Result
+    public enum UserPreferenceType : int
     {
-        public Nullable<int> TeamId { get; set; }
-        public Nullable<int> StageId { get; set; }
-        public Nullable<int> Matches { get; set; }
+        Unknown = 0,
+        BoxId = 1
     }
 }
