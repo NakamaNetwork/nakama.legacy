@@ -103,6 +103,20 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Update([FromBody] BoxUpdateModel model)
         {
+            return await BulkOperation(model, false);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("Set")]
+        [Route("[action]")]
+        public async Task<IActionResult> Set([FromBody] BoxUpdateModel model)
+        {
+            return await BulkOperation(model, true);
+        }
+
+        private async Task<IActionResult> BulkOperation(BoxUpdateModel model, bool clear)
+        {
             if (!CanPost(model.Id))
             {
                 return Unauthorized();
@@ -112,16 +126,36 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 return BadRequest("Box not found.");
             }
-            if (model.Added?.Any() ?? false)
+            if ((model.Added?.Any() ?? false) || (model.Removed?.Any() ?? false))
             {
-                var commands = model.Added.Select(x => $"INSERT INTO [dbo].[BoxUnits]([BoxId],[UnitId]) VALUES ({model.Id},{x})");
-                var addCommand = String.Join(";", commands);
-                await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, addCommand);
-            }
-            if (model.Removed?.Any() ?? false)
-            {
-                var removeCommand = $"DELETE FROM [dbo].[BoxUnits] WHERE [BoxId] = {model.Id} AND [UnitId] IN ({String.Join(",", model.Removed)})";
-                await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, removeCommand);
+                using (var transaction = DbContext.Database.BeginTransaction())
+                {
+                    if (clear)
+                    {
+                        var command = String.Format("DELETE FROM [dbo].[BoxUnits] WHERE [BoxId] = {0}", model.Id);
+                        await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, command);
+                    }
+                    else if (model.Removed?.Any() ?? false)
+                    {
+                        var command = String.Format(
+                            "DELETE FROM [dbo].[BoxUnits] WHERE [BoxId] = {0} AND [UnitId] IN ({1})", model.Id,
+                            String.Join(",", model.Removed));
+                        await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, command);
+                    }
+                    if (model.Added?.Any() ?? false)
+                    {
+                        var existing = box.Units.Select(x => x.Id).ToList();
+                        var real = await DbContext.Units.Where(x => model.Added.Contains(x.Id)).Select(x => x.Id).ToListAsync();
+                        var actual = real.Except(existing);
+                        if (actual.Any())
+                        {
+                            var commands = actual.Select(x => $"INSERT INTO [dbo].[BoxUnits]([BoxId],[UnitId]) VALUES({model.Id},{x})");
+                            var collection = String.Join(";", commands);
+                            await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, collection);
+                        }
+                    }
+                    transaction.Commit();
+                }
             }
             return Ok(1);
         }

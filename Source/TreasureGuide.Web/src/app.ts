@@ -17,12 +17,15 @@ export class App {
 
     constructor(accountService: AccountService, eventAggregator: EventAggregator, newsService: NewsService, boxService: BoxService) {
         this.accountService = accountService;
+        this.newsService = newsService;
+        this.boxService = boxService;
         this.ea = eventAggregator;
+        this.ea.subscribe('router:navigation:processing', response => {
+            this.boxService.save();
+        });
         this.ea.subscribe('router:navigation:complete', response => {
             this.navToggled = false;
         });
-        this.newsService = newsService;
-        this.boxService = boxService;
     }
 
     activate() {

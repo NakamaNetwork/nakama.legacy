@@ -12,11 +12,15 @@ export class BoxQueryService extends SearchableQueryService {
     }
 
     update(model: IBoxUpdateModel): Promise<any> {
-        return this.http.post(this.buildAddress('/update'), model);
+        return this.http.post(this.buildAddress('update'), model);
+    }
+
+    set(model: IBoxUpdateModel): Promise<any> {
+        return this.http.post(this.buildAddress('set'), model);
     }
 
     focus(id: number): Promise<IBoxDetailModel> {
-        return this.http.post(this.buildAddress('/focus/' + id));
+        return this.http.post(this.buildAddress('focus/' + id));
     }
 }
 

@@ -26,7 +26,7 @@ export class BoxService {
     }
 
     setBox(boxId, bypass: boolean = false) {
-        this.save(false).then(x => {
+        this.doSave(false).then(x => {
             if (boxId) {
                 var query;
                 if (bypass) {
@@ -52,19 +52,23 @@ export class BoxService {
     private timer;
 
     queueSave(messages: boolean = true) {
+        this.save(messages, 10000);
+    }
+
+    save(messages: boolean = true, delay: number = 100) {
         if (this.timer) {
             clearTimeout(this.timer);
         }
         this.timer = setTimeout(() => {
-            this.save(messages);
-        }, 10000);
+            this.doSave(messages);
+        }, 100);
     }
 
     get dirty() {
         return this.currentBox && (this.added.length > 0 || this.removed.length > 0);
     }
 
-    save(messages: boolean = true) {
+    doSave(messages: boolean = true) {
         if (this.timer) {
             clearTimeout(this.timer);
         }

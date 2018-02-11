@@ -3,11 +3,25 @@
     <div if.bind="!loading">
         <div with.bind="box">
             <h1>${name}</h1>
-            <div class="row">
-                <a if.bind="canEdit" class="button _primary" route-href="route: boxEdit; params.bind: {id: id}">
-                    <i class="fa fa-fw fa-pencil"></i>
-                    Edit Box Details
-                </a>
+            <div class="row" if.bind="canEdit">
+                <div class="col m4">
+                    <a class="button _primary _width100" route-href="route: boxEdit; params.bind: {id: id}">
+                        <i class="fa fa-fw fa-pencil"></i>
+                        Edit Box Details
+                    </a>
+                </div>
+                <div class="col m4">
+                    <button type="button" class="button _primary _width100" click.delegate="units()">
+                        <i class="fa fa-fw fa-search-plus"></i>
+                        Add/Remove Units
+                    </button>
+                </div>
+                <div class="col m4">
+                    <button type="button" class="button _primary _width100" click.delegate="bulk()">
+                        <i class="fa fa-fw fa-window-restore"></i>
+                        Bulk Operations
+                    </button>
+                </div>
             </div>
             <div class="row">
                 <div class="col m6">
@@ -31,9 +45,7 @@
                 <div class="row _alignCenter">
                     <div class="unit-collection">
                         <unit-display repeat.for="unit of units"
-                                      model.bind="unit"
-                                      click.delegate="clicked(unit)"
-                                      show-box="true">
+                                      model.bind="unit">
                         </unit-display>
                     </div>
                 </div>
