@@ -14,7 +14,7 @@ export class BoxUnitsDialog {
     private alertService: AlertService;
 
     private units: IUnitStubModel[] = [];
-    private searchModel = new UnitSearchModel().getCached();
+    private searchModel: UnitSearchModel = <UnitSearchModel>new UnitSearchModel().getCached();
     private loading: boolean;
     private box: IBoxDetailModel;
 
@@ -32,6 +32,7 @@ export class BoxUnitsDialog {
             unitIds: []
         };
 
+        this.searchModel.boxId = null;
         bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
         });

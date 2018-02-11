@@ -43,10 +43,15 @@ export abstract class SearchModel implements ISearchModel {
 
     @computedFrom('json')
     get payload() {
-        var payload = JSON.parse(this.json);
         if (this.cacheKey) {
-            sessionStorage.setItem(this.cacheKey, this.json);
+            var cachePayload = JSON.parse(this.json);
+            this.lockedFields.forEach(x => {
+                cachePayload[x] = undefined;
+            });
+            var cacheJson = JSON.stringify(cachePayload);
+            sessionStorage.setItem(this.cacheKey, cacheJson);
         }
+        var payload = JSON.parse(this.json);
         sessionStorage.setItem(SearchModel.pageSizeKey, payload.pageSize.toString());
         return payload;
     }

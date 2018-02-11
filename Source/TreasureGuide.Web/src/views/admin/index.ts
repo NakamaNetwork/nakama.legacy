@@ -20,7 +20,7 @@ export class AdminPage {
 
     profiles = [];
 
-    searchModel = new ProfileSearchModel().getCached();
+    searchModel: ProfileSearchModel = <ProfileSearchModel>new ProfileSearchModel().getCached();
     loading;
 
     allRoles = AccountService.allRoles;

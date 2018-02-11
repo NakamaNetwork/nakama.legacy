@@ -89,7 +89,7 @@ export class BoxService {
 
     private timer;
 
-    queueSave(messages: boolean = true, delay: number = 10000) {
+    queueSave(messages: boolean = true, delay: number = 5000) {
         if (this.timer) {
             clearTimeout(this.timer);
         }

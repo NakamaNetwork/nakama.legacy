@@ -51,7 +51,7 @@ export class BoxDetailPage {
         this.boxService = boxService;
 
         this.boxQueryService = boxQueryService;
-        this.searchModel = new UnitSearchModel();
+        this.searchModel = <UnitSearchModel>new UnitSearchModel().getCached();
     }
 
     activate(params) {

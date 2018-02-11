@@ -6,7 +6,7 @@ import { IProfileDetailModel } from '../../models/imported';
 import { TeamSearchModel } from '../../services/query/team-query-service';
 import { AccountService } from '../../services/account-service';
 import { BindingEngine } from 'aurelia-binding';
-import {MetaTool} from '../../tools/meta-tool';
+import { MetaTool } from '../../tools/meta-tool';
 
 @autoinject
 export class ProfileDetailPage {
@@ -26,8 +26,7 @@ export class ProfileDetailPage {
         this.profileQueryService = profileQueryService;
         this.router = router;
         this.teamQueryService = teamQueryService;
-        this.teamSearchModel = new TeamSearchModel();
-        this.teamSearchModel.cacheKey = 'search-team-user';
+        this.teamSearchModel = <TeamSearchModel>new TeamSearchModel().getCached();
 
         bindingEngine.propertyObserver(this.teamSearchModel, 'payload').subscribe((n, o) => {
             this.search(n);
