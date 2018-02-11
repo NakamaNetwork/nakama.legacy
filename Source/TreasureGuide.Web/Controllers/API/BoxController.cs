@@ -98,12 +98,12 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleConstants.BoxUser)]
+        [Authorize]
         [ActionName("Focus")]
         [Route("[action]/{id?}")]
         public async Task<IActionResult> Focus(int? id)
         {
-            if (id.HasValue)
+            if (id.HasValue && User.IsInRole(RoleConstants.BoxUser))
             {
                 await _preferenceService.SetPreference(User.GetId(), UserPreferenceType.BoxId, id?.ToString());
                 return await Detail(id);

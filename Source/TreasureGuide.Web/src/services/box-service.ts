@@ -56,7 +56,7 @@ export class BoxService {
     }
 
     setBox(boxId, bypass: boolean = false) {
-        if (boxId) {
+        if (boxId && this.accountService.isInRoles(RoleConstants.BoxUser)) {
             return this.doSave(false).then(x => {
                 if (boxId) {
                     var query;
