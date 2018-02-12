@@ -43,6 +43,7 @@ export class App {
         config.title = 'Nakama Network';
         config.addAuthorizeStep(AuthorizeStep);
         config.options.pushState = true;
+        config.options.root = '/';
         config.map([
             { route: ['', '/', '_=_', 'home'], name: 'home', title: 'Home', moduleId: 'views/index', nav: false },
             { route: 'news', name: 'news', title: 'News', moduleId: 'views/boring/news', nav: true },
@@ -66,8 +67,8 @@ export class App {
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: 'Administrator' },
             // Account
-            { route: 'account/:id?', name: 'account', title: 'Account', moduleId: 'views/account/index', nav: false, auth: false },
-            { route: 'account/:id/edit', name: 'accountEdit', title: 'Account', moduleId: 'views/account/edit', nav: false, auth: true },
+            { route: ['account/:id?', 'profile/:id?'], name: 'profile', title: 'Account', moduleId: 'views/profile/index', nav: false, auth: false },
+            { route: ['account/:id/edit', 'profile/:id/edit'], name: 'profileEdit', title: 'Account', moduleId: 'views/profile/edit', nav: false, auth: true },
             // Boring
             { route: 'privacy', name: 'privacy', title: 'Privacy Policy', moduleId: 'views/boring/privacy', nav: false, auth: false },
             { route: 'tos', name: 'tos', title: 'Terms of Service', moduleId: 'views/boring/tos', nav: false, auth: false },
@@ -98,7 +99,7 @@ export class App {
 
     @computedFrom('fragment')
     get accountIsActive() {
-        return this.fragment === '/account' ? 'active' : '';
+        return this.fragment === '/profile' ? 'active' : '';
     }
 
     @computedFrom('boxService', 'boxService.currentBox')

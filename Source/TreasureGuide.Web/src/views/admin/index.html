@@ -47,7 +47,7 @@
                     <tbody>
                         <tr repeat.for="profile of profiles">
                             <td>
-                                <a route-href="route: account; params.bind: { id: profile.userName }">
+                                <a route-href="route: profile; params.bind: { id: profile.userName }">
                                     <user-display name.bind="profile.userName" unit-id.bind="profile.unitId"></user-display>
                                 </a>
                             </td>
