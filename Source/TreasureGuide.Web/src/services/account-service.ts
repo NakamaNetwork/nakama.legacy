@@ -34,6 +34,8 @@ export class AccountService {
                 this.startHeartbeat();
                 this.doHeartbeat();
             }
+        } else if (sessionStorage['access_token']) {
+            this.logout(true);
         }
     }
 

@@ -74,6 +74,7 @@ namespace TreasureGuide.Web.Services
             {
                 return null;
             }
+            var roles = identity.FindAll(ClaimTypes.Role).Select(x => x.Value).ToList();
             var id = identity.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!String.IsNullOrEmpty(id))
             {
@@ -81,7 +82,11 @@ namespace TreasureGuide.Web.Services
                 if (item != null)
                 {
                     var casted = _mapper.Map<MyProfileModel>(item);
-                    return casted;
+                    if (casted.UserRoles.All(x => roles.Contains(x)) && roles.All(x => casted.UserRoles.Contains(x)))
+                    {
+                        return casted;
+                    }
+                    // If the identity roles don't match the account roles, force a relog.
                 }
             }
             return null;
