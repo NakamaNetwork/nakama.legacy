@@ -9,6 +9,7 @@ import { BindingEngine } from 'aurelia-binding';
 import { MetaTool } from '../../tools/meta-tool';
 import { BoxQueryService } from '../../services/query/box-query-service';
 import { BoxSearchModel } from '../../services/query/box-query-service';
+import { RoleConstants } from '../../models/imported';
 
 @autoinject
 export class ProfileDetailPage {
@@ -90,6 +91,11 @@ export class ProfileDetailPage {
                 this.loadingTeams = false;
             });
         }
+    }
+
+    @computedFrom('profile', 'profile.userId', 'accountService.userProfile', 'accountService.userProfile.id')
+    get canEdit() {
+        return this.profile && this.accountService.userProfile && this.profile.id === this.accountService.userProfile.id && this.accountService.isInRoles(RoleConstants.Administrator);
     }
 
     boxSearch(payload) {

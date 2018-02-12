@@ -94,7 +94,7 @@ export class BoxDetailPage {
 
     @computedFrom('box', 'box.userId', 'accountService.userProfile', 'accountService.userProfile.id')
     get canEdit() {
-        return this.box.userId === this.accountService.userProfile.id && this.accountService.isInRoles(RoleConstants.BoxUser);
+        return this.box && this.accountService.userProfile && this.box.userId === this.accountService.userProfile.id && this.accountService.isInRoles(RoleConstants.BoxUser);
     }
 
     openUnits() {
