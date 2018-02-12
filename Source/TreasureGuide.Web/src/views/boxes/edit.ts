@@ -88,7 +88,9 @@ export class BoxEditPage {
 
     doSubmit() {
         var updating = this.box.id;
-        this.boxQueryService.save(this.box).then(results => {
+        var item = this.box;
+        item.friendId = item.friendId ? parseInt(item.friendId.toString().replace(/\D/g, '')) : item.friendId;
+        this.boxQueryService.save(item).then(results => {
             if (!updating) {
                 this.boxService.boxCount++;
                 if (this.boxService.currentBox == null) {
