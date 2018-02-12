@@ -2,6 +2,7 @@
 using AutoMapper;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
+using TreasureGuide.Web.Models.BoxModels;
 using TreasureGuide.Web.Models.ProfileModels;
 using TreasureGuide.Web.Models.ShipModels;
 using TreasureGuide.Web.Models.StageModels;
@@ -94,8 +95,20 @@ namespace TreasureGuide.Web.Configurations
 
                 user.EditorMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
 
+                var myUser = mapper.CreateMap<UserProfile, MyProfileModel>();
+                myUser.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.SubmittedTeams.Count(x => !x.Deleted && !x.Draft)));
+                myUser.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
+                myUser.ForMember(x => x.CanEdit, o => o.MapFrom(y => true));
+                myUser.ForMember(x => x.UserPreferences, o => o.MapFrom(y => y.UserPreferences.ToDictionary(z => z.Key, z => z.Value)));
+                myUser.ForMember(x => x.BoxCount, o => o.MapFrom(y => y.Boxes.Count()));
+
                 var report = mapper.CreateMap<TeamReport, TeamReportStubModel>();
                 report.ForMember(x => x.Acknowledged, o => o.MapFrom(y => y.AcknowledgedDate.HasValue));
+
+                var box = mapper.CreateControllerMapping<Box, BoxDetailModel, BoxStubModel, BoxEditorModel>();
+                box.DetailMapping.ForMember(x => x.UnitIds, o => o.MapFrom(y => y.Units.Select(z => z.Id)));
+                box.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
+                box.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

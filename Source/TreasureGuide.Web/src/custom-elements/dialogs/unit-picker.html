@@ -23,7 +23,8 @@
                             <div class="unit-collection">
                                 <unit-display repeat.for="unit of units"
                                               model.bind="unit"
-                                              click.delegate="clicked(unit)">
+                                              selected.delegate="eventClicked($event)"
+                                              show-box="true">
                                 </unit-display>
                             </div>
                         </div>
@@ -59,7 +60,7 @@
                     <fieldset>
                         <legend>Output</legend>
                         <div class="_alignCenter">
-                            <unit-display size="large" model.bind="genericBuilder" click.delegate="clicked(genericBuilder)">
+                            <unit-display size="large" model.bind="genericBuilder" selected.delegate="eventClicked($event)">
                             </unit-display>
                         </div>
                     </fieldset>

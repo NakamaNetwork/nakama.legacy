@@ -13,6 +13,7 @@ export abstract class SearchModel implements ISearchModel {
     public totalResults: number = 0;
     public sortables: string[] = [];
     public cacheKey: string;
+    public lockedFields: string[] = ['totalResults', 'cached', 'sortables', 'cacheKey', 'lockedFields'];
 
     abstract getDefault(): SearchModel;
 
@@ -36,15 +37,21 @@ export abstract class SearchModel implements ISearchModel {
         ified.totalResults = undefined;
         ified.sortables = undefined;
         ified.cacheKey = undefined;
+        ified.lockedFields = undefined;
         return JSON.stringify(ified, SearchModel.removeEmpties);
     }
 
     @computedFrom('json')
     get payload() {
-        var payload = JSON.parse(this.json);
         if (this.cacheKey) {
-            sessionStorage.setItem(this.cacheKey, this.json);
+            var cachePayload = JSON.parse(this.json);
+            this.lockedFields.forEach(x => {
+                cachePayload[x] = undefined;
+            });
+            var cacheJson = JSON.stringify(cachePayload);
+            sessionStorage.setItem(this.cacheKey, cacheJson);
         }
+        var payload = JSON.parse(this.json);
         sessionStorage.setItem(SearchModel.pageSizeKey, payload.pageSize.toString());
         return payload;
     }
@@ -64,7 +71,7 @@ export abstract class SearchModel implements ISearchModel {
                 properties.push(yourProp);
             }
         }
-        properties.filter(x => x !== 'totalResults' && x !== 'cached' && x !== 'sortables' && x !== 'cacheKey').forEach(x => {
+        properties.filter(x => this.lockedFields.indexOf(x) === -1).forEach(x => {
             var value = newItem[x];
             if (reset || value !== undefined) {
                 this[x] = newItem[x];

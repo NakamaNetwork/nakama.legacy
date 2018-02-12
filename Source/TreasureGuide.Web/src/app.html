@@ -14,18 +14,29 @@
                         ${nav.title}
                     </a>
                 </li>
-                <li class="_floatRight" if.bind="!accountService.isLoggedIn">
+                <li class="_floatRight" auth-req="inverse: true">
                     <a href="#" click.trigger="accountService.login()">
                         Login
                     </a>
                 </li>
-                <li class="_floatRight" if.bind="accountService.isLoggedIn">
+                <li class="_floatRight" auth-req>
                     <a href="#" click.trigger="accountService.logout()">
                         Logout
                     </a>
                 </li>
-                <li class="_floatRight" if.bind="accountService.isLoggedIn">
-                    <a route-href="route: account; params.bind: { id: accountService.userProfile.userName }" class="${accountIsActive ? 'active' : ''}">
+                <li class="_floatRight" auth-req="BoxUser">
+                    <a route-href="route: boxes"
+                       title.bind="boxTitle"
+                       class.bind="boxClass">
+                        <span class="fa-stack">
+                            <i class="fa fa-square-o fa-stack-2x"></i>
+                            <i class="fa fa-stack-1x fa-users" if.bind="hasBox"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="_floatRight" auth-req>
+                    <a route-href="route: account; params.bind: { id: accountService.userProfile.userName }"
+                       class.bind="accountIsActive">
                         ${accountService.userProfile.userName}
                     </a>
                 </li>

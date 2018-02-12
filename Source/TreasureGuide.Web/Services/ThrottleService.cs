@@ -10,7 +10,7 @@ namespace TreasureGuide.Web.Services
 {
     public interface IThrottleService
     {
-        bool CanAccess(ClaimsPrincipal user, HttpRequest request);
+        bool CanAccess(ClaimsPrincipal user, HttpRequest request, double? seconds = null);
     }
 
     public class ThrottleService : IThrottleService
@@ -24,7 +24,7 @@ namespace TreasureGuide.Web.Services
             _cache = cache;
         }
 
-        public bool CanAccess(ClaimsPrincipal user, HttpRequest request)
+        public bool CanAccess(ClaimsPrincipal user, HttpRequest request, double? seconds = null)
         {
             if (user.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
             {
@@ -36,7 +36,7 @@ namespace TreasureGuide.Web.Services
             var cached = _cache.TryGetValue(key, out timestamp);
             if (!cached)
             {
-                var timeout = GenerateTimeout(request);
+                var timeout = GenerateTimeout(seconds);
                 _cache.Set(key, now, timeout);
             }
             return !cached;
@@ -54,9 +54,9 @@ namespace TreasureGuide.Web.Services
             return String.Join("||", connection.RemoteIpAddress, connection.RemotePort, extraKey);
         }
 
-        private DateTimeOffset GenerateTimeout(HttpRequest request)
+        private DateTimeOffset GenerateTimeout(double? seconds = null)
         {
-            return DateTimeOffset.Now.AddSeconds(Seconds);
+            return DateTimeOffset.Now.AddSeconds(seconds ?? Seconds);
         }
     }
 }

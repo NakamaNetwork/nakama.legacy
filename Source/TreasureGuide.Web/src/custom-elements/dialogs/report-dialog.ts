@@ -2,25 +2,32 @@
 import { DialogController } from 'aurelia-dialog';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
+import {AlertService} from '../../services/alert-service';
 
 @autoinject
 export class ReportDialog {
     private controller: DialogController;
     private validController: ValidationController;
+    private alertService: AlertService;
 
     model: ReportDialogViewModel;
 
-    constructor(controller: DialogController, validFactory: ValidationControllerFactory) {
+    constructor(controller: DialogController, validFactory: ValidationControllerFactory, alertService: AlertService) {
         this.controller = controller;
         this.validController = validFactory.createForCurrentScope();
         this.validController.addRenderer(new BeauterValidationFormRenderer());
         this.model = new ReportDialogViewModel();
+        this.alertService = alertService;
     }
 
     okay() {
         this.validController.validate().then(x => {
             if (x.valid) {
                 this.controller.ok(this.model.reason);
+            } else {
+                x.results.filter(y => !y.valid && y.message).forEach(y => {
+                    this.alertService.danger(y.message);
+                });
             }
         });
     };

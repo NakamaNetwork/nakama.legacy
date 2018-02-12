@@ -16,7 +16,14 @@
                 {
                     <div class="col d4">
                         <button type="submit" class="button _primary _large _width100" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">
-                            <i class="fa fa-fw fa-@provider.AuthenticationScheme.ToLower()"></i>
+                            @if (provider.AuthenticationScheme == "Discord")
+                            {
+                                <img src="/content/Discord-Logo-White.svg" class="fa fa-fw" />
+                            }
+                            else
+                            {
+                                <i class="fa fa-fw fa-@provider.AuthenticationScheme.ToLower()"></i>
+                            }
                             @provider.DisplayName
                         </button>
                     </div>

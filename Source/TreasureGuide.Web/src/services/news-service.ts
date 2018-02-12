@@ -8,6 +8,20 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
+            header: '02/11/18 - The Box Update',
+            lines: [
+                'Added new "Box" feature in which users can create a "Box" to keep track of units they own and don\'t own.',
+                'Added "Box Filter" option for Unit and Team searches that will only show teams that match your box.',
+                'Removed "Friend Id" and "Global" fields from user profiles and moved them into boxes.',
+                'Users can view each other\'s boxes from their profile pages (if set to public.)',
+                'Added missing Discord icon on login screen.',
+                'Fixed an issue where unsetting units on search filters would not actually remove them.',
+                'Fixed a bug where resetting search fields on certain pages (i.e. stage and profile pages) ' +
+                    'would remove search constraints that should be uneditable.',
+                'Improved search caching functionality and restored it to different parts of the website.'
+            ]
+        },
+        {
             header: '02/03/18',
             lines: [
                 'Added functionality to show similar teams when editing or creating teams to hopefully cut down on duplicates.'

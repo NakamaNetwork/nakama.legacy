@@ -62,9 +62,7 @@ export class TeamDetailPage {
                 this.teamQueryService.video(model).then(x => {
                     this.alertService.success('Successfully uploaded a video!');
                     this.reload(this.team.id);
-                }).catch(x => {
-                    this.alertService.success('Successfully deleted video.');
-                });
+                }).catch(response => this.alertService.reportError(response));
             }
         });
     }

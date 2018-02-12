@@ -79,11 +79,7 @@ export class ScoreDisplay {
             this.alertService.success('Your vote has been recorded!');
             this.score = result;
             this.myVote = score != null ? score ? 1 : -1 : 0;
-        }).catch(err => {
-            err.text().then(msg => {
-                this.alertService.danger(msg);
-            });
-        });
+        }).catch(response => this.alertService.reportError(response));
     }
 
     bookmark() {
@@ -91,11 +87,7 @@ export class ScoreDisplay {
             this.myBookmark = result;
             var message = result ? 'This team has been bookmarked.' : 'Removed team bookmark.';
             this.alertService.success(message);
-        }).catch(err => {
-            err.text().then(msg => {
-                this.alertService.danger(msg);
-            });
-        });
+        }).catch(response => this.alertService.reportError(response));
     }
 
     report() {
@@ -103,11 +95,7 @@ export class ScoreDisplay {
             if (!result.wasCancelled) {
                 this.teamQueryService.report({ teamId: this.teamId, reason: <string>result.output }).then(result => {
                     this.alertService.success('Thank you! Your report has been submitted.');
-                }).catch(err => {
-                    err.text().then(msg => {
-                        this.alertService.danger(msg);
-                    });
-                });
+                }).catch(response => this.alertService.reportError(response));
             }
         });
     }

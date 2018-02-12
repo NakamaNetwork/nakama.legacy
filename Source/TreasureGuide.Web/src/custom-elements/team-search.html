@@ -62,6 +62,15 @@
                                     <span class="-label-body"> Global</span>
                                 </label>
                             </div>
+                            <div class="form-group">
+                                <label for="myBoxInput" title.bind="myBoxTitle">
+                                    <input id="myBoxInput"
+                                           type="checkbox"
+                                           checked.two-way="myBox"
+                                           disabled.bind="myBoxDisabled" />
+                                    <span class="-label-body"> Box Filter</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="row">

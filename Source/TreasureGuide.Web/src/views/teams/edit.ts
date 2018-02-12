@@ -145,17 +145,7 @@ export class TeamEditPage {
                 this.alert.success('Successfully saved ' + this.team.name + '!');
                 this.router.navigateToRoute('teamDetails', { id: results.id });
             }
-        }).catch(response => {
-            return response.text().then(msg => {
-                if (msg) {
-                    this.alert.danger(msg);
-                } else {
-                    this.alert.danger('An error has occurred. Please try again in a few moments.');
-                }
-            }).catch(error => {
-                this.alert.danger('An error has occurred. Please try again in a few moments.');
-            });
-        });
+        }).catch(response => this.alert.reportError(response));
     }
 
     get similarModel() {

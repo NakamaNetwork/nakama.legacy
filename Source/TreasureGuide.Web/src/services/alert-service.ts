@@ -37,6 +37,15 @@ export class AlertService {
         this.show(message, 20000, AlertType.Info, true);
     }
 
+    reportError(response, message?: string) {
+        message = message || 'An error has occurred. Please try again in a few moments.';
+        response.text().then(x => {
+            this.danger(x);
+        }).catch(x => {
+            this.danger(message);
+        });
+    }
+
     show(message: string, duration: number, type: AlertType, html: boolean) {
         var id = ++this.count;
         var alert = new Alert(id, message, type, html);

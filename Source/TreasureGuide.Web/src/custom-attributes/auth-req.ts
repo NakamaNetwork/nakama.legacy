@@ -31,7 +31,10 @@ export class AuthReq {
     }
 
     private update() {
-        var visibility = this.accountService.isInRoles(this.roles, this.all, true);
+        var visibility = this.accountService.isLoggedIn;
+        if (this.roles) {
+            visibility = this.accountService.isInRoles(this.roles, this.all, true);
+        }
         if (this.inverse) {
             visibility = !visibility;
         }

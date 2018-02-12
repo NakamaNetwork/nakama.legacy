@@ -1,0 +1,49 @@
+﻿<template>
+    <h1>${title}</h1>
+    <div class="row">
+        <div class="alert _infoLight">
+            You have used ${boxService.boxCount} of ${boxService.boxLimit} available boxes.
+        </div>
+    </div>
+    <div class="row">
+        <a class="button _info _xlarge _width100" class.bind="boxService.reachedLimit ? '_disabled' : ''" route-href="route: boxCreate">
+            <i class="fa fa-fw fa-plus"></i> Create a New Box
+        </a>
+    </div>
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading">
+        <div class="row box-collection" if.bind="boxes.length > 0">
+            <table class="_width100">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Friend Id</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="box of boxes">
+                        <td>
+                            <a route-href="route: boxDetails; params.bind: { id: box.id }">
+                                ${box.name}
+                            </a>
+                            <i class="fa fa-fw fa-users" title="Public" if.bind="box.public"></i>
+                            <i class="fa fa-fw fa-times-rectangle-o" title="Blacklist" if.bind="box.blacklist"></i>
+                        </td>
+                        <td>
+                            <friend-id-display friend-id.bind="box.friendId" global.bind="box.global"></friend-id-display>
+                        </td>
+                        <td>
+                            <button if.bind="boxService.currentBox.id !== box.id" type="button" class="button _primary" click.delegate="clicked(box)">
+                                Open Box
+                            </button>
+                            <button if.bind="boxService.currentBox.id === box.id" type="button" class="button" click.delegate="clicked(box)">
+                                Close Box
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

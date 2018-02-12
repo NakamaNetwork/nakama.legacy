@@ -53,9 +53,7 @@ export class VideoDisplay {
                     this.teamQueryService.video(clone).then(x => {
                         this.video.deleted = true;
                         this.alertService.success('Successfully deleted video.');
-                    }).catch(x => {
-                        this.alertService.danger('Could not delete video. Please try again.');
-                    });
+                    }).catch(response => this.alertService.reportError(response));
                 }
             });
         }

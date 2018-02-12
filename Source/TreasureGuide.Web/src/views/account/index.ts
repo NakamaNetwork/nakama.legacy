@@ -6,7 +6,9 @@ import { IProfileDetailModel } from '../../models/imported';
 import { TeamSearchModel } from '../../services/query/team-query-service';
 import { AccountService } from '../../services/account-service';
 import { BindingEngine } from 'aurelia-binding';
-import {MetaTool} from '../../tools/meta-tool';
+import { MetaTool } from '../../tools/meta-tool';
+import { BoxQueryService } from '../../services/query/box-query-service';
+import { BoxSearchModel } from '../../services/query/box-query-service';
 
 @autoinject
 export class ProfileDetailPage {
@@ -14,6 +16,8 @@ export class ProfileDetailPage {
     private teamQueryService: TeamQueryService;
     private router: Router;
     private accountService: AccountService;
+    private boxQueryService: BoxQueryService;
+    private bindingEngine: BindingEngine;
 
     profile: IProfileDetailModel;
     loading: boolean;
@@ -22,16 +26,25 @@ export class ProfileDetailPage {
     teamSearchModel: TeamSearchModel;
     teams: any[] = [];
 
-    constructor(profileQueryService: ProfileQueryService, teamQueryService: TeamQueryService, accountService: AccountService, bindingEngine: BindingEngine, router: Router) {
+    loadingBoxes: boolean;
+    boxSearchModel: BoxSearchModel;
+    boxes: any[] = [];
+
+    constructor(
+        profileQueryService: ProfileQueryService,
+        teamQueryService: TeamQueryService,
+        accountService: AccountService,
+        boxQueryService: BoxQueryService,
+        bindingEngine: BindingEngine,
+        router: Router
+    ) {
         this.profileQueryService = profileQueryService;
         this.router = router;
         this.teamQueryService = teamQueryService;
-        this.teamSearchModel = new TeamSearchModel();
-        this.teamSearchModel.cacheKey = 'search-team-user';
+        this.teamSearchModel = <TeamSearchModel>new TeamSearchModel().getCached();
+        this.bindingEngine = bindingEngine;
 
-        bindingEngine.propertyObserver(this.teamSearchModel, 'payload').subscribe((n, o) => {
-            this.search(n);
-        });
+        this.boxQueryService = boxQueryService;
     }
 
     activate(params) {
@@ -40,7 +53,19 @@ export class ProfileDetailPage {
             this.profile = result;
             this.loading = false;
             this.teamSearchModel.submittedBy = result.id;
+
+            this.bindingEngine.propertyObserver(this.teamSearchModel, 'payload').subscribe((n, o) => {
+                this.search(n);
+            });
+            this.search(this.teamSearchModel.payload)
             MetaTool.setTitle(this.profile.userName);
+
+            this.boxSearchModel = new BoxSearchModel();
+            this.boxSearchModel.userId = result.id;
+            this.bindingEngine.propertyObserver(this.boxSearchModel, 'payload').subscribe((n, o) => {
+                this.boxSearch(n);
+            });
+            this.boxSearch(this.boxSearchModel.payload);
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested account could not be found.' });
         });
@@ -63,6 +88,19 @@ export class ProfileDetailPage {
                 this.loadingTeams = false;
             }).catch((e) => {
                 this.loadingTeams = false;
+            });
+        }
+    }
+
+    boxSearch(payload) {
+        if (this.boxQueryService) {
+            this.loadingBoxes = true;
+            this.boxQueryService.search(payload).then(x => {
+                this.boxes = x.results;
+                this.boxSearchModel.totalResults = x.totalResults;
+                this.loadingBoxes = false;
+            }).catch((e) => {
+                this.loadingBoxes = false;
             });
         }
     }
