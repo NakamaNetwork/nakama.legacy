@@ -90,7 +90,7 @@ export class ProfileEditPage {
         var item = this.profile;
         this.profileQueryService.save(item).then(results => {
             this.alert.success('Successfully updated profile information!');
-            this.router.navigateToRoute('account', { id: results.id });
+            this.router.navigateToRoute('profile', { id: results.id });
         }).catch(response => this.alert.reportError(response));
     }
 

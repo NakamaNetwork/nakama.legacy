@@ -44,6 +44,7 @@ export class ProfileDetailPage {
         this.teamQueryService = teamQueryService;
         this.teamSearchModel = <TeamSearchModel>new TeamSearchModel().getCached();
         this.bindingEngine = bindingEngine;
+        this.accountService = accountService;
 
         this.boxQueryService = boxQueryService;
     }
@@ -68,7 +69,7 @@ export class ProfileDetailPage {
             });
             this.boxSearch(this.boxSearchModel.payload);
         }).catch(error => {
-            this.router.navigateToRoute('error', { error: 'The requested account could not be found.' });
+            this.router.navigateToRoute('error', { error: 'The requested profile could not be found.' });
         });
     }
 
