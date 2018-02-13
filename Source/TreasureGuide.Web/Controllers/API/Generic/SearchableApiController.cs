@@ -21,6 +21,11 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         {
         }
 
+        protected override async Task<IActionResult> Stub(TKey id = default(TKey))
+        {
+            return await Get<TStubModel>(id, true);
+        }
+
         [HttpGet]
         [ActionName("Search")]
         [Route("[action]")]

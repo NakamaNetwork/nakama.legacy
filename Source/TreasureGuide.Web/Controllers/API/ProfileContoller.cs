@@ -45,7 +45,7 @@ namespace TreasureGuide.Web.Controllers.API
         protected override async Task<object> PerformGet<TModel>(string id = null, bool required = false)
         {
             id = DefaultIfUnspecified(id, User.GetId());
-            return await base.PerformGet<TModel>(id);
+            return await base.PerformGet<TModel>(id, required);
         }
 
         protected override async Task<TModel> SingleGetTransform<TModel>(TModel single, string id = null)
