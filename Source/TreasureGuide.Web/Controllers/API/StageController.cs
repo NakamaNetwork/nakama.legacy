@@ -19,6 +19,11 @@ namespace TreasureGuide.Web.Controllers.API
         {
         }
 
+        protected override async Task<IActionResult> Stub(int? id = default(int?))
+        {
+            return await Get<StageStubModel>(id, false);
+        }
+
         protected override async Task<IQueryable<Stage>> PerformSearch(IQueryable<Stage> results, StageSearchModel model)
         {
             results = SearchGlobal(results, model.Global);
