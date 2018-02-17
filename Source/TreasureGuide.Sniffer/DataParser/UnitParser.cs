@@ -55,11 +55,7 @@ namespace TreasureGuide.Sniffer.DataParser
         protected override async Task Save(IEnumerable<Unit> units)
         {
             Context.Units.Clear();
-            foreach (var unit in units)
-            {
-                Context.Units.Add(unit);
-            }
-            await Context.SaveChangesAsync();
+            await Context.LoopedAddSave(units);
         }
     }
 }

@@ -36,11 +36,7 @@ namespace TreasureGuide.Sniffer.DataParser
         protected override async Task Save(IEnumerable<Ship> ships)
         {
             Context.Ships.Clear();
-            foreach (var ship in ships)
-            {
-                Context.Ships.Add(ship);
-            }
-            await Context.SaveChangesAsync();
+            await Context.LoopedAddSave(ships);
         }
     }
 }

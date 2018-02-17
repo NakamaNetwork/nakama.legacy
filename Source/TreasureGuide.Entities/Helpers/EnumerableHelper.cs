@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace TreasureGuide.Entities.Helpers
 {
@@ -41,6 +44,24 @@ namespace TreasureGuide.Entities.Helpers
         public static IEnumerable<string> SplitSearchTerms(this string term)
         {
             return AlphaNumericRegex.Replace(term, " ").Split(Splitters, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static async Task LoopedAddSave<T>(this DbContext context, IEnumerable<T> entities, int pageSize = 100)
+            where T : class
+        {
+            var count = 0;
+            var total = entities.Count();
+            Debug.WriteLine($"Performing bulk save on {total} items");
+            IEnumerable<T> slice;
+            while ((slice = entities.Skip(count * pageSize).Take(pageSize)).Any())
+            {
+                Debug.WriteLine($"   {(count * pageSize)}/{total}");
+                context.Set<T>().AddRange(slice);
+                await context.SaveChangesAsync();
+                count++;
+            }
+            Debug.WriteLine($"   {total}/{total}");
+            Debug.WriteLine("Bulk save complete.");
         }
     }
 }
