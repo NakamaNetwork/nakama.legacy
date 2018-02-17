@@ -8,5 +8,5 @@
     [Global] BIT NULL, 
     CONSTRAINT [PK_dbo.UserProfile] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK.dbo_UserProfile_dbo.AspNetUsers] FOREIGN KEY([Id]) REFERENCES [dbo].[AspNetUsers]([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK.dbo_UserProfile_dbo.Units] FOREIGN KEY([UnitId]) REFERENCES [dbo].[Units]([Id])
+    CONSTRAINT [FK.dbo_UserProfile_dbo.Units] FOREIGN KEY([UnitId]) REFERENCES [dbo].[Units]([Id]) ON DELETE SET NULL
 )
