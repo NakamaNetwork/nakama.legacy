@@ -196,7 +196,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
           <Property Name="Type" Type="smallint" Nullable="false" />
           <Property Name="Class" Type="smallint" Nullable="false" />
-          <Property Name="Stars" Type="tinyint" />
+          <Property Name="Stars" Type="decimal" Precision="2" Scale="1" />
           <Property Name="Cost" Type="tinyint" />
           <Property Name="Combo" Type="tinyint" />
           <Property Name="Sockets" Type="tinyint" />
@@ -1094,7 +1094,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
                     <Property Name="Type" Type="tcdbModel.UnitType" Nullable="false" />
                     <Property Name="Class" Type="tcdbModel.UnitClass" Nullable="false" />
-                    <Property Name="Stars" Type="Byte" />
+                    <Property Name="Stars" Type="Decimal" />
                     <Property Name="Cost" Type="Byte" />
                     <Property Name="Combo" Type="Byte" />
                     <Property Name="Sockets" Type="Byte" />

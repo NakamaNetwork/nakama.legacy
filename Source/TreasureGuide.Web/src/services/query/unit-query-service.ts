@@ -3,6 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { IUnitSearchModel, UnitClass, UnitType } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
+import { SearchConstants } from '../../models/imported';
 
 @autoinject
 export class UnitQueryService extends SearchableQueryService {
@@ -36,6 +37,15 @@ export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
     global: boolean;
     freeToPlay: boolean;
     cacheKey: string = 'search-unit';
+
+
+    sortables: string[] = [
+        SearchConstants.SortId,
+        SearchConstants.SortName,
+        SearchConstants.SortType,
+        SearchConstants.SortClass,
+        SearchConstants.SortStars
+    ];
 
     public getDefault(): SearchModel {
         return new UnitSearchModel();

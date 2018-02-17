@@ -29,7 +29,7 @@ namespace TreasureGuide.Entities
         public string Name { get; set; }
         public UnitType Type { get; set; }
         public UnitClass Class { get; set; }
-        public Nullable<byte> Stars { get; set; }
+        public Nullable<decimal> Stars { get; set; }
         public Nullable<byte> Cost { get; set; }
         public Nullable<byte> Combo { get; set; }
         public Nullable<byte> Sockets { get; set; }

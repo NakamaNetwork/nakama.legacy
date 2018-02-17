@@ -127,6 +127,7 @@ export class SearchConstants {
     public static SortType: string = "Type";
     public static SortStage: string = "Stage";
     public static SortClass: string = "Class";
+    public static SortStars: string = "Stars";
     public static SortCount: string = "Count";
     public static SortScore: string = "Score";
     public static SortLeader: string = "Leader";

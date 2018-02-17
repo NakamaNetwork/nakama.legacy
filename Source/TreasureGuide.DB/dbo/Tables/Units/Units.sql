@@ -4,7 +4,7 @@
     [Name] NVARCHAR(128) NULL, 
     [Type] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Type] DEFAULT 0, 
     [Class] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Class] DEFAULT 0, 
-    [Stars] TINYINT NULL, 
+    [Stars] DECIMAL(2,1) NULL, 
     [Cost] TINYINT NULL, 
     [Combo] TINYINT NULL, 
     [Sockets] TINYINT NULL, 
