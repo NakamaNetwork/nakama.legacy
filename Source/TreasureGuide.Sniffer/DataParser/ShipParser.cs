@@ -22,15 +22,23 @@ namespace TreasureGuide.Sniffer.DataParser
             var models = arrays.Select((line, index) =>
             {
                 var id = index;
+                var name = line["name"].ToString();
                 var ship = new Ship
                 {
                     Id = id,
-                    Name = line["name"].ToString(),
-                    Description = line["description"].ToString()
+                    Name = name,
+                    Description = line["description"].ToString(),
+                    EventShip = IsEventShip(name.ToLower()),
+                    EventShipActive = false
                 };
                 return ship;
             });
             return models;
+        }
+
+        private bool IsEventShip(string name)
+        {
+            return name.Contains("anniversary") || name.Contains("burning whitebeard") || name.Contains("new year");
         }
 
         protected override async Task Save(IEnumerable<Ship> ships)
