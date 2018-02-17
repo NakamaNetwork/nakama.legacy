@@ -34,6 +34,11 @@ export class ShipDisplay {
         return this.shipQueryService.getIcon(this.shipId);
     }
 
+    @computedFrom('ship', 'ship.eventShip', 'ship.eventShipActive')
+    get iconClass() {
+        return this.ship ? this.ship.eventShipActive ? 'fa-star' : this.ship.eventShip ? 'fa-star-o' : 'fa-ship' : '';
+    }
+
     clicked() {
         if (this.editable) {
             this.dialogService.open({ viewModel: ShipPicker, model: { shipId: this.shipId }, lock: true }).whenClosed(result => {

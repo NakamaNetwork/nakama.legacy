@@ -21,6 +21,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool Draft { get; set; }
         public bool Reported { get; set; }
         public bool Bookmark { get; set; }
+        public bool EventShips { get; set; }
     }
 
     public enum FreeToPlayStatus
