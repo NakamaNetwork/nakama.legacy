@@ -127,6 +127,7 @@ export class SearchConstants {
     public static SortType: string = "Type";
     public static SortStage: string = "Stage";
     public static SortClass: string = "Class";
+    public static SortStars: string = "Stars";
     public static SortCount: string = "Count";
     public static SortScore: string = "Score";
     public static SortLeader: string = "Leader";
@@ -148,6 +149,8 @@ export interface ISearchModel {
 export interface IShipStubModel {
     id: number;
     name: string;
+    eventShip: boolean;
+    eventShipActive: boolean;
     
 }
 
@@ -385,6 +388,7 @@ export interface ITeamSearchModel extends ISearchModel{
     draft: boolean;
     reported: boolean;
     bookmark: boolean;
+    eventShips: boolean;
     
 }
 

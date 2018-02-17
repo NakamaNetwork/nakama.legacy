@@ -8,6 +8,15 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
+            header: '02/17/18',
+            lines: [
+                'Added sorting to unit search areas.',
+                'Added new icons for active event ships and inactive event ships.',
+                'Team searches will exclude teams using inactive even ships by default.',
+                'Added option in team searches to include teams using inactive event ships.'
+            ]
+        },
+        {
             header: '02/11/18 - The Box Update',
             lines: [
                 'Added new "Box" feature in which users can create a "Box" to keep track of units they own and don\'t own.',

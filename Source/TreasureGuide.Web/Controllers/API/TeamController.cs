@@ -127,6 +127,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchDeleted(results, model.Deleted);
             results = SearchDrafts(results, model.Draft);
             results = SearchReported(results, model.Reported);
+            results = SearchEventShips(results, model.EventShips);
             results = SearchBookmarks(results, model.Bookmark);
             results = SearchStage(results, model.StageId);
             results = SearchTerm(results, model.Term);
@@ -140,7 +141,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchBox(results, model.BoxId, model.Blacklist);
             return results;
         }
-
+        
         private IQueryable<Team> SearchDeleted(IQueryable<Team> results, bool modelDeleted)
         {
             if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
@@ -172,6 +173,15 @@ namespace TreasureGuide.Web.Controllers.API
             if (User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) && modelReported)
             {
                 results = results.Where(x => x.TeamReports.Any(y => !y.AcknowledgedDate.HasValue));
+            }
+            return results;
+        }
+
+        private IQueryable<Team> SearchEventShips(IQueryable<Team> results, bool modelEventShips)
+        {
+            if (!modelEventShips)
+            {
+                results = results.Where(x => !x.Ship.EventShip || x.Ship.EventShipActive);
             }
             return results;
         }

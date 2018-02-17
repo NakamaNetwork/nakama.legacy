@@ -65,6 +65,8 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
           <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="EventShip" Type="bit" Nullable="false" />
+          <Property Name="EventShipActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Stages">
           <Key>
@@ -194,7 +196,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
           <Property Name="Type" Type="smallint" Nullable="false" />
           <Property Name="Class" Type="smallint" Nullable="false" />
-          <Property Name="Stars" Type="tinyint" />
+          <Property Name="Stars" Type="decimal" Precision="2" Scale="1" />
           <Property Name="Cost" Type="tinyint" />
           <Property Name="Combo" Type="tinyint" />
           <Property Name="Sockets" Type="tinyint" />
@@ -1092,7 +1094,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
                     <Property Name="Type" Type="tcdbModel.UnitType" Nullable="false" />
                     <Property Name="Class" Type="tcdbModel.UnitClass" Nullable="false" />
-                    <Property Name="Stars" Type="Byte" />
+                    <Property Name="Stars" Type="Decimal" />
                     <Property Name="Cost" Type="Byte" />
                     <Property Name="Combo" Type="Byte" />
                     <Property Name="Sockets" Type="Byte" />
@@ -1135,6 +1137,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
                     <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Ship" ToRole="Team" />
+          <Property Name="EventShip" Type="Boolean" Nullable="false" />
+          <Property Name="EventShipActive" Type="Boolean" Nullable="false" />
                 </EntityType>
                 <EntityType Name="Stage">
                     <Key>
@@ -1756,7 +1760,9 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <EntitySetMapping Name="Ships">
                         <EntityTypeMapping TypeName="tcdbModel.Ship">
                             <MappingFragment StoreEntitySet="Ships">
-                                <ScalarProperty Name="Description" ColumnName="Description" />
+                                <ScalarProperty Name="EventShipActive" ColumnName="EventShipActive" />
+                <ScalarProperty Name="EventShip" ColumnName="EventShip" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                                 <ScalarProperty Name="Name" ColumnName="Name" />
                                 <ScalarProperty Name="Id" ColumnName="Id" />
                             </MappingFragment>

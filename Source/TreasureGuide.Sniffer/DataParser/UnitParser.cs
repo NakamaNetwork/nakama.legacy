@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TreasureGuide.Entities;
@@ -11,6 +12,7 @@ namespace TreasureGuide.Sniffer.DataParser
 {
     public class UnitParser : TreasureParser<IEnumerable<Unit>>
     {
+        private static readonly Regex NumberRegex = new Regex("\\d+?");
         private const string OptcDbUnitData = "https://raw.githubusercontent.com/optc-db/optc-db.github.io/master/common/data/units.js";
 
         public UnitParser(TreasureEntities context) : base(context, OptcDbUnitData)
@@ -33,7 +35,7 @@ namespace TreasureGuide.Sniffer.DataParser
                     Type = (line[1] as string).ToUnitType(),
                     Class = unitClass,
                     // Classes parsed later
-                    Stars = (line[3]?.ToString())?.ToByte(),
+                    Stars = ParseStars(line[3]?.ToString()),
                     Cost = (line[4]?.ToString())?.ToByte(),
                     Combo = (line[5]?.ToString())?.ToByte(),
                     Sockets = (line[6]?.ToString())?.ToByte(),
@@ -52,14 +54,25 @@ namespace TreasureGuide.Sniffer.DataParser
             return models.Where(x => !String.IsNullOrWhiteSpace(x.Name));
         }
 
+        private decimal? ParseStars(string value)
+        {
+            var number = NumberRegex.Match(value);
+            if (number.Success)
+            {
+                var result = number.Value.ToDecimal();
+                if (value.Contains("+"))
+                {
+                    result += (decimal?)0.5d;
+                }
+                return result;
+            }
+            return null;
+        }
+
         protected override async Task Save(IEnumerable<Unit> units)
         {
             Context.Units.Clear();
-            foreach (var unit in units)
-            {
-                Context.Units.Add(unit);
-            }
-            await Context.SaveChangesAsync();
+            await Context.LoopedAddSave(units);
         }
     }
 }

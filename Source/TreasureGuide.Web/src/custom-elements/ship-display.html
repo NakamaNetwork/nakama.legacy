@@ -1,10 +1,10 @@
 ﻿<template>
     <button type="button" if.bind="editable" class="_small" click.delegate="clicked()">
-        <i class="fa fa-fw fa-ship"></i>
+        <i class="fa fa-fw" class.bind="iconClass"></i>
         ${ship.name}
     </button>
     <span if.bind="!editable">
-        <i class="fa fa-fw fa-ship"></i>
+        <i class="fa fa-fw" class.bind="iconClass"></i>
         ${ship.name}
     </span>
 </template>

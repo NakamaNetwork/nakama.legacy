@@ -38,11 +38,7 @@ namespace TreasureGuide.Sniffer.DataParser
         protected override async Task Save(IEnumerable<UnitAlias> aliases)
         {
             Context.UnitAliases.Clear();
-            foreach (var alias in aliases)
-            {
-                Context.UnitAliases.Add(alias);
-            }
-            await Context.SaveChangesAsync();
+            await Context.LoopedAddSave(aliases);
         }
     }
 }

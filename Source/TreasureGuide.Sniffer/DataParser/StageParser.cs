@@ -104,9 +104,7 @@ namespace TreasureGuide.Sniffer.DataParser
         protected override async Task Save(IEnumerable<Stage> items)
         {
             Context.Stages.Clear();
-            foreach (var stage in items)
-                Context.Stages.Add(stage);
-            await Context.SaveChangesAsync();
+            await Context.LoopedAddSave(items);
         }
     }
 }

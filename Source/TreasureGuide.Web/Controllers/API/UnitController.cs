@@ -6,7 +6,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
+using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
+using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Models.UnitModels;
 using TreasureGuide.Web.Services;
 
@@ -30,9 +32,24 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
+
         protected override IQueryable<Unit> OrderSearchResults(IQueryable<Unit> results, UnitSearchModel model)
         {
-            return results.OrderBy(x => x.Id);
+            switch (model.SortBy ?? "")
+            {
+                case SearchConstants.SortId:
+                    return results.OrderBy(x => x.Id, model.SortDesc);
+                case SearchConstants.SortName:
+                    return results.OrderBy(x => x.Name, model.SortDesc);
+                case SearchConstants.SortType:
+                    return results.OrderBy(x => x.Type, model.SortDesc);
+                case SearchConstants.SortClass:
+                    return results.OrderBy(x => x.Class, model.SortDesc);
+                case SearchConstants.SortStars:
+                    return results.OrderBy(x => x.Stars ?? 0, model.SortDesc);
+                default:
+                    return results.OrderBy(x => x.Id, false);
+            }
         }
 
         private IQueryable<Unit> SearchFreeToPlay(IQueryable<Unit> results, bool freeToPlay)
