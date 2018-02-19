@@ -145,18 +145,25 @@ namespace TreasureGuide.Sniffer.DataParser
 
         private IEnumerable<StageAlias> GetAliases(Tuple<Unit, Stage> tuple)
         {
+            var me = GetAliases(tuple.Item1.Name, new[] { tuple.Item1 }, tuple.Item2, true);
             var to = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesTo, tuple.Item2);
             var from = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesFrom, tuple.Item2);
-            return to.Concat(from);
+            return to.Concat(from).Concat(me);
         }
 
-        private IEnumerable<StageAlias> GetAliases(string name, ICollection<Unit> targets, Stage detailItem2)
+        private IEnumerable<StageAlias> GetAliases(string name, ICollection<Unit> targets, Stage detailItem2, bool ignoreMe = false)
         {
-            return targets.Select(x => new StageAlias
+            var aliases = targets.Select(x => new StageAlias
             {
                 StageId = detailItem2.Id,
                 Name = detailItem2.Name.Replace(name, x.Name)
             });
+            var other = aliases.Select(x => new StageAlias
+            {
+                StageId = x.StageId,
+                Name = x.Name.Replace("Coliseum", "Colosseum")
+            });
+            return ignoreMe ? other : other.Concat(aliases);
         }
 
         protected override async Task Save(Tuple<List<Stage>, List<StageAlias>> items)
