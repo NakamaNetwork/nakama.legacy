@@ -156,26 +156,25 @@ namespace TreasureGuide.Web.Controllers.API
                 {
                     if (clear)
                     {
-                        var command = String.Format("DELETE FROM [dbo].[BoxUnits] WHERE [BoxId] = {0}", model.Id);
-                        await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, command);
+                        DbContext.BoxUnits.RemoveRange(DbContext.BoxUnits.Where(x => x.BoxId == model.Id));
                     }
                     else if (model.Removed?.Any() ?? false)
                     {
-                        var command = String.Format(
-                            "DELETE FROM [dbo].[BoxUnits] WHERE [BoxId] = {0} AND [UnitId] IN ({1})", model.Id,
-                            String.Join(",", model.Removed));
-                        await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, command);
+                        DbContext.BoxUnits.RemoveRange(DbContext.BoxUnits.Where(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId)));
                     }
                     if (model.Added?.Any() ?? false)
                     {
-                        var existing = box.Units.Select(x => x.Id).ToList();
+                        var existing = box.BoxUnits.Select(x => x.UnitId).ToList();
                         var real = await DbContext.Units.Where(x => model.Added.Contains(x.Id)).Select(x => x.Id).ToListAsync();
                         var actual = real.Except(existing);
                         if (actual.Any())
                         {
-                            var commands = actual.Select(x => $"INSERT INTO [dbo].[BoxUnits]([BoxId],[UnitId]) VALUES({model.Id},{x})");
-                            var collection = String.Join(";", commands);
-                            await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, collection);
+                            var newItems = actual.Select(x => new BoxUnit
+                            {
+                                BoxId = model.Id,
+                                UnitId = x
+                            });
+                            DbContext.BoxUnits.AddRange(newItems);
                         }
                     }
                     transaction.Commit();

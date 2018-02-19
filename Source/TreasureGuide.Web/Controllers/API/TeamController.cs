@@ -141,7 +141,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchBox(results, model.BoxId, model.Blacklist);
             return results;
         }
-        
+
         private IQueryable<Team> SearchDeleted(IQueryable<Team> results, bool modelDeleted)
         {
             if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
@@ -251,11 +251,11 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 if (blacklist ?? false)
                 {
-                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || !y.Unit.Boxes.Any(z => z.Id == boxId && z.Blacklist)));
+                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || !y.Unit.BoxUnits.Any(z => z.BoxId == boxId && z.Box.Blacklist)));
                 }
                 else
                 {
-                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.Boxes.Any(z => z.Id == boxId && !z.Blacklist)));
+                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.BoxUnits.Any(z => z.BoxId == boxId && !z.Box.Blacklist)));
                 }
             }
             return teams;

@@ -6,6 +6,8 @@ import { AccountService } from './account-service';
 import { UserPreferenceType } from '../models/imported';
 import { RoleConstants } from '../models/imported';
 import { BoxConstants } from '../models/imported';
+import { BoxDetailModel } from './query/box-query-service';
+import { IBoxUnitDetailModel } from '../models/imported';
 
 @autoinject
 export class BoxService {
@@ -13,7 +15,7 @@ export class BoxService {
     private alertService: AlertService;
     private accountService: AccountService;
 
-    public currentBox: IBoxDetailModel = null;
+    public currentBox: BoxDetailModel = null;
     private added: number[] = [];
     private removed: number[] = [];
 
@@ -66,7 +68,7 @@ export class BoxService {
                         query = this.boxQueryService.focus(boxId);
                     }
                     return query.then(y => {
-                        this.currentBox = y;
+                        this.currentBox = Object.assign(new BoxDetailModel(), y);
                         if (!bypass) {
                             this.alertService.info('You\'ve switched to box "' + y.name + '".');
                         }
@@ -130,7 +132,7 @@ export class BoxService {
         return promise;
     }
 
-    toggle(unitId: number, box: IBoxDetailModel) {
+    toggle(unitId: number, box: BoxDetailModel) {
         var myBox = !box;
         box = box || this.currentBox;
         if (box) {
@@ -142,7 +144,7 @@ export class BoxService {
                         this.removed.push(unitId);
                     }
                 }
-                box.unitIds = box.unitIds.filter(x => x !== unitId);
+                box.boxUnits = box.boxUnits.filter(x => x.unitId !== unitId);
             } else {
                 if (myBox) {
                     this.removed.filter(x => x !== unitId);
@@ -150,11 +152,11 @@ export class BoxService {
                         this.added.push(unitId);
                     }
                 }
-                box.unitIds.push(unitId);
-            }
-            if (myBox) {
-                this.queueSave();
-            }
+                box.boxUnits.push(<IBoxUnitDetailModel>{ unitId: unitId });
+            };
+        }
+        if (myBox) {
+            this.queueSave();
         }
     }
 }

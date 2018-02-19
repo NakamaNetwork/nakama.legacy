@@ -1,9 +1,8 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
-import { IBoxEditorModel, IBoxSearchModel, IBoxUpdateModel } from '../../models/imported';
+import { IBoxDetailModel, IBoxEditorModel, IBoxSearchModel, IBoxUpdateModel, IBoxUnitDetailModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
-import { IBoxDetailModel } from '../../models/imported';
 
 @autoinject
 export class BoxQueryService extends SearchableQueryService {
@@ -42,4 +41,20 @@ export class BoxEditorModel implements IBoxEditorModel {
     blacklist: boolean = false;
 
     deleted: boolean = false;
+}
+
+export class BoxDetailModel implements IBoxDetailModel {
+    boxUnits: IBoxUnitDetailModel[];
+    userId: string;
+    userName: string;
+    userUnitId: number;
+    id: number;
+    name: string;
+    friendId: number;
+    global: boolean;
+    public: boolean;
+    blacklist: boolean;
+    get unitIds(): number[] {
+        return this.boxUnits.map(x => x.unitId);
+    }
 }

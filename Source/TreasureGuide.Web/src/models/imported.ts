@@ -24,10 +24,10 @@ export interface IBoxStubModel {
 }
 
 export interface IBoxDetailModel extends IBoxStubModel{
+    boxUnits: IBoxUnitDetailModel[];
     userId: string;
     userName: string;
     userUnitId: number;
-    unitIds: number[];
     
 }
 
@@ -49,6 +49,24 @@ export interface IBoxSearchModel extends ISearchModel{
 }
 
 
+export interface IBoxUnitStubModel {
+    name: string;
+    unitId: number;
+    flags: number;
+    
+}
+
+export interface IBoxUnitDetailModel extends IBoxUnitStubModel{
+    
+}
+
+export interface IBoxUnitEditorModel {
+    unitId: number;
+    flags: number;
+    
+}
+
+
 export interface IBoxUpdateModel {
     id: number;
     added: number[];
@@ -63,6 +81,16 @@ export interface IExternalLoginConfirmationViewModel {
     toS: boolean;
     privacy: boolean;
     
+}
+
+
+export enum IndividualUnitFlags { 
+    Unknown = 0,
+    LevelMaxed = 1,
+    SocketsMaxed = 2,
+    CandyMaxed = 4,
+    LimitBroken = 8,
+    Featured = 16
 }
 
 
@@ -267,22 +295,6 @@ export interface ITeamGenericSlotEditorModel extends ITeamGenericSlotDetailModel
 }
 
 
-export interface ITeamGenericUnitStubModel {
-    role: number;
-    position: number;
-    
-}
-
-export interface ITeamGenericUnitDetailModel extends ITeamGenericUnitStubModel{
-    combo: number;
-    
-}
-
-export interface ITeamGenericUnitEditorModel extends ITeamGenericUnitDetailModel{
-    
-}
-
-
 export interface ITeamImportModel {
     team: ITeamEditorModel;
     credit: ITeamCreditModel;
@@ -427,13 +439,13 @@ export interface ITeamUnitStubModel {
 export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
     name: string;
     level: number;
-    special: number;
+    flags: number;
     sub: boolean;
     
 }
 
 export interface ITeamUnitEditorModel extends ITeamUnitStubModel{
-    special: number;
+    flags: number;
     sub: boolean;
     
 }

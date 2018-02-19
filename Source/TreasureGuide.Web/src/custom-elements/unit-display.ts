@@ -11,6 +11,7 @@ import { UnitClass } from '../models/imported';
 import { UnitRole, IBoxDetailModel } from '../models/imported';
 import { StringHelper } from '../tools/string-helper';
 import { BoxService } from '../services/box-service';
+import {BoxDetailModel} from '../services/query/box-query-service';
 
 @autoinject
 @customElement('unit-display')
@@ -27,7 +28,7 @@ export class UnitDisplay {
     @bindable info: boolean;
     @bindable tooltip: boolean;
     @bindable showBox: boolean;
-    @bindable box: IBoxDetailModel;
+    @bindable box: BoxDetailModel;
 
     inBox: boolean;
 

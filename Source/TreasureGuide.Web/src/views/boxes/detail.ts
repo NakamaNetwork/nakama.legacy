@@ -11,6 +11,7 @@ import { BoxService } from '../../services/box-service';
 import { BoxBulkDialog, BulkDialogResultModel, BulkDialogAction } from '../../custom-elements/dialogs/box-bulk-dialog';
 import { BoxUnitsDialog } from '../../custom-elements/dialogs/box-units-dialog';
 import { RoleConstants } from '../../models/imported';
+import { BoxDetailModel } from '../../services/query/box-query-service';
 
 @autoinject
 export class BoxDetailPage {
@@ -26,7 +27,7 @@ export class BoxDetailPage {
     private bindingEngine: BindingEngine;
     private boxService: BoxService;
 
-    private box: IBoxDetailModel;
+    private box: BoxDetailModel;
     private loading: boolean;
 
     private searchModel: UnitSearchModel;
@@ -65,10 +66,10 @@ export class BoxDetailPage {
     refresh(id) {
         this.loading = true;
         return this.boxQueryService.detail(id).then(result => {
+            this.box = Object.assign(new BoxDetailModel(), result);
             if (this.boxService.currentBox && this.boxService.currentBox.id === result.id) {
-                this.boxService.currentBox = result;
+                this.boxService.currentBox = this.box;
             }
-            this.box = result;
             this.loading = false;
             this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
                 this.search(n);

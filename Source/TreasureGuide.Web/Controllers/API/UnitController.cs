@@ -67,11 +67,11 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 if (blacklist ?? false)
                 {
-                    results = results.Where(x => !x.Boxes.Any(y => y.Id == boxId && y.Blacklist));
+                    results = results.Where(x => !x.BoxUnits.Any(y => y.BoxId == boxId && y.Box.Blacklist));
                 }
                 else
                 {
-                    results = results.Where(x => x.Boxes.Any(y => y.Id == boxId && !y.Blacklist));
+                    results = results.Where(x => x.BoxUnits.Any(y => y.BoxId == boxId && !y.Box.Blacklist));
                 }
             }
             return results;

@@ -18,13 +18,13 @@ namespace TreasureGuide.Entities
         public Team()
         {
             this.TeamSockets = new HashSet<TeamSocket>();
-            this.TeamUnits = new HashSet<TeamUnit>();
             this.TeamVotes = new HashSet<TeamVote>();
             this.TeamReports = new HashSet<TeamReport>();
             this.TeamVideos = new HashSet<TeamVideo>();
             this.TeamUnitSummaries = new HashSet<TeamUnitSummary>();
             this.TeamGenericSlots = new HashSet<TeamGenericSlot>();
             this.BookmarkedUsers = new HashSet<UserProfile>();
+            this.TeamUnits = new HashSet<TeamUnit>();
         }
     
         public int Id { get; set; }
@@ -48,8 +48,6 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamSocket> TeamSockets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamVote> TeamVotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamReport> TeamReports { get; set; }
@@ -62,5 +60,7 @@ namespace TreasureGuide.Entities
         public virtual ICollection<TeamGenericSlot> TeamGenericSlots { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfile> BookmarkedUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamUnit> TeamUnits { get; set; }
     }
 }

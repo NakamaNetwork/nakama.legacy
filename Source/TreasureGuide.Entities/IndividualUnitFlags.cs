@@ -10,17 +10,14 @@
 namespace TreasureGuide.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TeamUnit
+    public enum IndividualUnitFlags : int
     {
-        public int TeamId { get; set; }
-        public int UnitId { get; set; }
-        public byte Position { get; set; }
-        public Nullable<IndividualUnitFlags> Flags { get; set; }
-        public bool Sub { get; set; }
-    
-        public virtual Team Team { get; set; }
-        public virtual Unit Unit { get; set; }
+        Unknown = 0,
+        LevelMaxed = 1,
+        SocketsMaxed = 2,
+        CandyMaxed = 4,
+        LimitBroken = 8,
+        Featured = 16
     }
 }
