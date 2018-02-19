@@ -12,6 +12,7 @@ using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models.BoxModels;
 using TreasureGuide.Web.Services;
+using Z.EntityFramework.Plus;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -154,11 +155,11 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 if (clear)
                 {
-                    DbContext.BoxUnits.RemoveRange(DbContext.BoxUnits.Where(x => x.BoxId == model.Id));
+                    await DbContext.BoxUnits.Where(x => x.BoxId == model.Id).DeleteAsync();
                 }
                 else if (model.Removed?.Any() ?? false)
                 {
-                    DbContext.BoxUnits.RemoveRange(DbContext.BoxUnits.Where(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId)));
+                    await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId)).DeleteAsync();
                 }
                 if (model.Added?.Any() ?? false)
                 {
@@ -173,6 +174,13 @@ namespace TreasureGuide.Web.Controllers.API
                             UnitId = x
                         });
                         DbContext.BoxUnits.AddRange(newItems);
+                    }
+                }
+                if (model.Updated?.Any() ?? false)
+                {
+                    foreach (var item in model.Updated)
+                    {
+                        await DbContext.BoxUnits.Where(x => x.UnitId == item.Id).UpdateAsync(x => new BoxUnit { Flags = item.Flags });
                     }
                 }
                 await DbContext.SaveChangesAsync();
