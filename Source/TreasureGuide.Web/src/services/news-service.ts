@@ -8,10 +8,12 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
-            header: '02/19/18',
+            header: '02/19/18 - Continued',
             lines: [
                 'All users have been granted an additional box slot!',
                 'Users can now set flags on their box units to indicate maxed levels, skills, sockets, cotton candies, and more!',
+                'Updated the way we generate Stage Ids.',
+                'Added Aliases for Stages to make searching easier.',
                 'Box units can now be "featured" at the top of the box to better show-off cool stuff.',
                 'Clicking a unit portrait in the add/remove box dialog will now toggle it.',
                 'Clicking a unit portrait in the box detail page will now open its info page on OPTC-db.',
