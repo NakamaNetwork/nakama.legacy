@@ -14,10 +14,11 @@ namespace TreasureGuide.Entities
     public enum IndividualUnitFlags : int
     {
         Unknown = 0,
+        Favorite = 32,
         LevelMaxed = 1,
-        SocketsMaxed = 2,
-        CandyMaxed = 4,
-        LimitBroken = 8,
-        Featured = 16
+        SkillLevelMaxed = 2,
+        SocketsMaxed = 4,
+        CottonCandyMaxed = 8,
+        LimitBroken = 16
     }
 }

@@ -1725,11 +1725,12 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
         </Association>
         <EnumType Name="IndividualUnitFlags">
           <Member Name="Unknown" Value="0" />
-          <Member Name="LevelMaxed" Value="1" />
-          <Member Name="SocketsMaxed" Value="2" />
-          <Member Name="CandyMaxed" Value="4" />
-          <Member Name="LimitBroken" Value="8" />
-          <Member Name="Featured" Value="16" />
+            <Member Name="Favorite" Value="32" />
+            <Member Name="LevelMaxed" Value="1" />
+            <Member Name="SkillLevelMaxed" Value="2" />
+            <Member Name="SocketsMaxed" Value="4" />
+            <Member Name="CottonCandyMaxed" Value="8" />
+            <Member Name="LimitBroken" Value="16" />
         </EnumType>
         </Schema>
         </edmx:ConceptualModels>

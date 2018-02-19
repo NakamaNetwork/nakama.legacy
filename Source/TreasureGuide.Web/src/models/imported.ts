@@ -52,7 +52,7 @@ export interface IBoxSearchModel extends ISearchModel{
 export interface IBoxUnitStubModel {
     name: string;
     unitId: number;
-    flags: number;
+    flags: IndividualUnitFlags;
     
 }
 
@@ -68,9 +68,16 @@ export interface IBoxUnitEditorModel {
 
 
 export interface IBoxUpdateModel {
+    updated: IBoxUnitUpdateModel[];
     id: number;
     added: number[];
     removed: number[];
+    
+}
+
+export interface IBoxUnitUpdateModel {
+    id: number;
+    flags: IndividualUnitFlags;
     
 }
 
@@ -86,11 +93,12 @@ export interface IExternalLoginConfirmationViewModel {
 
 export enum IndividualUnitFlags { 
     Unknown = 0,
+    Favorite = 32,
     LevelMaxed = 1,
-    SocketsMaxed = 2,
-    CandyMaxed = 4,
-    LimitBroken = 8,
-    Featured = 16
+    SkillLevelMaxed = 2,
+    SocketsMaxed = 4,
+    CottonCandyMaxed = 8,
+    LimitBroken = 16
 }
 
 
@@ -439,7 +447,7 @@ export interface ITeamUnitStubModel {
 export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
     name: string;
     level: number;
-    flags: number;
+    flags: IndividualUnitFlags;
     sub: boolean;
     
 }

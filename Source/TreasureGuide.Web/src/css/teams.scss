@@ -550,3 +550,11 @@ team-box {
         }
     }
 }
+
+.unit-flag-container {
+    @extend ._alignCenter;
+    background-color: $background-color;
+    border: 1px solid $grey-color;
+    border-radius: 20px;
+    margin: 10px;
+}

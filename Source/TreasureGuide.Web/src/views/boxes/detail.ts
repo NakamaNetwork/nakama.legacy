@@ -12,6 +12,7 @@ import { BoxBulkDialog, BulkDialogResultModel, BulkDialogAction } from '../../cu
 import { BoxUnitsDialog } from '../../custom-elements/dialogs/box-units-dialog';
 import { RoleConstants } from '../../models/imported';
 import { BoxDetailModel } from '../../services/query/box-query-service';
+import { BoxFlagsDialog } from '../../custom-elements/dialogs/box-flags-dialog';
 
 @autoinject
 export class BoxDetailPage {
@@ -112,7 +113,17 @@ export class BoxDetailPage {
         if (this.canEdit) {
             this.dialogService.open({ viewModel: BoxBulkDialog, model: this.box, lock: true }).whenClosed(result => {
                 if (!result.wasCancelled) {
-                    this.search(this.searchModel);
+                    this.refresh(this.box.id);
+                }
+            });
+        }
+    }
+
+    openFlags() {
+        if (this.canEdit) {
+            this.dialogService.open({ viewModel: BoxFlagsDialog, model: this.box, lock: true }).whenClosed(result => {
+                if (!result.wasCancelled) {
+                    this.refresh(this.box.id);
                 }
             });
         }

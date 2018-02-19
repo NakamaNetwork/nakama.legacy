@@ -140,6 +140,15 @@ namespace TreasureGuide.Web.Controllers.API
             return await BulkOperation(model, true);
         }
 
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.BoxUser)]
+        [ActionName("Flags")]
+        [Route("[action]")]
+        public async Task<IActionResult> Flags([FromBody] BoxUpdateModel model)
+        {
+            return await BulkOperation(model, false);
+        }
+
         private async Task<IActionResult> BulkOperation(BoxUpdateModel model, bool clear)
         {
             if (!CanPost(model.Id))
@@ -151,17 +160,20 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 return BadRequest("Box not found.");
             }
-            if ((model.Added?.Any() ?? false) || (model.Removed?.Any() ?? false))
+            model.Added = model.Added ?? Enumerable.Empty<int>();
+            model.Removed = model.Removed ?? Enumerable.Empty<int>();
+            model.Updated = model.Updated ?? Enumerable.Empty<BoxUnitUpdateModel>();
+            if (model.Added.Any() || model.Removed.Any() || model.Updated.Any())
             {
                 if (clear)
                 {
-                    await DbContext.BoxUnits.Where(x => x.BoxId == model.Id).DeleteAsync();
+                    await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && !model.Added.Contains(x.UnitId)).DeleteAsync();
                 }
-                else if (model.Removed?.Any() ?? false)
+                else if (model.Removed.Any())
                 {
                     await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId)).DeleteAsync();
                 }
-                if (model.Added?.Any() ?? false)
+                if (model.Added.Any())
                 {
                     var existing = box.BoxUnits.Select(x => x.UnitId).ToList();
                     var real = await DbContext.Units.Where(x => model.Added.Contains(x.Id)).Select(x => x.Id).ToListAsync();
@@ -176,11 +188,11 @@ namespace TreasureGuide.Web.Controllers.API
                         DbContext.BoxUnits.AddRange(newItems);
                     }
                 }
-                if (model.Updated?.Any() ?? false)
+                if (model.Updated.Any())
                 {
                     foreach (var item in model.Updated)
                     {
-                        await DbContext.BoxUnits.Where(x => x.UnitId == item.Id).UpdateAsync(x => new BoxUnit { Flags = item.Flags });
+                        await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && x.UnitId == item.Id).UpdateAsync(x => new BoxUnit { Flags = item.Flags });
                     }
                 }
                 await DbContext.SaveChangesAsync();
