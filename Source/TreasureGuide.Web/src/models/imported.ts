@@ -7,8 +7,8 @@ export interface IAccessTokenModel {
 
 
 export class BoxConstants {
-    public static BoxUserLimit: number = 1;
-    public static MultiBoxUserLimit: number = 5;
+    public static BoxUserLimit: number = 2;
+    public static MultiBoxUserLimit: number = 6;
     
 }
 
