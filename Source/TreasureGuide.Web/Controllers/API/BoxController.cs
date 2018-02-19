@@ -152,33 +152,30 @@ namespace TreasureGuide.Web.Controllers.API
             }
             if ((model.Added?.Any() ?? false) || (model.Removed?.Any() ?? false))
             {
-                using (var transaction = DbContext.Database.BeginTransaction())
+                if (clear)
                 {
-                    if (clear)
-                    {
-                        DbContext.BoxUnits.RemoveRange(DbContext.BoxUnits.Where(x => x.BoxId == model.Id));
-                    }
-                    else if (model.Removed?.Any() ?? false)
-                    {
-                        DbContext.BoxUnits.RemoveRange(DbContext.BoxUnits.Where(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId)));
-                    }
-                    if (model.Added?.Any() ?? false)
-                    {
-                        var existing = box.BoxUnits.Select(x => x.UnitId).ToList();
-                        var real = await DbContext.Units.Where(x => model.Added.Contains(x.Id)).Select(x => x.Id).ToListAsync();
-                        var actual = real.Except(existing);
-                        if (actual.Any())
-                        {
-                            var newItems = actual.Select(x => new BoxUnit
-                            {
-                                BoxId = model.Id,
-                                UnitId = x
-                            });
-                            DbContext.BoxUnits.AddRange(newItems);
-                        }
-                    }
-                    transaction.Commit();
+                    DbContext.BoxUnits.RemoveRange(DbContext.BoxUnits.Where(x => x.BoxId == model.Id));
                 }
+                else if (model.Removed?.Any() ?? false)
+                {
+                    DbContext.BoxUnits.RemoveRange(DbContext.BoxUnits.Where(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId)));
+                }
+                if (model.Added?.Any() ?? false)
+                {
+                    var existing = box.BoxUnits.Select(x => x.UnitId).ToList();
+                    var real = await DbContext.Units.Where(x => model.Added.Contains(x.Id)).Select(x => x.Id).ToListAsync();
+                    var actual = real.Except(existing);
+                    if (actual.Any())
+                    {
+                        var newItems = actual.Select(x => new BoxUnit
+                        {
+                            BoxId = model.Id,
+                            UnitId = x
+                        });
+                        DbContext.BoxUnits.AddRange(newItems);
+                    }
+                }
+                await DbContext.SaveChangesAsync();
             }
             return Ok(1);
         }
