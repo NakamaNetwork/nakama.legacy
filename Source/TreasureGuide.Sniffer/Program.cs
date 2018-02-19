@@ -48,8 +48,8 @@ namespace TreasureGuide.Sniffer
                 new UnitFlagParser(context),
                 new UnitAliasParser(context),
                 new UnitEvolutionParser(context),
-                new StageParser(context),
                 new ShipParser(context),
+                new StageParser(context),
             };
             //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             ParsersRunning = parsers.Count();
