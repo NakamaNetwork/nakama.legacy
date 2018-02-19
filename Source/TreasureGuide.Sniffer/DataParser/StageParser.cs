@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -10,13 +11,16 @@ using TreasureGuide.Sniffer.Helpers;
 
 namespace TreasureGuide.Sniffer.DataParser
 {
-    public class StageParser : TreasureParser<IEnumerable<Stage>>
+    public class StageParser : TreasureParser<Tuple<List<Stage>, List<StageAlias>>>
     {
         private const string OptcDbStageData =
             "https://github.com/optc-db/optc-db.github.io/raw/master/common/data/drops.js";
 
+        private HashSet<int> _existing;
+
         public StageParser(TreasureEntities context) : base(context, OptcDbStageData)
         {
+            _existing = new HashSet<int>();
         }
 
         protected override string TrimData(string input)
@@ -26,16 +30,16 @@ namespace TreasureGuide.Sniffer.DataParser
             return input.Substring(start, end - start);
         }
 
-        protected override IEnumerable<Stage> ConvertData(string trimmed)
+        protected override Tuple<List<Stage>, List<StageAlias>> ConvertData(string trimmed)
         {
             var data = JsonConvert.DeserializeObject<JObject>(trimmed);
             var stages = new List<Stage>();
+            var aliases = new List<StageAlias>();
             foreach (var datum in data)
             {
                 var stageType = datum.Key.ToStageType();
-                stages.AddRange(datum.Value.SelectMany(child =>
+                var datas = datum.Value.Select(child =>
                 {
-
                     var name = child["name"]?.ToString() ?? "Unknown";
                     if (stageType == StageType.Coliseum)
                     {
@@ -53,58 +57,124 @@ namespace TreasureGuide.Sniffer.DataParser
                         thumb = thumbParse;
                     }
                     var output = HandleSingle(name, thumb, global, stageType);
-                    return new[] { output };
-                }));
+                    return Tuple.Create(new List<Stage> { output }, new List<StageAlias>());
+                }).ToList();
+                stages.AddRange(datas.SelectMany(x => x.Item1).ToList());
+                aliases.AddRange(datas.SelectMany(x => x.Item2).ToList());
             }
 
-            return stages;
+            return Tuple.Create(stages, aliases);
         }
 
-        private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType)
+        private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType, int smallId = 0)
         {
-            return new Stage
+            var id = CreateId(stageType, thumb, smallId);
+            var oldId = IdMaker.FromString(name, (int)(stageType) * 1000000);
+            var stage = new Stage
             {
-                Id = IdMaker.FromString(name, (int)(stageType) * 1000000),
+                Id = id,
                 UnitId = thumb,
                 Name = name,
                 Global = global,
-                Type = stageType
+                Type = stageType,
+                OldId = oldId,
             };
+            return stage;
         }
 
-        private IEnumerable<Stage> HandleColiseum(JToken child)
+        private int CreateId(StageType stageType, int? thumb, int smallId)
+        {
+            var idString = $"{(int)stageType}{thumb:0000}{smallId:00}";
+            var id = Int32.Parse(idString);
+            while (_existing.Contains(id))
+            {
+                id++;
+            }
+            _existing.Add(id);
+            return id;
+        }
+
+        private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)
         {
             var stageType = StageType.Coliseum;
             var exhibition = JsonConvert.DeserializeObject<int[]>(child["Exhibition"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 3)
-                    .Select(y => Tuple.Create(x, $" - Exhibition Stage {y}")));
+                .SelectMany(x => Enumerable.Range(1, 3).Select(y => new StageCollectionDetail
+                {
+                    UnitId = x,
+                    Name = $" - Exhibition Stage {y}",
+                    SmallId = y
+                }));
 
             var underground = JsonConvert.DeserializeObject<int[]>(child["Underground"].ToString())
                 .SelectMany(x => Enumerable.Range(1, 4)
-                    .Select(y => Tuple.Create(x, $" - Underground Stage {y}")));
+                    .Select(y => new StageCollectionDetail
+                    {
+                        UnitId = x,
+                        Name = $" - Underground Stage {y}",
+                        SmallId = 10 + y
+                    }));
 
             var chaos = JsonConvert.DeserializeObject<int[]>(child["Chaos"].ToString())
                 .SelectMany(x => Enumerable.Range(1, 5)
-                    .Select(y => Tuple.Create(x, $" - Chaos Stage {y}")));
+                    .Select(y => new StageCollectionDetail
+                    {
+                        UnitId = x,
+                        Name = $" - Chaos Stage {y}",
+                        SmallId = 20 + y
+                    }));
 
             var neo = JsonConvert.DeserializeObject<int[]>(child["Neo"].ToString())
                 .SelectMany(x => Enumerable.Range(1, 5)
-                    .Select(y => Tuple.Create(x, $" - Neo Stage {y}")));
+                    .Select(y => new StageCollectionDetail
+                    {
+                        UnitId = x,
+                        Name = $" - Neo Stage {y}",
+                        SmallId = 30 + y
+                    }));
 
             var all = exhibition.Concat(underground).Concat(chaos).Concat(neo).Distinct();
-            var units = all.Join(Context.Units, x => x.Item1, y => y.Id,
-                (stage, unit) => Tuple.Create(unit, stage.Item2));
-            var colo = units.Select(x =>
-                    HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2}", x.Item1.Id,
-                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType))
+            var units = all.Join(Context.Units, x => x.UnitId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
+            var colo = units.Select(x => Tuple.Create(x.Item1,
+                    HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item1.Id,
+                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId)))
                 .ToList();
-            return colo;
+            var aliases = colo.SelectMany(GetAliases).ToList();
+            var stages = colo.Select(x => x.Item2).ToList();
+            return Tuple.Create(stages, aliases);
         }
 
-        protected override async Task Save(IEnumerable<Stage> items)
+        private IEnumerable<StageAlias> GetAliases(Tuple<Unit, Stage> tuple)
         {
+            var to = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesTo, tuple.Item2);
+            var from = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesFrom, tuple.Item2);
+            return to.Concat(from);
+        }
+
+        private IEnumerable<StageAlias> GetAliases(string name, ICollection<Unit> targets, Stage detailItem2)
+        {
+            return targets.Select(x => new StageAlias
+            {
+                StageId = detailItem2.Id,
+                Name = detailItem2.Name.Replace(name, x.Name)
+            });
+        }
+
+        protected override async Task Save(Tuple<List<Stage>, List<StageAlias>> items)
+        {
+            Context.StageAliases.Clear();
+
             Context.Stages.Clear();
-            await Context.LoopedAddSave(items);
+
+            await Context.LoopedAddSave(items.Item1);
+
+            await Context.LoopedAddSave(items.Item2);
+        }
+
+        private class StageCollectionDetail
+        {
+            public int UnitId { get; set; }
+            public string Name { get; set; }
+            public int SmallId { get; set; }
         }
     }
 }

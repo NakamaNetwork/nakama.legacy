@@ -47,10 +47,11 @@ namespace TreasureGuide.Sniffer
                 new UnitParser(context),
                 new UnitFlagParser(context),
                 new UnitAliasParser(context),
-                new StageParser(context),
+                new UnitEvolutionParser(context),
                 new ShipParser(context),
+                new StageParser(context),
             };
-          //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
+            //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             ParsersRunning = parsers.Count();
 
             Task.Run(async () =>
