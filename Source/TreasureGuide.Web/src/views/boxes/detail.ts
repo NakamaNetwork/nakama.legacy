@@ -11,6 +11,8 @@ import { BoxService } from '../../services/box-service';
 import { BoxBulkDialog, BulkDialogResultModel, BulkDialogAction } from '../../custom-elements/dialogs/box-bulk-dialog';
 import { BoxUnitsDialog } from '../../custom-elements/dialogs/box-units-dialog';
 import { RoleConstants } from '../../models/imported';
+import { BoxDetailModel } from '../../services/query/box-query-service';
+import { BoxFlagsDialog } from '../../custom-elements/dialogs/box-flags-dialog';
 
 @autoinject
 export class BoxDetailPage {
@@ -26,12 +28,14 @@ export class BoxDetailPage {
     private bindingEngine: BindingEngine;
     private boxService: BoxService;
 
-    private box: IBoxDetailModel;
+    private box: BoxDetailModel;
     private loading: boolean;
 
     private searchModel: UnitSearchModel;
     private units: IUnitStubModel[] = [];
     private unitsLoading: boolean;
+
+    private featuredUnits: IUnitStubModel[] = [];
 
     constructor(boxQueryService: BoxQueryService,
         unitQueryService: UnitQueryService,
@@ -59,19 +63,24 @@ export class BoxDetailPage {
         if (id) {
             this.searchModel.boxId = id;
             this.refresh(id);
+            this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+                this.search(n);
+            });
         }
     }
 
     refresh(id) {
         this.loading = true;
         return this.boxQueryService.detail(id).then(result => {
+            this.box = Object.assign(new BoxDetailModel(), result);
             if (this.boxService.currentBox && this.boxService.currentBox.id === result.id) {
-                this.boxService.currentBox = result;
+                this.boxService.currentBox = this.box;
             }
-            this.box = result;
-            this.loading = false;
-            this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-                this.search(n);
+            this.boxQueryService.featured(id).then(result => {
+                this.featuredUnits = result;
+                this.loading = false;
+            }).catch(error => {
+                this.loading = false;
             });
             this.search(this.searchModel.payload);
         }).catch(error => {
@@ -111,7 +120,17 @@ export class BoxDetailPage {
         if (this.canEdit) {
             this.dialogService.open({ viewModel: BoxBulkDialog, model: this.box, lock: true }).whenClosed(result => {
                 if (!result.wasCancelled) {
-                    this.search(this.searchModel);
+                    this.refresh(this.box.id);
+                }
+            });
+        }
+    }
+
+    openFlags() {
+        if (this.canEdit) {
+            this.dialogService.open({ viewModel: BoxFlagsDialog, model: this.box, lock: true }).whenClosed(result => {
+                if (!result.wasCancelled) {
+                    this.refresh(this.box.id);
                 }
             });
         }

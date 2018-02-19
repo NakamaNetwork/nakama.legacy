@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
@@ -11,7 +12,9 @@ using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models.BoxModels;
+using TreasureGuide.Web.Models.UnitModels;
 using TreasureGuide.Web.Services;
+using Z.EntityFramework.Plus;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -24,6 +27,21 @@ namespace TreasureGuide.Web.Controllers.API
         {
             Throttled = true;
             _preferenceService = preferenceService;
+        }
+
+        [HttpGet]
+        [ActionName("featured")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Featured(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("Must specify a box id.");
+            }
+            var results = await DbContext.BoxUnits
+                .Where(x => x.BoxId == id && x.Flags.HasValue && x.Flags.Value.HasFlag(IndividualUnitFlags.Favorite))
+                .Select(x => x.Unit).ProjectTo<UnitStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+            return Ok(results);
         }
 
         protected override IQueryable<Box> Filter(IQueryable<Box> entities)
@@ -105,12 +123,12 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]/{id?}")]
         public async Task<IActionResult> Focus(int? id)
         {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, ControllerContext.RouteData))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
             if (id.HasValue && User.IsInRole(RoleConstants.BoxUser))
             {
-                if (Throttled && !ThrottlingService.CanAccess(User, Request))
-                {
-                    return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
-                }
                 await _preferenceService.SetPreference(User.GetId(), UserPreferenceType.BoxId, id?.ToString());
                 return await Detail(id);
             }
@@ -139,6 +157,15 @@ namespace TreasureGuide.Web.Controllers.API
             return await BulkOperation(model, true);
         }
 
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.BoxUser)]
+        [ActionName("Flags")]
+        [Route("[action]")]
+        public async Task<IActionResult> Flags([FromBody] BoxUpdateModel model)
+        {
+            return await BulkOperation(model, false);
+        }
+
         private async Task<IActionResult> BulkOperation(BoxUpdateModel model, bool clear)
         {
             if (!CanPost(model.Id))
@@ -150,36 +177,42 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 return BadRequest("Box not found.");
             }
-            if ((model.Added?.Any() ?? false) || (model.Removed?.Any() ?? false))
+            model.Added = model.Added ?? Enumerable.Empty<int>();
+            model.Removed = model.Removed ?? Enumerable.Empty<int>();
+            model.Updated = model.Updated ?? Enumerable.Empty<BoxUnitUpdateModel>();
+            if (model.Added.Any() || model.Removed.Any() || model.Updated.Any())
             {
-                using (var transaction = DbContext.Database.BeginTransaction())
+                if (clear)
                 {
-                    if (clear)
-                    {
-                        var command = String.Format("DELETE FROM [dbo].[BoxUnits] WHERE [BoxId] = {0}", model.Id);
-                        await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, command);
-                    }
-                    else if (model.Removed?.Any() ?? false)
-                    {
-                        var command = String.Format(
-                            "DELETE FROM [dbo].[BoxUnits] WHERE [BoxId] = {0} AND [UnitId] IN ({1})", model.Id,
-                            String.Join(",", model.Removed));
-                        await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, command);
-                    }
-                    if (model.Added?.Any() ?? false)
-                    {
-                        var existing = box.Units.Select(x => x.Id).ToList();
-                        var real = await DbContext.Units.Where(x => model.Added.Contains(x.Id)).Select(x => x.Id).ToListAsync();
-                        var actual = real.Except(existing);
-                        if (actual.Any())
-                        {
-                            var commands = actual.Select(x => $"INSERT INTO [dbo].[BoxUnits]([BoxId],[UnitId]) VALUES({model.Id},{x})");
-                            var collection = String.Join(";", commands);
-                            await DbContext.Database.ExecuteSqlCommandAsync(TransactionalBehavior.EnsureTransaction, collection);
-                        }
-                    }
-                    transaction.Commit();
+                    await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && !model.Added.Contains(x.UnitId)).DeleteAsync();
                 }
+                else if (model.Removed.Any())
+                {
+                    await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId)).DeleteAsync();
+                }
+                if (model.Added.Any())
+                {
+                    var existing = box.BoxUnits.Select(x => x.UnitId).ToList();
+                    var real = await DbContext.Units.Where(x => model.Added.Contains(x.Id)).Select(x => x.Id).ToListAsync();
+                    var actual = real.Except(existing);
+                    if (actual.Any())
+                    {
+                        var newItems = actual.Select(x => new BoxUnit
+                        {
+                            BoxId = model.Id,
+                            UnitId = x
+                        });
+                        DbContext.BoxUnits.AddRange(newItems);
+                    }
+                }
+                if (model.Updated.Any())
+                {
+                    foreach (var item in model.Updated)
+                    {
+                        await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && x.UnitId == item.Id).UpdateAsync(x => new BoxUnit { Flags = item.Flags });
+                    }
+                }
+                await DbContext.SaveChangesAsync();
             }
             return Ok(1);
         }

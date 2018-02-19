@@ -6,6 +6,8 @@ import { AccountService } from './account-service';
 import { UserPreferenceType } from '../models/imported';
 import { RoleConstants } from '../models/imported';
 import { BoxConstants } from '../models/imported';
+import { BoxDetailModel } from './query/box-query-service';
+import { IBoxUnitDetailModel } from '../models/imported';
 
 @autoinject
 export class BoxService {
@@ -13,9 +15,7 @@ export class BoxService {
     private alertService: AlertService;
     private accountService: AccountService;
 
-    public currentBox: IBoxDetailModel = null;
-    private added: number[] = [];
-    private removed: number[] = [];
+    public currentBox: BoxDetailModel = null;
 
     constructor(boxQueryService: BoxQueryService, alertService: AlertService, accountService: AccountService) {
         this.boxQueryService = boxQueryService;
@@ -66,7 +66,7 @@ export class BoxService {
                         query = this.boxQueryService.focus(boxId);
                     }
                     return query.then(y => {
-                        this.currentBox = y;
+                        this.currentBox = Object.assign(new BoxDetailModel(), y);
                         if (!bypass) {
                             this.alertService.info('You\'ve switched to box "' + y.name + '".');
                         }
@@ -99,62 +99,37 @@ export class BoxService {
         this.doSave(messages);
     }
 
-    @computedFrom('currentBox', 'added.length', 'removed.length')
-    get dirty() {
-        return this.currentBox && (this.added.length > 0 || this.removed.length > 0);
-    }
-
     doSave(messages: boolean = true) {
         if (this.timer) {
             clearTimeout(this.timer);
         }
         var promise = new Promise<void>((resolve, reject) => {
-            if (this.dirty) {
-                var model = <IBoxUpdateModel>{
-                    id: this.currentBox.id,
-                    added: this.added,
-                    removed: this.removed
+            if (this.currentBox) {
+                if (this.currentBox.dirty) {
+                    var model = this.currentBox.boxUpdateModel;
+                    this.boxQueryService.update(model).then(x => {
+                        this.currentBox.saved();
+                        resolve();
+                        this.alertService.success('Your box units have been saved!');
+                    }).catch(x => {
+                        reject(x);
+                    });
+                    return;
                 }
-                this.boxQueryService.update(model).then(x => {
-                    this.added = [];
-                    this.removed = [];
-                    resolve();
-                    this.alertService.success('Your box units have been saved!');
-                }).catch(x => {
-                    reject(x);
-                });
-            } else {
-                resolve();
             }
+            resolve();
         });
         return promise;
     }
 
-    toggle(unitId: number, box: IBoxDetailModel) {
+    toggle(unitId: number, box: BoxDetailModel) {
         var myBox = !box;
         box = box || this.currentBox;
         if (box) {
-            var index = box.unitIds.indexOf(unitId);
-            if (index > -1) {
-                if (myBox) {
-                    this.added = this.added.filter(x => x !== unitId);
-                    if (this.removed.indexOf(unitId) === -1) {
-                        this.removed.push(unitId);
-                    }
-                }
-                box.unitIds = box.unitIds.filter(x => x !== unitId);
-            } else {
-                if (myBox) {
-                    this.removed.filter(x => x !== unitId);
-                    if (this.added.indexOf(unitId) === -1) {
-                        this.added.push(unitId);
-                    }
-                }
-                box.unitIds.push(unitId);
-            }
-            if (myBox) {
-                this.queueSave();
-            }
+            box.toggle(unitId);
+        }
+        if (myBox) {
+            this.queueSave();
         }
     }
 }

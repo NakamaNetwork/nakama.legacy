@@ -144,7 +144,7 @@ export class TeamEditorModel implements ITeamEditorModel {
             teamUnits: this.teamUnits
                 .map(x => <ITeamUnitEditorModel>{
                     position: NumberHelper.forceNumber(x.position),
-                    special: NumberHelper.forceNumber(x.special),
+                    flags: NumberHelper.forceNumber(x.flags),
                     sub: x.sub,
                     unitId: NumberHelper.forceNumber(x.unitId)
                 })

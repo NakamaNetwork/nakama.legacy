@@ -1,4 +1,5 @@
-﻿using TreasureGuide.Entities.Interfaces;
+﻿using TreasureGuide.Entities;
+using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.TeamModels
 {
@@ -12,13 +13,13 @@ namespace TreasureGuide.Web.Models.TeamModels
     {
         public string Name { get; set; }
         public int Level { get; set; }
-        public byte? Special { get; set; }
+        public IndividualUnitFlags? Flags { get; set; }
         public bool Sub { get; set; }
     }
 
     public class TeamUnitEditorModel : TeamUnitStubModel, ISubItem
     {
-        public byte? Special { get; set; }
+        public int? Flags { get; set; }
         public bool Sub { get; set; }
     }
 }

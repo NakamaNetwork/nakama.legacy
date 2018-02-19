@@ -1,0 +1,5 @@
+﻿<template>
+    <bit-button repeat.for="flag of values" value.two-way="value" model.bind="flag.id">
+        <img src="/content/individual-flags/${flag.id}.png" title.bind="flag.name" />
+    </bit-button>
+</template>

@@ -1,20 +1,18 @@
-﻿import { autoinject } from 'aurelia-framework';
+﻿import { autoinject, computedFrom } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { BindingEngine } from 'aurelia-binding';
 import { UnitQueryService, UnitSearchModel } from '../../services/query/unit-query-service';
-import { IUnitStubModel, IBoxDetailModel, IBoxUnitDetailModel, IBoxUpdateModel } from '../../models/imported';
+import { IUnitStubModel, IBoxUnitDetailModel, IBoxUpdateModel, IBoxUnitUpdateModel } from '../../models/imported';
 import { AlertService } from '../../services/alert-service';
-import { BoxQueryService } from '../../services/query/box-query-service';
-import { BoxDetailModel } from '../../services/query/box-query-service';
-import { BoxService } from '../../services/box-service';
+import { BoxQueryService, BoxDetailModel } from '../../services/query/box-query-service';
 
 @autoinject
-export class BoxUnitsDialog {
+export class BoxFlagsDialog {
     private controller: DialogController;
     private unitQueryService: UnitQueryService;
     private boxQueryService: BoxQueryService;
     private alertService: AlertService;
-    private boxService: BoxService;
+    private bindingEngine: BindingEngine;
 
     private units: IUnitStubModel[] = [];
     private searchModel: UnitSearchModel = <UnitSearchModel>new UnitSearchModel().getCached();
@@ -25,24 +23,18 @@ export class BoxUnitsDialog {
         controller: DialogController,
         bindingEngine: BindingEngine,
         alertService: AlertService,
-        boxQueryService: BoxQueryService,
-        boxService: BoxService
+        boxQueryService: BoxQueryService
     ) {
         this.controller = controller;
         this.unitQueryService = unitQueryService;
         this.alertService = alertService;
         this.boxQueryService = boxQueryService;
-        this.boxService = boxService;
+        this.bindingEngine = bindingEngine;
 
         this.box = <BoxDetailModel>{
             boxUnits: []
         };
 
-        this.searchModel.boxId = null;
-        bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-            this.search(n);
-        });
-        this.search(this.searchModel.payload);
     }
 
     activate(viewModel: BoxDetailModel) {
@@ -52,6 +44,11 @@ export class BoxUnitsDialog {
             name: x.name,
             flags: x.flags
         });
+        this.searchModel.boxId = this.box.id;
+        this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+            this.search(n);
+        });
+        this.search(this.searchModel.payload);
     }
 
     search(payload: UnitSearchModel) {
@@ -67,16 +64,17 @@ export class BoxUnitsDialog {
         }
     }
 
-    toggle(event: CustomEvent) {
-        if (event && event.detail) {
-            this.boxService.toggle(event.detail.newValue.id, this.box);
-        }
+    updateFlags(unitId: number, event: CustomEvent) {
+        this.box.update(unitId, event.detail.newValue);
     }
 
-    cancel() {
-        this.controller.cancel();
-    };
-
+    @computedFrom('units', 'box')
+    get mappedUnits() {
+        return this.units.map(x => {
+            x['boxUnit'] = this.box.boxUnits.find(y => y.unitId === x.id);
+            return x;
+        });
+    }
 
     submit() {
         if (this.box.dirty) {
@@ -89,4 +87,8 @@ export class BoxUnitsDialog {
             this.controller.ok(this.box);
         }
     }
+
+    cancel() {
+        this.controller.cancel();
+    };
 }
