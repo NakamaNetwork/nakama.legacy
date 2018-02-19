@@ -6,6 +6,7 @@ import { IUnitStubModel, IBoxDetailModel, IBoxUnitDetailModel, IBoxUpdateModel }
 import { AlertService } from '../../services/alert-service';
 import { BoxQueryService } from '../../services/query/box-query-service';
 import { BoxDetailModel } from '../../services/query/box-query-service';
+import { BoxService } from '../../services/box-service';
 
 @autoinject
 export class BoxUnitsDialog {
@@ -13,6 +14,7 @@ export class BoxUnitsDialog {
     private unitQueryService: UnitQueryService;
     private boxQueryService: BoxQueryService;
     private alertService: AlertService;
+    private boxService: BoxService;
 
     private units: IUnitStubModel[] = [];
     private searchModel: UnitSearchModel = <UnitSearchModel>new UnitSearchModel().getCached();
@@ -23,11 +25,14 @@ export class BoxUnitsDialog {
         controller: DialogController,
         bindingEngine: BindingEngine,
         alertService: AlertService,
-        boxQueryService: BoxQueryService) {
+        boxQueryService: BoxQueryService,
+        boxService: BoxService
+    ) {
         this.controller = controller;
         this.unitQueryService = unitQueryService;
         this.alertService = alertService;
         this.boxQueryService = boxQueryService;
+        this.boxService = boxService;
 
         this.box = <BoxDetailModel>{
             boxUnits: []
@@ -59,6 +64,12 @@ export class BoxUnitsDialog {
             }).catch((e) => {
                 this.loading = false;
             });
+        }
+    }
+
+    toggle(event: CustomEvent) {
+        if (event && event.detail) {
+            this.boxService.toggle(event.detail.newValue.id, this.box);
         }
     }
 
