@@ -8,6 +8,18 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
+            header: '02/19/18',
+            lines: [
+                'All users have been granted an additional box slot!',
+                'Users can now set flags on their box units to indicate maxed levels, skills, sockets, cotton candies, and more!',
+                'Box units can now be "featured" at the top of the box to better show-off cool stuff.',
+                'Clicking a unit portrait in the add/remove box dialog will now toggle it.',
+                'Clicking a unit portrait in the box detail page will now open its info page on OPTC-db.',
+                'Fixed an issue where box deletion could fail.',
+                'Fixed an issue where creating a box would not immediately open it for the user.'
+            ]
+        },
+        {
             header: '02/17/18',
             lines: [
                 'Added sorting to unit search areas.',
