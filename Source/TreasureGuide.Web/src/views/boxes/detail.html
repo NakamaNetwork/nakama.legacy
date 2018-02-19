@@ -4,25 +4,25 @@
         <div with.bind="box">
             <h1>${name}</h1>
             <div class="row" if.bind="canEdit">
-                <div class="col d3">
+                <div class="col m6">
                     <a class="button _primary _width100" route-href="route: boxEdit; params.bind: {id: id}">
                         <i class="fa fa-fw fa-pencil"></i>
                         Edit Box Details
                     </a>
                 </div>
-                <div class="col d3">
+                <div class="col m6">
                     <button type="button" class="button _primary _width100" click.delegate="openUnits()">
                         <i class="fa fa-fw fa-search-plus"></i>
                         Add/Remove Units
                     </button>
                 </div>
-                <div class="col d3">
+                <div class="col m6">
                     <button type="button" class="button _primary _width100" click.delegate="openFlags()">
                         <i class="fa fa-fw fa-star-o"></i>
                         Update Unit Details
                     </button>
                 </div>
-                <div class="col d3">
+                <div class="col m6">
                     <button type="button" class="button _primary _width100" click.delegate="openBulk()">
                         <i class="fa fa-fw fa-window-restore"></i>
                         Bulk Operations

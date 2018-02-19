@@ -7,15 +7,19 @@ import { IndividualUnitFlags } from '../../models/imported';
 @autoinject
 @customElement('ind-unit-flag-picker')
 export class IndUnitFlagPicker {
+    private element: Element;
+
     @bindable
     value: number;
     @bindable
     maximum: number;
+
     protected values: NameIdPair[];
     protected maxModel: BitMaxModel;
 
-    constructor() {
+    constructor(element: Element) {
         this.values = NumberHelper.getPairs(IndividualUnitFlags, true);
+        this.element = element;
     }
 
     bind() {
@@ -30,7 +34,14 @@ export class IndUnitFlagPicker {
         this.maxModel.verify(newValue, oldValue).then(x => {
             this.value = x;
         }, x => {
-            // ...
+            if (newValue !== oldValue && oldValue != null) {
+                var bubble = new CustomEvent('changed',
+                    {
+                        detail: { newValue: newValue, oldValue: oldValue, viewModel: this },
+                        bubbles: true
+                    });
+                this.element.dispatchEvent(bubble);
+            }
         });
     }
 }

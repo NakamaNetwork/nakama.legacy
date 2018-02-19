@@ -27,7 +27,7 @@
                                     </unit-display>
                                 </div>
                                 <div class="row">
-                                    <ind-unit-flag-picker value.two-way="unit.boxUnit.flags"></ind-unit-flag-picker>
+                                    <ind-unit-flag-picker value.two-way="unit.boxUnit.flags" changed.delegate="updateFlags(unit.id, $event)"></ind-unit-flag-picker>
                                 </div>
                             </div>
                         </div>

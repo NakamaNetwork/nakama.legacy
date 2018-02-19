@@ -79,13 +79,14 @@ export class BoxUnitsDialog {
 
 
     submit() {
-        var model = <IBoxUpdateModel>{
-            id: this.box.id,
-            added: this.box.boxUnits.map(x => x.unitId)
-        };
-        this.boxQueryService.set(model).then(x => {
-            this.alertService.success('Successfully updated the box!');
+        if (this.box.dirty) {
+            var model = this.box.boxUpdateModel;
+            this.boxQueryService.update(model).then(x => {
+                this.alertService.success('Successfully updated the box!');
+                this.controller.ok(this.box);
+            }).catch(response => this.alertService.reportError(response));
+        } else {
             this.controller.ok(this.box);
-        }).catch(response => this.alertService.reportError(response));
+        }
     }
 }

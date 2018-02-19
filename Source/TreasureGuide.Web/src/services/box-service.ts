@@ -16,8 +16,6 @@ export class BoxService {
     private accountService: AccountService;
 
     public currentBox: BoxDetailModel = null;
-    private added: number[] = [];
-    private removed: number[] = [];
 
     constructor(boxQueryService: BoxQueryService, alertService: AlertService, accountService: AccountService) {
         this.boxQueryService = boxQueryService;
@@ -101,33 +99,25 @@ export class BoxService {
         this.doSave(messages);
     }
 
-    @computedFrom('currentBox', 'added.length', 'removed.length')
-    get dirty() {
-        return this.currentBox && (this.added.length > 0 || this.removed.length > 0);
-    }
-
     doSave(messages: boolean = true) {
         if (this.timer) {
             clearTimeout(this.timer);
         }
         var promise = new Promise<void>((resolve, reject) => {
-            if (this.dirty) {
-                var model = <IBoxUpdateModel>{
-                    id: this.currentBox.id,
-                    added: this.added,
-                    removed: this.removed
+            if (this.currentBox) {
+                if (this.currentBox.dirty) {
+                    var model = this.currentBox.boxUpdateModel;
+                    this.boxQueryService.update(model).then(x => {
+                        this.currentBox.saved();
+                        resolve();
+                        this.alertService.success('Your box units have been saved!');
+                    }).catch(x => {
+                        reject(x);
+                    });
+                    return;
                 }
-                this.boxQueryService.update(model).then(x => {
-                    this.added = [];
-                    this.removed = [];
-                    resolve();
-                    this.alertService.success('Your box units have been saved!');
-                }).catch(x => {
-                    reject(x);
-                });
-            } else {
-                resolve();
             }
+            resolve();
         });
         return promise;
     }
@@ -136,24 +126,7 @@ export class BoxService {
         var myBox = !box;
         box = box || this.currentBox;
         if (box) {
-            var index = box.unitIds.indexOf(unitId);
-            if (index > -1) {
-                if (myBox) {
-                    this.added = this.added.filter(x => x !== unitId);
-                    if (this.removed.indexOf(unitId) === -1) {
-                        this.removed.push(unitId);
-                    }
-                }
-                box.boxUnits = box.boxUnits.filter(x => x.unitId !== unitId);
-            } else {
-                if (myBox) {
-                    this.removed.filter(x => x !== unitId);
-                    if (this.added.indexOf(unitId) === -1) {
-                        this.added.push(unitId);
-                    }
-                }
-                box.boxUnits.push(<IBoxUnitDetailModel>{ unitId: unitId });
-            };
+            box.toggle(unitId);
         }
         if (myBox) {
             this.queueSave();
