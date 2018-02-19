@@ -2,7 +2,7 @@
 {
     public static class BoxConstants
     {
-        public const int BoxUserLimit = 1;
-        public const int MultiBoxUserLimit = 5;
+        public const int BoxUserLimit = 2;
+        public const int MultiBoxUserLimit = 6;
     }
 }

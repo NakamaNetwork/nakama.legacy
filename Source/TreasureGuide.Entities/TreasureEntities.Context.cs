@@ -34,7 +34,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<Ship> Ships { get; set; }
         public virtual DbSet<Stage> Stages { get; set; }
-        public virtual DbSet<TeamUnit> TeamUnits { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
@@ -47,6 +46,9 @@ namespace TreasureGuide.Entities
         public virtual DbSet<TeamGenericSlot> TeamGenericSlots { get; set; }
         public virtual DbSet<Box> Boxes { get; set; }
         public virtual DbSet<UserPreference> UserPreferences { get; set; }
+        public virtual DbSet<TeamUnit> TeamUnits { get; set; }
+        public virtual DbSet<BoxUnit> BoxUnits { get; set; }
+        public virtual DbSet<StageAlias> StageAliases { get; set; }
     
         [DbFunction("TreasureEntities", "SimilarTeams")]
         public virtual IQueryable<SimilarTeams_Result> SimilarTeams(Nullable<int> teamId, Nullable<int> stageId, Nullable<int> unit1, Nullable<int> unit2, Nullable<int> unit3, Nullable<int> unit4, Nullable<int> unit5, Nullable<int> unit6)

@@ -54,9 +54,15 @@
     <Compile Include="Box.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="BoxUnit.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityConstructor.cs" />
     <Compile Include="Helpers\ContextExtensions.cs" />
     <Compile Include="Helpers\EnumerableHelper.cs" />
+    <Compile Include="IndividualUnitFlags.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="InterfaceDefinitions.cs" />
     <Compile Include="Interfaces\ICanEdit.cs" />
     <Compile Include="Interfaces\IIdItem.cs" />
@@ -81,6 +87,9 @@
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Stage.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StageAlias.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="StageType.cs">

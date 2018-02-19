@@ -7,8 +7,8 @@ export interface IAccessTokenModel {
 
 
 export class BoxConstants {
-    public static BoxUserLimit: number = 1;
-    public static MultiBoxUserLimit: number = 5;
+    public static BoxUserLimit: number = 2;
+    public static MultiBoxUserLimit: number = 6;
     
 }
 
@@ -24,10 +24,10 @@ export interface IBoxStubModel {
 }
 
 export interface IBoxDetailModel extends IBoxStubModel{
+    boxUnits: IBoxUnitDetailModel[];
     userId: string;
     userName: string;
     userUnitId: number;
-    unitIds: number[];
     
 }
 
@@ -49,10 +49,35 @@ export interface IBoxSearchModel extends ISearchModel{
 }
 
 
+export interface IBoxUnitStubModel {
+    name: string;
+    unitId: number;
+    flags: IndividualUnitFlags;
+    
+}
+
+export interface IBoxUnitDetailModel extends IBoxUnitStubModel{
+    
+}
+
+export interface IBoxUnitEditorModel {
+    unitId: number;
+    flags: number;
+    
+}
+
+
 export interface IBoxUpdateModel {
+    updated: IBoxUnitUpdateModel[];
     id: number;
     added: number[];
     removed: number[];
+    
+}
+
+export interface IBoxUnitUpdateModel {
+    id: number;
+    flags: IndividualUnitFlags;
     
 }
 
@@ -63,6 +88,17 @@ export interface IExternalLoginConfirmationViewModel {
     toS: boolean;
     privacy: boolean;
     
+}
+
+
+export enum IndividualUnitFlags { 
+    Unknown = 0,
+    Favorite = 32,
+    LevelMaxed = 1,
+    SkillLevelMaxed = 2,
+    SocketsMaxed = 4,
+    CottonCandyMaxed = 8,
+    LimitBroken = 16
 }
 
 
@@ -267,22 +303,6 @@ export interface ITeamGenericSlotEditorModel extends ITeamGenericSlotDetailModel
 }
 
 
-export interface ITeamGenericUnitStubModel {
-    role: number;
-    position: number;
-    
-}
-
-export interface ITeamGenericUnitDetailModel extends ITeamGenericUnitStubModel{
-    combo: number;
-    
-}
-
-export interface ITeamGenericUnitEditorModel extends ITeamGenericUnitDetailModel{
-    
-}
-
-
 export interface ITeamImportModel {
     team: ITeamEditorModel;
     credit: ITeamCreditModel;
@@ -427,13 +447,13 @@ export interface ITeamUnitStubModel {
 export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
     name: string;
     level: number;
-    special: number;
+    flags: IndividualUnitFlags;
     sub: boolean;
     
 }
 
 export interface ITeamUnitEditorModel extends ITeamUnitStubModel{
-    special: number;
+    flags: number;
     sub: boolean;
     
 }

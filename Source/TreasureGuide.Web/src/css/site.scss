@@ -162,9 +162,13 @@ iframe {
     width: 100%;
 }
 
-.truncate {
+.no-wrap {
     white-space: nowrap;
     overflow: hidden;
+}
+
+.truncate {
+    @extend .no-wrap;
     text-overflow: ellipsis;
 }
 

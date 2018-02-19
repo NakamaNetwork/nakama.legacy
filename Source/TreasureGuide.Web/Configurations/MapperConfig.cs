@@ -104,11 +104,15 @@ namespace TreasureGuide.Web.Configurations
 
                 var report = mapper.CreateMap<TeamReport, TeamReportStubModel>();
                 report.ForMember(x => x.Acknowledged, o => o.MapFrom(y => y.AcknowledgedDate.HasValue));
+                
+                var boxUnit = mapper.CreateControllerMapping<BoxUnit, BoxUnitDetailModel, BoxUnitStubModel, BoxUnitEditorModel>();
+                boxUnit.StubMapping.ForMember(x => x.Name, o => o.MapFrom(y => y.Unit.Name));
+                boxUnit.DetailMapping.ForMember(x => x.Name, o => o.MapFrom(y => y.Unit.Name));
 
                 var box = mapper.CreateControllerMapping<Box, BoxDetailModel, BoxStubModel, BoxEditorModel>();
-                box.DetailMapping.ForMember(x => x.UnitIds, o => o.MapFrom(y => y.Units.Select(z => z.Id)));
                 box.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
                 box.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
+                box.EntityMapping.ForMember(x => x.BoxUnits, o => o.Ignore());
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

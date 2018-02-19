@@ -24,6 +24,17 @@ namespace TreasureGuide.Web.Controllers.API
             return await Get<StageStubModel>(id, false);
         }
 
+        protected override IQueryable<Stage> FetchEntities(int? id = null)
+        {
+            var queryable = DbContext.Stages.AsQueryable();
+            if (id.HasValue)
+            {
+                queryable = queryable.Where(x => x.Id == id || x.OldId == id);
+            }
+            queryable = Filter(queryable);
+            return queryable;
+        }
+
         protected override async Task<IQueryable<Stage>> PerformSearch(IQueryable<Stage> results, StageSearchModel model)
         {
             results = SearchGlobal(results, model.Global);
@@ -55,7 +66,7 @@ namespace TreasureGuide.Web.Controllers.API
             if (!String.IsNullOrEmpty(term))
             {
                 var terms = term.SplitSearchTerms();
-                results = results.Where(x => terms.All(t => x.Name.Contains(t)));
+                results = results.Where(x => terms.All(t => x.Name.Contains(t) || x.StageAliases.Any(y => y.Name.Contains(t))));
             }
             return results;
         }

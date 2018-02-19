@@ -25,7 +25,7 @@ export class App {
     activate() {
         this.newsService.show();
         window.addEventListener('beforeunload', (e) => {
-            if (this.boxService.dirty) {
+            if (this.boxService.currentBox && this.boxService.currentBox.dirty) {
                 this.boxService.save();
                 e.returnValue = true;
             }

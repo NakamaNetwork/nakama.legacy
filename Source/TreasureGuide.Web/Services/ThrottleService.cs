@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 using TreasureGuide.Web.Constants;
@@ -10,7 +12,7 @@ namespace TreasureGuide.Web.Services
 {
     public interface IThrottleService
     {
-        bool CanAccess(ClaimsPrincipal user, HttpRequest request, double? seconds = null);
+        bool CanAccess(ClaimsPrincipal user, HttpRequest request, RouteData routeData = null, double? seconds = null);
     }
 
     public class ThrottleService : IThrottleService
@@ -24,14 +26,14 @@ namespace TreasureGuide.Web.Services
             _cache = cache;
         }
 
-        public bool CanAccess(ClaimsPrincipal user, HttpRequest request, double? seconds = null)
+        public bool CanAccess(ClaimsPrincipal user, HttpRequest request, RouteData routeData = null, double? seconds = null)
         {
             if (user.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
             {
                 return true;
             }
             var now = DateTimeOffset.Now;
-            var key = GenerateKey(request);
+            var key = GenerateKey(request, routeData);
             DateTimeOffset? timestamp = null;
             var cached = _cache.TryGetValue(key, out timestamp);
             if (!cached)
@@ -42,7 +44,7 @@ namespace TreasureGuide.Web.Services
             return !cached;
         }
 
-        private string GenerateKey(HttpRequest request)
+        private string GenerateKey(HttpRequest request, RouteData routeData = null)
         {
             var connection = request.HttpContext.Connection;
             var extraKey = "Unknown";
@@ -51,7 +53,15 @@ namespace TreasureGuide.Web.Services
             {
                 extraKey = String.Join(":", agentKey);
             }
-            return String.Join("||", connection.RemoteIpAddress, connection.RemotePort, extraKey);
+            var items = new List<string>
+            {
+                connection.RemoteIpAddress?.ToString(), connection.RemotePort.ToString(), extraKey
+            };
+            if (routeData != null)
+            {
+                items.Add(String.Join("/", routeData.Values["controller"], routeData.Values["action"]));
+            }
+            return String.Join("||", items);
         }
 
         private DateTimeOffset GenerateTimeout(double? seconds = null)
