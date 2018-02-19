@@ -110,6 +110,8 @@ export class BoxEditPage {
                     this.boxService.setBox(null, true)
                         .then(x => this.finalizeDelete())
                         .catch(response => this.alertService.reportError(response));
+                } else {
+                    this.finalizeDelete();
                 }
             }
         });
