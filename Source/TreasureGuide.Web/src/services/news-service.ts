@@ -18,7 +18,8 @@ export class NewsService {
                 'Clicking a unit portrait in the add/remove box dialog will now toggle it.',
                 'Clicking a unit portrait in the box detail page will now open its info page on OPTC-db.',
                 'Fixed an issue where box deletion could fail.',
-                'Fixed an issue where creating a box would not immediately open it for the user.'
+                'Fixed an issue where creating a box would not immediately open it for the user.',
+                'Fixed an issue where editing teams could fail.'
             ]
         },
         {
