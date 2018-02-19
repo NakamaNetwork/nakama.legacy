@@ -123,12 +123,12 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]/{id?}")]
         public async Task<IActionResult> Focus(int? id)
         {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, ControllerContext.RouteData))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
             if (id.HasValue && User.IsInRole(RoleConstants.BoxUser))
             {
-                if (Throttled && !ThrottlingService.CanAccess(User, Request))
-                {
-                    return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
-                }
                 await _preferenceService.SetPreference(User.GetId(), UserPreferenceType.BoxId, id?.ToString());
                 return await Detail(id);
             }
