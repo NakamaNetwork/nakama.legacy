@@ -3,6 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { IBoxDetailModel, IBoxEditorModel, IBoxSearchModel, IBoxUpdateModel, IBoxUnitDetailModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
+import { IUnitStubModel } from '../../models/imported';
 
 @autoinject
 export class BoxQueryService extends SearchableQueryService {
@@ -20,6 +21,10 @@ export class BoxQueryService extends SearchableQueryService {
 
     focus(id: number): Promise<IBoxDetailModel> {
         return this.http.post(this.buildAddress('focus' + (id ? '/' + id : '')));
+    }
+
+    featured(id: number): Promise<IUnitStubModel[]> {
+        return this.http.get(this.buildAddress('featured/' + id));
     }
 }
 

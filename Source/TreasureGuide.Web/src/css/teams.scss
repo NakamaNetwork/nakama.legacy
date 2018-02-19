@@ -185,6 +185,31 @@ unit-display {
         width: 25%;
         height: 25%;
     }
+
+
+    ind-unit-flag-display {
+        position: absolute;
+        width: 75%;
+        height: 25%;
+        vertical-align: bottom;
+        text-align: right;
+        bottom: 0;
+        right: 0;
+        transform: scaleY(-1);
+        -webkit-transform: scaleY(-1);
+        line-height: 0;
+
+        img {
+            transform: scaleY(-1);
+            -webkit-transform: scaleY(-1);
+            height: 80%;
+            padding: 0.1em;
+            margin: 1px;
+            border: 1px $grey-color solid;
+            border-radius: 3px;
+            background-color: transparentize($white-color, 0,5);
+        }
+    }
 }
 
 team-inline {

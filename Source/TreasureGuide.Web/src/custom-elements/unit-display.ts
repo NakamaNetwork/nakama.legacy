@@ -11,7 +11,7 @@ import { UnitClass } from '../models/imported';
 import { UnitRole, IBoxDetailModel } from '../models/imported';
 import { StringHelper } from '../tools/string-helper';
 import { BoxService } from '../services/box-service';
-import {BoxDetailModel} from '../services/query/box-query-service';
+import { BoxDetailModel } from '../services/query/box-query-service';
 
 @autoinject
 @customElement('unit-display')
@@ -28,6 +28,7 @@ export class UnitDisplay {
     @bindable info: boolean;
     @bindable tooltip: boolean;
     @bindable showBox: boolean;
+    @bindable showBoxFlags: boolean;
     @bindable box: BoxDetailModel;
 
     inBox: boolean;
@@ -106,6 +107,17 @@ export class UnitDisplay {
     @computedFrom('showBox', 'unitId', 'assignedBox')
     get showBoxInput() {
         return this.showBox && this.unitId && this.assignedBox;
+    }
+
+    @computedFrom('showBoxFlags', 'unitId', 'assignedBox')
+    get unitBoxFlags() {
+        if (this.showBoxFlags && this.unitId) {
+            var boxValue = this.assignedBox.boxUnits.find(x => x.unitId === this.unitId);
+            if (boxValue) {
+                return boxValue.flags;
+            }
+        }
+        return null;
     }
 
     @computedFrom('showBoxInput', 'assignedBox.unitIds', 'assignedBox.unitIds.length', 'unitId')

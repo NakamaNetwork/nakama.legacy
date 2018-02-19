@@ -35,6 +35,8 @@ export class BoxDetailPage {
     private units: IUnitStubModel[] = [];
     private unitsLoading: boolean;
 
+    private featuredUnits: IUnitStubModel[] = [];
+
     constructor(boxQueryService: BoxQueryService,
         unitQueryService: UnitQueryService,
         alertService: AlertService,
@@ -61,6 +63,9 @@ export class BoxDetailPage {
         if (id) {
             this.searchModel.boxId = id;
             this.refresh(id);
+            this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+                this.search(n);
+            });
         }
     }
 
@@ -71,9 +76,11 @@ export class BoxDetailPage {
             if (this.boxService.currentBox && this.boxService.currentBox.id === result.id) {
                 this.boxService.currentBox = this.box;
             }
-            this.loading = false;
-            this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-                this.search(n);
+            this.boxQueryService.featured(id).then(result => {
+                this.featuredUnits = result;
+                this.loading = false;
+            }).catch(error => {
+                this.loading = false;
             });
             this.search(this.searchModel.payload);
         }).catch(error => {
