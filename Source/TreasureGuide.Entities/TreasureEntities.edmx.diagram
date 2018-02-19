@@ -57,6 +57,7 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_BoxUnits_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.StageAlias" Width="1.5" PointX="11.375" PointY="20.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" />
+        <AssociationConnector Association="tcdbModel.UnitEvolutions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

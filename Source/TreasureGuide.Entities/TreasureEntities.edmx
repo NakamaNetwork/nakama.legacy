@@ -198,6 +198,14 @@
           <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="UnitEvolutions">
+          <Key>
+            <PropertyRef Name="FromUnitId" />
+            <PropertyRef Name="ToUnitId" />
+          </Key>
+          <Property Name="FromUnitId" Type="int" Nullable="false" />
+          <Property Name="ToUnitId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Units">
           <Key>
             <PropertyRef Name="Id" />
@@ -650,6 +658,30 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_UnitEvolutions_dbo_FromUnitId">
+          <End Role="Units" Type="Self.Units" Multiplicity="1" />
+          <End Role="UnitEvolutions" Type="Self.UnitEvolutions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitEvolutions">
+              <PropertyRef Name="FromUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UnitEvolutions_dbo_ToUnitId">
+          <End Role="Units" Type="Self.Units" Multiplicity="1" />
+          <End Role="UnitEvolutions" Type="Self.UnitEvolutions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitEvolutions">
+              <PropertyRef Name="ToUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="SimilarTeams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="teamId" Type="int" Mode="In" />
           <Parameter Name="stageId" Type="int" Mode="In" />
@@ -700,6 +732,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="TeamVideos" EntityType="Self.TeamVideos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamVotes" EntityType="Self.TeamVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitAliases" EntityType="Self.UnitAliases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitEvolutions" EntityType="Self.UnitEvolutions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
@@ -831,6 +864,14 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_UnitAliasess_dbo_Units" Association="Self.FK_dbo_UnitAliasess_dbo_Units">
             <End Role="Units" EntitySet="Units" />
             <End Role="UnitAliases" EntitySet="UnitAliases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UnitEvolutions_dbo_FromUnitId" Association="Self.FK_dbo_UnitEvolutions_dbo_FromUnitId">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="UnitEvolutions" EntitySet="UnitEvolutions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UnitEvolutions_dbo_ToUnitId" Association="Self.FK_dbo_UnitEvolutions_dbo_ToUnitId">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="UnitEvolutions" EntitySet="UnitEvolutions" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -993,6 +1034,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Stage" EntitySet="Stages" />
             <End Role="StageAlias" EntitySet="StageAliases" />
           </AssociationSet>
+          <AssociationSet Name="UnitEvolutions" Association="tcdbModel.UnitEvolutions">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="Unit1" EntitySet="Units" />
+          </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -1153,6 +1198,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamUnitSummaries" Relationship="tcdbModel.UnitTeamUnitSummary" FromRole="Unit" ToRole="TeamUnitSummary" />
           <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="Unit" ToRole="TeamUnit" />
           <NavigationProperty Name="BoxUnits" Relationship="tcdbModel.FK_dbo_BoxUnits_dbo_Units" FromRole="Unit" ToRole="BoxUnit" />
+          <NavigationProperty Name="EvolvesTo" Relationship="tcdbModel.UnitEvolutions" FromRole="Unit" ToRole="Unit1" />
+          <NavigationProperty Name="EvolvesFrom" Relationship="tcdbModel.UnitEvolutions" FromRole="Unit1" ToRole="Unit" />
                 </EntityType>
                 <Association Name="FK_dbo_RoundUnits_dbo_Units">
                     <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
@@ -1790,6 +1837,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="UnitEvolutions">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="*" />
+          <End Type="tcdbModel.Unit" Role="Unit1" Multiplicity="*" />
+        </Association>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2079,6 +2130,14 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="UnitEvolutions" TypeName="tcdbModel.UnitEvolutions" StoreEntitySet="UnitEvolutions">
+            <EndProperty Name="Unit1">
+              <ScalarProperty Name="Id" ColumnName="ToUnitId" />
+            </EndProperty>
+            <EndProperty Name="Unit">
+              <ScalarProperty Name="Id" ColumnName="FromUnitId" />
+            </EndProperty>
+          </AssociationSetMapping>
                 </EntityContainerMapping>
             </Mapping>
         </edmx:Mappings>
