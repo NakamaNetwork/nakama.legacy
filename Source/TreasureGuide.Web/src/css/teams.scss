@@ -207,7 +207,7 @@ unit-display {
             margin: 1px;
             border: 1px $grey-color solid;
             border-radius: 3px;
-            background-color: transparentize($white-color, 0,5);
+            background-color: transparentize($white-color, 0.5);
         }
     }
 }
