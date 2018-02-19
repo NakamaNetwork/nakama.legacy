@@ -72,7 +72,7 @@ export class App {
             // Boring
             { route: 'privacy', name: 'privacy', title: 'Privacy Policy', moduleId: 'views/boring/privacy', nav: false, auth: false },
             { route: 'tos', name: 'tos', title: 'Terms of Service', moduleId: 'views/boring/tos', nav: false, auth: false },
-            { route: 'about', name: 'about', title: 'About', moduleId: 'views/boring/intro', nav: true },
+            { route: 'about', name: 'about', title: 'One Piece: Treasure Cruise Teams, Guides, and More', moduleId: 'views/boring/intro', nav: true },
             { route: 'markdown', name: 'markdown', title: 'Markdown', moduleId: 'views/boring/markdown', nav: false },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
