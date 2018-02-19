@@ -44,11 +44,11 @@ namespace TreasureGuide.Sniffer
         {
             IEnumerable<IParser> parsers = new IParser[]
             {
-                new UnitParser(context),
-                new UnitFlagParser(context),
-                new UnitAliasParser(context),
+                //new UnitParser(context),
+                //new UnitFlagParser(context),
+                //new UnitAliasParser(context),
                 new StageParser(context),
-                new ShipParser(context),
+                //new ShipParser(context),
             };
           //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             ParsersRunning = parsers.Count();

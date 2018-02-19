@@ -97,6 +97,8 @@
     <Build Include="dbo\Functions\SimilarTeamsId.sql" />
     <Build Include="dbo\Views\TeamMinis.sql" />
     <Build Include="dbo\Tables\Accounts\UserPreferences.sql" />
+    <Build Include="dbo\Tables\Stages\StageAliases.sql" />
+    <Build Include="PostDeploy\dbo.StageAliases.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
