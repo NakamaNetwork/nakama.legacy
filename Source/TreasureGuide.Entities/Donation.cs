@@ -19,9 +19,10 @@ namespace TreasureGuide.Entities
         public decimal Amount { get; set; }
         public string Message { get; set; }
         public System.DateTimeOffset Date { get; set; }
-        public byte TransactionType { get; set; }
+        public TransactionType TransactionType { get; set; }
         public string TransactionId { get; set; }
         public Nullable<bool> Public { get; set; }
+        public TransactionState State { get; set; }
     
         public virtual UserProfile UserProfile { get; set; }
     }

@@ -5,6 +5,7 @@
     [Amount] MONEY NOT NULL,
     [Message] NVARCHAR(500) NULL,
     [Date] DATETIMEOFFSET(7) NOT NULL CONSTRAINT [DF_dbo.Donations_SubmittedDate] DEFAULT SYSDATETIMEOFFSET(),
+    [State] TINYINT NOT NULL,
     [TransactionType] TINYINT NOT NULL,
     [TransactionId] NVARCHAR(450) NOT NULL,
     [Public] BIT NULL CONSTRAINT [DF_dbo.Donations_Public] DEFAULT 0,

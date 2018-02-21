@@ -21,6 +21,7 @@ using TreasureGuide.Web.Data;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
+using TreasureGuide.Web.Services.Donations;
 
 namespace TreasureGuide.Web.Configurations
 {
@@ -109,6 +110,7 @@ namespace TreasureGuide.Web.Configurations
             services.AddTransient<IThrottleService, ThrottleService>();
             services.AddTransient<IMetadataService, MetadataService>();
             services.AddTransient<IPreferenceService, PreferenceService>();
+            services.AddTransient<IDonationService, DonationService>();
 
             services.AddSingleton(x => MapperConfig.Create());
         }

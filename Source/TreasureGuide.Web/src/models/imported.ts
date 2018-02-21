@@ -95,11 +95,21 @@ export interface IDonationStubModel {
 
 export interface IDonationDetailModel extends IDonationStubModel{
     message: string;
+    state: TransactionState;
     
 }
 
 export interface IDonationEditorModel extends IDonationDetailModel{
     id: number;
+    
+}
+
+
+export interface IDonationResultModel {
+    transactionType: number;
+    transactionId: string;
+    error: string;
+    hasError: boolean;
     
 }
 
@@ -110,6 +120,16 @@ export interface IDonationSearchModel extends ISearchModel{
     endDate: Date;
     minAmount: number;
     maxAmount: number;
+    
+}
+
+
+export interface IDonationSubmissionModel {
+    amount: number;
+    currency: string;
+    providerType: TransactionType;
+    message: string;
+    public: boolean;
     
 }
 
@@ -524,6 +544,22 @@ export interface ITeamVoteModel {
     teamId: number;
     up: boolean;
     
+}
+
+
+export enum TransactionState { 
+    Unknown = 0,
+    Pending = 1,
+    Authorized = 2,
+    Complete = 3,
+    Failed = 4,
+    Chargeback = 5
+}
+
+
+export enum TransactionType { 
+    Unknown = 0,
+    Paypal = 1
 }
 
 
