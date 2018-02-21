@@ -26,6 +26,19 @@
           <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="Flags" Type="int" />
         </EntityType>
+        <EntityType Name="Donations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" />
+          <Property Name="Date" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="TransactionType" Type="tinyint" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Public" Type="bit" />
+        </EntityType>
         <EntityType Name="Rounds">
           <Key>
             <PropertyRef Name="Id" />
@@ -317,6 +330,18 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="BoxUnits">
               <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Donations_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1" />
+          <End Role="Donations" Type="Self.Donations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Donations">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -716,6 +741,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
         <EntityContainer Name="tcdbModelStoreContainer">
           <EntitySet Name="Boxes" EntityType="Self.Boxes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoxUnits" EntityType="Self.BoxUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Donations" EntityType="Self.Donations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rounds" EntityType="Self.Rounds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoundUnitBehavior" EntityType="Self.RoundUnitBehavior" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoundUnits" EntityType="Self.RoundUnits" Schema="dbo" store:Type="Tables" />
@@ -764,6 +790,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_BoxUnits_dbo_Units" Association="Self.FK_dbo_BoxUnits_dbo_Units">
             <End Role="Units" EntitySet="Units" />
             <End Role="BoxUnits" EntitySet="BoxUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Donations_dbo_UserProfiles" Association="Self.FK_dbo_Donations_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="Donations" EntitySet="Donations" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Stages_dbo_Units" Association="Self.FK_dbo_Stages_dbo_Units">
             <End Role="Units" EntitySet="Units" />
@@ -1038,6 +1068,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Unit" EntitySet="Units" />
             <End Role="Unit1" EntitySet="Units" />
           </AssociationSet>
+          <EntitySet Name="Donations" EntityType="tcdbModel.Donation" />
+          <AssociationSet Name="FK_dbo_Donations_dbo_UserProfiles" Association="tcdbModel.FK_dbo_Donations_dbo_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Donation" EntitySet="Donations" />
+          </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -1274,6 +1309,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="BookmarkedTeams" Relationship="tcdbModel.TeamBookmarks" FromRole="UserProfile" ToRole="Team" />
           <NavigationProperty Name="Boxes" Relationship="tcdbModel.FK_dbo_Boxes_dbo_UserProfiles" FromRole="UserProfile" ToRole="Box" />
           <NavigationProperty Name="UserPreferences" Relationship="tcdbModel.FK_dbo_UserPreferences_dbo_UserProfiles" FromRole="UserProfile" ToRole="UserPreference" />
+          <NavigationProperty Name="Donations" Relationship="tcdbModel.FK_dbo_Donations_dbo_UserProfiles" FromRole="UserProfile" ToRole="Donation" />
         </EntityType>
         <Association Name="FK_dbo_UserProfile_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
@@ -1841,6 +1877,32 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="*" />
           <End Type="tcdbModel.Unit" Role="Unit1" Multiplicity="*" />
         </Association>
+        <EntityType Name="Donation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="TransactionType" Type="Byte" Nullable="false" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Public" Type="Boolean" />
+          <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_Donations_dbo_UserProfiles" FromRole="Donation" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_dbo_Donations_dbo_UserProfiles">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="tcdbModel.Donation" Role="Donation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Donation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2138,6 +2200,20 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               <ScalarProperty Name="Id" ColumnName="FromUnitId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Donations">
+            <EntityTypeMapping TypeName="tcdbModel.Donation">
+              <MappingFragment StoreEntitySet="Donations">
+                <ScalarProperty Name="Public" ColumnName="Public" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
                 </EntityContainerMapping>
             </Mapping>
         </edmx:Mappings>

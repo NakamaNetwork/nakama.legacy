@@ -82,6 +82,38 @@ export interface IBoxUnitUpdateModel {
 }
 
 
+export interface IDonationStubModel {
+    id: number;
+    userId: string;
+    userName: string;
+    unitId: number;
+    amount: number;
+    date: Date;
+    public: boolean;
+    
+}
+
+export interface IDonationDetailModel extends IDonationStubModel{
+    message: string;
+    
+}
+
+export interface IDonationEditorModel extends IDonationDetailModel{
+    id: number;
+    
+}
+
+
+export interface IDonationSearchModel extends ISearchModel{
+    user: string;
+    startDate: Date;
+    endDate: Date;
+    minAmount: number;
+    maxAmount: number;
+    
+}
+
+
 export interface IExternalLoginConfirmationViewModel {
     userName: string;
     email: string;
