@@ -14,7 +14,6 @@ namespace TreasureGuide.Web.Services.Donations
         string WebRoot { get; }
         byte TransactionType { get; }
         Task<DonationResultModel> Process(DonationSubmissionModel model, int id, string userId, string urlRoot);
-        Task<DonationResultModel> Execute(string transactionId);
     }
 
     public abstract class DonationService : IDonationService
@@ -42,19 +41,11 @@ namespace TreasureGuide.Web.Services.Donations
             {
                 return result;
             }
-            try
-            {
-                result = await DoPreparation(model, id, userId, urlRoot, result);
-            }
-            catch (Exception e)
-            {
-                result.Error = e.Message;
-            }
+            result = await DoPreparation(model, id, userId, urlRoot, result);
             return result;
         }
 
         protected abstract Task<DonationResultModel> DoPreparation(DonationSubmissionModel model, int id, string userId, string urlRoot, DonationResultModel result);
-        public abstract Task<DonationResultModel> Execute(string transactionId);
 
         protected virtual string Validate(DonationSubmissionModel model, string userId)
         {

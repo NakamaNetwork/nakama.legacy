@@ -135,10 +135,17 @@ export interface IDonationSearchModel extends ISearchModel{
 
 export interface IDonationSubmissionModel {
     amount: number;
-    currency: string;
     providerType: TransactionType;
     message: string;
     public: boolean;
+    
+}
+
+
+export interface IDonationVerificationModel {
+    id: number;
+    payerId: string;
+    paymentId: string;
     
 }
 

@@ -9,9 +9,6 @@ namespace TreasureGuide.Web.Models.DonationModels
         [Required]
         [Range(1.0, Double.MaxValue)]
         public decimal Amount { get; set; }
-
-        [StringLength(3, MinimumLength = 3)]
-        public string Currency { get; set; } = "USD";
         public TransactionType ProviderType { get; set; } = TransactionType.Paypal;
 
         [StringLength(500)]

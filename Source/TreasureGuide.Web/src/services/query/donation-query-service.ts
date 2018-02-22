@@ -3,6 +3,8 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { SearchModel } from '../../models/search-model';
 import { IDonationFinalizationModel, IDonationSearchModel, IDonationSubmissionModel } from '../../models/imported';
+import * as Imported from '../../models/imported';
+import TransactionType = Imported.TransactionType;
 
 @autoinject
 export class DonationQueryService extends SearchableQueryService {
@@ -33,4 +35,15 @@ export class DonationSearchModel extends SearchModel implements IDonationSearchM
     getDefault(): SearchModel {
         return new DonationSearchModel();
     }
+}
+
+export class DonationSubmissionModel implements IDonationSubmissionModel {
+    public static messageMaxLength = 500;
+    public static min = 1.00;
+    public static max = 500.00;
+
+    public amount: number = 5.00;
+    public providerType: TransactionType = TransactionType.Paypal;
+    public message: string;
+    public public: boolean;
 }

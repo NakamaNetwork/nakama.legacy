@@ -37,6 +37,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" PrivateAssets="All" />
         <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.2" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
+        <PackageReference Include="PayPal" Version="1.9.1" />
         <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
         <PackageReference Include="Z.EntityFramework.Plus.EF6" Version="1.7.14" />
     </ItemGroup>
@@ -52,6 +53,12 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\donation-submission-model.tst.gen">
+        <CustomToolNamespace>Models\DonationModels\DonationSubmissionModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\donation-verification-model.tst.gen">
+        <CustomToolNamespace>Models\DonationModels\DonationVerificationModel.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

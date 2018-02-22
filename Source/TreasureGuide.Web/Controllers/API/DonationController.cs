@@ -24,10 +24,12 @@ namespace TreasureGuide.Web.Controllers.API
     public class DonationController : SearchableApiController<int, Donation, int?, DonationStubModel, DonationDetailModel, DonationEditorModel, DonationSearchModel>
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IDonationService _donationService;
 
-        public DonationController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService, UserManager<ApplicationUser> userManager) : base(dbContext, autoMapper, throttlingService)
+        public DonationController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService, UserManager<ApplicationUser> userManager, IDonationService donationService) : base(dbContext, autoMapper, throttlingService)
         {
             _userManager = userManager;
+            _donationService = donationService;
         }
 
         [HttpPost]
@@ -35,12 +37,17 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Prepare([FromBody] DonationSubmissionModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ConcatErrors();
+                return BadRequest(errors);
+            }
             var userId = User.GetId();
             if (String.IsNullOrWhiteSpace(userId))
             {
                 return Unauthorized();
             }
-
+            model.Amount = Math.Round(model.Amount, 2);
             // Create the donation record.
             var donation = new Donation
             {
@@ -54,13 +61,24 @@ namespace TreasureGuide.Web.Controllers.API
             };
             DbContext.Donations.Add(donation);
             await DbContext.SaveChangesAsync();
+
+            var payment = await _donationService.Process(model, donation.Id, userId, Request.GetUri().GetLeftPart(UriPartial.Authority));
+            if (payment.HasError)
+            {
+                donation.State = TransactionState.Failed;
+                await DbContext.SaveChangesAsync();
+                return BadRequest(payment.Error);
+            }
+            donation.State = TransactionState.Processing;
+            await DbContext.SaveChangesAsync();
+
             return Ok(donation.Id);
         }
 
         [HttpPost]
         [ActionName("Finalize")]
         [Route("[action]")]
-        public async Task<IActionResult> Finalize([FromBody] DonationFinalizationModel model)
+        public async Task<IActionResult> Finalize([FromBody] DonationVerificationModel model)
         {
             var result = await DbContext.Donations.SingleOrDefaultAsync(x => x.Id == model.Id);
             if (result == null)
@@ -86,7 +104,7 @@ namespace TreasureGuide.Web.Controllers.API
         [HttpPost]
         [ActionName("Abort")]
         [Route("[action]")]
-        public async Task<IActionResult> Abort([FromBody] DonationFinalizationModel model)
+        public async Task<IActionResult> Abort([FromBody] DonationVerificationModel model)
         {
             var result = await DbContext.Donations.SingleOrDefaultAsync(x => x.Id == model.Id);
             if (result == null)

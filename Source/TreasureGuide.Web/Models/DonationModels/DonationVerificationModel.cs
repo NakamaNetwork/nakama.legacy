@@ -1,6 +1,6 @@
 ﻿namespace TreasureGuide.Web.Models.DonationModels
 {
-    public class DonationFinalizationModel
+    public class DonationVerificationModel
     {
         public int Id { get; set; }
         public string PayerId { get; set; }

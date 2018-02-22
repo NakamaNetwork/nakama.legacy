@@ -108,6 +108,7 @@ namespace TreasureGuide.Web.Configurations
             services.AddScoped<ISmsSender, SmsSender>();
             services.AddScoped<IThrottleService, ThrottleService>();
             services.AddScoped<IMetadataService, MetadataService>();
+            services.AddScoped<IDonationService, PaypalDonationService>();
 
             services.AddSingleton(x => configuration);
             services.AddSingleton(x => MapperConfig.Create());
