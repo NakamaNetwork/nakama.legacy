@@ -8,15 +8,19 @@ import { BoxConstants } from '../../models/imported';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { DonationSubmissionModel } from '../../services/query/donation-query-service';
 import { ValidationControllerFactory, ValidationController, ValidationRules } from 'aurelia-validation';
+import { Router } from 'aurelia-router';
 
 @autoinject
-export class SupportIndexPage {
+export class DonateIndexPage {
     private accountService: AccountService;
     private dialogService: DialogService;
     private donationQueryService: DonationQueryService;
     private controller: ValidationController;
+    private router: Router;
 
     public model: DonationSubmissionModel;
+
+    private processing: boolean;
 
     perks = [
         'More boxes! From <strong>' + BoxConstants.BoxLimit + '</strong> to <strong>' + BoxConstants.DonorBoxLimit + '!</strong>',
@@ -28,7 +32,8 @@ export class SupportIndexPage {
         accountService: AccountService,
         dialogService: DialogService,
         donationQueryService: DonationQueryService,
-        validFactory: ValidationControllerFactory
+        validFactory: ValidationControllerFactory,
+        router: Router
     ) {
         this.accountService = accountService;
         this.dialogService = dialogService;
@@ -38,6 +43,7 @@ export class SupportIndexPage {
 
         this.model = new DonationSubmissionModel();
         this.controller.addObject(this.model);
+        this.router = router;
     }
 
     @computedFrom('accountService.isLoggedIn')
@@ -76,15 +82,33 @@ export class SupportIndexPage {
             var message = 'You\'ve already donated and have lifetime access to all perks including any perks that are added in a later update. Are you sure you want to continue?';
             this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
                 if (!x.wasCancelled) {
-                    return this.doSubmit();
+                    return this.verify();
                 }
             });
         }
-        return this.doSubmit();
+        return this.verify();
+    }
+
+    verify() {
+        var message = 'You will be redirected to PayPal to fulfil your donation of $' + this.model.amount + '.';
+        this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
+            if (!x.wasCancelled) {
+                return this.doSubmit();
+            }
+        });
     }
 
     doSubmit() {
-
+        this.processing = true;
+        this.donationQueryService.prepare(this.model).then(x => {
+            if (x.error) {
+                this.router.navigateToRoute('error', { error: x.error });
+            } else {
+                window.location.href = x.redirectUrl;
+            }
+        }).catch(x => {
+            this.router.navigateToRoute('error', { error: x });
+        });
     }
 }
 

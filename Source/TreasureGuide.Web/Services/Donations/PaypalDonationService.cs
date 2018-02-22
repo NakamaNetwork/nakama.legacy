@@ -48,13 +48,31 @@ namespace TreasureGuide.Web.Services.Donations
                         amount = new Amount
                         {
                             currency = "USD",
-                            total = amt
+                            total = amt,
+                            details = new Details
+                            {
+                                subtotal = amt
+                            }
+                        },
+                        item_list = new ItemList
+                        {
+                            items = new List<Item>
+                            {
+                                new Item
+                                {
+                                    name = "Nakama Network Donation",
+                                    price = amt,
+                                    quantity = "1",
+                                    url = urlRoot,
+                                    currency = "USD"
+                                }
+                            }
                         }
                     }
                 },
                 redirect_urls = new RedirectUrls
                 {
-                    return_url = urlRoot + "/donate/complete",
+                    return_url = urlRoot + "/donate/finalize",
                     cancel_url = urlRoot + "/donate/cancel"
                 }
             };
@@ -62,7 +80,7 @@ namespace TreasureGuide.Web.Services.Donations
             try
             {
                 var serverPayment = Payment.Create(context, payment);
-                result.RedirectUrl = serverPayment.links.First().href;
+                result.RedirectUrl = serverPayment.links.First(x => x.rel == "approval_url").href;
                 result.TransactionId = serverPayment.id;
                 result.Info = model;
             }
@@ -85,9 +103,9 @@ namespace TreasureGuide.Web.Services.Donations
         {
             return new Dictionary<string, string>
             {
-                {"mode", IsTesting ? "sandbox" : "live" },
-                {"clientId",Config["Authentication:PayPal:ClientID"] },
-                {"clientSecret",Config["Authentication:PayPal:ClientSecret"] }
+                {"mode", IsTesting ? "sandbox" : "live"},
+                {"clientId", Config["Authentication:PayPal:ClientID"]},
+                {"clientSecret", Config["Authentication:PayPal:ClientSecret"]}
             };
         }
     }

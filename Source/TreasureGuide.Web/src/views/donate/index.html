@@ -7,7 +7,8 @@
         </ul>
     </div>
 
-    <form with.bind="model">
+    <loading-area if.bind="processing"></loading-area>
+    <form if.bind="!processing" with.bind="model">
         <fieldset>
             <legend>Donate</legend>
             <div class="form-group">

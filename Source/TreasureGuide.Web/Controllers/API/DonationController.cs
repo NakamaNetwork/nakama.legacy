@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.ApplicationServices;
 using AutoMapper;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TreasureGuide.Entities;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
@@ -69,10 +68,11 @@ namespace TreasureGuide.Web.Controllers.API
                 await DbContext.SaveChangesAsync();
                 return BadRequest(payment.Error);
             }
+            donation.TransactionId = payment.TransactionId;
             donation.State = TransactionState.Processing;
             await DbContext.SaveChangesAsync();
 
-            return Ok(donation.Id);
+            return Ok(payment);
         }
 
         [HttpPost]
@@ -80,17 +80,16 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Finalize([FromBody] DonationVerificationModel model)
         {
-            var result = await DbContext.Donations.SingleOrDefaultAsync(x => x.Id == model.Id);
+            var result = await DbContext.Donations.SingleOrDefaultAsync(x => x.Id == model.Id || x.TransactionId == model.PaymentId);
             if (result == null)
             {
                 return BadRequest("Could not find donation record.");
             }
-            var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Id == User.GetId());
+            var user = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.SingleOrDefaultAsync(_userManager.Users, x => x.Id == User.GetId());
             if (user == null)
             {
                 return Unauthorized();
             }
-            result.TransactionId = model.PaymentId;
             result.State = TransactionState.Complete;
 
             if (User.IsInRole(RoleConstants.Donor))

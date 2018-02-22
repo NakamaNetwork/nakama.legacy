@@ -2,9 +2,7 @@ import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { SearchModel } from '../../models/search-model';
-import { IDonationFinalizationModel, IDonationSearchModel, IDonationSubmissionModel } from '../../models/imported';
-import * as Imported from '../../models/imported';
-import TransactionType = Imported.TransactionType;
+import { IDonationFinalizationModel, IDonationSearchModel, IDonationSubmissionModel, IDonationResultModel, TransactionType } from '../../models/imported';
 
 @autoinject
 export class DonationQueryService extends SearchableQueryService {
@@ -12,7 +10,7 @@ export class DonationQueryService extends SearchableQueryService {
         super('donation', http, true);
     }
 
-    prepare(model: IDonationSubmissionModel): Promise<number> {
+    prepare(model: IDonationSubmissionModel): Promise<IDonationResultModel> {
         return this.http.post(this.buildAddress('prepare'), model);
     }
 
