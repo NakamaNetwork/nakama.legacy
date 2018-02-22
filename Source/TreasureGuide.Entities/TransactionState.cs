@@ -14,8 +14,8 @@ namespace TreasureGuide.Entities
     public enum TransactionState : byte
     {
         Unknown = 0,
-        Pending = 1,
-        Authorized = 2,
+        Initialized = 1,
+        Processing = 2,
         Complete = 3,
         Failed = 4,
         Chargeback = 5

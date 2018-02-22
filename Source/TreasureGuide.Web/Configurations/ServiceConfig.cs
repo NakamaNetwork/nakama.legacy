@@ -103,15 +103,14 @@ namespace TreasureGuide.Web.Configurations
 
             services.AddScoped(x => new TreasureEntities(configuration.GetConnectionString("TreasureEntities")));
             services.AddScoped<IAuthExportService, AuthExportService>();
+            services.AddScoped<IDonationService, PaypalDonationService>();
+            services.AddScoped<IPreferenceService, PreferenceService>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<ISmsSender, SmsSender>();
+            services.AddScoped<IThrottleService, ThrottleService>();
+            services.AddScoped<IMetadataService, MetadataService>();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<ISmsSender, SmsSender>();
-            services.AddTransient<IThrottleService, ThrottleService>();
-            services.AddTransient<IMetadataService, MetadataService>();
-            services.AddTransient<IPreferenceService, PreferenceService>();
-            services.AddTransient<IDonationService, DonationService>();
-
+            services.AddSingleton(x => configuration);
             services.AddSingleton(x => MapperConfig.Create());
         }
     }

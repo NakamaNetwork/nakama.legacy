@@ -1991,8 +1991,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
         </EnumType>
         <EnumType Name="TransactionState" UnderlyingType="Byte">
           <Member Name="Unknown" Value="0" />
-          <Member Name="Pending" Value="1" />
-          <Member Name="Authorized" Value="2" />
+          <Member Name="Initialized" Value="1" />
+          <Member Name="Processing" Value="2" />
           <Member Name="Complete" Value="3" />
           <Member Name="Failed" Value="4" />
           <Member Name="Chargeback" Value="5" />
