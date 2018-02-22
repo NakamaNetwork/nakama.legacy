@@ -82,6 +82,14 @@ export interface IBoxUnitUpdateModel {
 }
 
 
+export interface IDonationFinalizationModel {
+    id: number;
+    payerId: string;
+    paymentId: string;
+    
+}
+
+
 export interface IDonationStubModel {
     id: number;
     userId: string;
@@ -106,9 +114,10 @@ export interface IDonationEditorModel extends IDonationDetailModel{
 
 
 export interface IDonationResultModel {
-    transactionType: number;
+    info: IDonationSubmissionModel;
     transactionId: string;
     error: string;
+    redirectUrl: string;
     hasError: boolean;
     
 }
@@ -549,8 +558,8 @@ export interface ITeamVoteModel {
 
 export enum TransactionState { 
     Unknown = 0,
-    Pending = 1,
-    Authorized = 2,
+    Initialized = 1,
+    Processing = 2,
     Complete = 3,
     Failed = 4,
     Chargeback = 5

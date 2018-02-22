@@ -103,7 +103,6 @@ namespace TreasureGuide.Web.Configurations
 
             services.AddScoped(x => new TreasureEntities(configuration.GetConnectionString("TreasureEntities")));
             services.AddScoped<IAuthExportService, AuthExportService>();
-            services.AddScoped<IDonationService, PaypalDonationService>();
             services.AddScoped<IPreferenceService, PreferenceService>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<ISmsSender, SmsSender>();

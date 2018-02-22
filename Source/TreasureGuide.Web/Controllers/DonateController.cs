@@ -2,8 +2,9 @@
 
 namespace TreasureGuide.Web.Controllers
 {
-    public class HomeController : Controller
+    public class DonateController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

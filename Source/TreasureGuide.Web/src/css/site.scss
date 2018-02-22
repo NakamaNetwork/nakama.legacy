@@ -244,3 +244,13 @@ iframe {
         -webkit-transform: translateY(50%);
     }
 }
+
+.donor-info {
+    @extend ._alignLeft;
+    margin: auto;
+    max-width: 75%;
+
+    ul {
+        margin-bottom: 0;
+    }
+}

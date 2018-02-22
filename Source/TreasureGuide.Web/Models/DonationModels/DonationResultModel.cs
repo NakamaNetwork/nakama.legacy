@@ -6,6 +6,7 @@ namespace TreasureGuide.Web.Models.DonationModels
     {
         public string TransactionId { get; set; }
         public string Error { get; set; }
+        public string RedirectUrl { get; set; }
 
         public DonationSubmissionModel Info { get; set; }
 
