@@ -92,7 +92,7 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<IActionResult> RefreshAll()
         {
             var donations = DbContext.Donations.Where(x => x.State == PaymentState.Initialized || x.State == PaymentState.Processing || x.State == PaymentState.Processing);
-            var results = await RefreshDonations(donations);
+            var results = await RefreshDonations(donations, false);
             return Ok(results);
         }
 
@@ -102,17 +102,17 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<IActionResult> Refresh([FromBody] DonationVerificationModel model)
         {
             var donation = await GetDonation(model);
-            var results = await RefreshDonations(new[] { donation });
+            var results = await RefreshDonations(new[] { donation }, true);
             return Ok(results.FirstOrDefault());
         }
 
-        private async Task<IEnumerable<DonationResultModel>> RefreshDonations(IEnumerable<Donation> donations)
+        private async Task<IEnumerable<DonationResultModel>> RefreshDonations(IEnumerable<Donation> donations, bool push)
         {
             var results = new List<DonationResultModel>();
             var changed = false;
             foreach (var donation in donations)
             {
-                var result = await _donationService.Refresh(donation.PaymentId, true);
+                var result = await _donationService.Refresh(donation.PaymentId, push);
                 result.Id = donation.Id;
                 result.UserId = donation.UserId;
                 if (result.HasError)

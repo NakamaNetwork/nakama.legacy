@@ -3,7 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { SearchModel } from '../../models/search-model';
 import { IDonationVerificationModel, IDonationSearchModel, IDonationSubmissionModel, IDonationResultModel, PaymentType } from '../../models/imported';
-import {SearchConstants} from '../../models/imported';
+import { SearchConstants } from '../../models/imported';
 
 @autoinject
 export class DonationQueryService extends SearchableQueryService {
@@ -17,6 +17,10 @@ export class DonationQueryService extends SearchableQueryService {
 
     refresh(model: IDonationVerificationModel): Promise<IDonationResultModel> {
         return this.http.post(this.buildAddress('refresh'), model);
+    }
+
+    refreshAll(m: Promise<IDonationResultModel[]>) {
+        return this.http.post(this.buildAddress('refreshAll'));
     }
 
     cancel(model: IDonationVerificationModel): Promise<IDonationResultModel> {

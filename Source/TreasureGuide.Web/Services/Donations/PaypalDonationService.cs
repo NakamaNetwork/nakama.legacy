@@ -105,7 +105,7 @@ namespace TreasureGuide.Web.Services.Donations
                     {
                         var payExecute = new PaymentExecution
                         {
-                            payer_id = payment.payer.payer_info.payer_id,
+                            payer_id = payment.payer?.payer_info?.payer_id,
                             transactions = payment.transactions
                         };
                         payment = Payment.Execute(context, paymentId, payExecute);
@@ -116,7 +116,7 @@ namespace TreasureGuide.Web.Services.Donations
                     }
                 }
                 result.PaymentId = payment.id;
-                result.PayerId = payment.payer.payer_info.payer_id;
+                result.PayerId = payment.payer?.payer_info?.payer_id;
                 result.TokenId = payment.token;
             }
             result.State = GetState(payment?.state);

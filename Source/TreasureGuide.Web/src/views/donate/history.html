@@ -13,7 +13,6 @@
                         <th>Amount</th>
                         <th>Message</th>
                         <th>Date</th>
-                        <th>State</th>
                         <th>Public</th>
                     </tr>
                 </thead>
@@ -32,9 +31,6 @@
                         </td>
                         <td>
                             ${donation.date | ageFormat}
-                        </td>
-                        <td>
-                            ${donation.state}
                         </td>
                         <td>
                             <i class="fa fa-fw fa-check" if.bind="donation.public"></i>
