@@ -70,11 +70,12 @@ export class DonateIndexPage {
             var message = 'You\'re not logged in! If you donate without logging in you won\'t be able to claim your donor perks. Are you sure you want to continue?';
             this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
                 if (!x.wasCancelled) {
-                    return this.checkDonated();
+                    this.checkDonated();
                 }
             });
+        } else {
+            this.checkDonated();
         }
-        return this.checkDonated();
     }
 
     checkDonated() {
@@ -82,18 +83,19 @@ export class DonateIndexPage {
             var message = 'You\'ve already donated and have lifetime access to all perks including any perks that are added in a later update. Are you sure you want to continue?';
             this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
                 if (!x.wasCancelled) {
-                    return this.verify();
+                    this.verify();
                 }
             });
+        } else {
+            this.verify();
         }
-        return this.verify();
     }
 
     verify() {
         var message = 'You will be redirected to PayPal to fulfil your donation of $' + this.model.amount + '.';
         this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
             if (!x.wasCancelled) {
-                return this.doSubmit();
+                this.doSubmit();
             }
         });
     }
@@ -114,7 +116,7 @@ export class DonateIndexPage {
 
 ValidationRules
     .ensure((x: DonationSubmissionModel) => x.message)
-    .minLength(DonationSubmissionModel.messageMaxLength)
+    .maxLength(DonationSubmissionModel.messageMaxLength)
     .ensure((x: DonationSubmissionModel) => x.amount)
     .required()
     .satisfies(a => a <= DonationSubmissionModel.max && a >= DonationSubmissionModel.min)

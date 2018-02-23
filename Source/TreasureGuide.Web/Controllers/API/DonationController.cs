@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
@@ -18,7 +18,6 @@ using TreasureGuide.Web.Services.Donations;
 
 namespace TreasureGuide.Web.Controllers.API
 {
-    [Authorize]
     [Route("api/donation")]
     public class DonationController : SearchableApiController<int, Donation, int?, DonationStubModel, DonationDetailModel, DonationEditorModel, DonationSearchModel>
     {
@@ -42,10 +41,6 @@ namespace TreasureGuide.Web.Controllers.API
                 return BadRequest(errors);
             }
             var userId = User.GetId();
-            if (String.IsNullOrWhiteSpace(userId))
-            {
-                return Unauthorized();
-            }
             model.Amount = Math.Round(model.Amount, 2);
             // Create the donation record.
             var donation = new Donation
@@ -53,72 +48,106 @@ namespace TreasureGuide.Web.Controllers.API
                 Amount = model.Amount,
                 Message = model.Message,
                 Public = model.Public,
-                TransactionType = model.ProviderType,
-                TransactionId = "",
+                PaymentType = model.PaymentType,
+                PaymentId = "",
+                PayerId = "",
                 UserId = userId,
-                State = TransactionState.Initialized
+                State = PaymentState.Initialized
             };
             DbContext.Donations.Add(donation);
             await DbContext.SaveChangesAsync();
 
-            var payment = await _donationService.Process(model, donation.Id, userId, Request.GetUri().GetLeftPart(UriPartial.Authority));
+            var payment = await _donationService.Prepare(model, donation.Id, userId, Request.GetUri().GetLeftPart(UriPartial.Authority));
             if (payment.HasError)
             {
-                donation.State = TransactionState.Failed;
+                donation.State = PaymentState.Failed;
                 await DbContext.SaveChangesAsync();
                 return BadRequest(payment.Error);
             }
-            donation.TransactionId = payment.TransactionId;
-            donation.State = TransactionState.Processing;
+            donation.PaymentId = payment.PaymentId;
+            donation.TokenId = payment.TokenId;
+            donation.State = PaymentState.Processing;
             await DbContext.SaveChangesAsync();
 
             return Ok(payment);
         }
 
         [HttpPost]
-        [ActionName("Finalize")]
+        [ActionName("Refresh")]
         [Route("[action]")]
-        public async Task<IActionResult> Finalize([FromBody] DonationVerificationModel model)
+        public async Task<IActionResult> Refresh([FromBody] DonationVerificationModel model)
         {
-            var result = await DbContext.Donations.SingleOrDefaultAsync(x => x.Id == model.Id || x.TransactionId == model.PaymentId);
-            if (result == null)
+            var donation = await GetDonation(model);
+            if (donation.State == PaymentState.Cancelled || donation.State == PaymentState.Failed || donation.State == PaymentState.Chargeback)
             {
-                return BadRequest("Could not find donation record.");
+                return Ok(donation.State);
             }
-            var user = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.SingleOrDefaultAsync(_userManager.Users, x => x.Id == User.GetId());
-            if (user == null)
+            var result = await _donationService.Refresh(donation.PaymentId);
+            result.Id = donation.Id;
+            result.UserId = donation.UserId;
+            result.PaymentId = donation.PaymentId;
+            result.PaymentType = donation.PaymentType;
+            result.TokenId = donation.TokenId;
+            if (result.HasError)
             {
-                return Unauthorized();
+                donation.State = PaymentState.Failed;
+                await DbContext.SaveChangesAsync();
+                return BadRequest(result.Error);
             }
-            result.State = TransactionState.Complete;
-
-            if (User.IsInRole(RoleConstants.Donor))
+            if (result.State == PaymentState.Complete)
             {
-                return Ok("Thank you for your donation!");
+                await GrantPerks(result.UserId);
             }
-            await _userManager.AddToRoleAsync(user, RoleConstants.Donor);
-            return Ok("Thank you for your donation! Please log out and back in to obtain your new donor perks!");
+            if (result.State != donation.State)
+            {
+                result.State = result.State;
+                await DbContext.SaveChangesAsync();
+            }
+            return Ok(result);
         }
 
         [HttpPost]
-        [ActionName("Abort")]
+        [ActionName("Cancel")]
         [Route("[action]")]
-        public async Task<IActionResult> Abort([FromBody] DonationVerificationModel model)
+        public async Task<IActionResult> Cancel([FromBody] DonationVerificationModel model)
         {
-            var result = await DbContext.Donations.SingleOrDefaultAsync(x => x.Id == model.Id);
+            var result = await GetDonation(model);
             if (result == null)
             {
                 return BadRequest("Could not find donation record.");
             }
-            var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Id == User.GetId());
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-            result.TransactionId = model.PaymentId;
-            result.State = TransactionState.Failed;
+            result.State = PaymentState.Cancelled;
+            await DbContext.SaveChangesAsync();
 
-            return Ok("The transaction has been aborted.");
+            return Ok(result);
+        }
+
+        private async Task<Donation> GetDonation(DonationVerificationModel model)
+        {
+            if (model.Id.HasValue)
+            {
+                return await DbContext.Donations.SingleOrDefaultAsync(x => x.Id == model.Id);
+            }
+            if (!String.IsNullOrWhiteSpace(model.TokenId))
+            {
+                return await DbContext.Donations.SingleOrDefaultAsync(x => x.TokenId == model.TokenId);
+            }
+            if (!String.IsNullOrWhiteSpace(model.PaymentId))
+            {
+                return await DbContext.Donations.SingleOrDefaultAsync(x => x.PaymentId == model.PaymentId);
+            }
+            return null;
+        }
+
+        private async Task<bool> GrantPerks(string id)
+        {
+            var user = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.SingleOrDefaultAsync(_userManager.Users, x => x.Id == id);
+            if (user == null || await _userManager.IsInRoleAsync(user, RoleConstants.Donor))
+            {
+                return false;
+            }
+            await _userManager.AddToRoleAsync(user, RoleConstants.Donor);
+            return true;
         }
 
         protected override bool CanPost(int? id)

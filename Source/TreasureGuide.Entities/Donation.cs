@@ -19,10 +19,12 @@ namespace TreasureGuide.Entities
         public decimal Amount { get; set; }
         public string Message { get; set; }
         public System.DateTimeOffset Date { get; set; }
-        public TransactionType TransactionType { get; set; }
-        public string TransactionId { get; set; }
+        public PaymentState State { get; set; }
+        public PaymentType PaymentType { get; set; }
+        public string PaymentId { get; set; }
+        public string PayerId { get; set; }
         public Nullable<bool> Public { get; set; }
-        public TransactionState State { get; set; }
+        public string TokenId { get; set; }
     
         public virtual UserProfile UserProfile { get; set; }
     }

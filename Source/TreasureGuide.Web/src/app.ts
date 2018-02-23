@@ -76,8 +76,7 @@ export class App {
             { route: 'markdown', name: 'markdown', title: 'Markdown', moduleId: 'views/boring/markdown', nav: false },
             // Give me your money
             { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: true },
-            { route: 'donate/finalize', name: 'donationFinalize', title: 'Finalizing Donation', moduleId: 'views/donate/finalize', nav: false },
-            { route: 'donate/complete', name: 'donationComplete', title: 'Donation Complete', moduleId: 'views/donate/complete', nav: false },
+            { route: 'donate/update', name: 'donationUpdate', title: 'Updating Donations', moduleId: 'views/donate/update', nav: false },
             { route: 'donate/cancel', name: 'donationCancelled', title: 'Donation Cancelled', moduleId: 'views/donate/cancel', nav: false }
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });

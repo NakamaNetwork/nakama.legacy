@@ -9,7 +9,7 @@ namespace TreasureGuide.Web.Models.DonationModels
         [Required]
         [Range(1.0, Double.MaxValue)]
         public decimal Amount { get; set; }
-        public TransactionType ProviderType { get; set; } = TransactionType.Paypal;
+        public PaymentType PaymentType { get; set; } = PaymentType.Paypal;
 
         [StringLength(500)]
         public string Message { get; set; }

@@ -6,7 +6,7 @@ import { IDonationVerificationModel, IDonationResultModel } from '../../models/i
 import { PaymentState } from '../../models/imported';
 
 @autoinject
-export class CancelDonationPage {
+export class UpdateDonationPage {
     private accountService: AccountService;
     private donationQueryService: DonationQueryService;
     private router: Router;
@@ -26,32 +26,32 @@ export class CancelDonationPage {
 
     activate(params) {
         var model = <IDonationVerificationModel>{
-            tokenId: params.token
+            paymentId: params.paymentId
         };
 
-        if (model.tokenId) {
-            this.cancel(model);
+        if (model.paymentId) {
+            this.refresh(model);
         } else {
             this.router.navigateToRoute('error', { error: 'Could not retrieve your donation. Please contact the administrator for assistance.' });
         }
     }
 
-    cancel(model: IDonationVerificationModel) {
+    refresh(model: IDonationVerificationModel) {
         this.processing = true;
-        this.donationQueryService.cancel(model).then(x => {
+        this.donationQueryService.refresh(model).then(x => {
             if (x.error) {
                 this.router.navigateToRoute('error', { error: x.error });
-            } else if (x.state === PaymentState.Cancelled) {
+            } else if (x.state === PaymentState.Complete) {
                 this.result = x;
                 this.processing = false;
             } else {
                 setTimeout(() => {
-                    this.cancel(model);
+                    this.refresh(model);
                 }, 5000);
             }
         }).catch(x => {
             setTimeout(() => {
-                this.cancel(model);
+                this.refresh(model);
             }, 5000);
         });
     }

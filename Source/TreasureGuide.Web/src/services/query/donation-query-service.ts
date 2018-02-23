@@ -2,7 +2,7 @@ import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { SearchModel } from '../../models/search-model';
-import { IDonationFinalizationModel, IDonationSearchModel, IDonationSubmissionModel, IDonationResultModel, TransactionType } from '../../models/imported';
+import { IDonationVerificationModel, IDonationSearchModel, IDonationSubmissionModel, IDonationResultModel, PaymentType } from '../../models/imported';
 
 @autoinject
 export class DonationQueryService extends SearchableQueryService {
@@ -14,12 +14,12 @@ export class DonationQueryService extends SearchableQueryService {
         return this.http.post(this.buildAddress('prepare'), model);
     }
 
-    finalize(model: IDonationFinalizationModel): Promise<string> {
-        return this.http.post(this.buildAddress('finalize'), model);
+    refresh(model: IDonationVerificationModel): Promise<IDonationResultModel> {
+        return this.http.post(this.buildAddress('refresh'), model);
     }
 
-    abort(model: IDonationFinalizationModel): Promise<string> {
-        return this.http.post(this.buildAddress('abort'), model);
+    cancel(model: IDonationVerificationModel): Promise<IDonationResultModel> {
+        return this.http.post(this.buildAddress('cancel'), model);
     }
 }
 
@@ -41,7 +41,7 @@ export class DonationSubmissionModel implements IDonationSubmissionModel {
     public static max = 500.00;
 
     public amount: number = 5.00;
-    public providerType: TransactionType = TransactionType.Paypal;
+    public paymentType: PaymentType = PaymentType.Paypal;
     public message: string;
     public public: boolean;
 }

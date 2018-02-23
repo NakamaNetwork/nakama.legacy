@@ -2,8 +2,8 @@
 {
     public class DonationVerificationModel
     {
-        public int Id { get; set; }
-        public string PayerId { get; set; }
         public string PaymentId { get; set; }
+        public string TokenId { get; set; }
+        public int? Id { get; set; }
     }
 }

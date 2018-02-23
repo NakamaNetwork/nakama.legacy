@@ -12,8 +12,9 @@ namespace TreasureGuide.Web.Services.Donations
     public interface IDonationService
     {
         string WebRoot { get; }
-        byte TransactionType { get; }
-        Task<DonationResultModel> Process(DonationSubmissionModel model, int id, string userId, string urlRoot);
+        PaymentType PaymentType { get; }
+        Task<DonationResultModel> Prepare(DonationSubmissionModel model, int id, string userId, string urlRoot);
+        Task<DonationResultModel> Refresh(string paymentId);
     }
 
     public abstract class DonationService : IDonationService
@@ -22,7 +23,7 @@ namespace TreasureGuide.Web.Services.Donations
         protected bool IsTesting;
         protected TreasureEntities Entities;
         public string WebRoot { get; }
-        public byte TransactionType { get; } = 1;
+        public abstract PaymentType PaymentType { get; }
 
         protected DonationService(IHostingEnvironment env, IConfigurationRoot config, TreasureEntities entities)
         {
@@ -31,11 +32,14 @@ namespace TreasureGuide.Web.Services.Donations
             Entities = entities;
         }
 
-        public async Task<DonationResultModel> Process(DonationSubmissionModel model, int id, string userId, string urlRoot)
+        public async Task<DonationResultModel> Prepare(DonationSubmissionModel model, int id, string userId, string urlRoot)
         {
             var result = new DonationResultModel
             {
-                Error = Validate(model, userId)
+                Id = id,
+                UserId = userId,
+                Error = Validate(model, userId),
+                PaymentType = PaymentType
             };
             if (result.HasError)
             {
@@ -45,14 +49,22 @@ namespace TreasureGuide.Web.Services.Donations
             return result;
         }
 
+        public async Task<DonationResultModel> Refresh(string paymentId)
+        {
+            var result = new DonationResultModel
+            {
+                PaymentId = paymentId,
+                PaymentType = PaymentType
+            };
+            result = await DoRefresh(paymentId, result);
+            return result;
+        }
+
         protected abstract Task<DonationResultModel> DoPreparation(DonationSubmissionModel model, int id, string userId, string urlRoot, DonationResultModel result);
+        protected abstract Task<DonationResultModel> DoRefresh(string paymentId, DonationResultModel result);
 
         protected virtual string Validate(DonationSubmissionModel model, string userId)
         {
-            if (String.IsNullOrWhiteSpace(userId))
-            {
-                return "Could not find current user.";
-            }
             if (model.Amount < 1.0m)
             {
                 return "Donation amount must be at least $1.00.";

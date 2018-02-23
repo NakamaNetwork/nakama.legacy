@@ -58,10 +58,10 @@
         <EntityTypeShape EntityType="tcdbModel.StageAlias" Width="1.5" PointX="11.375" PointY="20.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" />
         <AssociationConnector Association="tcdbModel.UnitEvolutions" />
-        <EntityTypeShape EntityType="tcdbModel.Donation" Width="1.5" PointX="7.25" PointY="22.125" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_Donations_dbo_UserProfiles" />
         <EntityTypeShape EntityType="tcdbModel.AspNetUser" Width="1.5" PointX="2.75" PointY="13.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UserProfile_dbo_AspNetUsers" />
+        <EntityTypeShape EntityType="tcdbModel.Donation" Width="1.5" PointX="7.25" PointY="23" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Donations_dbo_UserProfiles" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

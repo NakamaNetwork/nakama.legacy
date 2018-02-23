@@ -11,13 +11,9 @@ namespace TreasureGuide.Entities
 {
     using System;
     
-    public enum TransactionState : byte
+    public enum PaymentType : byte
     {
         Unknown = 0,
-        Initialized = 1,
-        Processing = 2,
-        Complete = 3,
-        Failed = 4,
-        Chargeback = 5
+        Paypal = 1
     }
 }

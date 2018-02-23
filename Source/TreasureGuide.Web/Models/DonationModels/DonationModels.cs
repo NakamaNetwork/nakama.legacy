@@ -18,7 +18,7 @@ namespace TreasureGuide.Web.Models.DonationModels
     public class DonationDetailModel : DonationStubModel
     {
         public string Message { get; set; }
-        public TransactionState State { get; set; }
+        public PaymentState State { get; set; }
     }
 
     public class DonationEditorModel : DonationDetailModel, IIdItem<int?>

@@ -103,7 +103,7 @@ export interface IDonationStubModel {
 
 export interface IDonationDetailModel extends IDonationStubModel{
     message: string;
-    state: TransactionState;
+    state: PaymentState;
     
 }
 
@@ -114,8 +114,13 @@ export interface IDonationEditorModel extends IDonationDetailModel{
 
 
 export interface IDonationResultModel {
-    info: IDonationSubmissionModel;
-    transactionId: string;
+    id: number;
+    userId: string;
+    payerId: string;
+    paymentId: string;
+    tokenId: string;
+    state: PaymentState;
+    paymentType: PaymentType;
     error: string;
     redirectUrl: string;
     hasError: boolean;
@@ -135,7 +140,7 @@ export interface IDonationSearchModel extends ISearchModel{
 
 export interface IDonationSubmissionModel {
     amount: number;
-    providerType: TransactionType;
+    paymentType: PaymentType;
     message: string;
     public: boolean;
     
@@ -143,9 +148,9 @@ export interface IDonationSubmissionModel {
 
 
 export interface IDonationVerificationModel {
-    id: number;
-    payerId: string;
     paymentId: string;
+    tokenId: string;
+    id: number;
     
 }
 
@@ -174,6 +179,23 @@ export interface IMetaResultModel {
     title: string;
     description: string;
     
+}
+
+
+export enum PaymentState { 
+    Unknown = 0,
+    Initialized = 1,
+    Processing = 2,
+    Complete = 3,
+    Failed = 4,
+    Cancelled = 5,
+    Chargeback = 6
+}
+
+
+export enum PaymentType { 
+    Unknown = 0,
+    Paypal = 1
 }
 
 
