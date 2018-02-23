@@ -3,6 +3,7 @@ using AutoMapper;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Models.BoxModels;
+using TreasureGuide.Web.Models.DonationModels;
 using TreasureGuide.Web.Models.ProfileModels;
 using TreasureGuide.Web.Models.ShipModels;
 using TreasureGuide.Web.Models.StageModels;
@@ -104,7 +105,7 @@ namespace TreasureGuide.Web.Configurations
 
                 var report = mapper.CreateMap<TeamReport, TeamReportStubModel>();
                 report.ForMember(x => x.Acknowledged, o => o.MapFrom(y => y.AcknowledgedDate.HasValue));
-                
+
                 var boxUnit = mapper.CreateControllerMapping<BoxUnit, BoxUnitDetailModel, BoxUnitStubModel, BoxUnitEditorModel>();
                 boxUnit.StubMapping.ForMember(x => x.Name, o => o.MapFrom(y => y.Unit.Name));
                 boxUnit.DetailMapping.ForMember(x => x.Name, o => o.MapFrom(y => y.Unit.Name));
@@ -113,6 +114,15 @@ namespace TreasureGuide.Web.Configurations
                 box.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
                 box.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
                 box.EntityMapping.ForMember(x => x.BoxUnits, o => o.Ignore());
+
+                var donation = mapper.CreateControllerMapping<Donation, DonationDetailModel, DonationStubModel, DonationEditorModel>();
+                donation.StubMapping.ForMember(x => x.TokenId, o => o.Ignore()); // Handle manually.
+                donation.StubMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
+                donation.StubMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
+
+                donation.DetailMapping.ForMember(x => x.TokenId, o => o.Ignore()); // Handle manually.
+                donation.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
+                donation.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

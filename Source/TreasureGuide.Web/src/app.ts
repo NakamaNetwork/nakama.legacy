@@ -9,7 +9,6 @@ import { BoxService } from './services/box-service';
 @autoinject
 export class App {
     public router: Router;
-    public message = 'Shukko da!';
     public accountService: AccountService;
     private boxService: BoxService;
     private ea: EventAggregator;
@@ -75,7 +74,8 @@ export class App {
             { route: 'about', name: 'about', title: 'About', moduleId: 'views/boring/intro', nav: true },
             { route: 'markdown', name: 'markdown', title: 'Markdown', moduleId: 'views/boring/markdown', nav: false },
             // Give me your money
-            { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: true },
+            { route: 'support', name: 'support', title: 'Support', moduleId: 'views/support/index', nav: true },
+            { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: false },
             { route: 'donate/update', name: 'donationUpdate', title: 'Updating Donations', moduleId: 'views/donate/update', nav: false },
             { route: 'donate/cancel', name: 'donationCancelled', title: 'Donation Cancelled', moduleId: 'views/donate/cancel', nav: false }
         ]);

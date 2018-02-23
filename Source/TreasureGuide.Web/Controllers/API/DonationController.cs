@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
@@ -28,6 +28,15 @@ namespace TreasureGuide.Web.Controllers.API
         {
             _userManager = userManager;
             _donationService = donationService;
+        }
+
+        protected override IQueryable<Donation> Filter(IQueryable<Donation> entities)
+        {
+            if (!User.IsInRole(RoleConstants.Administrator))
+            {
+                entities = entities.Where(x => x.UserId == User.GetId() || (x.Public == true && x.State == PaymentState.Complete));
+            }
+            return entities;
         }
 
         [HttpPost]
@@ -52,7 +61,8 @@ namespace TreasureGuide.Web.Controllers.API
                 PaymentId = "",
                 PayerId = "",
                 UserId = userId,
-                State = PaymentState.Initialized
+                State = PaymentState.Initialized,
+                Date = DateTimeOffset.Now
             };
             DbContext.Donations.Add(donation);
             await DbContext.SaveChangesAsync();
@@ -78,10 +88,6 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<IActionResult> Refresh([FromBody] DonationVerificationModel model)
         {
             var donation = await GetDonation(model);
-            if (donation.State == PaymentState.Cancelled || donation.State == PaymentState.Failed || donation.State == PaymentState.Chargeback)
-            {
-                return Ok(donation.State);
-            }
             var result = await _donationService.Refresh(donation.PaymentId);
             result.Id = donation.Id;
             result.UserId = donation.UserId;
@@ -100,7 +106,7 @@ namespace TreasureGuide.Web.Controllers.API
             }
             if (result.State != donation.State)
             {
-                result.State = result.State;
+                donation.State = result.State;
                 await DbContext.SaveChangesAsync();
             }
             return Ok(result);
@@ -160,6 +166,16 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchUser(results, model.User);
             results = SearchAmount(results, model.MinAmount, model.MaxAmount);
             results = SearchDate(results, model.StartDate, model.EndDate);
+            results = SearchComplex(results, model.Complex);
+            return results;
+        }
+
+        private IQueryable<Donation> SearchComplex(IQueryable<Donation> results, bool complex)
+        {
+            if (!complex)
+            {
+                results = results.Where(x => x.Public == true && x.State == PaymentState.Complete);
+            }
             return results;
         }
 
@@ -196,6 +212,21 @@ namespace TreasureGuide.Web.Controllers.API
                 return results.Where(x => x.UserId == modelUser || x.UserProfile.UserName.Contains(modelUser));
             }
             return results;
+        }
+
+        protected override IQueryable<Donation> OrderSearchResults(IQueryable<Donation> results, DonationSearchModel model)
+        {
+            switch (model.SortBy)
+            {
+                case SearchConstants.SortUser:
+                    return results.OrderBy(x => x.UserProfile.UserName, model.SortDesc);
+                case SearchConstants.SortDate:
+                    return results.OrderBy(x => x.Date, model.SortDesc);
+                case SearchConstants.SortAmount:
+                    return results.OrderBy(x => x.Amount, model.SortDesc);
+                default:
+                    return results.OrderBy(x => x.Id, true);
+            }
         }
     }
 }

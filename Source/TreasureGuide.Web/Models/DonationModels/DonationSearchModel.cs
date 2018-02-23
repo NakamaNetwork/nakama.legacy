@@ -9,5 +9,6 @@ namespace TreasureGuide.Web.Models.DonationModels
         public DateTimeOffset? EndDate { get; set; }
         public decimal? MinAmount { get; set; }
         public decimal? MaxAmount { get; set; }
+        public bool Complex { get; set; }
     }
 }

@@ -94,20 +94,20 @@ export interface IDonationStubModel {
     id: number;
     userId: string;
     userName: string;
-    unitId: number;
+    userUnitId: number;
     amount: number;
     date: Date;
     public: boolean;
+    message: string;
+    tokenId: string;
     
 }
 
 export interface IDonationDetailModel extends IDonationStubModel{
-    message: string;
-    state: PaymentState;
     
 }
 
-export interface IDonationEditorModel extends IDonationDetailModel{
+export interface IDonationEditorModel {
     id: number;
     
 }
@@ -134,6 +134,7 @@ export interface IDonationSearchModel extends ISearchModel{
     endDate: Date;
     minAmount: number;
     maxAmount: number;
+    complex: boolean;
     
 }
 
@@ -259,6 +260,7 @@ export class SearchConstants {
     public static SortLeader: string = "Leader";
     public static SortDate: string = "Date";
     public static SortUser: string = "User";
+    public static SortAmount: string = "Amount";
     
 }
 

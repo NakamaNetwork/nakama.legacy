@@ -3,6 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { SearchModel } from '../../models/search-model';
 import { IDonationVerificationModel, IDonationSearchModel, IDonationSubmissionModel, IDonationResultModel, PaymentType } from '../../models/imported';
+import {SearchConstants} from '../../models/imported';
 
 @autoinject
 export class DonationQueryService extends SearchableQueryService {
@@ -29,10 +30,17 @@ export class DonationSearchModel extends SearchModel implements IDonationSearchM
     endDate: Date;
     minAmount: number;
     maxAmount: number;
+    complex: boolean;
 
     getDefault(): SearchModel {
         return new DonationSearchModel();
     }
+
+    sortables: string[] = [
+        SearchConstants.SortUser,
+        SearchConstants.SortAmount,
+        SearchConstants.SortDate
+    ];
 }
 
 export class DonationSubmissionModel implements IDonationSubmissionModel {
