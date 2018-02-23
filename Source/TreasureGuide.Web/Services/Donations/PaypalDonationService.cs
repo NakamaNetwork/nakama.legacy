@@ -30,6 +30,7 @@ namespace TreasureGuide.Web.Services.Donations
             var context = GetContext();
             var payment = new Payment
             {
+                experience_profile_id = Config["Authentication:PayPal:ProfileID"],
                 intent = "sale",
                 payer = new Payer
                 {
