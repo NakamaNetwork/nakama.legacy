@@ -21,4 +21,6 @@ namespace TreasureGuide.Entities
     public partial class TeamUnit : ISubItem { }
 
     public partial class TeamGenericSlot : ISubItem { }
+
+    public partial class Donation : IIdItem<int> { }
 }

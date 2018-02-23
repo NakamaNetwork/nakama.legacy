@@ -7,6 +7,8 @@ export class SearchPager {
     @bindable bottom = false;
     pageSizes = [10, 20, 50, 100];
 
+    @bindable emptyMessage = 'Search yielded no results!';
+
     @computedFrom('searchModel.page', 'searchModel.pageSize', 'searchModel.totalResults')
     get startIndex() {
         return ((this.searchModel.page - 1) * this.searchModel.pageSize) + 1;

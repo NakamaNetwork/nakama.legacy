@@ -113,7 +113,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.ConcatErrors();
-                return StatusCode((int)HttpStatusCode.BadRequest, errors);
+                return BadRequest(errors);
             }
             id = DefaultIfUnspecified(id, model.Id);
             if (!CanPost(id))

@@ -73,9 +73,9 @@ namespace TreasureGuide.Web.Controllers.API
 
         private bool UnderBoxLimit(string userId)
         {
-            var limit = User.IsInRole(RoleConstants.MultiBoxUser)
-                ? BoxConstants.MultiBoxUserLimit
-                : BoxConstants.BoxUserLimit;
+            var limit = User.IsInRole(RoleConstants.Donor)
+                ? BoxConstants.DonorBoxLimit
+                : BoxConstants.BoxLimit;
             return DbContext.Boxes.Count(x => x.UserId == userId) < limit;
         }
 

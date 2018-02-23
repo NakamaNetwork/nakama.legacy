@@ -13,6 +13,8 @@ $active-color: #6E6E6E;
 $info-color: #183579;
 $black-color: #000000;
 $grey-color: #D1D1D1;
+$donorStart-color: #B41313;
+$donorEnd-color: #B45C13;
 
 body {
     background-color: $background-color;
@@ -68,6 +70,8 @@ body {
 @include makeColor("white",$white-color);
 @include makeColor("black",$black-color);
 @include makeColor("grey",$grey-color);
+@include makeColor("donorStart",$donorStart-color);
+@include makeColor("donorEnd",$donorEnd-color);
 
 a {
     @extend ._primaryText;

@@ -1,0 +1,46 @@
+﻿<template>
+    <h1>Donation History</h1>
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading">
+        <div class="row">
+            <search-pager search-model.bind="searchModel"></search-pager>
+        </div>
+        <div class="row donation-collection" if.bind="donations.length > 0">
+            <table class="_width100">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Amount</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Public</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="donation of donations">
+                        <td>
+                            <a route-href="route: profile; params.bind: {id: donation.userName}">
+                                <user-display name.bind="donation.userName" unit-id.bind="donation.userUnitId" donor.bind="donation.userIsDonor"></user-display>
+                            </a>
+                        </td>
+                        <td>
+                            $${donation.amount | currencyFormat}
+                        </td>
+                        <td>
+                            <em>${donation.message}</em>
+                        </td>
+                        <td>
+                            ${donation.date | ageFormat}
+                        </td>
+                        <td>
+                            <i class="fa fa-fw fa-check" if.bind="donation.public"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
+        </div>
+    </div>
+</template>

@@ -81,6 +81,16 @@ export class ProfileDetailPage {
         return '//' + this.profile.website;
     }
 
+    @computedFrom('profile', 'profile.userRoles')
+    get donor() {
+        return this.profile && this.profile.userRoles.some(x => x === RoleConstants.Donor);
+    }
+
+    @computedFrom('donor')
+    get donorClass() {
+        return this.donor ? 'donor-user' : '';
+    }
+
     search(payload) {
         if (this.teamQueryService) {
             this.loadingTeams = true;

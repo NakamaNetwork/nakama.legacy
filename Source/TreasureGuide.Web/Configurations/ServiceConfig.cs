@@ -21,6 +21,7 @@ using TreasureGuide.Web.Data;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
+using TreasureGuide.Web.Services.Donations;
 
 namespace TreasureGuide.Web.Configurations
 {
@@ -102,14 +103,14 @@ namespace TreasureGuide.Web.Configurations
 
             services.AddScoped(x => new TreasureEntities(configuration.GetConnectionString("TreasureEntities")));
             services.AddScoped<IAuthExportService, AuthExportService>();
+            services.AddScoped<IPreferenceService, PreferenceService>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<ISmsSender, SmsSender>();
+            services.AddScoped<IThrottleService, ThrottleService>();
+            services.AddScoped<IMetadataService, MetadataService>();
+            services.AddScoped<IDonationService, PaypalDonationService>();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<ISmsSender, SmsSender>();
-            services.AddTransient<IThrottleService, ThrottleService>();
-            services.AddTransient<IMetadataService, MetadataService>();
-            services.AddTransient<IPreferenceService, PreferenceService>();
-
+            services.AddSingleton(x => configuration);
             services.AddSingleton(x => MapperConfig.Create());
         }
     }

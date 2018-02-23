@@ -1,0 +1,11 @@
+﻿<template>
+    <div class="alert _alignCenter _warning" if.bind="processing">
+        <h3>Your donation has been cancelled.</h3>
+        <h4>We're updating a few things on our end... Feel free to go back to browsing.</h4>
+        <loading-area></loading-area>
+    </div>
+    <div class="alert _alignCenter _warningLight _width100" if.bind="result">
+        <h3>Your donation has been cancelled.</h3>
+        <p>Thank you for the consideration!</p>
+    </div>
+</template>

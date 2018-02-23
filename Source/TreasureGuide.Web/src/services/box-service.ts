@@ -42,10 +42,10 @@ export class BoxService {
     get boxLimit() {
         if (this.accountService.isInRoles([RoleConstants.Administrator, RoleConstants.Moderator])) {
             return 999;
-        } else if (this.accountService.isInRoles(RoleConstants.MultiBoxUser)) {
-            return BoxConstants.MultiBoxUserLimit;
+        } else if (this.accountService.isInRoles(RoleConstants.Donor)) {
+            return BoxConstants.DonorBoxLimit;
         } else if (this.accountService.isInRoles(RoleConstants.BoxUser)) {
-            return BoxConstants.BoxUserLimit;
+            return BoxConstants.BoxLimit;
         }
         return 0;
     }
