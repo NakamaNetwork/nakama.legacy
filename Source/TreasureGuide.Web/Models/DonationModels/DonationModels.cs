@@ -9,6 +9,7 @@ namespace TreasureGuide.Web.Models.DonationModels
         public string UserId { get; set; }
         public string UserName { get; set; }
         public int? UserUnitId { get; set; }
+        public bool UserIsDonor { get; set; }
         public decimal Amount { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool? Public { get; set; }

@@ -18,6 +18,7 @@ namespace TreasureGuide.Web.Models.BoxModels
     {
         public string UserId { get; set; }
         public string UserName { get; set; }
+        public bool UserIsDonor { get; set; }
         public int? UserUnitId { get; set; }
         public IEnumerable<BoxUnitDetailModel> BoxUnits { get; set; }
     }

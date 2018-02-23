@@ -1,7 +1,9 @@
 <template>
-    <unit-display if.bind="unitId"
-                  size="tiny"
-                  unit-id.bind="unitId">
-    </unit-display>
-    <span>${name}</span>
+    <span class.bind="displayClass">
+        <unit-display if.bind="unitId"
+                      size="tiny"
+                      unit-id.bind="unitId">
+        </unit-display>
+        <span>${name}</span>
+    </span>
 </template>

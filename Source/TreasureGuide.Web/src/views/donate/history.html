@@ -20,7 +20,7 @@
                     <tr repeat.for="donation of donations">
                         <td>
                             <a route-href="route: profile; params.bind: {id: donation.userName}">
-                                <user-display name.bind="donation.userName" unit-id.bind="donation.userUnitId"></user-display>
+                                <user-display name.bind="donation.userName" unit-id.bind="donation.userUnitId" donor.bind="donation.userIsDonor"></user-display>
                             </a>
                         </td>
                         <td>

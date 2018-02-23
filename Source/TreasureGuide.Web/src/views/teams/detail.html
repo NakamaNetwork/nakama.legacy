@@ -51,7 +51,7 @@
         <div class="row _alignRight">
             Submitted by
             <a route-href="route: profile; params.bind: { id: submittedByName }">
-                <user-display name.bind="submittedByName" unit-id.bind="submittedByUnitId"></user-display>
+                <user-display name.bind="submittedByName" unit-id.bind="submittedByUnitId" donor.bind="submittedByIsDonor"></user-display>
             </a>
             on ${editedDate | dateTimeFormat}
         </div>

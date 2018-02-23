@@ -27,6 +27,7 @@ export interface IBoxDetailModel extends IBoxStubModel{
     boxUnits: IBoxUnitDetailModel[];
     userId: string;
     userName: string;
+    userIsDonor: boolean;
     userUnitId: number;
     
 }
@@ -95,11 +96,11 @@ export interface IDonationStubModel {
     userId: string;
     userName: string;
     userUnitId: number;
+    userIsDonor: boolean;
     amount: number;
     date: Date;
     public: boolean;
     message: string;
-    tokenId: string;
     
 }
 
@@ -427,6 +428,7 @@ export interface ITeamStubModel {
     submittedById: string;
     submittedByName: string;
     submittedByUnitId: number;
+    submittedByIsDonor: boolean;
     editedDate: Date;
     score: number;
     global: boolean;
@@ -451,6 +453,7 @@ export interface ITeamDetailModel {
     submittedById: string;
     submittedByName: string;
     submittedByUnitId: number;
+    submittedByIsDonor: boolean;
     editedDate: Date;
     score: number;
     myVote: number;
@@ -576,6 +579,7 @@ export interface ITeamVideoModel {
     userId: string;
     userName: string;
     userUnitId: number;
+    userIsDonor: boolean;
     
 }
 
