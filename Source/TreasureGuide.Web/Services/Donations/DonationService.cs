@@ -14,7 +14,7 @@ namespace TreasureGuide.Web.Services.Donations
         string WebRoot { get; }
         PaymentType PaymentType { get; }
         Task<DonationResultModel> Prepare(DonationSubmissionModel model, int id, string userId, string urlRoot);
-        Task<DonationResultModel> Refresh(string paymentId);
+        Task<DonationResultModel> Refresh(string paymentId, bool push = false);
     }
 
     public abstract class DonationService : IDonationService
@@ -38,7 +38,7 @@ namespace TreasureGuide.Web.Services.Donations
             {
                 Id = id,
                 UserId = userId,
-                Error = Validate(model, userId),
+                Error = Validate(model),
                 PaymentType = PaymentType
             };
             if (result.HasError)
@@ -49,21 +49,21 @@ namespace TreasureGuide.Web.Services.Donations
             return result;
         }
 
-        public async Task<DonationResultModel> Refresh(string paymentId)
+        public async Task<DonationResultModel> Refresh(string paymentId, bool push = false)
         {
             var result = new DonationResultModel
             {
                 PaymentId = paymentId,
                 PaymentType = PaymentType
             };
-            result = await DoRefresh(paymentId, result);
+            result = await DoRefresh(paymentId, result, push);
             return result;
         }
 
         protected abstract Task<DonationResultModel> DoPreparation(DonationSubmissionModel model, int id, string userId, string urlRoot, DonationResultModel result);
-        protected abstract Task<DonationResultModel> DoRefresh(string paymentId, DonationResultModel result);
+        protected abstract Task<DonationResultModel> DoRefresh(string paymentId, DonationResultModel result, bool push);
 
-        protected virtual string Validate(DonationSubmissionModel model, string userId)
+        protected virtual string Validate(DonationSubmissionModel model)
         {
             if (model.Amount < 1.0m)
             {

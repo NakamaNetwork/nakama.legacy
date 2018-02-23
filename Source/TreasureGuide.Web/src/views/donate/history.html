@@ -1,14 +1,9 @@
 ﻿<template>
-    <h1>Support</h1>
-    <p>We'd like to take a moment to thank all of our incredible supporters who make Nakama Network possible!</p>
-
-    <h4>Donations</h4>
-    <p>And a big shout-out to everyone who's donated to support Nakama Network!</p>
-
+    <h1>Donation History</h1>
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading">
         <div class="row">
-            <search-pager search-model.bind="searchModel" empty-message=""></search-pager>
+            <search-pager search-model.bind="searchModel"></search-pager>
         </div>
         <div class="row donation-collection" if.bind="donations.length > 0">
             <table class="_width100">
@@ -18,6 +13,8 @@
                         <th>Amount</th>
                         <th>Message</th>
                         <th>Date</th>
+                        <th>State</th>
+                        <th>Public</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,37 +33,18 @@
                         <td>
                             ${donation.date | ageFormat}
                         </td>
+                        <td>
+                            ${donation.state}
+                        </td>
+                        <td>
+                            <i class="fa fa-fw fa-check" if.bind="donation.public"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="row">
             <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
-        </div>
-    </div>
-    <div class="row">
-        <h4>Want to help out?</h4>
-        <div class="_alignCenter">
-            <div class="col m6">
-                <a class="button _xlarge _width100 _info" href="https://github.com/RoboCafaz/TreasureGuide">
-                    <i class="fa fa-fw fa-github"></i>View on GitHub
-                </a>
-            </div>
-            <div class="col m6">
-                <a class="button _xlarge _width100 _info" href="https://discord.gg/vtAeMas">
-                    <img src="/content/Discord-Logo-White.svg" class="fa fa-fw" />Join the Discord
-                </a>
-            </div>
-            <div class="col m12">
-                <a class="button _xlarge _width100 _success" route-href="route: donate">
-                    <i class="fa fa-fw fa-usd"></i> Donate
-                </a>
-            </div>
-            <div class="col m12">
-                <a class="button _small _width100 _successLight" route-href="route: donationHistory" auth-req>
-                    View my donations
-                </a>
-            </div>
         </div>
     </div>
 </template>

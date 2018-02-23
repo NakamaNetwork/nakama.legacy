@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
@@ -32,9 +34,10 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override IQueryable<Donation> Filter(IQueryable<Donation> entities)
         {
+            entities = entities.Where(x => x.State == PaymentState.Complete);
             if (!User.IsInRole(RoleConstants.Administrator))
             {
-                entities = entities.Where(x => x.UserId == User.GetId() || (x.Public == true && x.State == PaymentState.Complete));
+                entities = entities.Where(x => x.UserId == User.GetId() || x.Public == true);
             }
             return entities;
         }
@@ -83,33 +86,62 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleConstants.Administrator)]
+        [ActionName("RefreshAll")]
+        [Route("[action]")]
+        public async Task<IActionResult> RefreshAll()
+        {
+            var donations = DbContext.Donations.Where(x => x.State == PaymentState.Initialized || x.State == PaymentState.Processing || x.State == PaymentState.Processing);
+            var results = await RefreshDonations(donations);
+            return Ok(results);
+        }
+
+        [HttpPost]
         [ActionName("Refresh")]
         [Route("[action]")]
         public async Task<IActionResult> Refresh([FromBody] DonationVerificationModel model)
         {
             var donation = await GetDonation(model);
-            var result = await _donationService.Refresh(donation.PaymentId);
-            result.Id = donation.Id;
-            result.UserId = donation.UserId;
-            result.PaymentId = donation.PaymentId;
-            result.PaymentType = donation.PaymentType;
-            result.TokenId = donation.TokenId;
-            if (result.HasError)
+            var results = await RefreshDonations(new[] { donation });
+            return Ok(results.FirstOrDefault());
+        }
+
+        private async Task<IEnumerable<DonationResultModel>> RefreshDonations(IEnumerable<Donation> donations)
+        {
+            var results = new List<DonationResultModel>();
+            var changed = false;
+            foreach (var donation in donations)
             {
-                donation.State = PaymentState.Failed;
+                var result = await _donationService.Refresh(donation.PaymentId, true);
+                result.Id = donation.Id;
+                result.UserId = donation.UserId;
+                if (result.HasError)
+                {
+                    changed = true;
+                    donation.State = PaymentState.Failed;
+                }
+                else
+                {
+                    if (result.State == PaymentState.Complete)
+                    {
+                        await GrantPerks(result.UserId);
+                    }
+                    if (result.State != donation.State)
+                    {
+                        changed = true;
+                        donation.PaymentId = result.PaymentId;
+                        donation.PayerId = result.PayerId;
+                        donation.TokenId = result.TokenId;
+                        donation.State = result.State;
+                    }
+                }
+                results.Add(result);
+            }
+            if (changed)
+            {
                 await DbContext.SaveChangesAsync();
-                return BadRequest(result.Error);
             }
-            if (result.State == PaymentState.Complete)
-            {
-                await GrantPerks(result.UserId);
-            }
-            if (result.State != donation.State)
-            {
-                donation.State = result.State;
-                await DbContext.SaveChangesAsync();
-            }
-            return Ok(result);
+            return results;
         }
 
         [HttpPost]
@@ -157,6 +189,11 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         protected override bool CanPost(int? id)
+        {
+            return false;
+        }
+
+        protected override bool CanGet(int? id)
         {
             return false;
         }
@@ -221,11 +258,11 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortUser:
                     return results.OrderBy(x => x.UserProfile.UserName, model.SortDesc);
                 case SearchConstants.SortDate:
-                    return results.OrderBy(x => x.Date, model.SortDesc);
+                    return results.OrderBy(x => x.Date, !model.SortDesc);
                 case SearchConstants.SortAmount:
-                    return results.OrderBy(x => x.Amount, model.SortDesc);
+                    return results.OrderBy(x => x.Amount, !model.SortDesc);
                 default:
-                    return results.OrderBy(x => x.Id, true);
+                    return results.OrderBy(x => x.Date, true);
             }
         }
     }

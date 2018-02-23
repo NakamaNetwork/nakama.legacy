@@ -1,5 +1,4 @@
 ﻿using System;
-using TreasureGuide.Entities;
 using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.DonationModels
@@ -14,7 +13,6 @@ namespace TreasureGuide.Web.Models.DonationModels
         public DateTimeOffset Date { get; set; }
         public bool? Public { get; set; }
         public string Message { get; set; }
-        public string TokenId { get; set; }
     }
 
     public class DonationDetailModel : DonationStubModel

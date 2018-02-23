@@ -77,7 +77,8 @@ export class App {
             { route: 'support', name: 'support', title: 'Support', moduleId: 'views/support/index', nav: true },
             { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: false },
             { route: 'donate/update', name: 'donationUpdate', title: 'Updating Donations', moduleId: 'views/donate/update', nav: false },
-            { route: 'donate/cancel', name: 'donationCancelled', title: 'Donation Cancelled', moduleId: 'views/donate/cancel', nav: false }
+            { route: 'donate/cancel', name: 'donationCancelled', title: 'Donation Cancelled', moduleId: 'views/donate/cancel', nav: false },
+            { route: 'donate/history', name: 'donationHistory', title: 'Donation History', moduleId: 'views/donate/history', nav: false, auth: true },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }

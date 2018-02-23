@@ -116,11 +116,9 @@ namespace TreasureGuide.Web.Configurations
                 box.EntityMapping.ForMember(x => x.BoxUnits, o => o.Ignore());
 
                 var donation = mapper.CreateControllerMapping<Donation, DonationDetailModel, DonationStubModel, DonationEditorModel>();
-                donation.StubMapping.ForMember(x => x.TokenId, o => o.Ignore()); // Handle manually.
                 donation.StubMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
                 donation.StubMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
-
-                donation.DetailMapping.ForMember(x => x.TokenId, o => o.Ignore()); // Handle manually.
+                
                 donation.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
                 donation.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
             });

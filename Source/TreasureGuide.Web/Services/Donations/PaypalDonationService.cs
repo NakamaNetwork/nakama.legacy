@@ -93,13 +93,13 @@ namespace TreasureGuide.Web.Services.Donations
             return result;
         }
 
-        protected override async Task<DonationResultModel> DoRefresh(string paymentId, DonationResultModel result)
+        protected override async Task<DonationResultModel> DoRefresh(string paymentId, DonationResultModel result, bool push)
         {
             var context = GetContext();
             var payment = Payment.Get(context, paymentId);
             if (payment != null)
             {
-                if (payment.state == "created")
+                if (push && payment.state == "created")
                 {
                     try
                     {
