@@ -331,6 +331,12 @@ team-display {
 }
 
 stage-display {
+    &[invasion] {
+        * {
+            color: $invasion-color;
+        }
+    }
+
     * > unit-display {
         display: inline-block;
 

@@ -40,12 +40,7 @@ export class StageDisplay {
     get iconClass() {
         return (this.unitId) ? '' : ('fa fa-fw fa-' + (this.stageId ? 'map' : 'map-o'));
     }
-
-    @computedFrom('invasion')
-    get invasionClass() {
-        return this.invasion ? 'invasion' : '';
-    }
-
+    
     @computedFrom('stage', 'stage.name', 'editable', 'invasion')
     get label() {
         return ((this.stage && this.stage.name) ? this.stage.name : ((this.editable ? 'Select' : 'Any') + ' ' + (this.invasion ? 'Invasion' : 'Stage')));
