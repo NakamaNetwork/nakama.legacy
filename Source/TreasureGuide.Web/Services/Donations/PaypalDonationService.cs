@@ -88,7 +88,8 @@ namespace TreasureGuide.Web.Services.Donations
             }
             catch
             {
-                result.Error = "An error has occurred trying to submit your payment. Please try again later.";
+                result.Error = "An error has occurred trying to submit your payment. Please try again later. " +
+                               "You have not been charged.";
             }
             result.State = GetState(payment.state);
             return result;
@@ -113,7 +114,8 @@ namespace TreasureGuide.Web.Services.Donations
                     }
                     catch
                     {
-                        result.Error = "An error has occurred trying to finalize your payment. Please try again later.";
+                        result.Error = "An error has occurred trying to finalize your payment. Please try again later. " +
+                                       "You have not been charged";
                     }
                 }
                 result.PaymentId = payment.id;
