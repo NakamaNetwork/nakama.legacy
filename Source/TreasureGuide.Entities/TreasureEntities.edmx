@@ -175,6 +175,7 @@
           <Property Name="Guide" Type="nvarchar(max)" />
           <Property Name="Credits" Type="nvarchar" MaxLength="2000" />
           <Property Name="StageId" Type="int" />
+          <Property Name="InvasionId" Type="int" />
           <Property Name="ShipId" Type="int" Nullable="false" />
           <Property Name="SubmittedById" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
@@ -415,6 +416,18 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="Teams">
               <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Teams_dbo_Stages_Invasions">
+          <End Role="Stages" Type="Self.Stages" Multiplicity="0..1" />
+          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teams">
+              <PropertyRef Name="InvasionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -849,6 +862,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Stages" EntitySet="Stages" />
             <End Role="Teams" EntitySet="Teams" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_Teams_dbo_Stages_Invasions" Association="Self.FK_dbo_Teams_dbo_Stages_Invasions">
+            <End Role="Stages" EntitySet="Stages" />
+            <End Role="Teams" EntitySet="Teams" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Teams_EditedById_dbo_UserProfiles" Association="Self.FK_dbo_Teams_EditedById_dbo_UserProfiles">
             <End Role="UserProfiles" EntitySet="UserProfiles" />
             <End Role="Teams" EntitySet="Teams" />
@@ -1120,6 +1137,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Donation" EntitySet="Donations" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_Teams_dbo_Stages_Invasions" Association="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions">
+            <End Role="Stage" EntitySet="Stages" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -1323,6 +1344,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_Stages_dbo_Units" FromRole="Stage" ToRole="Unit" />
           <Property Name="OldId" Type="Int32" />
           <NavigationProperty Name="StageAliases" Relationship="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" FromRole="Stage" ToRole="StageAlias" />
+          <NavigationProperty Name="InvasionTeams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" FromRole="Stage" ToRole="Team" />
                 </EntityType>
                 <Association Name="FK_dbo_Rounds_dbo_Stages">
                     <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
@@ -1422,6 +1444,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamGenericSlots" Relationship="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" FromRole="Team" ToRole="TeamGenericSlot" />
           <NavigationProperty Name="BookmarkedUsers" Relationship="tcdbModel.TeamBookmarks" FromRole="Team" ToRole="UserProfile" />
           <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
+          <Property Name="InvasionId" Type="Int32" />
+          <NavigationProperty Name="Invasion" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" FromRole="Team" ToRole="Stage" />
         </EntityType>
         <Association Name="FK_dbo_Teams_dbo_Ships">
           <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
@@ -2002,6 +2026,18 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Teams_dbo_Stages_Invasions">
+          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="0..1" />
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="InvasionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2124,6 +2160,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="tcdbModel.Team">
               <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="InvasionId" ColumnName="InvasionId" />
                 <ScalarProperty Name="Draft" ColumnName="Draft" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Version" ColumnName="Version" />

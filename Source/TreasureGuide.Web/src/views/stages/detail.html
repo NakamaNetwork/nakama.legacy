@@ -1,6 +1,9 @@
 ﻿<template>
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading" with.bind="stage">
+        <div class="_floatRight" if.bind="unitId">
+            <unit-display unit-id.bind="unitId"></unit-display>
+        </div>
         <h1>
             <global-display global.bind="global"></global-display>
             ${name}

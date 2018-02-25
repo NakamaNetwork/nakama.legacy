@@ -20,7 +20,7 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_UserProfile_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.UserRole" Width="1.5" PointX="5.125" PointY="12.125" />
         <AssociationConnector Association="tcdbModel.UserProfileUserRole" />
-        <EntityTypeShape EntityType="tcdbModel.Team" Width="1.5" PointX="7.25" PointY="2.875" />
+        <EntityTypeShape EntityType="tcdbModel.Team" Width="1.5" PointX="7.25" PointY="2.625" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Ships" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Stages" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" />
@@ -62,6 +62,7 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_UserProfile_dbo_AspNetUsers" />
         <EntityTypeShape EntityType="tcdbModel.Donation" Width="1.5" PointX="7.25" PointY="23" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Donations_dbo_UserProfiles" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

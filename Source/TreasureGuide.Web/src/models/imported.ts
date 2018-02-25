@@ -437,6 +437,7 @@ export interface ITeamStubModel {
     hasVideos: boolean;
     shipId: number;
     stageId: number;
+    invasionId: number;
     deleted: boolean;
     reported: boolean;
     draft: boolean;
@@ -465,6 +466,7 @@ export interface ITeamDetailModel {
     f2PC: boolean;
     shipId: number;
     stageId: number;
+    invasionId: number;
     canEdit: boolean;
     deleted: boolean;
     reported: boolean;
@@ -482,6 +484,7 @@ export interface ITeamEditorModel {
     guide: string;
     shipId: number;
     stageId: number;
+    invasionId: number;
     deleted: boolean;
     draft: boolean;
     
@@ -509,6 +512,7 @@ export interface ITeamSearchModel extends ISearchModel{
     leaderId: number;
     noHelp: boolean;
     stageId: number;
+    invasionId: number;
     boxId: number;
     blacklist: boolean;
     global: boolean;

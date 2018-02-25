@@ -23,6 +23,7 @@ namespace TreasureGuide.Web.Models.TeamModels
 
         public int ShipId { get; set; }
         public int? StageId { get; set; }
+        public int? InvasionId { get; set; }
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool Draft { get; set; }
@@ -50,6 +51,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public bool F2PC { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
+        public int? InvasionId { get; set; }
         public bool CanEdit { get; set; }
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
@@ -77,6 +79,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string Guide { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
+        public int? InvasionId { get; set; }
         public bool Deleted { get; set; }
         public bool Draft { get; set; }
 

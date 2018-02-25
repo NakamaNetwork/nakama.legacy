@@ -9,6 +9,7 @@ namespace TreasureGuide.Web.Models.TeamModels
         public int? LeaderId { get; set; }
         public bool NoHelp { get; set; }
         public int? StageId { get; set; }
+        public int? InvasionId { get; set; }
 
         public int? BoxId { get; set; }
         public bool? Blacklist { get; set; }

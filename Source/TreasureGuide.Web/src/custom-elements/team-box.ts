@@ -19,6 +19,14 @@ export class TeamBox {
         this.accountService = accountService;
     }
 
+    @computedFrom('team', 'team.invasionId')
+    get stageClass() {
+        if (this.team && this.team.invasionId) {
+            return 'm6';
+        }
+        return 'm12';
+    }
+
     @computedFrom('team', 'team.reported', 'team.deleted')
     get teamClass() {
         var className = '';
