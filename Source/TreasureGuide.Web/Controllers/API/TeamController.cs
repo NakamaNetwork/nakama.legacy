@@ -222,11 +222,11 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (stageId.HasValue)
             {
-                teams = teams.Where(x => x.StageId == stageId);
+                teams = teams.Where(x => x.StageId == stageId || x.InvasionId == stageId);
             }
             if (invasionId.HasValue)
             {
-                teams = teams.Where(x => x.InvasionId == invasionId);
+                teams = teams.Where(x => x.StageId == invasionId || x.InvasionId == invasionId);
             }
             return teams;
         }
