@@ -1,10 +1,12 @@
 ﻿<template>
     <button type="button" class="_width100" if.bind="editable" click.delegate="clicked()">
-        <i class.bind="iconClass"></i>
-        ${stageId ? stage.name : 'Select Stage'}
+        <unit-display unit-id.bind="unitId" if.bind="unitId" size="tiny"></unit-display>
+        <i class.bind="iconClass" if.bind="iconClass"></i>
+        ${label}
     </button>
     <span if.bind="!editable">
-        <i class.bind="iconClass"></i>
-        ${stageId ? stage.name : 'Any Stage'}
+        <unit-display unit-id.bind="unitId" if.bind="unitId" size="tiny"></unit-display>
+        <i class.bind="iconClass" if.bind="iconClass"></i>
+        ${label}
     </span>
 </template>

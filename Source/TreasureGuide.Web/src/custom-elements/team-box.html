@@ -16,17 +16,20 @@
             <team-inline team.bind="team" size="small"></team-inline>
         </div>
         <div class="row">
-            <div class="col m6 _alignLeft">
+            <div class="col" class.bind="stageClass">
                 <stage-display stage-id.bind="team.stageId"></stage-display>
             </div>
-            <div class="col m6 _alignRight">
+            <div class="col m6">
+                <stage-display stage-id.bind="team.invasionId" invasion="true" if.bind="team.invasionId"></stage-display>
+            </div>
+            <div class="col m12">
                 <ship-display ship-id.bind="team.shipId"></ship-display>
             </div>
-        </div>
-        <div class="row _alignRight submission">
-            -
-            <user-display name.bind="team.submittedByName" unit-id.bind="team.submittedByUnitId" donor.bind="team.submittedByIsDonor"></user-display>
-            ${team.editedDate | ageFormat}
+            <div class="col m12 submission _alignRight">
+                -
+                <user-display name.bind="team.submittedByName" unit-id.bind="team.submittedByUnitId" donor.bind="team.submittedByIsDonor"></user-display>
+                ${team.editedDate | ageFormat}
+            </div>
         </div>
     </a>
 </template>

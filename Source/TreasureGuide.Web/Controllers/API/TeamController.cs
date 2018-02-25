@@ -129,7 +129,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchReported(results, model.Reported);
             results = SearchEventShips(results, model.EventShips);
             results = SearchBookmarks(results, model.Bookmark);
-            results = SearchStage(results, model.StageId);
+            results = SearchStage(results, model.StageId, model.InvasionId);
             results = SearchTerm(results, model.Term);
             results = SearchSubmitter(results, model.SubmittedBy);
             results = SearchLead(results, model.LeaderId, model.NoHelp);
@@ -218,11 +218,15 @@ namespace TreasureGuide.Web.Controllers.API
             return teams;
         }
 
-        private IQueryable<Team> SearchStage(IQueryable<Team> teams, int? stageId)
+        private IQueryable<Team> SearchStage(IQueryable<Team> teams, int? stageId, int? invasionId)
         {
             if (stageId.HasValue)
             {
-                teams = teams.Where(x => x.StageId == stageId);
+                teams = teams.Where(x => x.StageId == stageId || x.InvasionId == stageId);
+            }
+            if (invasionId.HasValue)
+            {
+                teams = teams.Where(x => x.StageId == invasionId || x.InvasionId == invasionId);
             }
             return teams;
         }

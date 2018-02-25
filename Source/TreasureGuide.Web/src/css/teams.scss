@@ -330,6 +330,28 @@ team-display {
 .similar-section {
 }
 
+stage-display {
+    &[invasion] {
+        * {
+            color: $invasion-color;
+        }
+    }
+
+    * > unit-display {
+        display: inline-block;
+
+        .unit-button {
+            margin: 0;
+        }
+    }
+
+    > button {
+        padding-top: 0;
+        padding-bottom: 0;
+        line-height: 2.95em;
+    }
+}
+
 team-box {
     position: relative;
 
@@ -402,6 +424,7 @@ team-box {
     }
 
     .submission {
+        @extend .truncate;
         font-size: smaller;
 
         user-display {

@@ -2,32 +2,42 @@
 import { DialogController } from 'aurelia-dialog';
 import { BindingEngine } from 'aurelia-binding';
 import { StageQueryService, StageSearchModel } from '../../services/query/stage-query-service';
+import {StageType} from '../../models/imported';
 
 @autoinject
 export class StagePicker {
     private controller: DialogController;
     private stageQueryService: StageQueryService;
+    private bindingEngine: BindingEngine;
+
     @bindable stageId = 0;
 
     stage;
     stages: any[];
-    
-    searchModel = new StageSearchModel().getCached();
+    invasion: boolean;
+
+    searchModel: StageSearchModel = <StageSearchModel>new StageSearchModel().getCached();
     loading;
 
     constructor(stageQueryService: StageQueryService, controller: DialogController, bindingEngine: BindingEngine) {
         this.controller = controller;
         this.controller.settings.centerHorizontalOnly = true;
         this.stageQueryService = stageQueryService;
-
-        bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-            this.search(n);
-        });
-        this.search(this.searchModel.payload);
+        this.bindingEngine = bindingEngine;
     }
 
     activate(viewModel) {
         this.stageId = viewModel.stageId;
+        this.invasion = viewModel.invasion;
+
+        if (this.invasion) {
+            this.searchModel.term = 'Invasion';
+            this.searchModel.type = StageType.Special;
+        }
+        this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+            this.search(n);
+        });
+        this.search(this.searchModel.payload);
     }
 
     search(payload) {

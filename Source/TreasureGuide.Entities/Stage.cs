@@ -20,6 +20,7 @@ namespace TreasureGuide.Entities
             this.Rounds = new HashSet<Round>();
             this.Teams = new HashSet<Team>();
             this.StageAliases = new HashSet<StageAlias>();
+            this.InvasionTeams = new HashSet<Team>();
         }
     
         public int Id { get; set; }
@@ -37,5 +38,7 @@ namespace TreasureGuide.Entities
         public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StageAlias> StageAliases { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Team> InvasionTeams { get; set; }
     }
 }
