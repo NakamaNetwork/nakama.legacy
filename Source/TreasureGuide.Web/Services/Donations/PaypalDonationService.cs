@@ -149,7 +149,7 @@ namespace TreasureGuide.Web.Services.Donations
         {
             var config = GetConfig();
             var token = new OAuthTokenCredential(config).GetAccessToken();
-            var context = new APIContext(token);
+            var context = new APIContext(token) { Config = config };
             return context;
         }
 
