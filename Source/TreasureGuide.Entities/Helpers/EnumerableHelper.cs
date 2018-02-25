@@ -38,6 +38,15 @@ namespace TreasureGuide.Entities.Helpers
             return queryable.OrderBy(selector);
         }
 
+        public static IOrderedQueryable<T> ThenBy<T, TKey>(this IOrderedQueryable<T> queryable, Expression<Func<T, TKey>> selector, bool desc)
+        {
+            if (desc)
+            {
+                return queryable.ThenByDescending(selector);
+            }
+            return queryable.ThenBy(selector);
+        }
+
         private static readonly Regex AlphaNumericRegex = new Regex(@"/[^\w\d]/");
         private static readonly char[] Splitters = { ' ' };
 

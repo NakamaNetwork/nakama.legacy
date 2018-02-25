@@ -42,11 +42,11 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortName:
                     return results.OrderBy(x => x.Name, model.SortDesc);
                 case SearchConstants.SortType:
-                    return results.OrderBy(x => x.Type, model.SortDesc);
+                    return results.OrderBy(x => x.Type, model.SortDesc).ThenBy(x => x.Stars ?? 0, true);
                 case SearchConstants.SortClass:
-                    return results.OrderBy(x => x.Class, model.SortDesc);
+                    return results.OrderBy(x => x.Class, model.SortDesc).ThenBy(x => x.Stars ?? 0, true);
                 case SearchConstants.SortStars:
-                    return results.OrderBy(x => x.Stars ?? 0, model.SortDesc);
+                    return results.OrderBy(x => x.Stars ?? 0, model.SortDesc).ThenBy(x => x.Type, false);
                 default:
                     return results.OrderBy(x => x.Id, false);
             }
