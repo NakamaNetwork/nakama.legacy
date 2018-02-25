@@ -59,8 +59,8 @@ export class HttpEngine {
                     throw error;
                 });
             } else {
-                return response.text().catch(error => {
-                    throw response;
+                return response.text().then(error => {
+                    throw error;
                 });
             }
         });
