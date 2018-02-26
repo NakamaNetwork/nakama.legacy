@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { TeamEditorModel } from '../../services/query/team-query-service';
 import { ITeamUnitEditorModel } from '../../models/imported';
 import { DonationQueryService } from '../../services/query/donation-query-service';
+import { StageQueryService } from '../../services/query/stage-query-service';
 
 @autoinject
 export class AdminPage {
@@ -19,6 +20,7 @@ export class AdminPage {
     bindingEngine;
     profileQueryService;
     donationQueryService;
+    stageQueryService;
 
     profiles = [];
 
@@ -28,9 +30,11 @@ export class AdminPage {
     allRoles = AccountService.allRoles;
 
     constructor(httpEngine: HttpEngine, teamQueryService: TeamQueryService, profileQueryService: ProfileQueryService,
-        alertService: AlertService, bindingEngine: BindingEngine, donationQueryService: DonationQueryService) {
+        alertService: AlertService, bindingEngine: BindingEngine, donationQueryService: DonationQueryService,
+        stageQueryService: StageQueryService) {
         this.httpEngine = httpEngine;
         this.teamQueryService = teamQueryService;
+        this.stageQueryService = stageQueryService;
         this.profileQueryService = profileQueryService;
         this.alert = alertService;
         this.bindingEngine = bindingEngine;
@@ -55,24 +59,28 @@ export class AdminPage {
     }
 
     createTeam(suuuper: boolean) {
-        var team = new TeamEditorModel();
-        team.name = 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a');
-        team.guide = '';
-        team.guide = '';
-        team.credits = '';
-        for (var i = 0; i < 6; i++) {
-            var randomLimit = suuuper ? 1000 : i < 3 ? 4 : 20;
-            var unit = <ITeamUnitEditorModel>{
-                unitId: Math.floor(Math.random() * randomLimit) + 1,
-                position: i,
-                sub: false
+        this.stageQueryService.stub().then(x => {
+            var team = new TeamEditorModel();
+            team.name = 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a');
+            team.guide = '';
+            team.guide = '';
+            team.credits = '';
+            team.shipId = (Math.floor(Math.random() * 30)) + 1;
+            team.stageId = x[Math.floor((Math.random() * 200)) + 1].id;
+            for (var i = 0; i < 6; i++) {
+                var randomLimit = suuuper ? 1000 : i < 3 ? 4 : 20;
+                var unit = <ITeamUnitEditorModel>{
+                    unitId: Math.floor(Math.random() * randomLimit) + 1,
+                    position: i,
+                    sub: false
+                };
+                team.teamUnits.push(unit);
             };
-            team.teamUnits.push(unit);
-        };
-        this.teamQueryService.save(team).then(x => {
-            this.alert.success('Successfully created team \'' + team.name + '\'.');
-        }, x => {
-            this.alert.danger('Failed to create team \'' + team.name + '\'. Probably gave a bad unit or something.');
+            this.teamQueryService.save(team).then(x => {
+                this.alert.success('Successfully created team \'' + team.name + '\'.');
+            }, x => {
+                this.alert.danger('Failed to create team \'' + team.name + '\'. Probably gave a bad unit or something.');
+            });
         });
     }
 
