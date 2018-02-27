@@ -16,6 +16,7 @@ namespace TreasureGuide.Entities
     {
         public int UnitId { get; set; }
         public string Name { get; set; }
+        public System.DateTimeOffset EditedDate { get; set; }
     
         public virtual Unit Unit { get; set; }
     }

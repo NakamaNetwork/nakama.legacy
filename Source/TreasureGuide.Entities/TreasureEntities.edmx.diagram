@@ -6,16 +6,9 @@
     <edmx:Diagrams>
       <Diagram DiagramId="15b9edd1340940f481faacdd9b6411bb" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="tcdbModel.TeamSocket" Width="1.5" PointX="7.25" PointY="0.5" />
-        <EntityTypeShape EntityType="tcdbModel.Round" Width="1.5" PointX="2.75" PointY="10.125" />
-        <EntityTypeShape EntityType="tcdbModel.RoundUnitBehavior" Width="1.5" PointX="0.5" PointY="3.5" />
-        <EntityTypeShape EntityType="tcdbModel.RoundUnit" Width="1.5" PointX="0.5" PointY="7.125" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_RoundUnits_dbo_Stages" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_RoundUnitBehavior_dbo_RoundUnits" />
         <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="2.75" PointY="2.875" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_RoundUnits_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.Ship" Width="1.5" PointX="9.625" PointY="2.125" />
         <EntityTypeShape EntityType="tcdbModel.Stage" Width="1.5" PointX="9.125" PointY="9.75" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_Rounds_dbo_Stages" />
         <EntityTypeShape EntityType="tcdbModel.UserProfile" Width="1.5" PointX="5" PointY="6.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UserProfile_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.UserRole" Width="1.5" PointX="5.125" PointY="12.125" />
@@ -57,12 +50,14 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_BoxUnits_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.StageAlias" Width="1.5" PointX="11.375" PointY="20.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" />
-        <AssociationConnector Association="tcdbModel.UnitEvolutions" />
         <EntityTypeShape EntityType="tcdbModel.AspNetUser" Width="1.5" PointX="2.75" PointY="13.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UserProfile_dbo_AspNetUsers" />
         <EntityTypeShape EntityType="tcdbModel.Donation" Width="1.5" PointX="7.25" PointY="23" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Donations_dbo_UserProfiles" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" />
+        <EntityTypeShape EntityType="tcdbModel.UnitEvolution" Width="1.5" PointX="5" PointY="15" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_UnitEvolutions_dbo_FromUnitId" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

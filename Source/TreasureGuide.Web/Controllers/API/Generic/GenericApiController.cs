@@ -174,7 +174,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
 
         protected virtual async Task<IActionResult> Stub(TKey id = default(TKey))
         {
-            return await Get<TStubModel>(id);
+            return await Get<TStubModel>(id, true);
         }
 
         protected virtual async Task<IActionResult> Detail(TKey id = default(TKey))

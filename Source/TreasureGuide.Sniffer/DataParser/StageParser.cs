@@ -146,12 +146,12 @@ namespace TreasureGuide.Sniffer.DataParser
         private IEnumerable<StageAlias> GetAliases(Tuple<Unit, Stage> tuple)
         {
             var me = GetAliases(tuple.Item1.Name, new[] { tuple.Item1 }, tuple.Item2, true);
-            var to = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesTo, tuple.Item2);
-            var from = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesFrom, tuple.Item2);
+            var to = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesTo.Select(x => x.EvolvesTo), tuple.Item2);
+            var from = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesFrom.Select(x => x.EvolvesFrom), tuple.Item2);
             return to.Concat(from).Concat(me);
         }
 
-        private IEnumerable<StageAlias> GetAliases(string name, ICollection<Unit> targets, Stage detailItem2, bool ignoreMe = false)
+        private IEnumerable<StageAlias> GetAliases(string name, IEnumerable<Unit> targets, Stage detailItem2, bool ignoreMe = false)
         {
             var aliases = targets.Select(x => new StageAlias
             {
