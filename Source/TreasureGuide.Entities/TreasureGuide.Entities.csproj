@@ -152,6 +152,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TreasureEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="TreasureEntitiesConfiguration.cs" />
     <Compile Include="Unit.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>

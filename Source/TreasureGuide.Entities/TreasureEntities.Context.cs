@@ -15,6 +15,7 @@ namespace TreasureGuide.Entities
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
+    [DbConfigurationType(typeof(TreasureEntitiesConfiguration))] 
     public partial class TreasureEntities : DbContext
     {
         public TreasureEntities()
