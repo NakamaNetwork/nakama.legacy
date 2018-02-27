@@ -1,15 +1,22 @@
 ﻿<template>
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading" with.bind="profile">
-        <h1>${userName}</h1>
-        <a if.bind="canEdit" class="button _primary" route-href="route: profileEdit; params.bind: { id: id }">
-            <i class="fa fa-fw fa-pencil"></i>
-            Edit Profile
-        </a>
+        <h1 class.bind="donorClass">
+            ${userName}
+        </h1>
         <div class="_floatRight" if.bind="unitId">
             <unit-display unit-id.bind="unitId">
             </unit-display>
         </div>
+        <div class="row" if.bind="donor">
+            <em>
+                This user gets a shiny title and some other perks because they <a route-href="route: support">donated to Nakama Network's development!</a>
+            </em>
+        </div>
+        <a if.bind="canEdit" class="button _primary" route-href="route: profileEdit; params.bind: { id: id }">
+            <i class="fa fa-fw fa-pencil"></i>
+            Edit Profile
+        </a>
         <div if.bind="website">
             <label for="website">Website</label>
             <a id="website" href.bind="websiteParsed" href="#" target="_blank">${website}</a>

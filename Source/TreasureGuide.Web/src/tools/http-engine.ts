@@ -58,8 +58,11 @@ export class HttpEngine {
                 return response.json().catch(error => {
                     throw error;
                 });
+            } else {
+                return response.text().then(error => {
+                    throw error;
+                });
             }
-            throw response;
         });
     };
 

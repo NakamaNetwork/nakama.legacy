@@ -20,11 +20,18 @@
                 <score-display team-id.bind="id" score.bind="score" my-vote.two-way="myVote" my-bookmark.two-way="myBookmark" votable="true"></score-display>
             </div>
         </div>
-        <div class="row" if.bind="stageId">
+        <div class="row" if.bind="stageId || invasionId">
             <h4>Stage</h4>
-            <a route-href="route: stageDetails; params.bind: { id: stageId }">
-                <stage-display stage-id.bind="stageId"></stage-display>
-            </a>
+            <div class="row" if.bind="stageId">
+                <a route-href="route: stageDetails; params.bind: { id: stageId }">
+                    <stage-display stage-id.bind="stageId"></stage-display>
+                </a>
+            </div>
+            <div class="row" if.bind="invasionId">
+                <a route-href="route: stageDetails; params.bind: { id: invasionId }">
+                    <stage-display stage-id.bind="invasionId" invasion="true"></stage-display>
+                </a>
+            </div>
         </div>
         <div class="row _alignCenter">
             <h4>Team</h4>
@@ -51,7 +58,7 @@
         <div class="row _alignRight">
             Submitted by
             <a route-href="route: profile; params.bind: { id: submittedByName }">
-                <user-display name.bind="submittedByName" unit-id.bind="submittedByUnitId"></user-display>
+                <user-display name.bind="submittedByName" unit-id.bind="submittedByUnitId" donor.bind="submittedByIsDonor"></user-display>
             </a>
             on ${editedDate | dateTimeFormat}
         </div>

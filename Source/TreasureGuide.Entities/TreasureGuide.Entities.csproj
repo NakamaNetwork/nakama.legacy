@@ -51,10 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetUser.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Box.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="BoxUnit.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Donation.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityConstructor.cs" />
@@ -67,6 +73,12 @@
     <Compile Include="Interfaces\ICanEdit.cs" />
     <Compile Include="Interfaces\IIdItem.cs" />
     <Compile Include="Interfaces\ISubItem.cs" />
+    <Compile Include="PaymentState.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentType.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Round.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
@@ -140,6 +152,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TreasureEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="TreasureEntitiesConfiguration.cs" />
     <Compile Include="Unit.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>

@@ -14,5 +14,6 @@ namespace TreasureGuide.Web.Models.TeamModels
         public string UserId { get; set; }
         public string UserName { get; set; }
         public int? UserUnitId { get; set; }
+        public bool UserIsDonor { get; set; }
     }
 }

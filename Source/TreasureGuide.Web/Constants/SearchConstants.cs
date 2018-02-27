@@ -13,5 +13,6 @@
         public const string SortLeader = "Leader";
         public const string SortDate = "Date";
         public const string SortUser = "User";
+        public const string SortAmount = "Amount";
     }
 }

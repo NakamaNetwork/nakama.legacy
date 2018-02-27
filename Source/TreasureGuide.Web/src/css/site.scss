@@ -244,3 +244,48 @@ iframe {
         -webkit-transform: translateY(50%);
     }
 }
+
+.donor-info {
+    @extend ._alignLeft;
+    margin: auto;
+    max-width: 75%;
+
+    ul {
+        margin-bottom: 0;
+    }
+}
+
+.donor-user {
+    color: $donorStart-color;
+    animation: donorAnimation 2s infinite;
+    -webkit-animation: donorAnimation 2s infinite;
+    font-weight: bolder;
+}
+
+@keyframes donorAnimation {
+    0% {
+        color: $donorStart-color;
+    }
+
+    50% {
+        color: $donorEnd-color;
+    }
+
+    100% {
+        color: $donorStart-color;
+    }
+}
+
+@-webkit-keyframes donorAnimation {
+    0% {
+        color: $donorStart-color;
+    }
+
+    50% {
+        color: $donorEnd-color;
+    }
+
+    100% {
+        color: $donorStart-color;
+    }
+}

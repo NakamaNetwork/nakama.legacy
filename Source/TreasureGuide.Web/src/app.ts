@@ -9,7 +9,6 @@ import { BoxService } from './services/box-service';
 @autoinject
 export class App {
     public router: Router;
-    public message = 'Shukko da!';
     public accountService: AccountService;
     private boxService: BoxService;
     private ea: EventAggregator;
@@ -67,13 +66,19 @@ export class App {
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: 'Administrator' },
             // Account
-            { route: ['account/:id?', 'profile/:id?'], name: 'profile', title: 'Account', moduleId: 'views/profile/index', nav: false, auth: false },
+            { route: ['account/:id?', 'profile/:id?'], name: 'profile', title: 'Account', moduleId: 'views/profile/index', nav: false },
             { route: ['account/:id/edit', 'profile/:id/edit'], name: 'profileEdit', title: 'Account', moduleId: 'views/profile/edit', nav: false, auth: true },
             // Boring
-            { route: 'privacy', name: 'privacy', title: 'Privacy Policy', moduleId: 'views/boring/privacy', nav: false, auth: false },
-            { route: 'tos', name: 'tos', title: 'Terms of Service', moduleId: 'views/boring/tos', nav: false, auth: false },
+            { route: 'privacy', name: 'privacy', title: 'Privacy Policy', moduleId: 'views/boring/privacy', nav: false },
+            { route: 'tos', name: 'tos', title: 'Terms of Service', moduleId: 'views/boring/tos', nav: false },
             { route: 'about', name: 'about', title: 'About', moduleId: 'views/boring/intro', nav: true },
             { route: 'markdown', name: 'markdown', title: 'Markdown', moduleId: 'views/boring/markdown', nav: false },
+            // Give me your money
+            { route: 'support', name: 'support', title: 'Support', moduleId: 'views/support/index', nav: true },
+            { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: false },
+            { route: 'donate/update', name: 'donationUpdate', title: 'Updating Donations', moduleId: 'views/donate/update', nav: false },
+            { route: 'donate/cancel', name: 'donationCancelled', title: 'Donation Cancelled', moduleId: 'views/donate/cancel', nav: false },
+            { route: 'donate/history', name: 'donationHistory', title: 'Donation History', moduleId: 'views/donate/history', nav: false, auth: true },
         ]);
         config.mapUnknownRoutes({ route: 'notfound', moduleId: 'views/notfound' });
     }

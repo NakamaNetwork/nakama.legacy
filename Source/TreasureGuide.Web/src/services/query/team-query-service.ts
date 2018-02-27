@@ -75,6 +75,7 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     leaderId: number;
     noHelp: boolean;
     stageId: number;
+    invasionId: number;
     boxId: number;
     blacklist: boolean;
     global: boolean;
@@ -119,6 +120,7 @@ export class TeamEditorModel implements ITeamEditorModel {
     guide: string;
     shipId: number = 1;
     stageId: number;
+    invasionId: number;
     teamSockets: ITeamSocketEditorModel[] = [];
     teamUnits: ITeamUnitEditorModel[] = [];
     teamGenericSlots: ITeamGenericSlotEditorModel[] = [];
@@ -132,6 +134,7 @@ export class TeamEditorModel implements ITeamEditorModel {
             credits: this.credits,
             guide: this.guide,
             shipId: this.shipId,
+            invasionId: this.invasionId,
             stageId: this.stageId,
             deleted: this.deleted,
             draft: this.draft,

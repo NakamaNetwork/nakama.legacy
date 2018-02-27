@@ -3,19 +3,13 @@
         <fieldset>
             <legend>Search</legend>
             <div class="row">
-                <div class="col m4">
+                <div class="col m6" if.bind="!termLocked">
                     <label for="termInput">Stage Name</label>
-                    <input id="termInput" type="text" class="_width100" 
+                    <input id="termInput" type="text" class="_width100"
                            focus="true" value.two-way="term & debounce"
                            placeholder="Water Seven..." />
                 </div>
-                <div class="col m4">
-                    <label for="checkInput">
-                        <input id="checkInput" type="checkbox" checked.two-way="global" />
-                        <span class="-label-body">Global</span>
-                    </label>
-                </div>
-                <div class="col m4">
+                <div class="col m6" if.bind="!typeLocked">
                     <label for="typeInput">
                         Stage Type
                     </label>
@@ -23,7 +17,15 @@
                 </div>
             </div>
             <div class="row">
-                <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
+                <div class="col m6">
+                    <label for="checkInput">
+                        <input id="checkInput" type="checkbox" checked.two-way="global" />
+                        <span class="-label-body">Global</span>
+                    </label>
+                </div>
+                <div class="col m6">
+                    <button type="button" class="button _floatRight" click.trigger="reset()">Reset</button>
+                </div>
             </div>
         </fieldset>
     </form>

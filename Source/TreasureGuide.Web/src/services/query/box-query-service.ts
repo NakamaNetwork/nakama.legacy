@@ -54,6 +54,7 @@ export class BoxDetailModel implements IBoxDetailModel {
     userId: string;
     userName: string;
     userUnitId: number;
+    userIsDonor: boolean;
     id: number;
     name: string;
     friendId: number;

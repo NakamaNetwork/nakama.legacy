@@ -7,8 +7,8 @@ export interface IAccessTokenModel {
 
 
 export class BoxConstants {
-    public static BoxUserLimit: number = 2;
-    public static MultiBoxUserLimit: number = 6;
+    public static BoxLimit: number = 2;
+    public static DonorBoxLimit: number = 6;
     
 }
 
@@ -27,6 +27,7 @@ export interface IBoxDetailModel extends IBoxStubModel{
     boxUnits: IBoxUnitDetailModel[];
     userId: string;
     userName: string;
+    userIsDonor: boolean;
     userUnitId: number;
     
 }
@@ -82,6 +83,80 @@ export interface IBoxUnitUpdateModel {
 }
 
 
+export interface IDonationFinalizationModel {
+    id: number;
+    payerId: string;
+    paymentId: string;
+    
+}
+
+
+export interface IDonationStubModel {
+    id: number;
+    userId: string;
+    userName: string;
+    userUnitId: number;
+    userIsDonor: boolean;
+    amount: number;
+    date: Date;
+    public: boolean;
+    message: string;
+    
+}
+
+export interface IDonationDetailModel extends IDonationStubModel{
+    
+}
+
+export interface IDonationEditorModel {
+    id: number;
+    
+}
+
+
+export interface IDonationResultModel {
+    id: number;
+    userId: string;
+    payerId: string;
+    paymentId: string;
+    tokenId: string;
+    state: PaymentState;
+    paymentType: PaymentType;
+    error: string;
+    redirectUrl: string;
+    hasError: boolean;
+    
+}
+
+
+export interface IDonationSearchModel extends ISearchModel{
+    user: string;
+    startDate: Date;
+    endDate: Date;
+    minAmount: number;
+    maxAmount: number;
+    complex: boolean;
+    
+}
+
+
+export interface IDonationSubmissionModel {
+    amount: number;
+    paymentType: PaymentType;
+    message: string;
+    public: boolean;
+    
+}
+
+
+export interface IDonationVerificationModel {
+    paymentId: string;
+    tokenId: string;
+    id: number;
+    
+}
+
+
 export interface IExternalLoginConfirmationViewModel {
     userName: string;
     email: string;
@@ -106,6 +181,23 @@ export interface IMetaResultModel {
     title: string;
     description: string;
     
+}
+
+
+export enum PaymentState { 
+    Unknown = 0,
+    Initialized = 1,
+    Processing = 2,
+    Complete = 3,
+    Failed = 4,
+    Cancelled = 5,
+    Chargeback = 6
+}
+
+
+export enum PaymentType { 
+    Unknown = 0,
+    Paypal = 1
 }
 
 
@@ -152,7 +244,7 @@ export class RoleConstants {
     public static BetaTester: string = "BetaTester";
     public static Contributor: string = "Contributor";
     public static BoxUser: string = "BoxUser";
-    public static MultiBoxUser: string = "MultiBoxUser";
+    public static Donor: string = "Donor";
     
 }
 
@@ -169,6 +261,7 @@ export class SearchConstants {
     public static SortLeader: string = "Leader";
     public static SortDate: string = "Date";
     public static SortUser: string = "User";
+    public static SortAmount: string = "Amount";
     
 }
 
@@ -303,6 +396,22 @@ export interface ITeamGenericSlotEditorModel extends ITeamGenericSlotDetailModel
 }
 
 
+export interface ITeamGenericUnitStubModel {
+    role: number;
+    position: number;
+    
+}
+
+export interface ITeamGenericUnitDetailModel extends ITeamGenericUnitStubModel{
+    combo: number;
+    
+}
+
+export interface ITeamGenericUnitEditorModel extends ITeamGenericUnitDetailModel{
+    
+}
+
+
 export interface ITeamImportModel {
     team: ITeamEditorModel;
     credit: ITeamCreditModel;
@@ -319,6 +428,7 @@ export interface ITeamStubModel {
     submittedById: string;
     submittedByName: string;
     submittedByUnitId: number;
+    submittedByIsDonor: boolean;
     editedDate: Date;
     score: number;
     global: boolean;
@@ -327,6 +437,7 @@ export interface ITeamStubModel {
     hasVideos: boolean;
     shipId: number;
     stageId: number;
+    invasionId: number;
     deleted: boolean;
     reported: boolean;
     draft: boolean;
@@ -343,6 +454,7 @@ export interface ITeamDetailModel {
     submittedById: string;
     submittedByName: string;
     submittedByUnitId: number;
+    submittedByIsDonor: boolean;
     editedDate: Date;
     score: number;
     myVote: number;
@@ -354,6 +466,7 @@ export interface ITeamDetailModel {
     f2PC: boolean;
     shipId: number;
     stageId: number;
+    invasionId: number;
     canEdit: boolean;
     deleted: boolean;
     reported: boolean;
@@ -371,6 +484,7 @@ export interface ITeamEditorModel {
     guide: string;
     shipId: number;
     stageId: number;
+    invasionId: number;
     deleted: boolean;
     draft: boolean;
     
@@ -398,6 +512,7 @@ export interface ITeamSearchModel extends ISearchModel{
     leaderId: number;
     noHelp: boolean;
     stageId: number;
+    invasionId: number;
     boxId: number;
     blacklist: boolean;
     global: boolean;
@@ -453,7 +568,7 @@ export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
 }
 
 export interface ITeamUnitEditorModel extends ITeamUnitStubModel{
-    flags: number;
+    flags: IndividualUnitFlags;
     sub: boolean;
     
 }
@@ -468,6 +583,7 @@ export interface ITeamVideoModel {
     userId: string;
     userName: string;
     userUnitId: number;
+    userIsDonor: boolean;
     
 }
 
@@ -479,16 +595,32 @@ export interface ITeamVoteModel {
 }
 
 
+export enum TransactionState { 
+    Unknown = 0,
+    Initialized = 1,
+    Processing = 2,
+    Complete = 3,
+    Failed = 4,
+    Chargeback = 5
+}
+
+
+export enum TransactionType { 
+    Unknown = 0,
+    Paypal = 1
+}
+
+
 export enum UnitClass { 
     Unknown = 0,
-    Shooter = 1,
-    Fighter = 2,
+    Fighter = 1,
+    Slasher = 2,
     Striker = 4,
-    Slasher = 8,
-    Cerebral = 16,
+    Shooter = 8,
+    FreeSpirit = 16,
     Driven = 32,
-    Powerhouse = 64,
-    FreeSpirit = 128,
+    Cerebral = 64,
+    PowerHouse = 128,
     Evolver = 256,
     Booster = 512
 }

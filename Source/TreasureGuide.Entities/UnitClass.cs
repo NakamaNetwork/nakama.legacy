@@ -15,14 +15,14 @@ namespace TreasureGuide.Entities
     public enum UnitClass : short
     {
         Unknown = 0,
-        Shooter = 1,
-        Fighter = 2,
+        Fighter = 1,
+        Slasher = 2,
         Striker = 4,
-        Slasher = 8,
-        Cerebral = 16,
+        Shooter = 8,
+        FreeSpirit = 16,
         Driven = 32,
-        Powerhouse = 64,
-        FreeSpirit = 128,
+        Cerebral = 64,
+        PowerHouse = 128,
         Evolver = 256,
         Booster = 512
     }

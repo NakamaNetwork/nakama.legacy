@@ -32,7 +32,10 @@
                             <global-display global.bind="stage.global"></global-display>
                         </td>
                         <td>
-                            <a route-href="route: stageDetails; params.bind: {id: stage.id}">${stage.name}</a>
+                            <a route-href="route: stageDetails; params.bind: {id: stage.id}">
+                                <unit-display unit-id.bind="stage.unitId" size="small" if.bind="stage.unitId"></unit-display>
+                                ${stage.name}
+                            </a>
                         </td>
                         <td>
                             <stage-type-display type.bind="stage.type"></stage-type-display>

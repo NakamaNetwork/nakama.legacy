@@ -139,7 +139,7 @@ namespace TreasureGuide.Web
                 ClientSecret = Configuration["Authentication:Discord:ClientSecret"],
                 Scope = { "identify", "email" }
             });
-
+            
             RoleConfig.Configure(roleManager);
 
             app.Use(async (context, next) =>

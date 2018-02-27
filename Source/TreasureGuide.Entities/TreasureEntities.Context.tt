@@ -53,6 +53,7 @@ using System.Linq;
 }
 #>
 
+[DbConfigurationType(typeof(TreasureEntitiesConfiguration))] 
 <#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : DbContext
 {
     public <#=code.Escape(container)#>()

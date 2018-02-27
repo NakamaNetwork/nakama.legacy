@@ -19,7 +19,7 @@ namespace TreasureGuide.Web.Models.TeamModels
 
     public class TeamUnitEditorModel : TeamUnitStubModel, ISubItem
     {
-        public int? Flags { get; set; }
+        public IndividualUnitFlags? Flags { get; set; }
         public bool Sub { get; set; }
     }
 }

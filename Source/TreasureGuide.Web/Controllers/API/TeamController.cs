@@ -105,11 +105,11 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortScore:
                     return results.OrderBy(x => x.TeamVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), !model.SortDesc);
                 case SearchConstants.SortDate:
-                    return results.OrderBy(x => x.EditedDate, !model.SortDesc);
+                    return results.OrderBy(x => x.SubmittedDate, !model.SortDesc);
                 case SearchConstants.SortUser:
                     return results.OrderBy(x => x.SubmittingUser.UserName, model.SortDesc);
                 default:
-                    return results.OrderBy(x => x.EditedDate, true);
+                    return results.OrderBy(x => x.Id, true);
             }
         }
 
@@ -129,7 +129,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchReported(results, model.Reported);
             results = SearchEventShips(results, model.EventShips);
             results = SearchBookmarks(results, model.Bookmark);
-            results = SearchStage(results, model.StageId);
+            results = SearchStage(results, model.StageId, model.InvasionId);
             results = SearchTerm(results, model.Term);
             results = SearchSubmitter(results, model.SubmittedBy);
             results = SearchLead(results, model.LeaderId, model.NoHelp);
@@ -218,11 +218,15 @@ namespace TreasureGuide.Web.Controllers.API
             return teams;
         }
 
-        private IQueryable<Team> SearchStage(IQueryable<Team> teams, int? stageId)
+        private IQueryable<Team> SearchStage(IQueryable<Team> teams, int? stageId, int? invasionId)
         {
             if (stageId.HasValue)
             {
-                teams = teams.Where(x => x.StageId == stageId);
+                teams = teams.Where(x => x.StageId == stageId || x.InvasionId == stageId);
+            }
+            if (invasionId.HasValue)
+            {
+                teams = teams.Where(x => x.StageId == invasionId || x.InvasionId == invasionId);
             }
             return teams;
         }

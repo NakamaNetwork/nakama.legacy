@@ -8,6 +8,17 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
+            header: '02/25/18',
+            lines: [
+                'Teams can now be marked with an Invasion specification.',
+                'Added icons to stages.',
+                'Updated unit sorting logic to more closely resemble that of OPTC. (Not all of them are 100% accurate still.)',
+                'Updated order of unit classes to more closely resemble that of OPTC.',
+                'Added a few small perks for those who donate to the development and hosting of Nakama Network. See "Support" page for more details.',
+                'Give me all your money.'
+            ]
+        },
+        {
             header: '02/19/18 - Continued',
             lines: [
                 'All users have been granted an additional box slot!',
@@ -18,7 +29,8 @@ export class NewsService {
                 'Clicking a unit portrait in the add/remove box dialog will now toggle it.',
                 'Clicking a unit portrait in the box detail page will now open its info page on OPTC-db.',
                 'Fixed an issue where box deletion could fail.',
-                'Fixed an issue where creating a box would not immediately open it for the user.'
+                'Fixed an issue where creating a box would not immediately open it for the user.',
+                'Fixed an issue where editing teams could fail.'
             ]
         },
         {
@@ -40,7 +52,7 @@ export class NewsService {
                 'Added missing Discord icon on login screen.',
                 'Fixed an issue where unsetting units on search filters would not actually remove them.',
                 'Fixed a bug where resetting search fields on certain pages (i.e. stage and profile pages) ' +
-                    'would remove search constraints that should be uneditable.',
+                'would remove search constraints that should be uneditable.',
                 'Improved search caching functionality and restored it to different parts of the website.'
             ]
         },

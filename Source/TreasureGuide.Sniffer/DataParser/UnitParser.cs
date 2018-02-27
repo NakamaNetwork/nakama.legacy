@@ -56,6 +56,10 @@ namespace TreasureGuide.Sniffer.DataParser
 
         private decimal? ParseStars(string value)
         {
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
             var number = NumberRegex.Match(value);
             if (number.Success)
             {
