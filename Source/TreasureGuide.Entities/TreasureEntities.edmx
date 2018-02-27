@@ -1144,7 +1144,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Stage" ToRole="Team" />
           <Property Name="UnitId" Type="Int32" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_Stages_dbo_Units" FromRole="Stage" ToRole="Unit" />
-          <Property Name="OldId" Type="Int32" />
           <NavigationProperty Name="StageAliases" Relationship="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" FromRole="Stage" ToRole="StageAlias" />
           <NavigationProperty Name="InvasionTeams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" FromRole="Stage" ToRole="Team" />
           <Property Name="EditedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />

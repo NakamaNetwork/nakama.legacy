@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,20 +7,24 @@ using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
-using TreasureGuide.Web.Models.TeamModels;
 using TreasureGuide.Web.Models.UnitModels;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/unit")]
-    public class UnitController : SearchableApiController<int, Unit, int?, UnitStubModel, UnitDetailModel, UnitEditorModel, UnitSearchModel>
+    public class UnitController : LocallyCachedContentController<int, Unit, UnitStubModel>
     {
         public UnitController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
         }
 
-        protected override async Task<IQueryable<Unit>> PerformSearch(IQueryable<Unit> results, UnitSearchModel model)
+        protected override IQueryable<Unit> GetNewItems(IQueryable<Unit> entities, DateTimeOffset? date)
+        {
+            return entities.Where(x => x.EditedDate > date || x.UnitAliases.Any(y => y.EditedDate > date) || x.EvolvesTo.Any(y => y.EditedDate > date) || x.EvolvesFrom.Any(y => y.EditedDate > date));
+        }
+
+        protected async Task<IQueryable<Unit>> PerformSearch(IQueryable<Unit> results, UnitSearchModel model)
         {
             results = SearchTerm(results, model.Term);
             results = SearchTypes(results, model.Types);
@@ -32,8 +35,7 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
-
-        protected override IQueryable<Unit> OrderSearchResults(IQueryable<Unit> results, UnitSearchModel model)
+        protected IQueryable<Unit> OrderSearchResults(IQueryable<Unit> results, UnitSearchModel model)
         {
             switch (model.SortBy ?? "")
             {

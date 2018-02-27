@@ -69,15 +69,13 @@ namespace TreasureGuide.Sniffer.DataParser
         private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType, int smallId = 0)
         {
             var id = CreateId(stageType, thumb, smallId);
-            var oldId = IdMaker.FromString(name, (int)(stageType) * 1000000);
             var stage = new Stage
             {
                 Id = id,
                 UnitId = thumb,
                 Name = name,
                 Global = global,
-                Type = stageType,
-                OldId = oldId,
+                Type = stageType
             };
             return stage;
         }

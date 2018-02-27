@@ -21,12 +21,18 @@ namespace TreasureGuide.Web.Configurations
         {
             var config = new MapperConfiguration(mapper =>
             {
-                var ship = mapper.CreateControllerMapping<Ship, ShipDetailModel, ShipStubModel, ShipEditorModel>();
-                var unit = mapper.CreateControllerMapping<Unit, UnitDetailModel, UnitStubModel, UnitEditorModel>();
+                var unit = mapper.CreateMap<Unit, UnitStubModel>();
+                unit.ForMember(x => x.Aliases, o => o.MapFrom(y => y.UnitAliases.Select(z => z.Name)));
+                unit.ForMember(x => x.EvolvesTo, o => o.MapFrom(y => y.EvolvesTo.Select(z => z.ToUnitId)));
+                unit.ForMember(x => x.EvolvesFrom, o => o.MapFrom(y => y.EvolvesFrom.Select(z => z.FromUnitId)));
+
+                var stage = mapper.CreateMap<Stage, StageStubModel>();
+                stage.ForMember(x => x.Aliases, o => o.MapFrom(y => y.StageAliases.Select(z => z.Name)));
+                stage.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count(z => !z.Draft && !z.Deleted)));
+
+                var ship = mapper.CreateMap<Ship, ShipStubModel>();
 
                 var teamUnit = mapper.CreateControllerMapping<TeamUnit, TeamUnitDetailModel, TeamUnitStubModel, TeamUnitEditorModel>();
-                teamUnit.DetailMapping.ForMember(x => x.Name, o => o.MapFrom(y => y.Unit.Name));
-                teamUnit.DetailMapping.ForMember(x => x.Level, o => o.MapFrom(y => (int)(y.Unit.MaxLevel ?? 1)));
 
                 var teamGenericUnit = mapper.CreateControllerMapping<TeamGenericSlot, TeamGenericSlotDetailModel, TeamGenericSlotStubModel, TeamGenericSlotEditorModel>();
 
@@ -85,9 +91,6 @@ namespace TreasureGuide.Web.Configurations
                     z.Sub ||
                     z.Position < 2 || !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
                 )));
-
-                var stage = mapper.CreateControllerMapping<Stage, StageDetailModel, StageStubModel, StageEditorModel>();
-                stage.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count(x => !x.Deleted && !x.Draft)));
 
                 var user = mapper.CreateControllerMapping<UserProfile, ProfileDetailModel, ProfileStubModel, ProfileEditorModel>();
                 user.EntityMapping.ForMember(x => x.UserRoles, o => o.Ignore()); // Handle this manually.

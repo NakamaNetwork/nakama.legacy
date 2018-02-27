@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -15,6 +16,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         where TEntity : class, IIdItem<TEntityKey>, IEditedDateItem
         where TCacheModel : IIdItem<TEntityKey>, IEditedDateItem
     {
+        private const double Timeout = 5;
         protected readonly TreasureEntities DbContext;
         protected readonly IMapper AutoMapper;
         protected readonly IThrottleService ThrottlingService;
@@ -33,13 +35,22 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [Route("[date]")]
         public async Task<IActionResult> Get(DateTimeOffset? date = null)
         {
+            if (Throttled && ThrottlingService.CanAccess(User, Request, seconds: Timeout))
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+            }
             var entities = DbContext.Set<TEntity>().AsQueryable();
             if (date.HasValue)
             {
-                entities = entities.Where(x => x.EditedDate > date.Value);
+                entities = GetNewItems(entities, date);
             }
             var results = await entities.ProjectTo<TCacheModel>(AutoMapper.ConfigurationProvider).ToListAsync();
             return Ok(results);
+        }
+
+        protected virtual IQueryable<TEntity> GetNewItems(IQueryable<TEntity> entities, DateTimeOffset? date)
+        {
+            return entities.Where(x => x.EditedDate > date.Value);
         }
     }
 }
