@@ -41,7 +41,6 @@ export class BoxFlagsDialog {
         this.box = Object.assign(new BoxDetailModel(), viewModel);
         this.box.boxUnits = this.box.boxUnits.map(x => <IBoxUnitDetailModel>{
             unitId: x.unitId,
-            name: x.name,
             flags: x.flags
         });
 
