@@ -30,6 +30,7 @@ export class UnitDisplay {
     @bindable showBox: boolean;
     @bindable showBoxFlags: boolean;
     @bindable box: BoxDetailModel;
+    @bindable editorKey: string;
 
     inBox: boolean;
 
@@ -48,6 +49,9 @@ export class UnitDisplay {
                 id = Number(this.model);
             } else {
                 id = this.model.unitId || this.model.id || null;
+            }
+            if (this.model.editorKey) {
+                this.editorKey = this.model.editorKey;
             }
             this.unitId = id;
             return id;
@@ -85,9 +89,14 @@ export class UnitDisplay {
     }
 
     unitIdChanged(newValue, oldValue) {
-        if (this.unit != newValue) {
+        if (newValue != oldValue) {
             if (newValue) {
-                this.model = <IUnitStubModel>{ id: newValue };
+                this.unitQueryService.get(newValue).then(x => {
+                    // prevents a promise loop
+                    setTimeout(() => {
+                        this.model = x;
+                    }, 0);
+                });
             } else {
                 this.model = null;
             }
@@ -206,7 +215,7 @@ export class UnitDisplay {
                     var oldModel = model;
                     this.model = result.output;
                     var bubble = new CustomEvent('selected', {
-                        detail: { newValue: result.output, oldValue: oldModel, viewModel: this },
+                        detail: { newValue: result.output, oldValue: oldModel, editorKey: this.editorKey, viewModel: this },
                         bubbles: true
                     });
                     this.element.dispatchEvent(bubble);
@@ -214,7 +223,7 @@ export class UnitDisplay {
             });
         } else {
             var bubble = new CustomEvent('selected', {
-                detail: { newValue: this.model, viewModel: this },
+                detail: { newValue: this.model, editorKey: this.editorKey, viewModel: this },
                 bubbles: true
             });
             this.element.dispatchEvent(bubble);

@@ -7,6 +7,7 @@ import { ValidationControllerFactory, ValidationRules, ValidationController } fr
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
 import { AlertService } from '../../services/alert-service';
 import { TeamGenericSlotEditorModel } from '../../services/query/team-query-service';
+import { NumberHelper } from '../../tools/number-helper';
 
 @autoinject
 export class UnitPicker {
@@ -44,7 +45,7 @@ export class UnitPicker {
 
     activate(viewModel: UnitPickerParams) {
         this.allowGenerics = viewModel.allowGenerics;
-        if (this.allowGenerics && viewModel.model && !viewModel.model.unitId) {
+        if (this.allowGenerics && viewModel.model && !(viewModel.model.id || viewModel.model.unitId || NumberHelper.isNumber(viewModel.model))) {
             this.generic = true;
             Object.assign(this.genericBuilder, viewModel.model);
         }
