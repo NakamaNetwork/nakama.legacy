@@ -1,8 +1,8 @@
 ﻿import { HttpEngine } from '../../../tools/http-engine';
 import { CacheItem } from '../../../models/cache-item';
 import { LocallyCachedQueryService } from './locally-cached-query-service';
-import { SearchModel } from '../../../models/search-model';
-import { SearchResult } from '../../../models/search-model';
+import { SearchModel, SearchResult } from '../../../models/search-model';
+import * as firstBy from 'thenby';
 
 export abstract class LocallySearchedQueryService<TId, TEntity extends CacheItem, TSearchModel extends SearchModel>
     extends LocallyCachedQueryService<TId, TEntity> {
@@ -32,5 +32,27 @@ export abstract class LocallySearchedQueryService<TId, TEntity extends CacheItem
     protected performPagination(items: TEntity[], page: number, pageSize: number): TEntity[] {
         var start = (page - 1) * pageSize;
         return items.slice(start, start + pageSize);
+    }
+
+    protected doTermSearch(items: TEntity[], selector: (x: TEntity) => string[], criteria: string) {
+        criteria = (criteria || '').trim();
+        if (criteria) {
+            var allTerms = criteria.toLowerCase().split(' ');
+            items = items.filter(x => selector(x).some(y => allTerms.some(z => y.indexOf(z.toLowerCase()) !== -1)));
+        }
+        return items;
+    }
+
+    protected doSort(items: TEntity[], selector: ((x) => any[])[], desc: boolean[]) {
+        var sorter;
+        var dirs = desc.map(x => x ? -1 : 1);
+        for (var i = 0; i < selector.length; i++) {
+            if (i === 0) {
+                sorter = firstBy(selector[i], dirs[i]);
+            } else {
+                sorter = sorter.thenBy(selector[i], dirs[i]);
+            }
+        }
+        return items.sort(sorter);
     }
 }

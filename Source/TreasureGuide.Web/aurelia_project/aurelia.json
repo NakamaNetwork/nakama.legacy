@@ -167,6 +167,11 @@
                         "resources": []
                     },
                     {
+                        "name": "thenby",
+                        "main": "thenBy.module.js",
+                        "path": "../node_modules/thenby"
+                    },
+                    {
                         "name": "marked",
                         "main": "marked.js",
                         "path": "../node_modules/marked/lib"
