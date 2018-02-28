@@ -23,10 +23,6 @@ export class BoxQueryService extends SearchableQueryService {
     focus(id: number): Promise<IBoxDetailModel> {
         return this.http.post(this.buildAddress('focus' + (id ? '/' + id : '')));
     }
-
-    featured(id: number): Promise<IUnitStubModel[]> {
-        return this.http.get(this.buildAddress('featured/' + id));
-    }
 }
 
 export class BoxSearchModel extends SearchModel implements IBoxSearchModel {

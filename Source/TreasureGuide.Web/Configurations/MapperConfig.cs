@@ -115,8 +115,6 @@ namespace TreasureGuide.Web.Configurations
                 report.ForMember(x => x.Acknowledged, o => o.MapFrom(y => y.AcknowledgedDate.HasValue));
 
                 var boxUnit = mapper.CreateControllerMapping<BoxUnit, BoxUnitDetailModel, BoxUnitStubModel, BoxUnitEditorModel>();
-                boxUnit.StubMapping.ForMember(x => x.Name, o => o.MapFrom(y => y.Unit.Name));
-                boxUnit.DetailMapping.ForMember(x => x.Name, o => o.MapFrom(y => y.Unit.Name));
 
                 var box = mapper.CreateControllerMapping<Box, BoxDetailModel, BoxStubModel, BoxEditorModel>();
                 box.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));

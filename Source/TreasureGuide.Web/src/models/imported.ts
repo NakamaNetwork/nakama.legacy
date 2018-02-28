@@ -590,8 +590,9 @@ export interface IUnitSearchModel extends ISearchModel{
     forceClass: boolean;
     freeToPlay: boolean;
     global: boolean;
-    boxId: number;
+    myBox: boolean;
     blacklist: boolean;
+    limitTo: number[];
     
 }
 

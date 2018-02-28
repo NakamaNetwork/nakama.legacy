@@ -3,11 +3,15 @@ import { HttpEngine } from '../../tools/http-engine';
 import { IUnitStubModel, SearchConstants, IUnitSearchModel, UnitClass, UnitType, UnitFlag } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 import { LocallySearchedQueryService } from './generic/locally-searched-query-service';
+import { BoxService } from '../box-service';
 
 @autoinject
 export class UnitQueryService extends LocallySearchedQueryService<number, IUnitStubModel, UnitSearchModel> {
-    constructor(http: HttpEngine) {
+    private boxService: BoxService;
+
+    constructor(http: HttpEngine, boxService: BoxService) {
         super('unit', http);
+        this.boxService = boxService;
     }
 
     static getIcon(unitId: number) {
@@ -29,7 +33,8 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
         items = this.searchTypes(items, searchModel.types);
         items = this.searchClasses(items, searchModel.classes, searchModel.forceClass);
         items = this.searchGlobal(items, searchModel.global);
-        items = this.searchBox(items, searchModel.boxId, searchModel.blacklist);
+        items = this.searchBox(items, searchModel.myBox);
+        items = this.searchLimit(items, searchModel.limitTo);
         items = this.searchFreeToPlay(items, searchModel.freeToPlay);
         return items;
     }
@@ -63,7 +68,21 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
         return items;
     }
 
-    private searchBox(items: IUnitStubModel[], boxId: number, blacklist: boolean): IUnitStubModel[] {
+    private searchBox(items: IUnitStubModel[], myBox: boolean): IUnitStubModel[] {
+        if (myBox) {
+            var box = this.boxService.currentBox;
+            if (box) {
+                var boxIds = box.unitIds;
+                items = items.filter(x => boxIds.indexOf(x.id) !== -1);
+            }
+        }
+        return items;
+    }
+
+    private searchLimit(items: IUnitStubModel[], limitTo: number[]): IUnitStubModel[] {
+        if (limitTo) {
+            items = items.filter(x => limitTo.indexOf(x.id) !== -1);
+        }
         return items;
     }
 
@@ -99,11 +118,12 @@ export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
     classes: UnitClass;
     types: UnitType;
     forceClass: boolean;
-    boxId: number;
+    myBox: boolean;
     blacklist: boolean;
     global: boolean;
     freeToPlay: boolean;
     cacheKey: string = 'search-unit';
+    limitTo: number[] = null;
 
     sortables: string[] = [
         SearchConstants.SortId,
