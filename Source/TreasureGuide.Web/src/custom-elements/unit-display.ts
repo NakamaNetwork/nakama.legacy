@@ -97,8 +97,6 @@ export class UnitDisplay {
                         this.model = x;
                     }, 0);
                 });
-            } else {
-                this.model = null;
             }
         }
     }
