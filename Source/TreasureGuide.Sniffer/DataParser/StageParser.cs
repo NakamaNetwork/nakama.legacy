@@ -95,42 +95,26 @@ namespace TreasureGuide.Sniffer.DataParser
         private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)
         {
             var stageType = StageType.Coliseum;
-            var exhibition = JsonConvert.DeserializeObject<int[]>(child["Exhibition"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 3).Select(y => new StageCollectionDetail
+
+            var eIds = JsonConvert.DeserializeObject<int[]>(child["Exhibition"].ToString()).AsEnumerable();
+            var uIds = JsonConvert.DeserializeObject<int[]>(child["Underground"].ToString()).AsEnumerable();
+            var cIds = JsonConvert.DeserializeObject<int[]>(child["Chaos"].ToString()).AsEnumerable();
+            var nIds = JsonConvert.DeserializeObject<int[]>(child["Neo"].ToString()).AsEnumerable();
+
+            var all = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().SelectMany(x => new[] {
+                new StageCollectionDetail
                 {
                     UnitId = x,
-                    Name = $" - Exhibition Stage {y}",
-                    SmallId = y
-                }));
-
-            var underground = JsonConvert.DeserializeObject<int[]>(child["Underground"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 4)
-                    .Select(y => new StageCollectionDetail
-                    {
-                        UnitId = x,
-                        Name = $" - Underground Stage {y}",
-                        SmallId = 10 + y
-                    }));
-
-            var chaos = JsonConvert.DeserializeObject<int[]>(child["Chaos"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 5)
-                    .Select(y => new StageCollectionDetail
-                    {
-                        UnitId = x,
-                        Name = $" - Chaos Stage {y}",
-                        SmallId = 20 + y
-                    }));
-
-            var neo = JsonConvert.DeserializeObject<int[]>(child["Neo"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 5)
-                    .Select(y => new StageCollectionDetail
-                    {
-                        UnitId = x,
-                        Name = $" - Neo Stage {y}",
-                        SmallId = 30 + y
-                    }));
-
-            var all = exhibition.Concat(underground).Concat(chaos).Concat(neo).Distinct();
+                    Name = " - Opening Stages",
+                    SmallId = 0
+                },
+                new StageCollectionDetail
+                {
+                    UnitId = x,
+                    Name = " - Final Stage",
+                    SmallId = 1
+                }
+            });
             var units = all.Join(Context.Units, x => x.UnitId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
                     HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item1.Id,
