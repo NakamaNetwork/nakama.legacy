@@ -68,7 +68,7 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
     }
 
     private searchFreeToPlay(items: IUnitStubModel[], freeToPlay: boolean): IUnitStubModel[] {
-        if (global) {
+        if (freeToPlay) {
             items = items.filter(x =>
                 (x.flags & UnitFlag.RareRecruitExclusive) === 0 &&
                 (x.flags & UnitFlag.RareRecruitLimited) === 0);
