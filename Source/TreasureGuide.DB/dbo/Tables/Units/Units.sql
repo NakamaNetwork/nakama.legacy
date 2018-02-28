@@ -17,6 +17,17 @@
     [MaxATK] SMALLINT NULL, 
     [MaxRCV] SMALLINT NULL, 
     [GrowthRate] DECIMAL(2, 1) NULL,
-    [Flags] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Flags] DEFAULT 0, 
+    [Flags] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Flags] DEFAULT 0,
+    [EditedDate] DATETIMEOFFSET(7) NULL,
     CONSTRAINT [PK_dbo.Units] PRIMARY KEY CLUSTERED ([Id] ASC)
 )
+GO
+CREATE TRIGGER [dbo].[TRG_Units_Updated]
+ON [dbo].[Units]
+AFTER UPDATE 
+AS BEGIN
+   UPDATE [dbo].[Units]
+   SET [EditedDate] = SYSDATETIMEOFFSET()
+   FROM INSERTED
+END
+GO

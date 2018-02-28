@@ -11,8 +11,6 @@ namespace TreasureGuide.Web.Models.TeamModels
 
     public class TeamUnitDetailModel : TeamUnitStubModel, ISubItem
     {
-        public string Name { get; set; }
-        public int Level { get; set; }
         public IndividualUnitFlags? Flags { get; set; }
         public bool Sub { get; set; }
     }

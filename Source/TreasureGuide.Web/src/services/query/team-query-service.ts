@@ -13,7 +13,7 @@ import { NumberHelper } from '../../tools/number-helper';
 @autoinject
 export class TeamQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
-        super('team', http, false);
+        super('team', http);
     }
 
     save(model: TeamEditorModel, id?): Promise<any> {

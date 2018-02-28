@@ -8,6 +8,15 @@ export class NewsService {
 
     static news: NewsEntry[] = [
         {
+            header: '02/28/18',
+            lines: [
+                'Introduced local caching for values that don\'t change frequently (i.e. units, stages, ships) which will significantly reduce the number of queries needed when browsing the site.',
+                'New teams now must have a stage specified.',
+                'Reduced coliseum stage entries to just an "opening stages" and "final stage" category, instead of one for every difficulty and stage.',
+                'Fixed an issue that prevented the \'similar teams\' functionality from working.'
+            ]
+        },
+        {
             header: '02/25/18',
             lines: [
                 'Teams can now be marked with an Invasion specification.',

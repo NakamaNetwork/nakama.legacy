@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
+using TreasureGuide.Sniffer.Helpers;
 
 namespace TreasureGuide.Sniffer.DataParser
 {

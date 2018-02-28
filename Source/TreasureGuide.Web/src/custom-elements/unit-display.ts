@@ -5,7 +5,7 @@ import { DialogService } from 'aurelia-dialog';
 import { NumberHelper } from '../tools/number-helper';
 import { UnitPicker } from './dialogs/unit-picker';
 import { UnitPickerParams } from './dialogs/unit-picker';
-import { IUnitEditorModel } from '../models/imported';
+import { IUnitStubModel } from '../models/imported';
 import { UnitType } from '../models/imported';
 import { UnitClass } from '../models/imported';
 import { UnitRole, IBoxDetailModel } from '../models/imported';
@@ -30,6 +30,7 @@ export class UnitDisplay {
     @bindable showBox: boolean;
     @bindable showBoxFlags: boolean;
     @bindable box: BoxDetailModel;
+    @bindable editorKey: string;
 
     inBox: boolean;
 
@@ -48,6 +49,9 @@ export class UnitDisplay {
                 id = Number(this.model);
             } else {
                 id = this.model.unitId || this.model.id || null;
+            }
+            if (this.model.editorKey) {
+                this.editorKey = this.model.editorKey;
             }
             this.unitId = id;
             return id;
@@ -85,11 +89,14 @@ export class UnitDisplay {
     }
 
     unitIdChanged(newValue, oldValue) {
-        if (this.unit != newValue) {
+        if (newValue != oldValue) {
             if (newValue) {
-                this.model = <IUnitEditorModel>{ id: newValue };
-            } else {
-                this.model = null;
+                this.unitQueryService.get(newValue).then(x => {
+                    // prevents a promise loop
+                    setTimeout(() => {
+                        this.model = x;
+                    }, 0);
+                });
             }
         }
     }
@@ -206,7 +213,7 @@ export class UnitDisplay {
                     var oldModel = model;
                     this.model = result.output;
                     var bubble = new CustomEvent('selected', {
-                        detail: { newValue: result.output, oldValue: oldModel, viewModel: this },
+                        detail: { newValue: result.output, oldValue: oldModel, editorKey: this.editorKey, viewModel: this },
                         bubbles: true
                     });
                     this.element.dispatchEvent(bubble);
@@ -214,7 +221,7 @@ export class UnitDisplay {
             });
         } else {
             var bubble = new CustomEvent('selected', {
-                detail: { newValue: this.model, viewModel: this },
+                detail: { newValue: this.model, editorKey: this.editorKey, viewModel: this },
                 bubbles: true
             });
             this.element.dispatchEvent(bubble);

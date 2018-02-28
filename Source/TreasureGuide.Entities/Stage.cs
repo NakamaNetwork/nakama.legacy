@@ -17,7 +17,6 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Stage()
         {
-            this.Rounds = new HashSet<Round>();
             this.Teams = new HashSet<Team>();
             this.StageAliases = new HashSet<StageAlias>();
             this.InvasionTeams = new HashSet<Team>();
@@ -29,10 +28,8 @@ namespace TreasureGuide.Entities
         public StageType Type { get; set; }
         public bool Global { get; set; }
         public Nullable<int> UnitId { get; set; }
-        public Nullable<int> OldId { get; set; }
+        public Nullable<System.DateTimeOffset> EditedDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Round> Rounds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Teams { get; set; }
         public virtual Unit Unit { get; set; }

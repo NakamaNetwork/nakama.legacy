@@ -69,15 +69,13 @@ namespace TreasureGuide.Sniffer.DataParser
         private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType, int smallId = 0)
         {
             var id = CreateId(stageType, thumb, smallId);
-            var oldId = IdMaker.FromString(name, (int)(stageType) * 1000000);
             var stage = new Stage
             {
                 Id = id,
                 UnitId = thumb,
                 Name = name,
                 Global = global,
-                Type = stageType,
-                OldId = oldId,
+                Type = stageType
             };
             return stage;
         }
@@ -97,42 +95,26 @@ namespace TreasureGuide.Sniffer.DataParser
         private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)
         {
             var stageType = StageType.Coliseum;
-            var exhibition = JsonConvert.DeserializeObject<int[]>(child["Exhibition"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 3).Select(y => new StageCollectionDetail
+
+            var eIds = JsonConvert.DeserializeObject<int[]>(child["Exhibition"].ToString()).AsEnumerable();
+            var uIds = JsonConvert.DeserializeObject<int[]>(child["Underground"].ToString()).AsEnumerable();
+            var cIds = JsonConvert.DeserializeObject<int[]>(child["Chaos"].ToString()).AsEnumerable();
+            var nIds = JsonConvert.DeserializeObject<int[]>(child["Neo"].ToString()).AsEnumerable();
+
+            var all = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().SelectMany(x => new[] {
+                new StageCollectionDetail
                 {
                     UnitId = x,
-                    Name = $" - Exhibition Stage {y}",
-                    SmallId = y
-                }));
-
-            var underground = JsonConvert.DeserializeObject<int[]>(child["Underground"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 4)
-                    .Select(y => new StageCollectionDetail
-                    {
-                        UnitId = x,
-                        Name = $" - Underground Stage {y}",
-                        SmallId = 10 + y
-                    }));
-
-            var chaos = JsonConvert.DeserializeObject<int[]>(child["Chaos"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 5)
-                    .Select(y => new StageCollectionDetail
-                    {
-                        UnitId = x,
-                        Name = $" - Chaos Stage {y}",
-                        SmallId = 20 + y
-                    }));
-
-            var neo = JsonConvert.DeserializeObject<int[]>(child["Neo"].ToString())
-                .SelectMany(x => Enumerable.Range(1, 5)
-                    .Select(y => new StageCollectionDetail
-                    {
-                        UnitId = x,
-                        Name = $" - Neo Stage {y}",
-                        SmallId = 30 + y
-                    }));
-
-            var all = exhibition.Concat(underground).Concat(chaos).Concat(neo).Distinct();
+                    Name = " - Opening Stages",
+                    SmallId = 0
+                },
+                new StageCollectionDetail
+                {
+                    UnitId = x,
+                    Name = " - Final Stage",
+                    SmallId = 1
+                }
+            });
             var units = all.Join(Context.Units, x => x.UnitId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
                     HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item1.Id,
@@ -146,12 +128,12 @@ namespace TreasureGuide.Sniffer.DataParser
         private IEnumerable<StageAlias> GetAliases(Tuple<Unit, Stage> tuple)
         {
             var me = GetAliases(tuple.Item1.Name, new[] { tuple.Item1 }, tuple.Item2, true);
-            var to = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesTo, tuple.Item2);
-            var from = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesFrom, tuple.Item2);
+            var to = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesTo.Select(x => x.EvolvesTo), tuple.Item2);
+            var from = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesFrom.Select(x => x.EvolvesFrom), tuple.Item2);
             return to.Concat(from).Concat(me);
         }
 
-        private IEnumerable<StageAlias> GetAliases(string name, ICollection<Unit> targets, Stage detailItem2, bool ignoreMe = false)
+        private IEnumerable<StageAlias> GetAliases(string name, IEnumerable<Unit> targets, Stage detailItem2, bool ignoreMe = false)
         {
             var aliases = targets.Select(x => new StageAlias
             {

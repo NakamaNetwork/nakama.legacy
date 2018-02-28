@@ -38,7 +38,9 @@ export class BoxUnitsDialog {
             boxUnits: []
         };
 
-        this.searchModel.boxId = null;
+        this.searchModel.myBox = false;
+        this.searchModel.limitTo = null;
+
         bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
         });

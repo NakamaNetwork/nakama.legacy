@@ -8,7 +8,7 @@ using TreasureGuide.Web.Services;
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/ship")]
-    public class ShipController : EntityApiController<int, Ship, int?, ShipStubModel, ShipDetailModel, ShipEditorModel>
+    public class ShipController : LocallyCachedController<int, Ship, ShipStubModel>
     {
         public ShipController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {

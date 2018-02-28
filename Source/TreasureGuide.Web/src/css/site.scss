@@ -54,6 +54,12 @@ a, em, strong {
     }
 }
 
+.listnav li {
+    ._floatRight, ._floatLeft {
+        padding-top: 0.6em;
+    }
+}
+
 ux-dialog-container {
     overflow-y: scroll;
 
