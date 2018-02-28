@@ -38,12 +38,15 @@ namespace TreasureGuide.Sniffer.DataParser
             foreach (var datum in items)
             {
                 var item = await Context.Units.SingleOrDefaultAsync(x => x.Id == datum.UnitId);
-                item.Flags = datum.Flags;
-                current++;
-                if (current >= batch)
+                if (item != null)
                 {
-                    current = 0;
-                    await Context.SaveChangesAsync();
+                    item.Flags = datum.Flags;
+                    current++;
+                    if (current >= batch)
+                    {
+                        current = 0;
+                        await Context.SaveChangesAsync();
+                    }
                 }
             }
             await Context.SaveChangesAsync();

@@ -551,7 +551,7 @@ export enum UnitClass {
     FreeSpirit = 16,
     Driven = 32,
     Cerebral = 64,
-    PowerHouse = 128,
+    Powerhouse = 128,
     Evolver = 256,
     Booster = 512
 }

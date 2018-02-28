@@ -1026,7 +1026,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
-                    <Member Name="Unknown" Value="0" />
+          <Member Name="Unknown" Value="0" />
           <Member Name="Fighter" Value="1" />
           <Member Name="Slasher" Value="2" />
           <Member Name="Striker" Value="4" />
@@ -1034,7 +1034,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="FreeSpirit" Value="16" />
           <Member Name="Driven" Value="32" />
           <Member Name="Cerebral" Value="64" />
-          <Member Name="PowerHouse" Value="128" />
+          <Member Name="Powerhouse" Value="128" />
           <Member Name="Evolver" Value="256" />
           <Member Name="Booster" Value="512" />
         </EnumType>
