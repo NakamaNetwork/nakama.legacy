@@ -57,9 +57,9 @@ export class AdminPage {
             });
         }
     }
-
+    
     createTeam(suuuper: boolean) {
-        this.stageQueryService.stub().then(x => {
+        this.stageQueryService.get().then(x => {
             var team = new TeamEditorModel();
             team.name = 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a');
             team.guide = '';
