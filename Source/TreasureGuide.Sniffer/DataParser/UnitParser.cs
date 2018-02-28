@@ -47,7 +47,7 @@ namespace TreasureGuide.Sniffer.DataParser
                     MaxHP = (line[12]?.ToString()).ToInt16(),
                     MaxATK = (line[13]?.ToString()).ToInt16(),
                     MaxRCV = (line[14]?.ToString()).ToInt16(),
-                    GrowthRate = (line[15]?.ToString()).ToDecimal(),
+                    GrowthRate = (line[15]?.ToString()).ToDecimal()
                 };
                 return unit;
             });

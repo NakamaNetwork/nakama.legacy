@@ -28,7 +28,7 @@ namespace TreasureGuide.Entities
         public StageType Type { get; set; }
         public bool Global { get; set; }
         public Nullable<int> UnitId { get; set; }
-        public System.DateTimeOffset EditedDate { get; set; }
+        public Nullable<System.DateTimeOffset> EditedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Teams { get; set; }

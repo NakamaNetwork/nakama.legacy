@@ -20,6 +20,6 @@ namespace TreasureGuide.Web.Models.UnitModels
         public IEnumerable<int> EvolvesTo { get; set; }
         public IEnumerable<int> EvolvesFrom { get; set; }
 
-        public DateTimeOffset EditedDate { get; set; }
+        public DateTimeOffset? EditedDate { get; set; }
     }
 }

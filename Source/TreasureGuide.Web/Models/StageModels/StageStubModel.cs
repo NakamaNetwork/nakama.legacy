@@ -12,7 +12,7 @@ namespace TreasureGuide.Web.Models.StageModels
         public string Name { get; set; }
         public bool Global { get; set; }
         public StageType Type { get; set; }
-        public DateTimeOffset EditedDate { get; set; }
+        public DateTimeOffset? EditedDate { get; set; }
 
         public int TeamCount { get; set; }
 

@@ -38,7 +38,7 @@ namespace TreasureGuide.Sniffer.DataParser
             foreach (var datum in items)
             {
                 var item = await Context.Units.SingleOrDefaultAsync(x => x.Id == datum.UnitId);
-                if (item != null)
+                if (item != null && item.Flags != datum.Flags)
                 {
                     item.Flags = datum.Flags;
                     current++;

@@ -51,7 +51,6 @@ export interface IBoxSearchModel extends ISearchModel{
 
 
 export interface IBoxUnitStubModel {
-    name: string;
     unitId: number;
     flags: IndividualUnitFlags;
     

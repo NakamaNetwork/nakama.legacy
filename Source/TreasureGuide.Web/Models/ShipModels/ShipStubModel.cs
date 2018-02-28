@@ -9,6 +9,6 @@ namespace TreasureGuide.Web.Models.ShipModels
         public string Name { get; set; }
         public bool EventShip { get; set; }
         public bool EventShipActive { get; set; }
-        public DateTimeOffset EditedDate { get; set; }
+        public DateTimeOffset? EditedDate { get; set; }
     }
 }
