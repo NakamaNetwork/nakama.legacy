@@ -675,7 +675,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
         </Association>
         <Function Name="SimilarTeams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="teamId" Type="int" Mode="In" />
-          <Parameter Name="stageId" Type="int" Mode="In" />
           <Parameter Name="unit1" Type="int" Mode="In" />
           <Parameter Name="unit2" Type="int" Mode="In" />
           <Parameter Name="unit3" Type="int" Mode="In" />
@@ -686,7 +685,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <CollectionType>
               <RowType>
                 <Property Name="TeamId" Type="int" />
-                <Property Name="StageId" Type="int" />
                 <Property Name="Matches" Type="int" />
               </RowType>
             </CollectionType>
@@ -698,7 +696,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <CollectionType>
               <RowType>
                 <Property Name="TeamId" Type="int" />
-                <Property Name="StageId" Type="int" />
                 <Property Name="Matches" Type="int" />
               </RowType>
             </CollectionType>
@@ -962,7 +959,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </AssociationSet>
           <FunctionImport Name="SimilarTeams" IsComposable="true" ReturnType="Collection(tcdbModel.SimilarTeams_Result)">
             <Parameter Name="teamId" Mode="In" Type="Int32" />
-            <Parameter Name="stageId" Mode="In" Type="Int32" />
             <Parameter Name="unit1" Mode="In" Type="Int32" />
             <Parameter Name="unit2" Mode="In" Type="Int32" />
             <Parameter Name="unit3" Mode="In" Type="Int32" />
@@ -1590,7 +1586,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
         </Association>
         <ComplexType Name="SimilarTeams_Result">
             <Property Type="Int32" Name="TeamId" Nullable="true" />
-            <Property Type="Int32" Name="StageId" Nullable="true" />
             <Property Type="Int32" Name="Matches" Nullable="true" />
         </ComplexType>
         <EntityType Name="UserPreference">
@@ -2065,7 +2060,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <ResultMapping>
               <ComplexTypeMapping TypeName="tcdbModel.SimilarTeams_Result">
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
                 <ScalarProperty Name="Matches" ColumnName="Matches" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -2074,7 +2068,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <ResultMapping>
               <ComplexTypeMapping TypeName="tcdbModel.SimilarTeams_Result">
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
                 <ScalarProperty Name="Matches" ColumnName="Matches" />
               </ComplexTypeMapping>
             </ResultMapping>

@@ -149,10 +149,10 @@ export class TeamEditPage {
     }
 
     get similarModel() {
-        var similar = { stageId: this.team.stageId, teamId: this.team.id };
+        var similar = { teamId: this.team.id };
         for (var i = 0; i < 6; i++) {
             var unit = this.team.teamUnits.find(x => x.position === i && !x.sub);
-            similar['unit' + i] = unit ? unit.unitId : null;
+            similar['unit' + (i + 1)] = unit ? unit.unitId : null;
         }
         return similar;
     }

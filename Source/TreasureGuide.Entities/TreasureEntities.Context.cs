@@ -52,15 +52,11 @@ namespace TreasureGuide.Entities
         public virtual DbSet<UnitEvolution> UnitEvolutions { get; set; }
     
         [DbFunction("TreasureEntities", "SimilarTeams")]
-        public virtual IQueryable<SimilarTeams_Result> SimilarTeams(Nullable<int> teamId, Nullable<int> stageId, Nullable<int> unit1, Nullable<int> unit2, Nullable<int> unit3, Nullable<int> unit4, Nullable<int> unit5, Nullable<int> unit6)
+        public virtual IQueryable<SimilarTeams_Result> SimilarTeams(Nullable<int> teamId, Nullable<int> unit1, Nullable<int> unit2, Nullable<int> unit3, Nullable<int> unit4, Nullable<int> unit5, Nullable<int> unit6)
         {
             var teamIdParameter = teamId.HasValue ?
                 new ObjectParameter("teamId", teamId) :
                 new ObjectParameter("teamId", typeof(int));
-    
-            var stageIdParameter = stageId.HasValue ?
-                new ObjectParameter("stageId", stageId) :
-                new ObjectParameter("stageId", typeof(int));
     
             var unit1Parameter = unit1.HasValue ?
                 new ObjectParameter("unit1", unit1) :
@@ -86,7 +82,7 @@ namespace TreasureGuide.Entities
                 new ObjectParameter("unit6", unit6) :
                 new ObjectParameter("unit6", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SimilarTeams_Result>("[TreasureEntities].[SimilarTeams](@teamId, @stageId, @unit1, @unit2, @unit3, @unit4, @unit5, @unit6)", teamIdParameter, stageIdParameter, unit1Parameter, unit2Parameter, unit3Parameter, unit4Parameter, unit5Parameter, unit6Parameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SimilarTeams_Result>("[TreasureEntities].[SimilarTeams](@teamId, @unit1, @unit2, @unit3, @unit4, @unit5, @unit6)", teamIdParameter, unit1Parameter, unit2Parameter, unit3Parameter, unit4Parameter, unit5Parameter, unit6Parameter);
         }
     
         [DbFunction("TreasureEntities", "SimilarTeamsId")]
