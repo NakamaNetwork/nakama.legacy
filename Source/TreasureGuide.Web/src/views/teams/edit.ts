@@ -165,12 +165,12 @@ export class TeamEditPage {
             this.lastSimilar = json;
             this.similarLoading = true;
             this.teamQueryService.similar(model).then(x => {
-                    this.similar = x;
-                    this.similarLoading = false;
-                }).catch(x => {
-                    this.similar = [];
-                    this.similarLoading = false;
-                });
+                this.similar = x;
+                this.similarLoading = false;
+            }).catch(x => {
+                this.similar = [];
+                this.similarLoading = false;
+            });
         }
     }
 
@@ -195,6 +195,9 @@ ValidationRules
     .required()
     .minLength(TeamEditPage.nameMinLength)
     .maxLength(TeamEditPage.nameMaxLength)
+    .ensure((x: TeamEditorModel) => x.stageId)
+    .required()
+    .withMessage('Please specify a stage in which to use this team.')
     .ensure((x: TeamEditorModel) => x.credits)
     .maxLength(TeamEditPage.creditMaxLength)
     .ensure((x: TeamEditorModel) => x.guide)
