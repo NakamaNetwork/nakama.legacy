@@ -26,7 +26,7 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
     }
 
     private get newestDate() {
-        return this.items.filter(x => x.editedDate).map(x => moment(x.editedDate)).sort((a, b) => a.diff(b)).find(() => true);
+        return this.items.filter(x => x.editedDate).map(x => moment(x.editedDate)).sort((a, b) => b.diff(a)).find(() => true);
     }
 
     buildingCache = false;
@@ -37,7 +37,7 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
         }
         this.buildingCache = true;
         var date = this.newestDate;
-        var param = date ? date.unix().toString() : null;
+        var param = date ? (date.unix() + 5).toString() : null;
         var endpoint = this.buildAddress(param);
         return this.http.get(endpoint).then(x => {
             var ids = x.map(y => y.id);
