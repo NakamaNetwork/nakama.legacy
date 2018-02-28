@@ -65,7 +65,7 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
                     resolve(this.getCached(endpoint, id));
                 }, 100);
             } else if (id) {
-                var result = this.items.find(x => x.id === id);
+                var result = this.items.find(x => x.id == id);
                 if (result) {
                     resolve(result);
                 } else {
