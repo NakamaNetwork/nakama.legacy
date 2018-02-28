@@ -9,7 +9,7 @@ import { IndividualUnitFlags } from '../../models/imported';
 @autoinject
 export class BoxQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
-        super('box', http, true);
+        super('box', http);
     }
 
     update(model: IBoxUpdateModel): Promise<any> {

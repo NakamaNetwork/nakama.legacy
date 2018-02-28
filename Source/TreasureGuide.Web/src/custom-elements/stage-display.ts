@@ -24,7 +24,7 @@ export class StageDisplay {
     }
 
     stageIdChanged(newValue: number, oldValue: number) {
-        return this.stageQueryService.stub(newValue).then(result => {
+        return this.stageQueryService.get(newValue).then(result => {
             this.stage = result;
         }).catch(error => {
             console.error(error);

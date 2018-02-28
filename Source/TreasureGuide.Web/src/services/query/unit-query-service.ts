@@ -1,14 +1,13 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
-import { SearchableQueryService } from './generic/searchable-query-service';
-import { IUnitSearchModel, UnitClass, UnitType } from '../../models/imported';
+import { IUnitStubModel, SearchConstants, IUnitSearchModel, UnitClass, UnitType } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
-import { SearchConstants } from '../../models/imported';
+import { LocallySearchedQueryService } from './generic/locally-searched-query-service';
 
 @autoinject
-export class UnitQueryService extends SearchableQueryService {
+export class UnitQueryService extends LocallySearchedQueryService<number, IUnitStubModel, UnitSearchModel> {
     constructor(http: HttpEngine) {
-        super('unit', http, true);
+        super('unit', http);
     }
 
     static getIcon(unitId: number) {
@@ -24,10 +23,17 @@ export class UnitQueryService extends SearchableQueryService {
         }
         return null;
     }
+
+    public performSearch(items: IUnitStubModel[], searchModel: UnitSearchModel): IUnitStubModel[] {
+        return items;
+    }
+
+    public performSort(items: IUnitStubModel[], sortBy: string, sortDesc: boolean): IUnitStubModel[] {
+        return items;
+    }
 }
 
 export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
-
     term: string;
     classes: UnitClass;
     types: UnitType;

@@ -53,7 +53,7 @@ export class HttpEngine {
         if (data) {
             options['body'] = JSON.stringify(data);
         }
-        return this.http.fetch(endpoint, options).then(response => {
+        return this.http.fetch(endpoint, options).then((response) => {
             if (response.status >= 200 && response.status < 400) {
                 return response.json().catch(error => {
                     throw error;

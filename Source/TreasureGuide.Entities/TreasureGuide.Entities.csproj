@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="EntityConstructor.cs" />
     <Compile Include="Helpers\ContextExtensions.cs" />
+    <Compile Include="Helpers\DateExtensions.cs" />
     <Compile Include="Helpers\EnumerableHelper.cs" />
     <Compile Include="IndividualUnitFlags.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>

@@ -97,3 +97,8 @@ export abstract class SearchModel implements ISearchModel {
         return value ? value : undefined;
     }
 }
+
+export class SearchResult<TType> {
+    totalResults: number;
+    results: TType[];
+}

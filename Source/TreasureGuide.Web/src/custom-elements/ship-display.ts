@@ -22,7 +22,7 @@ export class ShipDisplay {
     }
 
     shipIdChanged(newValue: number, oldValue: number) {
-        return this.shipQueryService.stub(newValue).then(result => {
+        return this.shipQueryService.get(newValue).then(result => {
             this.ship = result;
         }).catch(error => {
             console.error(error);
@@ -31,7 +31,7 @@ export class ShipDisplay {
 
     @computedFrom('shipId')
     get imageUrl() {
-        return this.shipQueryService.getIcon(this.shipId);
+        return ShipQueryService.getIcon(this.shipId);
     }
 
     @computedFrom('ship', 'ship.eventShip', 'ship.eventShipActive')

@@ -1,14 +1,21 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { HttpEngine } from '../../tools/http-engine';
-import { SearchableQueryService } from './generic/searchable-query-service';
-import { IStageSearchModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
-import { SearchConstants } from '../../models/imported';
+import { IStageStubModel, IStageSearchModel, SearchConstants } from '../../models/imported';
+import { LocallySearchedQueryService } from './generic/locally-searched-query-service';
 
 @autoinject
-export class StageQueryService extends SearchableQueryService {
+export class StageQueryService extends LocallySearchedQueryService<number, IStageStubModel, StageSearchModel> {
     constructor(http: HttpEngine) {
-        super('stage', http, true);
+        super('stage', http);
+    }
+
+    protected performSearch(items: IStageStubModel[], searchModel: StageSearchModel): IStageStubModel[] {
+        return items;
+    }
+
+    protected performSort(items: IStageStubModel[], sortBy: string, sortDesc: boolean): IStageStubModel[] {
+        return items;
     }
 }
 

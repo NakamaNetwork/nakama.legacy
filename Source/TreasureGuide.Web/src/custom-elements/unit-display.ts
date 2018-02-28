@@ -5,7 +5,7 @@ import { DialogService } from 'aurelia-dialog';
 import { NumberHelper } from '../tools/number-helper';
 import { UnitPicker } from './dialogs/unit-picker';
 import { UnitPickerParams } from './dialogs/unit-picker';
-import { IUnitEditorModel } from '../models/imported';
+import { IUnitStubModel } from '../models/imported';
 import { UnitType } from '../models/imported';
 import { UnitClass } from '../models/imported';
 import { UnitRole, IBoxDetailModel } from '../models/imported';
@@ -87,7 +87,7 @@ export class UnitDisplay {
     unitIdChanged(newValue, oldValue) {
         if (this.unit != newValue) {
             if (newValue) {
-                this.model = <IUnitEditorModel>{ id: newValue };
+                this.model = <IUnitStubModel>{ id: newValue };
             } else {
                 this.model = null;
             }
