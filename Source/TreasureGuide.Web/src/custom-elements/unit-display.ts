@@ -60,9 +60,9 @@ export class UnitDisplay {
         return null;
     }
 
-    @computedFrom('model')
+    @computedFrom('tooltip', 'model', 'model.name', 'model.class', 'model.role', 'model.type')
     get name() {
-        if (this.model) {
+        if (this.tooltip && this.model) {
             if (this.model.name) {
                 return this.model.name;
             } else if (this.model.class + this.model.role + this.model.type) {
@@ -97,6 +97,8 @@ export class UnitDisplay {
                         this.model = x;
                     }, 0);
                 });
+            } else if (this.model.id === oldValue) {
+                this.model = null;
             }
         }
     }
