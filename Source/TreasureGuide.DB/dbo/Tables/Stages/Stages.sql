@@ -17,6 +17,7 @@ AFTER UPDATE
 AS BEGIN
    UPDATE [dbo].[Stages]
    SET [EditedDate] = SYSDATETIMEOFFSET()
-   FROM INSERTED
+   FROM INSERTED I
+   WHERE [dbo].[Stages].[Id] = I.[Id]
 END
 GO

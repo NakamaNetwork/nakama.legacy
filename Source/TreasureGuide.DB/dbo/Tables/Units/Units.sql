@@ -28,6 +28,7 @@ AFTER UPDATE
 AS BEGIN
    UPDATE [dbo].[Units]
    SET [EditedDate] = SYSDATETIMEOFFSET()
-   FROM INSERTED
+   FROM INSERTED I
+   WHERE [dbo].[Units].[Id] = I.[Id]
 END
 GO

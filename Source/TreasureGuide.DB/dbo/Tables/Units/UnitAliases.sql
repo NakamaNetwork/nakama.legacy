@@ -13,6 +13,7 @@ AFTER UPDATE
 AS BEGIN
    UPDATE [dbo].[UnitAliases]
    SET [EditedDate] = SYSDATETIMEOFFSET()
-   FROM INSERTED
+   FROM INSERTED I
+   WHERE [dbo].[UnitAliases].[UnitId] = I.[UnitId] AND [dbo].[UnitAliases].[Name] = I.[Name]
 END
 GO

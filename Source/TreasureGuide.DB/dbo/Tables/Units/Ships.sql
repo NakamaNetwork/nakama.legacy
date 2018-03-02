@@ -15,6 +15,7 @@ AFTER UPDATE
 AS BEGIN
    UPDATE [dbo].[Ships]
    SET [EditedDate] = SYSDATETIMEOFFSET()
-   FROM INSERTED
+   FROM INSERTED I
+   WHERE [dbo].[Ships].[Id] = I.[Id]
 END
 GO

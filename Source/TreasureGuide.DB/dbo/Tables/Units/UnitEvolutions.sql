@@ -14,6 +14,7 @@ AFTER UPDATE
 AS BEGIN
    UPDATE [dbo].[UnitEvolutions]
    SET [EditedDate] = SYSDATETIMEOFFSET()
-   FROM INSERTED
+   FROM INSERTED I
+   WHERE [dbo].[UnitEvolutions].[FromUnitId] = I.[FromUnitId] AND [dbo].[UnitEvolutions].[ToUnitId] = I.[ToUnitId]
 END
 GO
