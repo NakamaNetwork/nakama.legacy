@@ -87,6 +87,11 @@ export class TeamDetailPage {
         this.teamQueryService.detail(id).then(result => {
             this.team = result;
             MetaTool.setTitle(this.team.name);
+            this.team.teamUnits.forEach(x => {
+                this.unitQueryService.get(x.unitId).then(y => {
+                    (<any>x).level = y.maxLevel;
+                });
+            });
             this.similarLoading = true;
             this.teamQueryService.similarId(this.team.id).then(x => {
                 this.similar = x;
