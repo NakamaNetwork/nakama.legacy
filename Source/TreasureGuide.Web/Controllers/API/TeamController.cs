@@ -377,7 +377,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (Throttled && !ThrottlingService.CanAccess(User, Request))
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode(429, ThrottleService.Message);
             }
             var teamId = id ?? model.TeamId;
             var userId = User.GetId();
@@ -409,7 +409,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (Throttled && !ThrottlingService.CanAccess(User, Request))
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode(429, ThrottleService.Message);
             }
             var team = await DbContext.Teams.SingleOrDefaultAsync(x => x.Id == id);
             if (team == null)
@@ -443,7 +443,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (Throttled && !ThrottlingService.CanAccess(User, Request))
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode(429, ThrottleService.Message);
             }
             var teamId = id ?? model.TeamId;
 
@@ -465,7 +465,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (Throttled && !ThrottlingService.CanAccess(User, Request))
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode(429, ThrottleService.Message);
             }
             var reports = await DbContext
                 .TeamReports

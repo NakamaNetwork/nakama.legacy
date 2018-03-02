@@ -106,9 +106,9 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]/{id?}")]
         public async Task<IActionResult> Focus(int? id)
         {
-            if (Throttled && !ThrottlingService.CanAccess(User, Request, ControllerContext.RouteData))
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, Request.Path))
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode(429, ThrottleService.Message);
             }
             if (id.HasValue && User.IsInRole(RoleConstants.BoxUser))
             {

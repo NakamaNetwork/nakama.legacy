@@ -36,9 +36,9 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         [Route("{date?}")]
         public async Task<IActionResult> Get(long? date = null)
         {
-            if (Throttled && !ThrottlingService.CanAccess(User, Request, RouteData, Timeout))
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, Request.Path, Timeout))
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode(429, ThrottleService.Message);
             }
             var entities = DbContext.Set<TEntity>().AsQueryable();
             if (date.HasValue)

@@ -108,7 +108,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         {
             if (Throttled && !ThrottlingService.CanAccess(User, Request))
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode(429, ThrottleService.Message);
             }
             if (!ModelState.IsValid)
             {
