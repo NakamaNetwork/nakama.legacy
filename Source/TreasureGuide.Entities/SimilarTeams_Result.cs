@@ -15,5 +15,6 @@ namespace TreasureGuide.Entities
     {
         public Nullable<int> TeamId { get; set; }
         public Nullable<int> Matches { get; set; }
+        public Nullable<bool> StageMatches { get; set; }
     }
 }

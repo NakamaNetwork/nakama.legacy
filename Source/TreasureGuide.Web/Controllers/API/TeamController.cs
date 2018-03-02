@@ -304,16 +304,20 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("{id}/[action]")]
         public async Task<IActionResult> Similar(int? id)
         {
-            var similar = DbContext.SimilarTeamsId(id).OrderBy(x => x.Matches).Take(10);
+            var similar = DbContext.SimilarTeamsId(id)
+                .Where(x => x.Matches > 2).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
+                .Take(6);
             return await TrimDownSimilar(similar);
         }
 
         [HttpGet]
         [ActionName("Similar")]
         [Route("[action]")]
-        public async Task<IActionResult> Similar(int? teamId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
+        public async Task<IActionResult> Similar(int? teamId, int? stageId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
         {
-            var similar = DbContext.SimilarTeams(teamId, unit1, unit2, unit3, unit4, unit5, unit6).Where(x => x.Matches > 2).OrderByDescending(x => x.Matches).Take(3);
+            var similar = DbContext.SimilarTeams(teamId, stageId, unit1, unit2, unit3, unit4, unit5, unit6)
+                .Where(x => x.Matches > 2).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
+                .Take(3);
             return await TrimDownSimilar(similar);
         }
 

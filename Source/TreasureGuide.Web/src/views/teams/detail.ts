@@ -1,14 +1,15 @@
-﻿import { autoinject, computedFrom } from 'aurelia-framework';
+﻿import { autoinject, computedFrom, BindingEngine } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { TeamQueryService } from '../../services/query/team-query-service';
 import { ITeamDetailModel } from '../../models/imported';
 import { CalcParser } from '../../tools/calc-parser';
 import { DialogService } from 'aurelia-dialog';
 import { VideoPicker } from '../../custom-elements/dialogs/video-picker';
-import { ITeamVideoModel } from '../../models/imported';
+import { ITeamVideoModel, ITeamStubModel } from '../../models/imported';
 import { AlertService } from '../../services/alert-service';
 import * as moment from 'moment';
-import {MetaTool} from '../../tools/meta-tool';
+import { MetaTool } from '../../tools/meta-tool';
+import { UnitQueryService } from '../../services/query/unit-query-service';
 
 @autoinject
 export class TeamDetailPage {
@@ -16,15 +17,20 @@ export class TeamDetailPage {
     private router: Router;
     private dialogService: DialogService;
     private alertService: AlertService;
+    private unitQueryService: UnitQueryService;
 
     team: ITeamDetailModel;
     loading: boolean;
 
-    constructor(teamQueryService: TeamQueryService, router: Router, dialogService: DialogService, alertService: AlertService) {
+    similarLoading: boolean;
+    similar: ITeamStubModel[] = [];
+
+    constructor(teamQueryService: TeamQueryService, router: Router, dialogService: DialogService, alertService: AlertService, unitQueryService: UnitQueryService) {
         this.teamQueryService = teamQueryService;
         this.router = router;
         this.dialogService = dialogService;
         this.alertService = alertService;
+        this.unitQueryService = unitQueryService;
     }
 
     @computedFrom('team', 'team.teamUnits', 'team.teamShip')
@@ -80,8 +86,16 @@ export class TeamDetailPage {
         this.loading = true;
         this.teamQueryService.detail(id).then(result => {
             this.team = result;
-            this.loading = false;
             MetaTool.setTitle(this.team.name);
+            this.similarLoading = true;
+            this.teamQueryService.similarId(this.team.id).then(x => {
+                this.similar = x;
+                this.similarLoading = false;
+            }).catch(x => {
+                this.similar = [];
+                this.similarLoading = false;
+                });
+            this.loading = false;
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });
         });

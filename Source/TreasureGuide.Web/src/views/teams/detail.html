@@ -87,5 +87,16 @@
                 </div>
             </div>
         </div>
+        <div class="row" if.bind="similar.length > 0">
+            <hr />
+            <fieldset>
+                <legend>Similar Teams</legend>
+                <div class="similar-section">
+                    <div class="col m4" repeat.for="team of similar">
+                        <team-box team.bind="team"></team-box>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
     </div>
 </template>
