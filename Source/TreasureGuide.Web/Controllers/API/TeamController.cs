@@ -324,7 +324,10 @@ namespace TreasureGuide.Web.Controllers.API
         private async Task<IActionResult> TrimDownSimilar(IQueryable<SimilarTeams_Result> similar)
         {
             var teamIds = await similar.Select(x => x.TeamId).ToListAsync();
-            var teams = await DbContext.Teams.Join(teamIds, x => x.Id, y => y, (x, y) => x).Where(x => !x.Draft && !x.Deleted).ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+            var teams = await DbContext.Teams.Join(teamIds, x => x.Id, y => y, (x, y) => x)
+                .Where(x => !x.Draft && !x.Deleted)
+                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+            teams = teamIds.Join(teams, x => x, y => y.Id, (x, y) => y).ToList();
             return Ok(teams);
         }
 
