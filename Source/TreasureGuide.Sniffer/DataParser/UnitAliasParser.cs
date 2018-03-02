@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
+using TreasureGuide.Sniffer.Helpers;
 
 namespace TreasureGuide.Sniffer.DataParser
 {
@@ -22,13 +23,10 @@ namespace TreasureGuide.Sniffer.DataParser
             var arrays = JsonConvert.DeserializeObject<JObject>(trimmed);
             var models = arrays.Values().SelectMany((line) =>
             {
-                return line.Children().Select(y =>
+                return line.Children().Select(y => new UnitAlias
                 {
-                    return new UnitAlias
-                    {
-                        UnitId = Int32.Parse(line.Path),
-                        Name = y.Value<string>(),
-                    };
+                    UnitId = Int32.Parse(line.Path),
+                    Name = y.Value<string>()
                 });
             });
             var unique = models.GroupBy(x => String.Join(":::", x.UnitId, x.Name)).Select(x => x.First()).Where(x => !String.IsNullOrWhiteSpace(x.Name)).ToList();

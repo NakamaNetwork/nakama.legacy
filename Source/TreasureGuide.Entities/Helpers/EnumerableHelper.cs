@@ -54,23 +54,5 @@ namespace TreasureGuide.Entities.Helpers
         {
             return AlphaNumericRegex.Replace(term, " ").Split(Splitters, StringSplitOptions.RemoveEmptyEntries);
         }
-
-        public static async Task LoopedAddSave<T>(this DbContext context, IEnumerable<T> entities, int pageSize = 100)
-            where T : class
-        {
-            var count = 0;
-            var total = entities.Count();
-            Debug.WriteLine($"Performing bulk save on {total} items");
-            IEnumerable<T> slice;
-            while ((slice = entities.Skip(count * pageSize).Take(pageSize)).Any())
-            {
-                Debug.WriteLine($"   {(count * pageSize)}/{total}");
-                context.Set<T>().AddRange(slice);
-                await context.SaveChangesAsync();
-                count++;
-            }
-            Debug.WriteLine($"   {total}/{total}");
-            Debug.WriteLine("Bulk save complete.");
-        }
     }
 }

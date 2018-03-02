@@ -13,7 +13,8 @@
                 <textarea class="_width100" value.bind="text" placeholder="Unit Ids..."></textarea>
             </div>
             <div class="row" if.bind="parsed.length > 0">
-                <unit-display repeat.for="id of parsed" unit-id.bind="id" size="small"></unit-display>
+                <unit-display repeat.for="id of parsed" unit-id.bind="id"
+                              tooltip="true" size="small"></unit-display>
             </div>
         </ux-dialog-body>
         <ux-dialog-footer>

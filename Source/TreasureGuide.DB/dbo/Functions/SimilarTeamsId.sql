@@ -5,7 +5,7 @@
 RETURNS @returntable TABLE
 (
     [TeamId] INT,
-    [StageId] INT,
+    [StageMatches] BIT,
     [Matches] INT
 )
 AS

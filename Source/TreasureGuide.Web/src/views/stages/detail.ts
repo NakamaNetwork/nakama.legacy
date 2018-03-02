@@ -2,7 +2,7 @@
 import { Router } from 'aurelia-router';
 import { StageQueryService } from '../../services/query/stage-query-service';
 import { TeamQueryService, TeamSearchModel } from '../../services/query/team-query-service';
-import { IStageDetailModel } from '../../models/imported';
+import { IStageStubModel } from '../../models/imported';
 import { MetaTool } from '../../tools/meta-tool';
 
 @autoinject
@@ -11,7 +11,7 @@ export class StageDetailPage {
     private teamQueryService: TeamQueryService;
     private router: Router;
 
-    stage: IStageDetailModel;
+    stage: IStageStubModel;
     loading: boolean;
 
     loadingTeams: boolean;
@@ -41,7 +41,7 @@ export class StageDetailPage {
 
     reload(id) {
         this.loading = true;
-        this.stageQueryService.detail(id).then(result => {
+        this.stageQueryService.get(id).then(result => {
             this.stage = result;
             this.loading = false;
             this.teamSearchModel.stageId = result.id;

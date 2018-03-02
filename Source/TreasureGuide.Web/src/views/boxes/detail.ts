@@ -13,6 +13,7 @@ import { BoxUnitsDialog } from '../../custom-elements/dialogs/box-units-dialog';
 import { RoleConstants } from '../../models/imported';
 import { BoxDetailModel } from '../../services/query/box-query-service';
 import { BoxFlagsDialog } from '../../custom-elements/dialogs/box-flags-dialog';
+import { IndividualUnitFlags } from '../../models/imported';
 
 @autoinject
 export class BoxDetailPage {
@@ -34,8 +35,6 @@ export class BoxDetailPage {
     private searchModel: UnitSearchModel;
     private units: IUnitStubModel[] = [];
     private unitsLoading: boolean;
-
-    private featuredUnits: IUnitStubModel[] = [];
 
     constructor(boxQueryService: BoxQueryService,
         unitQueryService: UnitQueryService,
@@ -61,12 +60,16 @@ export class BoxDetailPage {
     activate(params) {
         var id = params.id;
         if (id) {
-            this.searchModel.boxId = id;
             this.refresh(id);
-            this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-                this.search(n);
-            });
         }
+    }
+
+    @computedFrom('box', 'box.boxUnits')
+    get featuredUnits() {
+        if (this.box && this.box.boxUnits) {
+            return this.box.boxUnits.filter(x => (x.flags & IndividualUnitFlags.Favorite) !== 0);
+        }
+        return [];
     }
 
     refresh(id) {
@@ -76,13 +79,13 @@ export class BoxDetailPage {
             if (this.boxService.currentBox && this.boxService.currentBox.id === result.id) {
                 this.boxService.currentBox = this.box;
             }
-            this.boxQueryService.featured(id).then(result => {
-                this.featuredUnits = result;
-                this.loading = false;
-            }).catch(error => {
-                this.loading = false;
+            this.searchModel.myBox = false;
+            this.searchModel.limitTo = this.box.unitIds;
+            this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+                this.search(n);
             });
             this.search(this.searchModel.payload);
+            this.loading = false;
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested box could not be found. It may not exist or you may not have permission to view it.' });
         });

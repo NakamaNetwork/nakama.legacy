@@ -51,7 +51,6 @@ export interface IBoxSearchModel extends ISearchModel{
 
 
 export interface IBoxUnitStubModel {
-    name: string;
     unitId: number;
     flags: IndividualUnitFlags;
     
@@ -79,14 +78,6 @@ export interface IBoxUpdateModel {
 export interface IBoxUnitUpdateModel {
     id: number;
     flags: IndividualUnitFlags;
-    
-}
-
-
-export interface IDonationFinalizationModel {
-    id: number;
-    payerId: string;
-    paymentId: string;
     
 }
 
@@ -280,16 +271,7 @@ export interface IShipStubModel {
     name: string;
     eventShip: boolean;
     eventShipActive: boolean;
-    
-}
-
-export interface IShipDetailModel extends IShipStubModel{
-    description: string;
-    
-}
-
-export interface IShipEditorModel {
-    id: number;
+    editedDate: Date;
     
 }
 
@@ -309,41 +291,23 @@ export enum SocketType {
 }
 
 
-export interface IStageStubModel {
-    id: number;
-    unitId: number;
-    stamina: number;
-    name: string;
-    global: boolean;
-    type: StageType;
-    teamCount: number;
-    
-}
-
-export interface IStageDetailModel {
-    id: number;
-    unitId: number;
-    stamina: number;
-    name: string;
-    global: boolean;
-    type: StageType;
-    
-}
-
-export interface IStageEditorModel {
-    id: number;
-    stamina: number;
-    name: string;
-    global: boolean;
-    type: StageType;
-    
-}
-
-
 export interface IStageSearchModel extends ISearchModel{
     term: string;
     type: StageType;
     global: boolean;
+    
+}
+
+
+export interface IStageStubModel {
+    id: number;
+    unitId: number;
+    name: string;
+    global: boolean;
+    type: StageType;
+    editedDate: Date;
+    teamCount: number;
+    aliases: string[];
     
 }
 
@@ -392,22 +356,6 @@ export interface ITeamGenericSlotDetailModel extends ITeamGenericSlotStubModel{
 }
 
 export interface ITeamGenericSlotEditorModel extends ITeamGenericSlotDetailModel{
-    
-}
-
-
-export interface ITeamGenericUnitStubModel {
-    role: number;
-    position: number;
-    
-}
-
-export interface ITeamGenericUnitDetailModel extends ITeamGenericUnitStubModel{
-    combo: number;
-    
-}
-
-export interface ITeamGenericUnitEditorModel extends ITeamGenericUnitDetailModel{
     
 }
 
@@ -560,8 +508,6 @@ export interface ITeamUnitStubModel {
 }
 
 export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
-    name: string;
-    level: number;
     flags: IndividualUnitFlags;
     sub: boolean;
     
@@ -595,22 +541,6 @@ export interface ITeamVoteModel {
 }
 
 
-export enum TransactionState { 
-    Unknown = 0,
-    Initialized = 1,
-    Processing = 2,
-    Complete = 3,
-    Failed = 4,
-    Chargeback = 5
-}
-
-
-export enum TransactionType { 
-    Unknown = 0,
-    Paypal = 1
-}
-
-
 export enum UnitClass { 
     Unknown = 0,
     Fighter = 1,
@@ -620,7 +550,7 @@ export enum UnitClass {
     FreeSpirit = 16,
     Driven = 32,
     Cerebral = 64,
-    PowerHouse = 128,
+    Powerhouse = 128,
     Evolver = 256,
     Booster = 512
 }
@@ -634,29 +564,6 @@ export enum UnitFlag {
     RareRecruitLimited = 8,
     Promotional = 16,
     Shop = 32
-}
-
-
-export interface IUnitModel {
-    id: number;
-    name: string;
-    class: UnitClass;
-    type: UnitType;
-    flags: UnitFlag;
-    
-}
-
-export interface IUnitStubModel extends IUnitModel{
-    
-}
-
-export interface IUnitDetailModel extends IUnitModel{
-    
-}
-
-export interface IUnitEditorModel {
-    id: number;
-    
 }
 
 
@@ -682,8 +589,25 @@ export interface IUnitSearchModel extends ISearchModel{
     forceClass: boolean;
     freeToPlay: boolean;
     global: boolean;
-    boxId: number;
+    myBox: boolean;
     blacklist: boolean;
+    limitTo: number[];
+    
+}
+
+
+export interface IUnitStubModel {
+    id: number;
+    name: string;
+    maxLevel: number;
+    stars: number;
+    class: UnitClass;
+    type: UnitType;
+    flags: UnitFlag;
+    aliases: string[];
+    evolvesTo: number[];
+    evolvesFrom: number[];
+    editedDate: Date;
     
 }
 

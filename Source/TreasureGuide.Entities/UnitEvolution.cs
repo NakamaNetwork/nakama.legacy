@@ -12,13 +12,13 @@ namespace TreasureGuide.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class RoundUnitBehavior
+    public partial class UnitEvolution
     {
-        public int Id { get; set; }
-        public int RoundUnitId { get; set; }
-        public string Condition { get; set; }
-        public string Description { get; set; }
+        public int FromUnitId { get; set; }
+        public int ToUnitId { get; set; }
+        public Nullable<System.DateTimeOffset> EditedDate { get; set; }
     
-        public virtual RoundUnit RoundUnit { get; set; }
+        public virtual Unit EvolvesFrom { get; set; }
+        public virtual Unit EvolvesTo { get; set; }
     }
 }

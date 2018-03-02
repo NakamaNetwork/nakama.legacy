@@ -5,12 +5,15 @@
                           model.bind="main"
                           editable.bind="editable"
                           info="true"
+                          tooltip="true"
                           allow-generics="true"
                           selected.delegate="unitAdded($event, false)"
                           show-box="true">
             </unit-display>
             <unit-display if.bind="!hasMain"
                           editable.bind="editable"
+                          info="true"
+                          tooltip="true"
                           allow-generics="true"
                           selected.delegate="unitAdded($event, false)"
                           show-box="true">
@@ -21,14 +24,16 @@
                 <unit-display model.bind="sub"
                               editable.bind="editable"
                               info="true"
+                              tooltip="true"
                               allow-generics="true"
                               selected.delegate="unitAdded($event, true)"
                               show-box="true">
                 </unit-display>
             </div>
-            <div class="team-unit" auth-req="BetaTester" if.bind="canAddSubs">
+            <div class="team-unit" if.bind="canAddSubs">
                 <unit-display editable="true"
                               info="true"
+                              tooltip="true"
                               allow-generics="true"
                               selected.delegate="unitAdded($event, true, true)"
                               show-box="true">

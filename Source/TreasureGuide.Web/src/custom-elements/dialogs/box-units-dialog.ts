@@ -38,7 +38,9 @@ export class BoxUnitsDialog {
             boxUnits: []
         };
 
-        this.searchModel.boxId = null;
+        this.searchModel.myBox = false;
+        this.searchModel.limitTo = null;
+
         bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
         });
@@ -49,7 +51,6 @@ export class BoxUnitsDialog {
         this.box = Object.assign(new BoxDetailModel(), viewModel);
         this.box.boxUnits = this.box.boxUnits.map(x => <IBoxUnitDetailModel>{
             unitId: x.unitId,
-            name: x.name,
             flags: x.flags
         });
     }

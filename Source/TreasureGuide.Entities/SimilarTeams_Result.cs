@@ -14,7 +14,7 @@ namespace TreasureGuide.Entities
     public partial class SimilarTeams_Result
     {
         public Nullable<int> TeamId { get; set; }
-        public Nullable<int> StageId { get; set; }
         public Nullable<int> Matches { get; set; }
+        public Nullable<bool> StageMatches { get; set; }
     }
 }

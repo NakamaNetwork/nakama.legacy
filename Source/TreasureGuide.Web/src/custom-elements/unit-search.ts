@@ -20,23 +20,9 @@ export class UnitSearch {
     bind() {
         if (this.model) {
             if (this.boxLocked) {
-                this.model.lockedFields.push('boxId');
-                this.model.lockedFields.push('blacklist');
+                this.model.lockedFields.push('myBox');
+                this.model.lockedFields.push('limitTo');
             }
-        }
-    }
-
-    @computedFrom('model.boxId')
-    get myBox() {
-        return this.model.boxId !== undefined;
-    }
-    set myBox(value) {
-        if (value && this.boxService.currentBox) {
-            this.model.boxId = this.boxService.currentBox.id;
-            this.model.blacklist = this.boxService.currentBox.blacklist;
-        } else {
-            this.model.boxId = undefined;
-            this.model.blacklist = undefined;
         }
     }
 

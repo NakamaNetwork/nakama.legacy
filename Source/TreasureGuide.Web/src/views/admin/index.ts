@@ -59,14 +59,14 @@ export class AdminPage {
     }
 
     createTeam(suuuper: boolean) {
-        this.stageQueryService.stub().then(x => {
+        this.stageQueryService.get().then(x => {
             var team = new TeamEditorModel();
             team.name = 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a');
             team.guide = '';
             team.guide = '';
             team.credits = '';
             team.shipId = (Math.floor(Math.random() * 30)) + 1;
-            team.stageId = x[Math.floor((Math.random() * 200)) + 1].id;
+            team.stageId = x[Math.floor((Math.random() * (suuuper ? 200 : 5))) + 1].id;
             for (var i = 0; i < 6; i++) {
                 var randomLimit = suuuper ? 1000 : i < 3 ? 4 : 20;
                 var unit = <ITeamUnitEditorModel>{

@@ -41,10 +41,12 @@ export class BoxFlagsDialog {
         this.box = Object.assign(new BoxDetailModel(), viewModel);
         this.box.boxUnits = this.box.boxUnits.map(x => <IBoxUnitDetailModel>{
             unitId: x.unitId,
-            name: x.name,
             flags: x.flags
         });
-        this.searchModel.boxId = this.box.id;
+
+        this.searchModel.myBox = false;
+        this.searchModel.limitTo = this.box.unitIds;
+
         this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
         });

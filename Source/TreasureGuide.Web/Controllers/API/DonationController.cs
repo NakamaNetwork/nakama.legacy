@@ -37,7 +37,8 @@ namespace TreasureGuide.Web.Controllers.API
             entities = entities.Where(x => x.State == PaymentState.Complete);
             if (!User.IsInRole(RoleConstants.Administrator))
             {
-                entities = entities.Where(x => x.UserId == User.GetId() || x.Public == true);
+                var userId = User.GetId();
+                entities = entities.Where(x => x.UserId == userId || x.Public == true);
             }
             return entities;
         }

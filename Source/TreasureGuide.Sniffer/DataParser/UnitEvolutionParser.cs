@@ -52,10 +52,9 @@ namespace TreasureGuide.Sniffer.DataParser
                 var source = await Context.Units.SingleOrDefaultAsync(x => x.Id == evo.Item1);
                 if (source != null)
                 {
-                    var target = await Context.Units.SingleOrDefaultAsync(x => x.Id == evo.Item2);
-                    if (target != null)
+                    if (await Context.Units.AnyAsync(y => y.Id == evo.Item2))
                     {
-                        source.EvolvesTo.Add(target);
+                        source.EvolvesTo.Add(new UnitEvolution { ToUnitId = evo.Item2 });
                     }
                 }
                 if (i % 100 == 0)

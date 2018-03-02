@@ -16,7 +16,7 @@ export class ShipPicker {
 
         this.shipQueryService = shipQueryService;
 
-        this.shipQueryService.stub().then(x => {
+        this.shipQueryService.get().then(x => {
             this.ships = x.sort((a, b) => a.name.localeCompare(b.name));
         });
     }
@@ -40,7 +40,7 @@ export class ShipPicker {
 
     getIcon(id: number) {
         if (id) {
-            return this.shipQueryService.getIcon(id);
+            return ShipQueryService.getIcon(id);
         }
         return null;
     }

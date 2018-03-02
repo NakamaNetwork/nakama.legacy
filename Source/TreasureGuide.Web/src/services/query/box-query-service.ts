@@ -9,7 +9,7 @@ import { IndividualUnitFlags } from '../../models/imported';
 @autoinject
 export class BoxQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
-        super('box', http, true);
+        super('box', http);
     }
 
     update(model: IBoxUpdateModel): Promise<any> {
@@ -22,10 +22,6 @@ export class BoxQueryService extends SearchableQueryService {
 
     focus(id: number): Promise<IBoxDetailModel> {
         return this.http.post(this.buildAddress('focus' + (id ? '/' + id : '')));
-    }
-
-    featured(id: number): Promise<IUnitStubModel[]> {
-        return this.http.get(this.buildAddress('featured/' + id));
     }
 }
 

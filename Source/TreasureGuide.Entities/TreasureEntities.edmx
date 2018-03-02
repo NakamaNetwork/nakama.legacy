@@ -62,39 +62,6 @@
           <Property Name="TokenId" Type="nvarchar" MaxLength="450" />
           <Property Name="Public" Type="bit" />
         </EntityType>
-        <EntityType Name="Rounds">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageId" Type="int" Nullable="false" />
-          <Property Name="Number" Type="tinyint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="RoundUnitBehavior">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoundUnitId" Type="int" Nullable="false" />
-          <Property Name="Condition" Type="nvarchar" MaxLength="250" />
-          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
-        </EntityType>
-        <EntityType Name="RoundUnits">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoundId" Type="int" Nullable="false" />
-          <Property Name="Position" Type="int" />
-          <Property Name="Level" Type="tinyint" Nullable="false" />
-          <Property Name="UnitId" Type="int" Nullable="false" />
-          <Property Name="HP" Type="smallint" />
-          <Property Name="Defense" Type="smallint" />
-          <Property Name="ATK" Type="smallint" />
-          <Property Name="MinCD" Type="tinyint" />
-          <Property Name="MaxCD" Type="tinyint" />
-          <Property Name="Interval" Type="tinyint" />
-        </EntityType>
         <EntityType Name="Ships">
           <Key>
             <PropertyRef Name="Id" />
@@ -104,6 +71,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="1000" />
           <Property Name="EventShip" Type="bit" Nullable="false" />
           <Property Name="EventShipActive" Type="bit" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
         </EntityType>
         <EntityType Name="StageAliases">
           <Key>
@@ -112,6 +80,7 @@
           </Key>
           <Property Name="StageId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
         </EntityType>
         <EntityType Name="Stages">
           <Key>
@@ -123,7 +92,7 @@
           <Property Name="UnitId" Type="int" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="Global" Type="bit" Nullable="false" />
-          <Property Name="OldId" Type="int" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
         </EntityType>
         <EntityType Name="TeamBookmarks">
           <Key>
@@ -180,7 +149,7 @@
           <Property Name="SubmittedById" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="EditedById" Type="nvarchar" MaxLength="450" Nullable="false" />
-          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
           <Property Name="Version" Type="int" Nullable="false" />
           <Property Name="Draft" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
@@ -234,6 +203,7 @@
           </Key>
           <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
         </EntityType>
         <EntityType Name="UnitEvolutions">
           <Key>
@@ -242,6 +212,7 @@
           </Key>
           <Property Name="FromUnitId" Type="int" Nullable="false" />
           <Property Name="ToUnitId" Type="int" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
         </EntityType>
         <EntityType Name="Units">
           <Key>
@@ -265,6 +236,7 @@
           <Property Name="MaxRCV" Type="smallint" />
           <Property Name="GrowthRate" Type="decimal" Precision="2" Scale="1" />
           <Property Name="Flags" Type="smallint" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
         </EntityType>
         <EntityType Name="UserPreferences">
           <Key>
@@ -495,62 +467,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Rounds_dbo_Stages">
-          <End Role="Stages" Type="Self.Stages" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Rounds" Type="Self.Rounds" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stages">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Rounds">
-              <PropertyRef Name="StageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
-          <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="RoundUnitBehavior" Type="Self.RoundUnitBehavior" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoundUnits">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RoundUnitBehavior">
-              <PropertyRef Name="RoundUnitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_RoundUnits_dbo_Stages">
-          <End Role="Rounds" Type="Self.Rounds" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rounds">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RoundUnits">
-              <PropertyRef Name="RoundId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_RoundUnits_dbo_Units">
-          <End Role="Units" Type="Self.Units" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="RoundUnits" Type="Self.RoundUnits" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Units">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RoundUnits">
-              <PropertyRef Name="UnitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_StageAliasess_dbo_Stages">
           <End Role="Stages" Type="Self.Stages" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -770,7 +686,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <CollectionType>
               <RowType>
                 <Property Name="TeamId" Type="int" />
-                <Property Name="StageId" Type="int" />
+                <Property Name="StageMatches" Type="bit" />
                 <Property Name="Matches" Type="int" />
               </RowType>
             </CollectionType>
@@ -782,7 +698,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <CollectionType>
               <RowType>
                 <Property Name="TeamId" Type="int" />
-                <Property Name="StageId" Type="int" />
+                <Property Name="StageMatches" Type="bit" />
                 <Property Name="Matches" Type="int" />
               </RowType>
             </CollectionType>
@@ -793,9 +709,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="Boxes" EntityType="Self.Boxes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoxUnits" EntityType="Self.BoxUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donations" EntityType="Self.Donations" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Rounds" EntityType="Self.Rounds" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RoundUnitBehavior" EntityType="Self.RoundUnitBehavior" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RoundUnits" EntityType="Self.RoundUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StageAliases" EntityType="Self.StageAliases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
@@ -886,22 +799,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Units" EntitySet="Units" />
             <End Role="UserProfiles" EntitySet="UserProfiles" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Rounds_dbo_Stages" Association="Self.FK_dbo_Rounds_dbo_Stages">
-            <End Role="Stages" EntitySet="Stages" />
-            <End Role="Rounds" EntitySet="Rounds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits" Association="Self.FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
-            <End Role="RoundUnits" EntitySet="RoundUnits" />
-            <End Role="RoundUnitBehavior" EntitySet="RoundUnitBehavior" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_RoundUnits_dbo_Stages" Association="Self.FK_dbo_RoundUnits_dbo_Stages">
-            <End Role="Rounds" EntitySet="Rounds" />
-            <End Role="RoundUnits" EntitySet="RoundUnits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_RoundUnits_dbo_Units" Association="Self.FK_dbo_RoundUnits_dbo_Units">
-            <End Role="Units" EntitySet="Units" />
-            <End Role="RoundUnits" EntitySet="RoundUnits" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_StageAliasess_dbo_Stages" Association="Self.FK_dbo_StageAliasess_dbo_Stages">
             <End Role="Stages" EntitySet="Stages" />
             <End Role="StageAliases" EntitySet="StageAliases" />
@@ -969,28 +866,9 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <Schema Namespace="tcdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
                 <EntityContainer Name="TreasureEntities" annotation:LazyLoadingEnabled="true">
                     <EntitySet Name="TeamSockets" EntityType="tcdbModel.TeamSocket" />
-                    <EntitySet Name="Rounds" EntityType="tcdbModel.Round" />
-                    <EntitySet Name="RoundUnitBehaviors" EntityType="tcdbModel.RoundUnitBehavior" />
-                    <EntitySet Name="RoundUnits" EntityType="tcdbModel.RoundUnit" />
-                    <AssociationSet Name="FK_dbo_RoundUnits_dbo_Stages" Association="tcdbModel.FK_dbo_RoundUnits_dbo_Stages">
-                        <End Role="Round" EntitySet="Rounds" />
-                        <End Role="RoundUnit" EntitySet="RoundUnits" />
-                    </AssociationSet>
-                    <AssociationSet Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits" Association="tcdbModel.FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
-                        <End Role="RoundUnit" EntitySet="RoundUnits" />
-                        <End Role="RoundUnitBehavior" EntitySet="RoundUnitBehaviors" />
-                    </AssociationSet>
                     <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
-                    <AssociationSet Name="FK_dbo_RoundUnits_dbo_Units" Association="tcdbModel.FK_dbo_RoundUnits_dbo_Units">
-                        <End Role="Unit" EntitySet="Units" />
-                        <End Role="RoundUnit" EntitySet="RoundUnits" />
-                    </AssociationSet>
                     <EntitySet Name="Ships" EntityType="tcdbModel.Ship" />
                     <EntitySet Name="Stages" EntityType="tcdbModel.Stage" />
-                    <AssociationSet Name="FK_dbo_Rounds_dbo_Stages" Association="tcdbModel.FK_dbo_Rounds_dbo_Stages">
-                        <End Role="Stage" EntitySet="Stages" />
-                        <End Role="Round" EntitySet="Rounds" />
-                    </AssociationSet>
           <EntitySet Name="UserProfiles" EntityType="tcdbModel.UserProfile" />
           <AssociationSet Name="FK_dbo_UserProfile_dbo_Units" Association="tcdbModel.FK_dbo_UserProfile_dbo_Units">
             <End Role="Unit" EntitySet="Units" />
@@ -1123,10 +1001,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Stage" EntitySet="Stages" />
             <End Role="StageAlias" EntitySet="StageAliases" />
           </AssociationSet>
-          <AssociationSet Name="UnitEvolutions" Association="tcdbModel.UnitEvolutions">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="Unit1" EntitySet="Units" />
-          </AssociationSet>
           <EntitySet Name="AspNetUsers" EntityType="tcdbModel.AspNetUser" />
           <AssociationSet Name="FK_dbo_UserProfile_dbo_AspNetUsers" Association="tcdbModel.FK_dbo_UserProfile_dbo_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -1141,9 +1015,18 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Stage" EntitySet="Stages" />
             <End Role="Team" EntitySet="Teams" />
           </AssociationSet>
+          <EntitySet Name="UnitEvolutions" EntityType="tcdbModel.UnitEvolution" />
+          <AssociationSet Name="FK_dbo_UnitEvolutions_dbo_FromUnitId" Association="tcdbModel.FK_dbo_UnitEvolutions_dbo_FromUnitId">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitEvolution" EntitySet="UnitEvolutions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UnitEvolutions_dbo_ToUnitId" Association="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitEvolution" EntitySet="UnitEvolutions" />
+          </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
-                    <Member Name="Unknown" Value="0" />
+          <Member Name="Unknown" Value="0" />
           <Member Name="Fighter" Value="1" />
           <Member Name="Slasher" Value="2" />
           <Member Name="Striker" Value="4" />
@@ -1151,7 +1034,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="FreeSpirit" Value="16" />
           <Member Name="Driven" Value="32" />
           <Member Name="Cerebral" Value="64" />
-          <Member Name="PowerHouse" Value="128" />
+          <Member Name="Powerhouse" Value="128" />
           <Member Name="Evolver" Value="256" />
           <Member Name="Booster" Value="512" />
         </EnumType>
@@ -1206,73 +1089,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="Level" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Team" Relationship="tcdbModel.FK_dbo_TeamSockets_dbo_Teams" FromRole="TeamSocket" ToRole="Team" />
                 </EntityType>
-                <EntityType Name="Round">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-                    <Property Name="StageId" Type="Int32" Nullable="false" />
-                    <Property Name="Number" Type="Byte" Nullable="false" />
-                    <NavigationProperty Name="RoundUnits" Relationship="tcdbModel.FK_dbo_RoundUnits_dbo_Stages" FromRole="Round" ToRole="RoundUnit" />
-                    <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Rounds_dbo_Stages" FromRole="Round" ToRole="Stage" />
-                </EntityType>
-                <EntityType Name="RoundUnitBehavior">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-                    <Property Name="RoundUnitId" Type="Int32" Nullable="false" />
-                    <Property Name="Condition" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-                    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-                    <NavigationProperty Name="RoundUnit" Relationship="tcdbModel.FK_dbo_RoundUnitBehavior_dbo_RoundUnits" FromRole="RoundUnitBehavior" ToRole="RoundUnit" />
-                </EntityType>
-                <EntityType Name="RoundUnit">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-                    <Property Name="RoundId" Type="Int32" Nullable="false" />
-                    <Property Name="Level" Type="Byte" Nullable="false" />
-                    <Property Name="UnitId" Type="Int32" Nullable="false" />
-                    <Property Name="Position" Type="Int32" />
-                    <Property Name="HP" Type="Int16" />
-                    <Property Name="Defense" Type="Int16" />
-                    <Property Name="ATK" Type="Int16" />
-                    <Property Name="MinCD" Type="Byte" />
-                    <Property Name="MaxCD" Type="Byte" />
-                    <Property Name="Interval" Type="Byte" />
-                    <NavigationProperty Name="Round" Relationship="tcdbModel.FK_dbo_RoundUnits_dbo_Stages" FromRole="RoundUnit" ToRole="Round" />
-                    <NavigationProperty Name="RoundUnitBehaviors" Relationship="tcdbModel.FK_dbo_RoundUnitBehavior_dbo_RoundUnits" FromRole="RoundUnit" ToRole="RoundUnitBehavior" />
-                    <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_RoundUnits_dbo_Units" FromRole="RoundUnit" ToRole="Unit" />
-                </EntityType>
-                <Association Name="FK_dbo_RoundUnits_dbo_Stages">
-                    <End Type="tcdbModel.Round" Role="Round" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Type="tcdbModel.RoundUnit" Role="RoundUnit" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Round">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="RoundUnit">
-                            <PropertyRef Name="RoundId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
-                <Association Name="FK_dbo_RoundUnitBehavior_dbo_RoundUnits">
-                    <End Type="tcdbModel.RoundUnit" Role="RoundUnit" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Type="tcdbModel.RoundUnitBehavior" Role="RoundUnitBehavior" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="RoundUnit">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="RoundUnitBehavior">
-                            <PropertyRef Name="RoundUnitId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
                 <EntityType Name="Unit">
                     <Key>
                         <PropertyRef Name="Id" />
@@ -1295,29 +1111,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="MaxRCV" Type="Int16" />
                     <Property Name="GrowthRate" Type="Decimal" Precision="2" Scale="1" />
                     <Property Name="Flags" Type="tcdbModel.UnitFlag" Nullable="false" />
-                    <NavigationProperty Name="RoundUnits" Relationship="tcdbModel.FK_dbo_RoundUnits_dbo_Units" FromRole="Unit" ToRole="RoundUnit" />
           <NavigationProperty Name="UnitAliases" Relationship="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" FromRole="Unit" ToRole="UnitAlias" />
           <NavigationProperty Name="Stages" Relationship="tcdbModel.FK_dbo_Stages_dbo_Units" FromRole="Unit" ToRole="Stage" />
           <NavigationProperty Name="TeamUnitSummaries" Relationship="tcdbModel.UnitTeamUnitSummary" FromRole="Unit" ToRole="TeamUnitSummary" />
           <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="Unit" ToRole="TeamUnit" />
           <NavigationProperty Name="BoxUnits" Relationship="tcdbModel.FK_dbo_BoxUnits_dbo_Units" FromRole="Unit" ToRole="BoxUnit" />
-          <NavigationProperty Name="EvolvesTo" Relationship="tcdbModel.UnitEvolutions" FromRole="Unit" ToRole="Unit1" />
-          <NavigationProperty Name="EvolvesFrom" Relationship="tcdbModel.UnitEvolutions" FromRole="Unit1" ToRole="Unit" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+          <NavigationProperty Name="EvolvesTo" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_FromUnitId" FromRole="Unit" ToRole="UnitEvolution" />
+          <NavigationProperty Name="EvolvesFrom" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId" FromRole="Unit" ToRole="UnitEvolution" />
                 </EntityType>
-                <Association Name="FK_dbo_RoundUnits_dbo_Units">
-                    <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Type="tcdbModel.RoundUnit" Role="RoundUnit" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Unit">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="RoundUnit">
-                            <PropertyRef Name="UnitId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
                 <EntityType Name="Ship">
                     <Key>
                         <PropertyRef Name="Id" />
@@ -1328,6 +1130,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Ship" ToRole="Team" />
           <Property Name="EventShip" Type="Boolean" Nullable="false" />
           <Property Name="EventShipActive" Type="Boolean" Nullable="false" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
                 </EntityType>
                 <EntityType Name="Stage">
                     <Key>
@@ -1338,28 +1141,13 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="Stamina" Type="Byte" />
                     <Property Name="Type" Type="tcdbModel.StageType" Nullable="false" />
                     <Property Name="Global" Type="Boolean" Nullable="false" />
-                    <NavigationProperty Name="Rounds" Relationship="tcdbModel.FK_dbo_Rounds_dbo_Stages" FromRole="Stage" ToRole="Round" />
           <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Stage" ToRole="Team" />
           <Property Name="UnitId" Type="Int32" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_Stages_dbo_Units" FromRole="Stage" ToRole="Unit" />
-          <Property Name="OldId" Type="Int32" />
           <NavigationProperty Name="StageAliases" Relationship="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" FromRole="Stage" ToRole="StageAlias" />
           <NavigationProperty Name="InvasionTeams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" FromRole="Stage" ToRole="Team" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
                 </EntityType>
-                <Association Name="FK_dbo_Rounds_dbo_Stages">
-                    <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
-                        <OnDelete Action="Cascade" />
-                    </End>
-                    <End Type="tcdbModel.Round" Role="Round" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Stage">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="Round">
-                            <PropertyRef Name="StageId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="Id" />
@@ -1427,7 +1215,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="SubmittedById" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="SubmittedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
           <Property Name="EditedById" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Name="EditedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
           <Property Name="Version" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ship" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Team" ToRole="Ship" />
           <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Team" ToRole="Stage" />
@@ -1654,6 +1442,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="UnitId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" FromRole="UnitAlias" ToRole="Unit" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
         </EntityType>
         <Association Name="FK_dbo_UnitAliasess_dbo_Units">
           <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
@@ -1801,8 +1590,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
         </Association>
         <ComplexType Name="SimilarTeams_Result">
             <Property Type="Int32" Name="TeamId" Nullable="true" />
-            <Property Type="Int32" Name="StageId" Nullable="true" />
             <Property Type="Int32" Name="Matches" Nullable="true" />
+          <Property Type="Boolean" Name="StageMatches" Nullable="true" />
         </ComplexType>
         <EntityType Name="UserPreference">
           <Key>
@@ -1930,6 +1719,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="StageId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" FromRole="StageAlias" ToRole="Stage" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
         </EntityType>
         <Association Name="FK_dbo_StageAliasess_dbo_Stages">
           <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
@@ -1944,10 +1734,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               <PropertyRef Name="StageId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="UnitEvolutions">
-          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="*" />
-          <End Type="tcdbModel.Unit" Role="Unit1" Multiplicity="*" />
         </Association>
         <EntityType Name="AspNetUser">
           <Key>
@@ -2038,6 +1824,41 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UnitEvolution">
+          <Key>
+            <PropertyRef Name="FromUnitId" />
+            <PropertyRef Name="ToUnitId" />
+          </Key>
+          <Property Name="FromUnitId" Type="Int32" Nullable="false" />
+          <Property Name="ToUnitId" Type="Int32" Nullable="false" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+          <NavigationProperty Name="EvolvesFrom" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_FromUnitId" FromRole="UnitEvolution" ToRole="Unit" />
+          <NavigationProperty Name="EvolvesTo" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId" FromRole="UnitEvolution" ToRole="Unit" />
+        </EntityType>
+        <Association Name="FK_dbo_UnitEvolutions_dbo_FromUnitId">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="tcdbModel.UnitEvolution" Role="UnitEvolution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitEvolution">
+              <PropertyRef Name="FromUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UnitEvolutions_dbo_ToUnitId">
+          <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="tcdbModel.UnitEvolution" Role="UnitEvolution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitEvolution">
+              <PropertyRef Name="ToUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2053,46 +1874,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                             </MappingFragment>
                         </EntityTypeMapping>
                     </EntitySetMapping>
-                    <EntitySetMapping Name="Rounds">
-                        <EntityTypeMapping TypeName="tcdbModel.Round">
-                            <MappingFragment StoreEntitySet="Rounds">
-                                <ScalarProperty Name="Number" ColumnName="Number" />
-                                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                                <ScalarProperty Name="Id" ColumnName="Id" />
-                            </MappingFragment>
-                        </EntityTypeMapping>
-                    </EntitySetMapping>
-                    <EntitySetMapping Name="RoundUnitBehaviors">
-                        <EntityTypeMapping TypeName="tcdbModel.RoundUnitBehavior">
-                            <MappingFragment StoreEntitySet="RoundUnitBehavior">
-                                <ScalarProperty Name="Description" ColumnName="Description" />
-                                <ScalarProperty Name="Condition" ColumnName="Condition" />
-                                <ScalarProperty Name="RoundUnitId" ColumnName="RoundUnitId" />
-                                <ScalarProperty Name="Id" ColumnName="Id" />
-                            </MappingFragment>
-                        </EntityTypeMapping>
-                    </EntitySetMapping>
-                    <EntitySetMapping Name="RoundUnits">
-                        <EntityTypeMapping TypeName="tcdbModel.RoundUnit">
-                            <MappingFragment StoreEntitySet="RoundUnits">
-                                <ScalarProperty Name="Interval" ColumnName="Interval" />
-                                <ScalarProperty Name="MaxCD" ColumnName="MaxCD" />
-                                <ScalarProperty Name="MinCD" ColumnName="MinCD" />
-                                <ScalarProperty Name="ATK" ColumnName="ATK" />
-                                <ScalarProperty Name="Defense" ColumnName="Defense" />
-                                <ScalarProperty Name="HP" ColumnName="HP" />
-                                <ScalarProperty Name="Position" ColumnName="Position" />
-                                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
-                                <ScalarProperty Name="Level" ColumnName="Level" />
-                                <ScalarProperty Name="RoundId" ColumnName="RoundId" />
-                                <ScalarProperty Name="Id" ColumnName="Id" />
-                            </MappingFragment>
-                        </EntityTypeMapping>
-                    </EntitySetMapping>
                     <EntitySetMapping Name="Units">
                         <EntityTypeMapping TypeName="tcdbModel.Unit">
                             <MappingFragment StoreEntitySet="Units">
-                                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
                                 <ScalarProperty Name="GrowthRate" ColumnName="GrowthRate" />
                                 <ScalarProperty Name="MaxRCV" ColumnName="MaxRCV" />
                                 <ScalarProperty Name="MaxATK" ColumnName="MaxATK" />
@@ -2116,7 +1902,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <EntitySetMapping Name="Ships">
                         <EntityTypeMapping TypeName="tcdbModel.Ship">
                             <MappingFragment StoreEntitySet="Ships">
-                                <ScalarProperty Name="EventShipActive" ColumnName="EventShipActive" />
+                                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="EventShipActive" ColumnName="EventShipActive" />
                 <ScalarProperty Name="EventShip" ColumnName="EventShip" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2127,7 +1914,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <EntitySetMapping Name="Stages">
                         <EntityTypeMapping TypeName="tcdbModel.Stage">
                             <MappingFragment StoreEntitySet="Stages">
-                                <ScalarProperty Name="OldId" ColumnName="OldId" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="Global" ColumnName="Global" />
                                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -2222,6 +2009,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySetMapping Name="UnitAliases">
             <EntityTypeMapping TypeName="tcdbModel.UnitAlias">
               <MappingFragment StoreEntitySet="UnitAliases">
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
               </MappingFragment>
@@ -2277,7 +2065,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <ResultMapping>
               <ComplexTypeMapping TypeName="tcdbModel.SimilarTeams_Result">
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
                 <ScalarProperty Name="Matches" ColumnName="Matches" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -2286,7 +2073,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <ResultMapping>
               <ComplexTypeMapping TypeName="tcdbModel.SimilarTeams_Result">
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
                 <ScalarProperty Name="Matches" ColumnName="Matches" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -2323,19 +2109,12 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySetMapping Name="StageAliases">
             <EntityTypeMapping TypeName="tcdbModel.StageAlias">
               <MappingFragment StoreEntitySet="StageAliases">
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="StageId" ColumnName="StageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="UnitEvolutions" TypeName="tcdbModel.UnitEvolutions" StoreEntitySet="UnitEvolutions">
-            <EndProperty Name="Unit1">
-              <ScalarProperty Name="Id" ColumnName="ToUnitId" />
-            </EndProperty>
-            <EndProperty Name="Unit">
-              <ScalarProperty Name="Id" ColumnName="FromUnitId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="tcdbModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
@@ -2371,6 +2150,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitEvolutions">
+            <EntityTypeMapping TypeName="tcdbModel.UnitEvolution">
+              <MappingFragment StoreEntitySet="UnitEvolutions">
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="ToUnitId" ColumnName="ToUnitId" />
+                <ScalarProperty Name="FromUnitId" ColumnName="FromUnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
@@ -12,7 +11,6 @@ using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models.BoxModels;
-using TreasureGuide.Web.Models.UnitModels;
 using TreasureGuide.Web.Services;
 using Z.EntityFramework.Plus;
 
@@ -27,21 +25,6 @@ namespace TreasureGuide.Web.Controllers.API
         {
             Throttled = true;
             _preferenceService = preferenceService;
-        }
-
-        [HttpGet]
-        [ActionName("featured")]
-        [Route("[action]/{id?}")]
-        public async Task<IActionResult> Featured(int? id)
-        {
-            if (!id.HasValue)
-            {
-                return BadRequest("Must specify a box id.");
-            }
-            var results = await DbContext.BoxUnits
-                .Where(x => x.BoxId == id && x.Flags.HasValue && x.Flags.Value.HasFlag(IndividualUnitFlags.Favorite))
-                .Select(x => x.Unit).ProjectTo<UnitStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
-            return Ok(results);
         }
 
         protected override IQueryable<Box> Filter(IQueryable<Box> entities)
@@ -123,9 +106,9 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]/{id?}")]
         public async Task<IActionResult> Focus(int? id)
         {
-            if (Throttled && !ThrottlingService.CanAccess(User, Request, ControllerContext.RouteData))
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, Request.Path))
             {
-                return StatusCode((int)HttpStatusCode.Conflict, ThrottleService.Message);
+                return StatusCode(429, ThrottleService.Message);
             }
             if (id.HasValue && User.IsInRole(RoleConstants.BoxUser))
             {

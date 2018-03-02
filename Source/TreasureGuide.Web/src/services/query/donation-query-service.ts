@@ -8,7 +8,7 @@ import { SearchConstants } from '../../models/imported';
 @autoinject
 export class DonationQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
-        super('donation', http, true);
+        super('donation', http);
     }
 
     prepare(model: IDonationSubmissionModel): Promise<IDonationResultModel> {

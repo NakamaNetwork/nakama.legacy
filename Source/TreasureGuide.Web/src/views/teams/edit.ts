@@ -149,10 +149,10 @@ export class TeamEditPage {
     }
 
     get similarModel() {
-        var similar = { stageId: this.team.stageId, teamId: this.team.id };
+        var similar = { teamId: this.team.id };
         for (var i = 0; i < 6; i++) {
             var unit = this.team.teamUnits.find(x => x.position === i && !x.sub);
-            similar['unit' + i] = unit ? unit.unitId : null;
+            similar['unit' + (i + 1)] = unit ? unit.unitId : null;
         }
         return similar;
     }
@@ -165,12 +165,12 @@ export class TeamEditPage {
             this.lastSimilar = json;
             this.similarLoading = true;
             this.teamQueryService.similar(model).then(x => {
-                    this.similar = x;
-                    this.similarLoading = false;
-                }).catch(x => {
-                    this.similar = [];
-                    this.similarLoading = false;
-                });
+                this.similar = x;
+                this.similarLoading = false;
+            }).catch(x => {
+                this.similar = [];
+                this.similarLoading = false;
+            });
         }
     }
 
@@ -195,6 +195,9 @@ ValidationRules
     .required()
     .minLength(TeamEditPage.nameMinLength)
     .maxLength(TeamEditPage.nameMaxLength)
+    .ensure((x: TeamEditorModel) => x.stageId)
+    .required()
+    .withMessage('Please specify a stage in which to use this team.')
     .ensure((x: TeamEditorModel) => x.credits)
     .maxLength(TeamEditPage.creditMaxLength)
     .ensure((x: TeamEditorModel) => x.guide)

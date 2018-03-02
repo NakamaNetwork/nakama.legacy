@@ -4,7 +4,6 @@ namespace TreasureGuide.Web.Models.BoxModels
 {
     public class BoxUnitStubModel
     {
-        public string Name { get; set; }
         public int UnitId { get; set; }
         public IndividualUnitFlags? Flags { get; set; }
     }

@@ -12,7 +12,7 @@ namespace TreasureGuide.Web.Services
 {
     public interface IThrottleService
     {
-        bool CanAccess(ClaimsPrincipal user, HttpRequest request, RouteData routeData = null, double? seconds = null);
+        bool CanAccess(ClaimsPrincipal user, HttpRequest request, string path = null, double? expirationSeconds = null, int? limitation = 1, string extra = null);
     }
 
     public class ThrottleService : IThrottleService
@@ -26,25 +26,28 @@ namespace TreasureGuide.Web.Services
             _cache = cache;
         }
 
-        public bool CanAccess(ClaimsPrincipal user, HttpRequest request, RouteData routeData = null, double? seconds = null)
+        public bool CanAccess(ClaimsPrincipal user, HttpRequest request, string path = null, double? expirationSeconds = null, int? limitation = 1, string extra = null)
         {
-            if (user.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+            if (user?.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) ?? false)
             {
                 return true;
             }
-            var now = DateTimeOffset.Now;
-            var key = GenerateKey(request, routeData);
-            DateTimeOffset? timestamp = null;
-            var cached = _cache.TryGetValue(key, out timestamp);
+            var key = GenerateKey(request, path, extra);
+            var count = 0;
+            var cached = _cache.TryGetValue(key, out count);
+            var timeout = GenerateTimeout(expirationSeconds);
             if (!cached)
             {
-                var timeout = GenerateTimeout(seconds);
-                _cache.Set(key, now, timeout);
+                _cache.Set(key, count, timeout);
             }
-            return !cached;
+            else
+            {
+                _cache.Set(key, ++count, timeout);
+            }
+            return count < limitation;
         }
 
-        private string GenerateKey(HttpRequest request, RouteData routeData = null)
+        private string GenerateKey(HttpRequest request, string path = null, string extra = null)
         {
             var connection = request.HttpContext.Connection;
             var extraKey = "Unknown";
@@ -57,10 +60,8 @@ namespace TreasureGuide.Web.Services
             {
                 connection.RemoteIpAddress?.ToString(), connection.RemotePort.ToString(), extraKey
             };
-            if (routeData != null)
-            {
-                items.Add(String.Join("/", routeData.Values["controller"], routeData.Values["action"]));
-            }
+                items.Add(path);
+                items.Add(extra);
             return String.Join("||", items);
         }
 

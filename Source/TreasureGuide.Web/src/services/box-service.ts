@@ -1,13 +1,11 @@
 import { autoinject, computedFrom } from 'aurelia-framework';
 import { AlertService } from './alert-service';
-import { IBoxDetailModel, IBoxUpdateModel } from '../models/imported';
 import { BoxQueryService } from './query/box-query-service';
 import { AccountService } from './account-service';
 import { UserPreferenceType } from '../models/imported';
 import { RoleConstants } from '../models/imported';
 import { BoxConstants } from '../models/imported';
 import { BoxDetailModel } from './query/box-query-service';
-import { IBoxUnitDetailModel } from '../models/imported';
 
 @autoinject
 export class BoxService {

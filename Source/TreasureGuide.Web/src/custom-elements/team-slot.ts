@@ -1,5 +1,5 @@
 import { bindable, computedFrom, customElement } from "aurelia-framework";
-import { ITeamEditorModel } from '../models/imported';
+import { ITeamGenericSlotEditorModel, ITeamEditorModel, ITeamUnitEditorModel } from '../models/imported';
 
 @customElement('team-slot')
 export class TeamSlot {
@@ -41,7 +41,8 @@ export class TeamSlot {
 
     unitAdded(event: CustomEvent, sub: boolean, newItem: boolean = false) {
         var newValue = event.detail.newValue;
-        var oldValue = event.detail.oldValue;
+        var editorKey = event.detail.editorKey;
+        var oldValue = this.units.find(x => x.editorKey === editorKey);
 
         if (!newValue) {
             if (oldValue) {
@@ -52,11 +53,12 @@ export class TeamSlot {
                 }
             }
         } else {
-            newValue.position = this.index;
-            newValue.sub = sub;
             if (newValue.id) {
-                newValue.unitId = newValue.id;
-                newValue.id = undefined;
+                newValue = <ITeamUnitEditorModel>{
+                    unitId: newValue.id,
+                    position: this.index,
+                    sub: sub
+                };
                 if (oldValue && oldValue.unitId) {
                     newValue = Object.assign(oldValue, newValue);
                 } else {
@@ -67,6 +69,13 @@ export class TeamSlot {
                     this.team.teamUnits.push(newValue);
                 }
             } else {
+                newValue = <ITeamGenericSlotEditorModel>{
+                    class: newValue.class,
+                    role: newValue.role,
+                    type: newValue.role,
+                    position: this.index,
+                    sub: sub
+                };
                 if (!oldValue || oldValue.unitId) {
                     if (oldValue) {
                         this.team.teamUnits = this.team.teamUnits.filter(x => (<any>x).editorKey !== oldValue.editorKey);

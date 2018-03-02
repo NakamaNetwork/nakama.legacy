@@ -62,6 +62,7 @@ namespace TreasureGuide.Web.Configurations
             {
                 options.Filters.Add(new RequireHttpsAttribute());
                 options.Filters.Add(new ExceptionLoggerAttribute());
+                options.Filters.Add(new ThrottlingAttribute());
             }).AddJsonOptions(json =>
             {
                 json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

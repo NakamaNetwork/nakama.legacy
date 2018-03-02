@@ -1,4 +1,5 @@
-﻿using TreasureGuide.Entities;
+﻿using System.Collections.Generic;
+using TreasureGuide.Entities;
 
 namespace TreasureGuide.Web.Models.UnitModels
 {
@@ -11,7 +12,9 @@ namespace TreasureGuide.Web.Models.UnitModels
         public bool FreeToPlay { get; set; }
 
         public bool Global { get; set; }
-        public int? BoxId { get; set; }
+        public bool MyBox { get; set; }
         public bool? Blacklist { get; set; }
+
+        public IEnumerable<int> LimitTo { get; set; }
     }
 }
