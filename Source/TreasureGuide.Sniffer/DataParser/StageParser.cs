@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,15 +50,25 @@ namespace TreasureGuide.Sniffer.DataParser
                     {
                         name = "Treasure Map: " + name;
                     }
+                    var localAliases = new List<StageAlias>();
                     var global = child["global"]?.ToString().ToBoolean() ?? false;
                     int? thumb = null;
                     int thumbParse;
                     if (Int32.TryParse(child["thumb"]?.ToString() ?? "", out thumbParse))
                     {
-                        thumb = thumbParse;
+                        var unit = Context.Units.SingleOrDefault(x => x.Id == thumbParse);
+                        if (unit != null)
+                        {
+                            thumb = thumbParse;
+                            localAliases.Add(new StageAlias { Name = unit.Name + " " + stageType });
+                        }
                     }
                     var output = HandleSingle(name, thumb, global, stageType);
-                    return Tuple.Create(new List<Stage> { output }, new List<StageAlias>());
+                    foreach (var alias in localAliases)
+                    {
+                        alias.StageId = output.Id;
+                    }
+                    return Tuple.Create(new List<Stage> { output }, localAliases);
                 }).ToList();
                 stages.AddRange(datas.SelectMany(x => x.Item1).ToList());
                 aliases.AddRange(datas.SelectMany(x => x.Item2).ToList());
