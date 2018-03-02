@@ -38,7 +38,7 @@ export abstract class LocallySearchedQueryService<TId, TEntity extends CacheItem
         criteria = (criteria || '').trim();
         if (criteria) {
             var allTerms = criteria.toLowerCase().split(' ');
-            items = items.filter(x => selector(x).some(y => allTerms.some(z => y.toLowerCase().indexOf(z.toLowerCase()) !== -1)));
+            items = items.filter(x => allTerms.every(z => selector(x).some(y => y.toLowerCase().indexOf(z.toLowerCase()) !== -1)));
         }
         return items;
     }
