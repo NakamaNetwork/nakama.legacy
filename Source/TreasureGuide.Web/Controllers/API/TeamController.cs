@@ -305,7 +305,7 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<IActionResult> Similar(int? id)
         {
             var similar = DbContext.SimilarTeamsId(id)
-                .Where(x => x.Matches > 2).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
+                .Where(x => x.Matches >= 1).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
                 .Take(6);
             return await TrimDownSimilar(similar);
         }
@@ -316,7 +316,7 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<IActionResult> Similar(int? teamId, int? stageId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
         {
             var similar = DbContext.SimilarTeams(teamId, stageId, unit1, unit2, unit3, unit4, unit5, unit6)
-                .Where(x => x.Matches > 2).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
+                .Where(x => x.Matches >= 1).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
                 .Take(3);
             return await TrimDownSimilar(similar);
         }
