@@ -7,6 +7,12 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '03/04/18',
+        lines: [
+            'Updated the default sorting rules for units.',
+            'Restored tooltips for unit portraits in unit picker dialogs.'
+        ]
+    }, {
         header: '03/02/18',
         lines: [
             'All users can now specify suggested unit subs when editing teams.',
