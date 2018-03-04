@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -297,6 +296,71 @@ namespace TreasureGuide.Web.Controllers.API
                 results = results.Where(x => x.TeamUnitSummaries.All(y => y.Sub || y.Class == UnitClass.Unknown || (y.Class & modelClasses) != 0));
             }
             return results;
+        }
+
+        [HttpGet]
+        [ActionName("Calc")]
+        [Route("{id}/[action]")]
+        public async Task<IActionResult> Calc(int? id)
+        {
+            var link = await GetCalcLink(id);
+            if (link == null)
+            {
+                return BadRequest("Could not find the input team.");
+            }
+            return Redirect(link);
+        }
+
+
+        [HttpGet]
+        [ActionName("CalcLink")]
+        [Route("{id}/[action]")]
+        public async Task<IActionResult> CalcLink(int? id)
+        {
+            var link = await GetCalcLink(id);
+            if (link == null)
+            {
+                return BadRequest("Could not find the input team.");
+            }
+            return Ok(link);
+        }
+
+        private async Task<string> GetCalcLink(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return null;
+            }
+            var team = await DbContext.Teams.Where(x => x.Id == id).Select(x => new
+            {
+                x.ShipId,
+                Units = x.TeamUnits.Where(y => !y.Sub).Select(z => new { Id = z.UnitId, z.Position, z.Unit.MaxLevel })
+            }).SingleOrDefaultAsync();
+            if (team == null)
+            {
+                return null;
+            }
+            var prefix = "http://optc-db.github.io/damage/#/transfer/D";
+            var characters = "";
+            for (var i = 0; i < 6; i++)
+            {
+                var unit = team.Units.SingleOrDefault(x => x.Position == i);
+                if (unit != null)
+                {
+                    characters += unit.Id + ":" + Math.Max((int)unit.MaxLevel, 1);
+                }
+                else
+                {
+                    characters += "!";
+                }
+                if (i < 5)
+                {
+                    characters += ",";
+                }
+            }
+            var boatString = "C" + team.ShipId + ",10";
+            var postfix = "B0D0E0Q0L0G0R0S100H";
+            return prefix + characters + boatString + postfix;
         }
 
         [HttpGet]
