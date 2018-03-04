@@ -318,7 +318,6 @@ namespace TreasureGuide.Web.Controllers.API
 
         [HttpGet]
         [ActionName("CalcLink")]
-        [NoThrottling]
         [Route("{ids}/[action]")]
         public async Task<IActionResult> CalcLink(string ids)
         {
