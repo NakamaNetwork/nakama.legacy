@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -303,7 +304,7 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("{id}/[action]")]
         public async Task<IActionResult> Calc(int? id)
         {
-            var link = await GetCalcLink(id);
+            var link = (await GetCalcLinks(id)).FirstOrDefault().Value;
             if (link == null)
             {
                 return BadRequest("Could not find the input team.");
@@ -311,56 +312,65 @@ namespace TreasureGuide.Web.Controllers.API
             return Redirect(link);
         }
 
+        private static Regex IdRegex = new Regex("(\\d+)");
+        private const string CalcPrefix = "http://optc-db.github.io/damage/#/transfer/D";
+        private const string CalcPostfix = "B0D0E0Q0L0G0R0S100H";
 
         [HttpGet]
         [ActionName("CalcLink")]
-        [Route("{id}/[action]")]
-        public async Task<IActionResult> CalcLink(int? id)
+        [NoThrottling]
+        [Route("{ids}/[action]")]
+        public async Task<IActionResult> CalcLink(string ids)
         {
-            var link = await GetCalcLink(id);
-            if (link == null)
+            var matches = IdRegex.Matches(ids);
+            if (matches.Count > 0)
             {
-                return BadRequest("Could not find the input team.");
+                var separated = Enumerable.Range(0, matches.Count).Select(x =>
+                {
+                    int id;
+                    if (Int32.TryParse(matches[x].Value, out id))
+                    {
+                        return id;
+                    }
+                    return (int?)null;
+                }).Where(x => x != null).ToArray();
+                var link = await GetCalcLinks(separated);
+                return Ok(link);
             }
-            return Ok(link);
+            return BadRequest();
         }
 
-        private async Task<string> GetCalcLink(int? id)
+        private async Task<IDictionary<int, string>> GetCalcLinks(params int?[] ids)
         {
-            if (!id.HasValue)
+            var teams = await DbContext.Teams.Where(x => ids.Contains(x.Id)).Select(x => new
             {
-                return null;
-            }
-            var team = await DbContext.Teams.Where(x => x.Id == id).Select(x => new
-            {
+                x.Id,
                 x.ShipId,
                 Units = x.TeamUnits.Where(y => !y.Sub).Select(z => new { Id = z.UnitId, z.Position, z.Unit.MaxLevel })
-            }).SingleOrDefaultAsync();
-            if (team == null)
+            }).ToListAsync();
+            var output = teams.ToDictionary(x => x.Id, x =>
             {
-                return null;
-            }
-            var prefix = "http://optc-db.github.io/damage/#/transfer/D";
-            var characters = "";
-            for (var i = 0; i < 6; i++)
-            {
-                var unit = team.Units.SingleOrDefault(x => x.Position == i);
-                if (unit != null)
+                var characters = "";
+                for (var i = 0; i < 6; i++)
                 {
-                    characters += unit.Id + ":" + Math.Max((int)unit.MaxLevel, 1);
+                    var unit = x.Units.SingleOrDefault(y => y.Position == i);
+                    if (unit != null)
+                    {
+                        characters += unit.Id + ":" + Math.Max((int)unit.MaxLevel, 1);
+                    }
+                    else
+                    {
+                        characters += "!";
+                    }
+                    if (i < 5)
+                    {
+                        characters += ",";
+                    }
                 }
-                else
-                {
-                    characters += "!";
-                }
-                if (i < 5)
-                {
-                    characters += ",";
-                }
-            }
-            var boatString = "C" + team.ShipId + ",10";
-            var postfix = "B0D0E0Q0L0G0R0S100H";
-            return prefix + characters + boatString + postfix;
+                var boatString = "C" + x.ShipId + ",10";
+                return CalcPrefix + characters + boatString + CalcPostfix;
+            });
+            return output;
         }
 
         [HttpGet]
