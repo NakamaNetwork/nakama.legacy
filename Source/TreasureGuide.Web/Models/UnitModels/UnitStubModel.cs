@@ -11,6 +11,7 @@ namespace TreasureGuide.Web.Models.UnitModels
         public string Name { get; set; }
         public int MaxLevel { get; set; }
         public decimal? Stars { get; set; }
+        public int Cost { get; set; }
 
         public UnitClass Class { get; set; }
         public UnitType Type { get; set; }

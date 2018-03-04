@@ -102,13 +102,13 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
             case SearchConstants.SortName:
                 return this.doSort(items, [x => x.name], [sortDesc]);
             case SearchConstants.SortType:
-                return this.doSort(items, [x => x.type, x => x.stars], [sortDesc, true]);
+                return this.doSort(items, [x => x.type, x => x.stars, x => x.cost], [sortDesc, true, true]);
             case SearchConstants.SortClass:
                 return this.doSort(items, [x => x.class, x => x.stars], [sortDesc, true]);
             case SearchConstants.SortStars:
                 return this.doSort(items, [x => x.stars, x => x.type], [sortDesc, false]);
             default:
-                return this.doSort(items, [x => x.id], [sortDesc]);
+                return this.doSort(items, [x => x.type, x => x.stars, x => x.cost], [false, true, true]);
         }
     }
 }
