@@ -29,6 +29,7 @@ namespace TreasureGuide.Web.Models.ProfileModels
     public class ProfileEditorModel : IIdItem<string>
     {
         public string Id { get; set; }
+        public string UserName { get; set; }
         public int? UnitId { get; set; }
         public string Website { get; set; }
         public IEnumerable<string> UserRoles { get; set; }
