@@ -3,7 +3,7 @@ using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.ShipModels
 {
-    public class ShipStubModel : IIdItem<int>, IEditedDateItem
+    public class ShipStubModel : IIdItem<int>
     {
         public int Id { get; set; }
         public string Name { get; set; }

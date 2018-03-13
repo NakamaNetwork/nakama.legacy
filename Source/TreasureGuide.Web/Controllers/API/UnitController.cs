@@ -23,5 +23,13 @@ namespace TreasureGuide.Web.Controllers.API
         {
             return entities.Where(x => x.EditedDate > date || x.UnitAliases.Any(y => y.EditedDate > date) || x.EvolvesTo.Any(y => y.EditedDate > date) || x.EvolvesFrom.Any(y => y.EditedDate > date));
         }
+
+        protected override DateTimeOffset? GetTimeStamp(IQueryable<Unit> entities)
+        {
+            return entities.SelectMany(x => x.EvolvesTo.Select(y => y.EditedDate)
+                .Concat(x.EvolvesFrom.Select(y => y.EditedDate))
+                .Concat(x.UnitAliases.Select(y => y.EditedDate))
+                .Concat(new[] { x.EditedDate })).Where(x => x != null).Max(x => x);
+        }
     }
 }

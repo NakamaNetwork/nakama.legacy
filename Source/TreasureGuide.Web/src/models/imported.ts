@@ -305,7 +305,6 @@ export interface IStageStubModel {
     name: string;
     global: boolean;
     type: StageType;
-    editedDate: Date;
     teamCount: number;
     aliases: string[];
     

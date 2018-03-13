@@ -18,7 +18,16 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override IQueryable<Stage> GetNewItems(IQueryable<Stage> entities, DateTimeOffset date)
         {
-            return entities.Where(x => x.EditedDate > date || x.StageAliases.Any(y => y.EditedDate > date) || x.Teams.Any(y => y.EditedDate > date));
+            return entities.Where(x => x.EditedDate > date || x.StageAliases.Any(y => y.EditedDate > date) || x.Teams.Any(y => y.EditedDate > date) || x.InvasionTeams.Any(y => y.EditedDate > date));
+        }
+
+        protected override DateTimeOffset? GetTimeStamp(IQueryable<Stage> entities)
+        {
+            return entities.SelectMany(x => x.StageAliases.Select(y => y.EditedDate)
+                .Concat(x.Teams.Select(y => y.EditedDate))
+                .Concat(x.InvasionTeams.Select(y => y.EditedDate))
+                .Concat(new[] { x.EditedDate })
+            ).Where(x => x != null).Max();
         }
     }
 }

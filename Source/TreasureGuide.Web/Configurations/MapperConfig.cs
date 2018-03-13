@@ -28,7 +28,7 @@ namespace TreasureGuide.Web.Configurations
 
                 var stage = mapper.CreateMap<Stage, StageStubModel>();
                 stage.ForMember(x => x.Aliases, o => o.MapFrom(y => y.StageAliases.Select(z => z.Name)));
-                stage.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count(z => !z.Draft && !z.Deleted)));
+                stage.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.Teams.Count(z => !z.Draft && !z.Deleted) + y.InvasionTeams.Count(z => !z.Draft && !z.Deleted)));
 
                 var ship = mapper.CreateMap<Ship, ShipStubModel>();
 

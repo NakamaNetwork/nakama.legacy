@@ -5,7 +5,7 @@ using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.UnitModels
 {
-    public class UnitStubModel : IIdItem<int>, IEditedDateItem
+    public class UnitStubModel : IIdItem<int>
     {
         public int Id { get; set; }
         public string Name { get; set; }
