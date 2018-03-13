@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -80,6 +81,15 @@ namespace TreasureGuide.Sniffer.DataParser
         private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType, int smallId = 0)
         {
             var id = CreateId(stageType, thumb, smallId);
+            if (thumb.HasValue)
+            {
+                var unit = Context.Units.Any(x => x.Id == thumb);
+                if (!unit)
+                {
+                    Debug.WriteLine($"Team {id} '{name}' thumbnail unit ({thumb}) was not found.");
+                    thumb = null;
+                }
+            }
             var stage = new Stage
             {
                 Id = id,
