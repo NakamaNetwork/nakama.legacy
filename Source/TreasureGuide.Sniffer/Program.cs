@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using TreasureGuide.Entities;
@@ -44,12 +45,13 @@ namespace TreasureGuide.Sniffer
         {
             IEnumerable<IParser> parsers = new IParser[]
             {
-                new UnitParser(context),
-                new UnitFlagParser(context),
-                new UnitAliasParser(context),
-                new UnitEvolutionParser(context),
-                new ShipParser(context),
-                new StageParser(context),
+                new ScheduleParser(context), 
+                //new UnitParser(context),
+                //new UnitFlagParser(context),
+                //new UnitAliasParser(context),
+                //new UnitEvolutionParser(context),
+                //new ShipParser(context),
+                //new StageParser(context),
             };
             //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             ParsersRunning = parsers.Count();
