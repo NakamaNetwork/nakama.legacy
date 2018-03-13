@@ -215,7 +215,6 @@ export interface IMyProfileModel extends IProfileDetailModel{
 
 export interface IProfileEditorModel {
     id: string;
-    userName: string;
     unitId: number;
     website: string;
     userRoles: string[];
@@ -601,6 +600,7 @@ export interface IUnitStubModel {
     name: string;
     maxLevel: number;
     stars: number;
+    cost: number;
     class: UnitClass;
     type: UnitType;
     flags: UnitFlag;
