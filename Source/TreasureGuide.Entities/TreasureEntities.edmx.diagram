@@ -58,6 +58,8 @@
         <EntityTypeShape EntityType="tcdbModel.UnitEvolution" Width="1.5" PointX="5" PointY="15" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitEvolutions_dbo_FromUnitId" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId" />
+        <EntityTypeShape EntityType="tcdbModel.ScheduledEvent" Width="1.5" PointX="9" PointY="21.75" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_ScheduledEvents_dbo_Stages" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

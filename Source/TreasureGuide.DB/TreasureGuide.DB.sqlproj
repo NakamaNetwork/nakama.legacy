@@ -68,6 +68,7 @@
     <Folder Include="dbo\Functions" />
     <Folder Include="dbo\Tables\Boxes" />
     <Folder Include="dbo\Tables\Donations" />
+    <Folder Include="dbo\Tables\Schedule" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Units\Ships.sql" />
@@ -100,6 +101,7 @@
     <Build Include="dbo\Tables\Units\UnitEvolutions.sql" />
     <None Include="PostDeploy\dbo.UnitEvolutions.Table.sql" />
     <Build Include="dbo\Tables\Donations\Donations.sql" />
+    <Build Include="dbo\Tables\Schedule\ScheduledEvents.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

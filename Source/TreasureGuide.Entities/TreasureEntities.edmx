@@ -62,6 +62,19 @@
           <Property Name="TokenId" Type="nvarchar" MaxLength="450" />
           <Property Name="Public" Type="bit" />
         </EntityType>
+        <EntityType Name="ScheduledEvents">
+          <Key>
+            <PropertyRef Name="StageId" />
+            <PropertyRef Name="Global" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="StageId" Type="int" Nullable="false" />
+          <Property Name="Global" Type="bit" Nullable="false" />
+          <Property Name="StartDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="EndDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
+        </EntityType>
         <EntityType Name="Ships">
           <Key>
             <PropertyRef Name="Id" />
@@ -467,6 +480,20 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_ScheduledEvents_dbo_Stages">
+          <End Role="Stages" Type="Self.Stages" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ScheduledEvents" Type="Self.ScheduledEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduledEvents">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_StageAliasess_dbo_Stages">
           <End Role="Stages" Type="Self.Stages" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -709,6 +736,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="Boxes" EntityType="Self.Boxes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoxUnits" EntityType="Self.BoxUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donations" EntityType="Self.Donations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScheduledEvents" EntityType="Self.ScheduledEvents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StageAliases" EntityType="Self.StageAliases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
@@ -798,6 +826,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_UserProfile_dbo_Units" Association="Self.FK_dbo_UserProfile_dbo_Units">
             <End Role="Units" EntitySet="Units" />
             <End Role="UserProfiles" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ScheduledEvents_dbo_Stages" Association="Self.FK_dbo_ScheduledEvents_dbo_Stages">
+            <End Role="Stages" EntitySet="Stages" />
+            <End Role="ScheduledEvents" EntitySet="ScheduledEvents" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_StageAliasess_dbo_Stages" Association="Self.FK_dbo_StageAliasess_dbo_Stages">
             <End Role="Stages" EntitySet="Stages" />
@@ -1024,6 +1056,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Unit" EntitySet="Units" />
             <End Role="UnitEvolution" EntitySet="UnitEvolutions" />
           </AssociationSet>
+          <EntitySet Name="ScheduledEvents" EntityType="tcdbModel.ScheduledEvent" />
+          <AssociationSet Name="FK_dbo_ScheduledEvents_dbo_Stages" Association="tcdbModel.FK_dbo_ScheduledEvents_dbo_Stages">
+            <End Role="Stage" EntitySet="Stages" />
+            <End Role="ScheduledEvent" EntitySet="ScheduledEvents" />
+          </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
           <Member Name="Unknown" Value="0" />
@@ -1147,6 +1184,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="StageAliases" Relationship="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" FromRole="Stage" ToRole="StageAlias" />
           <NavigationProperty Name="InvasionTeams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" FromRole="Stage" ToRole="Team" />
           <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+          <NavigationProperty Name="ScheduledEvents" Relationship="tcdbModel.FK_dbo_ScheduledEvents_dbo_Stages" FromRole="Stage" ToRole="ScheduledEvent" />
                 </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -1859,6 +1897,34 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ScheduledEvent">
+          <Key>
+            <PropertyRef Name="StageId" />
+            <PropertyRef Name="Global" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="Global" Type="Boolean" Nullable="false" />
+          <Property Name="StartDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="EndDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+          <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_ScheduledEvents_dbo_Stages" FromRole="ScheduledEvent" ToRole="Stage" />
+        </EntityType>
+        <Association Name="FK_dbo_ScheduledEvents_dbo_Stages">
+          <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.ScheduledEvent" Role="ScheduledEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduledEvent">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2159,6 +2225,17 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
                 <ScalarProperty Name="ToUnitId" ColumnName="ToUnitId" />
                 <ScalarProperty Name="FromUnitId" ColumnName="FromUnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScheduledEvents">
+            <EntityTypeMapping TypeName="tcdbModel.ScheduledEvent">
+              <MappingFragment StoreEntitySet="ScheduledEvents">
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Global" ColumnName="Global" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
