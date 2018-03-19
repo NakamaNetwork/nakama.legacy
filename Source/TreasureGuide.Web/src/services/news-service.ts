@@ -7,6 +7,12 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '03/19/18',
+        lines: [
+            'Fixed search filters so users can finally see their own drafts again.',
+            'Fixed a bug that would cause generic units to save their type incorrectly.'
+        ]
+    }, {
         header: '03/04/18',
         lines: [
             'Updated the default sorting rules for units.',
