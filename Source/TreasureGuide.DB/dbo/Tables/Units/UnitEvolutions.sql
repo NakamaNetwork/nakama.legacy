@@ -18,3 +18,13 @@ AS BEGIN
    WHERE [dbo].[UnitEvolutions].[FromUnitId] = I.[FromUnitId] AND [dbo].[UnitEvolutions].[ToUnitId] = I.[ToUnitId]
 END
 GO
+CREATE TRIGGER [dbo].[TRG_UnitEvolutions_Deleted]
+ON [dbo].[UnitEvolutions]
+AFTER DELETE 
+AS BEGIN
+   UPDATE [dbo].[Units]
+   SET [EditedDate] = SYSDATETIMEOFFSET()
+   FROM DELETED I
+   WHERE [dbo].[Units].[Id] = I.[FromUnitId] OR [dbo].[Units].[Id] = I.[ToUnitId]
+END
+GO

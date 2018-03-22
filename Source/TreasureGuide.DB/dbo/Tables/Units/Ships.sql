@@ -19,3 +19,11 @@ AS BEGIN
    WHERE [dbo].[Ships].[Id] = I.[Id]
 END
 GO
+CREATE TRIGGER [dbo].[TRG_Ships_Deleted]
+ON [dbo].[Ships]
+AFTER DELETE 
+AS BEGIN
+   INSERT INTO [dbo].[DeletedItems]([Id], [Type], [EditedDate])
+   SELECT [Id], 3, SYSDATETIMEOFFSET() FROM DELETED I
+END
+GO

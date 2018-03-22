@@ -60,6 +60,12 @@
     <Compile Include="BoxUnit.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DeletedItem.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeletedItemType.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Donation.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>

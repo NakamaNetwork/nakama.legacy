@@ -17,3 +17,13 @@ AS BEGIN
    WHERE [dbo].[StageAliases].[StageId] = I.[StageId] AND [dbo].[StageAliases].[Name] = I.[Name]
 END
 GO
+CREATE TRIGGER [dbo].[TRG_StageAliases_Deleted]
+ON [dbo].[StageAliases]
+AFTER DELETE 
+AS BEGIN
+   UPDATE [dbo].[Stages]
+   SET [EditedDate] = SYSDATETIMEOFFSET()
+   FROM DELETED I
+   WHERE [dbo].[Stages].[Id] = I.[StageId]
+END
+GO

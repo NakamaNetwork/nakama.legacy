@@ -82,6 +82,14 @@ export interface IBoxUnitUpdateModel {
 }
 
 
+export enum DeletedItemType { 
+    Unknown = 0,
+    Unit = 1,
+    Stage = 2,
+    Ship = 3
+}
+
+
 export interface IDonationStubModel {
     id: number;
     userId: string;

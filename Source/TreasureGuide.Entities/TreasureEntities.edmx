@@ -46,6 +46,16 @@
           <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="Flags" Type="int" />
         </EntityType>
+        <EntityType Name="DeletedItems">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="EditedDate" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="Donations">
           <Key>
             <PropertyRef Name="Id" />
@@ -708,6 +718,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Boxes" EntityType="Self.Boxes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoxUnits" EntityType="Self.BoxUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeletedItems" EntityType="Self.DeletedItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donations" EntityType="Self.Donations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StageAliases" EntityType="Self.StageAliases" Schema="dbo" store:Type="Tables" />
@@ -1024,6 +1035,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Unit" EntitySet="Units" />
             <End Role="UnitEvolution" EntitySet="UnitEvolutions" />
           </AssociationSet>
+          <EntitySet Name="DeletedItems" EntityType="tcdbModel.DeletedItem" />
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
           <Member Name="Unknown" Value="0" />
@@ -1859,6 +1871,22 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="DeletedItemType">
+          <Member Name="FullReset" Value="0" />
+          <Member Name="Unit" Value="1" />
+          <Member Name="Stage" Value="2" />
+          <Member Name="Ship" Value="3" />
+        </EnumType>
+        <EntityType Name="DeletedItem">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="EditedDate" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="tcdbModel.DeletedItemType" Nullable="false" />
+          <Property Name="EditedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+        </EntityType>
         </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2159,6 +2187,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
                 <ScalarProperty Name="ToUnitId" ColumnName="ToUnitId" />
                 <ScalarProperty Name="FromUnitId" ColumnName="FromUnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeletedItems">
+            <EntityTypeMapping TypeName="tcdbModel.DeletedItem">
+              <MappingFragment StoreEntitySet="DeletedItems">
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
