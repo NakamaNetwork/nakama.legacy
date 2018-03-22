@@ -21,6 +21,7 @@ namespace TreasureGuide.Sniffer.DataParser
         private readonly string Fortnights = "https://raw.githubusercontent.com/OPTC-Agenda/OPTC-Agenda.github.io/master/assets/json/fn.json";
         private readonly string Raids = "https://raw.githubusercontent.com/OPTC-Agenda/OPTC-Agenda.github.io/master/assets/json/raid.json";
         private readonly string Specials = "https://raw.githubusercontent.com/OPTC-Agenda/OPTC-Agenda.github.io/master/assets/json/special.json";
+        private readonly string Treasure = "https://raw.githubusercontent.com/OPTC-Agenda/OPTC-Agenda.github.io/master/assets/json/tm.json";
 
         private readonly string Drops = "https://raw.githubusercontent.com/OPTC-Agenda/OPTC-Agenda.github.io/master/assets/json/drops.json";
 
@@ -36,8 +37,9 @@ namespace TreasureGuide.Sniffer.DataParser
             var raidData = await GetEventData(Raids, StageType.Raid, dropData);
             var fnData = await GetEventData(Fortnights, StageType.Fortnight, dropData);
             var coloData = await GetEventData(Colos, StageType.Coliseum, dropData);
+            var treasureData = await GetEventData(Treasure, StageType.TreasureMap, dropData);
 
-            var allData = specialData.Concat(raidData).Concat(fnData).Concat(coloData);
+            var allData = specialData.Concat(raidData).Concat(fnData).Concat(coloData).Concat(treasureData);
 
             var globalSchedule = await GetSchedule(GlobalSchedule, true, allData);
             var japanSchedule = await GetSchedule(JapanSchedule, false, allData);
@@ -71,30 +73,43 @@ namespace TreasureGuide.Sniffer.DataParser
             var stages = new List<StageDataParsed>();
             foreach (var token in stageData)
             {
-                var stage = new StageDataParsed { Type = type, Identifier = token.Key, Representatives = new List<int>() };
-                var id = token.Value["linkDB"]?.ToString()?.Split('/').LastOrDefault()?.ToInt32();
+                var stage = new StageDataParsed
+                {
+                    Type = type,
+                    Identifier = token.Key,
+                    Representatives = new List<int>()
+                };
+                var id = token.Value["id"]?.ToString()?.ToInt32();
                 if (id.HasValue)
                 {
                     stage.Representatives.Add(id.Value);
                 }
                 if (!stage.Representatives.Any())
                 {
-                    var stageDrops = token.Value["drops"];
-                    if (stageDrops != null)
+                    var linkId = token.Value["linkDB"]?.ToString()?.Split('/').LastOrDefault()?.ToInt32();
+                    if (linkId.HasValue)
                     {
-                        foreach (var drop in stageDrops)
+                        stage.Representatives.Add(linkId.Value);
+                    }
+                    if (!stage.Representatives.Any())
+                    {
+                        var stageDrops = token.Value["drops"];
+                        if (stageDrops != null)
                         {
-                            var key = drop.ToString();
-                            if (drops.ContainsKey(key))
+                            foreach (var drop in stageDrops)
                             {
-                                stage.Representatives.Add(drops[key]);
-                            }
-                            else
-                            {
-                                var value = key?.ToInt32();
-                                if (value.HasValue)
+                                var key = drop.ToString();
+                                if (drops.ContainsKey(key))
                                 {
-                                    stage.Representatives.Add(value.Value);
+                                    stage.Representatives.Add(drops[key]);
+                                }
+                                else
+                                {
+                                    var value = key?.ToInt32();
+                                    if (value.HasValue)
+                                    {
+                                        stage.Representatives.Add(value.Value);
+                                    }
                                 }
                             }
                         }
@@ -102,7 +117,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 }
                 stages.Add(stage);
             }
-            return stages;
+            return stages.ToList();
         }
 
         private async Task<IEnumerable<ScheduledEvent>> GetSchedule(string endpoint, bool global, IEnumerable<StageDataParsed> stages)
@@ -150,6 +165,11 @@ namespace TreasureGuide.Sniffer.DataParser
                     }
                     current = evt;
                 }
+                if (pointer != null && current != null && !realSchedule.Contains(pointer))
+                {
+                    pointer.EndDate = current.EndDate;
+                    realSchedule.Add(pointer);
+                }
             }
             return realSchedule;
         }
@@ -164,6 +184,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 parsed.AddRange(GetEvents(day["colo"], index, StageType.Coliseum));
                 parsed.AddRange(GetEvents(day["fn"], index, StageType.Fortnight));
                 parsed.AddRange(GetEvents(day["special"], index, StageType.Special));
+                parsed.AddRange(GetEvents(day["tm"], index, StageType.TreasureMap));
                 index++;
             }
             return parsed;
@@ -172,11 +193,14 @@ namespace TreasureGuide.Sniffer.DataParser
         private IEnumerable<ProgramDataParsed> GetEvents(JToken eventType, int offset, StageType type)
         {
             var parsed = new List<ProgramDataParsed>();
-            foreach (var item in eventType)
+            if (eventType != null)
             {
-                if (item.ToString() != "none")
+                foreach (var item in eventType)
                 {
-                    parsed.Add(new ProgramDataParsed { Identifier = item.ToString(), Offset = offset, Type = type });
+                    if ((item ?? "none").ToString() != "none")
+                    {
+                        parsed.Add(new ProgramDataParsed { Identifier = item.ToString(), Offset = offset, Type = type });
+                    }
                 }
             }
             return parsed;
