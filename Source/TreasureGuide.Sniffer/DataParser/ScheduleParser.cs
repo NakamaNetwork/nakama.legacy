@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,7 +42,10 @@ namespace TreasureGuide.Sniffer.DataParser
             var globalSchedule = await GetSchedule(GlobalSchedule, true, allData);
             var japanSchedule = await GetSchedule(JapanSchedule, false, allData);
 
-            return globalSchedule.Concat(japanSchedule);
+            var everything = globalSchedule.Concat(japanSchedule).ToList();
+            var grouped = everything.GroupBy(x => String.Join("__", x.StageId, x.Global, x.StartDate, x.EndDate))
+                .Select(x => x.FirstOrDefault()).Where(x => x != null).ToList();
+            return grouped;
         }
 
         private async Task<IDictionary<string, int>> GetDropData()
@@ -85,6 +89,14 @@ namespace TreasureGuide.Sniffer.DataParser
                             {
                                 stage.Representatives.Add(drops[key]);
                             }
+                            else
+                            {
+                                var value = key?.ToInt32();
+                                if (value.HasValue)
+                                {
+                                    stage.Representatives.Add(value.Value);
+                                }
+                            }
                         }
                     }
                 }
@@ -103,10 +115,9 @@ namespace TreasureGuide.Sniffer.DataParser
             {
                 try
                 {
-                    var startDate = new DateTimeOffset(now.Year, ParseMonth(week["month"]?.ToString()), week["starting"]?.ToString().ToInt32() ?? 0, 1, 0, 0, TimeSpan.Zero);
-                    var endDate = startDate.AddDays(7);
+                    var startDate = new DateTimeOffset(now.Year, ParseMonth(week["month"]?.ToString()), week["starting"]?.ToString().ToInt32() ?? 0, 3, 0, 0, TimeSpan.Zero);
                     var programs = ParsePrograms(week["program"]);
-                    var evts = await ParseEvents(programs, startDate, endDate, stages, global);
+                    var evts = await ParseEvents(programs, startDate, stages, global);
                     schedule.AddRange(evts);
                 }
                 catch
@@ -115,7 +126,32 @@ namespace TreasureGuide.Sniffer.DataParser
                     // ... eat it.
                 }
             }
-            return schedule;
+            var grouped = schedule.OrderBy(x => x.StartDate).GroupBy(x => x.StageId);
+            var realSchedule = new List<ScheduledEvent>();
+            ScheduledEvent pointer = null;
+            ScheduledEvent current = null;
+            foreach (var group in grouped)
+            {
+                pointer = null;
+                current = null;
+                foreach (var evt in group)
+                {
+                    if (pointer == null || current == null)
+                    {
+                        pointer = evt;
+                        current = evt;
+                        continue;
+                    }
+                    if (current.StartDate.AddDays(1) < evt.StartDate)
+                    {
+                        pointer.EndDate = current.EndDate;
+                        realSchedule.Add(pointer);
+                        pointer = evt;
+                    }
+                    current = evt;
+                }
+            }
+            return realSchedule;
         }
 
         private IEnumerable<ProgramDataParsed> ParsePrograms(JToken program)
@@ -146,31 +182,21 @@ namespace TreasureGuide.Sniffer.DataParser
             return parsed;
         }
 
-        private async Task<IEnumerable<ScheduledEvent>> ParseEvents(IEnumerable<ProgramDataParsed> programs, DateTimeOffset startDate, DateTimeOffset endDate, IEnumerable<StageDataParsed> stages, bool global)
+        private async Task<IEnumerable<ScheduledEvent>> ParseEvents(IEnumerable<ProgramDataParsed> programs, DateTimeOffset startDate, IEnumerable<StageDataParsed> stages, bool global)
         {
             var evts = new List<ScheduledEvent>();
             foreach (var program in programs.OrderBy(x => x.Offset))
             {
-                if (program.Bypass)
-                {
-                    continue;
-                }
                 var stageId = await GetStageId(program.Identifier, program.Type, stages);
                 if (stageId == null)
                 {
                     continue;
                 }
-                var length = 0;
                 ProgramDataParsed other = null;
-                while ((other = programs.FirstOrDefault(x => x.Identifier == program.Identifier && x.Offset == program.Offset + length && !x.Bypass)) != null)
-                {
-                    other.Bypass = true;
-                    length++;
-                }
                 var evt = new ScheduledEvent
                 {
                     StartDate = startDate.AddDays(program.Offset),
-                    EndDate = startDate.AddDays(program.Offset + length + 1),
+                    EndDate = startDate.AddDays(program.Offset + 1),
                     Global = global,
                     StageId = stageId.Value
                 };
@@ -186,10 +212,62 @@ namespace TreasureGuide.Sniffer.DataParser
             {
                 return null;
             }
-            var id = $"{(int)stage.Type:00}{((int?)stage.Representatives.LastOrDefault() ?? 0):0000}{0:00}"?.ToInt32();
-            if (Context.Stages.Any(x => x.Id == id))
+            for (var i = 0; i < 2; i++)
             {
-                return id;
+                var numeral = programType == StageType.Coliseum ? 1 : 0;
+                var reps = stage.Representatives.ToList();
+                do
+                {
+                    var id = TryGetStage(programType, numeral, reps);
+                    if (id.HasValue)
+                    {
+                        return id;
+                    }
+                    reps = await Context.UnitEvolutions.Join(reps, x => x.FromUnitId, y => y, (x, y) => x.ToUnitId).ToListAsync();
+                } while (reps.Any());
+                reps = stage.Representatives.ToList();
+                do
+                {
+                    var id = TryGetStage(programType, numeral, reps);
+                    if (id.HasValue)
+                    {
+                        return id;
+                    }
+                    reps = await Context.UnitEvolutions.Join(reps, x => x.ToUnitId, y => y, (x, y) => x.FromUnitId).ToListAsync();
+                } while (reps.Any());
+                programType = StageType.Special;
+            }
+            return TryContingency(programIdentifier);
+        }
+
+        private int? TryContingency(string programIdentifier)
+        {
+            programIdentifier = programIdentifier.ToLower();
+            if (programIdentifier.Contains("halloween"))
+            {
+                return 6130000;
+            }
+            if (programIdentifier.Contains("summer") || programIdentifier.Contains("swim"))
+            {
+                return 6068300;
+            }
+            if (programIdentifier.Contains("bride") || programIdentifier.Contains("tea"))
+            {
+                return 6146300;
+            }
+            return null;
+        }
+
+        private int? TryGetStage(StageType programType, int numeral, List<int> reps)
+        {
+            for (var i = reps.Count - 1; i >= 0; i--)
+            {
+                var rep = reps[i];
+                var id = $"{(int)programType:00}{rep:0000}{numeral:00}"?.ToInt32();
+                if (Context.Stages.Any(x => x.Id == id))
+                {
+                    return id;
+                }
             }
             return null;
         }
@@ -257,7 +335,6 @@ namespace TreasureGuide.Sniffer.DataParser
             public int Offset { get; set; }
             public StageType Type { get; set; }
             public string Identifier { get; set; }
-            public bool Bypass { get; set; }
         }
     }
 }
