@@ -72,7 +72,7 @@ export class TeamSlot {
                 newValue = <ITeamGenericSlotEditorModel>{
                     class: newValue.class,
                     role: newValue.role,
-                    type: newValue.role,
+                    type: newValue.type,
                     position: this.index,
                     sub: sub
                 };

@@ -50,6 +50,7 @@ namespace TreasureGuide.Entities
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Donation> Donations { get; set; }
         public virtual DbSet<UnitEvolution> UnitEvolutions { get; set; }
+        public virtual DbSet<DeletedItem> DeletedItems { get; set; }
         public virtual DbSet<ScheduledEvent> ScheduledEvents { get; set; }
     
         [DbFunction("TreasureEntities", "SimilarTeams")]

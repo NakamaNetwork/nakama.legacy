@@ -58,7 +58,8 @@
         <EntityTypeShape EntityType="tcdbModel.UnitEvolution" Width="1.5" PointX="5" PointY="15" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitEvolutions_dbo_FromUnitId" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId" />
-        <EntityTypeShape EntityType="tcdbModel.ScheduledEvent" Width="1.5" PointX="9" PointY="21.75" />
+        <EntityTypeShape EntityType="tcdbModel.DeletedItem" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="tcdbModel.ScheduledEvent" Width="1.5" PointX="11.375" PointY="23.375" />
         <AssociationConnector Association="tcdbModel.FK_dbo_ScheduledEvents_dbo_Stages" />
         </Diagram>
     </edmx:Diagrams>

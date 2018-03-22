@@ -157,13 +157,12 @@ namespace TreasureGuide.Web.Controllers.API
 
         private IQueryable<Team> SearchDrafts(IQueryable<Team> results, bool modelDraft)
         {
-            if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+            results = results.Where(x => x.Draft == modelDraft);
+            if (modelDraft && !User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
             {
-                results = results.Where(x => !x.Draft);
-            }
-            else
-            {
-                results = results.Where(x => x.Draft == modelDraft);
+                var userId = User.GetId();
+                results = results.Where(x => x.SubmittedById == userId);
+
             }
             return results;
         }

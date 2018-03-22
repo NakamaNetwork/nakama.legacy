@@ -7,6 +7,18 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '03/22/18',
+        lines: [
+            'Fixed Raid Doflamingo v2 Unit Ids (you may need to re-add him to your boxes.)',
+            'Updated locally cached data services to cut down on duplicate units.'
+        ]
+    }, {
+        header: '03/19/18',
+        lines: [
+            'Fixed search filters so users can finally see their own drafts again.',
+            'Fixed a bug that would cause generic units to save their type incorrectly.'
+        ]
+    }, {
         header: '03/04/18',
         lines: [
             'Updated the default sorting rules for units.',

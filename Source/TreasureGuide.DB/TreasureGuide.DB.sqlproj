@@ -102,6 +102,7 @@
     <None Include="PostDeploy\dbo.UnitEvolutions.Table.sql" />
     <Build Include="dbo\Tables\Donations\Donations.sql" />
     <Build Include="dbo\Tables\Schedule\ScheduledEvents.sql" />
+    <Build Include="dbo\Tables\DeletedItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

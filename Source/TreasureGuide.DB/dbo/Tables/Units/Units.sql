@@ -32,3 +32,11 @@ AS BEGIN
    WHERE [dbo].[Units].[Id] = I.[Id]
 END
 GO
+CREATE TRIGGER [dbo].[TRG_Units_Deleted]
+ON [dbo].[Units]
+AFTER DELETE 
+AS BEGIN
+   INSERT INTO [dbo].[DeletedItems]([Id], [Type], [EditedDate])
+   SELECT [Id], 1, SYSDATETIMEOFFSET() FROM DELETED I
+END
+GO

@@ -7,6 +7,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Sniffer.DataParser;
 using TreasureGuide.Sniffer.TeamImporters;
 
@@ -58,6 +59,7 @@ namespace TreasureGuide.Sniffer
 
             Task.Run(async () =>
             {
+                await PreRun(context);
                 foreach (var parser in parsers)
                 {
                     var name = parser.GetType().Name;
@@ -79,7 +81,26 @@ namespace TreasureGuide.Sniffer
                     }
                     GC.Collect();
                 }
+                await PostRun(context);
             });
+        }
+
+        private static async Task PreRun(TreasureEntities context)
+        {
+            context.StageAliases.Clear();
+            context.Stages.Clear();
+            context.Ships.Clear();
+            context.UnitAliases.Clear();
+            context.UnitEvolutions.Clear();
+            context.Units.Clear();
+            context.DeletedItems.Clear();
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task PostRun(TreasureEntities context)
+        {
+            context.DeletedItems.Clear();
+            await context.SaveChangesAsync();
         }
     }
 }
