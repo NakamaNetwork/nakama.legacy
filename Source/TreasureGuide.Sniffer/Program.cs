@@ -46,12 +46,12 @@ namespace TreasureGuide.Sniffer
         {
             IEnumerable<IParser> parsers = new IParser[]
             {
-                //new UnitParser(context),
-                //new UnitFlagParser(context),
-                //new UnitAliasParser(context),
-                //new UnitEvolutionParser(context),
-                //new ShipParser(context),
-                //new StageParser(context),
+                new UnitParser(context),
+                new UnitFlagParser(context),
+                new UnitAliasParser(context),
+                new UnitEvolutionParser(context),
+                new ShipParser(context),
+                new StageParser(context),
                 new ScheduleParser(context)
             };
             //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
@@ -88,13 +88,13 @@ namespace TreasureGuide.Sniffer
         private static async Task PreRun(TreasureEntities context)
         {
             context.ScheduledEvents.Clear();
-            //context.StageAliases.Clear();
-            //context.Stages.Clear();
-            //context.Ships.Clear();
-            //context.UnitAliases.Clear();
-            //context.UnitEvolutions.Clear();
-            //context.Units.Clear();
-            //context.DeletedItems.Clear();
+            context.StageAliases.Clear();
+            context.Stages.Clear();
+            context.Ships.Clear();
+            context.UnitAliases.Clear();
+            context.UnitEvolutions.Clear();
+            context.Units.Clear();
+            context.DeletedItems.Clear();
             await context.SaveChangesAsync();
         }
 
