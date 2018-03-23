@@ -1,21 +1,15 @@
 <template>
-    <div class="schedule-box" class.bind="scheduleClass">
-        <span class="label main">
-            ${header}:
-        </span>
-        <span if.bind="schedule.length == 0">
-            Nothing at the moment.
-        </span>
-        <span if.bind="schedule.length > 0" repeat.for="bin of schedule">
-            <span class="label">
-                <stage-type-display type.bind="bin.key"></stage-type-display>
-            </span>
-            <span repeat.for="stage of bin.value" class="tooltip -tooltip-top">
-                <span class="tooltiptext _shadow _noDelay _small">${stage.name} (${stage.teamCount})</span>
-                <a route-href="route: stageDetails; params.bind: { id: stage.id }">
-                    <unit-display unit-id.bind="stage.unitId" class.bind="unitSize"></unit-display>
-                </a>
-            </span>
+    <br />
+    <loading-area if.bind="scheduleLoading"></loading-area>
+    <div if.bind="!scheduleLoading">
+        <label class="schedule-toggle" for="globalCheckbox">
+            <input id="globalCheckbox" type="checkbox" checked.bind="globalSchedule" />
+            <i class="fa fa-fw fa-globe"></i>
+        </label>
+        <schedule-bar schedule.bind="currentSchedule" global.bind="globalSchedule"></schedule-bar>
+        <schedule-bar schedule.bind="upcomingSchedule" upcoming="true" global.bind="globalSchedule"></schedule-bar>
+        <span class="schedule-credit">
+            Powered by <a href="https://optc-agenda.github.io/" target="_blank">OPTC-Agenda</a>
         </span>
     </div>
 </template>

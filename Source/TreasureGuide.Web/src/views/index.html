@@ -6,19 +6,7 @@
         </div>
     </div>
     <div class="row">
-        <br />
-        <loading-area if.bind="scheduleLoading"></loading-area>
-        <div if.bind="!scheduleLoading">
-            <label class="schedule-toggle" for="globalCheckbox">
-                <input id="globalCheckbox" type="checkbox" checked.bind="globalSchedule" />
-                <i class="fa fa-fw fa-globe"></i>
-            </label>
-            <schedule-display schedule.bind="currentSchedule" global.bind="globalSchedule"></schedule-display>
-            <schedule-display schedule.bind="upcomingSchedule" upcoming="true" global.bind="globalSchedule"></schedule-display>
-            <span class="schedule-credit">
-                Powered by <a href="https://optc-agenda.github.io/" target="_blank">OPTC-Agenda</a>
-            </span>
-        </div>
+        <schedule-display></schedule-display>
     </div>
     <div class="row">
         <div class="col m6">
