@@ -1,8 +1,9 @@
 ﻿import { autoinject, BindingEngine } from 'aurelia-framework';
 import { TeamQueryService } from '../services/query/team-query-service';
-import { ITeamStubModel, IScheduleModel } from '../models/imported';
+import { ITeamStubModel, IScheduleModel, IStageStubModel } from '../models/imported';
 import { Router } from 'aurelia-router';
 import { StageQueryService } from '../services/query/stage-query-service';
+import { ArrayHelper } from '../tools/array-helper';
 
 @autoinject
 export class HomePage {
@@ -12,7 +13,9 @@ export class HomePage {
     private bindingEngine: BindingEngine;
 
     private scheduleLoading: boolean = true;
-    private schedule: IScheduleModel;
+    private fullSchedule: IScheduleModel;
+    private currentSchedule = [];
+    private upcomingSchedule = [];
     private globalSchedule: boolean = true;
 
     private newLoading: boolean = true;
@@ -47,7 +50,7 @@ export class HomePage {
             });
 
             this.refreshSchedule();
-            this.bindingEngine.propertyObserver(this.globalSchedule, 'payload').subscribe((n, o) => {
+            this.bindingEngine.propertyObserver(this, 'globalSchedule').subscribe((n, o) => {
                 this.refreshSchedule();
             });
         }
@@ -56,8 +59,23 @@ export class HomePage {
     refreshSchedule() {
         this.scheduleLoading = true;
         this.stageQueryService.schedule().then(x => {
-            this.schedule = x;
+            this.fullSchedule = x;
+            this.stageQueryService.get().then(y => {
+                this.currentSchedule = this.getEvents(x.live, this.globalSchedule, y);
+                this.upcomingSchedule = this.getEvents(x.upcoming, this.globalSchedule, y);
+                this.scheduleLoading = false;
+            }).catch(x => {
+                this.scheduleLoading = false;
+            });
+        }).catch(x => {
             this.scheduleLoading = false;
         });
+    }
+
+    getEvents(eventData, global: boolean, stages: IStageStubModel[]): any[] {
+        var source = global ? eventData.global : eventData.japan;
+        var mapping = stages = source.map(x => stages.find(y => y.id == x));
+        var bins = ArrayHelper.binBy(mapping, 'type');
+        return bins;
     }
 }

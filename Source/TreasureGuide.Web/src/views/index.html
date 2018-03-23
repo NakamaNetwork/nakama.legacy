@@ -1,27 +1,50 @@
 ﻿<template>
-    <div class="jumbo">
+    <div class="row">
         <div class="jumbo _info">
             <h1>Nakama Network</h1>
             <p>One Piece: Treasure Cruise's Premiere Team Database</p>
         </div>
-        <div class="row">
-            <div class="col m6">
+    </div>
+    <div class="row">
+        <br />
+        <loading-area if.bind="scheduleLoading"></loading-area>
+        <div if.bind="!scheduleLoading">
+            <label class="schedule-toggle" for="globalCheckbox">
+                <input id="globalCheckbox" type="checkbox" checked.bind="globalSchedule" />
+                <i class="fa fa-fw fa-globe"></i>
+            </label>
+            <schedule-display schedule.bind="currentSchedule"></schedule-display>
+            <schedule-display schedule.bind="upcomingSchedule" upcoming="true"></schedule-display>
+            <span class="schedule-credit">
+                Powered by <a href="https://optc-agenda.github.io/" target="_blank">OPTC-Agenda</a>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m6">
+            <div class="jumbo">
                 <h4>Trending Teams</h4>
                 <loading-area if.bind="trendingLoading"></loading-area>
-                <div if.bind="!trendingLoading" class="team-collection _alignLeft">
+                <div if.bind="!trendingLoading" class="team-collection">
                     <h6 if.bind="trendingTeams.length === 0">Nothing trending at the moment.</h6>
-                    <div class="col m12" repeat.for="team of trendingTeams">
-                        <team-box team.bind="team"></team-box>
+                    <div class="row _alignLeft">
+                        <div class="col m12" repeat.for="team of trendingTeams">
+                            <team-box team.bind="team"></team-box>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col m6">
+        </div>
+        <div class="col m6">
+            <div class="jumbo">
                 <h4>New Teams</h4>
                 <loading-area if.bind="newLoading"></loading-area>
-                <div if.bind="!newLoading" class="team-collection _alignLeft">
+                <div if.bind="!newLoading" class="team-collection">
                     <h6 if.bind="newTeams.length === 0">Nothing new at the moment.</h6>
-                    <div class="col m12" repeat.for="team of newTeams">
-                        <team-box team.bind="team"></team-box>
+                    <div class="row _alignLeft">
+                        <div class="col m12" repeat.for="team of newTeams">
+                            <team-box team.bind="team"></team-box>
+                        </div>
                     </div>
                 </div>
             </div>

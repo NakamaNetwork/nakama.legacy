@@ -24,12 +24,12 @@
             <h4>Stage</h4>
             <div class="row" if.bind="stageId">
                 <a route-href="route: stageDetails; params.bind: { id: stageId }">
-                    <stage-display stage-id.bind="stageId"></stage-display>
+                    <stage-display stage-id.bind="stageId" size="tiny"></stage-display>
                 </a>
             </div>
             <div class="row" if.bind="invasionId">
                 <a route-href="route: stageDetails; params.bind: { id: invasionId }">
-                    <stage-display stage-id.bind="invasionId" invasion="true"></stage-display>
+                    <stage-display stage-id.bind="invasionId" invasion="true" size="tiny"></stage-display>
                 </a>
             </div>
         </div>

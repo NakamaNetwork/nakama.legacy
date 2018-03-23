@@ -5,6 +5,7 @@
         './global-display',
         './ind-unit-flag-display',
         './markdown',
+        './schedule-display',
         './score-display',
         './stage-type-display',
         './user-display',
