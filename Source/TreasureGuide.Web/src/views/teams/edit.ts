@@ -70,6 +70,9 @@ export class TeamEditPage {
                 this.router.navigateToRoute('error', { error: 'The requested team could not be found for editing. It may not exist or you may not have permission to edit it.' });
             });
         }
+        if (params.stageId) {
+            this.team.stageId = params.stageId;
+        }
         this.controller.validate();
         this.bindingEngine.propertyObserver(this, 'similarModel').subscribe((n, o) => {
             this.getSimilar(n);

@@ -30,18 +30,18 @@ namespace TreasureGuide.Sniffer.DataParser
 
         protected abstract Task Save(T items);
 
-        private async Task<T> GetData()
+        protected virtual async Task<T> GetData()
         {
-            var stringData = await PerformRequest();
+            var stringData = await PerformRequest(Endpoint);
             var cleaned = CleanData(stringData);
             var trimmed = TrimData(cleaned);
             var converted = ConvertData(trimmed);
             return converted;
         }
 
-        private async Task<string> PerformRequest()
+        protected async Task<string> PerformRequest(string endpoint)
         {
-            var request = WebRequest.Create(Endpoint);
+            var request = WebRequest.Create(endpoint);
             var response = await request.GetResponseAsync();
 
             using (var stream = response.GetResponseStream())

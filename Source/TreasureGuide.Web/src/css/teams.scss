@@ -59,7 +59,10 @@ $default-unit-margin: $huge-unit-margin;
     }
 
     &[size="tiny"],
-    [size="tiny"] & {
+    [size="tiny"] &,
+    &.tiny,
+    .tiny &,
+    .tiny {
         height: $tiny-unit-size;
         width: $tiny-unit-size;
         margin: $tiny-unit-margin;
@@ -67,35 +70,50 @@ $default-unit-margin: $huge-unit-margin;
     }
 
     &[size="small"],
-    [size="small"] & {
+    [size="small"] &,
+    &.small,
+    .small &,
+    .small {
         height: $small-unit-size;
         width: $small-unit-size;
         margin: $small-unit-margin;
     }
 
     &[size="medium"],
-    [size="medium"] & {
+    [size="medium"] &,
+    &.medium,
+    .medium &,
+    .medium {
         height: $medium-unit-size;
         width: $medium-unit-size;
         margin: $medium-unit-margin;
     }
 
     &[size="large"],
-    [size="large"] & {
+    [size="large"] &,
+    &.large,
+    .large &,
+    .large {
         height: $large-unit-size;
         width: $large-unit-size;
         margin: $large-unit-margin;
     }
 
     &[size="huge"],
-    [size="huge"] & {
+    [size="huge"] &,
+    & .huge,
+    .huge &,
+    .huge {
         height: $huge-unit-size;
         width: $huge-unit-size;
         margin: $huge-unit-margin;
     }
 
     &[size="massive"],
-    [size="massive"] & {
+    [size="massive"] &,
+    &.massive,
+    .massive &,
+    .massive {
         height: $massive-unit-size;
         width: $massive-unit-size;
         margin: $massive-unit-margin;
@@ -605,4 +623,70 @@ team-box {
     border: 1px solid $grey-color;
     border-radius: 20px;
     margin: 10px;
+}
+
+.schedule-box {
+    @extend .note;
+
+    span:not(.tooltiptext) {
+        vertical-align: middle;
+        height: 100%;
+    }
+
+    &.upcoming {
+        @extend ._successDark;
+
+        &.japan {
+            @extend ._dangerDark;
+        }
+
+        label {
+            @extend small;
+            padding-bottom: 3px;
+            padding-top: 3px;
+        }
+    }
+
+    &.live {
+        @extend ._success;
+
+        &.japan {
+            @extend ._danger;
+        }
+    }
+
+    .label {
+        @extend strong;
+        @extend ._alignRight;
+
+        &.main {
+            font-size: 1.2em;
+        }
+    }
+}
+
+.schedule-credit,
+.schedule-toggle {
+    float: right;
+    padding: 2px 12px;
+    vertical-align: middle;
+    text-align: right;
+    width: unset;
+    border: 1px solid;
+    border-radius: 6px;
+    right: 6px;
+    position: relative;
+}
+
+.schedule-credit {
+    @extend ._info;
+    bottom: 6px;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.schedule-toggle {
+    @extend ._activeLight;
+    bottom: 16px;
+    font-size: 1.2em;
 }
