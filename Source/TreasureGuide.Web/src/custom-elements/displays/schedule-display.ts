@@ -5,6 +5,7 @@ import { autoinject, bindable, computedFrom, customElement } from 'aurelia-frame
 export class ScheduleDisplay {
     @bindable schedule: any[] = [];
     @bindable upcoming: boolean;
+    @bindable global: boolean;
 
     @computedFrom('upcoming')
     get header() {
@@ -18,6 +19,6 @@ export class ScheduleDisplay {
 
     @computedFrom('upcoming')
     get scheduleClass() {
-        return this.upcoming ? 'upcoming' : 'live';
+        return (this.upcoming ? 'upcoming' : 'live') + ' ' + (this.global ? 'global' : 'japan');
     }
 }

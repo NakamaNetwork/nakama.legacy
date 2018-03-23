@@ -24,6 +24,8 @@ export class HomePage {
     private trendingLoading: boolean = true;
     private trendingTeams: ITeamStubModel[] = [];
 
+    private globalKey: string = 'global_schedule';
+
     constructor(teamQueryService: TeamQueryService, stageQueryService: StageQueryService, bindingEngine: BindingEngine, router: Router) {
         this.teamQueryService = teamQueryService;
         this.stageQueryService = stageQueryService;
@@ -49,8 +51,14 @@ export class HomePage {
                 this.trendingLoading = false;
             });
 
+
+            var global = localStorage.getItem(this.globalKey);
+            if (global) {
+                this.globalSchedule = JSON.parse(global);
+            }
             this.refreshSchedule();
             this.bindingEngine.propertyObserver(this, 'globalSchedule').subscribe((n, o) => {
+                localStorage.setItem(this.globalKey, JSON.stringify(n));
                 this.refreshSchedule();
             });
         }

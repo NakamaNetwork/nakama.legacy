@@ -634,7 +634,11 @@ team-box {
     }
 
     &.upcoming {
-        @extend ._dark;
+        @extend ._successDark;
+
+        &.japan {
+            @extend ._dangerDark;
+        }
 
         label {
             @extend small;
@@ -645,6 +649,10 @@ team-box {
 
     &.live {
         @extend ._success;
+
+        &.japan {
+            @extend ._danger;
+        }
     }
 
     .label {
