@@ -628,7 +628,7 @@ team-box {
 .schedule-box {
     @extend .note;
 
-    span {
+    span:not(.tooltiptext) {
         vertical-align: middle;
         height: 100%;
     }

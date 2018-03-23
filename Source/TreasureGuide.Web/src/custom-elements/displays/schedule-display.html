@@ -10,9 +10,12 @@
             <span class="label">
                 <stage-type-display type.bind="bin.key"></stage-type-display>
             </span>
-            <a repeat.for="stage of bin.value" route-href="route: stageDetails; params.bind: { id: stage.id }">
-                <unit-display unit-id.bind="stage.unitId" class.bind="unitSize"></unit-display>
-            </a>
+            <span repeat.for="stage of bin.value" class="tooltip -tooltip-top">
+                <span class="tooltiptext _shadow _noDelay _small">${stage.name} (${stage.teamCount})</span>
+                <a route-href="route: stageDetails; params.bind: { id: stage.id }">
+                    <unit-display unit-id.bind="stage.unitId" class.bind="unitSize"></unit-display>
+                </a>
+            </span>
         </span>
     </div>
 </template>
