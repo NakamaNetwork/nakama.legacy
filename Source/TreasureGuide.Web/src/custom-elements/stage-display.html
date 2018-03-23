@@ -1,11 +1,11 @@
 ﻿<template>
     <button type="button" class="_width100" if.bind="editable" click.delegate="clicked()">
-        <unit-display unit-id.bind="unitId" if.bind="unitId"></unit-display>
+        <unit-display unit-id.bind="unitId" if.bind="unitId" size="tiny"></unit-display>
         <i class.bind="iconClass" if.bind="iconClass"></i>
         ${label}
     </button>
     <span if.bind="!editable">
-        <unit-display unit-id.bind="unitId" if.bind="unitId"></unit-display>
+        <unit-display unit-id.bind="unitId" if.bind="unitId" size="tiny"></unit-display>
         <i class.bind="iconClass" if.bind="iconClass"></i>
         ${label}
     </span>
