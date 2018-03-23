@@ -130,7 +130,7 @@ namespace TreasureGuide.Sniffer.DataParser
             {
                 try
                 {
-                    var startDate = new DateTimeOffset(now.Year, ParseMonth(week["month"]?.ToString()), week["starting"]?.ToString().ToInt32() ?? 0, 3, 0, 0, TimeSpan.Zero);
+                    var startDate = new DateTimeOffset(now.Year, ParseMonth(week["month"]?.ToString()), (week["starting"]?.ToString().ToInt32() ?? 0) + 1, 3, 0, 0, TimeSpan.Zero);
                     var programs = ParsePrograms(week["program"]);
                     var evts = await ParseEvents(programs, startDate, stages, global);
                     schedule.AddRange(evts);
