@@ -83,7 +83,7 @@ export interface IBoxUnitUpdateModel {
 
 
 export enum DeletedItemType { 
-    Unknown = 0,
+    FullReset = 0,
     Unit = 1,
     Stage = 2,
     Ship = 3
@@ -244,6 +244,19 @@ export class RoleConstants {
     public static Contributor: string = "Contributor";
     public static BoxUser: string = "BoxUser";
     public static Donor: string = "Donor";
+    
+}
+
+
+export interface IScheduleModel {
+    live: IScheduleSubModel;
+    upcoming: IScheduleSubModel;
+    
+}
+
+export interface IScheduleSubModel {
+    global: number[];
+    japan: number[];
     
 }
 

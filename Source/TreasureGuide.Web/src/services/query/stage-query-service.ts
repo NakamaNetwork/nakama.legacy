@@ -3,6 +3,8 @@ import { HttpEngine } from '../../tools/http-engine';
 import { SearchModel } from '../../models/search-model';
 import { IStageStubModel, IStageSearchModel, SearchConstants, StageType } from '../../models/imported';
 import { LocallySearchedQueryService } from './generic/locally-searched-query-service';
+import * as moment from 'moment';
+import { NumberHelper } from '../../tools/number-helper';
 
 @autoinject
 export class StageQueryService extends LocallySearchedQueryService<number, IStageStubModel, StageSearchModel> {
@@ -46,6 +48,35 @@ export class StageQueryService extends LocallySearchedQueryService<number, IStag
             default:
                 return this.doSort(items, [x => x.name, x => x.unitId], [false]);
         }
+    }
+
+    private scheduleDateKey: string = 'controller_cache_date_stage_schedule';
+    private scheduleKey: string = 'controller_cache_stage_schedule';
+
+    public schedule() {
+        var lastChecked = localStorage.getItem(this.scheduleDateKey);
+        var now = moment.utc();
+        var then = moment.unix(NumberHelper.forceNumber(lastChecked));
+        if (lastChecked && now.isAfter(then)) {
+            var scheduleJson = localStorage.getItem(this.scheduleKey);
+            if (scheduleJson) {
+                var decoded = JSON.parse(scheduleJson);
+                if (decoded) {
+                    return new Promise((resolve) => {
+                        resolve(decoded);
+                    });
+                }
+            }
+        }
+        then = moment.utc().startOf('day').add(3, 'hours');
+        if (now.hours() >= 3) {
+            then = then.add(1, 'days');
+        }
+        return this.http.get(this.buildAddress('schedule')).then(x => {
+            localStorage.setItem(this.scheduleDateKey, JSON.stringify(then.unix()));
+            localStorage.setItem(this.scheduleKey, JSON.stringify(x));
+            return x;
+        });
     }
 }
 
