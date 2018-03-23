@@ -57,7 +57,7 @@ export class StageQueryService extends LocallySearchedQueryService<number, IStag
         var lastChecked = localStorage.getItem(this.scheduleDateKey);
         var now = moment.utc();
         var then = moment.unix(NumberHelper.forceNumber(lastChecked));
-        if (lastChecked && now.isAfter(then)) {
+        if (lastChecked && then.isAfter(now)) {
             var scheduleJson = localStorage.getItem(this.scheduleKey);
             if (scheduleJson) {
                 var decoded = JSON.parse(scheduleJson);

@@ -50,7 +50,7 @@ export class ScheduleDisplay {
 
     getEvents(eventData, global: boolean, stages: IStageStubModel[]): any[] {
         var source = global ? eventData.global : eventData.japan;
-        var mapping = stages = source.map(x => stages.find(y => y.id == x));
+        var mapping = stages = source.map(x => stages.find(y => y.id == x)).filter(x => x);
         var bins = ArrayHelper.binBy(mapping, 'type');
         return bins;
     }
