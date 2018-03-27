@@ -22,4 +22,7 @@
     CONSTRAINT [FK.dbo_Teams_EditedById_dbo.UserProfiles] FOREIGN KEY([EditedById]) REFERENCES [dbo].[UserProfiles]([Id])
 )
 GO
-CREATE NONCLUSTERED INDEX [IX_dbo.Teams] ON [dbo].[Teams]([Id] ASC) INCLUDE ([StageId], [InvasionId]);
+CREATE NONCLUSTERED INDEX [IX_dbo.Teams]
+    ON [dbo].[Teams]([Draft],[Deleted],[StageId],[InvasionId])
+        INCLUDE ([Id]);
+GO
