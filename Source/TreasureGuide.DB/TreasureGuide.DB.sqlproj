@@ -69,6 +69,8 @@
     <Folder Include="dbo\Tables\Boxes" />
     <Folder Include="dbo\Tables\Donations" />
     <Folder Include="dbo\Tables\Schedule" />
+    <Folder Include="dbo\Tables\GlobalClearRates" />
+    <Folder Include="dbo\Views\GCR" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Units\Ships.sql" />
@@ -103,7 +105,10 @@
     <Build Include="dbo\Tables\Donations\Donations.sql" />
     <Build Include="dbo\Tables\Schedule\ScheduledEvents.sql" />
     <Build Include="dbo\Tables\DeletedItems.sql" />
-    <Build Include="dbo\Views\GlobalClearRates.sql" />
+    <Build Include="dbo\Tables\GlobalClearRates\GCRUnits.sql" />
+    <Build Include="dbo\Tables\GlobalClearRates\GCRStages.sql" />
+    <Build Include="dbo\Views\GCR\GCRSummaries.sql" />
+    <Build Include="dbo\Views\GCR\GCRTable.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

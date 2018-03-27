@@ -12,6 +12,6 @@
 )
 GO
 CREATE NONCLUSTERED INDEX [IX_dbo.TeamUnits]
-    ON [dbo].[TeamUnits] ([Sub])
-        INCLUDE ([TeamId],[UnitId],[Position])
+    ON [dbo].[TeamUnits] ([Position],[Sub],[Flags])
+        INCLUDE ([TeamId],[UnitId])
 GO
