@@ -52,6 +52,9 @@ namespace TreasureGuide.Entities
         public virtual DbSet<UnitEvolution> UnitEvolutions { get; set; }
         public virtual DbSet<DeletedItem> DeletedItems { get; set; }
         public virtual DbSet<ScheduledEvent> ScheduledEvents { get; set; }
+        public virtual DbSet<GCRStage> GCRStages { get; set; }
+        public virtual DbSet<GCRUnit> GCRUnits { get; set; }
+        public virtual DbSet<GCRTable> GCRTables { get; set; }
     
         [DbFunction("TreasureEntities", "SimilarTeams")]
         public virtual IQueryable<SimilarTeams_Result> SimilarTeams(Nullable<int> teamId, Nullable<int> stageId, Nullable<int> unit1, Nullable<int> unit2, Nullable<int> unit3, Nullable<int> unit4, Nullable<int> unit5, Nullable<int> unit6)

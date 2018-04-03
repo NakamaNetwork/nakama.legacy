@@ -70,6 +70,15 @@
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityConstructor.cs" />
+    <Compile Include="GCRStage.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GCRTable.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GCRUnit.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ContextExtensions.cs" />
     <Compile Include="Helpers\DateExtensions.cs" />
     <Compile Include="Helpers\EnumerableHelper.cs" />

@@ -61,6 +61,11 @@
         <EntityTypeShape EntityType="tcdbModel.DeletedItem" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="tcdbModel.ScheduledEvent" Width="1.5" PointX="11.375" PointY="23.375" />
         <AssociationConnector Association="tcdbModel.FK_dbo_ScheduledEvents_dbo_Stages" />
+        <EntityTypeShape EntityType="tcdbModel.GCRStage" Width="1.5" PointX="11.375" PointY="26.75" />
+        <EntityTypeShape EntityType="tcdbModel.GCRUnit" Width="1.5" PointX="5" PointY="4" />
+        <EntityTypeShape EntityType="tcdbModel.GCRTable" Width="1.5" PointX="14.375" PointY="0.75" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_GCRStages_dbo_Units" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_GCRUnits_dbo_Units" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
