@@ -87,6 +87,8 @@ namespace TreasureGuide.Sniffer
 
         private static async Task PreRun(TreasureEntities context)
         {
+            context.Teams.Clear();
+            context.TeamUnits.Clear();
             context.ScheduledEvents.Clear();
             context.StageAliases.Clear();
             context.Stages.Clear();
