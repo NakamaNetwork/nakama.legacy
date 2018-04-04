@@ -95,6 +95,7 @@
           </Key>
           <Property Name="StageId" Type="int" Nullable="false" />
           <Property Name="Global" Type="bit" Nullable="false" />
+          <Property Name="Source" Type="bit" Nullable="false" />
           <Property Name="StartDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="EndDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
@@ -1078,7 +1079,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                         <End Role="Box" EntitySet="Boxes" />
                     </AssociationSet>
                     <FunctionImport Name="SimilarTeams" IsComposable="true" ReturnType="Collection(tcdbModel.SimilarTeams_Result)">
-                        <Parameter Name="teamId" Mode="In" Type="Int32" />
+            <Parameter Name="teamId" Mode="In" Type="Int32" />
             <Parameter Name="stageId" Mode="In" Type="Int32" />
             <Parameter Name="unit1" Mode="In" Type="Int32" />
             <Parameter Name="unit2" Mode="In" Type="Int32" />
@@ -1088,7 +1089,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <Parameter Name="unit6" Mode="In" Type="Int32" />
           </FunctionImport>
                     <FunctionImport Name="SimilarTeamsId" IsComposable="true" ReturnType="Collection(tcdbModel.SimilarTeams_Result)">
-                    <Parameter Name="teamId" Mode="In" Type="Int32" />
+          <Parameter Name="teamId" Mode="In" Type="Int32" />
           </FunctionImport>
                     <EntitySet Name="UserPreferences" EntityType="tcdbModel.UserPreference" />
                     <AssociationSet Name="FK_dbo_UserPreferences_dbo_UserProfiles" Association="tcdbModel.FK_dbo_UserPreferences_dbo_UserProfiles">
@@ -2024,6 +2025,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="StartDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
                     <Property Name="EndDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
                     <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_ScheduledEvents_dbo_Stages" FromRole="ScheduledEvent" ToRole="Stage" />
+          <Property Name="Source" Type="Boolean" Nullable="false" />
                 </EntityType>
                 <Association Name="FK_dbo_ScheduledEvents_dbo_Stages">
                     <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
@@ -2409,7 +2411,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <EntitySetMapping Name="ScheduledEvents">
                         <EntityTypeMapping TypeName="tcdbModel.ScheduledEvent">
                             <MappingFragment StoreEntitySet="ScheduledEvents">
-                                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                                 <ScalarProperty Name="Global" ColumnName="Global" />
                                 <ScalarProperty Name="StageId" ColumnName="StageId" />

@@ -18,6 +18,7 @@ namespace TreasureGuide.Entities
         public bool Global { get; set; }
         public System.DateTimeOffset StartDate { get; set; }
         public System.DateTimeOffset EndDate { get; set; }
+        public bool Source { get; set; }
     
         public virtual Stage Stage { get; set; }
     }
