@@ -202,7 +202,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 // Mr. 3 and Buggy FN
                 case 1302:
                     return 2130400;
-                    // Neptune
+                // Neptune
                 case 1725:
                     return 2172300;
                 // Raid Doffy v2
@@ -214,7 +214,18 @@ namespace TreasureGuide.Sniffer.DataParser
 
         protected override async Task Save(IEnumerable<ScheduledEvent> items)
         {
-            Context.ScheduledEvents.Clear();
+            var remove = new List<ScheduledEvent>();
+            foreach (var item in items)
+            {
+                if (Context.ScheduledEvents.Any(x => x.StageId == item.StageId 
+                    && x.Global == item.Global 
+                    && x.StartDate == item.StartDate 
+                    && x.EndDate == item.EndDate))
+                {
+                    remove.Add(item);
+                }
+            }
+            items = items.Except(remove);
             await Context.LoopedAddSave(items);
         }
     }
