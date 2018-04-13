@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Models.ScheduleModels;
 using TreasureGuide.Web.Models.StageModels;
@@ -54,13 +55,13 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 Live = new ScheduleSubModel
                 {
-                    Global = live[true],
-                    Japan = live[false]
+                    Global = live.SafeGet(true),
+                    Japan = live.SafeGet(false)
                 },
                 Upcoming = new ScheduleSubModel
                 {
-                    Global = upcoming[true],
-                    Japan = upcoming[false]
+                    Global = upcoming.SafeGet(true),
+                    Japan = upcoming.SafeGet(false)
                 },
             };
             return Ok(results);
