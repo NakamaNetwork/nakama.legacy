@@ -5,6 +5,7 @@ import { AccountService } from './services/account-service';
 import { AuthorizeStep } from './tools/authorize-step';
 import { NewsService } from './services/news-service';
 import { BoxService } from './services/box-service';
+import {RoleConstants} from './models/imported';
 
 @autoinject
 export class App {
@@ -51,20 +52,22 @@ export class App {
             { route: 'unauthorized', name: 'unauthorized', title: 'Unauthorized', moduleId: 'views/unauthorized', nav: false },
             // Teams
             { route: 'teams', name: 'teams', title: 'Teams', moduleId: 'views/teams/index', nav: true },
-            { route: 'teams/create', name: 'teamCreate', title: 'Create Team', moduleId: 'views/teams/edit', nav: false, auth: 'Contributor' },
-            { route: 'teams/:id/edit', name: 'teamEdit', title: 'Edit Team', moduleId: 'views/teams/edit', nav: false, auth: 'Contributor' },
+            { route: 'teams/create', name: 'teamCreate', title: 'Create Team', moduleId: 'views/teams/edit', nav: false, auth: RoleConstants.Contributor },
+            { route: 'teams/:id/edit', name: 'teamEdit', title: 'Edit Team', moduleId: 'views/teams/edit', nav: false, auth: RoleConstants.Contributor },
             { route: 'teams/:id/details', name: 'teamDetails', title: 'Team Details', moduleId: 'views/teams/detail', nav: false },
-            { route: 'teams/import', name: 'teamImport', title: 'Import', moduleId: 'views/teams/import', nav: true, auth: 'Administrator' },
+            { route: 'teams/import', name: 'teamImport', title: 'Import', moduleId: 'views/teams/import', nav: true, auth: RoleConstants.Administrator },
             // Stages
             { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
             { route: 'stages/:id/details', name: 'stageDetails', title: 'Stage Details', moduleId: 'views/stages/detail', nav: false },
             // Boxes
-            { route: 'boxes', name: 'boxes', title: 'Boxes', moduleId: 'views/boxes/index', nav: false, auth: 'BoxUser' },
-            { route: 'boxes/create', name: 'boxCreate', title: 'Create Box', moduleId: 'views/boxes/edit', nav: false, auth: 'BoxUser' },
-            { route: 'boxes/:id/edit', name: 'boxEdit', title: 'Edit Box', moduleId: 'views/boxes/edit', nav: false, auth: 'BoxUser' },
+            { route: 'boxes', name: 'boxes', title: 'Boxes', moduleId: 'views/boxes/index', nav: false, auth: RoleConstants.BoxUser },
+            { route: 'boxes/create', name: 'boxCreate', title: 'Create Box', moduleId: 'views/boxes/edit', nav: false, auth: RoleConstants.BoxUser },
+            { route: 'boxes/:id/edit', name: 'boxEdit', title: 'Edit Box', moduleId: 'views/boxes/edit', nav: false, auth: RoleConstants.BoxUser },
             { route: 'boxes/:id/details', name: 'boxDetails', title: 'Box Details', moduleId: 'views/boxes/detail', nav: false },
+            // GCR
+            { route: 'gcr', name: 'gcr', title: 'Global Clear Rates', moduleId: 'views/gcr/index', nav: true, auth: RoleConstants.GlobalClearRates },
             // Admin
-            { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: 'Administrator' },
+            { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: RoleConstants.Administrator },
             // Account
             { route: ['account/:id?', 'profile/:id?'], name: 'profile', title: 'Account', moduleId: 'views/profile/index', nav: false },
             { route: ['account/:id/edit', 'profile/:id/edit'], name: 'profileEdit', title: 'Account', moduleId: 'views/profile/edit', nav: false, auth: true },

@@ -1,0 +1,9 @@
+<template>
+    <span if.bind="bestTeam" with.bind="bestTeam">
+        <a route-href="route: teamDetails; params.bind: { id: id }">
+            <i class="fa fa-fw fa-globe" if.bind="global" title="Global"></i>
+            <i class="fa fa-fw fa-credit-card" if.bind="f2P" title="Free-to-Play Crew"></i>
+            <i class="fa fa-fw fa-video-camera" if.bind="videos" title="Has Videos"></i>
+        </a>
+    </span>
+</template>

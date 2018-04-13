@@ -1,0 +1,34 @@
+<template>
+    <h1>Global Clear Rates</h1>
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading">
+        <table with.bind="gcr" class="gcr">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="unit-display" repeat.for="unit of unitIds">
+                        <unit-display unit-id.bind="unit" size="small" tooltip="true"></unit-display>
+                    </th>
+                    <th class="unit-display">
+                        F2P
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="stage of stageIds">
+                    <th class="stage-display">
+                        <a route-href="route: stageDetails; params.bind: { id: stage }" target="_blank">
+                            <stage-display stage-id.bind="stage"></stage-display>
+                        </a>
+                    </th>
+                    <td repeat.for="unit of unitIds">
+                        <gcr-cell stage-id.bind="stage" unit-id.bind="unit" gcr.bind="gcr"></gcr-cell>
+                    </td>
+                    <td>
+                        <gcr-cell stage-id.bind="stage" gcr.bind="gcr"></gcr-cell>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>

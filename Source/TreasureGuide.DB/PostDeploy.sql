@@ -5,3 +5,4 @@
 :r ./PostDeploy/dbo.Stages.Table.sql
 :r ./PostDeploy/dbo.StageAliases.Table.sql
 :r ./PostDeploy/AuthData.sql
+:r ./PostDeploy/GCRPopulation.sql

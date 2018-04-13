@@ -1,0 +1,36 @@
+.gcr {
+    font-size: smaller;
+
+    .unit-display {
+        overflow: visible;
+    }
+
+    td, th, tr {
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    th, td {
+        @extend .no-wrap;
+        border: 1px solid rgba(0,0,0,0.2);
+        border-top: none;
+        border-left: none;
+    }
+
+    .unit-display {
+        min-width: $small-unit-size;
+    }
+
+    .stage-display {
+        text-align: start;
+
+        stage-display {
+            @extend .truncate;
+            max-width: 150px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}

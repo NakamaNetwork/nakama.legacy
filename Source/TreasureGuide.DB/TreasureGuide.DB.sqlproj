@@ -114,6 +114,7 @@
     <None Include="_local.publish.xml" />
     <PostDeploy Include="PostDeploy.sql" />
     <None Include="_staging.publish.xml" />
+    <None Include="PostDeploy\GCRPopulation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TreasureGuide.DB.refactorlog" />
