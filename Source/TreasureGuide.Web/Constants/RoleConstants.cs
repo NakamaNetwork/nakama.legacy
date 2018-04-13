@@ -8,5 +8,6 @@
         public const string Contributor = "Contributor";
         public const string BoxUser = "BoxUser";
         public const string Donor = "Donor";
+        public const string GlobalClearRates = "GlobalClearRates";
     }
 }

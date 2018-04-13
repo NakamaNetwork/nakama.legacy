@@ -140,9 +140,22 @@ namespace TreasureGuide.Web.Controllers
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
 
 #if DEBUG
-                        await _userManager.AddToRolesAsync(user, new[] { RoleConstants.Administrator, RoleConstants.Contributor, RoleConstants.BetaTester, RoleConstants.Moderator, RoleConstants.BoxUser, RoleConstants.Donor });
+                        await _userManager.AddToRolesAsync(user, new[]
+                        {
+                            RoleConstants.Administrator,
+                            RoleConstants.Contributor,
+                            RoleConstants.BetaTester,
+                            RoleConstants.Moderator,
+                            RoleConstants.BoxUser,
+                            RoleConstants.Donor,
+                            RoleConstants.GlobalClearRates
+                        });
 #endif
-                        await _userManager.AddToRolesAsync(user, new[] { RoleConstants.Contributor, RoleConstants.BoxUser });
+                        await _userManager.AddToRolesAsync(user, new[]
+                        {
+                            RoleConstants.Contributor,
+                            RoleConstants.BoxUser
+                        });
                         _entities.UserProfiles.Add(new UserProfile
                         {
                             Id = user.Id,

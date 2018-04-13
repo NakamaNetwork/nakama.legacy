@@ -144,6 +144,7 @@ export class AccountService {
         RoleConstants.BetaTester,
         RoleConstants.Contributor,
         RoleConstants.BoxUser,
-        RoleConstants.Donor
+        RoleConstants.Donor,
+        RoleConstants.GlobalClearRates
     ];
 }

@@ -165,6 +165,24 @@ export interface IExternalLoginConfirmationViewModel {
 }
 
 
+export interface IGCRResultModel {
+    teams: IGCRTableModel[];
+    unitIds: number[];
+    stageIds: number[];
+    
+}
+
+export interface IGCRTableModel {
+    id: number;
+    leaderId: number;
+    stageId: number;
+    f2P: boolean;
+    global: boolean;
+    video: boolean;
+    
+}
+
+
 export enum IndividualUnitFlags { 
     Unknown = 0,
     Favorite = 32,
@@ -244,6 +262,7 @@ export class RoleConstants {
     public static Contributor: string = "Contributor";
     public static BoxUser: string = "BoxUser";
     public static Donor: string = "Donor";
+    public static GlobalClearRates: string = "GlobalClearRates";
     
 }
 

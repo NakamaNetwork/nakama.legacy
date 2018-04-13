@@ -1,23 +1,15 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Web.Constants;
-using TreasureGuide.Web.Controllers.API.Generic;
-using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models.BoxModels;
 using TreasureGuide.Web.Models.GCRModels;
-using TreasureGuide.Web.Services;
-using Z.EntityFramework.Plus;
 
 namespace TreasureGuide.Web.Controllers.API
 {
-    //[Authorize]
+    [Authorize(Roles = RoleConstants.GlobalClearRates)]
     [Route("api/gcr")]
     public class GCRController : Controller
     {
@@ -40,7 +32,15 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 UnitIds = units,
                 StageIds = stages,
-                Teams = teams
+                Teams = teams.Select(x => new GCRTableModel
+                {
+                    Id = x.Id,
+                    LeaderId = x.LeaderId,
+                    StageId = x.StageId ?? 0,
+                    F2P = x.F2P ?? false,
+                    Global = x.Global ?? false,
+                    Video = x.Video ?? false
+                })
             };
             return Ok(result);
         }

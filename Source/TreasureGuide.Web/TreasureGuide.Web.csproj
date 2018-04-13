@@ -53,6 +53,12 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\g-c-r-result-model.tst.gen">
+        <CustomToolNamespace>Models\GCRModels\GCRResultModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\role-constants.tst.gen">
+        <CustomToolNamespace>Constants\RoleConstants.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
