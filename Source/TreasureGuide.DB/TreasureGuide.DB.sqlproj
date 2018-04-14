@@ -107,7 +107,6 @@
     <Build Include="dbo\Tables\DeletedItems.sql" />
     <Build Include="dbo\Tables\GlobalClearRates\GCRUnits.sql" />
     <Build Include="dbo\Tables\GlobalClearRates\GCRStages.sql" />
-    <Build Include="dbo\Views\GCR\GCRSummaries.sql" />
     <Build Include="dbo\Views\GCR\GCRTable.sql" />
   </ItemGroup>
   <ItemGroup>
