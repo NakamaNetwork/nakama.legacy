@@ -65,7 +65,7 @@ export class App {
             { route: 'boxes/:id/edit', name: 'boxEdit', title: 'Edit Box', moduleId: 'views/boxes/edit', nav: false, auth: RoleConstants.BoxUser },
             { route: 'boxes/:id/details', name: 'boxDetails', title: 'Box Details', moduleId: 'views/boxes/detail', nav: false },
             // GCR
-            { route: 'gcr', name: 'gcr', title: 'Global Clear Rates', moduleId: 'views/gcr/index', nav: true, auth: RoleConstants.GlobalClearRates },
+            { route: 'gcr', name: 'gcr', title: 'GCR', moduleId: 'views/gcr/index', nav: true, auth: RoleConstants.GlobalClearRates },
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: RoleConstants.Administrator },
             // Account

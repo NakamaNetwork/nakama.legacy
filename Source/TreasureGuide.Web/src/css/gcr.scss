@@ -28,9 +28,55 @@
 
         stage-display {
             @extend .truncate;
+            height: 100%;
             max-width: 150px;
             display: inline-block;
             vertical-align: middle;
         }
+    }
+
+    gcr-cell {
+        .complete {
+            @extend ._success;
+        }
+
+        .incomplete {
+            @extend ._warningLight;
+        }
+
+        .empty {
+            @extend ._dangerLight;
+        }
+    }
+    // Highlights
+    overflow: hidden;
+    
+    tr:nth-child(even) {
+        background-color: rgba(128, 128, 128, 0.2);
+    }
+
+    tr:hover {
+        background-color: #ffd800;
+    }
+
+    td, th {
+        position: relative;
+    }
+
+    td:hover,
+    th:hover {
+        overflow: visible;
+    }
+
+    td:hover::after,
+    th:hover::after {
+        background-color: #ffd800;
+        content: "";
+        position: absolute;
+        left: 0;
+        top: -5000px;
+        height: 10000px;
+        width: 100%;
+        z-index: -1;
     }
 }

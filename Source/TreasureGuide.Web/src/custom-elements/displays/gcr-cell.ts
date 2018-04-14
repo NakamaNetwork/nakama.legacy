@@ -13,52 +13,33 @@ export class GCRCell {
     public gcr: IGCRResultModel;
 
     @computedFrom('gcr', 'stageId', 'unintId')
-    get teams() {
-        return this.gcr.teams.filter(x => x.leaderId == this.unitId && x.stageId == this.stageId);
+    get team() {
+        return this.gcr.teams.find(x => x.leaderId == this.unitId && x.stageId == this.stageId);
     }
 
-    @computedFrom('teams')
-    get teamCount() {
-        return this.teams.length;
+    @computedFrom('team')
+    get complete() {
+        return this.team && this.team.f2P && this.team.global && this.team.video;
     }
 
-    @computedFrom('teams')
-    get fullTeam() {
-        return this.teams.find(x => x.f2P && x.global && x.video);
+    @computedFrom('team', 'complete')
+    get incomplete() {
+        return this.team && !this.complete && (this.team.f2P || this.team.global || this.team.video);
     }
 
-    @computedFrom('teams')
-    get f2Pglobal() {
-        return this.teams.find(x => x.f2P && x.global);
+    @computedFrom('complete', 'incomplete')
+    get empty() {
+        return !(this.team || this.complete || this.incomplete);
     }
 
-    @computedFrom('teams')
-    get f2PVideo() {
-        return this.teams.find(x => x.f2P && x.video);
-    }
-
-    @computedFrom('teams')
-    get globalVideo() {
-        return this.teams.find(x => x.global && x.video);
-    }
-
-    @computedFrom('teams')
-    get f2P() {
-        return this.teams.find(x => x.f2P);
-    }
-
-    @computedFrom('teams')
-    get global() {
-        return this.teams.find(x => x.global);
-    }
-
-    @computedFrom('teams')
-    get video() {
-        return this.teams.find(x => x.video);
-    }
-
-    @computedFrom('fullTeam', 'f2PGlobal', 'f2PVideo', 'globalVideo', 'f2P', 'global', 'video')
-    get bestTeam() {
-        return this.fullTeam || this.f2Pglobal || this.f2PVideo || this.f2P || this.global || this.video;
+    @computedFrom('team', 'complete', 'empty')
+    get style() {
+        if (this.empty) {
+            return 'empty';
+        } else if (this.complete) {
+            return 'complete';
+        } else if (this.incomplete) {
+            return 'incomplete';
+        }
     }
 }

@@ -22,10 +22,14 @@
                         </a>
                     </th>
                     <td repeat.for="unit of unitIds">
-                        <gcr-cell stage-id.bind="stage" unit-id.bind="unit" gcr.bind="gcr"></gcr-cell>
+                        <a route-href="route: teams; params.bind: { leaderId: unit, stageId: stage }" target="_blank">
+                            <gcr-cell stage-id.one-time="stage" unit-id.one-time="unit" gcr.one-time="gcr"></gcr-cell>
+                        </a>
                     </td>
                     <td>
-                        <gcr-cell stage-id.bind="stage" gcr.bind="gcr"></gcr-cell>
+                        <a route-href="route: teams; params.bind: { stageId: stage, freeToPlay: 1 }" target="_blank">
+                            <gcr-cell stage-id.one-time="stage" gcr.one-time="gcr"></gcr-cell>
+                        </a>
                     </td>
                 </tr>
             </tbody>

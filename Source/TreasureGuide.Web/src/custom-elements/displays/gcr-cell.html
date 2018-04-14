@@ -1,9 +1,11 @@
 <template>
-    <span if.bind="bestTeam" with.bind="bestTeam">
-        <a route-href="route: teamDetails; params.bind: { id: id }">
-            <i class="fa fa-fw fa-globe" if.bind="global" title="Global"></i>
-            <i class="fa fa-fw fa-credit-card" if.bind="f2P" title="Free-to-Play Crew"></i>
-            <i class="fa fa-fw fa-video-camera" if.bind="videos" title="Has Videos"></i>
-        </a>
+    <span class="cell" class.bind="style">
+        <span if.bind="incomplete">
+            <i class="fa fa-fw fa-globe" if.bind="team.global" title="Global"></i>
+            <i class="fa fa-fw fa-credit-card" if.bind="team.f2P" title="Free-to-Play Crew"></i>
+            <i class="fa fa-fw fa-video-camera" if.bind="team.video" title="Has Videos"></i>
+        </span>
+        <i if.bind="complete" class="fa fa-fw fa-check" title="Complete!"></i>
+        <i if.bind="empty" class="fa fa-fw fa-times" title="Missing"></i>
     </span>
 </template>
