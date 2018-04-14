@@ -9,6 +9,8 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
     protected dateKey: string;
     protected items: TEntity[] = [];
 
+    protected dict: any = {};
+
     constructor(controller: string, http: HttpEngine) {
         super(controller, http);
         this.key = 'controller_cache_' + controller;
@@ -24,6 +26,7 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
         var json = localStorage.getItem(this.key);
         if (json) {
             this.items = JSON.parse(json);
+            this.rebuildDictionary();
         }
         this.getLatest();
     }
@@ -67,8 +70,8 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
                 if (x.timestamp) {
                     localStorage.setItem(this.dateKey, moment(x.timestamp).unix().toString());
                 }
+                this.rebuildDictionary();
             }
-
             this.buildingCache = false;
         }).catch(x => {
             this.buildingCache = false;
@@ -86,7 +89,7 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
                     resolve(this.getCached(endpoint, id));
                 }, 100);
             } else if (id) {
-                var result = this.items.find(x => x.id == id);
+                var result = this.dict[id];
                 if (result) {
                     resolve(result);
                 } else {
@@ -95,6 +98,13 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
             } else {
                 resolve(this.items);
             }
+        });
+    }
+
+    protected rebuildDictionary() {
+        this.dict = {};
+        this.items.forEach(x => {
+            this.dict[x.id] = x;
         });
     }
 }
