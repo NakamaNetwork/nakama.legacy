@@ -2,12 +2,14 @@ $gcr-cell-width: 50px;
 $gcr-cell-height: 24px;
 
 @function makeGCRColor($color, $light) {
+    $newValue: $color;
     @if $light > 0 {
-        @return desaturate(lighten($color, 50%), 20%);
+        $newValue: desaturate(lighten($color, 30%), 20%);
     }
     @else {
-        @return desaturate(lighten($color, 30%), 20%);
+        $newValue: desaturate(lighten($color, 10%), 20%);
     }
+    @return change-color($newValue, $alpha: 0.5);
 }
 
 .gcr {
@@ -68,7 +70,7 @@ $gcr-cell-height: 24px;
         width: $gcr-cell-width !important;
         height: $gcr-cell-height !important;
     }
-    /// colors
+    // colors
     .complete {
         background-color: makeGCRColor($success-color, 0);
     }
@@ -100,6 +102,38 @@ $gcr-cell-height: 24px;
 
         .stage-header {
             background-color: makeGCRColor($light-color, 1);
+        }
+    }
+    // highlights
+    table {
+        overflow: hidden;
+
+        tr:nth-child(even) {
+            background-color: rgba(128, 128, 128, 0.2);
+        }
+
+        tr:hover {
+            background-color: #ffd800;
+        }
+
+        td, th {
+            position: relative;
+        }
+
+        td:hover,
+        th:hover {
+            overflow: visible;
+        }
+
+        td:hover::after {
+            background-color: #ffd800;
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -5000px;
+            height: 10000px;
+            width: 100%;
+            z-index: -1;
         }
     }
 }
