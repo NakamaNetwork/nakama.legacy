@@ -1,15 +1,21 @@
 $gcr-cell-width: 50px;
 $gcr-cell-height: 24px;
 
-@function makeGCRColor($color, $light) {
+@function makeGCRColor($color, $light, $alpha) {
     $newValue: $color;
+
     @if $light > 0 {
         $newValue: desaturate(lighten($color, 30%), 20%);
     }
     @else {
         $newValue: desaturate(lighten($color, 10%), 20%);
     }
-    @return change-color($newValue, $alpha: 0.5);
+
+    @if($alpha>0) {
+        @return change-color($newValue, $alpha: 0.5);
+    }
+
+    @return $newValue;
 }
 
 .gcr {
@@ -41,6 +47,7 @@ $gcr-cell-height: 24px;
         height: $gcr-cell-height + 1 !important;
         text-align: start;
         padding-top: 2px;
+        z-index: 10;
 
         a {
             @extend .truncate;
@@ -72,36 +79,36 @@ $gcr-cell-height: 24px;
     }
     // colors
     .complete {
-        background-color: makeGCRColor($success-color, 0);
+        background-color: makeGCRColor($success-color, 0, 1);
     }
 
     .incomplete {
-        background-color: makeGCRColor($warning-color, 0);
+        background-color: makeGCRColor($warning-color, 0, 1);
     }
 
     .empty {
-        background-color: makeGCRColor($danger-color, 0);
+        background-color: makeGCRColor($danger-color, 0, 1);
     }
 
     .stage-header {
-        background-color: makeGCRColor($light-color, 0);
+        background-color: makeGCRColor($light-color, 0, 0);
     }
 
     tr:nth-child(odd) {
         .complete {
-            background-color: makeGCRColor($success-color, 1);
+            background-color: makeGCRColor($success-color, 1, 1);
         }
 
         .incomplete {
-            background-color: makeGCRColor($warning-color, 1);
+            background-color: makeGCRColor($warning-color, 1, 1);
         }
 
         .empty {
-            background-color: makeGCRColor($danger-color, 1);
+            background-color: makeGCRColor($danger-color, 1, 1);
         }
 
         .stage-header {
-            background-color: makeGCRColor($light-color, 1);
+            background-color: makeGCRColor($light-color, 1, 0);
         }
     }
     // highlights
