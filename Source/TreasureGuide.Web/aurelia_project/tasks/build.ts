@@ -18,6 +18,7 @@ let buildTask = gulp.series(
         processCSS,
         copyFiles,
     ),
+    copyScripts,
     writeBundles
 );
 

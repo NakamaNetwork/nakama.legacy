@@ -32,6 +32,11 @@
             "src/**/site.scss"
         ]
     },
+    "copyScripts": {
+        "source": [
+            "node_modules/fixed-table-js/dist/fixed_table.min.js"
+        ]
+    },
     "editor": {
         "id": "visualstudio",
         "displayName": "Visual Studio"
@@ -182,12 +187,6 @@
                         "path": "../node_modules/moment",
                         "resources": []
                     }
-                ]
-            },
-            {
-                "name": "gcr_bundle.js",
-                "prepend": [
-                    "node_modules/fixed-table-js/dist/fixed_table.js"
                 ]
             }
         ]
