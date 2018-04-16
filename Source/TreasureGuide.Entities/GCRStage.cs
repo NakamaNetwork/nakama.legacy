@@ -16,6 +16,7 @@ namespace TreasureGuide.Entities
     {
         public int StageId { get; set; }
         public int Order { get; set; }
+        public string Name { get; set; }
     
         public virtual Stage Stage { get; set; }
     }

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using TreasureGuide.Entities;
 
 namespace TreasureGuide.Web.Models.GCRModels
 {
     public class GCRResultModel
     {
-        public IEnumerable<GCRDataModel> UnitIds { get; set; }
-        public IEnumerable<GCRDataModel> StageIds { get; set; }
+        public IEnumerable<GCRDataModel> Units { get; set; }
+        public IEnumerable<GCRDataModel> Stages { get; set; }
         public IEnumerable<GCRTableModel> Teams { get; set; }
     }
 
@@ -24,5 +25,6 @@ namespace TreasureGuide.Web.Models.GCRModels
         public int? Id { get; set; }
         public int? Thumbnail { get; set; }
         public string Name { get; set; }
+        public UnitType? Color { get; set; }
     }
 }

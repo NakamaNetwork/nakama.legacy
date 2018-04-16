@@ -73,10 +73,16 @@
     <Compile Include="GCRStage.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="GCRStageInfo.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="GCRTable.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="GCRUnit.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GCRUnitInfo.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ContextExtensions.cs" />

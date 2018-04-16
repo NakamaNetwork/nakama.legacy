@@ -27,6 +27,10 @@ $gcr-cell-height: 24px;
 
     .header {
         height: 5vh;
+
+        .buttons {
+            padding: 10px;
+        }
     }
 
     .body {

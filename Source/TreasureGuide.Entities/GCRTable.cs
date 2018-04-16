@@ -16,7 +16,12 @@ namespace TreasureGuide.Entities
     {
         public int Id { get; set; }
         public Nullable<int> LeaderId { get; set; }
+        public string LeaderName { get; set; }
+        public Nullable<UnitType> LeaderColor { get; set; }
         public Nullable<int> StageId { get; set; }
+        public Nullable<int> StageThumb { get; set; }
+        public string StageName { get; set; }
+        public Nullable<UnitType> StageColor { get; set; }
         public Nullable<bool> F2P { get; set; }
         public Nullable<bool> Global { get; set; }
         public Nullable<bool> Video { get; set; }

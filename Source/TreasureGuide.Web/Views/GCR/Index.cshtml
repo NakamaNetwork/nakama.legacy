@@ -14,14 +14,20 @@
 
 <div class="gcr">
     <div class="header">
-        <h2>@ViewData["Title"]</h2>
+        <div class="_floatRight buttons">
+            <a href="/gcr/missing" class="button _xsmall _info" target="_blank">Export "Missing" Table</a>
+            <a href="/gcr/edit" class="button _xsmall _info" target="_blank">Edit Stages and Units</a>
+        </div>
+        <h2>
+           GCR
+        </h2>
     </div>
     <div class="body" id="gcr">
         <table>
             <thead>
                 <tr>
                     <th class="stage-header"></th>
-                    @foreach (var unit in Model.UnitIds)
+                    @foreach (var unit in Model.Units)
                     {
                         <th class="unit-header">
                             @if (unit.Thumbnail.HasValue)
@@ -42,7 +48,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var stage in Model.StageIds)
+                @foreach (var stage in Model.Stages)
                 {
                     <tr>
                         <th class="stage-header">
@@ -58,7 +64,7 @@
                                 @(GCRHelper.GetShortStageName(stage.Name))
                             </a>
                         </th>
-                        @foreach (var unit in Model.UnitIds)
+                        @foreach (var unit in Model.Units)
                         {
                             var team = Model.Teams.SingleOrDefault(x => x.StageId == stage.Id && x.LeaderId == unit.Id);
                             var cellClass = "empty";

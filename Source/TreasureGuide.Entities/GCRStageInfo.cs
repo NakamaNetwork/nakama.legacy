@@ -12,12 +12,12 @@ namespace TreasureGuide.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class GCRUnit
+    public partial class GCRStageInfo
     {
-        public int UnitId { get; set; }
+        public int StageId { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
-    
-        public virtual Unit Unit { get; set; }
+        public Nullable<int> Thumbnail { get; set; }
+        public Nullable<UnitType> Color { get; set; }
     }
 }

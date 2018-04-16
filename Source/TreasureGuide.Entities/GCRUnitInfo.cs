@@ -12,12 +12,11 @@ namespace TreasureGuide.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class GCRUnit
+    public partial class GCRUnitInfo
     {
         public int UnitId { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
-    
-        public virtual Unit Unit { get; set; }
+        public UnitType Color { get; set; }
     }
 }

@@ -108,6 +108,8 @@
     <Build Include="dbo\Tables\GlobalClearRates\GCRUnits.sql" />
     <Build Include="dbo\Tables\GlobalClearRates\GCRStages.sql" />
     <Build Include="dbo\Views\GCR\GCRTable.sql" />
+    <Build Include="dbo\Views\GCR\GCRStageInfo.sql" />
+    <Build Include="dbo\Views\GCR\GCRUnitInfo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
