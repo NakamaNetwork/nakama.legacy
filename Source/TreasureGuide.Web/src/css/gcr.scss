@@ -1,8 +1,12 @@
 .gcr {
     font-size: smaller;
 
-    .unit-display {
-        overflow: visible;
+    .unit-button {
+        display: inline-block;
+    }
+
+    a {
+        text-decoration: none !important;
     }
 
     td, th, tr {
@@ -19,14 +23,10 @@
         border-left: none;
     }
 
-    .unit-display {
-        min-width: $small-unit-size;
-    }
-
     .stage-display {
         text-align: start;
 
-        stage-display {
+        a {
             @extend .truncate;
             height: 100%;
             max-width: 150px;
@@ -35,20 +35,19 @@
         }
     }
 
-    gcr-cell {
-        .complete {
+    .cell {
+        &.complete {
             @extend ._success;
         }
 
-        .incomplete {
+        &.incomplete {
             @extend ._warningLight;
         }
 
-        .empty {
+        &.empty {
             @extend ._dangerLight;
         }
     }
-
     // Highlights
     table {
         overflow: hidden;
