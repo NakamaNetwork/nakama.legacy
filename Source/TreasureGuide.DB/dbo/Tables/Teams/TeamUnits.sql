@@ -10,3 +10,8 @@
     CONSTRAINT [FK_dbo.TeamUnits_dbo.Teams] FOREIGN KEY([TeamId]) REFERENCES [dbo].[Teams] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.TeamUnits_dbo.Units] FOREIGN KEY([UnitId]) REFERENCES [dbo].[Units] ([Id]) ON DELETE CASCADE
 )
+GO
+CREATE NONCLUSTERED INDEX [IX_dbo.TeamUnits]
+    ON [dbo].[TeamUnits] ([Position],[Sub],[Flags])
+        INCLUDE ([TeamId],[UnitId])
+GO

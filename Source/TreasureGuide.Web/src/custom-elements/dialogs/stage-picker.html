@@ -17,7 +17,7 @@
                     <ul class="listnav">
                         <li repeat.for="stage of stages" class="${(stageId === stage.id ? 'active' : '')}">
                             <a href="#" click.delegate="clicked(stage.id)">
-                                <global-display global.bind="stage.global"></global-display>
+                                <i class="fa fa-fw fa-globe" if.bind="stage.global"></i>
                                 <unit-display unit-id.bind="stage.unitId" size="small" if.bind="stage.unitId"></unit-display>
                                 ${stage.name}
                                 (${stage.teamCount})

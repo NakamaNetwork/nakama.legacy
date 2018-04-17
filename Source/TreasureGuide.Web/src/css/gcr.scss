@@ -1,0 +1,164 @@
+$gcr-cell-width: 50px;
+$gcr-cell-height: 24px;
+
+@function makeGCRColor($color, $light, $alpha) {
+    $newValue: $color;
+
+    @if $light > 0 {
+        $newValue: desaturate(lighten($color, 30%), 20%);
+    }
+    @else {
+        $newValue: desaturate(lighten($color, 10%), 20%);
+    }
+
+    @if($alpha>0) {
+        @return change-color($newValue, $alpha: 0.5);
+    }
+
+    @return $newValue;
+}
+
+.gcr {
+    font-size: smaller;
+
+    a {
+        text-decoration: none !important;
+    }
+
+    .header {
+        height: 5vh;
+
+        .buttons {
+            padding-top: 10px;
+            padding-right: 10px;
+        }
+    }
+
+    .body {
+        height: 95vh;
+    }
+
+    td, th {
+        text-align: center;
+        vertical-align: middle;
+        padding: 0;
+        margin: 0;
+        border: 1px solid rgba(0,0,0,0.2);
+        border-top: none;
+        border-left: none;
+    }
+
+    .stage-header {
+        height: $gcr-cell-height + 1 !important;
+        text-align: start;
+        padding-top: 2px;
+        z-index: 10;
+
+        a {
+            @extend .truncate;
+            @extend .no-wrap;
+            width: 150px;
+            display: inline-block;
+        }
+
+        .unit-button {
+            display: inline-block;
+        }
+    }
+
+    .unit-header {
+        width: $gcr-cell-width !important;
+        height: $gcr-cell-height !important;
+        background-color: $background-color;
+
+        a {
+            width: ($small-unit-size + $small-unit-margin) !important;
+            height: ($small-unit-size + $small-unit-margin) !important;
+            display: inline-block;
+        }
+    }
+
+    .team-cell {
+        width: $gcr-cell-width !important;
+        height: $gcr-cell-height !important;
+    }
+    // colors
+    .complete {
+        background-color: makeGCRColor($success-color, 0, 1);
+    }
+
+    .incomplete {
+        background-color: makeGCRColor($warning-color, 0, 1);
+    }
+
+    .empty {
+        background-color: makeGCRColor($danger-color, 0, 1);
+    }
+
+    .stage-header {
+        background-color: makeGCRColor($light-color, 0, 0);
+    }
+
+    tr:nth-child(odd) {
+        .complete {
+            background-color: makeGCRColor($success-color, 1, 1);
+        }
+
+        .incomplete {
+            background-color: makeGCRColor($warning-color, 1, 1);
+        }
+
+        .empty {
+            background-color: makeGCRColor($danger-color, 1, 1);
+        }
+
+        .stage-header {
+            background-color: makeGCRColor($light-color, 1, 0);
+        }
+    }
+    // highlights
+    table {
+        overflow: hidden;
+
+        tr:nth-child(even) {
+            background-color: rgba(128, 128, 128, 0.2);
+        }
+
+        tr:hover {
+            background-color: #ffd800;
+        }
+
+        td, th {
+            position: relative;
+        }
+
+        td:hover,
+        th:hover {
+            overflow: visible;
+        }
+
+        td:hover::after {
+            background-color: #ffd800;
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -5000px;
+            height: 10000px;
+            width: 100%;
+            z-index: -1;
+        }
+    }
+}
+
+.gcr-edit {
+    stage-display {
+        width: 250px;
+        display: block;
+        @extend .truncate;
+        @extend .no-wrap;
+    }
+
+    td:first-child {
+        text-align: end;
+    }
+}

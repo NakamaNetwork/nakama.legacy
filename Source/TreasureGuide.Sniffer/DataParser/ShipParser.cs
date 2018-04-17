@@ -40,7 +40,7 @@ namespace TreasureGuide.Sniffer.DataParser
 
         private bool IsEventShip(string name)
         {
-            return name.Contains("anniversary") || name.Contains("burning whitebeard") || name.Contains("new year");
+            return name.Contains("anniversary") || name.Contains("burning whitebeard") || name.Contains("new year") || name.Contains("karasumaru");
         }
 
         protected override async Task Save(IEnumerable<Ship> ships)

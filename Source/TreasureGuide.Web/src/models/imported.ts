@@ -165,6 +165,54 @@ export interface IExternalLoginConfirmationViewModel {
 }
 
 
+export interface IGCREditorModel {
+    units: IGCRUnitEditModel[];
+    stages: IGCRStageEditModel[];
+    
+}
+
+export interface IGCRResultModel {
+    units: IGCRDataModel[];
+    stages: IGCRDataModel[];
+    teams: IGCRTableModel[];
+    
+}
+
+export interface IGCRTableModel {
+    id: number;
+    leaderId: number;
+    stageId: number;
+    f2P: boolean;
+    global: boolean;
+    video: boolean;
+    
+}
+
+export interface IGCRDataModel {
+    id: number;
+    thumbnail: number;
+    name: string;
+    color: UnitType;
+    
+}
+
+export interface IGCRAbstractEditModel {
+    order: number;
+    name: string;
+    
+}
+
+export interface IGCRUnitEditModel extends IGCRAbstractEditModel{
+    unitId: number;
+    
+}
+
+export interface IGCRStageEditModel extends IGCRAbstractEditModel{
+    stageId: number;
+    
+}
+
+
 export enum IndividualUnitFlags { 
     Unknown = 0,
     Favorite = 32,
@@ -244,6 +292,8 @@ export class RoleConstants {
     public static Contributor: string = "Contributor";
     public static BoxUser: string = "BoxUser";
     public static Donor: string = "Donor";
+    public static GCRViewer: string = "GCR";
+    public static GCRAdmin: string = "GCRAdmin";
     
 }
 

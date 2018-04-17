@@ -52,7 +52,8 @@ namespace TreasureGuide.Sniffer
                 new UnitEvolutionParser(context),
                 new ShipParser(context),
                 new StageParser(context),
-                new ScheduleParser(context)
+                new ScheduleParserAgenda(context),
+                new ScheduleParserCal(context)
             };
             //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             ParsersRunning = parsers.Count();
@@ -87,6 +88,8 @@ namespace TreasureGuide.Sniffer
 
         private static async Task PreRun(TreasureEntities context)
         {
+            context.Teams.Clear();
+            context.TeamUnits.Clear();
             context.ScheduledEvents.Clear();
             context.StageAliases.Clear();
             context.Stages.Clear();

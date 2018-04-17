@@ -13,7 +13,7 @@
                 <thead>
                     <tr>
                         <th class="_alignCenter">
-                            <global-display global="true"></global-display>
+                            <i class="fa fa-fw fa-globe"></i>
                         </th>
                         <th>
                             Stage
@@ -29,7 +29,7 @@
                 <tbody>
                     <tr repeat.for="stage of stages">
                         <td class="_alignCenter">
-                            <global-display global.bind="stage.global"></global-display>
+                            <i class="fa fa-fw fa-globe" if.bind="stage.global"></i>
                         </td>
                         <td>
                             <a route-href="route: stageDetails; params.bind: {id: stage.id}">

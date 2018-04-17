@@ -12,7 +12,7 @@ using TreasureGuide.Sniffer.Helpers;
 
 namespace TreasureGuide.Sniffer.DataParser
 {
-    public class ScheduleParser : TreasureParser<IEnumerable<ScheduledEvent>>
+    public class ScheduleParserAgenda : TreasureParser<IEnumerable<ScheduledEvent>>
     {
         private readonly string GlobalSchedule = "https://raw.githubusercontent.com/OPTC-Agenda/OPTC-Agenda.github.io/master/assets/json/weeks.json";
         private readonly string JapanSchedule = "https://raw.githubusercontent.com/OPTC-Agenda/OPTC-Agenda.github.io/master/assets/json/weeksJap.json";
@@ -25,7 +25,7 @@ namespace TreasureGuide.Sniffer.DataParser
 
         private readonly string Drops = "https://raw.githubusercontent.com/OPTC-Agenda/OPTC-Agenda.github.io/master/assets/json/drops.json";
 
-        public ScheduleParser(TreasureEntities context) : base(context, null)
+        public ScheduleParserAgenda(TreasureEntities context) : base(context, null)
         {
         }
 
@@ -126,11 +126,20 @@ namespace TreasureGuide.Sniffer.DataParser
             var scheduleData = JsonConvert.DeserializeObject<JObject>(json)["weeks"];
             var schedule = new List<ScheduledEvent>();
             var now = DateTimeOffset.Now;
+            var finishedFirstYear = false;
             foreach (var week in scheduleData)
             {
+                if (week["month"]?.ToString() == "January")
+                {
+                    finishedFirstYear = true;
+                }
+                if (!finishedFirstYear)
+                {
+                    continue;
+                }
                 try
                 {
-                    var startDate = new DateTimeOffset(now.Year, ParseMonth(week["month"]?.ToString()), (week["starting"]?.ToString().ToInt32() ?? 0) + 1, 3, 0, 0, TimeSpan.Zero);
+                    var startDate = new DateTimeOffset(now.Year, ParseMonth(week["month"]?.ToString()), (week["starting"]?.ToString().ToInt32() ?? 0), 3, 0, 0, TimeSpan.Zero);
                     var programs = ParsePrograms(week["program"]);
                     var evts = await ParseEvents(programs, startDate, stages, global);
                     schedule.AddRange(evts);
@@ -222,7 +231,8 @@ namespace TreasureGuide.Sniffer.DataParser
                     StartDate = startDate.AddDays(program.Offset),
                     EndDate = startDate.AddDays(program.Offset + 1),
                     Global = global,
-                    StageId = stageId.Value
+                    StageId = stageId.Value,
+                    Source = true
                 };
                 evts.Add(evt);
             }
@@ -343,7 +353,18 @@ namespace TreasureGuide.Sniffer.DataParser
 
         protected override async Task Save(IEnumerable<ScheduledEvent> items)
         {
-            Context.ScheduledEvents.Clear();
+            var remove = new List<ScheduledEvent>();
+            foreach (var item in items)
+            {
+                if (Context.ScheduledEvents.Any(x => x.StageId == item.StageId
+                                                     && x.Global == item.Global
+                                                     && x.StartDate == item.StartDate
+                                                     && x.EndDate == item.EndDate))
+                {
+                    remove.Add(item);
+                }
+            }
+            items = items.Except(remove);
             await Context.LoopedAddSave(items);
         }
 

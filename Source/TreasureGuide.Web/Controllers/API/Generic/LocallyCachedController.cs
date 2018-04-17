@@ -76,7 +76,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         protected DateTimeOffset? GetTimeStamp(IQueryable<TEntity> entities)
         {
             var deleted = DbContext.DeletedItems.Where(y => y.Type == Type || y.Type == DeletedItemType.FullReset).Select(x => x.EditedDate);
-            return GetTimeStamps(entities).Where(x => x != null).Select(x => x.Value).Concat(deleted).Max(x => x);
+            return GetTimeStamps(entities).Where(x => x.HasValue).Select(x => x.Value).Concat(deleted).DefaultIfEmpty().Max(x => x);
         }
 
         protected virtual IQueryable<DateTimeOffset?> GetTimeStamps(IQueryable<TEntity> entities)

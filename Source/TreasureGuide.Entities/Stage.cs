@@ -40,5 +40,6 @@ namespace TreasureGuide.Entities
         public virtual ICollection<Team> InvasionTeams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ScheduledEvent> ScheduledEvents { get; set; }
+        public virtual GCRStage GCRStage { get; set; }
     }
 }
