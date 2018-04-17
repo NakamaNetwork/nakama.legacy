@@ -5,6 +5,7 @@ using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Models.BoxModels;
 using TreasureGuide.Web.Models.DonationModels;
+using TreasureGuide.Web.Models.GCRModels;
 using TreasureGuide.Web.Models.ProfileModels;
 using TreasureGuide.Web.Models.ShipModels;
 using TreasureGuide.Web.Models.StageModels;
@@ -21,6 +22,9 @@ namespace TreasureGuide.Web.Configurations
         {
             var config = new MapperConfiguration(mapper =>
             {
+                var gUnit = mapper.CreateMap<GCRUnit, GCRUnitEditModel>().ReverseMap();
+                var gStage = mapper.CreateMap<GCRStage, GCRStageEditModel>().ReverseMap();
+
                 var unit = mapper.CreateMap<Unit, UnitStubModel>();
                 unit.ForMember(x => x.Aliases, o => o.MapFrom(y => y.UnitAliases.Select(z => z.Name)));
                 unit.ForMember(x => x.EvolvesTo, o => o.MapFrom(y => y.EvolvesTo.Select(z => z.ToUnitId)));

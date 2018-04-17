@@ -149,3 +149,16 @@ $gcr-cell-height: 24px;
         }
     }
 }
+
+.gcr-edit {
+    stage-display {
+        width: 250px;
+        display: block;
+        @extend .truncate;
+        @extend .no-wrap;
+    }
+
+    td:first-child {
+        text-align: end;
+    }
+}

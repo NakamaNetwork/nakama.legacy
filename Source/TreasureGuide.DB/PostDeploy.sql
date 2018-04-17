@@ -4,5 +4,6 @@
 :r ./PostDeploy/dbo.UnitEvolutions.Table.sql
 :r ./PostDeploy/dbo.Stages.Table.sql
 :r ./PostDeploy/dbo.StageAliases.Table.sql
+:r ./PostDeploy/dbo.GCRStages.Table.sql
+:r ./PostDeploy/dbo.GCRUnits.Table.sql
 :r ./PostDeploy/AuthData.sql
-:r ./PostDeploy/GCRPopulation.sql

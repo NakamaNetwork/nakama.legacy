@@ -11,7 +11,7 @@ using TreasureGuide.Web.Models.GCRModels;
 
 namespace TreasureGuide.Web.Controllers
 {
-    [Authorize(Roles = RoleConstants.GlobalClearRates)]
+    [Authorize(Roles = RoleConstants.GCRViewer)]
     public class GCRController : Controller
     {
         private readonly TreasureEntities _entities;

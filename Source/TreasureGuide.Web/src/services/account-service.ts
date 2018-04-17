@@ -145,6 +145,7 @@ export class AccountService {
         RoleConstants.Contributor,
         RoleConstants.BoxUser,
         RoleConstants.Donor,
-        RoleConstants.GlobalClearRates
+        RoleConstants.GCRAdmin,
+        RoleConstants.GCRViewer
     ];
 }

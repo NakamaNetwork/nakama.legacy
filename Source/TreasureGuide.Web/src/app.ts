@@ -5,7 +5,7 @@ import { AccountService } from './services/account-service';
 import { AuthorizeStep } from './tools/authorize-step';
 import { NewsService } from './services/news-service';
 import { BoxService } from './services/box-service';
-import {RoleConstants} from './models/imported';
+import { RoleConstants } from './models/imported';
 
 @autoinject
 export class App {
@@ -64,6 +64,8 @@ export class App {
             { route: 'boxes/create', name: 'boxCreate', title: 'Create Box', moduleId: 'views/boxes/edit', nav: false, auth: RoleConstants.BoxUser },
             { route: 'boxes/:id/edit', name: 'boxEdit', title: 'Edit Box', moduleId: 'views/boxes/edit', nav: false, auth: RoleConstants.BoxUser },
             { route: 'boxes/:id/details', name: 'boxDetails', title: 'Box Details', moduleId: 'views/boxes/detail', nav: false },
+            // GCR
+            { route: 'gcr/edit', name: 'gcrEdit', title: 'Edit GCR', moduleId: 'views/gcr/edit', nav: false, auth: RoleConstants.GCRAdmin },
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: RoleConstants.Administrator },
             // Account

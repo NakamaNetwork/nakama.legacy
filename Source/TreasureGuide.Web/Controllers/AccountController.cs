@@ -148,7 +148,7 @@ namespace TreasureGuide.Web.Controllers
                             RoleConstants.Moderator,
                             RoleConstants.BoxUser,
                             RoleConstants.Donor,
-                            RoleConstants.GlobalClearRates
+                            RoleConstants.GCRAdmin
                         });
 #endif
                         await _userManager.AddToRolesAsync(user, new[]
