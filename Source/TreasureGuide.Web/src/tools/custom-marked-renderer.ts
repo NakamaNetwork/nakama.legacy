@@ -37,6 +37,8 @@ export class CustomMarkedRenderer extends marked.Renderer {
 
     public link(href: string, title: string, text: string): string {
         var unitClass = this.checkUnitClassLink(href, text);
-        return unitClass || super.link(href, title, text);
+        var output = unitClass || super.link(href, title, text);
+        output = output.replace('a href', 'a target="_blank" href');
+        return output;
     }
 }
