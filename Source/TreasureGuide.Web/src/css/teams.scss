@@ -196,14 +196,17 @@ unit-display {
         }
     }
 
-    .in-box {
+    a.in-box:hover{
+        opacity: unset;
+    }
+
+    input.in-box {
         position: absolute;
         left: 0;
         bottom: 0;
         width: 25%;
         height: 25%;
     }
-
 
     ind-unit-flag-display {
         position: absolute;
