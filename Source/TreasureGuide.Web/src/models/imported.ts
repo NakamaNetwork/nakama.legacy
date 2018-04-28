@@ -648,7 +648,9 @@ export enum UnitRole {
     FixedDamage = 64,
     HealthCutter = 128,
     OrbShuffler = 256,
-    Healer = 512
+    Healer = 512,
+    Zombie = 1024,
+    Nuker = 2048
 }
 
 

@@ -1667,17 +1667,19 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 </Association>
                 <EnumType Name="UnitRole" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
-                    <Member Name="Beatstick" Value="1" />
-                    <Member Name="DamageReducer" Value="2" />
-                    <Member Name="DefenseReducer" Value="4" />
-                    <Member Name="Delayer" Value="8" />
-                    <Member Name="AttackBooster" Value="16" />
-                    <Member Name="OrbBooster" Value="32" />
-                    <Member Name="FixedDamage" Value="64" />
-                    <Member Name="HealthCutter" Value="128" />
-                    <Member Name="OrbShuffler" Value="256" />
-                    <Member Name="Healer" Value="512" />
-                </EnumType>
+          <Member Name="Beatstick" Value="1" />
+          <Member Name="DamageReducer" Value="2" />
+          <Member Name="DefenseReducer" Value="4" />
+          <Member Name="Delayer" Value="8" />
+          <Member Name="AttackBooster" Value="16" />
+          <Member Name="OrbBooster" Value="32" />
+          <Member Name="FixedDamage" Value="64" />
+          <Member Name="HealthCutter" Value="128" />
+          <Member Name="OrbShuffler" Value="256" />
+          <Member Name="Healer" Value="512" />
+          <Member Name="Zombie" Value="1024" />
+          <Member Name="Nuker" Value="2048" />
+        </EnumType>
                 <EntityType Name="TeamUnitSummary">
                     <Key>
                         <PropertyRef Name="TeamId" />
