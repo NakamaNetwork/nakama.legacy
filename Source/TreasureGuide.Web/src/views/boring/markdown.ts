@@ -21,6 +21,15 @@
         '\r\n' +
         'Strikethrough uses two tildes. ~~Scratch this.~~'
     }, {
+        header: 'Text Colors',
+        text: 'Text colors follow the same rules as the OPTC subreddit:\r\n\r\n' +
+        '[STR](/str)|' +
+        '[DEX](/dex)|' +
+        '[QCK](/qck)|' +
+        '[PSY](/psy)|' +
+        '[INT](/int)|' +
+        '[MEAT](/meat)'
+    }, {
         header: 'Headers',
         text: '# H1\r\n' +
         '## H2\r\n' +
