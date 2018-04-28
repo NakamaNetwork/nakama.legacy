@@ -9,8 +9,9 @@ export class HomePage {
     private router: Router;
 
     private newLoading: boolean = true;
-    private trendingLoading: boolean = true;
     private newTeams: ITeamStubModel[] = [];
+
+    private trendingLoading: boolean = true;
     private trendingTeams: ITeamStubModel[] = [];
 
     constructor(teamQueryService: TeamQueryService, router: Router) {

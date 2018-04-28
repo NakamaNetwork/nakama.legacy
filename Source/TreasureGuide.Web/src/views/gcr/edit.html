@@ -1,0 +1,81 @@
+<template>
+    <h2>Edit GCR Items</h2>
+    <loading-area if.bind="loading"></loading-area>
+    <div if.bind="!loading" class="gcr-edit">
+        <div class="row">
+            <h3>Units</h3>
+            <button class="_info" click.delegate="saveUnits()">Save Units</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Unit</th>
+                        <th class="_width100">Label</th>
+                        <th>Order</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="unit of units">
+                        <td>
+                            <unit-display unit-id.two-way="unit.unitId" editable="true" size="small" tooltip="true"></unit-display>
+                        </td>
+                        <td>
+                            <input type="text" value.bind="unit.name" class="_width100" />
+                        </td>
+                        <td>
+                            <input type="number" value.bind="unit.order" />
+                        </td>
+                        <td>
+                            <button class="_danger" click.delegate="delete(unit, units)">X</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <button class="_success" click.delegate="add(units)">Add New Unit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="_info" click.delegate="saveUnits()">Save Units</button>
+        </div>
+        <div class="row">
+            <h3>Stages</h3>
+            <button class="_info" click.delegate="saveStages()">Save Stages</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stage</th>
+                        <th class="_width100">Label</th>
+                        <th>Order</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="stage of stages">
+                        <td>
+                            <stage-display stage-id.two-way="stage.stageId" editable="true"></stage-display>
+                        </td>
+                        <td>
+                            <input type="text" value.bind="stage.name" class="_width100" />
+                        </td>
+                        <td>
+                            <input type="number" value.bind="stage.order" />
+                        </td>
+                        <td>
+                            <button class="_danger" click.delegate="delete(stage, stages)">X</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <button class="_success" click.delegate="add(stages)">Add New Stage</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="_info" click.delegate="saveStages()">Save Stages</button>
+        </div>
+        <div class="row">
+            <button class="_info" click.delegate="saveUnits()">Save Units</button>
+            <button class="_info" click.delegate="saveStages()">Save Stages</button>
+        </div>
+</template>

@@ -35,6 +35,7 @@ namespace TreasureGuide.Sniffer.DataParser
 
         protected override async Task Save(IEnumerable<UnitAlias> aliases)
         {
+            aliases = aliases.Join(Context.Units, x => x.UnitId, y => y.Id, (x, y) => y != null ? x : null).Where(x => x != null);
             Context.UnitAliases.Clear();
             await Context.LoopedAddSave(aliases);
         }

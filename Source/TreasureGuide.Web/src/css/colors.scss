@@ -17,6 +17,13 @@ $donorStart-color: #B41313;
 $donorEnd-color: #B45C13;
 $invasion-color: darken($danger-color,5%);
 
+$str-color: #FF3333;
+$dex-color: #19A347;
+$qck-color: #5656ff;
+$psy-color: #ffbc44;
+$int-color: #AC30D6;
+$meat-color: #996633;
+
 body {
     background-color: $background-color;
 }
@@ -55,8 +62,8 @@ body {
 
 @mixin makeColor($name, $color) {
     @include color($name,$color);
-    @include color("#{$name}Light", desaturate(lighten($color, 60%), 20%) );
-    @include color("#{$name}Dark", saturate(darken($color, 60%), 20%) );
+    @include color("#{$name}Light", desaturate(lighten($color, 50%), 20%) );
+    @include color("#{$name}Dark", saturate(darken($color, 20%), 10%) );
 }
 
 @include makeColor("active",$active-color);
@@ -74,6 +81,13 @@ body {
 @include makeColor("donorStart",$donorStart-color);
 @include makeColor("donorEnd",$donorEnd-color);
 @include makeColor("invasion",$invasion-color);
+
+@include makeColor("str",$str-color);
+@include makeColor("dex",$dex-color);
+@include makeColor("qck",$qck-color);
+@include makeColor("psy",$psy-color);
+@include makeColor("int",$int-color);
+@include makeColor("meat",$meat-color);
 
 a {
     @extend ._primaryText;

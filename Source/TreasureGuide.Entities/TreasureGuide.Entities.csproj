@@ -60,10 +60,31 @@
     <Compile Include="BoxUnit.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DeletedItem.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeletedItemType.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Donation.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityConstructor.cs" />
+    <Compile Include="GCRStage.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GCRStageInfo.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GCRTable.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GCRUnit.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GCRUnitInfo.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ContextExtensions.cs" />
     <Compile Include="Helpers\DateExtensions.cs" />
     <Compile Include="Helpers\EnumerableHelper.cs" />
@@ -82,6 +103,9 @@
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScheduledEvent.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Ship.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>

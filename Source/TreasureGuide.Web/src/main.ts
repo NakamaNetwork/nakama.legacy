@@ -1,6 +1,7 @@
 import { Aurelia, Container } from 'aurelia-framework'
 import environment from './environment';
 import * as marked from 'marked';
+import { CustomMarkedRenderer } from './tools/custom-marked-renderer';
 
 export function configure(aurelia: Aurelia) {
     aurelia.use
@@ -33,11 +34,4 @@ export function configure(aurelia: Aurelia) {
     });
 
     aurelia.start().then(() => aurelia.setRoot());
-}
-
-export class CustomMarkedRenderer extends marked.Renderer {
-    public image(href: string, title: string, text: string): string {
-        var linkTitle = title || text || 'image';
-        return '<a href="' + href + '" target="_blank"><i class="fa fa-fw fa-file-image-o"></i>' + linkTitle + '</a>';
-    }
 }

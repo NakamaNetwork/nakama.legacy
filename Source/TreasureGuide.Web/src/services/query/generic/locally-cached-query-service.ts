@@ -2,14 +2,19 @@
 import { BaseQueryService } from './base-query-service';
 import { CacheItem } from '../../../models/cache-item';
 import * as moment from 'moment';
+import { NumberHelper } from '../../../tools/number-helper';
 
 export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> extends BaseQueryService {
     protected key: string;
+    protected dateKey: string;
     protected items: TEntity[] = [];
+
+    protected dict: any = {};
 
     constructor(controller: string, http: HttpEngine) {
         super(controller, http);
         this.key = 'controller_cache_' + controller;
+        this.dateKey = 'controller_cache_date_' + controller;
         this.initializeCache();
     }
 
@@ -21,12 +26,17 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
         var json = localStorage.getItem(this.key);
         if (json) {
             this.items = JSON.parse(json);
+            this.rebuildDictionary();
         }
         this.getLatest();
     }
 
     private get newestDate() {
-        return this.items.filter(x => x.editedDate).map(x => moment(x.editedDate)).sort((a, b) => b.diff(a)).find(() => true);
+        var date = localStorage.getItem(this.dateKey);
+        if (date) {
+            return moment.unix(NumberHelper.forceNumber(date));
+        }
+        return null;
     }
 
     buildingCache = false;
@@ -40,21 +50,35 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
         var param = date ? (date.unix() + 5).toString() : null;
         var endpoint = this.buildAddress(param);
         return this.http.get(endpoint).then(x => {
-            var ids = x.map(y => y.id);
-            var newSet = this.items.filter(x => ids.indexOf(x.id) === -1);
-            x.forEach(y => {
-                newSet.push(y);
-            });
-            newSet = newSet.sort((a, b) => a.id - b.id);
+            if (x) {
+                if (x.reset) {
+                    this.items = [];
+                }
+                if (x.deleted && x.deleted.length > 0) {
+                    this.items = this.items.filter(y => x.deleted.indexOf(y.id) === -1);
+                }
+                var ids = x.items.map(y => y.id);
+                var newSet = this.items.filter(y => ids.indexOf(y.id) === -1);
+                x.items.forEach(y => {
+                    newSet.push(y);
+                });
+                newSet = newSet.sort((a, b) => a.id - b.id);
 
-            this.items = newSet;
-            var json = JSON.stringify(this.items);
-            localStorage.setItem(this.key, json);
-
+                this.items = newSet;
+                var json = JSON.stringify(this.items);
+                localStorage.setItem(this.key, json);
+                if (x.timestamp) {
+                    localStorage.setItem(this.dateKey, moment(x.timestamp).unix().toString());
+                }
+                this.rebuildDictionary();
+            }
             this.buildingCache = false;
         }).catch(x => {
+            this.buildingCache = false;
             // Try again shortly.
-            setTimeout(this.getLatest, 5000);
+            setTimeout(() => {
+                this.getLatest();
+            }, 5000);
         });
     }
 
@@ -65,7 +89,7 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
                     resolve(this.getCached(endpoint, id));
                 }, 100);
             } else if (id) {
-                var result = this.items.find(x => x.id == id);
+                var result = this.dict[id];
                 if (result) {
                     resolve(result);
                 } else {
@@ -74,6 +98,13 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
             } else {
                 resolve(this.items);
             }
+        });
+    }
+
+    protected rebuildDictionary() {
+        this.dict = {};
+        this.items.forEach(x => {
+            this.dict[x.id] = x;
         });
     }
 }

@@ -17,3 +17,13 @@ AS BEGIN
    WHERE [dbo].[UnitAliases].[UnitId] = I.[UnitId] AND [dbo].[UnitAliases].[Name] = I.[Name]
 END
 GO
+CREATE TRIGGER [dbo].[TRG_UnitAliases_Deleted]
+ON [dbo].[UnitAliases]
+AFTER DELETE 
+AS BEGIN
+   UPDATE [dbo].[Units]
+   SET [EditedDate] = SYSDATETIMEOFFSET()
+   FROM DELETED I
+   WHERE [dbo].[Units].[Id] = I.[UnitId]
+END
+GO

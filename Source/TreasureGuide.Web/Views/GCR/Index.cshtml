@@ -1,0 +1,116 @@
+﻿@using TreasureGuide.Web.Helpers
+@model TreasureGuide.Web.Models.GCRModels.GCRResultModel
+
+@{
+    ViewData["Title"] = "Global Clear Rates";
+}
+
+<style>
+    body {
+        overflow: hidden !important;
+    }
+</style>
+<script type="text/javascript" src="./scripts/static/fixed_table.min.js"></script>
+
+<div class="gcr">
+    <div class="header">
+        <div class="_floatRight buttons">
+            <a href="/gcr/missing" class="button _small _info" target="_blank">Export "Missing" Table</a>
+            <a href="/gcr/edit" class="button _small _info" target="_blank">Edit Stages and Units</a>
+        </div>
+        <h2>
+           GCR
+        </h2>
+    </div>
+    <div class="body" id="gcr">
+        <table>
+            <thead>
+                <tr>
+                    <th class="stage-header"></th>
+                    @foreach (var unit in Model.Units)
+                    {
+                        <th class="unit-header">
+                            @if (unit.Thumbnail.HasValue)
+                            {
+                                <a href="/teams?leaderId=@unit.Id" target="_blank">
+                                    <div class="unit-button" style="@(GCRHelper.GetBackgroundStyle(unit.Thumbnail))" title="@(unit.Name)" size="small">
+                                    </div>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="/teams?freeToPlay=1" target="_blank">
+                                    @(unit.Name)
+                                </a>
+                            }
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stage in Model.Stages)
+                {
+                    <tr>
+                        <th class="stage-header">
+                            <a href="/stages/@(stage.Id)/details" target="_blank">
+                                @if (stage.Thumbnail.HasValue)
+                                {
+                                    <div class="unit-button" style="@(GCRHelper.GetBackgroundStyle(stage.Thumbnail))" size="tiny"></div>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-fw fa-map"></i>
+                                }
+                                @(stage.Name)
+                            </a>
+                        </th>
+                        @foreach (var unit in Model.Units)
+                        {
+                            var team = Model.Teams.SingleOrDefault(x => x.StageId == stage.Id && x.LeaderId == unit.Id);
+                            var cellClass = "empty";
+                            if (team != null && team.F2P && team.Global && team.Video)
+                            {
+                                cellClass = "complete";
+                            }
+                            else if (team != null && (team.F2P || team.Global || team.Video))
+                            {
+                                cellClass = "incomplete";
+                            }
+                            <td class="team-cell @(cellClass)">
+                                <a href="/teams?stageId=@(stage.Id)&@(unit?.Id != null ? ("leaderId=" + unit.Id) : "freeToPlay=1")" target="_blank">
+                                    @if (cellClass == "incomplete")
+                                    {
+                                        if (team.Global)
+                                        {
+                                            <i class="fa fa-fw fa-globe" title="Global"></i>
+                                        }
+                                        if (team.F2P)
+                                        {
+                                            <i class="fa fa-fw fa-credit-card" title="Free-to-Play Crew"></i>
+                                        }
+                                        if (team.Video)
+                                        {
+                                            <i class="fa fa-fw fa-video-camera" title="Has Videos"></i>
+                                        }
+                                    }
+                                    else if (cellClass == "complete")
+                                    {
+                                        <i class="fa fa-fw fa-check" title="Complete!"></i>
+                                    }
+                                    else
+                                    {
+                                        <span title="Missing">...</span>
+                                    }
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    new FixedTable({ id: 'gcr' });
+</script>

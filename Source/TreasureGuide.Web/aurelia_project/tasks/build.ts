@@ -1,5 +1,6 @@
 import * as gulp from 'gulp';
 import cleanScripts from './clean-scripts';
+import copyScripts from './copy-scripts';
 import transpile from './transpile';
 import processMarkup from './process-markup';
 import processCSS from './process-css';
@@ -15,8 +16,9 @@ let buildTask = gulp.series(
         transpile,
         processMarkup,
         processCSS,
-        copyFiles
+        copyFiles,
     ),
+    copyScripts,
     writeBundles
 );
 

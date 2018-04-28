@@ -2,9 +2,10 @@
     config.globalResources([
         './flag-display',
         './friend-id-display',
-        './global-display',
         './ind-unit-flag-display',
         './markdown',
+        './schedule-bar',
+        './schedule-display',
         './score-display',
         './stage-type-display',
         './user-display',

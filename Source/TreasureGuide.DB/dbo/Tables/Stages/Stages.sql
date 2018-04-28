@@ -21,3 +21,11 @@ AS BEGIN
    WHERE [dbo].[Stages].[Id] = I.[Id]
 END
 GO
+CREATE TRIGGER [dbo].[TRG_Stages_Deleted]
+ON [dbo].[Stages]
+AFTER DELETE 
+AS BEGIN
+   INSERT INTO [dbo].[DeletedItems]([Id], [Type], [EditedDate])
+   SELECT [Id], 2, SYSDATETIMEOFFSET() FROM DELETED I
+END
+GO

@@ -82,6 +82,14 @@ export interface IBoxUnitUpdateModel {
 }
 
 
+export enum DeletedItemType { 
+    FullReset = 0,
+    Unit = 1,
+    Stage = 2,
+    Ship = 3
+}
+
+
 export interface IDonationStubModel {
     id: number;
     userId: string;
@@ -153,6 +161,54 @@ export interface IExternalLoginConfirmationViewModel {
     email: string;
     toS: boolean;
     privacy: boolean;
+    
+}
+
+
+export interface IGCREditorModel {
+    units: IGCRUnitEditModel[];
+    stages: IGCRStageEditModel[];
+    
+}
+
+export interface IGCRResultModel {
+    units: IGCRDataModel[];
+    stages: IGCRDataModel[];
+    teams: IGCRTableModel[];
+    
+}
+
+export interface IGCRTableModel {
+    id: number;
+    leaderId: number;
+    stageId: number;
+    f2P: boolean;
+    global: boolean;
+    video: boolean;
+    
+}
+
+export interface IGCRDataModel {
+    id: number;
+    thumbnail: number;
+    name: string;
+    color: UnitType;
+    
+}
+
+export interface IGCRAbstractEditModel {
+    order: number;
+    name: string;
+    
+}
+
+export interface IGCRUnitEditModel extends IGCRAbstractEditModel{
+    unitId: number;
+    
+}
+
+export interface IGCRStageEditModel extends IGCRAbstractEditModel{
+    stageId: number;
     
 }
 
@@ -236,6 +292,21 @@ export class RoleConstants {
     public static Contributor: string = "Contributor";
     public static BoxUser: string = "BoxUser";
     public static Donor: string = "Donor";
+    public static GCRViewer: string = "GCR";
+    public static GCRAdmin: string = "GCRAdmin";
+    
+}
+
+
+export interface IScheduleModel {
+    live: IScheduleSubModel;
+    upcoming: IScheduleSubModel;
+    
+}
+
+export interface IScheduleSubModel {
+    global: number[];
+    japan: number[];
     
 }
 
@@ -305,7 +376,6 @@ export interface IStageStubModel {
     name: string;
     global: boolean;
     type: StageType;
-    editedDate: Date;
     teamCount: number;
     aliases: string[];
     
@@ -578,7 +648,9 @@ export enum UnitRole {
     FixedDamage = 64,
     HealthCutter = 128,
     OrbShuffler = 256,
-    Healer = 512
+    Healer = 512,
+    Zombie = 1024,
+    Nuker = 2048
 }
 
 
@@ -601,6 +673,7 @@ export interface IUnitStubModel {
     name: string;
     maxLevel: number;
     stars: number;
+    cost: number;
     class: UnitClass;
     type: UnitType;
     flags: UnitFlag;

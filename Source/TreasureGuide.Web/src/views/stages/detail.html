@@ -5,7 +5,7 @@
             <unit-display unit-id.bind="unitId"></unit-display>
         </div>
         <h1>
-            <global-display global.bind="global"></global-display>
+            <i class="fa fa-fw fa-globe" if.bind="global"></i>
             ${name}
         </h1>
         <h4>
@@ -14,6 +14,11 @@
     </div>
     <div>
         <h2>Teams</h2>
+        <div auth-req="Contributor">
+            <a class="button _info _xlarge _width100" route-href="route: teamCreate; params.bind: { stageId: stage.id }">
+                <i class="fa fa-fw fa-plus"></i> Submit a Team
+            </a>
+        </div>
         <div class="row">
             <team-search model.two-way="teamSearchModel" stage-locked="true"></team-search>
         </div>

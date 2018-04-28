@@ -5,12 +5,13 @@ using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.UnitModels
 {
-    public class UnitStubModel : IIdItem<int>, IEditedDateItem
+    public class UnitStubModel : IIdItem<int>
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int MaxLevel { get; set; }
         public decimal? Stars { get; set; }
+        public int Cost { get; set; }
 
         public UnitClass Class { get; set; }
         public UnitType Type { get; set; }

@@ -60,5 +60,6 @@ namespace TreasureGuide.Entities
         public virtual ICollection<UnitEvolution> EvolvesTo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnitEvolution> EvolvesFrom { get; set; }
+        public virtual GCRUnit GCRUnit { get; set; }
     }
 }

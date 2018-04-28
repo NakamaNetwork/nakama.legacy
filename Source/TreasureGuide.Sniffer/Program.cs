@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using TreasureGuide.Entities;
+using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Sniffer.DataParser;
 using TreasureGuide.Sniffer.TeamImporters;
 
@@ -50,12 +52,15 @@ namespace TreasureGuide.Sniffer
                 new UnitEvolutionParser(context),
                 new ShipParser(context),
                 new StageParser(context),
+                new ScheduleParserAgenda(context),
+                new ScheduleParserCal(context)
             };
             //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             ParsersRunning = parsers.Count();
 
             Task.Run(async () =>
             {
+                await PreRun(context);
                 foreach (var parser in parsers)
                 {
                     var name = parser.GetType().Name;
@@ -77,7 +82,29 @@ namespace TreasureGuide.Sniffer
                     }
                     GC.Collect();
                 }
+                await PostRun(context);
             });
+        }
+
+        private static async Task PreRun(TreasureEntities context)
+        {
+            context.Teams.Clear();
+            context.TeamUnits.Clear();
+            context.ScheduledEvents.Clear();
+            context.StageAliases.Clear();
+            context.Stages.Clear();
+            context.Ships.Clear();
+            context.UnitAliases.Clear();
+            context.UnitEvolutions.Clear();
+            context.Units.Clear();
+            context.DeletedItems.Clear();
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task PostRun(TreasureEntities context)
+        {
+            context.DeletedItems.Clear();
+            await context.SaveChangesAsync();
         }
     }
 }

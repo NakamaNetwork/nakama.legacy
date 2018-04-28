@@ -17,10 +17,10 @@
         </div>
         <div class="row">
             <div class="col" class.bind="stageClass">
-                <stage-display stage-id.bind="team.stageId"></stage-display>
+                <stage-display stage-id.bind="team.stageId" size="tiny"></stage-display>
             </div>
             <div class="col m6">
-                <stage-display stage-id.bind="team.invasionId" invasion="true" if.bind="team.invasionId"></stage-display>
+                <stage-display stage-id.bind="team.invasionId" invasion="true" if.bind="team.invasionId" size="tiny"></stage-display>
             </div>
             <div class="col m12">
                 <ship-display ship-id.bind="team.shipId"></ship-display>

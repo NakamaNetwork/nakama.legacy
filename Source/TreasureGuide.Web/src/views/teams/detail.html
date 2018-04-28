@@ -2,8 +2,8 @@
     <loading-area if.bind="loading"></loading-area>
     <div if.bind="!loading" with.bind="team">
         <h1>${name}</h1>
-        <div class="row" auth-req="Moderator, Administrator">
-            <team-reports team.bind="team"></team-reports>
+        <div class="row">
+            <team-reports auth-req="Moderator, Administrator" team.bind="team"></team-reports>
             <div class="alert _danger" if.bind="deleted">
                 This team has been deleted.
             </div>
@@ -24,12 +24,12 @@
             <h4>Stage</h4>
             <div class="row" if.bind="stageId">
                 <a route-href="route: stageDetails; params.bind: { id: stageId }">
-                    <stage-display stage-id.bind="stageId"></stage-display>
+                    <stage-display stage-id.bind="stageId" size="tiny"></stage-display>
                 </a>
             </div>
             <div class="row" if.bind="invasionId">
                 <a route-href="route: stageDetails; params.bind: { id: invasionId }">
-                    <stage-display stage-id.bind="invasionId" invasion="true"></stage-display>
+                    <stage-display stage-id.bind="invasionId" invasion="true" size="tiny"></stage-display>
                 </a>
             </div>
         </div>

@@ -67,10 +67,4 @@ export class TeamSearch {
     }
 
     freeToPlayOptions = TeamSearchModel.freeToPlayOptions;
-
-    @computedFrom('model', 'model.submittedBy', 'accountService.userProfile', 'accountService.userProfile.id')
-    get canDraft() {
-        return this.accountService.userProfile && (this.model.submittedBy === this.accountService.userProfile.id
-            || this.accountService.isInRoles([RoleConstants.Administrator, RoleConstants.Moderator]));
-    }
 }

@@ -55,9 +55,13 @@ export class HttpEngine {
         }
         return this.http.fetch(endpoint, options).then((response) => {
             if (response.status >= 200 && response.status < 400) {
-                return response.json().catch(error => {
-                    throw error;
-                });
+                if (response.status == 204) {
+                    return null;
+                } else {
+                    return response.json().catch(error => {
+                        throw error;
+                    });
+                }
             } else {
                 return response.text().then(error => {
                     throw error;

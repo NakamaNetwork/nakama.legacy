@@ -47,6 +47,15 @@ namespace TreasureGuide.Entities.Helpers
             return queryable.ThenBy(selector);
         }
 
+        public static TValue SafeGet<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
+        {
+            if (dict.ContainsKey(key))
+            {
+                return dict[key];
+            }
+            return default(TValue);
+        }
+
         private static readonly Regex AlphaNumericRegex = new Regex(@"/[^\w\d]/");
         private static readonly char[] Splitters = { ' ' };
 

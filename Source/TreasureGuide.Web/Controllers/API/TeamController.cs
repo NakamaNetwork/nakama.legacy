@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -157,13 +157,12 @@ namespace TreasureGuide.Web.Controllers.API
 
         private IQueryable<Team> SearchDrafts(IQueryable<Team> results, bool modelDraft)
         {
-            if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+            results = results.Where(x => x.Draft == modelDraft);
+            if (modelDraft && !User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
             {
-                results = results.Where(x => !x.Draft);
-            }
-            else
-            {
-                results = results.Where(x => x.Draft == modelDraft);
+                var userId = User.GetId();
+                results = results.Where(x => x.SubmittedById == userId);
+
             }
             return results;
         }
@@ -300,12 +299,85 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         [HttpGet]
+        [ActionName("Calc")]
+        [Route("{id}/[action]")]
+        public async Task<IActionResult> Calc(int? id)
+        {
+            var link = (await GetCalcLinks(id)).FirstOrDefault().Value;
+            if (link == null)
+            {
+                return BadRequest("Could not find the input team.");
+            }
+            return Redirect(link);
+        }
+
+        private static Regex IdRegex = new Regex("(\\d+)");
+        private const string CalcPrefix = "http://optc-db.github.io/damage/#/transfer/D";
+        private const string CalcPostfix = "B0D0E0Q0L0G0R0S100H";
+
+        [HttpGet]
+        [ActionName("CalcLink")]
+        [Route("{ids}/[action]")]
+        public async Task<IActionResult> CalcLink(string ids)
+        {
+            var matches = IdRegex.Matches(ids);
+            if (matches.Count > 0)
+            {
+                var separated = Enumerable.Range(0, matches.Count).Select(x =>
+                {
+                    int id;
+                    if (Int32.TryParse(matches[x].Value, out id))
+                    {
+                        return id;
+                    }
+                    return (int?)null;
+                }).Where(x => x != null).ToArray();
+                var link = await GetCalcLinks(separated);
+                return Ok(link);
+            }
+            return BadRequest();
+        }
+
+        private async Task<IDictionary<int, string>> GetCalcLinks(params int?[] ids)
+        {
+            var teams = await DbContext.Teams.Where(x => ids.Contains(x.Id)).Select(x => new
+            {
+                x.Id,
+                x.ShipId,
+                Units = x.TeamUnits.Where(y => !y.Sub).Select(z => new { Id = z.UnitId, z.Position, z.Unit.MaxLevel })
+            }).ToListAsync();
+            var output = teams.ToDictionary(x => x.Id, x =>
+            {
+                var characters = "";
+                for (var i = 0; i < 6; i++)
+                {
+                    var unit = x.Units.SingleOrDefault(y => y.Position == i);
+                    if (unit != null)
+                    {
+                        characters += unit.Id + ":" + Math.Max((int)unit.MaxLevel, 1);
+                    }
+                    else
+                    {
+                        characters += "!";
+                    }
+                    if (i < 5)
+                    {
+                        characters += ",";
+                    }
+                }
+                var boatString = "C" + x.ShipId + ",10";
+                return CalcPrefix + characters + boatString + CalcPostfix;
+            });
+            return output;
+        }
+
+        [HttpGet]
         [ActionName("Similar")]
         [Route("{id}/[action]")]
         public async Task<IActionResult> Similar(int? id)
         {
             var similar = DbContext.SimilarTeamsId(id)
-                .Where(x => x.Matches > 2).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
+                .Where(x => x.Matches >= 1).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
                 .Take(6);
             return await TrimDownSimilar(similar);
         }
@@ -316,7 +388,7 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<IActionResult> Similar(int? teamId, int? stageId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
         {
             var similar = DbContext.SimilarTeams(teamId, stageId, unit1, unit2, unit3, unit4, unit5, unit6)
-                .Where(x => x.Matches > 2).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
+                .Where(x => x.Matches >= 1).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
                 .Take(3);
             return await TrimDownSimilar(similar);
         }
@@ -324,7 +396,10 @@ namespace TreasureGuide.Web.Controllers.API
         private async Task<IActionResult> TrimDownSimilar(IQueryable<SimilarTeams_Result> similar)
         {
             var teamIds = await similar.Select(x => x.TeamId).ToListAsync();
-            var teams = await DbContext.Teams.Join(teamIds, x => x.Id, y => y, (x, y) => x).Where(x => !x.Draft && !x.Deleted).ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+            var teams = await DbContext.Teams.Join(teamIds, x => x.Id, y => y, (x, y) => x)
+                .Where(x => !x.Draft && !x.Deleted)
+                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+            teams = teamIds.Join(teams, x => x, y => y.Id, (x, y) => y).ToList();
             return Ok(teams);
         }
 

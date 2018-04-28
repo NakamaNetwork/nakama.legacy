@@ -51,7 +51,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 };
                 return unit;
             });
-            return models.Where(x => !String.IsNullOrWhiteSpace(x.Name) && x.Class != UnitClass.Unknown && x.Type != UnitType.Unknown);
+            return models.Where(x => !String.IsNullOrWhiteSpace(x.Name));
         }
 
         private decimal? ParseStars(string value)
