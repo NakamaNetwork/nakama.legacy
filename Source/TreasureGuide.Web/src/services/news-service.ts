@@ -11,7 +11,8 @@ export class NewsService {
         lines: [
             'Added Zombies and Nukers to Generic Unit Roles.',
             'Units can now be added and removed from user boxes via Team Boxes.',
-            'Added Markdown support for unit text colors.'
+            'Added Markdown support for unit text colors.',
+            'Markdown links now pop open in a new window.'
         ]
     }, {
         header: '03/23/18',
