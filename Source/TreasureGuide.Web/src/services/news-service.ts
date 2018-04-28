@@ -9,7 +9,8 @@ export class NewsService {
     static news: NewsEntry[] = [{
         header: '04/27/18',
         lines: [
-            'Added Zombies and Nukers to Generic Unit Roles.'
+            'Added Zombies and Nukers to Generic Unit Roles.',
+            'Units can now be added and removed from user boxes via Team Boxes.'
         ]
     }, {
         header: '03/23/18',

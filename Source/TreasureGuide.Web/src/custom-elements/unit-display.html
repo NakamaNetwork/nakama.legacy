@@ -16,7 +16,9 @@
             </div>
         </button>
         <a if.bind="link" class="unit-link" href.bind="link" target="_blank"></a>
-        <input if.bind="showBoxInput" type="checkbox" checked.bind="hasUnit" title.bind="boxTitle" class="in-box" />
+        <a>
+            <input if.bind="showBoxInput" type="checkbox" checked.bind="hasUnit" title.bind="boxTitle" class="in-box" />
+        </a>
         <ind-unit-flag-display if.bind="showBoxFlags" value.bind="unitBoxFlags"></ind-unit-flag-display>
     </div>
 </template>
