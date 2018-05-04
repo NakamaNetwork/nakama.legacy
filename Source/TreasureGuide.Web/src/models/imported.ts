@@ -408,7 +408,8 @@ export enum TeamCreditType {
     YouTube = 2,
     Twitter = 3,
     Slefty = 4,
-    Irving = 5
+    Irving = 5,
+    GCR = 6
 }
 
 

@@ -55,7 +55,7 @@ export class App {
             { route: 'teams/create', name: 'teamCreate', title: 'Create Team', moduleId: 'views/teams/edit', nav: false, auth: RoleConstants.Contributor },
             { route: 'teams/:id/edit', name: 'teamEdit', title: 'Edit Team', moduleId: 'views/teams/edit', nav: false, auth: RoleConstants.Contributor },
             { route: 'teams/:id/details', name: 'teamDetails', title: 'Team Details', moduleId: 'views/teams/detail', nav: false },
-            { route: 'teams/import', name: 'teamImport', title: 'Import', moduleId: 'views/teams/import', nav: true, auth: RoleConstants.Administrator },
+            { route: 'teams/import', name: 'teamImport', title: 'Bulk', moduleId: 'views/teams/import', nav: true, auth: RoleConstants.GCRViewer },
             // Stages
             { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
             { route: 'stages/:id/details', name: 'stageDetails', title: 'Stage Details', moduleId: 'views/stages/detail', nav: false },

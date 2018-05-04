@@ -609,18 +609,18 @@ namespace TreasureGuide.Web.Controllers.API
         public const string ImportId = "112cf4e4-cb26-4293-afa2-e663785fd276";
 
         [HttpPost]
-        [Authorize(Roles = RoleConstants.Administrator)]
+        [Authorize(Roles = RoleConstants.GCRViewer)]
         [ActionName("Import")]
         [Route("[action]")]
         public async Task<IActionResult> Import([FromBody] TeamImportModel model)
         {
+            var userId = User.GetId();
             var now = DateTimeOffset.Now;
             var team = AutoMapper.Map<Team>(model.Team);
             team.SubmittedDate = now;
-            team.SubmittedById = ImportId;
+            team.SubmittedById = userId;
             team.EditedDate = now;
-            team.EditedById = ImportId;
-            team.Draft = true;
+            team.EditedById = userId;
             DbContext.Teams.Add(team);
 
             if (!String.IsNullOrWhiteSpace(model.Credit.Credit))

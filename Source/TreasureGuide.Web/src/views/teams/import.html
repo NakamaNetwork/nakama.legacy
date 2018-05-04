@@ -9,15 +9,13 @@
                 <th>Description</th>
                 <th>Credit</th>
                 <th>Videos</th>
-                <th>Original</th>
-                <th>Type</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr repeat.for="import of imports" class.bind="import.submitted ? '_success' : import.failed ? '_danger' : ''">
                 <td>
-                    <input type="text" value.bind="import.name" class="_width100" placeholder="Name" />
+                    <input type="text" value.bind="import.name" class="_width100" placeholder="Leave Blank to Auto-Generate" />
                 </td>
                 <td>
                     <input type="text" value.bind="import.calc" class="_width100" placeholder="OPTC-DB Export Link" />
@@ -33,12 +31,6 @@
                 </td>
                 <td>
                     <textarea type="text" value.bind="import.videos" class="_width100" placeholder="Comma-delimited"></textarea>
-                </td>
-                <td>
-                    <input type="text" value.bind="import.ref" class="_width100" placeholder="Reference for credit" />
-                </td>
-                <td>
-                    <input type="text" value.bind="import.type" class="_width100" placeholder="Type of Reference" />
                 </td>
                 <td>
                     <button type="button" class="button _danger _xsmall" click.delegate="remove(import)">
@@ -57,17 +49,30 @@
         </tbody>
     </table>
     <div class="row">
-        <div class="col m6">
-            <textarea class="_width100" value.bind="strings" placeholder="Strings..."></textarea>
-        </div>
-        <div class="col m4">
-            <button type="button" class="button _primary" click.delegate="convertStrings()">
-                Convert
+        <div class="_floatRight">
+            <button type="submit" class="_floatRight button _primary _width100" click.delegate="submit()">
+                Submit
             </button>
         </div>
-        <div class="col m2">
-            <button type="submit" class="_floatRight button _primary" click.delegate="submit()">
-                Submit
+    </div>
+    <div class="row">
+        <div>
+            Bulk-import teams: One team per line, starting with the calculator link followed by YouTube links all separated by semicolons (;). For example:
+            <pre><code><p>http://optc-db.github.io/damage/#/transfer/D1794:99:100:0:0,1123:99:100:0:0,831:99,418:99,1897:99,1662:99C26,10B0D0E256Q0L0G0R32S100H;https://www.youtube.com/watch?v=kDZDYgaonjo;https://www.youtube.com/watch?v=VvnAGuoKfU4
+http://optc-db.github.io/damage/#/transfer/D1794:99:100:0:0,1123:99:100:0:0,831:99,418:99,1897:99,1662:99C26,10B0D0E256Q0L0G0R32S100H;https://www.youtube.com/watch?v=kDZDYgaonjo
+http://optc-db.github.io/damage/#/transfer/D1794:99:100:0:0,1123:99:100:0:0,831:99,418:99,1897:99,1662:99C26,10B0D0E256Q0L0G0R32S100H
+http://optc-db.github.io/damage/#/transfer/D1794:99:100:0:0,1123:99:100:0:0,831:99,418:99,1897:99,1662:99C26,10B0D0E256Q0L0G0R32S100H;https://www.youtube.com/watch?v=kDZDYgaonjo
+http://optc-db.github.io/damage/#/transfer/D1794:99:100:0:0,1123:99:100:0:0,831:99,418:99,1897:99,1662:99C26,10B0D0E256Q0L0G0R32S100H</p></code></pre>
+        </div>
+        <textarea class="_width100" value.bind="strings" placeholder="Strings..."></textarea>
+    </div>
+    <div class="row">
+        <div class="col m4">
+            <stage-display stage-id.two-way="stageId" editable="true"></stage-display>
+        </div>
+        <div class="col m8">
+            <button type="button" class="button _width100" click.delegate="convertStrings()">
+                Convert
             </button>
         </div>
     </div>

@@ -1623,12 +1623,13 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 </Association>
                 <EnumType Name="TeamCreditType" UnderlyingType="Int16">
                     <Member Name="Unknown" Value="0" />
-                    <Member Name="Reddit" />
-                    <Member Name="YouTube" />
-                    <Member Name="Twitter" />
-                    <Member Name="Slefty" />
-                    <Member Name="Irving" />
-                </EnumType>
+          <Member Name="Reddit" />
+          <Member Name="YouTube" />
+          <Member Name="Twitter" />
+          <Member Name="Slefty" />
+          <Member Name="Irving" />
+          <Member Name="GCR" />
+        </EnumType>
                 <EntityType Name="UnitAlias">
                     <Key>
                         <PropertyRef Name="UnitId" />
