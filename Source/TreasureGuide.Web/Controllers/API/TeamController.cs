@@ -617,6 +617,14 @@ namespace TreasureGuide.Web.Controllers.API
             var userId = User.GetId();
             var now = DateTimeOffset.Now;
             var team = AutoMapper.Map<Team>(model.Team);
+            if (team.TeamUnits.Count < 2)
+            {
+                return BadRequest("Not enough units on team.");
+            }
+            if (String.IsNullOrWhiteSpace(team.Name))
+            {
+                team = await AutoGenName(team);
+            }
             team.SubmittedDate = now;
             team.SubmittedById = userId;
             team.EditedDate = now;
@@ -646,6 +654,43 @@ namespace TreasureGuide.Web.Controllers.API
             await DbContext.SaveChangesAsync();
 
             return Ok(team.Id);
+        }
+
+        private async Task<Team> AutoGenName(Team team)
+        {
+            var leader = team.TeamUnits.SingleOrDefault(x => x.Position == 1 && x.Sub == false)?.UnitId;
+            var unitName = "";
+            if (leader.HasValue)
+            {
+                unitName = (await DbContext.GCRUnitInfoes.SingleOrDefaultAsync(x => x.UnitId == leader))?.Name;
+                if (String.IsNullOrWhiteSpace(unitName))
+                {
+                    unitName = (await DbContext.Units.SingleOrDefaultAsync(x => x.Id == leader))?.Name;
+                }
+            }
+
+            var stage = team.StageId;
+            var stageName = "";
+            if (stage.HasValue)
+            {
+                stageName = (await DbContext.GCRStageInfoes.SingleOrDefaultAsync(x => x.StageId == stage))?.Name;
+                if (String.IsNullOrWhiteSpace(stageName))
+                {
+                    stageName = (await DbContext.Stages.SingleOrDefaultAsync(x => x.Id == stage))?.Name;
+                }
+            }
+
+            var name = unitName;
+            if (String.IsNullOrWhiteSpace(stageName))
+            {
+                name += " Team";
+            }
+            else
+            {
+                name += " @ " + stageName;
+            }
+            team.Name = name;
+            return team;
         }
     }
 }

@@ -16,6 +16,7 @@ export class TeamImportPage {
     imports: TeamImportLineModel[] = [];
     strings: string = '';
     stageId: number;
+    draft: boolean = true;
 
     constructor(teamQueryService: TeamQueryService, alertService: AlertService, dialogService: DialogService) {
         this.teamQueryService = teamQueryService;
@@ -35,7 +36,10 @@ export class TeamImportPage {
     }
 
     submit() {
-        var message = 'These teams will immediately be available to the public. Please make sure you have reviewed the submission table before committing!';
+        var message = 'Please make sure you have reviewed the submission table before committing!';
+        if (this.draft) {
+            message = 'These teams will be available to the public IMMEDIATELY! ' + message;
+        }
         this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
             if (!x.wasCancelled) {
                 this.imports.filter(x => x.calc && !x.submitted).forEach((o, i) => {
@@ -44,14 +48,19 @@ export class TeamImportPage {
                         this.teamQueryService.import(model).then(x => {
                             o.submitted = true;
                             o.failed = false;
+                            o.id = x;
                             this.alertService.success('Saved team #' + x);
                         }).catch(x => {
                             o.failed = true;
                             o.submitted = false;
                             this.alertService.danger('Failed to save a team. See the table and check your input.');
                         });
-                    }, i * 250);
+                    },
+                        i * 250);
                 });
+                if (this.draft) {
+                    this.alertService.info('Your teams are saved as drafts. Remember to enable drafts when searching for them!');
+                }
             }
         });
     }
@@ -126,7 +135,7 @@ export class TeamImportPage {
             teamUnits: teamUnits,
             shipId: teamIds.ship,
             stageId: value.stage,
-            draft: false
+            draft: this.draft
         };
         return item;
     }
@@ -151,6 +160,7 @@ export class TeamImportPage {
 }
 
 export class TeamImportLineModel {
+    id: number;
     name: string;
     calc: string;
     desc: string;

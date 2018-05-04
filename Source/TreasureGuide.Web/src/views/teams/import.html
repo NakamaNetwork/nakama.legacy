@@ -36,6 +36,9 @@
                     <button type="button" class="button _danger _xsmall" click.delegate="remove(import)">
                         <i class="fa fa-fw fa-times"></i>
                     </button>
+                    <a if.bind="import.id" class="button _info _xsmall" route-href="route: teamDetails; params.bind: { id: import.id }">
+                        <i class="fa fa-fw fa-eye"></i>
+                    </a>
                 </td>
             </tr>
             <tr class="_light">
@@ -49,7 +52,16 @@
         </tbody>
     </table>
     <div class="row">
-        <div class="_floatRight">
+        <div class="col m10">
+            <label for="draftInput">
+                <input type="checkbox" id="draftInput" checked.bind="draft" />
+                <span class="-label-body">
+                    Save as Draft
+                </span>
+            </label>
+            <em><small>(Saves team to server without allowing others to see it.)</small></em>
+        </div>
+        <div class="col m2">
             <button type="submit" class="_floatRight button _primary _width100" click.delegate="submit()">
                 Submit
             </button>
