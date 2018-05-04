@@ -34,7 +34,7 @@ FROM
                 GCRS.[Thumbnail] AS [StageThumb],
                 GCRS.[Name] AS [StageName],
                 GCRS.[Color] AS [StageColor],
-                CAST(CASE WHEN SUM(CASE WHEN U.[Position] = 0 OR (SU.[Flags] & 2 = 0 AND SU.[Flags] & 4 = 0 AND SU.[Flags] & 8 = 0) THEN 1 ELSE 0 END) = COUNT(U.[UnitId]) THEN 1 ELSE 0 END AS BIT) AS [F2P],
+                CAST(CASE WHEN SUM(CASE WHEN U.[Position] = 0 OR (SU.[Flags] & 4 = 0 AND SU.[Flags] & 8 = 0) THEN 1 ELSE 0 END) = COUNT(U.[UnitId]) THEN 1 ELSE 0 END AS BIT) AS [F2P],
                 CAST(CASE WHEN SUM(CASE WHEN SU.[Flags] & 1 = 1 THEN 1 ELSE 0 END) = COUNT(U.[UnitId]) AND LU.[Flags] & 1 = 1 THEN 1 ELSE 0 END AS BIT) AS [Global],
                 CAST(CASE WHEN COUNT(V.[Id]) > 0 THEN 1 ELSE 0 END AS BIT) AS [Video]
             FROM [dbo].[Teams] AS T
