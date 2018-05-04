@@ -241,14 +241,16 @@ iframe {
     }
 }
 
-.fa-stack {
-    text-align: center;
-    height: inherit !important;
+.box-icon {
+    .fa-stack {
+        text-align: center;
+        height: inherit !important;
 
-    .fa-stack-1x, .fa-stack-2x {
-        bottom: 0;
-        transform: translateY(50%);
-        -webkit-transform: translateY(50%);
+        .fa-stack-1x, .fa-stack-2x {
+            bottom: 0;
+            transform: translateY(50%);
+            -webkit-transform: translateY(50%);
+        }
     }
 }
 

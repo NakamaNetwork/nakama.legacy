@@ -110,8 +110,8 @@
     <Build Include="dbo\Views\GCR\GCRTable.sql" />
     <Build Include="dbo\Views\GCR\GCRStageInfo.sql" />
     <Build Include="dbo\Views\GCR\GCRUnitInfo.sql" />
-    <Build Include="PostDeploy\dbo.GCRUnits.Table.sql" />
-    <Build Include="PostDeploy\dbo.GCRStages.Table.sql" />
+    <None Include="PostDeploy\dbo.GCRUnits.Table.sql" />
+    <None Include="PostDeploy\dbo.GCRStages.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
