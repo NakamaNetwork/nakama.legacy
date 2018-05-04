@@ -76,8 +76,13 @@
                             {
                                 cellClass = "incomplete";
                             }
+                            var link = $"/teams/{team?.Id}/details";
+                            if (cellClass != "complete")
+                            {
+                                link = $"/teams?stageId={stage.Id}&{(unit?.Id != null ? ("leaderId=" + unit.Id) : "freeToPlay=1")}";
+                            }
                             <td class="team-cell @(cellClass)">
-                                <a href="/teams?stageId=@(stage.Id)&@(unit?.Id != null ? ("leaderId=" + unit.Id) : "freeToPlay=1")" target="_blank">
+                                <a href="@link" target="_blank">
                                     @if (cellClass == "incomplete")
                                     {
                                         if (team.Global)
