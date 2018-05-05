@@ -44,7 +44,7 @@ namespace TreasureGuide.Entities
         public Nullable<short> MaxRCV { get; set; }
         public Nullable<decimal> GrowthRate { get; set; }
         public UnitFlag Flags { get; set; }
-        public Nullable<System.DateTimeOffset> EditedDate { get; set; }
+        public System.DateTimeOffset EditedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnitAlias> UnitAliases { get; set; }

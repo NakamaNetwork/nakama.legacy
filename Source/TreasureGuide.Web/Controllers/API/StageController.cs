@@ -26,7 +26,7 @@ namespace TreasureGuide.Web.Controllers.API
             return entities.Where(x => x.EditedDate > date || x.StageAliases.Any(y => y.EditedDate > date) || x.Teams.Any(y => y.EditedDate > date) || x.InvasionTeams.Any(y => y.EditedDate > date));
         }
 
-        protected override IQueryable<DateTimeOffset?> GetTimeStamps(IQueryable<Stage> entities)
+        protected override IQueryable<DateTimeOffset> GetTimeStamps(IQueryable<Stage> entities)
         {
             return entities.SelectMany(x => x.StageAliases.Select(y => y.EditedDate)
                 .Concat(x.Teams.Select(y => y.EditedDate))

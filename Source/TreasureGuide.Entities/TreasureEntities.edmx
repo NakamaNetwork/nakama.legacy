@@ -77,16 +77,16 @@
             <PropertyRef Name="StageId" />
           </Key>
           <Property Name="StageId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="128" />
           <Property Name="Order" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="GCRUnits">
           <Key>
             <PropertyRef Name="UnitId" />
           </Key>
           <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="128" />
           <Property Name="Order" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="ScheduledEvents">
           <Key>
@@ -110,7 +110,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="1000" />
           <Property Name="EventShip" Type="bit" Nullable="false" />
           <Property Name="EventShipActive" Type="bit" Nullable="false" />
-          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="StageAliases">
           <Key>
@@ -119,7 +119,7 @@
           </Key>
           <Property Name="StageId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Stages">
           <Key>
@@ -131,7 +131,7 @@
           <Property Name="UnitId" Type="int" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="Global" Type="bit" Nullable="false" />
-          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamBookmarks">
           <Key>
@@ -188,7 +188,7 @@
           <Property Name="SubmittedById" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="SubmittedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="EditedById" Type="nvarchar" MaxLength="450" Nullable="false" />
-          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Version" Type="int" Nullable="false" />
           <Property Name="Draft" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
@@ -242,7 +242,7 @@
           </Key>
           <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="UnitEvolutions">
           <Key>
@@ -251,7 +251,7 @@
           </Key>
           <Property Name="FromUnitId" Type="int" Nullable="false" />
           <Property Name="ToUnitId" Type="int" Nullable="false" />
-          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Units">
           <Key>
@@ -275,7 +275,7 @@
           <Property Name="MaxRCV" Type="smallint" />
           <Property Name="GrowthRate" Type="decimal" Precision="2" Scale="1" />
           <Property Name="Flags" Type="smallint" Nullable="false" />
-          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="UserPreferences">
           <Key>
@@ -306,7 +306,7 @@ warning 6002: The table/view 'tcdb.dbo.GCRStageInfo' does not have a primary key
           </Key>
           <Property Name="StageId" Type="int" Nullable="false" />
           <Property Name="Order" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Name" Type="varchar" MaxLength="128" />
           <Property Name="Thumbnail" Type="int" />
           <Property Name="Color" Type="smallint" />
         </EntityType>
@@ -318,11 +318,11 @@ warning 6002: The table/view 'tcdb.dbo.GCRTable' does not have a primary key def
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="LeaderId" Type="int" />
-          <Property Name="LeaderName" Type="nvarchar" MaxLength="128" />
+          <Property Name="LeaderName" Type="varchar" MaxLength="128" />
           <Property Name="LeaderColor" Type="smallint" />
           <Property Name="StageId" Type="int" />
           <Property Name="StageThumb" Type="int" />
-          <Property Name="StageName" Type="nvarchar" MaxLength="128" />
+          <Property Name="StageName" Type="varchar" MaxLength="128" />
           <Property Name="StageColor" Type="smallint" />
           <Property Name="F2P" Type="bit" />
           <Property Name="Global" Type="bit" />
@@ -338,7 +338,7 @@ warning 6002: The table/view 'tcdb.dbo.GCRUnitInfo' does not have a primary key 
           </Key>
           <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="Order" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Name" Type="varchar" MaxLength="128" />
           <Property Name="Color" Type="smallint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -1308,7 +1308,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <NavigationProperty Name="TeamUnitSummaries" Relationship="tcdbModel.UnitTeamUnitSummary" FromRole="Unit" ToRole="TeamUnitSummary" />
                     <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Units" FromRole="Unit" ToRole="TeamUnit" />
                     <NavigationProperty Name="BoxUnits" Relationship="tcdbModel.FK_dbo_BoxUnits_dbo_Units" FromRole="Unit" ToRole="BoxUnit" />
-                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" Nullable="false" />
                     <NavigationProperty Name="EvolvesTo" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_FromUnitId" FromRole="Unit" ToRole="UnitEvolution" />
                     <NavigationProperty Name="EvolvesFrom" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId" FromRole="Unit" ToRole="UnitEvolution" />
           <NavigationProperty Name="GCRUnit" Relationship="tcdbModel.FK_dbo_GCRUnits_dbo_Units" FromRole="Unit" ToRole="GCRUnit" />
@@ -1323,7 +1323,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Ship" ToRole="Team" />
                     <Property Name="EventShip" Type="Boolean" Nullable="false" />
                     <Property Name="EventShipActive" Type="Boolean" Nullable="false" />
-                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" Nullable="false" />
                 </EntityType>
                 <EntityType Name="Stage">
                     <Key>
@@ -1339,7 +1339,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_Stages_dbo_Units" FromRole="Stage" ToRole="Unit" />
                     <NavigationProperty Name="StageAliases" Relationship="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" FromRole="Stage" ToRole="StageAlias" />
                     <NavigationProperty Name="InvasionTeams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" FromRole="Stage" ToRole="Team" />
-                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" Nullable="false" />
                     <NavigationProperty Name="ScheduledEvents" Relationship="tcdbModel.FK_dbo_ScheduledEvents_dbo_Stages" FromRole="Stage" ToRole="ScheduledEvent" />
           <NavigationProperty Name="GCRStage" Relationship="tcdbModel.FK_dbo_GCRStages_dbo_Units" FromRole="Stage" ToRole="GCRStage" />
                 </EntityType>
@@ -1410,7 +1410,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="SubmittedById" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
                     <Property Name="SubmittedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
                     <Property Name="EditedById" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
-                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" Nullable="false" />
                     <Property Name="Version" Type="Int32" Nullable="false" />
                     <NavigationProperty Name="Ship" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Team" ToRole="Ship" />
                     <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Team" ToRole="Stage" />
@@ -1638,7 +1638,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="UnitId" Type="Int32" Nullable="false" />
                     <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
                     <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" FromRole="UnitAlias" ToRole="Unit" />
-                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" Nullable="false" />
                 </EntityType>
                 <Association Name="FK_dbo_UnitAliasess_dbo_Units">
                     <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="1">
@@ -1917,7 +1917,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="StageId" Type="Int32" Nullable="false" />
                     <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
                     <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_StageAliasess_dbo_Stages" FromRole="StageAlias" ToRole="Stage" />
-                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" Nullable="false" />
                 </EntityType>
                 <Association Name="FK_dbo_StageAliasess_dbo_Stages">
                     <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="1">
@@ -2029,7 +2029,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     </Key>
                     <Property Name="FromUnitId" Type="Int32" Nullable="false" />
                     <Property Name="ToUnitId" Type="Int32" Nullable="false" />
-                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" />
+                    <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" Nullable="false" />
                     <NavigationProperty Name="EvolvesFrom" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_FromUnitId" FromRole="UnitEvolution" ToRole="Unit" />
                     <NavigationProperty Name="EvolvesTo" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId" FromRole="UnitEvolution" ToRole="Unit" />
                 </EntityType>
@@ -2107,11 +2107,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="LeaderId" Type="Int32" />
-          <Property Name="LeaderName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LeaderName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="LeaderColor" Type="tcdbModel.UnitType" />
           <Property Name="StageId" Type="Int32" />
           <Property Name="StageThumb" Type="Int32" />
-          <Property Name="StageName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StageName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="StageColor" Type="tcdbModel.UnitType" />
           <Property Name="F2P" Type="Boolean" />
           <Property Name="Global" Type="Boolean" />
@@ -2123,7 +2123,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </Key>
           <Property Name="StageId" Type="Int32" Nullable="false" />
           <Property Name="Order" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_GCRStages_dbo_Units" FromRole="GCRStage" ToRole="Stage" />
         </EntityType>
         <EntityType Name="GCRUnit">
@@ -2132,7 +2132,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </Key>
           <Property Name="UnitId" Type="Int32" Nullable="false" />
           <Property Name="Order" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Unit" Relationship="tcdbModel.FK_dbo_GCRUnits_dbo_Units" FromRole="GCRUnit" ToRole="Unit" />
         </EntityType>
         <Association Name="FK_dbo_GCRStages_dbo_Units">
@@ -2170,7 +2170,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </Key>
           <Property Name="StageId" Type="Int32" Nullable="false" />
           <Property Name="Order" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="Thumbnail" Type="Int32" />
           <Property Name="Color" Type="tcdbModel.UnitType" />
         </EntityType>
@@ -2182,7 +2182,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </Key>
           <Property Name="UnitId" Type="Int32" Nullable="false" />
           <Property Name="Order" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="Color" Type="tcdbModel.UnitType" Nullable="false" />
         </EntityType>
             </Schema>

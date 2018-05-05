@@ -24,7 +24,7 @@ namespace TreasureGuide.Web.Controllers.API
             return entities.Where(x => x.EditedDate > date || x.UnitAliases.Any(y => y.EditedDate > date) || x.EvolvesTo.Any(y => y.EditedDate > date) || x.EvolvesFrom.Any(y => y.EditedDate > date));
         }
 
-        protected override IQueryable<DateTimeOffset?> GetTimeStamps(IQueryable<Unit> entities)
+        protected override IQueryable<DateTimeOffset> GetTimeStamps(IQueryable<Unit> entities)
         {
             return entities.SelectMany(x => x.EvolvesTo.Select(y => y.EditedDate)
                 .Concat(x.EvolvesFrom.Select(y => y.EditedDate))
