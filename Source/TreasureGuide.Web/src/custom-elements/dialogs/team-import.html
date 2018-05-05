@@ -1,35 +1,33 @@
 ﻿<template>
-    <form>
-        <ux-dialog>
-            <ux-dialog-header>
-                <div class="_floatRight">
-                    <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+    <ux-dialog>
+        <ux-dialog-header>
+            <div class="_floatRight">
+                <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+            </div>
+            <h3>Import from optc-db</h3>
+        </ux-dialog-header>
+        <ux-dialog-body>
+            <fieldset>
+                <legend>Import</legend>
+                <a href="http://optc-db.github.io/damage/#/" class="button _success _xlarge _width100" target="_blank">
+                    <i class="fa fa-fw fa-external-link"></i>
+                    optc-db
+                </a>
+                Click the green "Export URL" button at the bottom of the calculator page and paste the code below.
+                <label for="linkInput">Team Export URL</label>
+                <input type="text" id="linkInput" class="validate _width100" value.bind="input" />
+            </fieldset>
+            <fieldset>
+                <legend>Preview</legend>
+                <div class="_alignCenter">
+                    <team-display team.bind="team"></team-display>
+                    <ship-display ship-id.bind="team.shipId"></ship-display>
                 </div>
-                <h3>Import from optc-db</h3>
-            </ux-dialog-header>
-            <ux-dialog-body>
-                <fieldset>
-                    <legend>Import</legend>
-                    <a href="http://optc-db.github.io/damage/#/" class="button _success _xlarge _width100" target="_blank">
-                        <i class="fa fa-fw fa-external-link"></i>
-                        optc-db
-                    </a>
-                    Click the green "Export URL" button at the bottom of the calculator page and paste the code below.
-                    <label for="linkInput">Team Export URL</label>
-                    <input type="text" id="linkInput" class="validate _width100" value.bind="input" />
-                </fieldset>
-                <fieldset>
-                    <legend>Preview</legend>
-                    <div class="_alignCenter">
-                        <team-display team.bind="team"></team-display>
-                        <ship-display ship-id.bind="team.shipId"></ship-display>
-                    </div>
-                </fieldset>
-            </ux-dialog-body>
-            <ux-dialog-footer>
-                <input type="submit" click.delegate="submit()" class="button _primary modal-action" name="Accept" />
-                <button type="button" click.delegate="cancel()" class="button modal-action">Cancel</button>
-            </ux-dialog-footer>
-        </ux-dialog>
-    </form>
+            </fieldset>
+        </ux-dialog-body>
+        <ux-dialog-footer>
+            <input type="submit" click.delegate="submit()" class="button _primary modal-action" name="Accept" />
+            <button type="button" click.delegate="cancel()" class="button modal-action">Cancel</button>
+        </ux-dialog-footer>
+    </ux-dialog>
 </template>
