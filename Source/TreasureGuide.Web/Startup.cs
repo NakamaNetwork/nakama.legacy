@@ -74,6 +74,7 @@ namespace TreasureGuide.Web
 
             app.UseResponseCompression();
             app.UseStaticFiles();
+            app.UseCors("NakamaCORS");
 
             app.UseIdentity();
 
