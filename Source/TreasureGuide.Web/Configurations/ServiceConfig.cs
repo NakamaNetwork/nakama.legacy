@@ -117,7 +117,6 @@ namespace TreasureGuide.Web.Configurations
 
             services.AddSingleton(x => configuration);
             services.AddSingleton(x => MapperConfig.Create());
-            services.AddSingleton<IJSonStaticService, JsonStaticService>();
         }
     }
 }
