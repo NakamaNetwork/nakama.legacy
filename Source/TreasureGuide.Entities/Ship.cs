@@ -25,7 +25,7 @@ namespace TreasureGuide.Entities
         public string Description { get; set; }
         public bool EventShip { get; set; }
         public bool EventShipActive { get; set; }
-        public Nullable<System.DateTimeOffset> EditedDate { get; set; }
+        public System.DateTimeOffset EditedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Teams { get; set; }

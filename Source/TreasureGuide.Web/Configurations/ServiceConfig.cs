@@ -69,6 +69,10 @@ namespace TreasureGuide.Web.Configurations
                 json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 json.SerializerSettings.Converters.Add(new StringTrimmingJsonConverter());
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("NakamaCORS", config => config.AllowAnyOrigin().WithMethods("GET"));
+            });
             var defaultJson = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore

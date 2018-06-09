@@ -7,6 +7,12 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '05/04/18',
+        lines: [
+            'Added new icons for team box flags (i.e. Global, F2P, Videos)',
+            'Fixed unit icons for Cerebral Doffy.'
+        ]
+    }, {
         header: '04/27/18',
         lines: [
             'Added Zombies and Nukers to Generic Unit Roles.',

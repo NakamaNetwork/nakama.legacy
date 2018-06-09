@@ -4,7 +4,7 @@
     <div if.bind="!loading" class="gcr-edit">
         <div class="row">
             <h3>Units</h3>
-            <button class="_info" click.delegate="saveUnits()">Save Units</button>
+            <button type="button" class="_info" click.delegate="saveUnits()">Save Units</button>
             <table>
                 <thead>
                     <tr>
@@ -26,21 +26,21 @@
                             <input type="number" value.bind="unit.order" />
                         </td>
                         <td>
-                            <button class="_danger" click.delegate="delete(unit, units)">X</button>
+                            <button type="button" class="_danger" click.delegate="delete(unit, units)">X</button>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <button class="_success" click.delegate="add(units)">Add New Unit</button>
+                            <button type="button" class="_success" click.delegate="add(units)">Add New Unit</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button class="_info" click.delegate="saveUnits()">Save Units</button>
+            <button type="button" class="_info" click.delegate="saveUnits()">Save Units</button>
         </div>
         <div class="row">
             <h3>Stages</h3>
-            <button class="_info" click.delegate="saveStages()">Save Stages</button>
+            <button type="button" class="_info" click.delegate="saveStages()">Save Stages</button>
             <table>
                 <thead>
                     <tr>
@@ -62,20 +62,21 @@
                             <input type="number" value.bind="stage.order" />
                         </td>
                         <td>
-                            <button class="_danger" click.delegate="delete(stage, stages)">X</button>
+                            <button type="button" class="_danger" click.delegate="delete(stage, stages)">X</button>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <button class="_success" click.delegate="add(stages)">Add New Stage</button>
+                            <button type="button" class="_success" click.delegate="add(stages)">Add New Stage</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button class="_info" click.delegate="saveStages()">Save Stages</button>
+            <button type="button" class="_info" click.delegate="saveStages()">Save Stages</button>
         </div>
         <div class="row">
-            <button class="_info" click.delegate="saveUnits()">Save Units</button>
-            <button class="_info" click.delegate="saveStages()">Save Stages</button>
+            <button type="button" class="_info" click.delegate="saveUnits()">Save Units</button>
+            <button type="button" class="_info" click.delegate="saveStages()">Save Stages</button>
         </div>
+    </div>
 </template>

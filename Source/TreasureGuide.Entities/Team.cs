@@ -36,7 +36,7 @@ namespace TreasureGuide.Entities
         public string SubmittedById { get; set; }
         public System.DateTimeOffset SubmittedDate { get; set; }
         public string EditedById { get; set; }
-        public Nullable<System.DateTimeOffset> EditedDate { get; set; }
+        public System.DateTimeOffset EditedDate { get; set; }
         public int Version { get; set; }
         public bool Deleted { get; set; }
         public bool Draft { get; set; }

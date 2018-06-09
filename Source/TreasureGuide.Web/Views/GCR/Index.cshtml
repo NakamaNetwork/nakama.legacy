@@ -19,7 +19,7 @@
             <a href="/gcr/edit" class="button _small _info" target="_blank">Edit Stages and Units</a>
         </div>
         <h2>
-           GCR
+            GCR
         </h2>
     </div>
     <div class="body" id="gcr">
@@ -76,26 +76,47 @@
                             {
                                 cellClass = "incomplete";
                             }
+                            var link = $"/teams/{team?.Id}/details";
+                            if (cellClass != "complete")
+                            {
+                                link = $"/teams?stageId={stage.Id}&{(unit?.Id != null ? ("leaderId=" + unit.Id) : "freeToPlay=1")}";
+                            }
                             <td class="team-cell @(cellClass)">
-                                <a href="/teams?stageId=@(stage.Id)&@(unit?.Id != null ? ("leaderId=" + unit.Id) : "freeToPlay=1")" target="_blank">
+                                <a href="@link" target="_blank">
                                     @if (cellClass == "incomplete")
                                     {
                                         if (team.Global)
                                         {
-                                            <i class="fa fa-fw fa-globe" title="Global"></i>
+                                            <span class="fa-stack" title="Global">
+                                                <i class="fa fa-circle fa-stack-2x _whiteText"></i>
+                                                <i class="fa fa-globe fa-stack-1x"></i>
+                                                <i class="fa fa-circle-o fa-stack-2x"></i>
+                                            </span>
                                         }
                                         if (team.F2P)
                                         {
-                                            <i class="fa fa-fw fa-credit-card" title="Free-to-Play Crew"></i>
+                                            <span class="fa-stack" title="Free-to-Play">
+                                                <i class="fa fa-circle fa-stack-2x _whiteText"></i>
+                                                <i class="fa fa-usd fa-stack-1x"></i>
+                                                <i class="fa fa-ban fa-stack-2x"></i>
+                                            </span>
                                         }
                                         if (team.Video)
                                         {
-                                            <i class="fa fa-fw fa-video-camera" title="Has Videos"></i>
+                                            <span class="fa-stack" title="Has Videos">
+                                                <i class="fa fa-circle fa-stack-2x _whiteText"></i>
+                                                <i class="fa fa-video-camera fa-stack-1x"></i>
+                                                <i class="fa fa-circle-o fa-stack-2x"></i>
+                                            </span>
                                         }
                                     }
                                     else if (cellClass == "complete")
                                     {
-                                        <i class="fa fa-fw fa-check" title="Complete!"></i>
+                                        <span class="fa-stack" title="Complete">
+                                            <i class="fa fa-circle fa-stack-2x _whiteText"></i>
+                                            <i class="fa fa-check fa-stack-1x"></i>
+                                            <i class="fa fa-circle-o fa-stack-2x"></i>
+                                        </span>
                                     }
                                     else
                                     {

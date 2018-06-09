@@ -16,13 +16,13 @@ namespace TreasureGuide.Web.Helpers
                 {
                     return "https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png";
                 }
-                if (id == "1923")
+                if (id == "2200")
                 {
-                    return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5009.png";
+                    return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5011.png";
                 }
-                if (id == "1924")
+                if (id == "2201")
                 {
-                    return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5010.png";
+                    return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5012.png";
                 }
                 return $"https://onepiece-treasurecruise.com/wp-content/uploads/f{id}.png";
             }

@@ -32,7 +32,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         public async Task<SearchResult<TStubModel>> Search(TSearchModel model)
         {
             model = model ?? new TSearchModel();
-            model.PageSize = Math.Min(100, Math.Max(10, model.PageSize));
+            model.PageSize = Math.Min(100, Math.Max(5, model.PageSize));
             var entities = FetchEntities();
             entities = (await PerformSearch(entities, model)).AsQueryable();
             var resultCount = await entities.CountAsync();

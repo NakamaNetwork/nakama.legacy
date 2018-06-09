@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Sniffer.DataParser;
-using TreasureGuide.Sniffer.TeamImporters;
+using TreasureGuide.Sniffer.Helpers;
 
 namespace TreasureGuide.Sniffer
 {
@@ -26,7 +25,7 @@ namespace TreasureGuide.Sniffer
 
             var configuration = builder.Build();
 
-            var context = new TreasureEntities(configuration.GetConnectionString("TreasureEntities"));
+            var context = new ParserContext(configuration.GetConnectionString("TreasureEntities"));
             AssureContextOpen(context);
             RunParsers(context, configuration);
             while (ParsersRunning > 0)

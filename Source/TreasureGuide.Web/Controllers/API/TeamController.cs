@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
@@ -19,6 +20,7 @@ using TreasureGuide.Web.Services;
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/team")]
+    [EnableCors("NakamaCORS")]
     public class TeamController : SearchableApiController<int, Team, int?, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
         public TeamController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
@@ -609,18 +611,26 @@ namespace TreasureGuide.Web.Controllers.API
         public const string ImportId = "112cf4e4-cb26-4293-afa2-e663785fd276";
 
         [HttpPost]
-        [Authorize(Roles = RoleConstants.Administrator)]
+        [Authorize(Roles = RoleConstants.GCRViewer)]
         [ActionName("Import")]
         [Route("[action]")]
         public async Task<IActionResult> Import([FromBody] TeamImportModel model)
         {
+            var userId = User.GetId();
             var now = DateTimeOffset.Now;
             var team = AutoMapper.Map<Team>(model.Team);
+            if (team.TeamUnits.Count < 2)
+            {
+                return BadRequest("Not enough units on team.");
+            }
+            if (String.IsNullOrWhiteSpace(team.Name))
+            {
+                team = await AutoGenName(team);
+            }
             team.SubmittedDate = now;
-            team.SubmittedById = ImportId;
+            team.SubmittedById = userId;
             team.EditedDate = now;
-            team.EditedById = ImportId;
-            team.Draft = true;
+            team.EditedById = userId;
             DbContext.Teams.Add(team);
 
             if (!String.IsNullOrWhiteSpace(model.Credit.Credit))
@@ -646,6 +656,43 @@ namespace TreasureGuide.Web.Controllers.API
             await DbContext.SaveChangesAsync();
 
             return Ok(team.Id);
+        }
+
+        private async Task<Team> AutoGenName(Team team)
+        {
+            var leader = team.TeamUnits.SingleOrDefault(x => x.Position == 1 && x.Sub == false)?.UnitId;
+            var unitName = "";
+            if (leader.HasValue)
+            {
+                unitName = (await DbContext.GCRUnitInfoes.SingleOrDefaultAsync(x => x.UnitId == leader))?.Name;
+                if (String.IsNullOrWhiteSpace(unitName))
+                {
+                    unitName = (await DbContext.Units.SingleOrDefaultAsync(x => x.Id == leader))?.Name;
+                }
+            }
+
+            var stage = team.StageId;
+            var stageName = "";
+            if (stage.HasValue)
+            {
+                stageName = (await DbContext.GCRStageInfoes.SingleOrDefaultAsync(x => x.StageId == stage))?.Name;
+                if (String.IsNullOrWhiteSpace(stageName))
+                {
+                    stageName = (await DbContext.Stages.SingleOrDefaultAsync(x => x.Id == stage))?.Name;
+                }
+            }
+
+            var name = unitName;
+            if (String.IsNullOrWhiteSpace(stageName))
+            {
+                name += " Team";
+            }
+            else
+            {
+                name += " @ " + stageName;
+            }
+            team.Name = name;
+            return team;
         }
     }
 }

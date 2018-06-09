@@ -1,8 +1,24 @@
 <template>
     <div class="flags" if.bind="team.global || team.f2PC || team.hasVideos">
-        <i class="fa fa-fw fa-globe" if.bind="team.global" title="Global"></i>
-        <i class="fa fa-fw fa-credit-card-alt" if.bind="team.f2P" title="Free-to-Play"></i>
-        <i class="fa fa-fw fa-credit-card" if.bind="!team.f2P && team.f2PC" title="Free-to-Play Crew"></i>
-        <i class="fa fa-fw fa-video-camera" if.bind="team.hasVideos" title="Has Videos"></i>
+        <div class="fa-stack" if.bind="team.global" title="Global">
+            <i class="fa fa-circle fa-stack-2x _infoLightText"></i>
+            <i class="fa fa-globe fa-stack-1x"></i>
+            <i class="fa fa-circle-o fa-stack-2x"></i>
+        </div>
+        <div class="fa-stack" if.bind="team.f2P" title="Free-to-Play">
+            <i class="fa fa-circle fa-stack-2x _infoLightText"></i>
+            <i class="fa fa-usd fa-stack-1x"></i>
+            <i class="fa fa-ban fa-stack-2x"></i>
+        </div>
+        <div class="fa-stack" if.bind="!team.f2P && team.f2PC" title="Free-to-Play Crew">
+            <i class="fa fa-circle fa-stack-2x _infoLightText"></i>
+            <i class="fa fa-usd fa-stack-1x _whiteText"></i>
+            <i class="fa fa-ban fa-stack-2x"></i>
+        </div>
+        <div class="fa-stack" if.bind="team.hasVideos" title="Has Videos">
+            <i class="fa fa-circle fa-stack-2x _infoLightText"></i>
+            <i class="fa fa-video-camera fa-stack-1x"></i>
+            <i class="fa fa-circle-o fa-stack-2x"></i>
+        </div>
     </div>
 </template>

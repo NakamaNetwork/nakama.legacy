@@ -1,21 +1,27 @@
 ﻿import { autoinject } from 'aurelia-framework';
 import { TeamQueryService } from '../../services/query/team-query-service';
-import { ITeamEditorModel, ITeamVideoModel, ITeamCreditModel, ITeamImportModel } from '../../models/imported';
+import { ITeamEditorModel, ITeamVideoModel, ITeamCreditModel, ITeamImportModel, TeamCreditType } from '../../models/imported';
 import { CalcParser } from '../../tools/calc-parser';
 import { VideoParser } from '../../tools/video-parser';
 import { AlertService } from '../../services/alert-service';
+import { AlertDialog } from '../../custom-elements/dialogs/alert-dialog';
+import { DialogService } from 'aurelia-dialog';
 
 @autoinject
 export class TeamImportPage {
     private teamQueryService: TeamQueryService;
     private alertService: AlertService;
+    private dialogService: DialogService;
 
     imports: TeamImportLineModel[] = [];
     strings: string = '';
+    stageId: number;
+    draft: boolean = true;
 
-    constructor(teamQueryService: TeamQueryService, alertService: AlertService) {
+    constructor(teamQueryService: TeamQueryService, alertService: AlertService, dialogService: DialogService) {
         this.teamQueryService = teamQueryService;
         this.alertService = alertService;
+        this.dialogService = dialogService;
     }
 
     add() {
@@ -30,46 +36,76 @@ export class TeamImportPage {
     }
 
     submit() {
-        this.imports.filter(x => x.name && !x.submitted).forEach(o => {
-            var model = this.createModel(o);
-            this.teamQueryService.import(model).then(x => {
-                o.submitted = true;
-                o.failed = false;
-            }).catch(x => {
-                o.failed = true;
-                o.submitted = false;
-            });
+        var message = 'Please make sure you have reviewed the submission table before committing!';
+        if (this.draft) {
+            message = 'These teams will be available to the public IMMEDIATELY! ' + message;
+        }
+        this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
+            if (!x.wasCancelled) {
+                this.imports.filter(x => x.calc && !x.submitted).forEach((o, i) => {
+                    setTimeout(() => {
+                        var model = this.createModel(o);
+                        this.teamQueryService.import(model).then(x => {
+                            o.submitted = true;
+                            o.failed = false;
+                            o.id = x;
+                            this.alertService.success('Saved team #' + x);
+                        }).catch(x => {
+                            o.failed = true;
+                            o.submitted = false;
+                            this.alertService.danger('Failed to save a team. See the table and check your input.');
+                        });
+                    },
+                        i * 250);
+                });
+                if (this.draft) {
+                    this.alertService.info('Your teams are saved as drafts. Remember to enable drafts when searching for them!');
+                }
+            }
         });
     }
 
     convertStrings() {
-        var lines = this.strings.split('Ξ');
-        if (lines.length % 8 !== 0) {
-            this.alertService.danger('Could not import text. Had ' +
-                lines.length +
-                ' fields. Needs to be a multiple of 8.');
-            return;
-        }
+        var lines = this.strings.toLowerCase().split(/\r?\n/g);
         var things = new Array<TeamImportLineModel>();
         this.alertService.info('Processing rows...');
-        for (var i = 0; i < lines.length; i += 8) {
-            var stage = parseInt(lines[i + 2]);
-            if (Number.isNaN(stage)) {
-                stage = null;
+        for (var i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            if (!line) {
+                continue;
             }
-            var type = parseInt(lines[i + 7]);
-            if (Number.isNaN(type)) {
-                type = 0;
+            var data = line.split(';');
+            if (data.length == 0) {
+                continue;
+            }
+            var calc = data[0];
+            if (calc.indexOf('yout') !== -1) {
+                continue;
+            }
+            var videos = '';
+            if (data.length > 1) {
+                for (var j = 1; j < data.length; j++) {
+                    if (j > 1) {
+                        videos += ',';
+                    }
+                    videos += data[j];
+                }
+                while (videos.indexOf(',,') !== -1) {
+                    videos = videos.replace(',,', ',');
+                }
+                if (videos.length === 1) {
+                    videos = '';
+                }
             }
             var model = <TeamImportLineModel>{
-                name: lines[i],
-                calc: lines[i + 1],
-                stage: stage,
-                desc: lines[i + 3],
-                credit: lines[i + 4],
-                videos: lines[i + 5],
-                ref: lines[i + 6],
-                type: type,
+                name: '',
+                calc: calc,
+                stage: this.stageId,
+                desc: '',
+                credit: 'From the Global Clear Rates sheet.',
+                videos: videos,
+                ref: 'GCR Import',
+                type: TeamCreditType.GCR,
                 submitted: false,
                 failed: false
             };
@@ -78,7 +114,6 @@ export class TeamImportPage {
         this.alertService.info('Setting fields...');
         this.imports = (things);
         this.alertService.success('Ready for review.');
-        this.strings = '';
     }
 
     createModel(value: TeamImportLineModel): ITeamImportModel {
@@ -99,7 +134,8 @@ export class TeamImportPage {
             credits: value.credit,
             teamUnits: teamUnits,
             shipId: teamIds.ship,
-            stageId: value.stage
+            stageId: value.stage,
+            draft: this.draft
         };
         return item;
     }
@@ -124,6 +160,7 @@ export class TeamImportPage {
 }
 
 export class TeamImportLineModel {
+    id: number;
     name: string;
     calc: string;
     desc: string;

@@ -196,7 +196,7 @@ unit-display {
         }
     }
 
-    a.in-box:hover{
+    a.in-box:hover {
         opacity: unset;
     }
 
@@ -457,22 +457,14 @@ team-box {
 
     .flags {
         @extend ._floatLeft;
-        @extend ._infoLight;
-        padding: 2px 0;
         position: absolute;
-        top: 1.5em;
+        top: 2em;
         left: -3px;
         font-size: small;
-        border-radius: 6px;
 
-        * {
+        .fa-stack {
             display: block;
             margin: 0 auto;
-            padding: 1px 0;
-        }
-
-        .fa-credit-card, .fa-credit-card-alt {
-            font-size: x-small;
         }
     }
 }

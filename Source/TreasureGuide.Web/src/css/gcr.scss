@@ -81,6 +81,18 @@ $gcr-cell-height: 24px;
     .team-cell {
         width: $gcr-cell-width !important;
         height: $gcr-cell-height !important;
+        @extend .no-wrap;
+
+        a {
+            width: ($small-unit-size + $small-unit-margin) !important;
+            display: inline-block;
+        }
+
+        .fa-stack {
+            &:not(:first-of-type) {
+                left: -0.5em;
+            }
+        }
     }
     // colors
     .complete {
