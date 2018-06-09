@@ -4,6 +4,7 @@ node_modules
 
 wwwroot/scripts
 wwwroot/css
+wwwroot/json
 src/**/*.js
 src/**/*.js.map
 test/unit/**/*.js

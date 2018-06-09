@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using AspNet.Security.OAuth.Discord;
 using AspNet.Security.OAuth.Reddit;
 using AspNet.Security.OAuth.Twitch;
@@ -51,7 +52,7 @@ namespace TreasureGuide.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RoleManager<IdentityRole> roleManager)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RoleManager<IdentityRole> roleManager, IJSonStaticService staticService)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddFile("logs/nakama-errors-{Date}.txt", LogLevel.Error);
@@ -160,6 +161,8 @@ namespace TreasureGuide.Web
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
             });
+
+            await staticService.Save();
         }
     }
 }
