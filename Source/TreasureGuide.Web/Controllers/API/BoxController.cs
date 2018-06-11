@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
-using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
-using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models.BoxModels;
+using TreasureGuide.Common.Helpers;
+using TreasureGuide.Common.Models.BoxModels;
 using TreasureGuide.Web.Services;
 using Z.EntityFramework.Plus;
 

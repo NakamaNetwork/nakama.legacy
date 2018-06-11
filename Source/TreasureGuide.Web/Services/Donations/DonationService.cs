@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using TreasureGuide.Entities;
-using TreasureGuide.Web.Models.DonationModels;
+using TreasureGuide.Common.Models.DonationModels;
 
 namespace TreasureGuide.Web.Services.Donations
 {

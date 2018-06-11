@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TreasureGuide.Web.Helpers
+namespace TreasureGuide.Common.Helpers
 {
     public static class CacheBustingService
     {

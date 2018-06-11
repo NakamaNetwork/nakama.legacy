@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Configurations;
-using TreasureGuide.Web.Helpers;
+using TreasureGuide.Common.Helpers;
 using TreasureGuide.Web.Models.ProfileModels;
 
 namespace TreasureGuide.Web.Services

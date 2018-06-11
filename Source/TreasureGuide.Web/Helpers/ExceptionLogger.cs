@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace TreasureGuide.Web.Helpers
+namespace TreasureGuide.Common.Helpers
 {
     public class ExceptionLoggerAttribute : Attribute, IFilterFactory
     {

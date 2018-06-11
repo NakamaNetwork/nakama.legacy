@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Net.Http.Headers;
 
-namespace TreasureGuide.Web.Helpers
+namespace TreasureGuide.Common.Helpers
 {
     public static class HttpHelper
     {

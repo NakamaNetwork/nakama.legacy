@@ -47,18 +47,13 @@
         <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\TreasureGuide.Common\TreasureGuide.Common.csproj" />
         <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
-      <None Update="src\models\generated\cache-item-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\CacheItemType.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-credit-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\TeamCreditType.cs</CustomToolNamespace>
-      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

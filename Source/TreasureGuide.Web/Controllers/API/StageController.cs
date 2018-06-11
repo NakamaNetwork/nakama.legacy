@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
-using TreasureGuide.Web.Models.ScheduleModels;
+using TreasureGuide.Common.Models.ScheduleModels;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API

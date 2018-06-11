@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
-using TreasureGuide.Web.Constants;
+using TreasureGuide.Common.Models;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountViewModels;
 

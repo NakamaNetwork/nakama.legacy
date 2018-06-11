@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TreasureGuide.Web.Helpers;
+using TreasureGuide.Common.Helpers;
 
 namespace TreasureGuide.Web.Controllers.API
 {

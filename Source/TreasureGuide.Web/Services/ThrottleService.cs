@@ -4,8 +4,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
-using TreasureGuide.Web.Constants;
-using TreasureGuide.Web.Helpers;
+using TreasureGuide.Common.Constants;
+using TreasureGuide.Common.Helpers;
 
 namespace TreasureGuide.Web.Services
 {

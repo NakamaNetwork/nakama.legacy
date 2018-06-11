@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using TreasureGuide.Common.Models;
 using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models.ProfileModels

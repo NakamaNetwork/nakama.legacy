@@ -8,7 +8,5 @@ namespace TreasureGuide.Web.Models
     {
         public DateTimeOffset? Timestamp { get; set; }
         public IEnumerable<TItem> Items { get; set; }
-        public IEnumerable<int> Deleted { get; set; }
-        public bool Reset { get; set; }
     }
 }
