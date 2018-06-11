@@ -31,7 +31,7 @@ namespace TreasureGuide.Sniffer
 
             var configuration = builder.Build();
 
-            var context = new ParserContext(configuration.GetConnectionString("TreasureEntities"));
+            var context = new TreasureEntities(configuration.GetConnectionString("TreasureEntities"));
             var mapper = MapperConfig.Create();
             AssureContextOpen(context);
             RunParsers(context, mapper, configuration);
@@ -113,9 +113,10 @@ namespace TreasureGuide.Sniffer
         private static async Task PostRun(TreasureEntities context, IMapper mapper)
         {
             await context.SaveChangesAsync();
-            await CacheBuilder.BuildCache<Unit, UnitStubModel>(context, mapper, CacheItemType.Unit);
-            await CacheBuilder.BuildCache<Stage, StageStubModel>(context, mapper, CacheItemType.Stage);
-            await CacheBuilder.BuildCache<Ship, ShipStubModel>(context, mapper, CacheItemType.Ship);
+            var timestamp = DateTimeOffset.UtcNow;
+            await CacheBuilder.BuildCache<Unit, UnitStubModel>(context, mapper, CacheItemType.Unit, timestamp);
+            await CacheBuilder.BuildCache<Stage, StageStubModel>(context, mapper, CacheItemType.Stage, timestamp);
+            await CacheBuilder.BuildCache<Ship, ShipStubModel>(context, mapper, CacheItemType.Ship, timestamp);
         }
     }
 }

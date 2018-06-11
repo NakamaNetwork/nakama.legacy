@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace TreasureGuide.Sniffer.Helpers
             }
         };
 
-        public static async Task BuildCache<TEntity, TCache>(TreasureEntities entities, IMapper mapper, CacheItemType type) where TEntity : class
+        public static async Task BuildCache<TEntity, TCache>(TreasureEntities entities, IMapper mapper, CacheItemType type, DateTimeOffset timestamp) where TEntity : class
         {
             Debug.WriteLine("Building cache for " + type);
             var data = entities.Set<TEntity>().AsQueryable();
@@ -42,6 +43,7 @@ namespace TreasureGuide.Sniffer.Helpers
                 entities.CacheSets.Add(existing);
             }
             existing.JSON = json;
+            existing.EditedDate = timestamp;
             await entities.SaveChangesAsync();
             Debug.WriteLine("Cache built.");
         }
