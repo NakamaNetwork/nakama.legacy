@@ -10,12 +10,12 @@
 namespace TreasureGuide.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class DeletedItem
+    public enum CacheItemType : int
     {
-        public int Id { get; set; }
-        public DeletedItemType Type { get; set; }
-        public System.DateTimeOffset EditedDate { get; set; }
+        FullReset = 0,
+        Unit = 1,
+        Stage = 2,
+        Ship = 3
     }
 }

@@ -18,25 +18,6 @@
     [MaxRCV] SMALLINT NULL, 
     [GrowthRate] DECIMAL(2, 1) NULL,
     [Flags] SMALLINT NOT NULL CONSTRAINT [DF_dbo.Units_Flags] DEFAULT 0,
-    [EditedDate] DATETIMEOFFSET(7) NOT NULL CONSTRAINT [DF_dbo.Units_EditedDate] DEFAULT SYSDATETIMEOFFSET(),
     CONSTRAINT [PK_dbo.Units] PRIMARY KEY CLUSTERED ([Id] ASC)
 )
-GO
-CREATE TRIGGER [dbo].[TRG_Units_Updated]
-ON [dbo].[Units]
-AFTER UPDATE 
-AS BEGIN
-   UPDATE [dbo].[Units]
-   SET [EditedDate] = SYSDATETIMEOFFSET()
-   FROM INSERTED I
-   WHERE [dbo].[Units].[Id] = I.[Id]
-END
-GO
-CREATE TRIGGER [dbo].[TRG_Units_Deleted]
-ON [dbo].[Units]
-AFTER DELETE 
-AS BEGIN
-   INSERT INTO [dbo].[DeletedItems]([Id], [Type], [EditedDate])
-   SELECT [Id], 1, SYSDATETIMEOFFSET() FROM DELETED I
-END
 GO

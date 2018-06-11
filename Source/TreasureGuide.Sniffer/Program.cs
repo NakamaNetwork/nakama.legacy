@@ -96,13 +96,12 @@ namespace TreasureGuide.Sniffer
             context.UnitAliases.Clear();
             context.UnitEvolutions.Clear();
             context.Units.Clear();
-            context.DeletedItems.Clear();
+            context.CacheSets.Clear();
             await context.SaveChangesAsync();
         }
 
         private static async Task PostRun(TreasureEntities context)
         {
-            context.DeletedItems.Clear();
             await context.SaveChangesAsync();
         }
     }
