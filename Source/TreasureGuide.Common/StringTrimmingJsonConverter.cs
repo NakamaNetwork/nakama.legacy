@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace TreasureGuide.Common.Helpers
+namespace TreasureGuide.Common
 {
     public class StringTrimmingJsonConverter : JsonConverter
     {

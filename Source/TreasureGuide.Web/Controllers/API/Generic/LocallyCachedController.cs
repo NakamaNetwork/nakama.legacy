@@ -42,16 +42,16 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 var dateTime = date.Value.FromUnixEpochDate();
                 found = found.Where(x => x.EditedDate > dateTime);
-                var data = await found.SingleOrDefaultAsync();
-                if (data != null)
+            }
+            var data = await found.SingleOrDefaultAsync();
+            if (data != null)
+            {
+                var result = new CacheResults
                 {
-                    var result = new CacheResults
-                    {
-                        Timestamp = data.EditedDate,
-                        Items = data.JSON
-                    };
-                    return Ok(result);
-                }
+                    Timestamp = data.EditedDate,
+                    Items = data.JSON
+                };
+                return Ok(result);
             }
             return Ok(null);
         }

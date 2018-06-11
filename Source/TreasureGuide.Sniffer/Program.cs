@@ -19,6 +19,7 @@ namespace TreasureGuide.Sniffer
 {
     public static class Program
     {
+        private static bool Running;
         private static int ParsersRunning;
 
         public static void Main(string[] args)
@@ -34,10 +35,11 @@ namespace TreasureGuide.Sniffer
             var mapper = MapperConfig.Create();
             AssureContextOpen(context);
             RunParsers(context, mapper, configuration);
-            while (ParsersRunning > 0)
+            while (Running || ParsersRunning > 0)
             {
                 // ...
             }
+            Debug.WriteLine("Seeya");
         }
 
         private static void AssureContextOpen(TreasureEntities context)
@@ -61,34 +63,36 @@ namespace TreasureGuide.Sniffer
                 new ScheduleParserCal(context)
             };
             //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
+            Running = true;
             ParsersRunning = parsers.Count();
 
             Task.Run(async () =>
-            {
-                await PreRun(context);
-                foreach (var parser in parsers)
                 {
-                    var name = parser.GetType().Name;
-                    try
+                    await PreRun(context);
+                    foreach (var parser in parsers)
                     {
-                        Debug.WriteLine($"Running {name}.");
-                        await parser.Execute();
-                        Debug.WriteLine($"{name} Succeeded!");
+                        var name = parser.GetType().Name;
+                        try
+                        {
+                            Debug.WriteLine($"Running {name}.");
+                            await parser.Execute();
+                            Debug.WriteLine($"{name} Succeeded!");
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.WriteLine($"{name} Failed!");
+                            Debug.WriteLine(e);
+                        }
+                        finally
+                        {
+                            ParsersRunning--;
+                            Debug.WriteLine($"{ParsersRunning} Parser(s) Remain");
+                        }
+                        GC.Collect();
                     }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine($"{name} Failed!");
-                        Debug.WriteLine(e);
-                    }
-                    finally
-                    {
-                        ParsersRunning--;
-                        Debug.WriteLine($"{ParsersRunning} Parser(s) Remain");
-                    }
-                    GC.Collect();
-                }
-                await PostRun(context, mapper);
-            });
+                    await PostRun(context, mapper);
+                    Running = false;
+                });
         }
 
         private static async Task PreRun(TreasureEntities context)
