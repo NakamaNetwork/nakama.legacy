@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.SqlServer.Server;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
-using TreasureGuide.Common.Models;
+using TreasureGuide.Common.Models.ProfileModels;
 using TreasureGuide.Web.Models;
-using TreasureGuide.Web.Models.ProfileModels;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API

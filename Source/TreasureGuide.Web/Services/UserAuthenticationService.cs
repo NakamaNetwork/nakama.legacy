@@ -10,6 +10,7 @@ using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Configurations;
 using TreasureGuide.Common.Helpers;
+using TreasureGuide.Common.Models.ProfileModels;
 using TreasureGuide.Web.Models.ProfileModels;
 
 namespace TreasureGuide.Web.Services
