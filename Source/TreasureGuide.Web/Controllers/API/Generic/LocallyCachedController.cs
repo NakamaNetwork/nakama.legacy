@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
+using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
@@ -40,8 +42,16 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 var dateTime = date.Value.FromUnixEpochDate();
                 found = found.Where(x => x.EditedDate > dateTime);
-                var data = found.Select(x => x.JSON).SingleOrDefaultAsync();
-                return Ok(data);
+                var data = await found.SingleOrDefaultAsync();
+                if (data != null)
+                {
+                    var result = new CacheResults
+                    {
+                        Timestamp = data.EditedDate,
+                        Items = data.JSON
+                    };
+                    return Ok(result);
+                }
             }
             return Ok(null);
         }

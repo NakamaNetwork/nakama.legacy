@@ -4,7 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using TreasureGuide.Common;
+using TreasureGuide.Common.Models.ShipModels;
+using TreasureGuide.Common.Models.StageModels;
+using TreasureGuide.Common.Models.UnitModels;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Sniffer.DataParser;
@@ -26,8 +31,9 @@ namespace TreasureGuide.Sniffer
             var configuration = builder.Build();
 
             var context = new ParserContext(configuration.GetConnectionString("TreasureEntities"));
+            var mapper = MapperConfig.Create();
             AssureContextOpen(context);
-            RunParsers(context, configuration);
+            RunParsers(context, mapper, configuration);
             while (ParsersRunning > 0)
             {
                 // ...
@@ -41,7 +47,7 @@ namespace TreasureGuide.Sniffer
             Debug.WriteLine("Success!");
         }
 
-        private static void RunParsers(TreasureEntities context, IConfigurationRoot configuration)
+        private static void RunParsers(TreasureEntities context, IMapper mapper, IConfigurationRoot configuration)
         {
             IEnumerable<IParser> parsers = new IParser[]
             {
@@ -81,7 +87,7 @@ namespace TreasureGuide.Sniffer
                     }
                     GC.Collect();
                 }
-                await PostRun(context);
+                await PostRun(context, mapper);
             });
         }
 
@@ -100,9 +106,12 @@ namespace TreasureGuide.Sniffer
             await context.SaveChangesAsync();
         }
 
-        private static async Task PostRun(TreasureEntities context)
+        private static async Task PostRun(TreasureEntities context, IMapper mapper)
         {
             await context.SaveChangesAsync();
+            await CacheBuilder.BuildCache<Unit, UnitStubModel>(context, mapper, CacheItemType.Unit);
+            await CacheBuilder.BuildCache<Stage, StageStubModel>(context, mapper, CacheItemType.Stage);
+            await CacheBuilder.BuildCache<Ship, ShipStubModel>(context, mapper, CacheItemType.Ship);
         }
     }
 }

@@ -13,8 +13,6 @@ namespace TreasureGuide.Common.Models.StageModels
         public bool Global { get; set; }
         public StageType Type { get; set; }
 
-        public int TeamCount { get; set; }
-
         public IEnumerable<string> Aliases { get; set; }
     }
 }

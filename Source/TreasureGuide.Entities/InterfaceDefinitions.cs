@@ -27,4 +27,6 @@ namespace TreasureGuide.Entities
     public partial class TeamGenericSlot : ISubItem { }
 
     public partial class Donation : IIdItem<int> { }
+
+    public partial class CacheSet : IEditedDateItem { }
 }
