@@ -82,8 +82,8 @@ export class App {
             { route: 'about', name: 'about', title: 'About', moduleId: 'views/boring/intro', nav: true },
             { route: 'markdown', name: 'markdown', title: 'Markdown', moduleId: 'views/boring/markdown', nav: false },
             // Give me your money
-            { route: 'support', name: 'support', title: 'Support', moduleId: 'views/support/index', nav: true },
-            { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: false },
+            { route: 'support', name: 'support', title: 'Credits', moduleId: 'views/support/index', nav: true },
+            { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: true },
             { route: 'donate/update', name: 'donationUpdate', title: 'Updating Donations', moduleId: 'views/donate/update', nav: false },
             { route: 'donate/cancel', name: 'donationCancelled', title: 'Donation Cancelled', moduleId: 'views/donate/cancel', nav: false },
             { route: 'donate/history', name: 'donationHistory', title: 'Donation History', moduleId: 'views/donate/history', nav: false, auth: true },
