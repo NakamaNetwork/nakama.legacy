@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 
-namespace TreasureGuide.Web.Helpers
+namespace TreasureGuide.Common.Helpers
 {
     public static class IdentityHelper
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using TreasureGuide.Web.Constants;
+using TreasureGuide.Common.Constants;
 
 namespace TreasureGuide.Web.Configurations
 {

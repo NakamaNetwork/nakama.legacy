@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
@@ -15,23 +12,19 @@ using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
-    public abstract class LocallyCachedController<TEntityKey, TEntity, TCacheModel> : Controller
-        where TEntity : class, IIdItem<TEntityKey>, IEditedDateItem
-        where TCacheModel : IIdItem<TEntityKey>
+    public abstract class LocallyCachedController : Controller
     {
         private const double Timeout = 5;
         protected readonly TreasureEntities DbContext;
-        protected readonly IMapper AutoMapper;
         protected readonly IThrottleService ThrottlingService;
-        protected readonly DeletedItemType Type;
+        protected readonly CacheItemType Type;
 
         public bool Throttled { get; set; } = true;
 
-        public LocallyCachedController(DeletedItemType type, TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService)
+        public LocallyCachedController(CacheItemType type, TreasureEntities dbContext, IThrottleService throttlingService)
         {
             Type = type;
             DbContext = dbContext;
-            AutoMapper = autoMapper;
             ThrottlingService = throttlingService;
         }
 
@@ -44,54 +37,23 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 return StatusCode(429, ThrottleService.Message);
             }
-            var reset = false;
-            var entities = DbContext.Set<TEntity>().AsQueryable();
-            IEnumerable<int> deleted = null;
+            var found = DbContext.CacheSets.Where(x => x.Type == Type);
             if (date.HasValue)
             {
                 var dateTime = date.Value.FromUnixEpochDate();
-                reset = await DbContext.DeletedItems.AnyAsync(x => x.Type == DeletedItemType.FullReset && x.EditedDate > dateTime);
-                if (!reset)
-                {
-                    entities = GetNewItems(entities, dateTime);
-                    deleted = GetDeletedItems(dateTime);
-                }
+                found = found.Where(x => x.EditedDate > dateTime);
             }
-            var timestamp = GetTimeStamp(entities);
-            var results = await entities.ProjectTo<TCacheModel>(AutoMapper.ConfigurationProvider).ToListAsync();
-            if (results.Any())
+            var data = await found.SingleOrDefaultAsync();
+            if (data != null)
             {
-                var result = new CacheResults<TEntityKey, TCacheModel>
+                var result = new CacheResults
                 {
-                    Items = results,
-                    Timestamp = timestamp,
-                    Deleted = deleted,
-                    Reset = reset
+                    Timestamp = data.EditedDate,
+                    Items = data.JSON
                 };
                 return Ok(result);
             }
             return Ok(null);
-        }
-
-        protected DateTimeOffset GetTimeStamp(IQueryable<TEntity> entities)
-        {
-            var deleted = DbContext.DeletedItems.Where(y => y.Type == Type || y.Type == DeletedItemType.FullReset).Select(x => x.EditedDate);
-            return GetTimeStamps(entities).Concat(deleted).DefaultIfEmpty().Max(x => x);
-        }
-
-        protected virtual IQueryable<DateTimeOffset> GetTimeStamps(IQueryable<TEntity> entities)
-        {
-            return entities.Select(x => x.EditedDate);
-        }
-
-        private IEnumerable<int> GetDeletedItems(DateTimeOffset date)
-        {
-            return DbContext.DeletedItems.Where(x => x.Type == Type && x.EditedDate > date).Select(x => x.Id);
-        }
-
-        protected virtual IQueryable<TEntity> GetNewItems(IQueryable<TEntity> entities, DateTimeOffset date)
-        {
-            return entities.Where(x => x.EditedDate > date);
         }
     }
 }

@@ -82,7 +82,7 @@ export interface IBoxUnitUpdateModel {
 }
 
 
-export enum DeletedItemType { 
+export enum CacheItemType { 
     FullReset = 0,
     Unit = 1,
     Stage = 2,
@@ -342,7 +342,6 @@ export interface IShipStubModel {
     name: string;
     eventShip: boolean;
     eventShipActive: boolean;
-    editedDate: Date;
     
 }
 
@@ -681,7 +680,6 @@ export interface IUnitStubModel {
     aliases: string[];
     evolvesTo: number[];
     evolvesFrom: number[];
-    editedDate: Date;
     
 }
 

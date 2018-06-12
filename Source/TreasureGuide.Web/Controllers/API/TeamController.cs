@@ -9,12 +9,12 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
-using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models.TeamModels;
+using TreasureGuide.Common.Helpers;
+using TreasureGuide.Common.Models.TeamModels;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API

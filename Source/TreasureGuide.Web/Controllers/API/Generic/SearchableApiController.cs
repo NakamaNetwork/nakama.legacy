@@ -6,7 +6,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Interfaces;
-using TreasureGuide.Web.Models;
+using TreasureGuide.Common.Models;
 using System.Data.Entity;
 using TreasureGuide.Web.Services;
 

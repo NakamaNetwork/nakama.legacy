@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Entities.Interfaces;
-using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Services;
 using System.Net;
-using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models;
+using TreasureGuide.Common.Constants;
+using TreasureGuide.Common.Helpers;
+using TreasureGuide.Common.Models;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {

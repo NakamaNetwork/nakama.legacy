@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TreasureGuide.Common.Models;
 using TreasureGuide.Web.Models;
 
 namespace TreasureGuide.Web.Data

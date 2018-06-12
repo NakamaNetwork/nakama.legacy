@@ -62,6 +62,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TreasureGuide.Common\TreasureGuide.Common.csproj">
+      <Project>{9a1a6bc9-d8be-4566-bc4d-b983c6469b58}</Project>
+      <Name>TreasureGuide.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj">
       <Project>{a6a0c40e-0d3c-4ee3-ad52-b5b477c7f971}</Project>
       <Name>TreasureGuide.Entities</Name>

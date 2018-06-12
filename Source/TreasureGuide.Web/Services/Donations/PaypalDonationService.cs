@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using PayPal.Api;
 using TreasureGuide.Entities;
-using TreasureGuide.Web.Models.DonationModels;
+using TreasureGuide.Common.Models.DonationModels;
 
 namespace TreasureGuide.Web.Services.Donations
 {

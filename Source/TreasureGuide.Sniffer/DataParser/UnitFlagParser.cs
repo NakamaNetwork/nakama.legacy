@@ -33,7 +33,6 @@ namespace TreasureGuide.Sniffer.DataParser
 
         protected override async Task Save(IEnumerable<UnitFlagModel> items)
         {
-            await Context.Database.ExecuteSqlCommandAsync("DISABLE TRIGGER [dbo].[TRG_Units_Updated] ON[dbo].[Units]");
             var batch = 100;
             var current = 0;
             foreach (var datum in items)
@@ -51,7 +50,6 @@ namespace TreasureGuide.Sniffer.DataParser
                 }
             }
             await Context.SaveChangesAsync();
-            await Context.Database.ExecuteSqlCommandAsync("ENABLE TRIGGER [dbo].[TRG_Units_Updated] ON[dbo].[Units]");
         }
     }
 

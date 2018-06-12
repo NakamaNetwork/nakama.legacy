@@ -2,21 +2,21 @@
 
 namespace TreasureGuide.Entities
 {
-    public partial class Unit : IIdItem<int>, IEditedDateItem { }
+    public partial class Unit : IIdItem<int> { }
 
-    public partial class UnitAlias : IEditedDateItem { }
+    public partial class UnitAlias { }
 
-    public partial class UnitEvolution : IEditedDateItem { }
+    public partial class UnitEvolution { }
 
     public partial class Team : IIdItem<int>, IEditedDateItem { }
 
     public partial class TeamVideo : IIdItem<int> { }
 
-    public partial class Stage : IIdItem<int>, IEditedDateItem { }
+    public partial class Stage : IIdItem<int> { }
 
-    public partial class StageAlias : IEditedDateItem { }
+    public partial class StageAlias { }
 
-    public partial class Ship : IIdItem<int>, IEditedDateItem { }
+    public partial class Ship : IIdItem<int> { }
 
     public partial class UserProfile : IIdItem<string> { }
 
@@ -27,4 +27,6 @@ namespace TreasureGuide.Entities
     public partial class TeamGenericSlot : ISubItem { }
 
     public partial class Donation : IIdItem<int> { }
+
+    public partial class CacheSet : IEditedDateItem { }
 }

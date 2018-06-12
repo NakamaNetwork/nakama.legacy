@@ -2,29 +2,8 @@
 (
     [FromUnitId] INT NOT NULL,
     [ToUnitId] INT NOT NULL,
-    [EditedDate] DATETIMEOFFSET(7) NOT NULL CONSTRAINT [DF_dbo.UnitEvolutions_EditedDate] DEFAULT SYSDATETIMEOFFSET(),
     CONSTRAINT [PK_dbo.UnitEvolutions] PRIMARY KEY CLUSTERED ([FromUnitId] ASC, [ToUnitId] ASC),
     CONSTRAINT [FK_dbo.UnitEvolutions_dbo.ToUnitId] FOREIGN KEY([ToUnitId]) REFERENCES [dbo].[Units] ([Id]),
     CONSTRAINT [FK_dbo.UnitEvolutions_dbo.FromUnitId] FOREIGN KEY([FromUnitId]) REFERENCES [dbo].[Units] ([Id])
 )
-GO
-CREATE TRIGGER [dbo].[TRG_UnitEvolutions_Updated]
-ON [dbo].[UnitEvolutions]
-AFTER UPDATE 
-AS BEGIN
-   UPDATE [dbo].[UnitEvolutions]
-   SET [EditedDate] = SYSDATETIMEOFFSET()
-   FROM INSERTED I
-   WHERE [dbo].[UnitEvolutions].[FromUnitId] = I.[FromUnitId] AND [dbo].[UnitEvolutions].[ToUnitId] = I.[ToUnitId]
-END
-GO
-CREATE TRIGGER [dbo].[TRG_UnitEvolutions_Deleted]
-ON [dbo].[UnitEvolutions]
-AFTER DELETE 
-AS BEGIN
-   UPDATE [dbo].[Units]
-   SET [EditedDate] = SYSDATETIMEOFFSET()
-   FROM DELETED I
-   WHERE [dbo].[Units].[Id] = I.[FromUnitId] OR [dbo].[Units].[Id] = I.[ToUnitId]
-END
 GO

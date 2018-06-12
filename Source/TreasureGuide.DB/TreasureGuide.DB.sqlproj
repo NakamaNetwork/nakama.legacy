@@ -104,7 +104,7 @@
     <None Include="PostDeploy\dbo.UnitEvolutions.Table.sql" />
     <Build Include="dbo\Tables\Donations\Donations.sql" />
     <Build Include="dbo\Tables\Schedule\ScheduledEvents.sql" />
-    <Build Include="dbo\Tables\DeletedItems.sql" />
+    <Build Include="dbo\Tables\CacheSets.sql" />
     <Build Include="dbo\Tables\GlobalClearRates\GCRUnits.sql" />
     <Build Include="dbo\Tables\GlobalClearRates\GCRStages.sql" />
     <Build Include="dbo\Views\GCR\GCRTable.sql" />

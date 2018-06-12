@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TreasureGuide.Common;
 using TreasureGuide.Entities;
-using TreasureGuide.Web.Configurations;
 
 namespace TreasureGuide.Web.Test.UnitTests.Configuration
 {

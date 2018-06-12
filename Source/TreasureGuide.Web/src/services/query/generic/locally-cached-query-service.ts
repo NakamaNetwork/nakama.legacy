@@ -51,25 +51,11 @@ export abstract class LocallyCachedQueryService<TId, TEntity extends CacheItem> 
         var endpoint = this.buildAddress(param);
         return this.http.get(endpoint).then(x => {
             if (x) {
-                if (x.reset) {
-                    this.items = [];
-                }
-                if (x.deleted && x.deleted.length > 0) {
-                    this.items = this.items.filter(y => x.deleted.indexOf(y.id) === -1);
-                }
-                var ids = x.items.map(y => y.id);
-                var newSet = this.items.filter(y => ids.indexOf(y.id) === -1);
-                x.items.forEach(y => {
-                    newSet.push(y);
-                });
-                newSet = newSet.sort((a, b) => a.id - b.id);
-
-                this.items = newSet;
-                var json = JSON.stringify(this.items);
-                localStorage.setItem(this.key, json);
+                localStorage.setItem(this.key, x.items);
                 if (x.timestamp) {
                     localStorage.setItem(this.dateKey, moment(x.timestamp).unix().toString());
                 }
+                this.items = JSON.parse(x.items);
                 this.rebuildDictionary();
             }
             this.buildingCache = false;
