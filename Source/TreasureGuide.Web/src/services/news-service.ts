@@ -7,6 +7,14 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '06/11/18',
+        lines: [
+            'Updated the way data caching works to significantly reduce database load.',
+            'Migrated database to a new Amazon RDS instance.',
+            'Updated name of "Support" page.',
+            'Added a direct link to the "Donate" page from the menu bar.'
+        ]
+    }, {
         header: '05/04/18',
         lines: [
             'Added new icons for team box flags (i.e. Global, F2P, Videos)',
