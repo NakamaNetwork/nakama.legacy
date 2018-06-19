@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '06/19/18',
+        lines: [
+            'Added some new team query endpoints for use by the OPTC Wiki.'
+        ]
+    }, {
         header: '06/18/18',
         lines: [
             'Fixed an issue that could cause uploaded video links to break during submission.'

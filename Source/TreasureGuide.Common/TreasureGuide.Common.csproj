@@ -80,6 +80,7 @@
     <Compile Include="Models\TeamModels\TeamUnitModels.cs" />
     <Compile Include="Models\TeamModels\TeamVideoModels.cs" />
     <Compile Include="Models\TeamModels\TeamVoteModel.cs" />
+    <Compile Include="Models\TeamModels\WikiSearchResultModel.cs" />
     <Compile Include="Models\UnitModels\UnitSearchModel.cs" />
     <Compile Include="Models\UnitModels\UnitStubModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

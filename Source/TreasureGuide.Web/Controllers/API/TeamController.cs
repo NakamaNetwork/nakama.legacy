@@ -14,17 +14,26 @@ using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
+using TreasureGuide.Common.Models;
 using TreasureGuide.Common.Models.TeamModels;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/team")]
-    [EnableCors("NakamaCORS")]
     public class TeamController : SearchableApiController<int, Team, int?, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
         public TeamController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
+        }
+
+        [HttpGet]
+        [ActionName("Wiki")]
+        [Route("[action]")]
+        [EnableCors("NakamaCORS")]
+        public async Task<SearchResult<WikiSearchResultModel>> Wiki(TeamSearchModel model)
+        {
+            return await Search<WikiSearchResultModel>(model);
         }
 
         protected override async Task<Team> PostProcess(Team entity)

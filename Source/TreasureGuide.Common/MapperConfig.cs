@@ -95,6 +95,17 @@ namespace TreasureGuide.Common
                     z.Position < 2 || !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
                 )));
 
+                var wiki = mapper.CreateMap<Team, WikiSearchResultModel>();
+                wiki.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
+                wiki.ForMember(x => x.StageName, o => o.MapFrom(y => y.Stage != null ? y.Stage.Name : null));
+                wiki.ForMember(x => x.InvasionName, o => o.MapFrom(y => y.Invasion != null ? y.Invasion.Name : null));
+                wiki.ForMember(x => x.ShipName, o => o.MapFrom(y => y.Ship != null ? y.Ship.Name : null));
+                wiki.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
+                wiki.ForMember(x => x.TeamUnits, o => o.MapFrom(y => y.TeamUnits.Where(z => !z.Sub)));
+
+                var wikiUnit = mapper.CreateMap<TeamUnit, WikiSearchUnitStubModel>();
+                wikiUnit.ForMember(x => x.UnitName, o => o.MapFrom(y => y.Unit != null ? y.Unit.Name : null));
+
                 var user = mapper.CreateControllerMapping<UserProfile, ProfileDetailModel, ProfileStubModel, ProfileEditorModel>();
                 user.EntityMapping.ForMember(x => x.UserRoles, o => o.Ignore()); // Handle this manually.
                 user.EntityMapping.ForMember(x => x.UserName, o => o.Ignore()); // Don't allow thise to be changed.
