@@ -37,7 +37,7 @@ export class TeamImportPage {
 
     submit() {
         var message = 'Please make sure you have reviewed the submission table before committing!';
-        if (this.draft) {
+        if (!this.draft) {
             message = 'These teams will be available to the public IMMEDIATELY! ' + message;
         }
         this.dialogService.open({ viewModel: AlertDialog, model: { message: message, cancelable: true }, lock: true }).whenClosed(x => {
@@ -66,7 +66,7 @@ export class TeamImportPage {
     }
 
     convertStrings() {
-        var lines = this.strings.toLowerCase().split(/\r?\n/g);
+        var lines = this.strings.split(/\r?\n/g);
         var things = new Array<TeamImportLineModel>();
         this.alertService.info('Processing rows...');
         for (var i = 0; i < lines.length; i++) {

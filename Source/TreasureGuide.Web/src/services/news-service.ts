@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '06/18/18',
+        lines: [
+            'Fixed an issue that could cause uploaded video links to break during submission.'
+        ]
+    }, {
         header: '06/11/18',
         lines: [
             'Updated the way data caching works to significantly reduce database load.',
