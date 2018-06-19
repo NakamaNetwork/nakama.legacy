@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '06/19/18 - #2',
+        lines: [
+            'Fixed an issue with the team submission validator that prevented teams with similar (but not duplicate) generic units from being submitted.'
+        ]
+    }, {
         header: '06/19/18',
         lines: [
             'Added some new team query endpoints for use by the OPTC Wiki.'

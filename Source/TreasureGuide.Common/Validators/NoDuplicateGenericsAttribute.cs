@@ -25,7 +25,7 @@ namespace TreasureGuide.Common.Validators
             {
                 return true;
             }
-            var groups = team.GroupBy(x => new { x.Position, x.Class, x.Role, x.Sub });
+            var groups = team.GroupBy(x => new { x.Position, x.Class, x.Role, x.Sub, x.Type });
             var offending = groups.FirstOrDefault(x => x.Count() > 1);
             if (offending != null)
             {
