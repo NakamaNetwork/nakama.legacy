@@ -1,0 +1,94 @@
+.nakama-teams {
+    border: 1px solid #d1d1d1;
+    border-radius: 20px;
+    padding: 5px;
+    text-align: center;
+}
+
+.nakama-teams .nakama-error {
+    color: darkred;
+}
+
+.nakama-teams .nakama-info img {
+    width: 24px;
+    padding: 2px;
+    vertical-align: middle;
+}
+
+.nakama-teams .nakama-loading img {
+    -webkit-animation: naka-spin 1s linear infinite;
+    -moz-animation: naka-spin 1s linear infinite;
+    animation: naka-spin 1s linear infinite;
+}
+
+@-moz-keyframes naka-spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes naka-spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes naka-spin { 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
+
+.nakama-team {
+    text-align: center;
+    padding: 10px;
+    display: inline-block;
+    width: 46%;
+}
+
+@media only screen and (max-width: 550px) {
+    .nakama-team {
+        width: 92%;
+    }
+}
+
+.nakama-team table {
+    border: 1px solid #d1d1d1;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.nakama-team table th,
+.nakama-team table td {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 1px;
+}
+
+.nakama-team .nakama-score {
+    text-align: center;
+    font-weight: bold;
+    font-family: "Courier New", Courier, monospace;
+}
+
+.nakama-team .nakama-score span {
+    border: 1px solid;
+    border-radius: 1em;
+    padding: 0 5px;
+}
+
+.nakama-team .nakama-score.positive{
+    color: green;
+}
+
+.nakama-team .nakama-score.negative{
+    color: darkred;
+}
+
+.nakama-team .unit {
+    width: 16%;
+}
+
+.nakama-team img {
+    max-width: 100%;
+}
+
+.nakama-team .stage,
+.nakama-team .ship,
+.nakama-team .invasion,
+.nakama-team .author {
+    text-align: left;
+    padding: 0 10px;
+}
+
+.nakama-team .invasion,
+.nakama-team .author {
+    text-align: right;
+}
