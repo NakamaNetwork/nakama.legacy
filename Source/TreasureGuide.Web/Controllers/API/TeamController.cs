@@ -648,7 +648,7 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 Team = team,
                 SubmittedDate = now,
-                UserId = ImportId,
+                UserId = userId,
                 VideoLink = x.VideoLink
             }).ToList();
             DbContext.TeamVideos.AddRange(videos);
