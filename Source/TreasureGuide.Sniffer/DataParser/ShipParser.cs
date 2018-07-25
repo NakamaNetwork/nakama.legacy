@@ -30,8 +30,7 @@ namespace TreasureGuide.Sniffer.DataParser
                     Id = id,
                     Name = name,
                     Description = line["description"].ToString(),
-                    EventShip = IsEventShip(name.ToLower()),
-                    EventShipActive = false
+                    EventShip = IsEventShip(name.ToLower())
                 };
                 return ship;
             });

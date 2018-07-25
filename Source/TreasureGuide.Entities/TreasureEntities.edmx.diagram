@@ -7,14 +7,12 @@
       <Diagram DiagramId="15b9edd1340940f481faacdd9b6411bb" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="tcdbModel.TeamSocket" Width="1.5" PointX="7.25" PointY="0.5" />
         <EntityTypeShape EntityType="tcdbModel.Unit" Width="1.5" PointX="2.75" PointY="2.875" />
-        <EntityTypeShape EntityType="tcdbModel.Ship" Width="1.5" PointX="9.625" PointY="2.125" />
         <EntityTypeShape EntityType="tcdbModel.Stage" Width="1.5" PointX="9.125" PointY="9.75" />
         <EntityTypeShape EntityType="tcdbModel.UserProfile" Width="1.5" PointX="5" PointY="6.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UserProfile_dbo_Units" />
         <EntityTypeShape EntityType="tcdbModel.UserRole" Width="1.5" PointX="5.125" PointY="12.125" />
         <AssociationConnector Association="tcdbModel.UserProfileUserRole" />
         <EntityTypeShape EntityType="tcdbModel.Team" Width="1.5" PointX="7.25" PointY="2.625" />
-        <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Ships" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Stages" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" />
@@ -68,6 +66,8 @@
         <EntityTypeShape EntityType="tcdbModel.GCRStageInfo" Width="1.5" PointX="12.375" PointY="14.75" />
         <EntityTypeShape EntityType="tcdbModel.GCRUnitInfo" Width="1.5" PointX="14.375" PointY="8.75" />
         <EntityTypeShape EntityType="tcdbModel.CacheSet" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="tcdbModel.Ship" Width="1.5" PointX="10" PointY="1.125" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Ships" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

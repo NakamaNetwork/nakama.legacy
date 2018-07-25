@@ -138,7 +138,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchDeleted(results, model.Deleted);
             results = SearchDrafts(results, model.Draft);
             results = SearchReported(results, model.Reported);
-            results = SearchEventShips(results, model.EventShips);
+            results = SearchEventShips(results, model.ExcludeEventShips);
             results = SearchBookmarks(results, model.Bookmark);
             results = SearchStage(results, model.StageId, model.InvasionId);
             results = SearchTerm(results, model.Term);
@@ -187,11 +187,11 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
-        private IQueryable<Team> SearchEventShips(IQueryable<Team> results, bool modelEventShips)
+        private IQueryable<Team> SearchEventShips(IQueryable<Team> results, bool excludeEventShips)
         {
-            if (!modelEventShips)
+            if (excludeEventShips)
             {
-                results = results.Where(x => !x.Ship.EventShip || x.Ship.EventShipActive);
+                results = results.Where(x => !x.Ship.EventShip);
             }
             return results;
         }

@@ -375,7 +375,6 @@ export interface IStageStubModel {
     name: string;
     global: boolean;
     type: StageType;
-    teamCount: number;
     aliases: string[];
     
 }
@@ -541,7 +540,7 @@ export interface ITeamSearchModel extends ISearchModel{
     draft: boolean;
     reported: boolean;
     bookmark: boolean;
-    eventShips: boolean;
+    excludeEventShips: boolean;
     
 }
 
@@ -697,5 +696,28 @@ export enum UnitType {
 export enum UserPreferenceType { 
     Unknown = 0,
     BoxId = 1
+}
+
+
+export interface IWikiSearchResultModel {
+    teamUnits: IWikiSearchUnitStubModel[];
+    id: number;
+    name: string;
+    submittedById: string;
+    submittedByName: string;
+    editedDate: Date;
+    score: number;
+    shipId: number;
+    shipName: string;
+    stageId: number;
+    stageName: string;
+    invasionId: number;
+    invasionName: string;
+    
+}
+
+export interface IWikiSearchUnitStubModel extends ITeamUnitStubModel{
+    unitName: string;
+    
 }
 

@@ -18,6 +18,7 @@ namespace TreasureGuide.Sniffer.DataParser
         private readonly string Fortnights = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/fortnightEvents.js";
         private readonly string Raids = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/raidEvents.js";
         private readonly string Treasure = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/tmEvents.js";
+        private readonly string Special = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/specialEvents.js";
 
         public ScheduleParserCal(TreasureEntities context) : base(context, null)
         {
@@ -29,8 +30,9 @@ namespace TreasureGuide.Sniffer.DataParser
             var fnData = await GetEventData(Fortnights, StageType.Fortnight);
             var coloData = await GetEventData(Colos, StageType.Coliseum);
             var treasureData = await GetEventData(Treasure, StageType.TreasureMap);
+            var specialData = await GetEventData(Special, StageType.Special);
 
-            var allData = raidData.Concat(fnData).Concat(coloData).Concat(treasureData).ToList();
+            var allData = raidData.Concat(fnData).Concat(coloData).Concat(treasureData).Concat(specialData).ToList();
             var grouped = allData.GroupBy(x => String.Join("__", x.StageId, x.Global, x.StartDate, x.EndDate))
                 .Select(x => x.FirstOrDefault()).Where(x => x != null).ToList();
 
@@ -89,7 +91,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Replace("ambush: ywb", "ambush: 1258")
                 .Replace("ambush: shanks", "ambush: 1380")
                 .Replace("ambush: cavendish", "ambush: 1530")
-                .Replace("ambush: garp", "ambush: 1846");
+                .Replace("id: sb_1023", "id: 1023");
         }
 
         private DateTimeOffset? GetDate(string value)
@@ -208,6 +210,10 @@ namespace TreasureGuide.Sniffer.DataParser
                 // Raid Doffy v2
                 case 5012:
                     return 4220100;
+                case 1810:
+                    return 2181200;
+                case 1893:
+                    return 2189100;
             }
             return null;
         }

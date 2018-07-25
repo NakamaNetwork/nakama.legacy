@@ -81,6 +81,7 @@ namespace TreasureGuide.Sniffer.Helpers
                 case "story island":
                     return StageType.Story;
                 case "weekly island":
+                case "booster and evolver island":
                     return StageType.Weekly;
                 case "fortnight":
                     return StageType.Fortnight;

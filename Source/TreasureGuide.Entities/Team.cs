@@ -42,7 +42,6 @@ namespace TreasureGuide.Entities
         public bool Draft { get; set; }
         public Nullable<int> InvasionId { get; set; }
     
-        public virtual Ship Ship { get; set; }
         public virtual Stage Stage { get; set; }
         public virtual UserProfile EditingUser { get; set; }
         public virtual UserProfile SubmittingUser { get; set; }
@@ -64,5 +63,6 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
         public virtual Stage Invasion { get; set; }
+        public virtual Ship Ship { get; set; }
     }
 }

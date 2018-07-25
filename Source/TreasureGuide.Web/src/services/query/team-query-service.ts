@@ -83,7 +83,7 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     deleted: boolean;
     bookmark: boolean;
     reported: boolean;
-    eventShips: boolean;
+    excludeEventShips: boolean;
     draft: boolean;
     cacheKey: string = 'search-team';
 

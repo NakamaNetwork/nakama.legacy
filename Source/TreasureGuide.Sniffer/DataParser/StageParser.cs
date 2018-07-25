@@ -74,6 +74,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 stages.AddRange(datas.SelectMany(x => x.Item1).ToList());
                 aliases.AddRange(datas.SelectMany(x => x.Item2).ToList());
             }
+            CreateExtras(stages, aliases);
 
             return Tuple.Create(stages, aliases);
         }
@@ -111,6 +112,13 @@ namespace TreasureGuide.Sniffer.DataParser
             }
             _existing.Add(id);
             return id;
+        }
+
+        private void CreateExtras(List<Stage> stages, List<StageAlias> aliases)
+        {
+            var beli = HandleSingle("Golden Cave", 59, true, StageType.Weekly);
+            stages.Add(beli);
+            aliases.Add(new StageAlias { StageId = beli.Id, Name = "Beli Cavern" });
         }
 
         private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)

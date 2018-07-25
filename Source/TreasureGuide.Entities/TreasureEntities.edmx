@@ -107,7 +107,6 @@
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
           <Property Name="Description" Type="nvarchar" MaxLength="1000" />
           <Property Name="EventShip" Type="bit" Nullable="false" />
-          <Property Name="EventShipActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="StageAliases">
           <Key>
@@ -1032,7 +1031,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <EntityContainer Name="TreasureEntities" annotation:LazyLoadingEnabled="true">
                     <EntitySet Name="TeamSockets" EntityType="tcdbModel.TeamSocket" />
                     <EntitySet Name="Units" EntityType="tcdbModel.Unit" />
-                    <EntitySet Name="Ships" EntityType="tcdbModel.Ship" />
                     <EntitySet Name="Stages" EntityType="tcdbModel.Stage" />
                     <EntitySet Name="UserProfiles" EntityType="tcdbModel.UserProfile" />
                     <AssociationSet Name="FK_dbo_UserProfile_dbo_Units" Association="tcdbModel.FK_dbo_UserProfile_dbo_Units">
@@ -1045,10 +1043,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                         <End Role="UserRole" EntitySet="UserRoles" />
                     </AssociationSet>
                     <EntitySet Name="Teams" EntityType="tcdbModel.Team" />
-                    <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="tcdbModel.FK_dbo_Teams_dbo_Ships">
-                        <End Role="Ship" EntitySet="Ships" />
-                        <End Role="Team" EntitySet="Teams" />
-                    </AssociationSet>
                     <AssociationSet Name="FK_dbo_Teams_dbo_Stages" Association="tcdbModel.FK_dbo_Teams_dbo_Stages">
                         <End Role="Stage" EntitySet="Stages" />
                         <End Role="Team" EntitySet="Teams" />
@@ -1208,6 +1202,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="GCRStageInfoes" EntityType="tcdbModel.GCRStageInfo" />
           <EntitySet Name="GCRUnitInfoes" EntityType="tcdbModel.GCRUnitInfo" />
           <EntitySet Name="CacheSets" EntityType="tcdbModel.CacheSet" />
+          <EntitySet Name="Ships" EntityType="tcdbModel.Ship" />
+          <AssociationSet Name="FK_dbo_Teams_dbo_Ships" Association="tcdbModel.FK_dbo_Teams_dbo_Ships">
+            <End Role="Ship" EntitySet="Ships" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
                 </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -1304,17 +1303,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <NavigationProperty Name="EvolvesFrom" Relationship="tcdbModel.FK_dbo_UnitEvolutions_dbo_ToUnitId" FromRole="Unit" ToRole="UnitEvolution" />
           <NavigationProperty Name="GCRUnit" Relationship="tcdbModel.FK_dbo_GCRUnits_dbo_Units" FromRole="Unit" ToRole="GCRUnit" />
                 </EntityType>
-                <EntityType Name="Ship">
-                    <Key>
-                        <PropertyRef Name="Id" />
-                    </Key>
-                    <Property Name="Id" Type="Int32" Nullable="false" />
-                    <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-                    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-                    <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Ship" ToRole="Team" />
-                    <Property Name="EventShip" Type="Boolean" Nullable="false" />
-                    <Property Name="EventShipActive" Type="Boolean" Nullable="false" />
-                </EntityType>
                 <EntityType Name="Stage">
                     <Key>
                         <PropertyRef Name="Id" />
@@ -1401,7 +1389,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="EditedById" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
                     <Property Name="EditedDate" Type="DateTimeOffset" Precision="7" Nullable="false" />
                     <Property Name="Version" Type="Int32" Nullable="false" />
-                    <NavigationProperty Name="Ship" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Team" ToRole="Ship" />
                     <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages" FromRole="Team" ToRole="Stage" />
                     <NavigationProperty Name="EditingUser" Relationship="tcdbModel.FK_dbo_Teams_EditedById_dbo_UserProfiles" FromRole="Team" ToRole="UserProfile" />
                     <NavigationProperty Name="SubmittingUser" Relationship="tcdbModel.FK_dbo_Teams_SubmittedById_dbo_UserProfiles" FromRole="Team" ToRole="UserProfile" />
@@ -1418,19 +1405,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <NavigationProperty Name="TeamUnits" Relationship="tcdbModel.FK_dbo_TeamUnits_dbo_Teams" FromRole="Team" ToRole="TeamUnit" />
                     <Property Name="InvasionId" Type="Int32" />
                     <NavigationProperty Name="Invasion" Relationship="tcdbModel.FK_dbo_Teams_dbo_Stages_Invasions" FromRole="Team" ToRole="Stage" />
+          <NavigationProperty Name="Ship" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Team" ToRole="Ship" />
                 </EntityType>
-                <Association Name="FK_dbo_Teams_dbo_Ships">
-                    <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
-                    <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
-                    <ReferentialConstraint>
-                        <Principal Role="Ship">
-                            <PropertyRef Name="Id" />
-                        </Principal>
-                        <Dependent Role="Team">
-                            <PropertyRef Name="ShipId" />
-                        </Dependent>
-                    </ReferentialConstraint>
-                </Association>
                 <Association Name="FK_dbo_Teams_dbo_Stages">
                     <End Type="tcdbModel.Stage" Role="Stage" Multiplicity="0..1" />
                     <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
@@ -2169,6 +2145,28 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="JSON" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EditedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
         </EntityType>
+        <EntityType Name="Ship">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="EventShip" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Teams" Relationship="tcdbModel.FK_dbo_Teams_dbo_Ships" FromRole="Ship" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_dbo_Teams_dbo_Ships">
+          <End Type="tcdbModel.Ship" Role="Ship" Multiplicity="1" />
+          <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ship">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="ShipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
             </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2203,17 +2201,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                                 <ScalarProperty Name="Stars" ColumnName="Stars" />
                                 <ScalarProperty Name="Class" ColumnName="Class" />
                                 <ScalarProperty Name="Type" ColumnName="Type" />
-                                <ScalarProperty Name="Name" ColumnName="Name" />
-                                <ScalarProperty Name="Id" ColumnName="Id" />
-                            </MappingFragment>
-                        </EntityTypeMapping>
-                    </EntitySetMapping>
-                    <EntitySetMapping Name="Ships">
-                        <EntityTypeMapping TypeName="tcdbModel.Ship">
-                            <MappingFragment StoreEntitySet="Ships">
-                                <ScalarProperty Name="EventShipActive" ColumnName="EventShipActive" />
-                                <ScalarProperty Name="EventShip" ColumnName="EventShip" />
-                                <ScalarProperty Name="Description" ColumnName="Description" />
                                 <ScalarProperty Name="Name" ColumnName="Name" />
                                 <ScalarProperty Name="Id" ColumnName="Id" />
                             </MappingFragment>
@@ -2539,6 +2526,16 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
                 <ScalarProperty Name="JSON" ColumnName="JSON" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ships">
+            <EntityTypeMapping TypeName="tcdbModel.Ship">
+              <MappingFragment StoreEntitySet="Ships">
+                <ScalarProperty Name="EventShip" ColumnName="EventShip" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -54,6 +54,12 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\ship-stub-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\ShipModels\ShipStubModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-search-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamSearchModel.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
