@@ -91,7 +91,15 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Replace("ambush: ywb", "ambush: 1258")
                 .Replace("ambush: shanks", "ambush: 1380")
                 .Replace("ambush: cavendish", "ambush: 1530")
-                .Replace("id: sb_1023", "id: 1023");
+                .Replace("ambush: garp", "ambush: 1846")
+                .Replace("id: 'sb_1023'", "id: 1023")
+                .Replace("id: 'tp_1463'", "id: 1463")
+                .Replace("id: 'tp_1465'", "id: 1463")
+                .Replace("id: 'tp_1508'", "id: 1463")
+                .Replace("id: 'tp_1516'", "id: 1463")
+                .Replace("id: 'bb_0870'", "id: 870")
+                .Replace("id: 'bb_1314'", "id: 1314")
+                .Replace("id: 'bb_1404'", "id: 1404");
         }
 
         private DateTimeOffset? GetDate(string value)
