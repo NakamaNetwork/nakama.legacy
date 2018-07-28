@@ -217,7 +217,7 @@ namespace TreasureGuide.Sniffer.DataParser
                     return 2172300;
                 // Raid Doffy v2
                 case 5012:
-                    return 4220100;
+                    return 4250100;
                 case 1810:
                     return 2181200;
                 case 1893:

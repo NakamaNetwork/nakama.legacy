@@ -20,10 +20,10 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
             if (id == '0742') {
                 return 'https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png';
             }
-            if (id == '2200') {
+            if (id == '2200' || id == '2500') {
                 return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5011.png';
             }
-            if (id == '2201') {
+            if (id == '2201' || id == '2501') {
                 return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5012.png';
             }
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
