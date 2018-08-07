@@ -99,7 +99,8 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Replace("id: 'tp_1516'", "id: 1463")
                 .Replace("id: 'bb_0870'", "id: 870")
                 .Replace("id: 'bb_1314'", "id: 1314")
-                .Replace("id: 'bb_1404'", "id: 1404");
+                .Replace("id: 'bb_1404'", "id: 1404")
+                .Replace("id: 'db_1985'", "id: 1985");
         }
 
         private DateTimeOffset? GetDate(string value)
@@ -205,6 +206,8 @@ namespace TreasureGuide.Sniffer.DataParser
                 case 690:
                 case 1199:
                 case 1201:
+                case 1709:
+                case 1711:
                     return 6068300;
                 // valentines
                 case 990:
@@ -222,6 +225,8 @@ namespace TreasureGuide.Sniffer.DataParser
                     return 2181200;
                 case 1893:
                     return 2189100;
+                case 1980:
+                    return 2198200;
             }
             return null;
         }
@@ -231,9 +236,9 @@ namespace TreasureGuide.Sniffer.DataParser
             var remove = new List<ScheduledEvent>();
             foreach (var item in items)
             {
-                if (Context.ScheduledEvents.Any(x => x.StageId == item.StageId 
-                    && x.Global == item.Global 
-                    && x.StartDate == item.StartDate 
+                if (Context.ScheduledEvents.Any(x => x.StageId == item.StageId
+                    && x.Global == item.Global
+                    && x.StartDate == item.StartDate
                     && x.EndDate == item.EndDate))
                 {
                     remove.Add(item);

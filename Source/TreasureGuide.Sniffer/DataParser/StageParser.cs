@@ -119,6 +119,13 @@ namespace TreasureGuide.Sniffer.DataParser
             var beli = HandleSingle("Golden Cave", 59, true, StageType.Weekly);
             stages.Add(beli);
             aliases.Add(new StageAlias { StageId = beli.Id, Name = "Beli Cavern" });
+
+            var doubles = HandleSingle("Double Character Missions", 1985, true, StageType.Special);
+            stages.Add(doubles);
+            aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Luffy Ace Missions Fortnight Event" });
+            aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Lace Missions Fortnight Event" });
+            aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Smoker Tashigi Missions Fortnight Event" });
+            aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Double Character Introduction" });
         }
 
         private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)
