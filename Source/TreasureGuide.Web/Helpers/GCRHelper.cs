@@ -12,19 +12,15 @@ namespace TreasureGuide.Common.Helpers
             if (unitId.HasValue)
             {
                 var id = AokijiRegex.Replace($"{unitId:0000}", "0$0"); // missing aokiji image
-                if (id == "0742")
+                switch (id)
                 {
-                    return "https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png";
+                    case "0742": return "https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png";
+                    case "2500": case "2200": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5011.png";
+                    case "2501": case "2201": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5012.png";
+                    case "2502": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5013.png";
+                    case "2503": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5014.png";
+                    case "2504": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5015.png";
                 }
-                if (id == "2200" || id == "2500")
-                {
-                    return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5011.png";
-                }
-                if (id == "2201" || id == "2501")
-                {
-                    return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5012.png";
-                }
-                return $"https://onepiece-treasurecruise.com/wp-content/uploads/f{id}.png";
             }
             return null;
         }

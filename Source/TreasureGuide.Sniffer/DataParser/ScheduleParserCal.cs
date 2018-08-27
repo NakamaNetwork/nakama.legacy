@@ -227,6 +227,10 @@ namespace TreasureGuide.Sniffer.DataParser
                     return 2189100;
                 case 1980:
                     return 2198200;
+                case 1995:
+                    return 2199700;
+                case 2019:
+                    return 2202100;
             }
             return null;
         }
