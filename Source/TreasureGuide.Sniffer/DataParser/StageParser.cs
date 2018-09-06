@@ -65,6 +65,10 @@ namespace TreasureGuide.Sniffer.DataParser
                         }
                     }
                     var output = HandleSingle(name, thumb, global, stageType);
+                    if (output == null)
+                    {
+                        return Tuple.Create(new List<Stage>(), new List<StageAlias>());
+                    }
                     foreach (var alias in localAliases)
                     {
                         alias.StageId = output.Id;
@@ -79,9 +83,13 @@ namespace TreasureGuide.Sniffer.DataParser
             return Tuple.Create(stages, aliases);
         }
 
-        private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType, int smallId = 0)
+        private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType, int smallId = 0, bool bypassId = false)
         {
-            var id = CreateId(stageType, thumb, smallId);
+            var id = CreateId(stageType, thumb, smallId, bypassId);
+            if (id == null)
+            {
+                return null;
+            }
             if (thumb.HasValue)
             {
                 var unit = Context.Units.Any(x => x.Id == thumb);
@@ -93,7 +101,7 @@ namespace TreasureGuide.Sniffer.DataParser
             }
             var stage = new Stage
             {
-                Id = id,
+                Id = id.Value,
                 UnitId = thumb,
                 Name = name,
                 Global = global,
@@ -102,12 +110,16 @@ namespace TreasureGuide.Sniffer.DataParser
             return stage;
         }
 
-        private int CreateId(StageType stageType, int? thumb, int smallId)
+        private int? CreateId(StageType stageType, int? thumb, int smallId, bool bypassId)
         {
             var idString = $"{(int)stageType}{thumb:0000}{smallId:00}";
             var id = Int32.Parse(idString);
             while (_existing.Contains(id))
             {
+                if (bypassId)
+                {
+                    return null;
+                }
                 id++;
             }
             _existing.Add(id);
@@ -132,10 +144,10 @@ namespace TreasureGuide.Sniffer.DataParser
         {
             var stageType = StageType.Coliseum;
 
-            var eIds = JsonConvert.DeserializeObject<int[]>(child["Exhibition"].ToString()).AsEnumerable();
-            var uIds = JsonConvert.DeserializeObject<int[]>(child["Underground"].ToString()).AsEnumerable();
-            var cIds = JsonConvert.DeserializeObject<int[]>(child["Chaos"].ToString()).AsEnumerable();
-            var nIds = JsonConvert.DeserializeObject<int[]>(child["Neo"].ToString()).AsEnumerable();
+            var eIds = GetIds(child, "Exhibition");
+            var uIds = GetIds(child, "Underground");
+            var cIds = GetIds(child, "Chaos");
+            var nIds = GetIds(child, "Neo");
 
             var all = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().SelectMany(x => new[] {
                 new StageCollectionDetail
@@ -154,11 +166,21 @@ namespace TreasureGuide.Sniffer.DataParser
             var units = all.Join(Context.Units, x => x.UnitId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
                     HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item1.Id,
-                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId)))
-                .ToList();
+                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, true)))
+                .Where(x => x.Item2 != null).ToList();
             var aliases = colo.SelectMany(GetAliases).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
             return Tuple.Create(stages, aliases);
+        }
+
+        private IEnumerable<int> GetIds(JToken child, string underground)
+        {
+            var token = child[underground];
+            if (token != null)
+            {
+                return JsonConvert.DeserializeObject<int[]>(token.ToString()).AsEnumerable();
+            }
+            return Enumerable.Empty<int>();
         }
 
         private IEnumerable<StageAlias> GetAliases(Tuple<Unit, Stage> tuple)
