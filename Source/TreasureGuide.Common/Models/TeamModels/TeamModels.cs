@@ -27,6 +27,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool Draft { get; set; }
+        public int Comments { get; set; }
 
         public IEnumerable<TeamUnitStubModel> TeamUnits { get; set; }
         public IEnumerable<TeamGenericSlotStubModel> TeamGenericSlots { get; set; }
