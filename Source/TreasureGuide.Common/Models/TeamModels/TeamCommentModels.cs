@@ -24,6 +24,8 @@ namespace TreasureGuide.Common.Models.TeamModels
         public DateTimeOffset? EditedDate { get; set; }
     }
 
+    public class TeamCommentDetailModel : TeamCommentStubModel { }
+
     public class TeamCommentEditorModel : IIdItem<int?>
     {
         public int? Id { get; set; }

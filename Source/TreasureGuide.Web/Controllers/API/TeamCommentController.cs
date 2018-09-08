@@ -15,7 +15,7 @@ using TreasureGuide.Web.Services;
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/teamcomment")]
-    public class TeamCommentController : SearchableApiController<int, TeamComment, int?, TeamCommentStubModel, TeamCommentStubModel, TeamCommentEditorModel, TeamCommentSearchModel>
+    public class TeamCommentController : SearchableApiController<int, TeamComment, int?, TeamCommentStubModel, TeamCommentDetailModel, TeamCommentEditorModel, TeamCommentSearchModel>
     {
         public TeamCommentController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
