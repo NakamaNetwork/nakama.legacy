@@ -1,20 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TreasureGuide.Entities;
+using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Common.Models.TeamModels
 {
-    public class TeamCommentStubModel
+    public class TeamCommentStubModel : IIdItem<int>
     {
         public int Id { get; set; }
         public int TeamId { get; set; }
-
-        [StringLength(4000)]
         public string Text { get; set; }
-    }
 
-    public class TeamCommentDetailModel : TeamCommentStubModel
-    {
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool CanEdit { get; set; }
@@ -29,7 +24,12 @@ namespace TreasureGuide.Common.Models.TeamModels
         public DateTimeOffset? EditedDate { get; set; }
     }
 
-    public class TeamCommentEditorModel : TeamCommentStubModel
+    public class TeamCommentEditorModel : IIdItem<int?>
     {
+        public int? Id { get; set; }
+        public int TeamId { get; set; }
+
+        [StringLength(4000)]
+        public string Text { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace TreasureGuide.Entities
 
     public partial class Team : IIdItem<int>, IEditedDateItem { }
 
+    public partial class TeamComment : IIdItem<int>, IEditedDateItem { }
+
     public partial class TeamVideo : IIdItem<int> { }
 
     public partial class Stage : IIdItem<int> { }
