@@ -127,6 +127,12 @@
     <Compile Include="Team.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="TeamComment.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TeamCommentVote.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="TeamCredit.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
