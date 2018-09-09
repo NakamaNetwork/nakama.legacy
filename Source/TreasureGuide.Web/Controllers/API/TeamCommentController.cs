@@ -28,7 +28,7 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override async Task<object> PerformPost(TeamCommentEditorModel model, int? id = null)
         {
-            if (Throttled && !ThrottlingService.CanAccess(User, Request, expirationSeconds: COMMENT_TIMEOUT))
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, Request.Path, COMMENT_TIMEOUT))
             {
                 return StatusCode(429, ThrottleService.Message);
             }
@@ -114,7 +114,10 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override async Task<IQueryable<TeamComment>> PerformSearch(IQueryable<TeamComment> results, TeamCommentSearchModel model)
         {
-            results = results.Where(x => x.TeamId == model.TeamId);
+            if (model.TeamId != 0 || !User.IsInRole(RoleConstants.Administrator))
+            {
+                results = results.Where(x => x.TeamId == model.TeamId);
+            }
             if (model.Deleted)
             {
                 results = results.Where(x => x.Deleted);
@@ -188,7 +191,7 @@ namespace TreasureGuide.Web.Controllers.API
             }
             return Ok(teamCommentId);
         }
-        
+
         [HttpPost]
         [Authorize(Roles = RoleConstants.Administrator + "," + RoleConstants.Moderator)]
         [ActionName("Acknowledge")]

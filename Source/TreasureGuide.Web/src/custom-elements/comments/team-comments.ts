@@ -40,7 +40,9 @@ export class TeamComments {
 
     attached() {
         this.searchModel = new TeamCommentSearchModel();
-        this.searchModel.teamId = this.team.id;
+        if (this.team) {
+            this.searchModel.teamId = this.team.id;
+        }
         this.refreshed();
 
         PLATFORM.global.addEventListener("scroll", this.refreshEventHandler);
@@ -100,15 +102,21 @@ export class TeamComments {
 
     edit(model) {
         var id = null;
+        var teamId = null;
         if (model) {
             id = model.id;
+            teamId = model.teamId;
         }
         this.dialogService.open({ viewModel: CommentDialog, model: model, lock: true }).whenClosed(result => {
             if (!result.wasCancelled) {
-                this.teamCommentService.save({ id: id, teamId: this.team.id, text: <string>result.output }).then(result => {
+                if (!teamId) {
+                    teamId = this.team.id;
+                }
+                this.teamCommentService.save({ id: id, teamId: teamId, text: <string>result.output }).then(result => {
                     this.alertService.success('Thank you! Your comment has been submitted.');
                     this.searchModel.sortBy = SearchConstants.SortDate;
                     this.searchModel.sortDesc = false;
+                    this.search(this.searchModel.payload);
                 }).catch(response => this.alertService.reportError(response));
             }
         });
@@ -129,6 +137,7 @@ export class TeamComments {
                         this.alertService.success('The reports have been cleared.');
                         this.searchModel.sortBy = SearchConstants.SortDate;
                         this.searchModel.sortDesc = false;
+                        this.search(this.searchModel.payload);
                     });
                 }
             });
@@ -150,6 +159,7 @@ export class TeamComments {
                         this.alertService.success('Your comment has been deleted.');
                         this.searchModel.sortBy = SearchConstants.SortDate;
                         this.searchModel.sortDesc = false;
+                        this.search(this.searchModel.payload);
                     });
                 }
             });

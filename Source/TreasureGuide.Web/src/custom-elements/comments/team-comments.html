@@ -1,5 +1,5 @@
 <template>
-    <button type="button" auth-req="Contributor" class="button _primary _floatRight" click.delegate="edit()">
+    <button type="button" auth-req="Contributor" if.bind="team" class="button _primary _floatRight" click.delegate="edit()">
         <i class="fa fa-fw fa-comment"></i>
         Add Comment
     </button>

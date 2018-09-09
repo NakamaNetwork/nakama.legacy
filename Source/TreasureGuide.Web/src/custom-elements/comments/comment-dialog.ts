@@ -23,8 +23,10 @@ export class CommentDialog {
     }
 
     activate(model: ITeamCommentEditorModel) {
-        this.model.text = model.text;
-        this.name = 'Edit Comment';
+        if (model) {
+            this.model.text = model.text;
+            this.name = 'Edit Comment';
+        }
     }
 
     okay() {

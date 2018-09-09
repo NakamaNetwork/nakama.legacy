@@ -73,6 +73,7 @@ export class App {
             { route: 'gcr/edit', name: 'gcrEdit', title: 'Edit GCR', moduleId: 'views/gcr/edit', nav: false, auth: RoleConstants.GCRAdmin },
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: RoleConstants.Administrator },
+            { route: 'commentAdmin', name: 'commentAdmin', title: 'Comments', moduleId: 'views/admin/comments', nav: false, auth: RoleConstants.Administrator },
             // Account
             { route: ['account/:id?', 'profile/:id?'], name: 'profile', title: 'Account', moduleId: 'views/profile/index', nav: false },
             { route: ['account/:id/edit', 'profile/:id/edit'], name: 'profileEdit', title: 'Account', moduleId: 'views/profile/edit', nav: false, auth: true },
