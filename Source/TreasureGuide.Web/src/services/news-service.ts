@@ -11,9 +11,10 @@ export class NewsService {
         lines: [
             'At long last, user can now post comments on teams!',
             'Users can vote on comments. Comments will be sorted by highest score by default.',
+            'Merged featured content bars into one and reduced the date range to 5 days instead of 7.',
+            'Removed JPN option from featured content bar as we don\'t have a source for it at the moment.',
+            'Added a character requirement to team guides to encourage people to write something.',
             'Removed "similar teams" feature from team detail pages due to lack of engagement.',
-            'Schedule display on front page no longer has a JPN option, as we don\'t have a source for it at the moment.',
-            'Added a character requirement to team guides to encourage people to write something.'
         ]
     }, {
         header: '06/25/18',

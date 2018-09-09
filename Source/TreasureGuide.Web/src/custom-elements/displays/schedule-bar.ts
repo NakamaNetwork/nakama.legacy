@@ -9,7 +9,7 @@ export class ScheduleBar {
 
     @computedFrom('upcoming')
     get header() {
-        return this.upcoming ? 'Upcoming' : 'Today';
+        return this.upcoming ? 'Upcoming' : 'Featured';
     }
 
     @computedFrom('upcoming')

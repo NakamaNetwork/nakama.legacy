@@ -299,12 +299,6 @@ export class RoleConstants {
 
 
 export interface IScheduleModel {
-    live: IScheduleSubModel;
-    upcoming: IScheduleSubModel;
-    
-}
-
-export interface IScheduleSubModel {
     global: number[];
     japan: number[];
     

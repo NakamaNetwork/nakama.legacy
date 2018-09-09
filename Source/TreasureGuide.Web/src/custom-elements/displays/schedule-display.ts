@@ -11,8 +11,7 @@ export class ScheduleDisplay {
 
     private scheduleLoading: boolean = true;
     private fullSchedule: IScheduleModel;
-    private currentSchedule = [];
-    private upcomingSchedule = [];
+    private schedule = [];
     private globalSchedule: boolean = true;
 
     private globalKey: string = 'global_schedule';
@@ -37,8 +36,7 @@ export class ScheduleDisplay {
         this.stageQueryService.schedule().then(x => {
             this.fullSchedule = x;
             this.stageQueryService.get().then(y => {
-                this.currentSchedule = this.getEvents(x.live, this.globalSchedule, y);
-                this.upcomingSchedule = this.getEvents(x.upcoming, this.globalSchedule, y);
+                this.schedule = this.getEvents(x, this.globalSchedule, y);
                 this.scheduleLoading = false;
             }).catch(x => {
                 this.scheduleLoading = false;
