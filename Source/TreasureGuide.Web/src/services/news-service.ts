@@ -15,6 +15,7 @@ export class NewsService {
             'Removed JPN option from featured content bar as we don\'t have a source for it at the moment.',
             'Added a character requirement to team guides to encourage people to write something.',
             'Removed "similar teams" feature from team detail pages due to lack of engagement.',
+            'If data is not showing properly, try clearing your cache, cookies, and saved website data.'
         ]
     }, {
         header: '06/25/18',
