@@ -7,6 +7,13 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '09/09/18',
+        lines: [
+            'At long last, user can now post comments on teams!',
+            'Users can vote on comments. Comments will be sorted by highest score by default.',
+            'Removed "similar teams" feature from team detail pages due to lack of engagement.',
+        ]
+    }, {
         header: '06/25/18',
         lines: [
             'Team Search now includes event ships by default. Added "Exclude Event Ships" option to team search instead.',
