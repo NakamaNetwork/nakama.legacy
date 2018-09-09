@@ -12,6 +12,8 @@ export class NewsService {
             'At long last, user can now post comments on teams!',
             'Users can vote on comments. Comments will be sorted by highest score by default.',
             'Removed "similar teams" feature from team detail pages due to lack of engagement.',
+            'Schedule display on front page no longer has a JPN option, as we don\'t have a source for it at the moment.',
+            'Added a character requirement to team guides to encourage people to write something.'
         ]
     }, {
         header: '06/25/18',
