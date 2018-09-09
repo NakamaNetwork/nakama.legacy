@@ -43,8 +43,6 @@ export class StageQueryService extends LocallySearchedQueryService<number, IStag
                 return this.doSort(items, [x => x.name, x => x.unitId], [sortDesc, false]);
             case SearchConstants.SortType:
                 return this.doSort(items, [x => x.type, x => x.name], [sortDesc, false]);
-            case SearchConstants.SortCount:
-                return this.doSort(items, [x => x.teamCount, x => x.name, x => x.unitId], [sortDesc, false, false]);
             default:
                 return this.doSort(items, [x => x.name, x => x.unitId], [false]);
         }
@@ -88,8 +86,7 @@ export class StageSearchModel extends SearchModel implements IStageSearchModel {
 
     public sortables: string[] = [
         SearchConstants.SortName,
-        SearchConstants.SortType,
-        SearchConstants.SortCount
+        SearchConstants.SortType
     ];
 
     getDefault(): SearchModel {

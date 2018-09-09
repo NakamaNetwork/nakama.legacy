@@ -22,9 +22,6 @@ export class TeamDetailPage {
     team: ITeamDetailModel;
     loading: boolean;
 
-    similarLoading: boolean;
-    similar: ITeamStubModel[] = [];
-
     constructor(teamQueryService: TeamQueryService, router: Router, dialogService: DialogService, alertService: AlertService, unitQueryService: UnitQueryService) {
         this.teamQueryService = teamQueryService;
         this.router = router;
@@ -92,14 +89,6 @@ export class TeamDetailPage {
                     (<any>x).level = y.maxLevel;
                 });
             });
-            this.similarLoading = true;
-            this.teamQueryService.similarId(this.team.id).then(x => {
-                this.similar = x;
-                this.similarLoading = false;
-            }).catch(x => {
-                this.similar = [];
-                this.similarLoading = false;
-                });
             this.loading = false;
         }).catch(error => {
             this.router.navigateToRoute('error', { error: 'The requested team could not be found.' });

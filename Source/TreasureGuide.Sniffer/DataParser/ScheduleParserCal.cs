@@ -18,6 +18,7 @@ namespace TreasureGuide.Sniffer.DataParser
         private readonly string Fortnights = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/fortnightEvents.js";
         private readonly string Raids = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/raidEvents.js";
         private readonly string Treasure = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/tmEvents.js";
+        private readonly string Special = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/specialEvents.js";
 
         public ScheduleParserCal(TreasureEntities context) : base(context, null)
         {
@@ -29,8 +30,9 @@ namespace TreasureGuide.Sniffer.DataParser
             var fnData = await GetEventData(Fortnights, StageType.Fortnight);
             var coloData = await GetEventData(Colos, StageType.Coliseum);
             var treasureData = await GetEventData(Treasure, StageType.TreasureMap);
+            var specialData = await GetEventData(Special, StageType.Special);
 
-            var allData = raidData.Concat(fnData).Concat(coloData).Concat(treasureData).ToList();
+            var allData = raidData.Concat(fnData).Concat(coloData).Concat(treasureData).Concat(specialData).ToList();
             var grouped = allData.GroupBy(x => String.Join("__", x.StageId, x.Global, x.StartDate, x.EndDate))
                 .Select(x => x.FirstOrDefault()).Where(x => x != null).ToList();
 
@@ -89,7 +91,16 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Replace("ambush: ywb", "ambush: 1258")
                 .Replace("ambush: shanks", "ambush: 1380")
                 .Replace("ambush: cavendish", "ambush: 1530")
-                .Replace("ambush: garp", "ambush: 1846");
+                .Replace("ambush: garp", "ambush: 1846")
+                .Replace("id: 'sb_1023'", "id: 1023")
+                .Replace("id: 'tp_1463'", "id: 1463")
+                .Replace("id: 'tp_1465'", "id: 1463")
+                .Replace("id: 'tp_1508'", "id: 1463")
+                .Replace("id: 'tp_1516'", "id: 1463")
+                .Replace("id: 'bb_0870'", "id: 870")
+                .Replace("id: 'bb_1314'", "id: 1314")
+                .Replace("id: 'bb_1404'", "id: 1404")
+                .Replace("id: 'db_1985'", "id: 1985");
         }
 
         private DateTimeOffset? GetDate(string value)
@@ -195,6 +206,8 @@ namespace TreasureGuide.Sniffer.DataParser
                 case 690:
                 case 1199:
                 case 1201:
+                case 1709:
+                case 1711:
                     return 6068300;
                 // valentines
                 case 990:
@@ -207,7 +220,17 @@ namespace TreasureGuide.Sniffer.DataParser
                     return 2172300;
                 // Raid Doffy v2
                 case 5012:
-                    return 4220100;
+                    return 4250100;
+                case 1810:
+                    return 2181200;
+                case 1893:
+                    return 2189100;
+                case 1980:
+                    return 2198200;
+                case 1995:
+                    return 2199700;
+                case 2019:
+                    return 2202100;
             }
             return null;
         }
@@ -217,9 +240,9 @@ namespace TreasureGuide.Sniffer.DataParser
             var remove = new List<ScheduledEvent>();
             foreach (var item in items)
             {
-                if (Context.ScheduledEvents.Any(x => x.StageId == item.StageId 
-                    && x.Global == item.Global 
-                    && x.StartDate == item.StartDate 
+                if (Context.ScheduledEvents.Any(x => x.StageId == item.StageId
+                    && x.Global == item.Global
+                    && x.StartDate == item.StartDate
                     && x.EndDate == item.EndDate))
                 {
                     remove.Add(item);

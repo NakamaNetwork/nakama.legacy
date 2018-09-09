@@ -7,6 +7,46 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '09/09/18',
+        lines: [
+            'At long last, user can now post comments on teams!',
+            'Updated coliseum stages to show the highest evo of the character as the icon and name.',
+            'Users can vote on comments. Comments will be sorted by highest score by default.',
+            'Merged featured content bars into one and reduced the date range to 5 days instead of 7.',
+            'Removed JPN option from featured content bar as we don\'t have a source for it at the moment.',
+            'Added a character requirement to team guides to encourage people to write something.',
+            'Removed "similar teams" feature from team detail pages due to lack of engagement.',
+            'If data is not showing properly, try clearing your cache, cookies, and saved website data.'
+        ]
+    }, {
+        header: '06/25/18',
+        lines: [
+            'Team Search now includes event ships by default. Added "Exclude Event Ships" option to team search instead.',
+        ]
+    }, {
+        header: '06/19/18 - #2',
+        lines: [
+            'Fixed an issue with the team submission validator that prevented teams with similar (but not duplicate) generic units from being submitted.'
+        ]
+    }, {
+        header: '06/19/18',
+        lines: [
+            'Added some new team query endpoints for use by the OPTC Wiki.'
+        ]
+    }, {
+        header: '06/18/18',
+        lines: [
+            'Fixed an issue that could cause uploaded video links to break during submission.'
+        ]
+    }, {
+        header: '06/11/18',
+        lines: [
+            'Updated the way data caching works to significantly reduce database load.',
+            'Migrated database to a new Amazon RDS instance.',
+            'Updated name of "Support" page.',
+            'Added a direct link to the "Donate" page from the menu bar.'
+        ]
+    }, {
         header: '05/04/18',
         lines: [
             'Added new icons for team box flags (i.e. Global, F2P, Videos)',

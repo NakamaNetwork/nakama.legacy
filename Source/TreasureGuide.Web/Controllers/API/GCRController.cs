@@ -7,10 +7,10 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Web.Constants;
-using TreasureGuide.Web.Models.GCRModels;
+using TreasureGuide.Common.Models.GCRModels;
 
 namespace TreasureGuide.Web.Controllers.API
 {

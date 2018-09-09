@@ -9,22 +9,31 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
-using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models.TeamModels;
+using TreasureGuide.Common.Helpers;
+using TreasureGuide.Common.Models;
+using TreasureGuide.Common.Models.TeamModels;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/team")]
-    [EnableCors("NakamaCORS")]
     public class TeamController : SearchableApiController<int, Team, int?, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
         public TeamController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
+        }
+
+        [HttpGet]
+        [ActionName("Wiki")]
+        [Route("[action]")]
+        [EnableCors("NakamaCORS")]
+        public async Task<SearchResult<WikiSearchResultModel>> Wiki(TeamSearchModel model)
+        {
+            return await Search<WikiSearchResultModel>(model);
         }
 
         protected override async Task<Team> PostProcess(Team entity)
@@ -129,7 +138,7 @@ namespace TreasureGuide.Web.Controllers.API
             results = SearchDeleted(results, model.Deleted);
             results = SearchDrafts(results, model.Draft);
             results = SearchReported(results, model.Reported);
-            results = SearchEventShips(results, model.EventShips);
+            results = SearchEventShips(results, model.ExcludeEventShips);
             results = SearchBookmarks(results, model.Bookmark);
             results = SearchStage(results, model.StageId, model.InvasionId);
             results = SearchTerm(results, model.Term);
@@ -178,11 +187,11 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
-        private IQueryable<Team> SearchEventShips(IQueryable<Team> results, bool modelEventShips)
+        private IQueryable<Team> SearchEventShips(IQueryable<Team> results, bool excludeEventShips)
         {
-            if (!modelEventShips)
+            if (excludeEventShips)
             {
-                results = results.Where(x => !x.Ship.EventShip || x.Ship.EventShipActive);
+                results = results.Where(x => !x.Ship.EventShip);
             }
             return results;
         }
@@ -648,7 +657,7 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 Team = team,
                 SubmittedDate = now,
-                UserId = ImportId,
+                UserId = userId,
                 VideoLink = x.VideoLink
             }).ToList();
             DbContext.TeamVideos.AddRange(videos);

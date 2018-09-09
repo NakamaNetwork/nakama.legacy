@@ -17,14 +17,13 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
     static getIcon(unitId: number) {
         if (unitId) {
             var id = ('0000' + unitId).slice(-4).replace(/(057[54])/, '0$1'); // missing aokiji image
-            if (id == '0742') {
-                return 'https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png';
-            }
-            if (id == '2200') {
-                return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5011.png';
-            }
-            if (id == '2201') {
-                return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5012.png';
+            switch (id) {
+                case '0742': return 'https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png';
+                case '2500': case '2200': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5011.png';
+                case '2501': case '2201': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5012.png';
+                case '2502': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5013.png';
+                case '2503': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5014.png';
+                case '2504': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5015.png';
             }
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
         }

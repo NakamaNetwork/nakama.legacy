@@ -82,7 +82,7 @@ export interface IBoxUnitUpdateModel {
 }
 
 
-export enum DeletedItemType { 
+export enum CacheItemType { 
     FullReset = 0,
     Unit = 1,
     Stage = 2,
@@ -299,12 +299,6 @@ export class RoleConstants {
 
 
 export interface IScheduleModel {
-    live: IScheduleSubModel;
-    upcoming: IScheduleSubModel;
-    
-}
-
-export interface IScheduleSubModel {
     global: number[];
     japan: number[];
     
@@ -341,8 +335,6 @@ export interface IShipStubModel {
     id: number;
     name: string;
     eventShip: boolean;
-    eventShipActive: boolean;
-    editedDate: Date;
     
 }
 
@@ -376,7 +368,6 @@ export interface IStageStubModel {
     name: string;
     global: boolean;
     type: StageType;
-    teamCount: number;
     aliases: string[];
     
 }
@@ -392,6 +383,71 @@ export enum StageType {
     Special = 6,
     TrainingForest = 7,
     TreasureMap = 8
+}
+
+
+export interface ITeamCommentStubModel {
+    id: number;
+    teamId: number;
+    text: string;
+    deleted: boolean;
+    reported: boolean;
+    canEdit: boolean;
+    myVote: number;
+    score: number;
+    submittedById: string;
+    submittedByName: string;
+    submittedByUnitId: number;
+    submittedByIsDonor: boolean;
+    editedDate: Date;
+    
+}
+
+export interface ITeamCommentDetailModel extends ITeamCommentStubModel{
+    
+}
+
+export interface ITeamCommentEditorModel {
+    id: number;
+    teamId: number;
+    text: string;
+    
+}
+
+
+export interface ITeamCommentReportModel {
+    teamCommentId: number;
+    
+}
+
+
+export interface ITeamCommentSearchModel extends ISearchModel{
+    teamId: number;
+    deleted: boolean;
+    reported: boolean;
+    
+}
+
+
+export interface ITeamCommentSearchModel extends ISearchModel{
+    teamId: number;
+    deleted: boolean;
+    reported: boolean;
+    
+}
+
+
+export interface ITeamCommentVoteModel {
+    teamCommentId: number;
+    up: boolean;
+    
+}
+
+
+export interface ITeamCommentVoteModel {
+    teamCommentId: number;
+    up: boolean;
+    
 }
 
 
@@ -460,6 +516,7 @@ export interface ITeamStubModel {
     deleted: boolean;
     reported: boolean;
     draft: boolean;
+    comments: number;
     
 }
 
@@ -542,7 +599,7 @@ export interface ITeamSearchModel extends ISearchModel{
     draft: boolean;
     reported: boolean;
     bookmark: boolean;
-    eventShips: boolean;
+    excludeEventShips: boolean;
     
 }
 
@@ -681,7 +738,6 @@ export interface IUnitStubModel {
     aliases: string[];
     evolvesTo: number[];
     evolvesFrom: number[];
-    editedDate: Date;
     
 }
 
@@ -699,5 +755,28 @@ export enum UnitType {
 export enum UserPreferenceType { 
     Unknown = 0,
     BoxId = 1
+}
+
+
+export interface IWikiSearchResultModel {
+    teamUnits: IWikiSearchUnitStubModel[];
+    id: number;
+    name: string;
+    submittedById: string;
+    submittedByName: string;
+    editedDate: Date;
+    score: number;
+    shipId: number;
+    shipName: string;
+    stageId: number;
+    stageName: string;
+    invasionId: number;
+    invasionName: string;
+    
+}
+
+export interface IWikiSearchUnitStubModel extends ITeamUnitStubModel{
+    unitName: string;
+    
 }
 

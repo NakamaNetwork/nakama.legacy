@@ -15,6 +15,7 @@ import { AccountService } from '../../services/account-service';
 export class TeamEditPage {
     public static nameMinLength = 10;
     public static nameMaxLength = 250;
+    public static guideMinLength = 50;
     public static guideMaxLength = 40000;
     public static creditMaxLength = 2000;
 
@@ -204,6 +205,7 @@ ValidationRules
     .ensure((x: TeamEditorModel) => x.credits)
     .maxLength(TeamEditPage.creditMaxLength)
     .ensure((x: TeamEditorModel) => x.guide)
+    .minLength(TeamEditPage.guideMinLength)
     .maxLength(TeamEditPage.guideMaxLength)
     .ensure((x: TeamEditorModel) => x.teamUnits)
     .required()

@@ -15,8 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using TreasureGuide.Web.Configurations;
-using TreasureGuide.Web.Helpers;
-using TreasureGuide.Web.Models;
+using TreasureGuide.Common.Helpers;
+using TreasureGuide.Common.Models;
 
 namespace TreasureGuide.Web
 {

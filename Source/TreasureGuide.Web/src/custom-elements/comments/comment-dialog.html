@@ -1,0 +1,27 @@
+﻿<template>
+    <form with.bind="model">
+        <ux-dialog>
+            <ux-dialog-header>
+                <div class="_floatRight">
+                    <a click.delegate="cancel()" class="button _flat modal-action">X</a>
+                </div>
+                <h3>
+                    ${name}
+                </h3>
+            </ux-dialog-header>
+            <ux-dialog-body>
+                <div class="form-group">
+                    <label for="textInput">Text</label>
+                    <markdown-editor id="textInput"
+                                     placeholder="Will you join my crew?"
+                                     value.two-way="text & validate"></markdown-editor>
+                    <div class="field-length">${textLength}</div>
+                </div>
+            </ux-dialog-body>
+            <ux-dialog-footer>
+                <input type="submit" click.delegate="okay()" class="button modal-action _primary" name="Submit" />
+                <button type="button" click.delegate="cancel()" class="button modal-action">Cancel</button>
+            </ux-dialog-footer>
+        </ux-dialog>
+    </form>
+</template>

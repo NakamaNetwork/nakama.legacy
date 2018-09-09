@@ -65,6 +65,10 @@ namespace TreasureGuide.Sniffer.DataParser
                         }
                     }
                     var output = HandleSingle(name, thumb, global, stageType);
+                    if (output == null)
+                    {
+                        return Tuple.Create(new List<Stage>(), new List<StageAlias>());
+                    }
                     foreach (var alias in localAliases)
                     {
                         alias.StageId = output.Id;
@@ -74,13 +78,19 @@ namespace TreasureGuide.Sniffer.DataParser
                 stages.AddRange(datas.SelectMany(x => x.Item1).ToList());
                 aliases.AddRange(datas.SelectMany(x => x.Item2).ToList());
             }
+            CreateExtras(stages, aliases);
 
             return Tuple.Create(stages, aliases);
         }
 
-        private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType, int smallId = 0)
+        private Stage HandleSingle(string name, int? mainId, bool global, StageType stageType, int smallId = 0, int? thumb = null, bool bypassId = false)
         {
-            var id = CreateId(stageType, thumb, smallId);
+            var id = CreateId(stageType, mainId, smallId, bypassId);
+            if (id == null)
+            {
+                return null;
+            }
+            thumb = thumb ?? mainId;
             if (thumb.HasValue)
             {
                 var unit = Context.Units.Any(x => x.Id == thumb);
@@ -92,7 +102,7 @@ namespace TreasureGuide.Sniffer.DataParser
             }
             var stage = new Stage
             {
-                Id = id,
+                Id = id.Value,
                 UnitId = thumb,
                 Name = name,
                 Global = global,
@@ -101,49 +111,86 @@ namespace TreasureGuide.Sniffer.DataParser
             return stage;
         }
 
-        private int CreateId(StageType stageType, int? thumb, int smallId)
+        private int? CreateId(StageType stageType, int? thumb, int smallId, bool bypassId)
         {
             var idString = $"{(int)stageType}{thumb:0000}{smallId:00}";
             var id = Int32.Parse(idString);
             while (_existing.Contains(id))
             {
+                if (bypassId)
+                {
+                    return null;
+                }
                 id++;
             }
             _existing.Add(id);
             return id;
         }
 
+        private void CreateExtras(List<Stage> stages, List<StageAlias> aliases)
+        {
+            var beli = HandleSingle("Golden Cave", 59, true, StageType.Weekly);
+            stages.Add(beli);
+            aliases.Add(new StageAlias { StageId = beli.Id, Name = "Beli Cavern" });
+
+            var doubles = HandleSingle("Double Character Missions", 1985, true, StageType.Special);
+            stages.Add(doubles);
+            aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Luffy Ace Missions Fortnight Event" });
+            aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Lace Missions Fortnight Event" });
+            aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Smoker Tashigi Missions Fortnight Event" });
+            aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Double Character Introduction" });
+        }
+
         private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)
         {
             var stageType = StageType.Coliseum;
 
-            var eIds = JsonConvert.DeserializeObject<int[]>(child["Exhibition"].ToString()).AsEnumerable();
-            var uIds = JsonConvert.DeserializeObject<int[]>(child["Underground"].ToString()).AsEnumerable();
-            var cIds = JsonConvert.DeserializeObject<int[]>(child["Chaos"].ToString()).AsEnumerable();
-            var nIds = JsonConvert.DeserializeObject<int[]>(child["Neo"].ToString()).AsEnumerable();
+            var eIds = GetIds(child, "Exhibition");
+            var uIds = GetIds(child, "Underground");
+            var cIds = GetIds(child, "Chaos");
+            var nIds = GetIds(child, "Neo");
 
-            var all = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().SelectMany(x => new[] {
+            var unitIds = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().Join(Context.Units, x => x, y => y.Id, (id, unit) => id);
+            var evos = GetBiggestEvos(unitIds);
+            var all = evos.SelectMany(x => new[] {
                 new StageCollectionDetail
                 {
-                    UnitId = x,
+                    MainId = x.Item1,
+                    ThumbId = x.Item2,
                     Name = " - Opening Stages",
                     SmallId = 0
                 },
                 new StageCollectionDetail
                 {
-                    UnitId = x,
+                    MainId = x.Item1,
+                    ThumbId = x.Item2,
                     Name = " - Final Stage",
                     SmallId = 1
                 }
             });
-            var units = all.Join(Context.Units, x => x.UnitId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
+            var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
-                    HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item1.Id,
-                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId)))
-                .ToList();
+                    HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item2.MainId,
+                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, x.Item1.Id, true)))
+                .Where(x => x.Item2 != null).ToList();
             var aliases = colo.SelectMany(GetAliases).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
             return Tuple.Create(stages, aliases);
+        }
+
+        private IEnumerable<Tuple<int, int>> GetBiggestEvos(IEnumerable<int> unitIds)
+        {
+            return unitIds.GroupJoin(Context.UnitEvolutions, x => x, y => y.FromUnitId, (id, evo) => Tuple.Create(id, evo.LastOrDefault()?.ToUnitId ?? id));
+        }
+
+        private IEnumerable<int> GetIds(JToken child, string underground)
+        {
+            var token = child[underground];
+            if (token != null)
+            {
+                return JsonConvert.DeserializeObject<int[]>(token.ToString()).AsEnumerable();
+            }
+            return Enumerable.Empty<int>();
         }
 
         private IEnumerable<StageAlias> GetAliases(Tuple<Unit, Stage> tuple)
@@ -182,7 +229,9 @@ namespace TreasureGuide.Sniffer.DataParser
 
         private class StageCollectionDetail
         {
-            public int UnitId { get; set; }
+            public int UnitName { get; set; }
+            public int ThumbId { get; set; }
+            public int MainId { get; set; }
             public string Name { get; set; }
             public int SmallId { get; set; }
         }

@@ -73,6 +73,7 @@ export class App {
             { route: 'gcr/edit', name: 'gcrEdit', title: 'Edit GCR', moduleId: 'views/gcr/edit', nav: false, auth: RoleConstants.GCRAdmin },
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: RoleConstants.Administrator },
+            { route: 'commentAdmin', name: 'commentAdmin', title: 'Comments', moduleId: 'views/admin/comments', nav: false, auth: RoleConstants.Administrator },
             // Account
             { route: ['account/:id?', 'profile/:id?'], name: 'profile', title: 'Account', moduleId: 'views/profile/index', nav: false },
             { route: ['account/:id/edit', 'profile/:id/edit'], name: 'profileEdit', title: 'Account', moduleId: 'views/profile/edit', nav: false, auth: true },
@@ -82,8 +83,8 @@ export class App {
             { route: 'about', name: 'about', title: 'About', moduleId: 'views/boring/intro', nav: true },
             { route: 'markdown', name: 'markdown', title: 'Markdown', moduleId: 'views/boring/markdown', nav: false },
             // Give me your money
-            { route: 'support', name: 'support', title: 'Support', moduleId: 'views/support/index', nav: true },
-            { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: false },
+            { route: 'support', name: 'support', title: 'Credits', moduleId: 'views/support/index', nav: true },
+            { route: 'donate', name: 'donate', title: 'Donate', moduleId: 'views/donate/index', nav: true },
             { route: 'donate/update', name: 'donationUpdate', title: 'Updating Donations', moduleId: 'views/donate/update', nav: false },
             { route: 'donate/cancel', name: 'donationCancelled', title: 'Donation Cancelled', moduleId: 'views/donate/cancel', nav: false },
             { route: 'donate/history', name: 'donationHistory', title: 'Donation History', moduleId: 'views/donate/history', nav: false, auth: true },

@@ -8,13 +8,14 @@ using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Web.Constants;
 using TreasureGuide.Web.Controllers.API.Generic;
-using TreasureGuide.Web.Helpers;
+using TreasureGuide.Common.Helpers;
+using TreasureGuide.Common.Models;
+using TreasureGuide.Common.Models.DonationModels;
 using TreasureGuide.Web.Models;
-using TreasureGuide.Web.Models.DonationModels;
 using TreasureGuide.Web.Services;
 using TreasureGuide.Web.Services.Donations;
 

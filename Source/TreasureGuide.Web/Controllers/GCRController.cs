@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
-using TreasureGuide.Web.Constants;
-using TreasureGuide.Web.Models.GCRModels;
+using TreasureGuide.Common.Models.GCRModels;
 
 namespace TreasureGuide.Web.Controllers
 {

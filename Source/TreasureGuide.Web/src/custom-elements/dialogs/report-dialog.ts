@@ -23,7 +23,7 @@ export class ReportDialog {
     okay() {
         this.validController.validate().then(x => {
             if (x.valid) {
-                this.controller.ok(this.model.reason);
+                this.controller.ok(this.model.text);
             } else {
                 x.results.filter(y => !y.valid && y.message).forEach(y => {
                     this.alertService.danger(y.message);
@@ -38,17 +38,17 @@ export class ReportDialog {
 
     @computedFrom('model.reason')
     get reasonLength() {
-        return (this.model.reason || '').length + '/' + ReportDialogViewModel.reasonMaxLength;
+        return (this.model.text || '').length + '/' + ReportDialogViewModel.reasonMaxLength;
     }
 }
 
 export class ReportDialogViewModel {
     public static reasonMaxLength: number = 100;
-    reason: string;
+    text: string;
 }
 
 ValidationRules
-    .ensure((x: ReportDialogViewModel) => x.reason)
+    .ensure((x: ReportDialogViewModel) => x.text)
     .required()
     .maxLength(ReportDialogViewModel.reasonMaxLength)
     .on(ReportDialogViewModel);

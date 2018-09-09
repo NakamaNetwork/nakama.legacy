@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HeyRed.MarkdownSharp;
 using TreasureGuide.Entities;
-using TreasureGuide.Web.Models;
+using TreasureGuide.Common.Models;
 
 namespace TreasureGuide.Web.Services
 {

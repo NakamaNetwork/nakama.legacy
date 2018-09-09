@@ -60,10 +60,10 @@
     <Compile Include="BoxUnit.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DeletedItem.cs">
+    <Compile Include="CacheItemType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DeletedItemType.cs">
+    <Compile Include="CacheSet.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Donation.cs">
@@ -125,6 +125,12 @@
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Team.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TeamComment.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TeamCommentVote.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="TeamCredit.cs">

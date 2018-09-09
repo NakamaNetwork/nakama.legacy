@@ -11,7 +11,7 @@
                 <stage-type-display type.bind="bin.key"></stage-type-display>
             </span>
             <span repeat.for="stage of bin.value" class="tooltip -tooltip-top">
-                <span class="tooltiptext _shadow _noDelay _small">${stage.name} (${stage.teamCount})</span>
+                <span class="tooltiptext _shadow _noDelay _small">${stage.name}</span>
                 <a route-href="route: stageDetails; params.bind: { id: stage.id }">
                     <unit-display unit-id.bind="stage.unitId" class.bind="unitSize"></unit-display>
                 </a>

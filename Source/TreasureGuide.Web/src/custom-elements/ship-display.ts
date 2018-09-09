@@ -36,7 +36,7 @@ export class ShipDisplay {
 
     @computedFrom('ship', 'ship.eventShip', 'ship.eventShipActive')
     get iconClass() {
-        return this.ship ? this.ship.eventShipActive ? 'fa-star' : this.ship.eventShip ? 'fa-star-o' : 'fa-ship' : '';
+        return this.ship ? this.ship.eventShip ? 'fa-star' : 'fa-ship' : '';
     }
 
     clicked() {
