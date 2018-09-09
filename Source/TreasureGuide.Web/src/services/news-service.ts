@@ -10,6 +10,7 @@ export class NewsService {
         header: '09/09/18',
         lines: [
             'At long last, user can now post comments on teams!',
+            'Updated coliseum stages to show the highest evo of the character as the icon and name.',
             'Users can vote on comments. Comments will be sorted by highest score by default.',
             'Merged featured content bars into one and reduced the date range to 5 days instead of 7.',
             'Removed JPN option from featured content bar as we don\'t have a source for it at the moment.',

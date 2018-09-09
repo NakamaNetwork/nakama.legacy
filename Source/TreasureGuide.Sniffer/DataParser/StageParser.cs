@@ -83,13 +83,14 @@ namespace TreasureGuide.Sniffer.DataParser
             return Tuple.Create(stages, aliases);
         }
 
-        private Stage HandleSingle(string name, int? thumb, bool global, StageType stageType, int smallId = 0, bool bypassId = false)
+        private Stage HandleSingle(string name, int? mainId, bool global, StageType stageType, int smallId = 0, int? thumb = null, bool bypassId = false)
         {
-            var id = CreateId(stageType, thumb, smallId, bypassId);
+            var id = CreateId(stageType, mainId, smallId, bypassId);
             if (id == null)
             {
                 return null;
             }
+            thumb = thumb ?? mainId;
             if (thumb.HasValue)
             {
                 var unit = Context.Units.Any(x => x.Id == thumb);
@@ -149,28 +150,37 @@ namespace TreasureGuide.Sniffer.DataParser
             var cIds = GetIds(child, "Chaos");
             var nIds = GetIds(child, "Neo");
 
-            var all = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().SelectMany(x => new[] {
+            var unitIds = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().Join(Context.Units, x => x, y => y.Id, (id, unit) => id);
+            var evos = GetBiggestEvos(unitIds);
+            var all = evos.SelectMany(x => new[] {
                 new StageCollectionDetail
                 {
-                    UnitId = x,
+                    MainId = x.Item1,
+                    ThumbId = x.Item2,
                     Name = " - Opening Stages",
                     SmallId = 0
                 },
                 new StageCollectionDetail
                 {
-                    UnitId = x,
+                    MainId = x.Item1,
+                    ThumbId = x.Item2,
                     Name = " - Final Stage",
                     SmallId = 1
                 }
             });
-            var units = all.Join(Context.Units, x => x.UnitId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
+            var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
-                    HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item1.Id,
-                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, true)))
+                    HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item2.MainId,
+                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, x.Item1.Id, true)))
                 .Where(x => x.Item2 != null).ToList();
             var aliases = colo.SelectMany(GetAliases).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
             return Tuple.Create(stages, aliases);
+        }
+
+        private IEnumerable<Tuple<int, int>> GetBiggestEvos(IEnumerable<int> unitIds)
+        {
+            return unitIds.GroupJoin(Context.UnitEvolutions, x => x, y => y.FromUnitId, (id, evo) => Tuple.Create(id, evo.LastOrDefault()?.ToUnitId ?? id));
         }
 
         private IEnumerable<int> GetIds(JToken child, string underground)
@@ -219,7 +229,9 @@ namespace TreasureGuide.Sniffer.DataParser
 
         private class StageCollectionDetail
         {
-            public int UnitId { get; set; }
+            public int UnitName { get; set; }
+            public int ThumbId { get; set; }
+            public int MainId { get; set; }
             public string Name { get; set; }
             public int SmallId { get; set; }
         }
