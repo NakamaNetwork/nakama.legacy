@@ -17,6 +17,10 @@ export class TeamCommentQueryService extends SearchableQueryService {
     report(model: ITeamCommentReportModel): Promise<number> {
         return this.http.post(this.buildAddress('report'), model);
     }
+
+    acknowledge(model: ITeamCommentReportModel): Promise<number> {
+        return this.http.post(this.buildAddress('acknowledge'), model);
+    }
 }
 
 export class TeamCommentSearchModel extends SearchModel implements ITeamCommentSearchModel {

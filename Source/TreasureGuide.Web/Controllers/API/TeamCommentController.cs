@@ -188,5 +188,22 @@ namespace TreasureGuide.Web.Controllers.API
             }
             return Ok(teamCommentId);
         }
+        
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.Administrator + "," + RoleConstants.Moderator)]
+        [ActionName("Acknowledge")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Acknowledge([FromBody] TeamCommentReportModel model, int? id = null)
+        {
+            var teamCommentId = id ?? model.TeamCommentId;
+
+            var team = DbContext.TeamComments.SingleOrDefault(x => x.Id == teamCommentId);
+            if (team != null)
+            {
+                team.Reported = false;
+                await DbContext.SaveChangesAsync();
+            }
+            return Ok(teamCommentId);
+        }
     }
 }

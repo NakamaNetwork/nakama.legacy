@@ -9,7 +9,7 @@
     </div>
     <div if.bind="seen" class="comment-area">
         <div class="row">
-            <comment-search model.bind="searchModel"></comment-search>
+
         </div>
         <loading-area if.bind="loading"></loading-area>
         <div if.bind="!loading">
@@ -29,6 +29,9 @@
                             </a>
                             <a href="#" if.bind="comment.canEdit" auth-req click.delegate="delete(comment)" title="Delete">
                                 <i class="fa fa-fw fa-trash-o"></i>
+                            </a>
+                            <a href="#" if.bind="comment.reported" auth-req="Moderator, Administrator" click.delegate="acknowledge(comment)" title="Clear Reports">
+                                <i class="fa fa-fw fa-exclamation"></i>
                             </a>
                         </div>
                         <div class="col m6 _alignRight">

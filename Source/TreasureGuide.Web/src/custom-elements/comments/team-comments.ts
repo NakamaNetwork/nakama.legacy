@@ -114,6 +114,27 @@ export class TeamComments {
         });
     }
 
+    acknowledge(model) {
+        if (model) {
+            this.dialogService.open({
+                viewModel: AlertDialog,
+                model: <AlertDialogViewModel>{
+                    message: 'Are you sure you want to clear the reports on this comment?',
+                    cancelable: true
+                },
+                lock: true
+            }).whenClosed(result => {
+                if (!result.wasCancelled) {
+                    this.teamCommentService.acknowledge({ teamCommentId: model.id }).then(result => {
+                        this.alertService.success('The reports have been cleared.');
+                        this.searchModel.sortBy = SearchConstants.SortDate;
+                        this.searchModel.sortDesc = false;
+                    });
+                }
+            });
+        }
+    };
+
     delete(model) {
         if (model) {
             this.dialogService.open({
