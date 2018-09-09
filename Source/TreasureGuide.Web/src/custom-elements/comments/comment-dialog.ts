@@ -5,18 +5,18 @@ import { BeauterValidationFormRenderer } from '../../renderers/beauter-validatio
 import {AlertService} from '../../services/alert-service';
 
 @autoinject
-export class ReportDialog {
+export class CommentDialog {
     private controller: DialogController;
     private validController: ValidationController;
     private alertService: AlertService;
 
-    model: ReportDialogViewModel;
+    model: CommentDialogViewModel;
 
     constructor(controller: DialogController, validFactory: ValidationControllerFactory, alertService: AlertService) {
         this.controller = controller;
         this.validController = validFactory.createForCurrentScope();
         this.validController.addRenderer(new BeauterValidationFormRenderer());
-        this.model = new ReportDialogViewModel();
+        this.model = new CommentDialogViewModel();
         this.alertService = alertService;
     }
 
@@ -36,19 +36,19 @@ export class ReportDialog {
         this.controller.cancel();
     };
 
-    @computedFrom('model.reason')
-    get reasonLength() {
-        return (this.model.text || '').length + '/' + ReportDialogViewModel.reasonMaxLength;
+    @computedFrom('model.text')
+    get textLength() {
+        return (this.model.text || '').length + '/' + CommentDialogViewModel.textMaxLength;
     }
 }
 
-export class ReportDialogViewModel {
-    public static reasonMaxLength: number = 100;
+export class CommentDialogViewModel {
+    public static textMaxLength: number = 4000;
     text: string;
 }
 
 ValidationRules
-    .ensure((x: ReportDialogViewModel) => x.text)
+    .ensure((x: CommentDialogViewModel) => x.text)
     .required()
-    .maxLength(ReportDialogViewModel.reasonMaxLength)
-    .on(ReportDialogViewModel);
+    .maxLength(CommentDialogViewModel.textMaxLength)
+    .on(CommentDialogViewModel);

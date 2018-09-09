@@ -1,0 +1,36 @@
+<template>
+    <button type="button" auth-req="Contributor" class="button _primary _floatRight" click.delegate="comment()">
+        <i class="fa fa-fw fa-comment"></i>
+        Add Comment
+    </button>
+    <h4>Comments</h4>
+    <div if.bind="!seen" class="_alignCenter">
+        <button class="button _width100" click.delegate="loadComments()">Load Comments</button>
+    </div>
+    <div if.bind="seen" class="comment-area">
+        <div class="row">
+            <comment-search model.bind="searchModel"></comment-search>
+        </div>
+        <loading-area if.bind="loading"></loading-area>
+        <div if.bind="!loading">
+            <div class="row">
+                <search-pager search-model.bind="searchModel" empty-message="No comments yet."></search-pager>
+            </div>
+            <div class="row comment-collection" if.bind="comments.length > 0">
+                <div repeat.for="comment of comments" class="comment">
+                    <markdown value.bind="comment.text"></markdown>
+                    <div class="row _alignRight">
+                        -
+                        <a route-href="route: profile; params.bind: { id: submittedByName }">
+                            <user-display name.bind="comment.submittedByName" unit-id.bind="comment.submittedByUnitId" donor.bind="comment.submittedByIsDonor"></user-display>
+                        </a>
+                        on ${comment.editedDate | dateTimeFormat}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <search-pager search-model.bind="searchModel" bottom="true"></search-pager>
+            </div>
+        </div>
+    </div>
+</template>

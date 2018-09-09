@@ -23,6 +23,7 @@ export function configure(aurelia: Aurelia) {
         // Custom Elements
         .feature('./custom-attributes')
         .feature('./custom-elements')
+        .feature('./custom-elements/comments')
         .feature('./custom-elements/dialogs')
         .feature('./custom-elements/displays')
         .feature('./custom-elements/editors')
