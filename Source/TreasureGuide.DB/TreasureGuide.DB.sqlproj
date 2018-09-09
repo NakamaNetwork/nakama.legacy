@@ -112,6 +112,8 @@
     <Build Include="dbo\Views\GCR\GCRUnitInfo.sql" />
     <None Include="PostDeploy\dbo.GCRUnits.Table.sql" />
     <None Include="PostDeploy\dbo.GCRStages.Table.sql" />
+    <Build Include="dbo\Tables\Teams\TeamComments.sql" />
+    <Build Include="dbo\Tables\Teams\TeamCommentVotes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

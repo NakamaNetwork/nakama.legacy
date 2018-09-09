@@ -6,23 +6,17 @@
                     <a click.delegate="cancel()" class="button _flat modal-action">X</a>
                 </div>
                 <h3>
-                    Submit Report
+                    ${name}
                 </h3>
             </ux-dialog-header>
             <ux-dialog-body>
                 <div class="form-group">
-                    <label for="reasonInput">Reason</label>
-                    <textarea id="reasonInput"
-                              class="_width100"
-                              value.bind="reason & validate"></textarea>
-                    <div class="field-length">${reasonLength}</div>
+                    <label for="textInput">Text</label>
+                    <markdown-editor id="textInput"
+                                     placeholder="Will you join my crew?"
+                                     value.two-way="text & validate"></markdown-editor>
+                    <div class="field-length">${textLength}</div>
                 </div>
-                <em>
-                    <small>
-                        Please only report teams for rule violations (i.e. vulgar language, spam, etc.)
-                        Teams should not be reported for being ineffective--that's what voting is for.
-                    </small>
-                </em>
             </ux-dialog-body>
             <ux-dialog-footer>
                 <input type="submit" click.delegate="okay()" class="button modal-action _primary" name="Submit" />

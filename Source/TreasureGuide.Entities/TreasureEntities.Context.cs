@@ -57,6 +57,8 @@ namespace TreasureGuide.Entities
         public virtual DbSet<GCRUnitInfo> GCRUnitInfoes { get; set; }
         public virtual DbSet<CacheSet> CacheSets { get; set; }
         public virtual DbSet<Ship> Ships { get; set; }
+        public virtual DbSet<TeamComment> TeamComments { get; set; }
+        public virtual DbSet<TeamCommentVote> TeamCommentVotes { get; set; }
     
         [DbFunction("TreasureEntities", "SimilarTeams")]
         public virtual IQueryable<SimilarTeams_Result> SimilarTeams(Nullable<int> teamId, Nullable<int> stageId, Nullable<int> unit1, Nullable<int> unit2, Nullable<int> unit3, Nullable<int> unit4, Nullable<int> unit5, Nullable<int> unit6)

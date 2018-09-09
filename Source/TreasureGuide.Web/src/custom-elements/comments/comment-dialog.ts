@@ -2,22 +2,31 @@
 import { DialogController } from 'aurelia-dialog';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
-import {AlertService} from '../../services/alert-service';
+import { AlertService } from '../../services/alert-service';
+import { ITeamCommentEditorModel } from '../../models/imported';
 
 @autoinject
-export class ReportDialog {
+export class CommentDialog {
     private controller: DialogController;
     private validController: ValidationController;
     private alertService: AlertService;
 
-    model: ReportDialogViewModel;
+    model: CommentDialogViewModel;
+    name: string = 'Submit Comment';
 
     constructor(controller: DialogController, validFactory: ValidationControllerFactory, alertService: AlertService) {
         this.controller = controller;
         this.validController = validFactory.createForCurrentScope();
         this.validController.addRenderer(new BeauterValidationFormRenderer());
-        this.model = new ReportDialogViewModel();
+        this.model = new CommentDialogViewModel();
         this.alertService = alertService;
+    }
+
+    activate(model: ITeamCommentEditorModel) {
+        if (model) {
+            this.model.text = model.text;
+            this.name = 'Edit Comment';
+        }
     }
 
     okay() {
@@ -36,19 +45,19 @@ export class ReportDialog {
         this.controller.cancel();
     };
 
-    @computedFrom('model.reason')
-    get reasonLength() {
-        return (this.model.text || '').length + '/' + ReportDialogViewModel.reasonMaxLength;
+    @computedFrom('model.text')
+    get textLength() {
+        return (this.model.text || '').length + '/' + CommentDialogViewModel.textMaxLength;
     }
 }
 
-export class ReportDialogViewModel {
-    public static reasonMaxLength: number = 100;
+export class CommentDialogViewModel {
+    public static textMaxLength: number = 4000;
     text: string;
 }
 
 ValidationRules
-    .ensure((x: ReportDialogViewModel) => x.text)
+    .ensure((x: CommentDialogViewModel) => x.text)
     .required()
-    .maxLength(ReportDialogViewModel.reasonMaxLength)
-    .on(ReportDialogViewModel);
+    .maxLength(CommentDialogViewModel.textMaxLength)
+    .on(CommentDialogViewModel);

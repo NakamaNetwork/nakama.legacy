@@ -70,6 +70,9 @@
     <Compile Include="Models\ShipModels\ShipStubModel.cs" />
     <Compile Include="Models\StageModels\StageSearchModel.cs" />
     <Compile Include="Models\StageModels\StageStubModel.cs" />
+    <Compile Include="Models\TeamModels\TeamCommentModels.cs" />
+    <Compile Include="Models\TeamModels\TeamCommentReportModel.cs" />
+    <Compile Include="Models\TeamModels\TeamCommentSearchModel.cs" />
     <Compile Include="Models\TeamModels\TeamCreditModel.cs" />
     <Compile Include="Models\TeamModels\TeamGenericSlotModels.cs" />
     <Compile Include="Models\TeamModels\TeamImportModel.cs" />
@@ -79,6 +82,7 @@
     <Compile Include="Models\TeamModels\TeamSocketModels.cs" />
     <Compile Include="Models\TeamModels\TeamUnitModels.cs" />
     <Compile Include="Models\TeamModels\TeamVideoModels.cs" />
+    <Compile Include="Models\TeamModels\TeamCommentVoteModel.cs" />
     <Compile Include="Models\TeamModels\TeamVoteModel.cs" />
     <Compile Include="Models\TeamModels\WikiSearchResultModel.cs" />
     <Compile Include="Models\UnitModels\UnitSearchModel.cs" />

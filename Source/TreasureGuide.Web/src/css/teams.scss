@@ -685,3 +685,36 @@ team-box {
     bottom: 16px;
     font-size: 1.2em;
 }
+
+.comment-area {
+    background-color: $background-color;
+    border: 1px solid $grey-color;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 0 10px;
+
+    p {
+        margin-bottom: 0 !important;
+    }
+
+    .comment-collection {
+        font-size: small;
+
+        .comment {
+            background-color: $background-color;
+            border: 1px solid $grey-color;
+            border-radius: 20px;
+            margin: 10px;
+            padding: 0 20px;
+
+            &.deleted {
+                background-color: lighten($danger-color, 50) !important;
+                opacity: 0.4;
+            }
+
+            &.reported {
+                background-color: lighten($warning-color, 50);
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<template>
+    <div class="score-container" class.bind="scoreClass">
+        <a href="#" if.bind="votable" auth-req click.delegate="thumbsDown()" class="thumbs-down" title="Downvote">
+            <i class="fa fa-fw" class.bind="thumbsDownIcon"></i>
+        </a>
+        <span>${score}</span>
+        <a href="#" if.bind="votable" auth-req click.delegate="thumbsUp()" class="thumbs-up" title="Upvote">
+            <i class="fa fa-fw" class.bind="thumbsUpIcon"></i>
+        </a>
+        <a href="#" if.bind="votable" auth-req class="report" title="Report" click.delegate="report()">
+            <i class="fa fa-fw fa-warning"></i>
+        </a>
+    </div>
+</template>

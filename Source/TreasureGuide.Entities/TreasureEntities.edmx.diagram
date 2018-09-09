@@ -68,6 +68,13 @@
         <EntityTypeShape EntityType="tcdbModel.CacheSet" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="tcdbModel.Ship" Width="1.5" PointX="10" PointY="1.125" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Teams_dbo_Ships" />
+        <EntityTypeShape EntityType="tcdbModel.TeamComment" Width="1.5" PointX="15.5" PointY="12" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamComments_EditedById_dbo_UserProfiles" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamComments_SubmittedById_dbo_UserProfiles" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamComments_dbo_Teams" />
+        <EntityTypeShape EntityType="tcdbModel.TeamCommentVote" Width="1.5" PointX="17.75" PointY="10" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamCommentVotes_dbo_TeamComments" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamCommentVotes_dbo_UserProfiles" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

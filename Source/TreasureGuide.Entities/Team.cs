@@ -25,6 +25,7 @@ namespace TreasureGuide.Entities
             this.TeamGenericSlots = new HashSet<TeamGenericSlot>();
             this.BookmarkedUsers = new HashSet<UserProfile>();
             this.TeamUnits = new HashSet<TeamUnit>();
+            this.TeamComments = new HashSet<TeamComment>();
         }
     
         public int Id { get; set; }
@@ -64,5 +65,7 @@ namespace TreasureGuide.Entities
         public virtual ICollection<TeamUnit> TeamUnits { get; set; }
         public virtual Stage Invasion { get; set; }
         public virtual Ship Ship { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamComment> TeamComments { get; set; }
     }
 }

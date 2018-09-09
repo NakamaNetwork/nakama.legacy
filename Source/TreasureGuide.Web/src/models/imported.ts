@@ -341,7 +341,6 @@ export interface IShipStubModel {
     id: number;
     name: string;
     eventShip: boolean;
-    eventShipActive: boolean;
     
 }
 
@@ -390,6 +389,71 @@ export enum StageType {
     Special = 6,
     TrainingForest = 7,
     TreasureMap = 8
+}
+
+
+export interface ITeamCommentStubModel {
+    id: number;
+    teamId: number;
+    text: string;
+    deleted: boolean;
+    reported: boolean;
+    canEdit: boolean;
+    myVote: number;
+    score: number;
+    submittedById: string;
+    submittedByName: string;
+    submittedByUnitId: number;
+    submittedByIsDonor: boolean;
+    editedDate: Date;
+    
+}
+
+export interface ITeamCommentDetailModel extends ITeamCommentStubModel{
+    
+}
+
+export interface ITeamCommentEditorModel {
+    id: number;
+    teamId: number;
+    text: string;
+    
+}
+
+
+export interface ITeamCommentReportModel {
+    teamCommentId: number;
+    
+}
+
+
+export interface ITeamCommentSearchModel extends ISearchModel{
+    teamId: number;
+    deleted: boolean;
+    reported: boolean;
+    
+}
+
+
+export interface ITeamCommentSearchModel extends ISearchModel{
+    teamId: number;
+    deleted: boolean;
+    reported: boolean;
+    
+}
+
+
+export interface ITeamCommentVoteModel {
+    teamCommentId: number;
+    up: boolean;
+    
+}
+
+
+export interface ITeamCommentVoteModel {
+    teamCommentId: number;
+    up: boolean;
+    
 }
 
 
@@ -458,6 +522,7 @@ export interface ITeamStubModel {
     deleted: boolean;
     reported: boolean;
     draft: boolean;
+    comments: number;
     
 }
 
