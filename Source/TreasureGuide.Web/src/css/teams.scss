@@ -693,6 +693,10 @@ team-box {
     margin: 10px;
     padding: 0 10px;
 
+    p {
+        margin-bottom: 0 !important;
+    }
+
     .comment-collection {
         font-size: small;
 
@@ -701,8 +705,16 @@ team-box {
             border: 1px solid $grey-color;
             border-radius: 20px;
             margin: 10px;
-            padding: 20px;
-            padding-bottom: 0;
+            padding: 0 20px;
+
+            &.deleted {
+                background-color: lighten($danger-color, 50) !important;
+                opacity: 0.4;
+            }
+
+            &.reported {
+                background-color: lighten($warning-color, 50);
+            }
         }
     }
 }

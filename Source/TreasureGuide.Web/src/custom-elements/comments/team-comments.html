@@ -17,19 +17,20 @@
                 <search-pager search-model.bind="searchModel" empty-message="No comments yet."></search-pager>
             </div>
             <div class="row comment-collection" if.bind="comments.length > 0">
-                <div repeat.for="comment of comments" class="row comment">
+                <div repeat.for="comment of comments" class="row comment" class.bind="(comment.reported ? 'reported ' : '') + (comment.deleted ? 'deleted' : '')">
+                    <div class="comment-header">
+                        <div class="col m6">
+                            <a route-href="route: profile; params.bind: { id: submittedByName }">
+                                <user-display name.bind="comment.submittedByName" unit-id.bind="comment.submittedByUnitId" donor.bind="comment.submittedByIsDonor"></user-display>
+                            </a>
+                            on ${comment.editedDate | dateTimeFormat}
+                        </div>
+                        <div class="col m6 _alignRight">
+                            <comment-score-display team-comment-id.bind="comment.id" score.bind="comment.score" my-vote.two-way="comment.myVote" reported.two-way="comment.reported" votable="true"></comment-score-display>
+                        </div>
+                    </div>
                     <div class="col m12">
                         <markdown value.bind="comment.text"></markdown>
-                    </div>
-                    <div class="col m6">
-                        <comment-score-display team-comment-id.bind="comment.id" score.bind="comment.score" my-vote.two-way="comment.myVote" reported.two-way="comment.reported" votable="true"></comment-score-display>
-                    </div>
-                    <div class="col m6 _alignRight">
-                        -
-                        <a route-href="route: profile; params.bind: { id: submittedByName }">
-                            <user-display name.bind="comment.submittedByName" unit-id.bind="comment.submittedByUnitId" donor.bind="comment.submittedByIsDonor"></user-display>
-                        </a>
-                        on ${comment.editedDate | dateTimeFormat}
                     </div>
                 </div>
             </div>
