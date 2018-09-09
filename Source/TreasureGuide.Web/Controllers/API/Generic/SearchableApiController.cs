@@ -43,7 +43,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             var resultCount = await entities.CountAsync();
             entities = OrderSearchResults(entities, model);
             entities = entities.Skip(model.PageSize * (model.Page - 1)).Take(model.PageSize);
-            var output = entities.ProjectTo<TOutput>(AutoMapper.ConfigurationProvider);
+            var output = Project<TOutput>(entities);
             var results = await output.ToListAsync();
             return new SearchResult<TOutput>
             {
@@ -51,7 +51,6 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 TotalResults = resultCount
             };
         }
-
         protected abstract Task<IQueryable<TEntity>> PerformSearch(IQueryable<TEntity> results, TSearchModel model);
 
         protected virtual IQueryable<TEntity> OrderSearchResults(IQueryable<TEntity> results, TSearchModel model)

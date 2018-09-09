@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Models.BoxModels;
@@ -22,6 +23,9 @@ namespace TreasureGuide.Common
         {
             var config = new MapperConfiguration(mapper =>
             {
+                string userId = null;
+                bool? canEdit = null;
+
                 var gUnit = mapper.CreateMap<GCRUnit, GCRUnitEditModel>().ReverseMap();
                 var gStage = mapper.CreateMap<GCRStage, GCRStageEditModel>().ReverseMap();
 
@@ -101,8 +105,8 @@ namespace TreasureGuide.Common
                 comments.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
                 comments.StubMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UnitId : null));
                 comments.StubMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
-                comments.StubMapping.ForMember(x => x.MyVote, o => o.Ignore()); // Handle this manually
-                comments.StubMapping.ForMember(x => x.CanEdit, o => o.Ignore()); // Handle this manually
+                comments.StubMapping.ForMember(x => x.MyVote, o => o.MapFrom(y => y.TeamCommentVotes.Where(z => z.UserId == userId).Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
+                comments.StubMapping.ForMember(x => x.CanEdit, o => o.MapFrom(y => (canEdit ?? false) || y.SubmittedById == userId));
 
                 comments.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
                 comments.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));

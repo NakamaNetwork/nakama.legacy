@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Helpers;
@@ -52,6 +53,20 @@ namespace TreasureGuide.Web.Controllers.API
                 entities = entities.Where(x => !x.Deleted);
             }
             return base.Filter(entities);
+        }
+
+        protected override IQueryable<TModel> Project<TModel>(IQueryable<TeamComment> entities)
+        {
+            if (typeof(TModel) == typeof(TeamCommentStubModel))
+            {
+                return entities.ProjectTo<TModel>(AutoMapper.ConfigurationProvider,
+                    new
+                    {
+                        userId = User.GetId(),
+                        canEdit = (User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
+                    });
+            }
+            return base.Project<TModel>(entities);
         }
 
         protected override bool CanPost(int? id)
