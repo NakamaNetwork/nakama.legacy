@@ -6,13 +6,14 @@
                     <a click.delegate="cancel()" class="button _flat modal-action">X</a>
                 </div>
                 <h3>
-                    Submit Comment
+                    ${name}
                 </h3>
             </ux-dialog-header>
             <ux-dialog-body>
                 <div class="form-group">
                     <label for="textInput">Text</label>
                     <markdown-editor id="textInput"
+                                     placeholder="Will you join my crew?"
                                      value.two-way="text & validate"></markdown-editor>
                     <div class="field-length">${textLength}</div>
                 </div>

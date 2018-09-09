@@ -6,6 +6,8 @@ import { ITeamCommentStubModel, ITeamDetailModel, SearchConstants } from '../../
 import { PLATFORM } from 'aurelia-pal';
 import { CommentDialog } from './comment-dialog';
 import { AlertService } from '../../services/alert-service';
+import { AlertDialog } from '../dialogs/alert-dialog';
+import { AlertDialogViewModel } from '../dialogs/alert-dialog';
 
 @autoinject
 @customElement('team-comments')
@@ -96,7 +98,7 @@ export class TeamComments {
         );
     }
 
-    comment(model) {
+    edit(model) {
         var id = null;
         if (model) {
             id = model.id;
@@ -111,4 +113,25 @@ export class TeamComments {
             }
         });
     }
+
+    delete(model) {
+        if (model) {
+            this.dialogService.open({
+                viewModel: AlertDialog,
+                model: <AlertDialogViewModel>{
+                    message: 'Are you sure you want to delete this comment?',
+                    cancelable: true
+                },
+                lock: true
+            }).whenClosed(result => {
+                if (!result.wasCancelled) {
+                    this.teamCommentService.delete(model.id).then(result => {
+                        this.alertService.success('Your comment has been deleted.');
+                        this.searchModel.sortBy = SearchConstants.SortDate;
+                        this.searchModel.sortDesc = false;
+                    });
+                }
+            });
+        }
+    };
 }

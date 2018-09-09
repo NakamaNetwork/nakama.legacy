@@ -82,6 +82,16 @@ namespace TreasureGuide.Web.Controllers.API
             return base.Project<TModel>(entities);
         }
 
+        protected override async Task<object> Remove(TeamComment single)
+        {
+            if (single != null)
+            {
+                single.Deleted = true;
+                await SaveChangesAsync();
+            }
+            return 1;
+        }
+
         protected override bool CanPost(int? id)
         {
             var userId = User.GetId();

@@ -2,7 +2,8 @@
 import { DialogController } from 'aurelia-dialog';
 import { ValidationControllerFactory, ValidationRules, ValidationController } from 'aurelia-validation';
 import { BeauterValidationFormRenderer } from '../../renderers/beauter-validation-form-renderer';
-import {AlertService} from '../../services/alert-service';
+import { AlertService } from '../../services/alert-service';
+import { ITeamCommentEditorModel } from '../../models/imported';
 
 @autoinject
 export class CommentDialog {
@@ -11,6 +12,7 @@ export class CommentDialog {
     private alertService: AlertService;
 
     model: CommentDialogViewModel;
+    name: string = 'Submit Comment';
 
     constructor(controller: DialogController, validFactory: ValidationControllerFactory, alertService: AlertService) {
         this.controller = controller;
@@ -18,6 +20,11 @@ export class CommentDialog {
         this.validController.addRenderer(new BeauterValidationFormRenderer());
         this.model = new CommentDialogViewModel();
         this.alertService = alertService;
+    }
+
+    activate(model: ITeamCommentEditorModel) {
+        this.model.text = model.text;
+        this.name = 'Edit Comment';
     }
 
     okay() {

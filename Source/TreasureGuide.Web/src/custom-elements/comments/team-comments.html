@@ -1,5 +1,5 @@
 <template>
-    <button type="button" auth-req="Contributor" class="button _primary _floatRight" click.delegate="comment()">
+    <button type="button" auth-req="Contributor" class="button _primary _floatRight" click.delegate="edit()">
         <i class="fa fa-fw fa-comment"></i>
         Add Comment
     </button>
@@ -24,6 +24,12 @@
                                 <user-display name.bind="comment.submittedByName" unit-id.bind="comment.submittedByUnitId" donor.bind="comment.submittedByIsDonor"></user-display>
                             </a>
                             on ${comment.editedDate | dateTimeFormat}
+                            <a href="#" if.bind="comment.canEdit" auth-req click.delegate="edit(comment)" title="Edit">
+                                <i class="fa fa-fw fa-pencil"></i>
+                            </a>
+                            <a href="#" if.bind="comment.canEdit" auth-req click.delegate="delete(comment)" title="Delete">
+                                <i class="fa fa-fw fa-trash-o"></i>
+                            </a>
                         </div>
                         <div class="col m6 _alignRight">
                             <comment-score-display team-comment-id.bind="comment.id" score.bind="comment.score" my-vote.two-way="comment.myVote" reported.two-way="comment.reported" votable="true"></comment-score-display>
