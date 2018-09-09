@@ -421,10 +421,31 @@ export interface ITeamCommentEditorModel {
 }
 
 
+export interface ITeamCommentReportModel {
+    teamCommentId: number;
+    
+}
+
+
 export interface ITeamCommentSearchModel extends ISearchModel{
     teamId: number;
     deleted: boolean;
     reported: boolean;
+    
+}
+
+
+export interface ITeamCommentSearchModel extends ISearchModel{
+    teamId: number;
+    deleted: boolean;
+    reported: boolean;
+    
+}
+
+
+export interface ITeamCommentVoteModel {
+    teamCommentId: number;
+    up: boolean;
     
 }
 

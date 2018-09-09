@@ -2,12 +2,20 @@
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { SearchModel } from '../../models/search-model';
-import { ITeamCommentStubModel, ITeamCommentSearchModel, ITeamCommentEditorModel, SearchConstants } from '../../models/imported';
+import { ITeamCommentStubModel, ITeamCommentSearchModel, ITeamCommentEditorModel, SearchConstants, ITeamCommentVoteModel, ITeamCommentReportModel } from '../../models/imported';
 
 @autoinject
 export class TeamCommentQueryService extends SearchableQueryService {
     constructor(http: HttpEngine) {
         super('teamcomment', http);
+    }
+
+    vote(model: ITeamCommentVoteModel): Promise<number> {
+        return this.http.post(this.buildAddress('vote'), model);
+    }
+
+    report(model: ITeamCommentReportModel): Promise<number> {
+        return this.http.post(this.buildAddress('report'), model);
     }
 }
 

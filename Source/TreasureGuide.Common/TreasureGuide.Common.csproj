@@ -71,6 +71,7 @@
     <Compile Include="Models\StageModels\StageSearchModel.cs" />
     <Compile Include="Models\StageModels\StageStubModel.cs" />
     <Compile Include="Models\TeamModels\TeamCommentModels.cs" />
+    <Compile Include="Models\TeamModels\TeamCommentReportModel.cs" />
     <Compile Include="Models\TeamModels\TeamCommentSearchModel.cs" />
     <Compile Include="Models\TeamModels\TeamCreditModel.cs" />
     <Compile Include="Models\TeamModels\TeamGenericSlotModels.cs" />

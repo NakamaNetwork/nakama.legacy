@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Helpers;
@@ -18,8 +20,19 @@ namespace TreasureGuide.Web.Controllers.API
     [Route("api/teamcomment")]
     public class TeamCommentController : SearchableApiController<int, TeamComment, int?, TeamCommentStubModel, TeamCommentDetailModel, TeamCommentEditorModel, TeamCommentSearchModel>
     {
+        private const int COMMENT_TIMEOUT = 30;
+
         public TeamCommentController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
+        }
+
+        protected override async Task<object> PerformPost(TeamCommentEditorModel model, int? id = null)
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, expirationSeconds: COMMENT_TIMEOUT))
+            {
+                return StatusCode(429, ThrottleService.Message);
+            }
+            return await base.PerformPost(model, id);
         }
 
         protected override async Task<TeamComment> PostProcess(TeamComment entity)
@@ -112,6 +125,58 @@ namespace TreasureGuide.Web.Controllers.API
                 default:
                     return results.OrderBy(x => x.TeamCommentVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), !model.SortDesc);
             }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("Vote")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Vote([FromBody] TeamCommentVoteModel model, int? id = null)
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode(429, ThrottleService.Message);
+            }
+            var commentId = id ?? model.TeamCommentId;
+            var userId = User.GetId();
+            var vote = await DbContext.TeamCommentVotes.SingleOrDefaultAsync(x => x.TeamCommentId == model.TeamCommentId && x.UserId == userId);
+            var exists = vote != null;
+            vote = vote ?? new TeamCommentVote
+            {
+                TeamCommentId = commentId,
+                UserId = userId,
+                SubmittedDate = DateTimeOffset.Now
+            };
+            var value = model.Up.HasValue ? (model.Up ?? true) ? 1 : -1 : 0;
+            if (!exists)
+            {
+                DbContext.TeamCommentVotes.Add(vote);
+            }
+            vote.Value = (short)value;
+            await DbContext.SaveChangesAsync();
+            var returnValue = await DbContext.TeamCommentVotes.Where(x => x.TeamCommentId == commentId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
+            return Ok(returnValue);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ActionName("Report")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Report([FromBody] TeamCommentReportModel model, int? id = null)
+        {
+            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            {
+                return StatusCode(429, ThrottleService.Message);
+            }
+            var teamCommentId = id ?? model.TeamCommentId;
+
+            var team = DbContext.TeamComments.SingleOrDefault(x => x.Id == teamCommentId);
+            if (team != null)
+            {
+                team.Reported = true;
+                await DbContext.SaveChangesAsync();
+            }
+            return Ok(teamCommentId);
         }
     }
 }
