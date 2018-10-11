@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '10/10/18',
+        lines: [
+            'Fixed an issue that was causing events to be removed from "featured content" too soon.'
+        ]
+    }, {
         header: '09/09/18',
         lines: [
             'At long last, user can now post comments on teams!',
