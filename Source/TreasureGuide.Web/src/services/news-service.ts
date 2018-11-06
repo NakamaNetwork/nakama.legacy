@@ -9,7 +9,8 @@ export class NewsService {
     static news: NewsEntry[] = [{
             header: '11/06/18',
             lines: [
-                'Fixed an issue that was causing events to be removed from "featured content" too soon.'
+                'Removed duplicate dual unit entries from the character database. All team and box references to these units have been automatically updated to use their correct versions.',
+                'Added the ability to reply to top-level comments.'
             ]
         },{
         header: '10/10/18',
