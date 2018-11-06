@@ -239,6 +239,8 @@ namespace TreasureGuide.Sniffer.DataParser
                     return 2202100;
                 case 2046:
                     return 2204400;
+                case 2144:
+                    return 2214600;
                 case 530: // 3rd anni champ challenge
                 case 562:
                 case 1045:
