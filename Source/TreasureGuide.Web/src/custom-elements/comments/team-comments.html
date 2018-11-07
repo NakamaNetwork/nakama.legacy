@@ -5,7 +5,10 @@
     </button>
     <h4>Comments</h4>
     <div if.bind="!seen" class="_alignCenter">
-        <button class="button _width100" click.delegate="loadComments()">Load Comments</button>
+        <button class="button _width100" click.delegate="loadComments()">
+            <i class="fa fa-fw fa-newspaper-o"></i>
+            Load Comments
+        </button>
     </div>
     <div if.bind="seen" class="comment-area">
         <div class="row">

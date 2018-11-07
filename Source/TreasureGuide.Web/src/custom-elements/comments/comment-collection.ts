@@ -1,11 +1,11 @@
-import { autoinject, bindable, customElement } from 'aurelia-framework';
+import { autoinject, bindable, computedFrom, customElement } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { TeamCommentQueryService, TeamCommentSearchModel } from '../../services/query/team-comment-query-service';
 import { ITeamCommentStubModel, ITeamDetailModel, SearchConstants } from '../../models/imported';
 import { CommentDialog } from './comment-dialog';
 import { AlertService } from '../../services/alert-service';
-import { AlertDialog } from '../dialogs/alert-dialog';
-import { AlertDialogViewModel } from '../dialogs/alert-dialog';
+import { AlertDialog, AlertDialogViewModel } from '../dialogs/alert-dialog';
+import { BindingSignaler } from 'aurelia-templating-resources';
 
 @autoinject
 @customElement('comment-collection')
@@ -13,17 +13,20 @@ export class CommentCollection {
     private teamCommentService: TeamCommentQueryService;
     private alertService: AlertService;
     private dialogService: DialogService;
+    private bindingSignaler: BindingSignaler;
 
     public loading: boolean;
+
     @bindable
     private comments: ITeamCommentStubModel[];
     @bindable
     public team: ITeamDetailModel;
-    
-    constructor(teamCommentService: TeamCommentQueryService, alertService: AlertService, dialogService: DialogService) {
+
+    constructor(teamCommentService: TeamCommentQueryService, alertService: AlertService, dialogService: DialogService, signaler: BindingSignaler) {
         this.teamCommentService = teamCommentService;
         this.alertService = alertService;
         this.dialogService = dialogService;
+        this.bindingSignaler = signaler;
     }
 
     edit(model, parentId) {
@@ -39,8 +42,19 @@ export class CommentCollection {
                 if (!teamId) {
                     teamId = this.team.id;
                 }
-                this.teamCommentService.save({ id: id, teamId: teamId, parentId: parentId, text: <string>result.output }).then(result => {
+                var newComment = !model;
+                if (newComment) {
+                    model = { id: id, teamId: teamId, parentId: parentId }
+                };
+                model.text = <string>result.output;
+                this.teamCommentService.save(model).then(result => {
                     this.alertService.success('Thank you! Your comment has been submitted.');
+                    if (newComment && parentId) {
+                        var parent = this.comments.find(x => x.id == parentId);
+                        if (parent) {
+                            this.loadMore(parent);
+                        }
+                    }
                 }).catch(response => this.alertService.reportError(response));
             }
         });
@@ -59,6 +73,7 @@ export class CommentCollection {
                 if (!result.wasCancelled) {
                     this.teamCommentService.acknowledge({ teamCommentId: model.id }).then(result => {
                         this.alertService.success('The reports have been cleared.');
+                        model.reported = false;
                     });
                 }
             });
@@ -79,8 +94,28 @@ export class CommentCollection {
                     this.teamCommentService.delete(model.id).then(result => {
                         this.alertService.success('Your comment has been deleted.');
                     });
+                    var index = this.comments.indexOf(model);
+                    if (index >= 0) {
+                        this.comments.splice(index, 1);
+                    }
                 }
             });
         }
     };
+
+    loadMore(model) {
+        this.teamCommentService.loadMore(model.id, model.children.length).then(result => {
+            result.forEach(x => {
+                var existing = model.children.find(y => y.id == x.id);
+                if (!existing) {
+                    model.children.push(x);
+                }
+            });
+            this.bindingSignaler.signal('update-loads');
+        });
+    }
+
+    needMore(comment) {
+        return comment.childCount > comment.children.length;
+    }
 }

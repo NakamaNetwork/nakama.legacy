@@ -28,10 +28,17 @@
                 <comment-collection comments.bind="comment.children" team.bind="team"></comment-collection>
             </div>
             <div class="row" if.bind="!comment.parentId">
-                <button type="button" auth-req="Contributor" if.bind="!comment.parentId" class="button _primary _small _floatRight" click.delegate="edit(null, comment.id)">
-                    <i class="fa fa-fw fa-reply"></i>
-                    Reply
-                </button>
+                <div class="_floatRight">
+                    <button type="button" if.bind="needMore(comment) & signal: 'update-loads'" class="button _small" click.delegate="loadMore(comment)">
+                        <i class="fa fa-fw fa-newspaper-o"></i>
+                        Load More Comments
+                    </button>
+                    &nbsp;
+                    <button type="button" auth-req="Contributor" if.bind="!comment.parentId" class="button _primary _small" click.delegate="edit(null, comment.id)">
+                        <i class="fa fa-fw fa-reply"></i>
+                        Reply
+                    </button>
+                </div>
             </div>
         </div>
     </div>
