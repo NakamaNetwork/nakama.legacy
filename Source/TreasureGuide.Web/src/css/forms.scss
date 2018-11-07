@@ -113,6 +113,11 @@ markdown.preview {
         -ms-transform: translateY(-50%);
         transform: translateY(-50%);
     }
+
+    .button._large{
+        max-height: 50px !important;
+        min-height: 50px !important;
+    }
 }
 
 .bit-button {

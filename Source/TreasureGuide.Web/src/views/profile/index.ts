@@ -42,7 +42,8 @@ export class ProfileDetailPage {
         this.profileQueryService = profileQueryService;
         this.router = router;
         this.teamQueryService = teamQueryService;
-        this.teamSearchModel = <TeamSearchModel>new TeamSearchModel().getCached();
+        this.teamSearchModel = new TeamSearchModel().getDefault();
+        this.teamSearchModel = <TeamSearchModel>this.teamSearchModel.getCached();
         this.bindingEngine = bindingEngine;
         this.accountService = accountService;
 
@@ -62,7 +63,7 @@ export class ProfileDetailPage {
             this.search(this.teamSearchModel.payload)
             MetaTool.setTitle(this.profile.userName);
 
-            this.boxSearchModel = new BoxSearchModel();
+            this.boxSearchModel = new BoxSearchModel().getDefault();
             this.boxSearchModel.userId = result.id;
             this.bindingEngine.propertyObserver(this.boxSearchModel, 'payload').subscribe((n, o) => {
                 this.boxSearch(n);

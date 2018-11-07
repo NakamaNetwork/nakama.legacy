@@ -1,7 +1,7 @@
 <template>
     <div repeat.for="comment of comments" class="row comment" class.bind="(comment.reported ? 'reported ' : '') + (comment.deleted ? 'deleted' : '')">
         <div class="row">
-            <div class="col m6">
+            <div class="col m5">
                 <a route-href="route: profile; params.bind: { id: submittedByName }">
                     <user-display name.bind="comment.submittedByName" unit-id.bind="comment.submittedByUnitId" donor.bind="comment.submittedByIsDonor"></user-display>
                 </a>
@@ -16,18 +16,23 @@
                     <i class="fa fa-fw fa-exclamation"></i>
                 </a>
             </div>
-            <div class="col m6 _alignRight">
+                <div class="col m4">
+                <em if.bind="comment.submittedDate != comment.editedDate">
+                    <small>Last edited on ${comment.editedDate | dateTimeFormat}</small>
+                </em>
+            </div>
+            <div class="col m3 _alignRight">
                 <comment-score-display team-comment-id.bind="comment.id" score.bind="comment.score" my-vote.two-way="comment.myVote" reported.two-way="comment.reported" votable="true"></comment-score-display>
             </div>
         </div>
         <div class="row">
             <markdown value.bind="comment.text"></markdown>
         </div>
-        <div class="comment-footer">
+        <div class="comment-footer" if.bind="!comment.parentId">
             <div class="row comment-collection" if.bind="comment.children.length > 0">
                 <comment-collection comments.bind="comment.children" team.bind="team"></comment-collection>
             </div>
-            <div class="row" if.bind="!comment.parentId">
+            <div class="row">
                 <div class="_floatRight">
                     <button type="button" if.bind="needMore(comment) & signal: 'update-loads'" class="button _small" click.delegate="loadMore(comment)">
                         <i class="fa fa-fw fa-newspaper-o"></i>

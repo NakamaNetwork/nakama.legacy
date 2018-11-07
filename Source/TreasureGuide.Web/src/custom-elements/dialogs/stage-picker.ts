@@ -16,13 +16,15 @@ export class StagePicker {
     stages: any[];
     invasion: boolean;
 
-    searchModel: StageSearchModel = <StageSearchModel>new StageSearchModel().getCached();
+    searchModel: StageSearchModel;
     loading;
 
     constructor(stageQueryService: StageQueryService, controller: DialogController, bindingEngine: BindingEngine) {
         this.controller = controller;
         this.controller.settings.centerHorizontalOnly = true;
         this.stageQueryService = stageQueryService;
+        this.searchModel = new StageSearchModel().getDefault();
+        this.searchModel = <StageSearchModel>this.searchModel.getCached();
         this.bindingEngine = bindingEngine;
     }
 

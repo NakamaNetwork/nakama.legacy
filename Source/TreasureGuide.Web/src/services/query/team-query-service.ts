@@ -97,7 +97,10 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     ];
 
     getDefault(): TeamSearchModel {
-        return new TeamSearchModel();
+        var model = new TeamSearchModel();
+        model.sortBy = SearchConstants.SortDate;
+        model.sortDesc = true;
+        return model;
     }
 
     static freeToPlayOptions = [

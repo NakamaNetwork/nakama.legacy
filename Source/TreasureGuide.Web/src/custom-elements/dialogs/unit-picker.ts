@@ -19,7 +19,7 @@ export class UnitPicker {
     private allowGenerics: boolean;
     private generic: boolean;
     private units: IUnitStubModel[] = [];
-    private searchModel = new UnitSearchModel().getCached();
+    private searchModel: UnitSearchModel;
     private loading: boolean;
 
     private genericBuilder: TeamGenericSlotEditorModel = new TeamGenericSlotEditorModel();
@@ -36,6 +36,9 @@ export class UnitPicker {
         this.validController = validFactory.createForCurrentScope();
         this.validController.addRenderer(new BeauterValidationFormRenderer());
         this.validController.addObject(this.genericBuilder);
+
+        this.searchModel = new UnitSearchModel().getDefault();
+        this.searchModel = <UnitSearchModel>this.searchModel.getCached();
 
         bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);

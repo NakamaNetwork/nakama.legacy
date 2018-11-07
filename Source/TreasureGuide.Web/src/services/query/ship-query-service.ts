@@ -3,6 +3,7 @@ import { HttpEngine } from '../../tools/http-engine';
 import { IShipStubModel, ISearchModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
 import { LocallySearchedQueryService } from './generic/locally-searched-query-service';
+import {SearchConstants} from '../../models/imported';
 
 @autoinject
 export class ShipQueryService extends LocallySearchedQueryService<number, IShipStubModel, ShipSearchModel> {
@@ -29,6 +30,9 @@ export class ShipQueryService extends LocallySearchedQueryService<number, IShipS
 
 export class ShipSearchModel extends SearchModel implements ISearchModel {
     getDefault(): SearchModel {
-        return new ShipSearchModel();
+        var model = new ShipSearchModel();
+        model.sortBy = SearchConstants.SortName;
+        model.sortDesc = false;
+        return model;
     }
 }

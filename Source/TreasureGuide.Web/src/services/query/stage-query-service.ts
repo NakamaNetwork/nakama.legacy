@@ -89,7 +89,10 @@ export class StageSearchModel extends SearchModel implements IStageSearchModel {
         SearchConstants.SortType
     ];
 
-    getDefault(): SearchModel {
-        return new StageSearchModel();
+    getDefault(): StageSearchModel {
+        var model = new StageSearchModel();
+        model.sortBy = SearchConstants.SortName;
+        model.sortDesc = false;
+        return model;
     }
 }

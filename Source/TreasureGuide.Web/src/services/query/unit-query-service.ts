@@ -135,7 +135,10 @@ export class UnitSearchModel extends SearchModel implements IUnitSearchModel {
         SearchConstants.SortStars
     ];
 
-    public getDefault(): SearchModel {
-        return new UnitSearchModel();
+    public getDefault(): UnitSearchModel {
+        var model = new UnitSearchModel();
+        model.sortBy = SearchConstants.SortStars;
+        model.sortDesc = true;
+        return model;
     }
 };

@@ -7,13 +7,24 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
-            header: '11/06/18',
-            lines: [
-                'Removed duplicate dual unit entries from the character database. All team and box references to these units have been automatically updated to use their correct versions.',
-                'Added the ability to reply to top-level comments.',
-                'Added notifications for comments, comment replies, and video posts.'
-            ]
-        },{
+        header: '11/07/18',
+        lines: [
+            'Added separate "edited" date display on teams and team comments. This has been applied retroactively to all applicable items.',
+            'Updated Team Summaries to show Submitted Dates instead of Edited Dates',
+            'Fixed an issue that would prevent team searches from updating when changing the leader filter.',
+            'Gave all search models a default sorting state.',
+            'Removed ability to turn off search sorting.',
+            'Added a check to prevent comments from attempting to load when none exist.',
+            'Fixed the Twitter login button showing up in the wrong place on desktop screens.'
+        ]
+    }, {
+        header: '11/06/18',
+        lines: [
+            'Removed duplicate dual unit entries from the character database. All team and box references to these units have been automatically updated to use their correct versions.',
+            'Added the ability to reply to top-level comments.',
+            'Added notifications for comments, comment replies, and video posts.'
+        ]
+    }, {
         header: '10/10/18',
         lines: [
             'Fixed an issue that was causing events to be removed from "featured content" too soon.'

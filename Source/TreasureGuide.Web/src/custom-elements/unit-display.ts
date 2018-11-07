@@ -57,6 +57,7 @@ export class UnitDisplay {
             return id;
 
         }
+        this.unitId = null;
         return null;
     }
 
@@ -97,7 +98,7 @@ export class UnitDisplay {
                         this.model = x;
                     }, 0);
                 });
-            } else if (this.model.id === oldValue) {
+            } else if (!this.model || this.model.id === oldValue) {
                 this.model = null;
             }
         }
