@@ -24,7 +24,7 @@
                         Logout
                     </a>
                 </li>
-                <li class="_floatRight box-icon" auth-req="BoxUser">
+                <li class="_floatRight nav-icon" auth-req="BoxUser">
                     <a route-href="route: boxes"
                        title.bind="boxTitle"
                        class.bind="boxClass">
@@ -34,11 +34,12 @@
                         </span>
                     </a>
                 </li>
-                <li class="_floatRight notification-icon" auth-req>
+                <li class="_floatRight nav-icon" auth-req>
                     <a route-href="route: notifications"
                        title.bind="notificationTitle">
-                        <span class="notification-badge">${notificationCount}</span>
-                        <i class="fa fa-fw" class.bind="notificationClass"></i>
+                        <span class="fa-stack" class.bind="badgeClass" data-count.bind="notificationService.notificationCount">
+                            <i class="fa fa-stack-1x" class.bind="notificationClass"></i>
+                        </span>
                     </a>
                 </li>
                 <li class="_floatRight" auth-req>

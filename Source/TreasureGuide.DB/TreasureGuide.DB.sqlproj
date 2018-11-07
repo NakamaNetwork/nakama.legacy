@@ -120,6 +120,7 @@
     <Build Include="dbo\Tables\Notifications\Triggers\TeamCommentTrigger.sql" />
     <Build Include="dbo\Tables\Notifications\Triggers\CommentReplyTrigger.sql" />
     <Build Include="dbo\Tables\Notifications\Triggers\TeamVideoTrigger.sql" />
+    <Build Include="dbo\Views\NotificationSummary.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

@@ -45,7 +45,7 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 return Unauthorized();
             }
-            var notifications = await DbContext.Notifications
+            var notifications =  await DbContext.NotificationSummaries
                 .Where(x => x.UserId == id)
                 .OrderBy(x => x.Id)
                 .ProjectTo<NotificationModel>(AutoMapper.ConfigurationProvider)
@@ -74,11 +74,11 @@ namespace TreasureGuide.Web.Controllers.API
             return Ok(notifications);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Authorize]
-        [ActionName("Acknowledge")]
-        [Route("[action]/{id?}")]
-        public async Task<IActionResult> Acknowledge(int? id = null)
+        [ActionName("")]
+        [Route("{id?}")]
+        public async Task<IActionResult> Delete(int? id = null)
         {
             var userId = User.GetId();
             if (String.IsNullOrWhiteSpace(User.GetId()))

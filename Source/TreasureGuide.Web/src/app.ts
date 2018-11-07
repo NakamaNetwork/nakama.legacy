@@ -45,9 +45,9 @@ export class App {
             }
         });
         setInterval(() => {
-            this.refreshNotifications();
+            this.notificationService.refreshNotifications();
         }, 30000);
-        this.refreshNotifications();
+        this.notificationService.refreshNotifications();
     }
 
     configureRouter(config: RouterConfiguration, router: Router): void {
@@ -148,26 +148,23 @@ export class App {
         });
     }
 
-    notificationCount: number;
-
-    @computedFrom('notificationCount')
+    @computedFrom('notificationService.notificationCount')
     get notificationTitle() {
-        return this.notificationCount + ' unread notification' + (this.notificationCount != 1 ? 's' : '');
+        return this.notificationService.notificationCount + ' unread notification' + (this.notificationService.notificationCount != 1 ? 's' : '');
     }
 
-    @computedFrom('notificationCount')
+    @computedFrom('notificationService.notificationCount')
     get hasNotifications() {
-        return this.notificationCount > 0;
+        return this.notificationService.notificationCount > 0;
     }
 
-    @computedFrom('notificationCount')
+    @computedFrom('notificationService.notificationCount')
     get notificationClass() {
-        return this.notificationCount > 0 ? 'fa-envelope' : 'fa-envelope-open';
+        return this.notificationService.notificationCount > 0 ? 'fa-envelope' : 'fa-envelope-open';
     }
 
-    refreshNotifications() {
-        this.notificationService.count().then(x => {
-            this.notificationCount = x;
-        });
+    @computedFrom('notificationService.notificationCount')
+    get badgeClass() {
+        return this.notificationService.notificationCount > 0 ? 'has-badge' : '';
     }
 }

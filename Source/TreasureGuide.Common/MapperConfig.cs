@@ -169,8 +169,7 @@ namespace TreasureGuide.Common
                 donation.DetailMapping.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.UserProfile.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
                 donation.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
 
-                var notification = mapper.CreateMap<Notification, NotificationModel>();
-                notification.ForMember(x => x.TriggerName, o => o.MapFrom(y => y.TriggeringUser != null ? y.TriggeringUser.UserName : null));
+                var notification = mapper.CreateMap<NotificationSummary, NotificationModel>();
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

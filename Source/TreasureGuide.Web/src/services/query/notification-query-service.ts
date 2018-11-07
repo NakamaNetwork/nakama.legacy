@@ -18,6 +18,14 @@ export class NotificationQueryService {
     }
 
     acknowledge(id: number) {
-        return this.http.post('/api/notifications', { id: id });
+        return this.http.delete('/api/notifications/' + id);
+    }
+
+    notificationCount: number;
+
+    refreshNotifications() {
+        this.count().then(x => {
+            this.notificationCount = x;
+        });
     }
 }

@@ -241,11 +241,12 @@ export enum NotificationEventType {
 
 export interface INotificationModel {
     id: number;
-    eventType: NotificationEventType;
+    eventType: number;
     eventId: number;
+    eventInfo: string;
+    extraInfo: string;
     triggerUserId: string;
-    triggerName: string;
-    acknowledged: boolean;
+    triggerUserName: string;
     receivedDate: Date;
     
 }
@@ -461,21 +462,6 @@ export interface ITeamCommentSearchModel extends ISearchModel{
     teamId: number;
     deleted: boolean;
     reported: boolean;
-    
-}
-
-
-export interface ITeamCommentSearchModel extends ISearchModel{
-    teamId: number;
-    deleted: boolean;
-    reported: boolean;
-    
-}
-
-
-export interface ITeamCommentVoteModel {
-    teamCommentId: number;
-    up: boolean;
     
 }
 
