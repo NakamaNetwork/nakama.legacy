@@ -26,6 +26,19 @@ namespace TreasureGuide.Web.Controllers.API
         {
         }
 
+        [HttpGet]
+        [ActionName("LoadMore")]
+        [Route("[action]")]
+        public async Task<IActionResult> LoadMore(int id, int current)
+        {
+            var found = DbContext.TeamComments.Where(x => x.ParentId == id);
+            found = Filter(found);
+            var results = await found.OrderBy(x => x.Id).Skip(current).Take(10)
+                .ProjectTo<TeamCommentDetailModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+
+            return Ok(results);
+        }
+
         protected override async Task<object> PerformPost(TeamCommentEditorModel model, int? id = null)
         {
             if (Throttled && !ThrottlingService.CanAccess(User, Request, Request.Path, COMMENT_TIMEOUT))

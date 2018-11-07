@@ -241,7 +241,7 @@ iframe {
     }
 }
 
-.box-icon {
+.nav-icon {
     .fa-stack {
         text-align: center;
         height: inherit !important;
@@ -252,6 +252,27 @@ iframe {
             -webkit-transform: translateY(50%);
         }
     }
+
+    a {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+.fa-stack[data-count]:after {
+    position: absolute;
+    right: 5%;
+    top: 1%;
+    content: attr(data-count);
+    font-size: 60%;
+    padding: .2em 0;
+    border-radius: 999px;
+    line-height: .75em;
+    color: white;
+    background: rgba(255,0,0,.85);
+    text-align: center;
+    min-width: 1.2em;
+    font-weight: bold;
 }
 
 .donor-info {

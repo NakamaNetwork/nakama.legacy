@@ -51,7 +51,9 @@ namespace TreasureGuide.Sniffer.DataParser
                 };
                 return unit;
             });
-            return models.Where(x => !String.IsNullOrWhiteSpace(x.Name));
+            return models.Where(x => !String.IsNullOrWhiteSpace(x.Name) && 
+            !(x.Id >= 5000 && x.Name.Contains("[Dual Unit]")) // Dual Unit Filter
+            );
         }
 
         private decimal? ParseStars(string value)

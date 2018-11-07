@@ -231,6 +231,27 @@ export interface IMetaResultModel {
 }
 
 
+export enum NotificationEventType { 
+    Unknown = 0,
+    TeamComment = 1,
+    CommentReply = 2,
+    TeamVideo = 3
+}
+
+
+export interface INotificationModel {
+    id: number;
+    eventType: number;
+    eventId: number;
+    eventInfo: string;
+    extraInfo: string;
+    triggerUserId: string;
+    triggerUserName: string;
+    receivedDate: Date;
+    
+}
+
+
 export enum PaymentState { 
     Unknown = 0,
     Initialized = 1,
@@ -387,8 +408,27 @@ export enum StageType {
 
 
 export interface ITeamCommentStubModel {
+    children: ITeamCommentDetailModel[];
     id: number;
     teamId: number;
+    text: string;
+    deleted: boolean;
+    reported: boolean;
+    canEdit: boolean;
+    myVote: number;
+    score: number;
+    submittedById: string;
+    submittedByName: string;
+    submittedByUnitId: number;
+    submittedByIsDonor: boolean;
+    editedDate: Date;
+    childCount: number;
+    
+}
+
+export interface ITeamCommentDetailModel {
+    id: number;
+    parentId: number;
     text: string;
     deleted: boolean;
     reported: boolean;
@@ -403,13 +443,10 @@ export interface ITeamCommentStubModel {
     
 }
 
-export interface ITeamCommentDetailModel extends ITeamCommentStubModel{
-    
-}
-
 export interface ITeamCommentEditorModel {
     id: number;
     teamId: number;
+    parentId: number;
     text: string;
     
 }
@@ -425,21 +462,6 @@ export interface ITeamCommentSearchModel extends ISearchModel{
     teamId: number;
     deleted: boolean;
     reported: boolean;
-    
-}
-
-
-export interface ITeamCommentSearchModel extends ISearchModel{
-    teamId: number;
-    deleted: boolean;
-    reported: boolean;
-    
-}
-
-
-export interface ITeamCommentVoteModel {
-    teamCommentId: number;
-    up: boolean;
     
 }
 

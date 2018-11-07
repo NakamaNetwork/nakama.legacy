@@ -7,19 +7,23 @@ import { NewsService } from './services/news-service';
 import { BoxService } from './services/box-service';
 import { RoleConstants } from './models/imported';
 import { ThiccStep } from './tools/thicc-step';
+import { NotificationQueryService } from './services/query/notification-query-service';
 
 @autoinject
 export class App {
     public router: Router;
     public accountService: AccountService;
     private boxService: BoxService;
+    private notificationService: NotificationQueryService;
     private ea: EventAggregator;
     private newsService: NewsService;
 
-    constructor(accountService: AccountService, eventAggregator: EventAggregator, newsService: NewsService, boxService: BoxService) {
+    constructor(accountService: AccountService, eventAggregator: EventAggregator, newsService: NewsService,
+        boxService: BoxService, notificationService: NotificationQueryService) {
         this.accountService = accountService;
         this.newsService = newsService;
         this.boxService = boxService;
+        this.notificationService = notificationService;
         this.ea = eventAggregator;
     }
 
@@ -40,6 +44,10 @@ export class App {
                 ThiccStep.cleanForce(this.router.currentInstruction);
             }
         });
+        setInterval(() => {
+            this.notificationService.refreshNotifications();
+        }, 30000);
+        this.notificationService.refreshNotifications();
     }
 
     configureRouter(config: RouterConfiguration, router: Router): void {
@@ -69,6 +77,8 @@ export class App {
             { route: 'boxes/create', name: 'boxCreate', title: 'Create Box', moduleId: 'views/boxes/edit', nav: false, auth: RoleConstants.BoxUser },
             { route: 'boxes/:id/edit', name: 'boxEdit', title: 'Edit Box', moduleId: 'views/boxes/edit', nav: false, auth: RoleConstants.BoxUser },
             { route: 'boxes/:id/details', name: 'boxDetails', title: 'Box Details', moduleId: 'views/boxes/detail', nav: false },
+            // Notifications
+            { route: 'notifications', name: 'notifications', title: 'Notifications', moduleId: 'views/notifications/index', nav: false, auth: true },
             // GCR
             { route: 'gcr/edit', name: 'gcrEdit', title: 'Edit GCR', moduleId: 'views/gcr/edit', nav: false, auth: RoleConstants.GCRAdmin },
             // Admin
@@ -136,5 +146,25 @@ export class App {
         return this.router.navigation.filter(n => {
             return this.accountService.isInRoles(n.config['auth']);
         });
+    }
+
+    @computedFrom('notificationService.notificationCount')
+    get notificationTitle() {
+        return this.notificationService.notificationCount + ' unread notification' + (this.notificationService.notificationCount != 1 ? 's' : '');
+    }
+
+    @computedFrom('notificationService.notificationCount')
+    get hasNotifications() {
+        return this.notificationService.notificationCount > 0;
+    }
+
+    @computedFrom('notificationService.notificationCount')
+    get notificationClass() {
+        return this.notificationService.notificationCount > 0 ? 'fa-envelope' : 'fa-envelope-open';
+    }
+
+    @computedFrom('notificationService.notificationCount')
+    get badgeClass() {
+        return this.notificationService.notificationCount > 0 ? 'has-badge' : '';
     }
 }

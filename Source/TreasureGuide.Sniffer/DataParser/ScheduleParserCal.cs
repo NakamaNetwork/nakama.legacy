@@ -41,6 +41,7 @@ namespace TreasureGuide.Sniffer.DataParser
 
         private async Task<IEnumerable<ScheduledEvent>> GetEventData(string endpoint, StageType type)
         {
+            var now = DateTime.Now;
             var json = await PerformRequest(endpoint);
             var first = json.IndexOf("[");
             var last = json.LastIndexOf("]") + 1;
@@ -52,7 +53,7 @@ namespace TreasureGuide.Sniffer.DataParser
             {
                 var startDate = GetDate(token["start"]?.ToString());
                 var endDate = GetDate(token["end"]?.ToString()) ?? startDate?.AddDays(1);
-                if (startDate.HasValue)
+                if (startDate.HasValue && endDate > now)
                 {
                     foreach (var unit in GetUnits(token))
                     {
@@ -100,7 +101,8 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Replace("id: 'bb_0870'", "id: 870")
                 .Replace("id: 'bb_1314'", "id: 1314")
                 .Replace("id: 'bb_1404'", "id: 1404")
-                .Replace("id: 'db_1985'", "id: 1985");
+                .Replace("id: 'db_1985'", "id: 1985")
+                .Replace("cc_", "");
         }
 
         private DateTimeOffset? GetDate(string value)
@@ -219,8 +221,12 @@ namespace TreasureGuide.Sniffer.DataParser
                 case 1725:
                     return 2172300;
                 // Raid Doffy v2
+                case 2500:
+                case 2262:
+                case 2501:
+                case 2263:
                 case 5012:
-                    return 4250100;
+                    return 4226300;
                 case 1810:
                     return 2181200;
                 case 1893:
@@ -231,6 +237,35 @@ namespace TreasureGuide.Sniffer.DataParser
                     return 2199700;
                 case 2019:
                     return 2202100;
+                case 2046:
+                    return 2204400;
+                case 2144:
+                    return 2214600;
+                case 530: // 3rd anni champ challenge
+                case 562:
+                case 1045:
+                case 1123:
+                case 578:
+                case 720:
+                case 1001:
+                case 1192:
+                case 1268:
+                case 416:
+                case 1035:
+                case 1240:
+                case 1362:
+                case 1391:
+                case 367:
+                case 669:
+                case 718:
+                case 935:
+                case 1085:
+                case 261:
+                case 459:
+                case 649:
+                case 748:
+                case 2113:
+                    return 6158800;
             }
             return null;
         }

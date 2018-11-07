@@ -1,0 +1,45 @@
+<template>
+    <div repeat.for="comment of comments" class="row comment" class.bind="(comment.reported ? 'reported ' : '') + (comment.deleted ? 'deleted' : '')">
+        <div class="row">
+            <div class="col m6">
+                <a route-href="route: profile; params.bind: { id: submittedByName }">
+                    <user-display name.bind="comment.submittedByName" unit-id.bind="comment.submittedByUnitId" donor.bind="comment.submittedByIsDonor"></user-display>
+                </a>
+                on ${comment.editedDate | dateTimeFormat}
+                <a href="#" if.bind="comment.canEdit" auth-req click.delegate="edit(comment)" title="Edit">
+                    <i class="fa fa-fw fa-pencil"></i>
+                </a>
+                <a href="#" if.bind="comment.canEdit" auth-req click.delegate="delete(comment)" title="Delete">
+                    <i class="fa fa-fw fa-trash-o"></i>
+                </a>
+                <a href="#" if.bind="comment.reported" auth-req="Moderator, Administrator" click.delegate="acknowledge(comment)" title="Clear Reports">
+                    <i class="fa fa-fw fa-exclamation"></i>
+                </a>
+            </div>
+            <div class="col m6 _alignRight">
+                <comment-score-display team-comment-id.bind="comment.id" score.bind="comment.score" my-vote.two-way="comment.myVote" reported.two-way="comment.reported" votable="true"></comment-score-display>
+            </div>
+        </div>
+        <div class="row">
+            <markdown value.bind="comment.text"></markdown>
+        </div>
+        <div class="comment-footer">
+            <div class="row comment-collection" if.bind="comment.children.length > 0">
+                <comment-collection comments.bind="comment.children" team.bind="team"></comment-collection>
+            </div>
+            <div class="row" if.bind="!comment.parentId">
+                <div class="_floatRight">
+                    <button type="button" if.bind="needMore(comment) & signal: 'update-loads'" class="button _small" click.delegate="loadMore(comment)">
+                        <i class="fa fa-fw fa-newspaper-o"></i>
+                        Load More Comments
+                    </button>
+                    &nbsp;
+                    <button type="button" auth-req="Contributor" if.bind="!comment.parentId" class="button _primary _small" click.delegate="edit(null, comment.id)">
+                        <i class="fa fa-fw fa-reply"></i>
+                        Reply
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

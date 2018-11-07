@@ -18,6 +18,7 @@ namespace TreasureGuide.Entities
         public TeamComment()
         {
             this.TeamCommentVotes = new HashSet<TeamCommentVote>();
+            this.Children = new HashSet<TeamComment>();
         }
     
         public int Id { get; set; }
@@ -30,11 +31,15 @@ namespace TreasureGuide.Entities
         public string EditedById { get; set; }
         public System.DateTimeOffset EditedDate { get; set; }
         public int Version { get; set; }
+        public Nullable<int> ParentId { get; set; }
     
         public virtual UserProfile EditedBy { get; set; }
         public virtual UserProfile SubmittedBy { get; set; }
         public virtual Team Team { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamCommentVote> TeamCommentVotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamComment> Children { get; set; }
+        public virtual TeamComment Parent { get; set; }
     }
 }

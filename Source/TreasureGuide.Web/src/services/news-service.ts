@@ -7,6 +7,18 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+            header: '11/06/18',
+            lines: [
+                'Removed duplicate dual unit entries from the character database. All team and box references to these units have been automatically updated to use their correct versions.',
+                'Added the ability to reply to top-level comments.',
+                'Added notifications for comments, comment replies, and video posts.'
+            ]
+        },{
+        header: '10/10/18',
+        lines: [
+            'Fixed an issue that was causing events to be removed from "featured content" too soon.'
+        ]
+    }, {
         header: '09/09/18',
         lines: [
             'At long last, user can now post comments on teams!',

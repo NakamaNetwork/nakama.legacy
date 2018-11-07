@@ -75,6 +75,11 @@
         <EntityTypeShape EntityType="tcdbModel.TeamCommentVote" Width="1.5" PointX="17.75" PointY="10" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamCommentVotes_dbo_TeamComments" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamCommentVotes_dbo_UserProfiles" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamComments_dbo_TeamComments" />
+        <EntityTypeShape EntityType="tcdbModel.Notification" Width="1.5" PointX="7.25" PointY="27.625" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles_Trigger" />
+        <EntityTypeShape EntityType="tcdbModel.NotificationSummary" Width="1.5" PointX="15.375" PointY="4.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

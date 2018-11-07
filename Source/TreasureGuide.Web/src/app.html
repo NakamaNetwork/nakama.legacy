@@ -24,13 +24,21 @@
                         Logout
                     </a>
                 </li>
-                <li class="_floatRight box-icon" auth-req="BoxUser">
+                <li class="_floatRight nav-icon" auth-req="BoxUser">
                     <a route-href="route: boxes"
                        title.bind="boxTitle"
                        class.bind="boxClass">
                         <span class="fa-stack">
                             <i class="fa fa-square-o fa-stack-2x"></i>
                             <i class="fa fa-stack-1x fa-users" if.bind="hasBox"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="_floatRight nav-icon" auth-req>
+                    <a route-href="route: notifications"
+                       title.bind="notificationTitle">
+                        <span class="fa-stack" class.bind="badgeClass" data-count.bind="notificationService.notificationCount">
+                            <i class="fa fa-stack-1x" class.bind="notificationClass"></i>
                         </span>
                     </a>
                 </li>

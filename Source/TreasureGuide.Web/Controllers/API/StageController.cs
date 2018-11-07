@@ -27,7 +27,7 @@ namespace TreasureGuide.Web.Controllers.API
             var now = DateTimeOffset.Now;
             var later = now.AddDays(5);
             var events = await DbContext.ScheduledEvents
-                .Where(x => (x.StartDate <= now && x.StartDate > later) || (x.StartDate > now && x.StartDate <= later))
+                .Where(x => (x.StartDate <= now && x.EndDate > now) || (x.StartDate >= now && x.StartDate <= later))
                 .GroupBy(x => x.Global)
                 .ToDictionaryAsync(x => x.Key, x => x.Select(y => y.StageId).Distinct());
 

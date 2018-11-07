@@ -15,8 +15,8 @@ namespace TreasureGuide.Common.Helpers
                 switch (id)
                 {
                     case "0742": return "https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png";
-                    case "2500": case "2200": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5011.png";
-                    case "2501": case "2201": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5012.png";
+                    case "2500": case "2200": case "2262": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5011.png";
+                    case "2501": case "2201": case "2263": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5012.png";
                     case "2502": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5013.png";
                     case "2503": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5014.png";
                     case "2504": return "http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5015.png";

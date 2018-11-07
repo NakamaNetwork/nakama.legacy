@@ -62,8 +62,7 @@ export class AdminPage {
         this.stageQueryService.get().then(x => {
             var team = new TeamEditorModel();
             team.name = 'Random Team @' + moment().format('MM/DD/YY hh:mm:ss a');
-            team.guide = '';
-            team.guide = '';
+            team.guide = '123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789';
             team.credits = '';
             team.shipId = (Math.floor(Math.random() * 30)) + 1;
             team.stageId = x[Math.floor((Math.random() * (suuuper ? 200 : 5))) + 1].id;
