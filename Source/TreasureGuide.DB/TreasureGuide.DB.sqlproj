@@ -71,6 +71,8 @@
     <Folder Include="dbo\Tables\Schedule" />
     <Folder Include="dbo\Tables\GlobalClearRates" />
     <Folder Include="dbo\Views\GCR" />
+    <Folder Include="dbo\Tables\Notifications" />
+    <Folder Include="dbo\Tables\Notifications\Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Units\Ships.sql" />
@@ -114,6 +116,10 @@
     <None Include="PostDeploy\dbo.GCRStages.Table.sql" />
     <Build Include="dbo\Tables\Teams\TeamComments.sql" />
     <Build Include="dbo\Tables\Teams\TeamCommentVotes.sql" />
+    <Build Include="dbo\Tables\Notifications\Notifications.sql" />
+    <Build Include="dbo\Tables\Notifications\Triggers\TeamCommentTrigger.sql" />
+    <Build Include="dbo\Tables\Notifications\Triggers\CommentReplyTrigger.sql" />
+    <Build Include="dbo\Tables\Notifications\Triggers\TeamVideoTrigger.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
