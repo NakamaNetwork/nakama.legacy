@@ -10,7 +10,8 @@ export class NewsService {
             header: '11/06/18',
             lines: [
                 'Removed duplicate dual unit entries from the character database. All team and box references to these units have been automatically updated to use their correct versions.',
-                'Added the ability to reply to top-level comments.'
+                'Added the ability to reply to top-level comments.',
+                'Added notifications for comments, comment replies, and video posts.'
             ]
         },{
         header: '10/10/18',
