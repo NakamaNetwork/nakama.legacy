@@ -716,5 +716,9 @@ team-box {
                 background-color: lighten($warning-color, 50);
             }
         }
+
+        .comment-collection {
+            padding-left: 25px;
+        }
     }
 }

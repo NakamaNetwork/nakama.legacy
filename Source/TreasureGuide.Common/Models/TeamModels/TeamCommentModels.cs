@@ -22,6 +22,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public string SubmittedByName { get; set; }
         public int? SubmittedByUnitId { get; set; }
         public bool SubmittedByIsDonor { get; set; }
+        public DateTimeOffset SubmittedDate { get; set; }
         public DateTimeOffset? EditedDate { get; set; }
 
         public int ChildCount { get; set; }
@@ -45,6 +46,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public string SubmittedByName { get; set; }
         public int? SubmittedByUnitId { get; set; }
         public bool SubmittedByIsDonor { get; set; }
+        public DateTimeOffset SubmittedDate { get; set; }
         public DateTimeOffset? EditedDate { get; set; }
     }
 

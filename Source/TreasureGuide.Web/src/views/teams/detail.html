@@ -56,11 +56,15 @@
             <markdown value.bind="credits"></markdown>
         </div>
         <div class="row _alignRight">
+            <em if.bind="submittedDate != editedDate">
+                <small>Last edited on ${editedDate | dateTimeFormat}</small>
+                <br />
+            </em>
             Submitted by
             <a route-href="route: profile; params.bind: { id: submittedByName }">
                 <user-display name.bind="submittedByName" unit-id.bind="submittedByUnitId" donor.bind="submittedByIsDonor"></user-display>
             </a>
-            on ${editedDate | dateTimeFormat}
+            on ${submittedDate | dateTimeFormat}
         </div>
         <hr />
         <div>

@@ -70,5 +70,6 @@ export class TeamCommentStubModel implements ITeamCommentStubModel {
     public submittedByName: string;
     public submittedByUnitId: number;
     public submittedByIsDonor: boolean;
+    public submittedDate: Date;
     public editedDate: Date;
 }

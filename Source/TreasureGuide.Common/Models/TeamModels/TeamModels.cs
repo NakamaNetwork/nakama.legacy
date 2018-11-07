@@ -14,7 +14,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public string SubmittedByName { get; set; }
         public int? SubmittedByUnitId { get; set; }
         public bool SubmittedByIsDonor { get; set; }
-        public DateTimeOffset? EditedDate { get; set; }
+        public DateTimeOffset SubmittedDate { get; set; }
         public int Score { get; set; }
         public bool Global { get; set; }
         public bool F2P { get; set; }
@@ -42,6 +42,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public int? SubmittedByUnitId { get; set; }
         public bool SubmittedByIsDonor { get; set; }
         public DateTimeOffset? EditedDate { get; set; }
+        public DateTimeOffset SubmittedDate { get; set; }
         public int Score { get; set; }
         public int MyVote { get; set; }
         public bool MyBookmark { get; set; }

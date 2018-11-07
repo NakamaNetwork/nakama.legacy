@@ -421,6 +421,7 @@ export interface ITeamCommentStubModel {
     submittedByName: string;
     submittedByUnitId: number;
     submittedByIsDonor: boolean;
+    submittedDate: Date;
     editedDate: Date;
     childCount: number;
     
@@ -439,6 +440,7 @@ export interface ITeamCommentDetailModel {
     submittedByName: string;
     submittedByUnitId: number;
     submittedByIsDonor: boolean;
+    submittedDate: Date;
     editedDate: Date;
     
 }
@@ -526,7 +528,7 @@ export interface ITeamStubModel {
     submittedByName: string;
     submittedByUnitId: number;
     submittedByIsDonor: boolean;
-    editedDate: Date;
+    submittedDate: Date;
     score: number;
     global: boolean;
     f2P: boolean;
@@ -554,6 +556,7 @@ export interface ITeamDetailModel {
     submittedByUnitId: number;
     submittedByIsDonor: boolean;
     editedDate: Date;
+    submittedDate: Date;
     score: number;
     myVote: number;
     myBookmark: boolean;
