@@ -534,13 +534,13 @@ export interface ITeamStubModel {
     f2P: boolean;
     f2PC: boolean;
     hasVideos: boolean;
+    hasComments: boolean;
     shipId: number;
     stageId: number;
     invasionId: number;
     deleted: boolean;
     reported: boolean;
     draft: boolean;
-    comments: number;
     
 }
 
@@ -572,6 +572,7 @@ export interface ITeamDetailModel {
     deleted: boolean;
     reported: boolean;
     draft: boolean;
+    comments: number;
     
 }
 

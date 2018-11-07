@@ -20,6 +20,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool F2P { get; set; }
         public bool F2PC { get; set; }
         public bool HasVideos { get; set; }
+        public bool HasComments { get; set; }
 
         public int ShipId { get; set; }
         public int? StageId { get; set; }
@@ -27,7 +28,6 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool Draft { get; set; }
-        public int Comments { get; set; }
 
         public IEnumerable<TeamUnitStubModel> TeamUnits { get; set; }
         public IEnumerable<TeamGenericSlotStubModel> TeamGenericSlots { get; set; }
@@ -58,6 +58,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool Draft { get; set; }
+        public int Comments { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
         public IEnumerable<TeamGenericSlotDetailModel> TeamGenericSlots { get; set; }

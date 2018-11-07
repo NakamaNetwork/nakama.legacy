@@ -78,7 +78,7 @@ namespace TreasureGuide.Common
                     z.Position < 2 || !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
                 )));
                 team.StubMapping.ForMember(x => x.TeamUnits, o => o.MapFrom(y => y.TeamUnits.Where(z => !z.Sub)));
-                team.StubMapping.ForMember(x => x.Comments, o => o.MapFrom(y => y.TeamComments.Count(z => !z.Deleted)));
+                team.StubMapping.ForMember(x => x.HasComments, o => o.MapFrom(y => y.TeamComments.Any(z => !z.Deleted)));
 
                 team.DetailMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
                 team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
@@ -100,6 +100,7 @@ namespace TreasureGuide.Common
                     z.Sub ||
                     z.Position < 2 || !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
                 )));
+                team.DetailMapping.ForMember(x => x.Comments, o => o.MapFrom(y => y.TeamComments.Count(z => !z.Deleted)));
 
                 var comments = mapper.CreateControllerMapping<TeamComment, TeamCommentDetailModel, TeamCommentStubModel, TeamCommentEditorModel>();
                 comments.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));

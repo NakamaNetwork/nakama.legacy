@@ -39,7 +39,7 @@ export class TeamComments {
     refreshEventHandler = () => this.refreshed();
 
     attached() {
-        this.searchModel = new TeamCommentSearchModel();
+        this.searchModel = <TeamCommentSearchModel>new TeamCommentSearchModel().getDefault();
         if (this.team) {
             this.searchModel.teamId = this.team.id;
         }
@@ -65,12 +65,14 @@ export class TeamComments {
 
     loadComments() {
         this.seen = true;
-        this.loading = true;
+        if (this.team.comments > 0) {
+            this.loading = true;
+            this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
+                this.search(n);
+            });
+            this.search(this.searchModel.payload);
+        }
         this.disableLoading();
-        this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
-            this.search(n);
-        });
-        this.search(this.searchModel.payload);
     }
 
     search(payload) {
