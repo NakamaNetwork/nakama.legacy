@@ -252,6 +252,18 @@ iframe {
             -webkit-transform: translateY(50%);
         }
     }
+
+    a {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+.notification-icon {
+    a {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
 }
 
 .donor-info {

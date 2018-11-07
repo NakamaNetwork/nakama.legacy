@@ -34,6 +34,13 @@
                         </span>
                     </a>
                 </li>
+                <li class="_floatRight notification-icon" auth-req>
+                    <a route-href="route: notifications"
+                       title.bind="notificationTitle">
+                        <span class="notification-badge">${notificationCount}</span>
+                        <i class="fa fa-fw" class.bind="notificationClass"></i>
+                    </a>
+                </li>
                 <li class="_floatRight" auth-req>
                     <a route-href="route: profile; params.bind: { id: accountService.userProfile.userName }"
                        class.bind="accountIsActive">
