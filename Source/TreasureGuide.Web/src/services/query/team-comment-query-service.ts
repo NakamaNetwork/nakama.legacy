@@ -42,8 +42,11 @@ export class TeamCommentSearchModel extends SearchModel implements ITeamCommentS
         SearchConstants.SortDate
     ];
 
-    getDefault(): SearchModel {
-        return new TeamCommentSearchModel();
+    getDefault(): TeamCommentSearchModel {
+        var model = new TeamCommentSearchModel();
+        model.sortBy = SearchConstants.SortScore;
+        model.sortDesc = false;
+        return model;
     }
 }
 

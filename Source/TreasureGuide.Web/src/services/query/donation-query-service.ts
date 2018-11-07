@@ -36,8 +36,11 @@ export class DonationSearchModel extends SearchModel implements IDonationSearchM
     maxAmount: number;
     complex: boolean;
 
-    getDefault(): SearchModel {
-        return new DonationSearchModel();
+    getDefault(): DonationSearchModel {
+        var model = new DonationSearchModel();
+        model.sortBy = SearchConstants.SortDate;
+        model.sortDesc = true;
+        return model;
     }
 
     sortables: string[] = [

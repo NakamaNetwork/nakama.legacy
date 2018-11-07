@@ -4,6 +4,7 @@ import { SearchableQueryService } from './generic/searchable-query-service';
 import { IProfileSearchModel } from '../../models/imported';
 import { IProfileEditorModel } from '../../models/imported';
 import { SearchModel } from '../../models/search-model';
+import { SearchConstants } from '../../models/imported';
 
 @autoinject
 export class ProfileQueryService extends SearchableQueryService {
@@ -21,8 +22,11 @@ export class ProfileSearchModel extends SearchModel implements IProfileSearchMod
     roles: string[] = [];
     cacheKey: string = 'search-profile';
 
-    public getDefault(): SearchModel {
-        return new ProfileSearchModel();
+    public getDefault(): ProfileSearchModel {
+        var model = new ProfileSearchModel();
+        model.sortBy = SearchConstants.SortName;
+        model.sortDesc = false;
+        return model;
     }
 }
 

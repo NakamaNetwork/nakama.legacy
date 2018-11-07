@@ -5,6 +5,7 @@ import { IBoxDetailModel, IBoxEditorModel, IBoxSearchModel, IBoxUpdateModel, IBo
 import { SearchModel } from '../../models/search-model';
 import { IUnitStubModel, IBoxUnitUpdateModel } from '../../models/imported';
 import { IndividualUnitFlags } from '../../models/imported';
+import {SearchConstants} from '../../models/imported';
 
 @autoinject
 export class BoxQueryService extends SearchableQueryService {
@@ -29,8 +30,11 @@ export class BoxSearchModel extends SearchModel implements IBoxSearchModel {
     userId: string;
     blacklist: boolean;
 
-    public getDefault(): SearchModel {
-        return new BoxSearchModel();
+    public getDefault(): BoxSearchModel {
+        var model = new BoxSearchModel();
+        model.sortBy = SearchConstants.SortName;
+        model.sortDesc = true;
+        return model;
     }
 }
 

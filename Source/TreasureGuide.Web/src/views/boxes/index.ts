@@ -21,7 +21,7 @@ export class BoxIndexPage {
     }
 
     activate() {
-        this.searchModel = new BoxSearchModel();
+        this.searchModel = new BoxSearchModel().getDefault();
         this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
         });

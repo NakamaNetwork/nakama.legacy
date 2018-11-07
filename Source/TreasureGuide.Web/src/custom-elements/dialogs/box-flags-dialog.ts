@@ -15,7 +15,7 @@ export class BoxFlagsDialog {
     private bindingEngine: BindingEngine;
 
     private units: IUnitStubModel[] = [];
-    private searchModel: UnitSearchModel = <UnitSearchModel>new UnitSearchModel().getCached();
+    private searchModel: UnitSearchModel;
     private loading: boolean;
     private box: BoxDetailModel;
 
@@ -30,6 +30,8 @@ export class BoxFlagsDialog {
         this.alertService = alertService;
         this.boxQueryService = boxQueryService;
         this.bindingEngine = bindingEngine;
+        this.searchModel = new UnitSearchModel().getDefault();
+        this.searchModel = <UnitSearchModel>this.searchModel.getCached();
 
         this.box = <BoxDetailModel>{
             boxUnits: []

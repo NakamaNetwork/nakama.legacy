@@ -23,7 +23,7 @@ export class StageIndexPage {
     }
 
     activate(params) {
-        this.searchModel = new StageSearchModel();
+        this.searchModel = new StageSearchModel().getDefault();
         if (!this.searchModel.assign(params)) {
             this.searchModel = <StageSearchModel>this.searchModel.getCached();
         }

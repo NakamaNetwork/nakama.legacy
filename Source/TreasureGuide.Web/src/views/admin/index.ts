@@ -24,7 +24,7 @@ export class AdminPage {
 
     profiles = [];
 
-    searchModel: ProfileSearchModel = <ProfileSearchModel>new ProfileSearchModel().getCached();
+    searchModel: ProfileSearchModel;
     loading;
 
     allRoles = AccountService.allRoles;
@@ -39,6 +39,8 @@ export class AdminPage {
         this.alert = alertService;
         this.bindingEngine = bindingEngine;
         this.donationQueryService = donationQueryService;
+        this.searchModel = new ProfileSearchModel().getDefault();
+        this.searchModel = <ProfileSearchModel>this.searchModel.getCached();
         bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
         });

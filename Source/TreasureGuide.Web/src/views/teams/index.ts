@@ -22,7 +22,7 @@ export class TeamIndexPage {
     }
 
     activate(params) {
-        this.searchModel = new TeamSearchModel();
+        this.searchModel = new TeamSearchModel().getDefault();
         if (!this.searchModel.assign(params)) {
             this.searchModel = <TeamSearchModel>this.searchModel.getCached();
         }

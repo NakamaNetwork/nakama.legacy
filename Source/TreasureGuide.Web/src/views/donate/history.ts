@@ -20,7 +20,7 @@ export class DonationHistoryPage {
     }
 
     activate() {
-        this.searchModel = new DonationSearchModel();
+        this.searchModel = new DonationSearchModel().getDefault();
         this.searchModel.complex = true;
         this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);

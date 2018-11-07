@@ -8,8 +8,7 @@ export class SortButtons {
     click(type: string) {
         if (this.searchModel.sortBy === type) {
             if (this.searchModel.sortDesc) {
-                this.searchModel.sortDesc = undefined;
-                this.searchModel.sortBy = undefined;
+                this.searchModel.sortDesc = false;
             } else {
                 this.searchModel.sortDesc = true;
             }

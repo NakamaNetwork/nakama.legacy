@@ -17,7 +17,7 @@ export class SupportIndexPage {
     }
 
     activate() {
-        this.searchModel = new DonationSearchModel();
+        this.searchModel = new DonationSearchModel().getDefault();
         this.bindingEngine.propertyObserver(this.searchModel, 'payload').subscribe((n, o) => {
             this.search(n);
         });
