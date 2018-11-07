@@ -1,0 +1,55 @@
+<template>
+    <h3>Notifications</h3>
+    <loading-display loading.bind="loading"></loading-display>
+    <div if.bind="!loading">
+        <div if.bind="notifications.length > 0">
+            <div class="row">
+                <table class="_width100">
+                    <thead>
+                        <tr>
+                            <th>
+                                Message
+                            </th>
+                            <th>
+                                Time
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="notification of notifications">
+                            <td>
+                                <a href.bind="getLink(notification)">
+                                    ${getMessage(notification)}
+                                </a>
+                            </td>
+                            <td>
+                                ${notification.receivedDate | dateTimeFormat}
+                            </td>
+                            <td>
+                                <a class="button _primary _small" title="View" href.bind="getLink(notification)" if.bind="getLink(notification)">
+                                    <i class="fa fa-fw fa-eye"></i>
+                                </a>
+                                &nbsp;
+                                <button class="button _danger _small" title="Dismiss" click.delegate="acknowledge(notification)">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <button class="button _danger _width100 _large" click.delegate="acknowledge()">
+                    <i class="fa fa-fw fa-times"></i>
+                    Dismiss All
+                </button>
+            </div>
+        </div>
+        <div class="row" if.bind="notifications.length == 0">
+            <h5 class="_alignCenter"> You're all caught up!</h5>
+        </div>
+    </div>
+</template>
