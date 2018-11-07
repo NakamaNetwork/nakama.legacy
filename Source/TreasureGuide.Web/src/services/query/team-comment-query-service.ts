@@ -2,7 +2,10 @@
 import { HttpEngine } from '../../tools/http-engine';
 import { SearchableQueryService } from './generic/searchable-query-service';
 import { SearchModel } from '../../models/search-model';
-import { ITeamCommentStubModel, ITeamCommentSearchModel, ITeamCommentEditorModel, SearchConstants, ITeamCommentVoteModel, ITeamCommentReportModel } from '../../models/imported';
+import {
+    ITeamCommentStubModel, ITeamCommentSearchModel, ITeamCommentDetailModel,
+    ITeamCommentEditorModel, SearchConstants, ITeamCommentVoteModel, ITeamCommentReportModel
+} from '../../models/imported';
 
 @autoinject
 export class TeamCommentQueryService extends SearchableQueryService {
@@ -20,6 +23,12 @@ export class TeamCommentQueryService extends SearchableQueryService {
 
     acknowledge(model: ITeamCommentReportModel): Promise<number> {
         return this.http.post(this.buildAddress('acknowledge'), model);
+    }
+
+    loadMore(id: number, currentCount: number): Promise<ITeamCommentStubModel[]> {
+        var payload = { id: id, current: currentCount };
+        var endpoint = this.http.parameterize(this.buildAddress('loadMore'), payload);
+        return this.http.get(endpoint);
     }
 }
 
@@ -40,12 +49,15 @@ export class TeamCommentSearchModel extends SearchModel implements ITeamCommentS
 
 
 export class TeamCommentEditorModel implements ITeamCommentEditorModel {
+    public parentId: number;
     public id: number;
     public teamId: number;
     public text: string;
 }
 
 export class TeamCommentStubModel implements ITeamCommentStubModel {
+    public children: ITeamCommentDetailModel[];
+    public childCount: number;
     public id: number;
     public teamId: number;
     public text: string;

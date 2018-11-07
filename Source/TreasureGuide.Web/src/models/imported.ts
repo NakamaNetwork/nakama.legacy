@@ -387,8 +387,27 @@ export enum StageType {
 
 
 export interface ITeamCommentStubModel {
+    children: ITeamCommentDetailModel[];
     id: number;
     teamId: number;
+    text: string;
+    deleted: boolean;
+    reported: boolean;
+    canEdit: boolean;
+    myVote: number;
+    score: number;
+    submittedById: string;
+    submittedByName: string;
+    submittedByUnitId: number;
+    submittedByIsDonor: boolean;
+    editedDate: Date;
+    childCount: number;
+    
+}
+
+export interface ITeamCommentDetailModel {
+    id: number;
+    parentId: number;
     text: string;
     deleted: boolean;
     reported: boolean;
@@ -403,13 +422,10 @@ export interface ITeamCommentStubModel {
     
 }
 
-export interface ITeamCommentDetailModel extends ITeamCommentStubModel{
-    
-}
-
 export interface ITeamCommentEditorModel {
     id: number;
     teamId: number;
+    parentId: number;
     text: string;
     
 }

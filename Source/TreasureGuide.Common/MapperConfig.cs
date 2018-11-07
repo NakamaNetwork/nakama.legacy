@@ -107,13 +107,15 @@ namespace TreasureGuide.Common
                 comments.StubMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
                 comments.StubMapping.ForMember(x => x.MyVote, o => o.MapFrom(y => y.TeamCommentVotes.Where(z => z.UserId == userId).Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
                 comments.StubMapping.ForMember(x => x.CanEdit, o => o.MapFrom(y => (canEdit ?? false) || y.SubmittedById == userId));
+                comments.StubMapping.ForMember(x => x.ChildCount, o => o.MapFrom(y => y.Children.Count(z => (canEdit ?? false) || !z.Deleted)));
+                comments.StubMapping.ForMember(x => x.Children, o => o.MapFrom(y => y.Children.Where(z => (canEdit ?? false) || !z.Deleted).OrderBy(z => z.Id).Take(10)));
 
                 comments.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
                 comments.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
                 comments.DetailMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UnitId : null));
                 comments.DetailMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
-                comments.DetailMapping.ForMember(x => x.MyVote, o => o.Ignore()); // Handle this manually
-                comments.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore()); // Handle this manually
+                comments.DetailMapping.ForMember(x => x.MyVote, o => o.MapFrom(y => y.TeamCommentVotes.Where(z => z.UserId == userId).Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
+                comments.DetailMapping.ForMember(x => x.CanEdit, o => o.MapFrom(y => (canEdit ?? false) || y.SubmittedById == userId));
 
                 var wiki = mapper.CreateMap<Team, WikiSearchResultModel>();
                 wiki.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
