@@ -86,6 +86,18 @@
           <Property Name="Name" Type="varchar" MaxLength="128" />
           <Property Name="Order" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="EventType" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" />
+          <Property Name="TriggerUserId" Type="nvarchar" MaxLength="450" />
+          <Property Name="ReceivedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="AcknowledgedDate" Type="datetimeoffset" Precision="7" />
+        </EntityType>
         <EntityType Name="ScheduledEvents">
           <Key>
             <PropertyRef Name="StageId" />
@@ -438,6 +450,30 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="Donations">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Notifications_dbo_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Notifications_dbo_UserProfiles_Trigger">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="TriggerUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -930,6 +966,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="Donations" EntityType="Self.Donations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GCRStages" EntityType="Self.GCRStages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GCRUnits" EntityType="Self.GCRUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScheduledEvents" EntityType="Self.ScheduledEvents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StageAliases" EntityType="Self.StageAliases" Schema="dbo" store:Type="Tables" />
@@ -1014,6 +1051,14 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_Donations_dbo_UserProfiles" Association="Self.FK_dbo_Donations_dbo_UserProfiles">
             <End Role="UserProfiles" EntitySet="UserProfiles" />
             <End Role="Donations" EntitySet="Donations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Notifications_dbo_UserProfiles" Association="Self.FK_dbo_Notifications_dbo_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Notifications_dbo_UserProfiles_Trigger" Association="Self.FK_dbo_Notifications_dbo_UserProfiles_Trigger">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="Notifications" EntitySet="Notifications" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Stages_dbo_Units" Association="Self.FK_dbo_Stages_dbo_Units">
             <End Role="Units" EntitySet="Units" />
@@ -1361,6 +1406,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="TeamComment" EntitySet="TeamComments" />
             <End Role="TeamComment1" EntitySet="TeamComments" />
           </AssociationSet>
+          <EntitySet Name="Notifications" EntityType="tcdbModel.Notification" />
+          <AssociationSet Name="FK_dbo_Notifications_dbo_UserProfiles" Association="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Notifications_dbo_UserProfiles_Trigger" Association="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles_Trigger">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
                 </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -1497,6 +1551,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamComments" Relationship="tcdbModel.FK_dbo_TeamComments_EditedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamComment" />
           <NavigationProperty Name="TeamComments1" Relationship="tcdbModel.FK_dbo_TeamComments_SubmittedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamComment" />
           <NavigationProperty Name="TeamCommentVotes" Relationship="tcdbModel.FK_dbo_TeamCommentVotes_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamCommentVote" />
+          <NavigationProperty Name="Notifications" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles" FromRole="UserProfile" ToRole="Notification" />
+          <NavigationProperty Name="Notifications1" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles_Trigger" FromRole="UserProfile" ToRole="Notification" />
                 </EntityType>
                 <Association Name="FK_dbo_UserProfile_dbo_Units">
                     <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
@@ -2435,6 +2491,49 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="EventType" Type="tcdbModel.NotificationEventType" Nullable="false" />
+          <Property Name="EventId" Type="Int32" />
+          <Property Name="TriggerUserId" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="ReceivedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <NavigationProperty Name="TargetUser" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles" FromRole="Notification" ToRole="UserProfile" />
+          <NavigationProperty Name="TriggeringUser" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles_Trigger" FromRole="Notification" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_dbo_Notifications_dbo_UserProfiles">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="tcdbModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Notifications_dbo_UserProfiles_Trigger">
+          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="tcdbModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="TriggerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="NotificationEventType">
+          <Member Name="Unknown" Value="0" />
+          <Member Name="TeamComment" Value="1" />
+          <Member Name="CommentReply" Value="2" />
+          <Member Name="TeamVideo" Value="3" />
+        </EnumType>
             </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2831,6 +2930,18 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                 <ScalarProperty Name="SubmittedDate" ColumnName="SubmittedDate" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TeamCommentId" ColumnName="TeamCommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="tcdbModel.Notification">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="TriggerUserId" ColumnName="TriggerUserId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

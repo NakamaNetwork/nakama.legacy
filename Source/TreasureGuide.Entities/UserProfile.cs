@@ -29,6 +29,8 @@ namespace TreasureGuide.Entities
             this.TeamComments = new HashSet<TeamComment>();
             this.TeamComments1 = new HashSet<TeamComment>();
             this.TeamCommentVotes = new HashSet<TeamCommentVote>();
+            this.Notifications = new HashSet<Notification>();
+            this.Notifications1 = new HashSet<Notification>();
         }
     
         public string Id { get; set; }
@@ -63,5 +65,9 @@ namespace TreasureGuide.Entities
         public virtual ICollection<TeamComment> TeamComments1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamCommentVote> TeamCommentVotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notification> Notifications { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notification> Notifications1 { get; set; }
     }
 }

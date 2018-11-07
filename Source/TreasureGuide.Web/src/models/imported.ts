@@ -231,6 +231,26 @@ export interface IMetaResultModel {
 }
 
 
+export enum NotificationEventType { 
+    Unknown = 0,
+    TeamComment = 1,
+    CommentReply = 2,
+    TeamVideo = 3
+}
+
+
+export interface INotificationModel {
+    id: number;
+    eventType: NotificationEventType;
+    eventId: number;
+    triggerUserId: string;
+    triggerName: string;
+    acknowledged: boolean;
+    receivedDate: Date;
+    
+}
+
+
 export enum PaymentState { 
     Unknown = 0,
     Initialized = 1,

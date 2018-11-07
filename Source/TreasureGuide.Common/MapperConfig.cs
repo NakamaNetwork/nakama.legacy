@@ -5,6 +5,7 @@ using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Models.BoxModels;
 using TreasureGuide.Common.Models.DonationModels;
 using TreasureGuide.Common.Models.GCRModels;
+using TreasureGuide.Common.Models.NotificationModels;
 using TreasureGuide.Common.Models.ProfileModels;
 using TreasureGuide.Common.Models.ShipModels;
 using TreasureGuide.Common.Models.StageModels;
@@ -167,6 +168,9 @@ namespace TreasureGuide.Common
                 donation.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
                 donation.DetailMapping.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.UserProfile.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
                 donation.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
+
+                var notification = mapper.CreateMap<Notification, NotificationModel>();
+                notification.ForMember(x => x.TriggerName, o => o.MapFrom(y => y.TriggeringUser != null ? y.TriggeringUser.UserName : null));
             });
             config.AssertConfigurationIsValid();
             return config.CreateMapper();

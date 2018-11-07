@@ -64,6 +64,7 @@
     <Compile Include="Models\IdResponse.cs" />
     <Compile Include="Models\MessageResponse.cs" />
     <Compile Include="Models\MetaResultModel.cs" />
+    <Compile Include="Models\NotificationModels\NotificationModel.cs" />
     <Compile Include="Models\ProfileModels\ProfileModels.cs" />
     <Compile Include="Models\ScheduleModels\ScheduleModel.cs" />
     <Compile Include="Models\SearchModel.cs" />

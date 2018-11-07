@@ -6,7 +6,6 @@
     [EventId] INT NULL,
     [TriggerUserId] NVARCHAR(450) NULL,
     [ReceivedDate] DATETIMEOFFSET(7) NOT NULL CONSTRAINT [DF_dbo.Notifications_ReceivedDate] DEFAULT SYSDATETIMEOFFSET(),
-    [AcknowledgedDate] DATETIMEOFFSET(7) NULL,
     CONSTRAINT [PK_dbo.Notifications] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK.dbo_Notifications_dbo.UserProfiles] FOREIGN KEY([UserId]) REFERENCES [dbo].[UserProfiles]([Id]),
     CONSTRAINT [FK.dbo_Notifications_dbo.UserProfiles_Trigger] FOREIGN KEY([TriggerUserId]) REFERENCES [dbo].[UserProfiles]([Id])
