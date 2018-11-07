@@ -39,7 +39,7 @@ namespace TreasureGuide.Common.Helpers
             var controller = context.Controller as Controller;
             if (controller != null)
             {
-                if (!_service.CanAccess(null, controller.Request, null, 0.5, 8, "filter"))
+                if (!_service.CanAccess(null, controller.Request, null, 0.5, 10, "filter"))
                 {
                     var userString = controller.User?.GetId();
                     _logger.LogWarning($"User {(!String.IsNullOrWhiteSpace(userString) ? $"'{userString}'" : "")}" +
