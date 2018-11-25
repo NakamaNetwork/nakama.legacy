@@ -17,7 +17,7 @@
         <loading-area if.bind="loading"></loading-area>
         <div if.bind="!loading">
             <div class="row">
-                <search-pager search-model.bind="searchModel" empty-message="No comments yet."></search-pager>
+                <search-pager search-model.bind="searchModel" empty-message="No comments yet." error.bind="error"></search-pager>
             </div>
             <div class="row comment-collection" if.bind="comments.length > 0">
                 <comment-collection comments.bind="comments" team.bind="team"></comment-collection>

@@ -9,7 +9,10 @@ export class NewsService {
     static news: NewsEntry[] = [{
         header: '11/25/18',
         lines: [
-            'Reduced the size and frequency of notification queries to hopefully help stem some DB performance issues.'
+            'Added some error messages for failed searches instead of just "No results found."',
+            'Reduced the size and frequency of notification queries to help stem some DB performance issues.',
+            'Added a cap to DB query runtime to force-terminate long-running queries.',
+            'Fixed an issue where Notification queries could run multiple times.'
         ]
     }, {
         header: '11/07/18',

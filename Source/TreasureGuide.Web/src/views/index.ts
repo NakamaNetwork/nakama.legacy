@@ -9,9 +9,11 @@ export class HomePage {
     private router: Router;
 
     private newLoading: boolean = true;
+    private newError: boolean = false;
     private newTeams: ITeamStubModel[] = [];
 
     private trendingLoading: boolean = true;
+    private trendingError: boolean = false;
     private trendingTeams: ITeamStubModel[] = [];
 
     constructor(teamQueryService: TeamQueryService, router: Router) {

@@ -15,6 +15,7 @@ export class StageDetailPage {
     loading: boolean;
 
     loadingTeams: boolean;
+    errorTeams: boolean;
     teamSearchModel: TeamSearchModel;
     teams: any[] = [];
 
@@ -59,8 +60,10 @@ export class StageDetailPage {
                 this.teams = x.results;
                 this.teamSearchModel.totalResults = x.totalResults;
                 this.loadingTeams = false;
+                this.errorTeams = false;
             }).catch((e) => {
                 this.loadingTeams = false;
+                this.errorTeams = true;
             });
         }
     }

@@ -12,5 +12,6 @@
             <sort-buttons search-model.two-way="searchModel"></sort-buttons>
         </div>
     </div>
-    <h5 class="_alignCenter" show.bind="!bottom && !hasResults">${emptyMessage}</h5>
+    <h5 class="_alignCenter" show.bind="!bottom && !hasResults && !error">${emptyMessage}</h5>
+    <h5 class="_alignCenter errorText" show.bind="!bottom && error">${emptyMessage}</h5>
 </template>

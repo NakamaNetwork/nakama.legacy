@@ -5,9 +5,11 @@ import { SearchModel } from '../models/search-model';
 export class SearchPager {
     @bindable searchModel: SearchModel;
     @bindable bottom = false;
+    @bindable error = false;
     pageSizes = [10, 20, 50, 100];
 
     @bindable emptyMessage = 'Search yielded no results!';
+    @bindable errorMessage = 'An error occurred getting your results!';
 
     @computedFrom('searchModel.page', 'searchModel.pageSize', 'searchModel.totalResults')
     get startIndex() {

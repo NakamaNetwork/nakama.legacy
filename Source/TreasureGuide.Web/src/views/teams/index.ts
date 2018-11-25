@@ -13,7 +13,8 @@ export class TeamIndexPage {
     teams = [];
 
     searchModel: TeamSearchModel;
-    loading;
+    loading: boolean;
+    error: boolean;
 
     constructor(teamQueryService: TeamQueryService, bindingEngine: BindingEngine, router: Router) {
         this.teamQueryService = teamQueryService;
@@ -40,8 +41,10 @@ export class TeamIndexPage {
                 this.teams = x.results;
                 this.searchModel.totalResults = x.totalResults;
                 this.loading = false;
+                this.error = false;
             }).catch((e) => {
                 this.loading = false;
+                this.error = true;
             });
         }
     }
