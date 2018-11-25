@@ -16,7 +16,7 @@ namespace TreasureGuide.Entities
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public int EventType { get; set; }
+        public NotificationEventType EventType { get; set; }
         public Nullable<int> EventId { get; set; }
         public System.DateTimeOffset ReceivedDate { get; set; }
     

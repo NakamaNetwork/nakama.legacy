@@ -2480,7 +2480,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Name="EventType" Type="Int32" Nullable="false" />
+          <Property Name="EventType" Type="tcdbModel.NotificationEventType" Nullable="false" />
           <Property Name="EventId" Type="Int32" />
           <Property Name="ReceivedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
           <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles" FromRole="Notification" ToRole="UserProfile" />
