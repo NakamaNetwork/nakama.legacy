@@ -11,6 +11,8 @@ export class NotificationsPage {
     loading: boolean;
     notifications: INotificationModel[] = [];
 
+    notificationHandle;
+
     constructor(notificationQueryService: NotificationQueryService, alertService: AlertService) {
         this.notificationQueryService = notificationQueryService;
         this.alertService = alertService;
@@ -18,7 +20,11 @@ export class NotificationsPage {
 
     activate() {
         this.refresh();
-        setInterval(this.refresh, 30000);
+        this.notificationHandle = setInterval(this.refresh, 30000);
+    }
+
+    deactivate() {
+        clearInterval(this.notificationHandle);
     }
 
     refresh() {
@@ -47,9 +53,8 @@ export class NotificationsPage {
         switch (model.eventType) {
             case NotificationEventType.TeamComment:
             case NotificationEventType.TeamVideo:
-                return '/teams/' + model.eventId + '/details';
             case NotificationEventType.CommentReply:
-                return '/teams/' + model.extraInfo + '/details';
+                return '/teams/' + model.eventId + '/details';
             default:
                 return null;
         }
@@ -58,11 +63,11 @@ export class NotificationsPage {
     getMessage(model: INotificationModel) {
         switch (model.eventType) {
             case NotificationEventType.TeamComment:
-                return `"${model.triggerUserName}" commented on your team "${model.eventInfo}".`;
+                return `A new comment was added to your team.`;
             case NotificationEventType.TeamVideo:
-                return `"${model.triggerUserName}" added a video to your team "${model.eventInfo}".`;
+                return `A new video was added to your team.`;
             case NotificationEventType.CommentReply:
-                return `"${model.triggerUserName}" replied to your comment "${model.eventInfo}".`;
+                return `Someone replied to one of your comments.`;
             default:
                 return 'Unknown';
         }

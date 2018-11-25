@@ -241,12 +241,8 @@ export enum NotificationEventType {
 
 export interface INotificationModel {
     id: number;
-    eventType: number;
     eventId: number;
-    eventInfo: string;
-    extraInfo: string;
-    triggerUserId: string;
-    triggerUserName: string;
+    eventType: number;
     receivedDate: Date;
     
 }

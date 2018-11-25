@@ -1393,11 +1393,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Notifications_dbo_UserProfiles_Trigger" Association="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles_Trigger">
-            <End Role="UserProfile" EntitySet="UserProfiles" />
-            <End Role="Notification" EntitySet="Notifications" />
-          </AssociationSet>
-                </EntityContainer>
+          </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
                     <Member Name="Fighter" Value="1" />
@@ -1534,8 +1530,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <NavigationProperty Name="TeamComments1" Relationship="tcdbModel.FK_dbo_TeamComments_SubmittedById_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamComment" />
           <NavigationProperty Name="TeamCommentVotes" Relationship="tcdbModel.FK_dbo_TeamCommentVotes_dbo_UserProfiles" FromRole="UserProfile" ToRole="TeamCommentVote" />
           <NavigationProperty Name="Notifications" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles" FromRole="UserProfile" ToRole="Notification" />
-          <NavigationProperty Name="Notifications1" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles_Trigger" FromRole="UserProfile" ToRole="Notification" />
-                </EntityType>
+          </EntityType>
                 <Association Name="FK_dbo_UserProfile_dbo_Units">
                     <End Type="tcdbModel.Unit" Role="Unit" Multiplicity="0..1" />
                     <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="*" />
@@ -2473,18 +2468,22 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="NotificationEventType">
+          <Member Name="Unknown" Value="0" />
+          <Member Name="TeamComment" Value="1" />
+          <Member Name="CommentReply" Value="2" />
+          <Member Name="TeamVideo" Value="3" />
+        </EnumType>
         <EntityType Name="Notification">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Name="EventType" Type="tcdbModel.NotificationEventType" Nullable="false" />
+          <Property Name="EventType" Type="Int32" Nullable="false" />
           <Property Name="EventId" Type="Int32" />
-          <Property Name="TriggerUserId" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="ReceivedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <NavigationProperty Name="TargetUser" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles" FromRole="Notification" ToRole="UserProfile" />
-          <NavigationProperty Name="TriggeringUser" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles_Trigger" FromRole="Notification" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles" FromRole="Notification" ToRole="UserProfile" />
         </EntityType>
         <Association Name="FK_dbo_Notifications_dbo_UserProfiles">
           <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
@@ -2498,24 +2497,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Notifications_dbo_UserProfiles_Trigger">
-          <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
-          <End Type="tcdbModel.Notification" Role="Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notification">
-              <PropertyRef Name="TriggerUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EnumType Name="NotificationEventType">
-          <Member Name="Unknown" Value="0" />
-          <Member Name="TeamComment" Value="1" />
-          <Member Name="CommentReply" Value="2" />
-          <Member Name="TeamVideo" Value="3" />
-        </EnumType>
             </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->

@@ -46,7 +46,7 @@ export class App {
         });
         setInterval(() => {
             this.notificationService.refreshNotifications();
-        }, 30000);
+        }, 120000);
         this.notificationService.refreshNotifications();
     }
 

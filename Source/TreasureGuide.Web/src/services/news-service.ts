@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '11/25/18',
+        lines: [
+            'Reduced the size and frequency of notification queries to hopefully help stem some DB performance issues.'
+        ]
+    }, {
         header: '11/07/18',
         lines: [
             'Added separate "edited" date display on teams and team comments. This has been applied retroactively to all applicable items.',

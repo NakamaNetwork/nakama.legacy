@@ -45,7 +45,7 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 return Unauthorized();
             }
-            var notifications =  await DbContext.NotificationSummaries
+            var notifications =  await DbContext.Notifications
                 .Where(x => x.UserId == id)
                 .OrderBy(x => x.Id)
                 .ProjectTo<NotificationModel>(AutoMapper.ConfigurationProvider)
