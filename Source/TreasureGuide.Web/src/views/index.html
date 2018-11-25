@@ -14,7 +14,8 @@
                 <h4>Trending Teams</h4>
                 <loading-area if.bind="trendingLoading"></loading-area>
                 <div if.bind="!trendingLoading" class="team-collection">
-                    <h6 if.bind="trendingTeams.length === 0">Nothing trending at the moment.</h6>
+                    <h6 if.bind="trendingTeams.length === 0 && !trendingError">Nothing trending at the moment.</h6>
+                    <h6 class="errorText" if.bind="trendingError">An error occurred fetching trending teams.</h6>
                     <div class="row _alignLeft">
                         <div class="col m12" repeat.for="team of trendingTeams">
                             <team-box team.bind="team"></team-box>
@@ -28,7 +29,8 @@
                 <h4>New Teams</h4>
                 <loading-area if.bind="newLoading"></loading-area>
                 <div if.bind="!newLoading" class="team-collection">
-                    <h6 if.bind="newTeams.length === 0">Nothing new at the moment.</h6>
+                    <h6 if.bind="newTeams.length === 0 && !newError">Nothing new at the moment.</h6>
+                    <h6 class="errorText" if.bind="newError">An error occurred fetching new teams.</h6>
                     <div class="row _alignLeft">
                         <div class="col m12" repeat.for="team of newTeams">
                             <team-box team.bind="team"></team-box>

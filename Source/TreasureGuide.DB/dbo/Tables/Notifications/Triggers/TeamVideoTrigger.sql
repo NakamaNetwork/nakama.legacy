@@ -4,9 +4,9 @@
     AS
     BEGIN
         SET NOCOUNT ON
-        INSERT INTO [dbo].[Notifications]([UserId], [EventType], [EventId], [TriggerUserId])
+        INSERT INTO [dbo].[Notifications]([UserId], [EventType], [EventId])
             SELECT 
-                T.[SubmittedById], 3, T.[Id], I.[UserId]
+                T.[SubmittedById], 3, T.[Id]
             FROM INSERTED AS I
             JOIN [dbo].[Teams] AS T
                 ON I.[TeamId] = T.[Id]

@@ -33,7 +33,10 @@ namespace TreasureGuide.Web.Configurations
         {
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("TreasureEntities")));
+                options.UseSqlServer(
+                    configuration.GetConnectionString("TreasureEntities"),
+                    sqlServerOptions => sqlServerOptions.CommandTimeout(15)
+                    ));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {

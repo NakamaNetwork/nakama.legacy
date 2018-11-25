@@ -26,7 +26,7 @@
             <loading-area if.bind="loadingTeams"></loading-area>
             <div if.bind="!loadingTeams">
                 <div class="row">
-                    <search-pager search-model.bind="teamSearchModel"></search-pager>
+                    <search-pager search-model.bind="teamSearchModel" error.bind="errorTeams"></search-pager>
                 </div>
                 <div class="row team-collection" if.bind="teams.length > 0">
                     <div class=" col m6" repeat.for="team of teams">

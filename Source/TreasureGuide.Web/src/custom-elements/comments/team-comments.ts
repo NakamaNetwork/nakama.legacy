@@ -22,6 +22,7 @@ export class TeamComments {
     public team: ITeamDetailModel;
     public seen: boolean;
     public loading: boolean;
+    public error: boolean;
     private comments: ITeamCommentStubModel[];
 
     public searchModel: TeamCommentSearchModel;
@@ -82,8 +83,10 @@ export class TeamComments {
                 this.comments = x.results;
                 this.searchModel.totalResults = x.totalResults;
                 this.loading = false;
+                this.error = false;
             }).catch((e) => {
                 this.loading = false;
+                this.error = true;
             });
         }
     }

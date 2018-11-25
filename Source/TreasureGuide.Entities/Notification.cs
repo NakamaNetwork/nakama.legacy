@@ -18,10 +18,8 @@ namespace TreasureGuide.Entities
         public string UserId { get; set; }
         public NotificationEventType EventType { get; set; }
         public Nullable<int> EventId { get; set; }
-        public string TriggerUserId { get; set; }
         public System.DateTimeOffset ReceivedDate { get; set; }
     
-        public virtual UserProfile TargetUser { get; set; }
-        public virtual UserProfile TriggeringUser { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("")]
         public async Task<IActionResult> Get()
         {
-            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, Request.Path))
             {
                 return StatusCode(429, ThrottleService.Message);
             }
@@ -45,7 +45,7 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 return Unauthorized();
             }
-            var notifications =  await DbContext.NotificationSummaries
+            var notifications =  await DbContext.Notifications
                 .Where(x => x.UserId == id)
                 .OrderBy(x => x.Id)
                 .ProjectTo<NotificationModel>(AutoMapper.ConfigurationProvider)
@@ -59,7 +59,7 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Count()
         {
-            if (Throttled && !ThrottlingService.CanAccess(User, Request))
+            if (Throttled && !ThrottlingService.CanAccess(User, Request, Request.Path))
             {
                 return StatusCode(429, ThrottleService.Message);
             }

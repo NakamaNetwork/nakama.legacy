@@ -39,7 +39,7 @@ namespace TreasureGuide.Web.Services
             {
                 _cache.Set(key, count, timeout);
             }
-            else
+            else if(count < limitation)
             {
                 _cache.Set(key, ++count, timeout);
             }

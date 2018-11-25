@@ -29,25 +29,30 @@ export class App {
 
     activate() {
         this.newsService.show();
-        window.addEventListener('beforeunload', (e) => {
-            if (this.boxService.currentBox && this.boxService.currentBox.dirty) {
+        window.addEventListener('beforeunload',
+            (e) => {
+                if (this.boxService.currentBox && this.boxService.currentBox.dirty) {
+                    this.boxService.save();
+                    e.returnValue = true;
+                }
+            });
+        this.ea.subscribe('router:navigation:processing',
+            response => {
                 this.boxService.save();
-                e.returnValue = true;
-            }
-        });
-        this.ea.subscribe('router:navigation:processing', response => {
-            this.boxService.save();
-        });
-        this.ea.subscribe('router:navigation:complete', response => {
-            this.navToggled = false;
-            if (this.router) {
-                ThiccStep.cleanForce(this.router.currentInstruction);
-            }
-        });
-        setInterval(() => {
+            });
+        this.ea.subscribe('router:navigation:complete',
+            response => {
+                this.navToggled = false;
+                if (this.router) {
+                    ThiccStep.cleanForce(this.router.currentInstruction);
+                }
+            });
+        if (this.accountService.isLoggedIn) {
+            setInterval(() => {
+                this.notificationService.refreshNotifications();
+            }, 120000);
             this.notificationService.refreshNotifications();
-        }, 30000);
-        this.notificationService.refreshNotifications();
+        }
     }
 
     configureRouter(config: RouterConfiguration, router: Router): void {

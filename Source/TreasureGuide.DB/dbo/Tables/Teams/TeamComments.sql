@@ -19,6 +19,6 @@
 )
 GO
 CREATE NONCLUSTERED INDEX [IX_dbo.TeamComments]
-    ON [dbo].[TeamComments]([TeamId],[Deleted],[Reported])
+    ON [dbo].[TeamComments]([TeamId],[ParentId],[Deleted],[Reported],[SubmittedById],[EditedById])
         INCLUDE ([Id]);
 GO

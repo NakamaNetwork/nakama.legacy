@@ -102,9 +102,6 @@
     <Compile Include="NotificationEventType.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="NotificationSummary.cs">
-      <DependentUpon>TreasureEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="PaymentState.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
