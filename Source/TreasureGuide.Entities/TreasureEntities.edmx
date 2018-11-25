@@ -94,7 +94,6 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="EventType" Type="int" Nullable="false" />
           <Property Name="EventId" Type="int" />
-          <Property Name="TriggerUserId" Type="nvarchar" MaxLength="450" />
           <Property Name="ReceivedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="ScheduledEvents">
@@ -370,26 +369,6 @@ warning 6002: The table/view 'tcdb.dbo.GCRUnitInfo' does not have a primary key 
           <Property Name="Color" Type="smallint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'tcdb.dbo.NotificationSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="NotificationSummary">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="EventType" />
-            <PropertyRef Name="ReceivedDate" />
-            <PropertyRef Name="ExtraInfo" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
-          <Property Name="EventType" Type="int" Nullable="false" />
-          <Property Name="EventId" Type="int" />
-          <Property Name="TriggerUserId" Type="nvarchar" MaxLength="450" />
-          <Property Name="ReceivedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
-          <Property Name="EventInfo" Type="nvarchar" MaxLength="250" />
-          <Property Name="ExtraInfo" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="TriggerUserName" Type="nvarchar" MaxLength="256" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'tcdb.dbo.TeamUnitSummaries' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TeamUnitSummaries">
           <Key>
@@ -481,18 +460,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="Notifications">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Notifications_dbo_UserProfiles_Trigger">
-          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="0..1" />
-          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfiles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notifications">
-              <PropertyRef Name="TriggerUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1038,19 +1005,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
     [GCRUnitInfo].[Color] AS [Color]
     FROM [dbo].[GCRUnitInfo] AS [GCRUnitInfo]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="NotificationSummary" EntityType="Self.NotificationSummary" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [NotificationSummary].[Id] AS [Id], 
-    [NotificationSummary].[UserId] AS [UserId], 
-    [NotificationSummary].[EventType] AS [EventType], 
-    [NotificationSummary].[EventId] AS [EventId], 
-    [NotificationSummary].[TriggerUserId] AS [TriggerUserId], 
-    [NotificationSummary].[ReceivedDate] AS [ReceivedDate], 
-    [NotificationSummary].[EventInfo] AS [EventInfo], 
-    [NotificationSummary].[ExtraInfo] AS [ExtraInfo], 
-    [NotificationSummary].[TriggerUserName] AS [TriggerUserName]
-    FROM [dbo].[NotificationSummary] AS [NotificationSummary]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="TeamUnitSummaries" EntityType="Self.TeamUnitSummaries" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [TeamUnitSummaries].[TeamId] AS [TeamId], 
@@ -1085,10 +1039,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Donations" EntitySet="Donations" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Notifications_dbo_UserProfiles" Association="Self.FK_dbo_Notifications_dbo_UserProfiles">
-            <End Role="UserProfiles" EntitySet="UserProfiles" />
-            <End Role="Notifications" EntitySet="Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Notifications_dbo_UserProfiles_Trigger" Association="Self.FK_dbo_Notifications_dbo_UserProfiles_Trigger">
             <End Role="UserProfiles" EntitySet="UserProfiles" />
             <End Role="Notifications" EntitySet="Notifications" />
           </AssociationSet>
@@ -1447,7 +1397,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
-          <EntitySet Name="NotificationSummaries" EntityType="tcdbModel.NotificationSummary" />
                 </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -2567,24 +2516,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="CommentReply" Value="2" />
           <Member Name="TeamVideo" Value="3" />
         </EnumType>
-        <EntityType Name="NotificationSummary">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="EventType" />
-            <PropertyRef Name="ReceivedDate" />
-            <PropertyRef Name="ExtraInfo" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Name="EventType" Type="Int32" Nullable="false" />
-          <Property Name="EventId" Type="Int32" />
-          <Property Name="TriggerUserId" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Name="ReceivedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="EventInfo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ExtraInfo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="TriggerUserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-        </EntityType>
             </Schema>
         </edmx:ConceptualModels>
         <!-- C-S mapping content -->
@@ -2988,22 +2919,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <EntityTypeMapping TypeName="tcdbModel.Notification">
               <MappingFragment StoreEntitySet="Notifications">
                 <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
-                <ScalarProperty Name="TriggerUserId" ColumnName="TriggerUserId" />
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
-                <ScalarProperty Name="EventType" ColumnName="EventType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NotificationSummaries">
-            <EntityTypeMapping TypeName="tcdbModel.NotificationSummary">
-              <MappingFragment StoreEntitySet="NotificationSummary">
-                <ScalarProperty Name="TriggerUserName" ColumnName="TriggerUserName" />
-                <ScalarProperty Name="ExtraInfo" ColumnName="ExtraInfo" />
-                <ScalarProperty Name="EventInfo" ColumnName="EventInfo" />
-                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
-                <ScalarProperty Name="TriggerUserId" ColumnName="TriggerUserId" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="EventType" ColumnName="EventType" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
