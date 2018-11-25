@@ -8,3 +8,8 @@
     CONSTRAINT [FK_dbo.TeamCommentVotes_dbo.TeamComments] FOREIGN KEY([TeamCommentId]) REFERENCES [dbo].[TeamComments] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.TeamCommentVotes_dbo.UserProfiles] FOREIGN KEY([UserId]) REFERENCES [dbo].[UserProfiles] ([Id]) ON DELETE CASCADE
 )
+GO
+CREATE NONCLUSTERED INDEX [IX_dbo.TeamCommentVotes]
+    ON [dbo].[TeamCommentVotes]([UserId])
+        INCLUDE ([TeamCommentId]);
+GO

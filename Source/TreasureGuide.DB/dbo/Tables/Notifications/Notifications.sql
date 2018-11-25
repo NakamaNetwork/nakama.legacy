@@ -10,4 +10,9 @@
     CONSTRAINT [FK.dbo_Notifications_dbo.UserProfiles] FOREIGN KEY([UserId]) REFERENCES [dbo].[UserProfiles]([Id]),
     CONSTRAINT [FK.dbo_Notifications_dbo.UserProfiles_Trigger] FOREIGN KEY([TriggerUserId]) REFERENCES [dbo].[UserProfiles]([Id])
 )
+GO
 -- EventType 0 = Unknown, 1 = Team Comment, 2 = Comment Reply, 3 = Video Submission
+CREATE NONCLUSTERED INDEX [IX_dbo.Notifications]
+    ON [dbo].[Notifications]([UserId],[EventType],[EventId])
+        INCLUDE ([Id]);
+GO
