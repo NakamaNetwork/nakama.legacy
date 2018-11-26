@@ -11,6 +11,7 @@ export class NewsService {
         lines: [
             'Added some error messages for failed searches instead of just "No results found."',
             'Reduced the size and frequency of notification queries to help stem some DB performance issues.',
+            'Updated some very inefficient team searching queries.',
             'Added a cap to DB query runtime to force-terminate long-running queries.',
             'Fixed an issue where Notification queries could run multiple times.'
         ]

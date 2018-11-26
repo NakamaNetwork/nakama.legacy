@@ -242,7 +242,7 @@ export enum NotificationEventType {
 export interface INotificationModel {
     id: number;
     eventId: number;
-    eventType: number;
+    eventType: NotificationEventType;
     receivedDate: Date;
     
 }

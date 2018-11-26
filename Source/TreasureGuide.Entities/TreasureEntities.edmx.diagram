@@ -30,9 +30,6 @@
         <EntityTypeShape EntityType="tcdbModel.UnitAlias" Width="1.5" PointX="5" PointY="0.75" />
         <AssociationConnector Association="tcdbModel.FK_dbo_UnitAliasess_dbo_Units" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Stages_dbo_Units" />
-        <EntityTypeShape EntityType="tcdbModel.TeamUnitSummary" Width="1.5" PointX="12.375" PointY="0.75" />
-        <AssociationConnector Association="tcdbModel.TeamTeamUnitSummary" />
-        <AssociationConnector Association="tcdbModel.UnitTeamUnitSummary" />
         <EntityTypeShape EntityType="tcdbModel.TeamGenericSlot" Width="1.5" PointX="9.5" PointY="16.625" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamGenericSlots_dbo_Teams" />
         <AssociationConnector Association="tcdbModel.TeamBookmarks" />

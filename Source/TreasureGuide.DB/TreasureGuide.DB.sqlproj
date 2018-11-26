@@ -137,7 +137,6 @@
     <Build Include="dbo\Tables\Teams\TeamCredits.sql" />
     <Build Include="dbo\Tables\Units\UnitAliases.sql" />
     <Build Include="dbo\Tables\Teams\TeamGenericSlots.sql" />
-    <Build Include="dbo\Views\TeamUnitSummaries.sql" />
     <Build Include="dbo\Tables\Teams\TeamBookmarks.sql" />
   </ItemGroup>
 </Project>

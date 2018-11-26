@@ -26,3 +26,7 @@ CREATE NONCLUSTERED INDEX [IX_dbo.Teams]
     ON [dbo].[Teams]([Draft],[Deleted],[StageId],[InvasionId])
         INCLUDE ([Id]);
 GO
+CREATE NONCLUSTERED INDEX [IX_dbo.Teams_Adv]
+ON [dbo].[Teams] ([Draft],[Deleted])
+INCLUDE ([Name],[StageId],[InvasionId],[ShipId],[SubmittedById],[SubmittedDate])
+GO

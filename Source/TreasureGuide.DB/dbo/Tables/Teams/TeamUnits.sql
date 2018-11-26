@@ -15,3 +15,7 @@ CREATE NONCLUSTERED INDEX [IX_dbo.TeamUnits]
     ON [dbo].[TeamUnits] ([Position],[Sub],[Flags])
         INCLUDE ([TeamId],[UnitId])
 GO
+CREATE NONCLUSTERED INDEX [IX_dbo.TeamUnits_Sub]
+    ON [dbo].[TeamUnits] ([Sub])
+        INCLUDE ([TeamId],[UnitId])
+GO
