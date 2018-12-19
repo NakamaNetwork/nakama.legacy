@@ -21,12 +21,13 @@ namespace TreasureGuide.Sniffer.DataParser
 
         protected override IEnumerable<Unit> ConvertData(string trimmed)
         {
+            trimmed = trimmed.Replace("'6+'", "\"6+\"").Replace("'5+'", "\"5+\"");
             var arrays = JsonConvert.DeserializeObject<object[][]>(trimmed);
             var models = arrays.Select((line, index) =>
             {
                 var id = index + 1;
                 var classData = line[2]?.ToString();
-                var parsedClasses = (classData.Contains("[") ? JsonConvert.DeserializeObject<string[]>(classData) : new[] { classData }).Select(type => type.ToUnitClass()).Where(x => x != UnitClass.Unknown);
+                var parsedClasses = classData.Replace("[", "").Replace("]", "").Replace("\"", "").Split(',').Select(type => type.ToUnitClass()).Distinct().Where(x => x != UnitClass.Unknown);
                 var unitClass = parsedClasses.Aggregate(UnitClass.Unknown, (current, parsed) => current | parsed);
                 var unit = new Unit
                 {
@@ -51,7 +52,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 };
                 return unit;
             });
-            return models.Where(x => !String.IsNullOrWhiteSpace(x.Name) && 
+            return models.Where(x => !String.IsNullOrWhiteSpace(x.Name) &&
             !(x.Id >= 5000 && x.Name.Contains("[Dual Unit]")) // Dual Unit Filter
             );
         }
