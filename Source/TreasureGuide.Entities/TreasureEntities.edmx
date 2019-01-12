@@ -2655,8 +2655,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="Global" Type="Boolean" Nullable="false" />
           <Property Name="F2P" Type="Boolean" Nullable="false" />
           <Property Name="F2PC" Type="Boolean" Nullable="false" />
-          <Property Name="Type" Type="Int16" Nullable="false" />
-          <Property Name="Class" Type="Int16" Nullable="false" />
+          <Property Name="Type" Type="tcdbModel.UnitType" Nullable="false" />
+          <Property Name="Class" Type="tcdbModel.UnitClass" Nullable="false" />
           <Property Name="HelperId" Type="Int32" />
           <Property Name="LeaderId" Type="Int32" />
           <NavigationProperty Name="Stage" Relationship="tcdbModel.FK_dbo_TeamMinis_dbo_Stages" FromRole="TeamMini" ToRole="Stage" />

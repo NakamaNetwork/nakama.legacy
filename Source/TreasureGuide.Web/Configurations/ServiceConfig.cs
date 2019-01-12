@@ -120,7 +120,7 @@ namespace TreasureGuide.Web.Configurations
             services.AddScoped<IThrottleService, ThrottleService>();
             services.AddScoped<IMetadataService, MetadataService>();
             services.AddScoped<IDonationService, PaypalDonationService>();
-            services.AddScoped<TeamSearchService, TeamDbSearchService>();
+            services.AddScoped<TeamSearchService, TeamMiniDbSearchService>();
 
             services.AddSingleton(x => configuration);
             services.AddSingleton(x => MapperConfig.Create());

@@ -19,29 +19,6 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             _entities = entities;
         }
 
-        private class TeamMini
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public int? StageId { get; set; }
-            public string StageName { get; set; }
-            public int? InvasionId { get; set; }
-            public string InvasionName { get; set; }
-            public bool EventShip { get; set; }
-            public string SubmittedById { get; set; }
-            public string SubmittingUserName { get; set; }
-            public bool Draft { get; set; }
-            public bool Deleted { get; set; }
-            public bool HasReport { get; set; }
-            public bool Global { get; set; }
-            public bool F2P { get; set; }
-            public bool F2PC { get; set; }
-            public int HelperId { get; set; }
-            public int LeaderId { get; set; }
-            public UnitType TypeFlags { get; set; }
-            public UnitClass ClassFlags { get; set; }
-        }
-
         public override async Task<IQueryable<Team>> Search(IQueryable<Team> results, TeamSearchModel model, ClaimsPrincipal user = null)
         {
             var minis = Enumerable.Empty<TeamMini>().AsQueryable();
@@ -61,7 +38,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             minis = SearchFreeToPlay(minis, model.FreeToPlay, model.LeaderId);
             minis = SearchBox(minis, model.BoxId);
 
-            results = minis.Join(results, x => x.Id, y => y.Id, (x, y) => y);
+            results = minis.Join(results, x => x.TeamId, y => y.Id, (x, y) => y);
             return results;
         }
 
@@ -114,7 +91,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
                 var userId = user?.GetId();
                 if (!String.IsNullOrWhiteSpace(userId))
                 {
-                    results = results.Where(x => x.BookmarkedUsers.Any(y => y.Id == userId));
+                    results = results.Where(x => x.Team.BookmarkedUsers.Any(y => y.Id == userId));
                 }
             }
             return results;
@@ -174,7 +151,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
         {
             if (boxId.HasValue)
             {
-                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.BoxUnits.Any(z => z.BoxId == boxId)));
+                teams = teams.Where(x => x.Team.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.BoxUnits.Any(z => z.BoxId == boxId)));
             }
             return teams;
         }
@@ -192,7 +169,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
         {
             if (modelTypes != UnitType.Unknown)
             {
-                results = results.Where(x => (x.TypeFlags & modelTypes) != 0);
+                results = results.Where(x => (x.Type & modelTypes) != 0);
             }
             return results;
         }
@@ -201,7 +178,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
         {
             if (modelClasses != UnitClass.Unknown)
             {
-                results = results.Where(x => (x.ClassFlags & modelClasses) != 0);
+                results = results.Where(x => (x.Class & modelClasses) != 0);
             }
             return results;
         }

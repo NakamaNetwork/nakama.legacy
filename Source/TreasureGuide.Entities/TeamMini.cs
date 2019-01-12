@@ -29,8 +29,8 @@ namespace TreasureGuide.Entities
         public bool Global { get; set; }
         public bool F2P { get; set; }
         public bool F2PC { get; set; }
-        public short Type { get; set; }
-        public short Class { get; set; }
+        public UnitType Type { get; set; }
+        public UnitClass Class { get; set; }
         public Nullable<int> HelperId { get; set; }
         public Nullable<int> LeaderId { get; set; }
     
