@@ -34,7 +34,6 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="FriendId" Type="numeric" Precision="9" Scale="0" />
           <Property Name="Global" Type="bit" />
-          <Property Name="Blacklist" Type="bit" Nullable="false" />
           <Property Name="Public" Type="bit" />
         </EntityType>
         <EntityType Name="BoxUnits">
