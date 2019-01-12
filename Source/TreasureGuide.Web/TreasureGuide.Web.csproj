@@ -55,6 +55,9 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\box-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\BoxModels\BoxModels.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\generated\box-search-model.tst.gen">
         <CustomToolNamespace>..\TreasureGuide.Common\Models\BoxModels\BoxSearchModel.cs</CustomToolNamespace>
       </None>
