@@ -161,6 +161,13 @@
           <Property Name="EditedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Version" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TeamCommentScores">
+          <Key>
+            <PropertyRef Name="TeamCommentId" />
+          </Key>
+          <Property Name="TeamCommentId" Type="int" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TeamCommentVotes">
           <Key>
             <PropertyRef Name="TeamCommentId" />
@@ -709,6 +716,20 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_TeamCommentScores_dbo_TeamComments">
+          <End Role="TeamComments" Type="Self.TeamComments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamCommentScores" Type="Self.TeamCommentScores" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TeamComments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamCommentScores">
+              <PropertyRef Name="TeamCommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_TeamCommentVotes_dbo_TeamComments">
           <End Role="TeamComments" Type="Self.TeamComments" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -961,6 +982,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <EntitySet Name="Stages" EntityType="Self.Stages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamBookmarks" EntityType="Self.TeamBookmarks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamComments" EntityType="Self.TeamComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamCommentScores" EntityType="Self.TeamCommentScores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamCommentVotes" EntityType="Self.TeamCommentVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamCredits" EntityType="Self.TeamCredits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamGenericSlots" EntityType="Self.TeamGenericSlots" Schema="dbo" store:Type="Tables" />
@@ -1113,6 +1135,10 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_TeamComments_dbo_Teams" Association="Self.FK_dbo_TeamComments_dbo_Teams">
             <End Role="Teams" EntitySet="Teams" />
             <End Role="TeamComments" EntitySet="TeamComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TeamCommentScores_dbo_TeamComments" Association="Self.FK_dbo_TeamCommentScores_dbo_TeamComments">
+            <End Role="TeamComments" EntitySet="TeamComments" />
+            <End Role="TeamCommentScores" EntitySet="TeamCommentScores" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_TeamCommentVotes_dbo_TeamComments" Association="Self.FK_dbo_TeamCommentVotes_dbo_TeamComments">
             <End Role="TeamComments" EntitySet="TeamComments" />
@@ -1384,6 +1410,11 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <AssociationSet Name="FK_dbo_TeamScores_dbo_Teams" Association="tcdbModel.FK_dbo_TeamScores_dbo_Teams">
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamScore" EntitySet="TeamScores" />
+          </AssociationSet>
+          <EntitySet Name="TeamCommentScores" EntityType="tcdbModel.TeamCommentScore" />
+          <AssociationSet Name="FK_dbo_TeamCommentScores_dbo_TeamComments" Association="tcdbModel.FK_dbo_TeamCommentScores_dbo_TeamComments">
+            <End Role="TeamComment" EntitySet="TeamComments" />
+            <End Role="TeamCommentScore" EntitySet="TeamCommentScores" />
           </AssociationSet>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
@@ -2327,6 +2358,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Property Name="ParentId" Type="Int32" />
           <NavigationProperty Name="Children" Relationship="tcdbModel.FK_dbo_TeamComments_dbo_TeamComments" FromRole="TeamComment" ToRole="TeamComment1" />
           <NavigationProperty Name="Parent" Relationship="tcdbModel.FK_dbo_TeamComments_dbo_TeamComments" FromRole="TeamComment1" ToRole="TeamComment" />
+          <NavigationProperty Name="TeamCommentScore" Relationship="tcdbModel.FK_dbo_TeamCommentScores_dbo_TeamComments" FromRole="TeamComment" ToRole="TeamCommentScore" />
         </EntityType>
         <Association Name="FK_dbo_TeamComments_EditedById_dbo_UserProfiles">
           <End Type="tcdbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
@@ -2464,6 +2496,28 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             </Principal>
             <Dependent Role="TeamScore">
               <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeamCommentScore">
+          <Key>
+            <PropertyRef Name="TeamCommentId" />
+          </Key>
+          <Property Name="TeamCommentId" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TeamComment" Relationship="tcdbModel.FK_dbo_TeamCommentScores_dbo_TeamComments" FromRole="TeamCommentScore" ToRole="TeamComment" />
+        </EntityType>
+        <Association Name="FK_dbo_TeamCommentScores_dbo_TeamComments">
+          <End Type="tcdbModel.TeamComment" Role="TeamComment" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tcdbModel.TeamCommentScore" Role="TeamCommentScore" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TeamComment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamCommentScore">
+              <PropertyRef Name="TeamCommentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2869,6 +2923,14 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               <MappingFragment StoreEntitySet="TeamScores">
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamCommentScores">
+            <EntityTypeMapping TypeName="tcdbModel.TeamCommentScore">
+              <MappingFragment StoreEntitySet="TeamCommentScores">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="TeamCommentId" ColumnName="TeamCommentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

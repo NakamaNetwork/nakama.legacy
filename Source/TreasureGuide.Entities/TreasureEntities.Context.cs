@@ -60,6 +60,7 @@ namespace TreasureGuide.Entities
         public virtual DbSet<TeamCommentVote> TeamCommentVotes { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<TeamScore> TeamScores { get; set; }
+        public virtual DbSet<TeamCommentScore> TeamCommentScores { get; set; }
     
         [DbFunction("TreasureEntities", "SimilarTeams")]
         public virtual IQueryable<SimilarTeams_Result> SimilarTeams(Nullable<int> teamId, Nullable<int> stageId, Nullable<int> unit1, Nullable<int> unit2, Nullable<int> unit3, Nullable<int> unit4, Nullable<int> unit5, Nullable<int> unit6)
