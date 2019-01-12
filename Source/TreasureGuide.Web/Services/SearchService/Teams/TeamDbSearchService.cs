@@ -12,7 +12,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
 {
     public class TeamDbSearchService : TeamSearchService
     {
-        private TreasureEntities _entities;
+        private readonly TreasureEntities _entities;
 
         public TeamDbSearchService(TreasureEntities entities)
         {
@@ -35,13 +35,13 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             results = SearchTypes(results, model.Types);
             results = SearchClasses(results, model.Classes);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
-            results = SearchBox(results, model.BoxId, model.Blacklist);
+            results = SearchBox(results, model.BoxId);
             return results;
         }
 
         private IQueryable<Team> SearchDeleted(IQueryable<Team> results, bool modelDeleted, ClaimsPrincipal user)
         {
-            if (user?.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator)?? false)
+            if (user?.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) ?? false)
             {
                 results = results.Where(x => x.Deleted == modelDeleted);
             }
@@ -144,18 +144,11 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             return teams;
         }
 
-        private IQueryable<Team> SearchBox(IQueryable<Team> teams, int? boxId, bool? blacklist)
+        private IQueryable<Team> SearchBox(IQueryable<Team> teams, int? boxId)
         {
             if (boxId.HasValue)
             {
-                if (blacklist ?? false)
-                {
-                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || !y.Unit.BoxUnits.Any(z => z.BoxId == boxId && z.Box.Blacklist)));
-                }
-                else
-                {
-                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.BoxUnits.Any(z => z.BoxId == boxId && !z.Box.Blacklist)));
-                }
+                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.BoxUnits.Any(z => z.BoxId == boxId)));
             }
             return teams;
         }
@@ -193,7 +186,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             }
             return results;
         }
-        
+
         public override async Task RebuildIndex(IQueryable<Team> input, bool clearAll = false)
         {
             // Nothing to do.

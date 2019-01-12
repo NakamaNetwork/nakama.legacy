@@ -74,16 +74,6 @@ namespace TreasureGuide.Web.Controllers.API
         protected override async Task<IQueryable<Box>> PerformSearch(IQueryable<Box> results, BoxSearchModel model)
         {
             results = PerformUserSearch(results, model.UserId);
-            results = PerformBlacklistSearch(results, model.Blacklist);
-            return results;
-        }
-
-        private IQueryable<Box> PerformBlacklistSearch(IQueryable<Box> results, bool? modelBlacklist)
-        {
-            if (modelBlacklist.HasValue)
-            {
-                results = results.Where(x => x.Blacklist == modelBlacklist);
-            }
             return results;
         }
 

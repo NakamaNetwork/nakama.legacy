@@ -1901,7 +1901,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
                     <Property Name="FriendId" Type="Decimal" Precision="9" Scale="0" />
                     <Property Name="Global" Type="Boolean" />
-                    <Property Name="Blacklist" Type="Boolean" Nullable="false" />
                     <Property Name="Public" Type="Boolean" />
                     <NavigationProperty Name="UserProfile" Relationship="tcdbModel.FK_dbo_Boxes_dbo_UserProfiles" FromRole="Box" ToRole="UserProfile" />
                     <NavigationProperty Name="BoxUnits" Relationship="tcdbModel.FK_dbo_BoxUnits_dbo_Boxes" FromRole="Box" ToRole="BoxUnit" />
@@ -2685,7 +2684,6 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <EntitySetMapping Name="Boxes">
                         <EntityTypeMapping TypeName="tcdbModel.Box">
                             <MappingFragment StoreEntitySet="Boxes">
-                                <ScalarProperty Name="Blacklist" ColumnName="Blacklist" />
                                 <ScalarProperty Name="Public" ColumnName="Public" />
                                 <ScalarProperty Name="Global" ColumnName="Global" />
                                 <ScalarProperty Name="FriendId" ColumnName="FriendId" />

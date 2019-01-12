@@ -25,7 +25,6 @@ namespace TreasureGuide.Entities
         public string Name { get; set; }
         public Nullable<decimal> FriendId { get; set; }
         public Nullable<bool> Global { get; set; }
-        public bool Blacklist { get; set; }
         public Nullable<bool> Public { get; set; }
     
         public virtual UserProfile UserProfile { get; set; }
