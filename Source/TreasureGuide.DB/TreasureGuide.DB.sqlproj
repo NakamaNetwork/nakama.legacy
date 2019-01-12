@@ -73,6 +73,7 @@
     <Folder Include="dbo\Views\GCR" />
     <Folder Include="dbo\Tables\Notifications" />
     <Folder Include="dbo\Tables\Notifications\Triggers" />
+    <Folder Include="dbo\Tables\Teams\Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Units\Ships.sql" />
@@ -120,6 +121,10 @@
     <Build Include="dbo\Tables\Notifications\Triggers\TeamCommentTrigger.sql" />
     <Build Include="dbo\Tables\Notifications\Triggers\CommentReplyTrigger.sql" />
     <Build Include="dbo\Tables\Notifications\Triggers\TeamVideoTrigger.sql" />
+    <Build Include="dbo\Tables\Teams\TeamScores.sql" />
+    <Build Include="dbo\Tables\Teams\Triggers\TeamScoreCreateTrigger.sql" />
+    <Build Include="dbo\Tables\Teams\Triggers\TeamScoreUpdateTrigger.sql" />
+    <Build Include="dbo\Functions\UpdateTeamScores.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
