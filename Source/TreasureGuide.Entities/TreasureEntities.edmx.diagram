@@ -75,6 +75,8 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamComments_dbo_TeamComments" />
         <EntityTypeShape EntityType="tcdbModel.Notification" Width="1.5" PointX="4.375" PointY="26" />
         <AssociationConnector Association="tcdbModel.FK_dbo_Notifications_dbo_UserProfiles" />
+        <EntityTypeShape EntityType="tcdbModel.TeamScore" Width="1.5" PointX="9.5" PointY="30.125" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamScores_dbo_Teams" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
