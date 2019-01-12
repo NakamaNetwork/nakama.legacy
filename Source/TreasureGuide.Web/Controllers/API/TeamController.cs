@@ -420,24 +420,10 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<IActionResult> Trending()
         {
             var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(1.5));
-            var top = await DbContext.Teams
-                .Where(x => !x.Deleted && !x.Draft)
-                .Select(x => new
-                {
-                    team = x,
-                    trendScore = x.TeamVotes
-                        .Where(y => y.SubmittedDate > threshold)
-                        .Select(y => (int)y.Value)
-                        .DefaultIfEmpty()
-                        .Sum()
-                })
-                .Where(x => x.trendScore > 0)
-                .OrderByDescending(x => x.trendScore)
-                .Take(5)
-                .Select(x => x.team)
-                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider)
-                .ToListAsync();
-            return Ok(top);
+            var topA = await DbContext.TeamVotes.Where(x => x.SubmittedDate > threshold).GroupBy(x => x.TeamId)
+                .OrderByDescending(x => x.Key).Join(DbContext.Teams, x => x.Key, y => y.Id, (x, y) => y).Where(x => !x.Deleted && !x.Draft).Take(5)
+                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
+            return Ok(topA);
         }
 
         [HttpGet]
@@ -445,10 +431,9 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Latest()
         {
-            var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(3));
             var top = await DbContext.Teams
-                .Where(x => !x.Deleted && !x.Draft && x.SubmittedDate > threshold)
-                .OrderByDescending(x => x.SubmittedDate)
+                .Where(x => !x.Deleted && !x.Draft)
+                .OrderByDescending(x => x.Id)
                 .Take(5)
                 .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider)
                 .ToListAsync();

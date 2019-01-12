@@ -58,7 +58,7 @@ namespace TreasureGuide.Common
                 team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
                 team.StubMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UnitId : null));
                 team.StubMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittingUser.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
-                team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
+                team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamScore != null ? y.TeamScore.Value : 0));
                 team.StubMapping.ForMember(x => x.Reported, o => o.MapFrom(y => y.TeamReports.Any(z => !z.AcknowledgedDate.HasValue)));
                 team.StubMapping.ForMember(x => x.HasVideos, o => o.MapFrom(y => y.TeamVideos.Any(z => !z.Deleted)));
                 team.StubMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnits.All(z =>
@@ -83,7 +83,7 @@ namespace TreasureGuide.Common
                 team.DetailMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UnitId : null));
                 team.DetailMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittingUser.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
 
-                team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
+                team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamScore != null ? y.TeamScore.Value : 0));
                 team.DetailMapping.ForMember(x => x.Reported, o => o.MapFrom(y => y.TeamReports.Any(z => !z.AcknowledgedDate.HasValue)));
                 team.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.MyVote, o => o.Ignore()); // Handle this manually
@@ -101,7 +101,7 @@ namespace TreasureGuide.Common
                 team.DetailMapping.ForMember(x => x.Comments, o => o.MapFrom(y => y.TeamComments.Count(z => !z.Deleted)));
 
                 var comments = mapper.CreateControllerMapping<TeamComment, TeamCommentDetailModel, TeamCommentStubModel, TeamCommentEditorModel>();
-                comments.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
+                comments.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentScore != null ? y.TeamCommentScore.Value : 0));
                 comments.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
                 comments.StubMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UnitId : null));
                 comments.StubMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
@@ -110,7 +110,7 @@ namespace TreasureGuide.Common
                 comments.StubMapping.ForMember(x => x.ChildCount, o => o.MapFrom(y => y.Children.Count(z => (canEdit ?? false) || !z.Deleted)));
                 comments.StubMapping.ForMember(x => x.Children, o => o.MapFrom(y => y.Children.Where(z => (canEdit ?? false) || !z.Deleted).OrderBy(z => z.Id).Take(10)));
 
-                comments.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentVotes.Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
+                comments.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentScore != null ? y.TeamCommentScore.Value : 0));
                 comments.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
                 comments.DetailMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UnitId : null));
                 comments.DetailMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z.Name == RoleConstants.Donor)));

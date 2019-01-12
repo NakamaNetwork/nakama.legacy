@@ -103,6 +103,11 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Replace("id: 'bb_1404'", "id: 1404")
                 .Replace("id: 'db_1985'", "id: 1985")
                 .Replace("id: 'wc_2401'", "id: 2407")
+                .Replace("id: 'se_2138'", "id: 2138")
+                .Replace("wc_", "")
+                .Replace("bb_", "")
+                .Replace("db_", "")
+                .Replace("se_", "")
                 .Replace("cc_", "");
         }
 
