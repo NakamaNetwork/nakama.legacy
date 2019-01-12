@@ -7,6 +7,13 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '01/12/19',
+        lines: [
+            'Happy first anniversary, Nakama Network!',
+            'Rewrote scoring system backend to make score queries significantly faster.',
+            'Fixed a bug where comment replies would appear at the top-level.'
+        ]
+    }, {
         header: '11/25/18',
         lines: [
             'Added some error messages for failed searches instead of just "No results found."',

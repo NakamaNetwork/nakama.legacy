@@ -129,7 +129,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (model.TeamId != 0 || !User.IsInRole(RoleConstants.Administrator))
             {
-                results = results.Where(x => x.TeamId == model.TeamId);
+                results = results.Where(x => x.TeamId == model.TeamId && x.ParentId == null);
             }
             if (model.Deleted)
             {

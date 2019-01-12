@@ -136,6 +136,9 @@
     <Compile Include="TeamComment.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="TeamCommentScore.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="TeamCommentVote.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
@@ -149,6 +152,9 @@
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="TeamReport.cs">
+      <DependentUpon>TreasureEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TeamScore.cs">
       <DependentUpon>TreasureEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="TeamSocket.cs">
