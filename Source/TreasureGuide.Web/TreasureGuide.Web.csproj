@@ -2,8 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>net452</TargetFramework>
-        <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
+        <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
 
     <PropertyGroup>
