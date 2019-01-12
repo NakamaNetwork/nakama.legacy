@@ -57,6 +57,10 @@ namespace TreasureGuide.Web.Controllers.API
                         Value = 1
                     }
                 };
+                entity.TeamScore = new TeamScore
+                {
+                    Value = 1
+                };
             }
             entity.EditedById = userId;
             entity.EditedDate = now;
@@ -118,7 +122,7 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortLeader:
                     return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault());
                 case SearchConstants.SortScore:
-                    return results.OrderBy(x => x.TeamVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), !model.SortDesc);
+                    return results.OrderBy(x => x.TeamScore != null ? x.TeamScore.Value : 0, !model.SortDesc);
                 case SearchConstants.SortDate:
                     return results.OrderBy(x => x.SubmittedDate, !model.SortDesc);
                 case SearchConstants.SortUser:
@@ -300,7 +304,8 @@ namespace TreasureGuide.Web.Controllers.API
             }
             vote.Value = (short)value;
             await DbContext.SaveChangesAsync();
-            var returnValue = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
+            DbContext.UpdateTeamScores(teamId);
+            var returnValue = (await DbContext.TeamScores.SingleOrDefaultAsync(x => x.TeamId == teamId))?.Value ?? 0;
             return Ok(returnValue);
         }
 

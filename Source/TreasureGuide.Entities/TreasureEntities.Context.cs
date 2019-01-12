@@ -109,5 +109,23 @@ namespace TreasureGuide.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SimilarTeams_Result>("[TreasureEntities].[SimilarTeamsId](@teamId)", teamIdParameter);
         }
+    
+        public virtual int UpdateTeamCommentScores(Nullable<int> teamCommentId)
+        {
+            var teamCommentIdParameter = teamCommentId.HasValue ?
+                new ObjectParameter("teamCommentId", teamCommentId) :
+                new ObjectParameter("teamCommentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTeamCommentScores", teamCommentIdParameter);
+        }
+    
+        public virtual int UpdateTeamScores(Nullable<int> teamId)
+        {
+            var teamIdParameter = teamId.HasValue ?
+                new ObjectParameter("teamId", teamId) :
+                new ObjectParameter("teamId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTeamScores", teamIdParameter);
+        }
     }
 }
