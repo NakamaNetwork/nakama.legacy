@@ -19,9 +19,9 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             _entities = entities;
         }
 
-        public override async Task<IQueryable<Team>> Search(IQueryable<Team> input, TeamSearchModel model, ClaimsPrincipal user = null)
+        public override async Task<IQueryable<Team>> Search(IQueryable<Team> results, TeamSearchModel model, ClaimsPrincipal user = null)
         {
-            var results = SearchDeleted(input, model.Deleted, user);
+            results = SearchDeleted(results, model.Deleted, user);
             results = SearchDrafts(results, model.Draft, user);
             results = SearchReported(results, model.Reported, user);
             results = SearchEventShips(results, model.ExcludeEventShips);
@@ -193,13 +193,8 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             }
             return results;
         }
-
-        public override async Task RebuildFullIndex()
-        {
-            // Nothing to do.
-        }
-
-        public override async Task RebuildIndex(Team model)
+        
+        public override async Task RebuildIndex(IQueryable<Team> input, bool clearAll = false)
         {
             // Nothing to do.
         }

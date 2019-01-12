@@ -2,16 +2,14 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TreasureGuide.Common.Models;
-using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Services.SearchService
 {
-    public interface ISearchService<TEntityKey, TEntity, TSearchModel>
-        where TEntity : class, IIdItem<TEntityKey>
+    public interface ISearchService<TEntity, TSearchModel>
+        where TEntity : class
         where TSearchModel : SearchModel, new()
     {
-        Task<IQueryable<TEntity>> Search(IQueryable<TEntity> input, TSearchModel model, ClaimsPrincipal user = null);
-        Task RebuildFullIndex();
-        Task RebuildIndex(TEntity model);
+        Task<IQueryable<TEntity>> Search(IQueryable<TEntity> results, TSearchModel model, ClaimsPrincipal user = null);
+        Task RebuildIndex(IQueryable<TEntity> input, bool clearOld = false);
     }
 }
