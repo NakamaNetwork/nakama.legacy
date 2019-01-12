@@ -10,8 +10,10 @@ export class NewsService {
         header: '01/12/19',
         lines: [
             'Happy first anniversary, Nakama Network!',
-            'Rewrote scoring system backend to make score queries significantly faster.',
-            'Fixed a bug where comment replies would appear at the top-level.'
+            'Rewrote scoring backend to make score queries significantly faster.',
+            'Added new indexing to database to make team queries significantly faster.',
+            'Fixed a bug where comment replies would appear at the top-level.',
+            'Completely removed Similar Teams feature due to lack of engagement.'
         ]
     }, {
         header: '11/25/18',

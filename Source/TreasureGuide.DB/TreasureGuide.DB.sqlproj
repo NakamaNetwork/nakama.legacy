@@ -122,8 +122,6 @@
     <None Include="PostDeploy\dbo.UnitAliases.Table.sql" />
     <Build Include="dbo\Tables\Boxes\Boxes.sql" />
     <Build Include="dbo\Tables\Boxes\BoxUnits.sql" />
-    <Build Include="dbo\Functions\SimilarTeams.sql" />
-    <Build Include="dbo\Functions\SimilarTeamsId.sql" />
     <Build Include="dbo\Tables\Accounts\UserPreferences.sql" />
     <Build Include="dbo\Tables\Stages\StageAliases.sql" />
     <None Include="PostDeploy\dbo.StageAliases.Table.sql" />
@@ -149,6 +147,7 @@
     <Build Include="dbo\Functions\UpdateTeamCommentScores.sql" />
     <Build Include="dbo\Tables\Teams\Summaries\TeamScores.sql" />
     <Build Include="dbo\Tables\Teams\Summaries\TeamCommentScores.sql" />
+    <Build Include="dbo\Tables\Teams\Summaries\TeamMinis.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

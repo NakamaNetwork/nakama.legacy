@@ -218,39 +218,7 @@ namespace TreasureGuide.Web.Controllers.API
             });
             return output;
         }
-
-        [HttpGet]
-        [ActionName("Similar")]
-        [Route("{id}/[action]")]
-        public async Task<IActionResult> Similar(int? id)
-        {
-            var similar = DbContext.SimilarTeamsId(id)
-                .Where(x => x.Matches >= 1).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
-                .Take(6);
-            return await TrimDownSimilar(similar);
-        }
-
-        [HttpGet]
-        [ActionName("Similar")]
-        [Route("[action]")]
-        public async Task<IActionResult> Similar(int? teamId, int? stageId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
-        {
-            var similar = DbContext.SimilarTeams(teamId, stageId, unit1, unit2, unit3, unit4, unit5, unit6)
-                .Where(x => x.Matches >= 1).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
-                .Take(3);
-            return await TrimDownSimilar(similar);
-        }
-
-        private async Task<IActionResult> TrimDownSimilar(IQueryable<SimilarTeams_Result> similar)
-        {
-            var teamIds = await similar.Select(x => x.TeamId).ToListAsync();
-            var teams = await DbContext.Teams.Join(teamIds, x => x.Id, y => y, (x, y) => x)
-                .Where(x => !x.Draft && !x.Deleted)
-                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
-            teams = teamIds.Join(teams, x => x, y => y.Id, (x, y) => y).ToList();
-            return Ok(teams);
-        }
-
+        
         [HttpGet]
         [ActionName("Trending")]
         [Route("[action]")]

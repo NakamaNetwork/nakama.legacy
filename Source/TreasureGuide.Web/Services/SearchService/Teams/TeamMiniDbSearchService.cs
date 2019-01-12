@@ -19,21 +19,25 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             _entities = entities;
         }
 
-        private class TeamMini : Team
+        private class TeamMini
         {
-            public bool EventShip { get; set; }
-            public bool HasReport { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int? StageId { get; set; }
             public string StageName { get; set; }
+            public int? InvasionId { get; set; }
+            public string InvasionName { get; set; }
+            public bool EventShip { get; set; }
+            public string SubmittedById { get; set; }
             public string SubmittingUserName { get; set; }
+            public bool Draft { get; set; }
+            public bool Deleted { get; set; }
+            public bool HasReport { get; set; }
             public bool Global { get; set; }
             public bool F2P { get; set; }
             public bool F2PC { get; set; }
-            public int Unit0 { get; set; }
-            public int Unit1 { get; set; }
-            public int Unit2 { get; set; }
-            public int Unit3 { get; set; }
-            public int Unit4 { get; set; }
-            public int Unit5 { get; set; }
+            public int HelperId { get; set; }
+            public int LeaderId { get; set; }
             public UnitType TypeFlags { get; set; }
             public UnitClass ClassFlags { get; set; }
         }
@@ -152,7 +156,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
         {
             if (leaderId.HasValue)
             {
-                teams = teams.Where(x => x.Unit1 == leaderId || (!noHelper && x.Unit0 == leaderId));
+                teams = teams.Where(x => x.LeaderId == leaderId || (!noHelper && x.HelperId == leaderId));
             }
             return teams;
         }
@@ -179,7 +183,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
         {
             if (status != FreeToPlayStatus.None)
             {
-                results = results.Where(x => status == FreeToPlayStatus.Crew ? x.F2PC : (x.F2P || x.Unit1 == leaderId));
+                results = results.Where(x => status == FreeToPlayStatus.Crew ? x.F2PC : (x.F2P || x.LeaderId == leaderId));
             }
             return results;
         }
