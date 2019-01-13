@@ -23,6 +23,8 @@ namespace TreasureGuide.Entities
             this.BoxUnits = new HashSet<BoxUnit>();
             this.EvolvesTo = new HashSet<UnitEvolution>();
             this.EvolvesFrom = new HashSet<UnitEvolution>();
+            this.TeamMinis = new HashSet<TeamMini>();
+            this.TeamMinis1 = new HashSet<TeamMini>();
         }
     
         public int Id { get; set; }
@@ -57,5 +59,9 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnitEvolution> EvolvesFrom { get; set; }
         public virtual GCRUnit GCRUnit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamMini> TeamMinis { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamMini> TeamMinis1 { get; set; }
     }
 }

@@ -53,6 +53,31 @@
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
   <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
@@ -73,7 +98,7 @@
     <Folder Include="dbo\Views\GCR" />
     <Folder Include="dbo\Tables\Notifications" />
     <Folder Include="dbo\Tables\Notifications\Triggers" />
-    <Folder Include="dbo\Tables\Teams\Triggers" />
+    <Folder Include="dbo\Tables\Teams\Summaries" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Units\Ships.sql" />
@@ -97,9 +122,6 @@
     <None Include="PostDeploy\dbo.UnitAliases.Table.sql" />
     <Build Include="dbo\Tables\Boxes\Boxes.sql" />
     <Build Include="dbo\Tables\Boxes\BoxUnits.sql" />
-    <Build Include="dbo\Functions\SimilarTeams.sql" />
-    <Build Include="dbo\Functions\SimilarTeamsId.sql" />
-    <Build Include="dbo\Views\TeamMinis.sql" />
     <Build Include="dbo\Tables\Accounts\UserPreferences.sql" />
     <Build Include="dbo\Tables\Stages\StageAliases.sql" />
     <None Include="PostDeploy\dbo.StageAliases.Table.sql" />
@@ -121,14 +143,13 @@
     <Build Include="dbo\Tables\Notifications\Triggers\TeamCommentTrigger.sql" />
     <Build Include="dbo\Tables\Notifications\Triggers\CommentReplyTrigger.sql" />
     <Build Include="dbo\Tables\Notifications\Triggers\TeamVideoTrigger.sql" />
-    <Build Include="dbo\Tables\Teams\TeamScores.sql" />
-    <Build Include="dbo\Tables\Teams\Triggers\TeamScoreCreateTrigger.sql" />
-    <Build Include="dbo\Tables\Teams\Triggers\TeamScoreUpdateTrigger.sql" />
     <Build Include="dbo\Functions\UpdateTeamScores.sql" />
-    <Build Include="dbo\Tables\Teams\TeamCommentScores.sql" />
     <Build Include="dbo\Functions\UpdateTeamCommentScores.sql" />
-    <Build Include="dbo\Tables\Teams\Triggers\TeamCommentCreateTrigger.sql" />
-    <Build Include="dbo\Tables\Teams\Triggers\TeamCommentUpdateTrigger.sql" />
+    <Build Include="dbo\Tables\Teams\Summaries\TeamScores.sql" />
+    <Build Include="dbo\Tables\Teams\Summaries\TeamCommentScores.sql" />
+    <Build Include="dbo\Tables\Teams\Summaries\TeamMinis.sql" />
+    <Build Include="dbo\Functions\ResetSummaryItems.sql" />
+    <Build Include="dbo\Functions\UpdateTeamMinis.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />

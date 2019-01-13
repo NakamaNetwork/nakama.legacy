@@ -33,9 +33,6 @@ export class TeamEditPage {
     loading: boolean;
     saved: boolean;
 
-    similarLoading: boolean;
-    similar: ITeamStubModel[] = [];
-
     constructor(teamQueryService: TeamQueryService,
         router: Router,
         alertService: AlertService,
@@ -75,9 +72,6 @@ export class TeamEditPage {
             this.team.stageId = params.stageId;
         }
         this.controller.validate();
-        this.bindingEngine.propertyObserver(this, 'similarModel').subscribe((n, o) => {
-            this.getSimilar(n);
-        });
     }
 
     canDeactivate() {
@@ -150,32 +144,6 @@ export class TeamEditPage {
                 this.router.navigateToRoute('teamDetails', { id: results.id });
             }
         }).catch(response => this.alert.reportError(response));
-    }
-
-    get similarModel() {
-        var similar = { teamId: this.team.id };
-        for (var i = 0; i < 6; i++) {
-            var unit = this.team.teamUnits.find(x => x.position === i && !x.sub);
-            similar['unit' + (i + 1)] = unit ? unit.unitId : null;
-        }
-        return similar;
-    }
-
-    lastSimilar: string;
-
-    getSimilar(model) {
-        var json = JSON.stringify(model);
-        if (this.lastSimilar !== json) {
-            this.lastSimilar = json;
-            this.similarLoading = true;
-            this.teamQueryService.similar(model).then(x => {
-                this.similar = x;
-                this.similarLoading = false;
-            }).catch(x => {
-                this.similar = [];
-                this.similarLoading = false;
-            });
-        }
     }
 
     @computedFrom('team.name')

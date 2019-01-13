@@ -79,6 +79,13 @@
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamScores_dbo_Teams" />
         <EntityTypeShape EntityType="tcdbModel.TeamCommentScore" Width="1.5" PointX="17.75" PointY="13.5" />
         <AssociationConnector Association="tcdbModel.FK_dbo_TeamCommentScores_dbo_TeamComments" />
+        <EntityTypeShape EntityType="tcdbModel.TeamMini" Width="1.5" PointX="17.375" PointY="3.125" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamMinis_dbo_Stages" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamMinis_dbo_Stages_Invasions" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamMinis_dbo_Teams" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamMinis_SubmittedById_dbo_UserProfiles" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamMinis_dbo_Units_0" />
+        <AssociationConnector Association="tcdbModel.FK_dbo_TeamMinis_dbo_Units_1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

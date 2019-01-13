@@ -65,6 +65,10 @@ namespace TreasureGuide.Web.Controllers.API
                         Value = 1
                     }
                 };
+                entity.TeamCommentScore = new TeamCommentScore
+                {
+                    Value = 1
+                };
             }
             entity.EditedById = userId;
             entity.EditedDate = now;
@@ -149,7 +153,7 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortDate:
                     return results.OrderBy(x => x.SubmittedDate, !model.SortDesc);
                 default:
-                    return results.OrderBy(x => x.TeamCommentVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), !model.SortDesc);
+                    return results.OrderBy(x => x.TeamCommentScore != null ? x.TeamCommentScore.Value : 0, !model.SortDesc);
             }
         }
 
@@ -180,7 +184,8 @@ namespace TreasureGuide.Web.Controllers.API
             }
             vote.Value = (short)value;
             await DbContext.SaveChangesAsync();
-            var returnValue = await DbContext.TeamCommentVotes.Where(x => x.TeamCommentId == commentId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
+            DbContext.UpdateTeamCommentScores(commentId);
+            var returnValue = (await DbContext.TeamCommentScores.SingleOrDefaultAsync(x => x.TeamCommentId == commentId))?.Value ?? 0;
             return Ok(returnValue);
         }
 

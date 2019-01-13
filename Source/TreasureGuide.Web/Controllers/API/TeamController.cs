@@ -17,14 +17,18 @@ using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models;
 using TreasureGuide.Common.Models.TeamModels;
 using TreasureGuide.Web.Services;
+using TreasureGuide.Web.Services.SearchService.Teams;
 
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/team")]
     public class TeamController : SearchableApiController<int, Team, int?, TeamStubModel, TeamDetailModel, TeamEditorModel, TeamSearchModel>
     {
-        public TeamController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
+        private readonly TeamSearchService _searchService;
+
+        public TeamController(TeamSearchService searchService, TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
+            _searchService = searchService;
         }
 
         [HttpGet]
@@ -34,6 +38,17 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<SearchResult<WikiSearchResultModel>> Wiki(TeamSearchModel model)
         {
             return await Search<WikiSearchResultModel>(model);
+        }
+
+        protected override async Task<object> CreateOrUpdate(TeamEditorModel model, Team entity = null)
+        {
+            var result = await base.CreateOrUpdate(model, entity);
+            var id = (result as IdResponse<int>)?.Id;
+            if (id.HasValue)
+            {
+                DbContext.UpdateTeamMinis(id.Value);
+            }
+            return result;
         }
 
         protected override async Task<Team> PostProcess(Team entity)
@@ -52,6 +67,16 @@ namespace TreasureGuide.Web.Controllers.API
                         UserId = userId,
                         Value = 1
                     }
+                };
+                entity.TeamScore = new TeamScore
+                {
+                    Value = 1
+                };
+                entity.TeamMini = new TeamMini
+                {
+                    Name = entity.Name,
+                    SubmittingUserName = entity.SubmittedById,
+                    SubmittedById = entity.SubmittedById
                 };
             }
             entity.EditedById = userId;
@@ -114,7 +139,7 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortLeader:
                     return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault());
                 case SearchConstants.SortScore:
-                    return results.OrderBy(x => x.TeamVotes.Select(y => (int)y.Value).DefaultIfEmpty(0).Sum(), !model.SortDesc);
+                    return results.OrderBy(x => x.TeamScore != null ? x.TeamScore.Value : 0, !model.SortDesc);
                 case SearchConstants.SortDate:
                     return results.OrderBy(x => x.SubmittedDate, !model.SortDesc);
                 case SearchConstants.SortUser:
@@ -135,178 +160,7 @@ namespace TreasureGuide.Web.Controllers.API
 
         protected override async Task<IQueryable<Team>> PerformSearch(IQueryable<Team> results, TeamSearchModel model)
         {
-            results = SearchDeleted(results, model.Deleted);
-            results = SearchDrafts(results, model.Draft);
-            results = SearchReported(results, model.Reported);
-            results = SearchEventShips(results, model.ExcludeEventShips);
-            results = SearchBookmarks(results, model.Bookmark);
-            results = SearchStage(results, model.StageId, model.InvasionId);
-            results = SearchTerm(results, model.Term);
-            results = SearchSubmitter(results, model.SubmittedBy);
-            results = SearchLead(results, model.LeaderId, model.NoHelp);
-            results = SearchGlobal(results, model.Global);
-            results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
-            results = SearchTypes(results, model.Types);
-            results = SearchClasses(results, model.Classes);
-            results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
-            results = SearchBox(results, model.BoxId, model.Blacklist);
-            return results;
-        }
-
-        private IQueryable<Team> SearchDeleted(IQueryable<Team> results, bool modelDeleted)
-        {
-            if (!User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
-            {
-                results = results.Where(x => !x.Deleted);
-            }
-            else
-            {
-                results = results.Where(x => x.Deleted == modelDeleted);
-            }
-            return results;
-        }
-
-        private IQueryable<Team> SearchDrafts(IQueryable<Team> results, bool modelDraft)
-        {
-            results = results.Where(x => x.Draft == modelDraft);
-            if (modelDraft && !User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator))
-            {
-                var userId = User.GetId();
-                results = results.Where(x => x.SubmittedById == userId);
-
-            }
-            return results;
-        }
-
-        private IQueryable<Team> SearchReported(IQueryable<Team> results, bool modelReported)
-        {
-            if (User.IsInAnyRole(RoleConstants.Administrator, RoleConstants.Moderator) && modelReported)
-            {
-                results = results.Where(x => x.TeamReports.Any(y => !y.AcknowledgedDate.HasValue));
-            }
-            return results;
-        }
-
-        private IQueryable<Team> SearchEventShips(IQueryable<Team> results, bool excludeEventShips)
-        {
-            if (excludeEventShips)
-            {
-                results = results.Where(x => !x.Ship.EventShip);
-            }
-            return results;
-        }
-
-        private IQueryable<Team> SearchBookmarks(IQueryable<Team> results, bool bookmarked)
-        {
-            if (bookmarked)
-            {
-                var userId = User.GetId();
-                if (!String.IsNullOrWhiteSpace(userId))
-                {
-                    results = results.Where(x => x.BookmarkedUsers.Any(y => y.Id == userId));
-                }
-            }
-            return results;
-        }
-
-        private IQueryable<Team> SearchTerm(IQueryable<Team> teams, string term)
-        {
-            if (!String.IsNullOrEmpty(term))
-            {
-                var terms = term.SplitSearchTerms();
-                teams = teams.Where(x => terms.All(t => x.Name.Contains(t) || (x.Stage != null && x.Stage.Name.Contains(t))));
-            }
-            return teams;
-        }
-
-        private IQueryable<Team> SearchSubmitter(IQueryable<Team> teams, string term)
-        {
-            if (!String.IsNullOrEmpty(term))
-            {
-                teams = teams.Where(x => x.SubmittedById == term || x.SubmittingUser.UserName.Contains(term));
-            }
-            return teams;
-        }
-
-        private IQueryable<Team> SearchStage(IQueryable<Team> teams, int? stageId, int? invasionId)
-        {
-            if (stageId.HasValue)
-            {
-                teams = teams.Where(x => x.StageId == stageId || x.InvasionId == stageId);
-            }
-            if (invasionId.HasValue)
-            {
-                teams = teams.Where(x => x.StageId == invasionId || x.InvasionId == invasionId);
-            }
-            return teams;
-        }
-
-        private IQueryable<Team> SearchLead(IQueryable<Team> teams, int? leaderId, bool noHelper)
-        {
-            if (leaderId.HasValue)
-            {
-                teams = teams.Where(x => x.TeamUnits.Any(y => y.UnitId == leaderId && (noHelper ? y.Position == 1 : y.Position < 2) && !y.Sub));
-            }
-            return teams;
-        }
-
-        private IQueryable<Team> SearchGlobal(IQueryable<Team> teams, bool global)
-        {
-            if (global)
-            {
-                teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.Flags.HasFlag(UnitFlag.Global)));
-            }
-            return teams;
-        }
-
-        private IQueryable<Team> SearchBox(IQueryable<Team> teams, int? boxId, bool? blacklist)
-        {
-            if (boxId.HasValue)
-            {
-                if (blacklist ?? false)
-                {
-                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || !y.Unit.BoxUnits.Any(z => z.BoxId == boxId && z.Box.Blacklist)));
-                }
-                else
-                {
-                    teams = teams.Where(x => x.TeamUnits.All(y => y.Sub || y.Position == 0 || y.Unit.BoxUnits.Any(z => z.BoxId == boxId && !z.Box.Blacklist)));
-                }
-            }
-            return teams;
-        }
-
-        private IQueryable<Team> SearchFreeToPlay(IQueryable<Team> results, FreeToPlayStatus status, int? leaderId)
-        {
-            if (status != FreeToPlayStatus.None)
-            {
-                results = results.Where(x => x.TeamUnits.All(y =>
-                    y.Sub || // Ignore subs
-                    y.Position == 0 || // Ignore friends
-                    y.UnitId == leaderId || // Ignore searched captain
-                    ( // Ignore leaders if only searching crew
-                        (status == FreeToPlayStatus.Crew && y.Position < 2) || !EnumerableHelper.PayToPlay.Any(z => y.Unit.Flags.HasFlag(z))
-                    )
-                ));
-            }
-            return results;
-        }
-
-        private IQueryable<Team> SearchTypes(IQueryable<Team> results, UnitType modelTypes)
-        {
-            if (modelTypes != UnitType.Unknown)
-            {
-                results = results.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.Type == UnitType.Unknown || (y.Unit.Type & modelTypes) != 0));
-            }
-            return results;
-        }
-
-        private IQueryable<Team> SearchClasses(IQueryable<Team> results, UnitClass modelClasses)
-        {
-            if (modelClasses != UnitClass.Unknown)
-            {
-                results = results.Where(x => x.TeamUnits.All(y => y.Sub || y.Unit.Class == UnitClass.Unknown || (y.Unit.Class & modelClasses) != 0));
-            }
-            return results;
+            return await _searchService.Search(results, model, User);
         }
 
         [HttpGet]
@@ -383,38 +237,6 @@ namespace TreasureGuide.Web.Controllers.API
         }
 
         [HttpGet]
-        [ActionName("Similar")]
-        [Route("{id}/[action]")]
-        public async Task<IActionResult> Similar(int? id)
-        {
-            var similar = DbContext.SimilarTeamsId(id)
-                .Where(x => x.Matches >= 1).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
-                .Take(6);
-            return await TrimDownSimilar(similar);
-        }
-
-        [HttpGet]
-        [ActionName("Similar")]
-        [Route("[action]")]
-        public async Task<IActionResult> Similar(int? teamId, int? stageId, int? unit1, int? unit2, int? unit3, int? unit4, int? unit5, int? unit6)
-        {
-            var similar = DbContext.SimilarTeams(teamId, stageId, unit1, unit2, unit3, unit4, unit5, unit6)
-                .Where(x => x.Matches >= 1).OrderByDescending(x => x.StageMatches).ThenByDescending(x => x.Matches)
-                .Take(3);
-            return await TrimDownSimilar(similar);
-        }
-
-        private async Task<IActionResult> TrimDownSimilar(IQueryable<SimilarTeams_Result> similar)
-        {
-            var teamIds = await similar.Select(x => x.TeamId).ToListAsync();
-            var teams = await DbContext.Teams.Join(teamIds, x => x.Id, y => y, (x, y) => x)
-                .Where(x => !x.Draft && !x.Deleted)
-                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
-            teams = teamIds.Join(teams, x => x, y => y.Id, (x, y) => y).ToList();
-            return Ok(teams);
-        }
-
-        [HttpGet]
         [ActionName("Trending")]
         [Route("[action]")]
         public async Task<IActionResult> Trending()
@@ -467,7 +289,8 @@ namespace TreasureGuide.Web.Controllers.API
             }
             vote.Value = (short)value;
             await DbContext.SaveChangesAsync();
-            var returnValue = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty((short)0).SumAsync(x => x);
+            DbContext.UpdateTeamScores(teamId);
+            var returnValue = (await DbContext.TeamScores.SingleOrDefaultAsync(x => x.TeamId == teamId))?.Value ?? 0;
             return Ok(returnValue);
         }
 
