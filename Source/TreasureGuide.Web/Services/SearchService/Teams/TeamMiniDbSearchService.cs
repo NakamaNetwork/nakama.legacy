@@ -21,7 +21,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
 
         public override async Task<IQueryable<Team>> Search(IQueryable<Team> results, TeamSearchModel model, ClaimsPrincipal user = null)
         {
-            var minis = Enumerable.Empty<TeamMini>().AsQueryable();
+            var minis = _entities.TeamMinis.AsQueryable();
             minis = SearchDeleted(minis, model.Deleted, user);
             minis = SearchDrafts(minis, model.Draft, user);
             minis = SearchReported(minis, model.Reported, user);

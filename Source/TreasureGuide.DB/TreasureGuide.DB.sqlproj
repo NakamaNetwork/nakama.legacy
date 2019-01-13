@@ -148,6 +148,8 @@
     <Build Include="dbo\Tables\Teams\Summaries\TeamScores.sql" />
     <Build Include="dbo\Tables\Teams\Summaries\TeamCommentScores.sql" />
     <Build Include="dbo\Tables\Teams\Summaries\TeamMinis.sql" />
+    <Build Include="dbo\Functions\ResetSummaryItems.sql" />
+    <Build Include="dbo\Functions\UpdateTeamMinis.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_local.publish.xml" />
