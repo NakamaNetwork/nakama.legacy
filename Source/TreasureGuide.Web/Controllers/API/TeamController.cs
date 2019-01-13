@@ -242,10 +242,17 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<IActionResult> Trending()
         {
             var threshold = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(1.5));
-            var topA = await DbContext.TeamVotes.Where(x => x.SubmittedDate > threshold).GroupBy(x => x.TeamId)
-                .OrderByDescending(x => x.Key).Join(DbContext.Teams, x => x.Key, y => y.Id, (x, y) => y).Where(x => !x.Deleted && !x.Draft).Take(5)
-                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider).ToListAsync();
-            return Ok(topA);
+            var result = await DbContext.TeamVotes
+                .Where(x => x.SubmittedDate > threshold)
+                .GroupBy(x => x.TeamId)
+                .Join(DbContext.Teams, x => x.Key, y => y.Id, (x, y) => new { score = x.Select(z => z.Value).DefaultIfEmpty().Sum(z => z), team = y })
+                .OrderByDescending(x => x.score)
+                .Select(x => x.team)
+                .Where(x => !x.Deleted && !x.Draft)
+                .Take(5)
+                .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider)
+                .ToListAsync();
+            return Ok(result);
         }
 
         [HttpGet]
