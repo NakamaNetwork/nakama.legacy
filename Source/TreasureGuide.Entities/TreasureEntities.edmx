@@ -1036,6 +1036,9 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
         <Function Name="UpdateTeamCommentScores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="teamCommentId" Type="int" Mode="In" />
         </Function>
+        <Function Name="UpdateTeamMinis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teamId" Type="int" Mode="In" />
+        </Function>
         <Function Name="UpdateTeamScores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="teamId" Type="int" Mode="In" />
         </Function>
@@ -1531,6 +1534,9 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
             <End Role="Unit" EntitySet="Units" />
             <End Role="TeamMini" EntitySet="TeamMinis" />
           </AssociationSet>
+          <FunctionImport Name="UpdateTeamMinis">
+            <Parameter Name="teamId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
                 <EnumType Name="UnitClass" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
@@ -3163,6 +3169,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateTeamMinis" FunctionName="tcdbModel.Store.UpdateTeamMinis" />
                 </EntityContainerMapping>
             </Mapping>
         </edmx:Mappings>

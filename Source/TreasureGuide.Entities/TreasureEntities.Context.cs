@@ -80,5 +80,14 @@ namespace TreasureGuide.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTeamScores", teamIdParameter);
         }
+    
+        public virtual int UpdateTeamMinis(Nullable<int> teamId)
+        {
+            var teamIdParameter = teamId.HasValue ?
+                new ObjectParameter("teamId", teamId) :
+                new ObjectParameter("teamId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTeamMinis", teamIdParameter);
+        }
     }
 }

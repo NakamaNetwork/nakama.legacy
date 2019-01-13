@@ -40,6 +40,17 @@ namespace TreasureGuide.Web.Controllers.API
             return await Search<WikiSearchResultModel>(model);
         }
 
+        protected override async Task<object> CreateOrUpdate(TeamEditorModel model, Team entity = null)
+        {
+            var result = await base.CreateOrUpdate(model, entity);
+            var id = (result as IdResponse<int>)?.Id;
+            if (id.HasValue)
+            {
+                DbContext.UpdateTeamMinis(id.Value);
+            }
+            return result;
+        }
+
         protected override async Task<Team> PostProcess(Team entity)
         {
             var userId = User.GetId();
@@ -60,6 +71,12 @@ namespace TreasureGuide.Web.Controllers.API
                 entity.TeamScore = new TeamScore
                 {
                     Value = 1
+                };
+                entity.TeamMini = new TeamMini
+                {
+                    Name = entity.Name,
+                    SubmittingUserName = entity.SubmittedById,
+                    SubmittedById = entity.SubmittedById
                 };
             }
             entity.EditedById = userId;
@@ -218,7 +235,7 @@ namespace TreasureGuide.Web.Controllers.API
             });
             return output;
         }
-        
+
         [HttpGet]
         [ActionName("Trending")]
         [Route("[action]")]
