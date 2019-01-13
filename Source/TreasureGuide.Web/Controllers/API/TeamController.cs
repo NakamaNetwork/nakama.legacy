@@ -137,7 +137,7 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortStage:
                     return results.OrderBy(x => x.Stage != null ? x.Stage.Name : "", model.SortDesc);
                 case SearchConstants.SortLeader:
-                    return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault());
+                    return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault(), model.SortDesc);
                 case SearchConstants.SortScore:
                     return results.OrderBy(x => x.TeamScore != null ? x.TeamScore.Value : 0, !model.SortDesc);
                 case SearchConstants.SortDate:
