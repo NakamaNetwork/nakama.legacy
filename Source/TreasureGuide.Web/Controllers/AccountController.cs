@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
 using TreasureGuide.Common.Models;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountViewModels;
 
@@ -162,7 +163,7 @@ namespace TreasureGuide.Web.Controllers
                             Id = user.Id,
                             UserName = user.UserName
                         });
-                        await _entities.SaveChangesAsync();
+                        await _entities.SaveChangesSafe();
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }

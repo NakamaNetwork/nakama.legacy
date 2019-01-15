@@ -13,6 +13,7 @@ using TreasureGuide.Common.Models.TeamModels;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
@@ -104,7 +105,7 @@ namespace TreasureGuide.Web.Controllers.API
             if (single != null)
             {
                 single.Deleted = true;
-                await SaveChangesAsync();
+                await DbContext.SaveChangesSafe();
             }
             return 1;
         }
@@ -183,10 +184,21 @@ namespace TreasureGuide.Web.Controllers.API
                 DbContext.TeamCommentVotes.Add(vote);
             }
             vote.Value = (short)value;
-            await DbContext.SaveChangesAsync();
-            DbContext.UpdateTeamCommentScores(commentId);
+            await DbContext.SaveChangesSafe();
+            await UpdateTeamCommentScores(commentId);
             var returnValue = (await DbContext.TeamCommentScores.SingleOrDefaultAsync(x => x.TeamCommentId == commentId))?.Value ?? 0;
             return Ok(returnValue);
+        }
+
+        private async Task UpdateTeamCommentScores(int commentId)
+        {
+            var set = await DbContext.TeamCommentScores.SingleOrDefaultAsync(x => x.TeamCommentId == commentId);
+            if (set != null)
+            {
+                var score = await DbContext.TeamCommentVotes.Where(x => x.TeamCommentId == commentId).Select(x => x.Value).DefaultIfEmpty().SumAsync(x => x);
+                set.Value = score;
+                await DbContext.SaveChangesSafe();
+            }
         }
 
         [HttpPost]
@@ -205,7 +217,7 @@ namespace TreasureGuide.Web.Controllers.API
             if (team != null)
             {
                 team.Reported = true;
-                await DbContext.SaveChangesAsync();
+                await DbContext.SaveChangesSafe();
             }
             return Ok(teamCommentId);
         }
@@ -222,7 +234,7 @@ namespace TreasureGuide.Web.Controllers.API
             if (team != null)
             {
                 team.Reported = false;
-                await DbContext.SaveChangesAsync();
+                await DbContext.SaveChangesSafe();
             }
             return Ok(teamCommentId);
         }

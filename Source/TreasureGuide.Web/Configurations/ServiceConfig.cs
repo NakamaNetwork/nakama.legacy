@@ -36,7 +36,7 @@ namespace TreasureGuide.Web.Configurations
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("TreasureEntities"),
-                    sqlServerOptions => sqlServerOptions.CommandTimeout(15)
+                    sqlServerOptions => sqlServerOptions.CommandTimeout(10).EnableRetryOnFailure(0)
                     ));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>

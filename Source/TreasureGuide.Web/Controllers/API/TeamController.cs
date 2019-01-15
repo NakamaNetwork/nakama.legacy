@@ -16,6 +16,7 @@ using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models;
 using TreasureGuide.Common.Models.TeamModels;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
 using TreasureGuide.Web.Services.SearchService.Teams;
 
@@ -46,9 +47,58 @@ namespace TreasureGuide.Web.Controllers.API
             var id = (result as IdResponse<int>)?.Id;
             if (id.HasValue)
             {
-                DbContext.UpdateTeamMinis(id.Value);
+                await UpdateTeamMinis(id.Value);
             }
             return result;
+        }
+
+        private async Task UpdateTeamMinis(int idValue)
+        {
+            var teamData = await DbContext.Teams.Select(x => new
+            {
+                TeamId = x.Id,
+                Name = x.Name,
+                StageId = x.StageId,
+                StageName = x.Stage != null ? x.Stage.Name : "",
+                InvasionId = x.InvasionId,
+                InvasionName = x.Invasion != null ? x.Invasion.Name : "",
+                EventShip = x.Ship != null && x.Ship.EventShip,
+                SubmittedById = x.SubmittedById,
+                SubmittingUserName = x.SubmittingUser != null ? x.SubmittingUser.UserName : "",
+                Draft = x.Draft,
+                Deleted = x.Deleted,
+                HasReport = x.TeamReports.Any(y => y.AcknowledgedDate == null),
+                Units = x.TeamUnits.Where(y => !y.Sub).Select(y => new { Id = y.UnitId, Position = y.Position, Flags = y.Unit.Flags, Class = y.Unit.Class, Type = y.Unit.Type })
+            }).SingleOrDefaultAsync(x => x.TeamId == idValue);
+            if (teamData != null)
+            {
+                var mini = await DbContext.TeamMinis.SingleOrDefaultAsync(x => x.TeamId == idValue);
+                if (mini != null)
+                {
+                    mini.Name = teamData.Name;
+                    mini.StageId = teamData.StageId;
+                    mini.StageName = teamData.StageName;
+                    mini.InvasionId = teamData.InvasionId;
+                    mini.InvasionName = teamData.InvasionName;
+                    mini.EventShip = teamData.EventShip;
+                    mini.SubmittedById = teamData.SubmittedById;
+                    mini.SubmittingUserName = teamData.SubmittingUserName;
+                    mini.Draft = teamData.Draft;
+                    mini.Deleted = teamData.Deleted;
+                    mini.HasReport = teamData.HasReport;
+                    mini.HelperId = teamData.Units.SingleOrDefault(x => x.Position == 0)?.Id;
+                    mini.LeaderId = teamData.Units.SingleOrDefault(x => x.Position == 1)?.Id;
+                    mini.F2PC = !teamData.Units.Where(x => x.Position > 1)
+                        .Any(x => x.Flags.HasFlag(UnitFlag.RareRecruitExclusive) ||
+                                  x.Flags.HasFlag(UnitFlag.RareRecruitLimited));
+                    mini.F2P = mini.F2PC && !teamData.Units.Where(x => x.Position == 1)
+                                   .Any(x => x.Flags.HasFlag(UnitFlag.RareRecruitExclusive) ||
+                                             x.Flags.HasFlag(UnitFlag.RareRecruitLimited));
+                    mini.Type = teamData.Units.Select(x => x.Type).Aggregate((sum, current) => sum & current);
+                    mini.Class = teamData.Units.Select(x => x.Class).Aggregate((sum, current) => sum & current);
+                    await DbContext.SaveChangesSafe();
+                }
+            }
         }
 
         protected override async Task<Team> PostProcess(Team entity)
@@ -295,12 +345,22 @@ namespace TreasureGuide.Web.Controllers.API
                 DbContext.TeamVotes.Add(vote);
             }
             vote.Value = (short)value;
-            await DbContext.SaveChangesAsync();
-            DbContext.UpdateTeamScores(teamId);
+            await DbContext.SaveChangesSafe();
+            await UpdateTeamScores(teamId);
             var returnValue = (await DbContext.TeamScores.SingleOrDefaultAsync(x => x.TeamId == teamId))?.Value ?? 0;
             return Ok(returnValue);
         }
 
+        private async Task UpdateTeamScores(int teamId)
+        {
+            var set = await DbContext.TeamScores.SingleOrDefaultAsync(x => x.TeamId == teamId);
+            if (set != null)
+            {
+                var score = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty().SumAsync(x => x);
+                set.Value = score;
+                await DbContext.SaveChangesSafe();
+            }
+        }
 
         [HttpPost]
         [Authorize]
@@ -332,7 +392,7 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 team.BookmarkedUsers.Add(profile);
             }
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
             return Ok(!existed);
         }
 
@@ -353,7 +413,7 @@ namespace TreasureGuide.Web.Controllers.API
                 TeamId = teamId,
                 Reason = model.Reason
             });
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
             return Ok(teamId);
         }
 
@@ -390,7 +450,7 @@ namespace TreasureGuide.Web.Controllers.API
                 return BadRequest("Could not find report.");
             }
             team.AcknowledgedDate = DateTimeOffset.Now;
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
             return Ok(id);
         }
 
@@ -421,7 +481,7 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 DbContext.TeamVideos.Add(video);
             }
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
             return Ok(video.Id);
         }
 
@@ -477,7 +537,7 @@ namespace TreasureGuide.Web.Controllers.API
             }).ToList();
             DbContext.TeamVideos.AddRange(videos);
 
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
 
             return Ok(team.Id);
         }

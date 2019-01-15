@@ -11,6 +11,7 @@ using TreasureGuide.Entities;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.BoxModels;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
 using Z.EntityFramework.Plus;
 
@@ -185,7 +186,7 @@ namespace TreasureGuide.Web.Controllers.API
                         await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && x.UnitId == item.Id).UpdateAsync(x => new BoxUnit { Flags = item.Flags });
                     }
                 }
-                await DbContext.SaveChangesAsync();
+                await DbContext.SaveChangesSafe();
             }
             return Ok(1);
         }

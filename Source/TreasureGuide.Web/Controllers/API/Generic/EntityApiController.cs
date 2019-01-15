@@ -16,6 +16,7 @@ using System.Net;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models;
+using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -171,7 +172,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
                 entity = Update(model, entity);
             }
             entity = await PostProcess(entity);
-            await SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
             return new IdResponse<TEntityKey> { Id = entity.Id };
         }
 
@@ -180,7 +181,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             var removed = DbContext.Set<TEntity>().Remove(single);
             if (removed != null)
             {
-                await SaveChangesAsync();
+                await DbContext.SaveChangesSafe();
                 return removed.Id;
             }
             return 1;
@@ -214,29 +215,6 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         protected virtual async Task<TEntity> PostProcess(TEntity entity)
         {
             return entity;
-        }
-
-        protected virtual async Task SaveChangesAsync()
-        {
-            try
-            {
-                DbContext.SaveChanges();
-            }
-            catch (DbEntityValidationException dbEx)
-            {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        var message = $"{validationErrors.Entry.Entity}:{validationError.ErrorMessage}";
-                        // raise a new exception nesting
-                        // the current instance as InnerException
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
-            }
         }
     }
 }

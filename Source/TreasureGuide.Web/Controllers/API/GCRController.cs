@@ -11,6 +11,7 @@ using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Common.Models.GCRModels;
+using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -53,7 +54,7 @@ namespace TreasureGuide.Web.Controllers.API
             var units = model.Select(x => _mapper.Map<GCRUnit>(x));
             _entities.GCRUnits.AddRange(units);
 
-            await _entities.SaveChangesAsync();
+            await _entities.SaveChangesSafe();
             return Ok(1);
         }
 
@@ -67,7 +68,7 @@ namespace TreasureGuide.Web.Controllers.API
             var stages = model.Select(x => _mapper.Map<GCRStage>(x));
             _entities.GCRStages.AddRange(stages);
 
-            await _entities.SaveChangesAsync();
+            await _entities.SaveChangesSafe();
             return Ok(1);
         }
     }

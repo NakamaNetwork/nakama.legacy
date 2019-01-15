@@ -12,8 +12,6 @@ namespace TreasureGuide.Entities
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     [DbConfigurationType(typeof(TreasureEntitiesConfiguration))] 
     public partial class TreasureEntities : DbContext
@@ -62,32 +60,5 @@ namespace TreasureGuide.Entities
         public virtual DbSet<TeamScore> TeamScores { get; set; }
         public virtual DbSet<TeamCommentScore> TeamCommentScores { get; set; }
         public virtual DbSet<TeamMini> TeamMinis { get; set; }
-    
-        public virtual int UpdateTeamCommentScores(Nullable<int> teamCommentId)
-        {
-            var teamCommentIdParameter = teamCommentId.HasValue ?
-                new ObjectParameter("teamCommentId", teamCommentId) :
-                new ObjectParameter("teamCommentId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTeamCommentScores", teamCommentIdParameter);
-        }
-    
-        public virtual int UpdateTeamScores(Nullable<int> teamId)
-        {
-            var teamIdParameter = teamId.HasValue ?
-                new ObjectParameter("teamId", teamId) :
-                new ObjectParameter("teamId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTeamScores", teamIdParameter);
-        }
-    
-        public virtual int UpdateTeamMinis(Nullable<int> teamId)
-        {
-            var teamIdParameter = teamId.HasValue ?
-                new ObjectParameter("teamId", teamId) :
-                new ObjectParameter("teamId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTeamMinis", teamIdParameter);
-        }
     }
 }
