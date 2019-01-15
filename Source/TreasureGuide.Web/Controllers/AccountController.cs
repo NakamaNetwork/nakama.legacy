@@ -150,14 +150,18 @@ namespace TreasureGuide.Web.Controllers
                             RoleConstants.Moderator,
                             RoleConstants.BoxUser,
                             RoleConstants.Donor,
-                            RoleConstants.GCRAdmin
+                            RoleConstants.GCRAdmin,
+                            RoleConstants.Contributor,
+                            RoleConstants.BoxUser
                         });
 #endif
+#if RELEASE
                         await _userManager.AddToRolesAsync(user, new[]
                         {
                             RoleConstants.Contributor,
                             RoleConstants.BoxUser
                         });
+#endif
                         _entities.UserProfiles.Add(new UserProfile
                         {
                             Id = user.Id,

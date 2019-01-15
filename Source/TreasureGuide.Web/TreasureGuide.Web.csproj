@@ -11,6 +11,14 @@
         <UserSecretsId>aspnet-TreasureGuide.Web-5f05675e-555e-48ff-bb51-5d655998ec83</UserSecretsId>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <DefineConstants>RELEASE</DefineConstants>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="AspNet.Security.OAuth.Discord" Version="1.0.0-rc2-final" />
         <PackageReference Include="AspNet.Security.OAuth.Reddit" Version="1.0.0-rc2-final" />
@@ -55,18 +63,6 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
-      <None Update="src\models\generated\box-models.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Common\Models\BoxModels\BoxModels.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\box-search-model.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Common\Models\BoxModels\BoxSearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-search-model.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamSearchModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-unit-models.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamUnitModels.cs</CustomToolNamespace>
-      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
