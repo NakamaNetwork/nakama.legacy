@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '01/14/19',
+        lines: [
+            'Revised one of the weekend\'s "significantly faster" database updates as it was causing things to go significantly not faster.'
+        ]
+    },{
         header: '01/12/19',
         lines: [
             'Happy first anniversary, Nakama Network!',
