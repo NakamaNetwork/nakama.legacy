@@ -19,7 +19,6 @@ export interface IBoxStubModel {
     friendId: number;
     global: boolean;
     public: boolean;
-    blacklist: boolean;
     
 }
 
@@ -38,14 +37,12 @@ export interface IBoxEditorModel {
     friendId: number;
     global: boolean;
     public: boolean;
-    blacklist: boolean;
     
 }
 
 
 export interface IBoxSearchModel extends ISearchModel{
     userId: string;
-    blacklist: boolean;
     
 }
 
@@ -612,7 +609,6 @@ export interface ITeamSearchModel extends ISearchModel{
     stageId: number;
     invasionId: number;
     boxId: number;
-    blacklist: boolean;
     global: boolean;
     freeToPlay: FreeToPlayStatus;
     classes: UnitClass;
