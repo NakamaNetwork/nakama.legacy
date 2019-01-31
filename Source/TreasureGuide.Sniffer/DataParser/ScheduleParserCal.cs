@@ -247,6 +247,10 @@ namespace TreasureGuide.Sniffer.DataParser
                     return 2204400;
                 case 2144:
                     return 2214600;
+                case 1963: // Sanji/Pudding Wedding FN
+                    return 6196100;
+                case 9999: // Shanks and Mihawk
+                    return 4251300;
                 case 530: // 3rd anni champ challenge
                 case 562:
                 case 1045:
