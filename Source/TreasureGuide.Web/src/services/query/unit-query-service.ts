@@ -22,6 +22,15 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
                 case '2502': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5013.png';
                 case '2503': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5014.png';
                 case '2504': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5015.png';
+                case '2505': return '/content/units/2505.png';
+                case '2506': return '/content/units/2506.png';
+                case '2507': return '/content/units/2507.png';
+                case '2508': return '/content/units/2508.png';
+                case '2509': return '/content/units/2509.png';
+                case '2510': return '/content/units/2510.png';
+                case '2511': return '/content/units/2511.png';
+                case '2512': return '/content/units/2512.png';
+                case '2513': return '/content/units/2513.png';
             }
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
         }
