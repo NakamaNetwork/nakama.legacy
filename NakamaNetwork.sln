@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NakamaNetwork.Web", "Source
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "NakamaNetwork.DB", "Source\NakamaNetwork.DB\NakamaNetwork.DB.sqlproj", "{68D50D74-DECE-4004-B19B-EB10AF35903E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NakamaNetwork.Entities", "Source\NakamaNetwork.Entities\NakamaNetwork.Entities.csproj", "{F4772854-61BA-4017-B3CE-5370E57D0C04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{68D50D74-DECE-4004-B19B-EB10AF35903E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68D50D74-DECE-4004-B19B-EB10AF35903E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{68D50D74-DECE-4004-B19B-EB10AF35903E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F4772854-61BA-4017-B3CE-5370E57D0C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4772854-61BA-4017-B3CE-5370E57D0C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4772854-61BA-4017-B3CE-5370E57D0C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4772854-61BA-4017-B3CE-5370E57D0C04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
