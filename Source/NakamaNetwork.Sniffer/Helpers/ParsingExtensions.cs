@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NakamaNetwork.Entities.EnumTypes;
+using TreasureGuide.Entities;
 
 namespace NakamaNetwork.Sniffer.Helpers
 {

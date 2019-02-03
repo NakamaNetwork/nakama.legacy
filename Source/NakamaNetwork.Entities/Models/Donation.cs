@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using NakamaNetwork.Entities.EnumTypes;
+using TreasureGuide.Entities;
 
 namespace NakamaNetwork.Entities.Models
 {
@@ -10,8 +12,8 @@ namespace NakamaNetwork.Entities.Models
         public decimal Amount { get; set; }
         public string Message { get; set; }
         public DateTimeOffset Date { get; set; }
-        public byte State { get; set; }
-        public byte PaymentType { get; set; }
+        public PaymentState State { get; set; }
+        public PaymentType PaymentType { get; set; }
         public string PaymentId { get; set; }
         public string PayerId { get; set; }
         public string TokenId { get; set; }

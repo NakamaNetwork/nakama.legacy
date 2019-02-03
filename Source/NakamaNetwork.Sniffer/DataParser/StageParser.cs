@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using NakamaNetwork.Entities.EnumTypes;
 using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Sniffer.Helpers;
 using Newtonsoft.Json;
@@ -193,8 +194,8 @@ namespace NakamaNetwork.Sniffer.DataParser
         private IEnumerable<StageAlias> GetAliases(Tuple<Unit, Stage> tuple)
         {
             var me = GetAliases(tuple.Item1.Name, new[] { tuple.Item1 }, tuple.Item2, true);
-            var to = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesTo.Select(x => x.EvolvesTo), tuple.Item2);
-            var from = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesFrom.Select(x => x.EvolvesFrom), tuple.Item2);
+            var to = GetAliases(tuple.Item1.Name, tuple.Item1.UnitEvolutionsToUnit.Select(x => x.ToUnit), tuple.Item2);
+            var from = GetAliases(tuple.Item1.Name, tuple.Item1.UnitEvolutionsFromUnit.Select(x => x.FromUnit), tuple.Item2);
             return to.Concat(from).Concat(me);
         }
 

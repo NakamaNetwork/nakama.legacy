@@ -54,7 +54,7 @@ namespace NakamaNetwork.Sniffer.DataParser
                 {
                     if (await Context.Units.AnyAsync(y => y.Id == evo.Item2))
                     {
-                        source.EvolvesTo.Add(new UnitEvolution { ToUnitId = evo.Item2 });
+                        source.UnitEvolutionsToUnit.Add(new UnitEvolution { ToUnitId = evo.Item2 });
                     }
                 }
                 if (i % 100 == 0)

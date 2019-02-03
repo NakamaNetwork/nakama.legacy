@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace NakamaNetwork.Entities.Models
 {
@@ -17,7 +18,7 @@ namespace NakamaNetwork.Entities.Models
         public string Name { get; set; }
         public byte? Stamina { get; set; }
         public int? UnitId { get; set; }
-        public byte Type { get; set; }
+        public StageType Type { get; set; }
         public bool? Global { get; set; }
 
         public virtual Unit Unit { get; set; }

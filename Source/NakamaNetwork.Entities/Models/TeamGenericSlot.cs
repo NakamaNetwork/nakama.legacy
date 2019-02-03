@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace NakamaNetwork.Entities.Models
 {
@@ -7,9 +8,9 @@ namespace NakamaNetwork.Entities.Models
     {
         public int TeamId { get; set; }
         public byte Position { get; set; }
-        public short Type { get; set; }
-        public short Class { get; set; }
-        public short Role { get; set; }
+        public UnitType Type { get; set; }
+        public UnitClass Class { get; set; }
+        public UnitRole Role { get; set; }
         public bool Sub { get; set; }
 
         public virtual Team Team { get; set; }

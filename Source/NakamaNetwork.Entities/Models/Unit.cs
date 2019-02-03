@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace NakamaNetwork.Entities.Models
 {
@@ -18,8 +19,8 @@ namespace NakamaNetwork.Entities.Models
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public short Type { get; set; }
-        public short Class { get; set; }
+        public UnitType Type { get; set; }
+        public UnitClass Class { get; set; }
         public decimal? Stars { get; set; }
         public byte? Cost { get; set; }
         public byte? Combo { get; set; }
@@ -33,7 +34,7 @@ namespace NakamaNetwork.Entities.Models
         public short? MaxAtk { get; set; }
         public short? MaxRcv { get; set; }
         public decimal? GrowthRate { get; set; }
-        public short Flags { get; set; }
+        public UnitFlag Flags { get; set; }
 
         public virtual ICollection<BoxUnit> BoxUnits { get; set; }
         public virtual ICollection<Stage> Stages { get; set; }
