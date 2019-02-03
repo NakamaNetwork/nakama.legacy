@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using NakamaNetwork.Entities.EnumTypes;
-using TreasureGuide.Entities;
 
 namespace NakamaNetwork.Entities.Models
 {

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NakamaNetwork.Entities.Helpers;
 using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Sniffer.DataParser;
 using TreasureGuide.Sniffer;
-using TreasureGuide.Sniffer.Helpers;
 
 namespace NakamaNetwork.Sniffer
 {
@@ -27,9 +27,9 @@ namespace NakamaNetwork.Sniffer
 
             var dbOptions =
                 new DbContextOptionsBuilder<NakamaNetworkContext>().UseSqlServer(
-                    configuration.GetConnectionString("NakamaNetworkContext")).Options;
+                    configuration.GetConnectionString("NakamaNetworkContext"));
 
-            var context = new NakamaNetworkContext(dbOptions);
+            var context = new NakamaNetworkContext(dbOptions.Options);
             AssureContextOpen(context);
             RunParsers(context, configuration);
             while (Running || ParsersRunning > 0)
@@ -58,7 +58,6 @@ namespace NakamaNetwork.Sniffer
                 new StageParser(context),
                 new ScheduleParserCal(context)
             };
-            //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             Running = true;
             ParsersRunning = parsers.Count();
 
@@ -86,7 +85,7 @@ namespace NakamaNetwork.Sniffer
                         }
                         GC.Collect();
                     }
-                    await PostRun(context, mapper);
+                    await PostRun(context);
                     Running = false;
                 });
         }
@@ -102,17 +101,12 @@ namespace NakamaNetwork.Sniffer
             context.UnitAliases.Clear();
             context.UnitEvolutions.Clear();
             context.Units.Clear();
-            context.CacheSets.Clear();
             await context.SaveChangesAsync();
         }
 
-        private static async Task PostRun(NakamaNetworkContext context, IMapper mapper)
+        private static async Task PostRun(NakamaNetworkContext context)
         {
             await context.SaveChangesAsync();
-            var timestamp = DateTimeOffset.UtcNow;
-            await CacheBuilder.BuildCache<Unit, UnitStubModel>(context, mapper, CacheItemType.Unit, timestamp);
-            await CacheBuilder.BuildCache<Stage, StageStubModel>(context, mapper, CacheItemType.Stage, timestamp);
-            await CacheBuilder.BuildCache<Ship, ShipStubModel>(context, mapper, CacheItemType.Ship, timestamp);
         }
     }
 }

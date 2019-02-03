@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Helpers;
 using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Sniffer.Helpers;
 using Newtonsoft.Json;
