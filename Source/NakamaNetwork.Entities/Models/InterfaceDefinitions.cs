@@ -29,6 +29,4 @@ namespace NakamaNetwork.Entities.Models
     public partial class TeamGenericSlot : ISubItem { }
 
     public partial class Donation : IIdItem<int> { }
-
-    public partial class CacheSet : IEditedDateItem { }
 }
