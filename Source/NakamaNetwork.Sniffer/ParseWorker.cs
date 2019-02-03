@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace TreasureGuide.Sniffer
+namespace NakamaNetwork.Sniffer
 {
     public interface IParser
     {

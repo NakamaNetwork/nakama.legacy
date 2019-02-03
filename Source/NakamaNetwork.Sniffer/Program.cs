@@ -26,8 +26,9 @@ namespace NakamaNetwork.Sniffer
                 .Build();
 
             var dbOptions =
-                new DbContextOptionsBuilder<NakamaNetworkContext>().UseSqlServer(
-                    configuration.GetConnectionString("NakamaNetworkContext"));
+                new DbContextOptionsBuilder<NakamaNetworkContext>()
+                    .UseSqlServer(configuration.GetConnectionString("NakamaNetworkContext"))
+                    .EnableSensitiveDataLogging();
 
             var context = new NakamaNetworkContext(dbOptions.Options);
             AssureContextOpen(context);

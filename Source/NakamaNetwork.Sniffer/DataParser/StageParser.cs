@@ -172,7 +172,7 @@ namespace NakamaNetwork.Sniffer.DataParser
                     HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item2.MainId,
                         x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, x.Item1.Id, true)))
                 .Where(x => x.Item2 != null).ToList();
-            var aliases = colo.SelectMany(GetAliases).ToList();
+            var aliases = colo.SelectMany(GetAliases).GroupBy(x => String.Join(":::", x.StageId, x.Name)).Select(y => y.First()).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
             return Tuple.Create(stages, aliases);
         }
