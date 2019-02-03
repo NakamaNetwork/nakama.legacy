@@ -15,37 +15,37 @@ namespace NakamaNetwork.Entities.Models
         {
         }
 
-        public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
-        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<BoxUnits> BoxUnits { get; set; }
-        public virtual DbSet<Boxes> Boxes { get; set; }
-        public virtual DbSet<Donations> Donations { get; set; }
-        public virtual DbSet<Notifications> Notifications { get; set; }
-        public virtual DbSet<ScheduledEvents> ScheduledEvents { get; set; }
-        public virtual DbSet<Ships> Ships { get; set; }
-        public virtual DbSet<StageAliases> StageAliases { get; set; }
-        public virtual DbSet<Stages> Stages { get; set; }
-        public virtual DbSet<TeamBookmarks> TeamBookmarks { get; set; }
-        public virtual DbSet<TeamCommentVotes> TeamCommentVotes { get; set; }
-        public virtual DbSet<TeamComments> TeamComments { get; set; }
-        public virtual DbSet<TeamCredits> TeamCredits { get; set; }
-        public virtual DbSet<TeamGenericSlots> TeamGenericSlots { get; set; }
-        public virtual DbSet<TeamReports> TeamReports { get; set; }
-        public virtual DbSet<TeamSockets> TeamSockets { get; set; }
-        public virtual DbSet<TeamUnits> TeamUnits { get; set; }
-        public virtual DbSet<TeamVideos> TeamVideos { get; set; }
-        public virtual DbSet<TeamVotes> TeamVotes { get; set; }
-        public virtual DbSet<Teams> Teams { get; set; }
-        public virtual DbSet<UnitAliases> UnitAliases { get; set; }
-        public virtual DbSet<UnitEvolutions> UnitEvolutions { get; set; }
-        public virtual DbSet<Units> Units { get; set; }
-        public virtual DbSet<UserPreferences> UserPreferences { get; set; }
-        public virtual DbSet<UserProfiles> UserProfiles { get; set; }
+        public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+        public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<BoxUnit> BoxUnits { get; set; }
+        public virtual DbSet<Box> Boxes { get; set; }
+        public virtual DbSet<Donation> Donations { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<ScheduledEvent> ScheduledEvents { get; set; }
+        public virtual DbSet<Ship> Ships { get; set; }
+        public virtual DbSet<StageAlias> StageAliases { get; set; }
+        public virtual DbSet<Stage> Stages { get; set; }
+        public virtual DbSet<TeamBookmark> TeamBookmarks { get; set; }
+        public virtual DbSet<TeamCommentVote> TeamCommentVotes { get; set; }
+        public virtual DbSet<TeamComment> TeamComments { get; set; }
+        public virtual DbSet<TeamCredit> TeamCredits { get; set; }
+        public virtual DbSet<TeamGenericSlot> TeamGenericSlots { get; set; }
+        public virtual DbSet<TeamReport> TeamReports { get; set; }
+        public virtual DbSet<TeamSocket> TeamSockets { get; set; }
+        public virtual DbSet<TeamUnit> TeamUnits { get; set; }
+        public virtual DbSet<TeamVideo> TeamVideos { get; set; }
+        public virtual DbSet<TeamVote> TeamVotes { get; set; }
+        public virtual DbSet<Team> Teams { get; set; }
+        public virtual DbSet<UnitAlias> UnitAliases { get; set; }
+        public virtual DbSet<UnitEvolution> UnitEvolutions { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<UserPreference> UserPreferences { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -55,7 +55,7 @@ namespace NakamaNetwork.Entities.Models
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
 
-            modelBuilder.Entity<AspNetRoleClaims>(entity =>
+            modelBuilder.Entity<AspNetRoleClaim>(entity =>
             {
                 entity.Property(e => e.RoleId)
                     .IsRequired()
@@ -66,7 +66,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasForeignKey(d => d.RoleId);
             });
 
-            modelBuilder.Entity<AspNetRoles>(entity =>
+            modelBuilder.Entity<AspNetRole>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -75,7 +75,7 @@ namespace NakamaNetwork.Entities.Models
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<AspNetUserClaims>(entity =>
+            modelBuilder.Entity<AspNetUserClaim>(entity =>
             {
                 entity.Property(e => e.UserId)
                     .IsRequired()
@@ -86,7 +86,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<AspNetUserLogins>(entity =>
+            modelBuilder.Entity<AspNetUserLogin>(entity =>
             {
                 entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
 
@@ -103,7 +103,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<AspNetUserRoles>(entity =>
+            modelBuilder.Entity<AspNetUserRole>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.RoleId });
 
@@ -116,7 +116,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<AspNetUserTokens>(entity =>
+            modelBuilder.Entity<AspNetUserToken>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
 
@@ -129,7 +129,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<AspNetUsers>(entity =>
+            modelBuilder.Entity<AspNetUser>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -142,7 +142,7 @@ namespace NakamaNetwork.Entities.Models
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<BoxUnits>(entity =>
+            modelBuilder.Entity<BoxUnit>(entity =>
             {
                 entity.HasKey(e => new { e.BoxId, e.UnitId })
                     .HasName("PK.dbo_BoxUnits");
@@ -158,7 +158,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK.dbo_BoxUnits_dbo.Units");
             });
 
-            modelBuilder.Entity<Boxes>(entity =>
+            modelBuilder.Entity<Box>(entity =>
             {
                 entity.Property(e => e.FriendId).HasColumnType("numeric(9, 0)");
 
@@ -178,7 +178,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK.dbo_Boxes_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<Donations>(entity =>
+            modelBuilder.Entity<Donation>(entity =>
             {
                 entity.Property(e => e.Amount).HasColumnType("money");
 
@@ -202,7 +202,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK.dbo_Donations_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<Notifications>(entity =>
+            modelBuilder.Entity<Notification>(entity =>
             {
                 entity.HasIndex(e => new { e.Id, e.UserId, e.EventType, e.EventId })
                     .HasName("IX_dbo.Notifications");
@@ -218,7 +218,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK.dbo_Notifications_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<ScheduledEvents>(entity =>
+            modelBuilder.Entity<ScheduledEvent>(entity =>
             {
                 entity.HasKey(e => new { e.StageId, e.Global, e.StartDate, e.EndDate })
                     .HasName("PK_dbo.ScheduledEvents");
@@ -229,7 +229,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.ScheduledEvents_dbo.Stages");
             });
 
-            modelBuilder.Entity<Ships>(entity =>
+            modelBuilder.Entity<Ship>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -238,7 +238,7 @@ namespace NakamaNetwork.Entities.Models
                 entity.Property(e => e.Name).HasMaxLength(128);
             });
 
-            modelBuilder.Entity<StageAliases>(entity =>
+            modelBuilder.Entity<StageAlias>(entity =>
             {
                 entity.HasKey(e => new { e.StageId, e.Name })
                     .HasName("PK_dbo.StageAliases");
@@ -251,7 +251,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.StageAliasess_dbo.Stages");
             });
 
-            modelBuilder.Entity<Stages>(entity =>
+            modelBuilder.Entity<Stage>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -268,7 +268,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK.dbo_Stages_dbo.Units");
             });
 
-            modelBuilder.Entity<TeamBookmarks>(entity =>
+            modelBuilder.Entity<TeamBookmark>(entity =>
             {
                 entity.HasKey(e => new { e.TeamId, e.UserId })
                     .HasName("PK_dbo.TeamBookmarks");
@@ -284,7 +284,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.TeamBookmarks_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<TeamCommentVotes>(entity =>
+            modelBuilder.Entity<TeamCommentVote>(entity =>
             {
                 entity.HasKey(e => new { e.TeamCommentId, e.UserId })
                     .HasName("PK_dbo.TeamCommentVotes");
@@ -305,7 +305,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.TeamCommentVotes_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<TeamComments>(entity =>
+            modelBuilder.Entity<TeamComment>(entity =>
             {
                 entity.HasIndex(e => new { e.Id, e.TeamId, e.ParentId, e.Deleted, e.Reported, e.SubmittedById, e.EditedById })
                     .HasName("IX_dbo.TeamComments");
@@ -346,7 +346,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.TeamComments_dbo.Teams");
             });
 
-            modelBuilder.Entity<TeamCredits>(entity =>
+            modelBuilder.Entity<TeamCredit>(entity =>
             {
                 entity.HasKey(e => e.TeamId)
                     .HasName("PK_dbo.TeamCredits");
@@ -359,11 +359,11 @@ namespace NakamaNetwork.Entities.Models
 
                 entity.HasOne(d => d.Team)
                     .WithOne(p => p.TeamCredits)
-                    .HasForeignKey<TeamCredits>(d => d.TeamId)
+                    .HasForeignKey<TeamCredit>(d => d.TeamId)
                     .HasConstraintName("FK_dbo.TeamCredits_dbo.Teams");
             });
 
-            modelBuilder.Entity<TeamGenericSlots>(entity =>
+            modelBuilder.Entity<TeamGenericSlot>(entity =>
             {
                 entity.HasKey(e => new { e.TeamId, e.Position, e.Type, e.Class, e.Role })
                     .HasName("PK_dbo.TeamGenericSlots");
@@ -374,7 +374,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.TeamGenericSlots_dbo.Teams");
             });
 
-            modelBuilder.Entity<TeamReports>(entity =>
+            modelBuilder.Entity<TeamReport>(entity =>
             {
                 entity.Property(e => e.Reason)
                     .IsRequired()
@@ -388,7 +388,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK.dbo_TeamReports_dbo.Teams");
             });
 
-            modelBuilder.Entity<TeamSockets>(entity =>
+            modelBuilder.Entity<TeamSocket>(entity =>
             {
                 entity.HasKey(e => new { e.TeamId, e.SocketType })
                     .HasName("PK_dbo.TeamSockets");
@@ -399,7 +399,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.TeamSockets_dbo.Teams");
             });
 
-            modelBuilder.Entity<TeamUnits>(entity =>
+            modelBuilder.Entity<TeamUnit>(entity =>
             {
                 entity.HasKey(e => new { e.TeamId, e.Position, e.UnitId })
                     .HasName("PK_dbo.TeamUnits");
@@ -421,7 +421,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.TeamUnits_dbo.Units");
             });
 
-            modelBuilder.Entity<TeamVideos>(entity =>
+            modelBuilder.Entity<TeamVideo>(entity =>
             {
                 entity.Property(e => e.SubmittedDate).HasDefaultValueSql("(sysdatetimeoffset())");
 
@@ -444,7 +444,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.TeamVideos_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<TeamVotes>(entity =>
+            modelBuilder.Entity<TeamVote>(entity =>
             {
                 entity.HasKey(e => new { e.TeamId, e.UserId })
                     .HasName("PK_dbo.TeamVotes");
@@ -462,7 +462,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.TeamVotes_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<Teams>(entity =>
+            modelBuilder.Entity<Team>(entity =>
             {
                 entity.HasIndex(e => new { e.Id, e.Draft, e.Deleted, e.StageId, e.InvasionId })
                     .HasName("IX_dbo.Teams");
@@ -515,7 +515,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK.dbo_Teams_SubmittedById_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<UnitAliases>(entity =>
+            modelBuilder.Entity<UnitAlias>(entity =>
             {
                 entity.HasKey(e => new { e.UnitId, e.Name })
                     .HasName("PK_dbo.UnitAliases");
@@ -528,7 +528,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.UnitAliasess_dbo.Units");
             });
 
-            modelBuilder.Entity<UnitEvolutions>(entity =>
+            modelBuilder.Entity<UnitEvolution>(entity =>
             {
                 entity.HasKey(e => new { e.FromUnitId, e.ToUnitId })
                     .HasName("PK_dbo.UnitEvolutions");
@@ -546,7 +546,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK_dbo.UnitEvolutions_dbo.ToUnitId");
             });
 
-            modelBuilder.Entity<Units>(entity =>
+            modelBuilder.Entity<Unit>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -571,7 +571,7 @@ namespace NakamaNetwork.Entities.Models
                 entity.Property(e => e.Stars).HasColumnType("decimal(2, 1)");
             });
 
-            modelBuilder.Entity<UserPreferences>(entity =>
+            modelBuilder.Entity<UserPreference>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.Key })
                     .HasName("PK_dbo.UserPreferences");
@@ -584,7 +584,7 @@ namespace NakamaNetwork.Entities.Models
                     .HasConstraintName("FK.dbo_UserPreferences_dbo.UserProfiles");
             });
 
-            modelBuilder.Entity<UserProfiles>(entity =>
+            modelBuilder.Entity<UserProfile>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -598,7 +598,7 @@ namespace NakamaNetwork.Entities.Models
 
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.UserProfiles)
-                    .HasForeignKey<UserProfiles>(d => d.Id)
+                    .HasForeignKey<UserProfile>(d => d.Id)
                     .HasConstraintName("FK.dbo_UserProfile_dbo.AspNetUsers");
 
                 entity.HasOne(d => d.Unit)
