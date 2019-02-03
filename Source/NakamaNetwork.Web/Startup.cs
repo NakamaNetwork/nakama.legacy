@@ -39,11 +39,37 @@ namespace NakamaNetwork.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddAuthentication().AddGoogle(o =>
-            {
-                o.ClientId = Configuration["Authentication:Google:ClientId"];
-                o.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            });
+            services.AddAuthentication()
+                .AddGoogle(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Google:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                })
+                .AddFacebook(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Facebook:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Facebook:ClientSecret"];
+                })
+                .AddTwitter(o =>
+                {
+                    o.ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"];
+                    o.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
+                    o.RetrieveUserDetails = true;
+                }).AddReddit(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Reddit:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Reddit:ClientSecret"];
+                }).AddTwitch(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Twitch:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Twitch:ClientSecret"];
+                }).AddDiscord(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Discord:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Discord:ClientSecret"];
+                    o.Scope.Add("identity");
+                    o.Scope.Add("email");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
