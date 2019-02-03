@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Entities;
 using TreasureGuide.Common.Models;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountViewModels;
 
@@ -149,20 +150,24 @@ namespace TreasureGuide.Web.Controllers
                             RoleConstants.Moderator,
                             RoleConstants.BoxUser,
                             RoleConstants.Donor,
-                            RoleConstants.GCRAdmin
+                            RoleConstants.GCRAdmin,
+                            RoleConstants.Contributor,
+                            RoleConstants.BoxUser
                         });
 #endif
+#if RELEASE
                         await _userManager.AddToRolesAsync(user, new[]
                         {
                             RoleConstants.Contributor,
                             RoleConstants.BoxUser
                         });
+#endif
                         _entities.UserProfiles.Add(new UserProfile
                         {
                             Id = user.Id,
                             UserName = user.UserName
                         });
-                        await _entities.SaveChangesAsync();
+                        await _entities.SaveChangesSafe();
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }

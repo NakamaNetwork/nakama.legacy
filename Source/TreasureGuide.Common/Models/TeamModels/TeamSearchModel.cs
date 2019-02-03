@@ -12,7 +12,6 @@ namespace TreasureGuide.Common.Models.TeamModels
         public int? InvasionId { get; set; }
 
         public int? BoxId { get; set; }
-        public bool? Blacklist { get; set; }
         public bool Global { get; set; }
         public FreeToPlayStatus FreeToPlay { get; set; }
         public UnitClass Classes { get; set; }

@@ -2,12 +2,21 @@
 
     <PropertyGroup>
         <TargetFramework>net452</TargetFramework>
-        <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
+        <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
 
     <PropertyGroup>
         <UserSecretsId>aspnet-TreasureGuide.Web-5f05675e-555e-48ff-bb51-5d655998ec83</UserSecretsId>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <DefineConstants>RELEASE</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,7 +30,7 @@
         <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="1.1.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="1.1.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="1.1.3" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="1.1.3" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.2" />

@@ -24,6 +24,7 @@ using TreasureGuide.Common.Models;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
 using TreasureGuide.Web.Services.Donations;
+using TreasureGuide.Web.Services.SearchService.Teams;
 
 namespace TreasureGuide.Web.Configurations
 {
@@ -35,7 +36,7 @@ namespace TreasureGuide.Web.Configurations
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("TreasureEntities"),
-                    sqlServerOptions => sqlServerOptions.CommandTimeout(15)
+                    sqlServerOptions => sqlServerOptions.CommandTimeout(10).EnableRetryOnFailure(0)
                     ));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -119,6 +120,7 @@ namespace TreasureGuide.Web.Configurations
             services.AddScoped<IThrottleService, ThrottleService>();
             services.AddScoped<IMetadataService, MetadataService>();
             services.AddScoped<IDonationService, PaypalDonationService>();
+            services.AddScoped<TeamSearchService, TeamMiniDbSearchService>();
 
             services.AddSingleton(x => configuration);
             services.AddSingleton(x => MapperConfig.Create());

@@ -65,7 +65,7 @@ namespace TreasureGuide.Sniffer.DataParser
         {
             var start = input.IndexOf('=') + 1;
             var end = input.LastIndexOf(';');
-            return input.Substring(start, end - start);
+            return input.Substring(start, end - start).Trim();
         }
 
         protected virtual T ConvertData(string trimmed)

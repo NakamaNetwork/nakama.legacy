@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.NotificationModels;
 using TreasureGuide.Entities;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
 
 namespace TreasureGuide.Web.Controllers.API
@@ -92,7 +93,7 @@ namespace TreasureGuide.Web.Controllers.API
                 notifications = notifications.Where(x => x.Id == id);
             }
             DbContext.Notifications.RemoveRange(notifications);
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
             return Ok(1);
         }
     }

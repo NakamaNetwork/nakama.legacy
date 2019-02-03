@@ -41,5 +41,6 @@ namespace TreasureGuide.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamComment> Children { get; set; }
         public virtual TeamComment Parent { get; set; }
+        public virtual TeamCommentScore TeamCommentScore { get; set; }
     }
 }

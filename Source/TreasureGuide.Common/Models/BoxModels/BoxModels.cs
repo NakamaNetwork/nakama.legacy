@@ -11,7 +11,6 @@ namespace TreasureGuide.Common.Models.BoxModels
         public decimal? FriendId { get; set; }
         public bool? Global { get; set; }
         public bool Public { get; set; }
-        public bool Blacklist { get; set; }
     }
 
     public class BoxDetailModel : BoxStubModel
@@ -33,6 +32,5 @@ namespace TreasureGuide.Common.Models.BoxModels
         public decimal? FriendId { get; set; }
         public bool? Global { get; set; }
         public bool Public { get; set; }
-        public bool Blacklist { get; set; }
     }
 }

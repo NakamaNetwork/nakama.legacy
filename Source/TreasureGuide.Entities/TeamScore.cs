@@ -10,11 +10,13 @@
 namespace TreasureGuide.Entities
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SimilarTeams_Result
+    public partial class TeamScore
     {
-        public Nullable<int> TeamId { get; set; }
-        public Nullable<int> Matches { get; set; }
-        public Nullable<bool> StageMatches { get; set; }
+        public int TeamId { get; set; }
+        public int Value { get; set; }
+    
+        public virtual Team Team { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Threading.Tasks;
 using TreasureGuide.Entities;
+using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Services
 {
@@ -29,7 +30,7 @@ namespace TreasureGuide.Web.Services
                 if (existed)
                 {
                     _entities.UserPreferences.Remove(existing);
-                    await _entities.SaveChangesAsync();
+                    await _entities.SaveChangesSafe();
                 }
             }
             else
@@ -40,7 +41,7 @@ namespace TreasureGuide.Web.Services
                 {
                     _entities.UserPreferences.Add(existing);
                 }
-                await _entities.SaveChangesAsync();
+                await _entities.SaveChangesSafe();
             }
         }
 

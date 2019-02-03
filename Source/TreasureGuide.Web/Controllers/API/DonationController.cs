@@ -15,6 +15,7 @@ using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models;
 using TreasureGuide.Common.Models.DonationModels;
+using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
 using TreasureGuide.Web.Services.Donations;
@@ -70,19 +71,19 @@ namespace TreasureGuide.Web.Controllers.API
                 Date = DateTimeOffset.Now
             };
             DbContext.Donations.Add(donation);
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
 
             var payment = await _donationService.Prepare(model, donation.Id, userId, Request.GetUri().GetLeftPart(UriPartial.Authority));
             if (payment.HasError)
             {
                 donation.State = PaymentState.Failed;
-                await DbContext.SaveChangesAsync();
+                await DbContext.SaveChangesSafe();
                 return BadRequest(payment.Error);
             }
             donation.PaymentId = payment.PaymentId;
             donation.TokenId = payment.TokenId;
             donation.State = PaymentState.Processing;
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
 
             return Ok(payment);
         }
@@ -141,7 +142,7 @@ namespace TreasureGuide.Web.Controllers.API
             }
             if (changed)
             {
-                await DbContext.SaveChangesAsync();
+                await DbContext.SaveChangesSafe();
             }
             return results;
         }
@@ -157,7 +158,7 @@ namespace TreasureGuide.Web.Controllers.API
                 return BadRequest("Could not find donation record.");
             }
             result.State = PaymentState.Cancelled;
-            await DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesSafe();
 
             return Ok(result);
         }

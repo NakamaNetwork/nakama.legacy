@@ -4,7 +4,6 @@
 @import "forms.scss";
 @import "pagination.scss";
 @import "teams.scss";
-@import "gcr.scss";
 
 body {
     overflow-y: scroll;
@@ -218,8 +217,17 @@ iframe {
     }
 }
 
+.logo-hat {
+    position: absolute;
+    margin-top: -14px;
+    margin-left: -7px;
+    pointer-events: none;
+    width: 28px;
+    image-rendering: pixelated;
+}
+
 .beta {
-    @extend ._warningLightText;
+    @extend ._successLightText;
     position: absolute;
     font-weight: bolder;
     margin-left: -24px;

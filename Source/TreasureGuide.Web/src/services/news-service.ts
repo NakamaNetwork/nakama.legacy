@@ -7,10 +7,30 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '02/02/19',
+        lines: [
+            'Rewrote Google authentication module in preparation for Google Plus deprecation this month.'
+        ]
+    }, {
+        header: '01/14/19',
+        lines: [
+            'Revised one of the weekend\'s "significantly faster" database updates as it was causing things to go significantly not faster.'
+        ]
+    }, {
+        header: '01/12/19',
+        lines: [
+            'Happy first anniversary, Nakama Network!',
+            'Rewrote scoring backend to make score queries significantly faster.',
+            'Added new indexing to database to make team queries significantly faster.',
+            'Fixed a bug where comment replies would appear at the top-level.',
+            'Completely removed Similar Teams feature due to lack of engagement.'
+        ]
+    }, {
         header: '11/25/18',
         lines: [
             'Added some error messages for failed searches instead of just "No results found."',
             'Reduced the size and frequency of notification queries to help stem some DB performance issues.',
+            'Updated some very inefficient team searching queries.',
             'Added a cap to DB query runtime to force-terminate long-running queries.',
             'Fixed an issue where Notification queries could run multiple times.'
         ]

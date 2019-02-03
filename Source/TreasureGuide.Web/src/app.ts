@@ -73,7 +73,7 @@ export class App {
             { route: 'teams/create', name: 'teamCreate', title: 'Create Team', moduleId: 'views/teams/edit', nav: false, auth: RoleConstants.Contributor },
             { route: 'teams/:id/edit', name: 'teamEdit', title: 'Edit Team', moduleId: 'views/teams/edit', nav: false, auth: RoleConstants.Contributor },
             { route: 'teams/:id/details', name: 'teamDetails', title: 'Team Details', moduleId: 'views/teams/detail', nav: false },
-            { route: 'teams/import', name: 'teamImport', title: 'Bulk', moduleId: 'views/teams/import', nav: true, thicc: true, auth: RoleConstants.GCRViewer },
+            { route: 'teams/import', name: 'teamImport', title: 'Bulk', moduleId: 'views/teams/import', nav: true, thicc: true, auth: RoleConstants.Administrator },
             // Stages
             { route: 'stages', name: 'stages', title: 'Stages', moduleId: 'views/stages/index', nav: true },
             { route: 'stages/:id/details', name: 'stageDetails', title: 'Stage Details', moduleId: 'views/stages/detail', nav: false },
@@ -84,8 +84,6 @@ export class App {
             { route: 'boxes/:id/details', name: 'boxDetails', title: 'Box Details', moduleId: 'views/boxes/detail', nav: false },
             // Notifications
             { route: 'notifications', name: 'notifications', title: 'Notifications', moduleId: 'views/notifications/index', nav: false, auth: true },
-            // GCR
-            { route: 'gcr/edit', name: 'gcrEdit', title: 'Edit GCR', moduleId: 'views/gcr/edit', nav: false, auth: RoleConstants.GCRAdmin },
             // Admin
             { route: 'admin', name: 'admin', title: 'Admin', moduleId: 'views/admin/index', nav: true, auth: RoleConstants.Administrator },
             { route: 'commentAdmin', name: 'commentAdmin', title: 'Comments', moduleId: 'views/admin/comments', nav: false, auth: RoleConstants.Administrator },
