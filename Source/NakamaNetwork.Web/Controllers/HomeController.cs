@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using NakamaNetwork.Site.Models;
+using NakamaNetwork.Web.Models;
 
-namespace NakamaNetwork.Site.Controllers
+namespace NakamaNetwork.Web.Controllers
 {
     public class HomeController : Controller
     {

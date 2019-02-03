@@ -28,7 +28,6 @@ namespace NakamaNetwork.Entities.Models
         public int? UnitId { get; set; }
         public bool? Global { get; set; }
 
-        public virtual AspNetUser IdNavigation { get; set; }
         public virtual Unit Unit { get; set; }
         public virtual ICollection<Box> Boxes { get; set; }
         public virtual ICollection<Donation> Donations { get; set; }

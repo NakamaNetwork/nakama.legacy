@@ -1,6 +1,4 @@
-using System;
-
-namespace NakamaNetwork.Site.Models
+namespace NakamaNetwork.Web.Models
 {
     public class ErrorViewModel
     {
