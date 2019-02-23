@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TreasureGuide.Common.Models.TeamModels;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 
 namespace TreasureGuide.Web.Services.SearchService.Teams
 {

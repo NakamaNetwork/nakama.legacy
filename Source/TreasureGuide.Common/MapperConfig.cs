@@ -7,7 +7,6 @@ using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Models.BoxModels;
 using TreasureGuide.Common.Models.DonationModels;
-using TreasureGuide.Common.Models.GCRModels;
 using TreasureGuide.Common.Models.NotificationModels;
 using TreasureGuide.Common.Models.ProfileModels;
 using TreasureGuide.Common.Models.ShipModels;

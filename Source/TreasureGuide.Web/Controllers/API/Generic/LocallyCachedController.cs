@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Entities.Interfaces;
+using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.Interfaces;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
 

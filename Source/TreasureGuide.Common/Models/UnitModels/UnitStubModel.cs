@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Interfaces;
+using System;
 using System.Collections.Generic;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Interfaces;
 
 namespace TreasureGuide.Common.Models.UnitModels
 {

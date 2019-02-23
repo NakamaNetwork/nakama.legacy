@@ -7,7 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Constants;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.BoxModels;

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.NotificationModels;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
 

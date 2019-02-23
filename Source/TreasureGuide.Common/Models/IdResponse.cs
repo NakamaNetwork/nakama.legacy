@@ -1,4 +1,4 @@
-﻿using TreasureGuide.Entities.Interfaces;
+﻿using NakamaNetwork.Entities.Interfaces;
 
 namespace TreasureGuide.Common.Models
 {

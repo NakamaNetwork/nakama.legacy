@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TreasureGuide.Common.Constants;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 using TreasureGuide.Common.Models;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;

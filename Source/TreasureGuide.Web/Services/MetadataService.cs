@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HeyRed.MarkdownSharp;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 using TreasureGuide.Common.Models;
 
 namespace TreasureGuide.Web.Services

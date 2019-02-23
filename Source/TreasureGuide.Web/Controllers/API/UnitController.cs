@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Services;
 

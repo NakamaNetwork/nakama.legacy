@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Services

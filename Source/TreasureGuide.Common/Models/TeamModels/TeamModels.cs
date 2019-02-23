@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using TreasureGuide.Entities.Interfaces;
+using NakamaNetwork.Entities.Interfaces;
 using TreasureGuide.Common.Validators;
 
 namespace TreasureGuide.Common.Models.TeamModels

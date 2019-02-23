@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace TreasureGuide.Common.Models.DonationModels
 {

@@ -1,5 +1,6 @@
-﻿using TreasureGuide.Entities;
-using TreasureGuide.Entities.Interfaces;
+﻿using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Interfaces;
 
 namespace TreasureGuide.Common.Models.TeamModels
 {

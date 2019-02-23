@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Interfaces;
+using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Interfaces;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace TreasureGuide.Common.Models.StageModels
 {

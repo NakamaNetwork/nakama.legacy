@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NakamaNetwork.Entities.EnumTypes;
+using System;
 using System.Collections.Generic;
 
 namespace NakamaNetwork.Entities.Models
@@ -7,7 +8,7 @@ namespace NakamaNetwork.Entities.Models
     {
         public int TeamId { get; set; }
         public string Credit { get; set; }
-        public short Type { get; set; }
+        public TeamCreditType Type { get; set; }
 
         public virtual Team Team { get; set; }
     }

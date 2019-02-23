@@ -63,6 +63,21 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\notification-event-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\EnumTypes\NotificationEventType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\notification-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\NotificationModels\NotificationModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-credit-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamCreditModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-credit-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\EnumTypes\TeamCreditType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-import-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamImportModel.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

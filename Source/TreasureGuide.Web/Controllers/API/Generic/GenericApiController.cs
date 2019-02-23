@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TreasureGuide.Entities.Interfaces;
+using NakamaNetwork.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {

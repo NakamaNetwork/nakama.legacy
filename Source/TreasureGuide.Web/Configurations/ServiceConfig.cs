@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using TreasureGuide.Common;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 using TreasureGuide.Web.Data;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models;

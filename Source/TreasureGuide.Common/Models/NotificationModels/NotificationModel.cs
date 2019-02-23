@@ -1,5 +1,6 @@
 ﻿using System;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace TreasureGuide.Common.Models.NotificationModels
 {

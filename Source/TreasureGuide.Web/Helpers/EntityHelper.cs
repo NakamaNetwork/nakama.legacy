@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
-using TreasureGuide.Entities;
+using NakamaNetwork.Entities;
 
 namespace TreasureGuide.Web.Helpers
 {

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.TeamModels;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
+using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Helpers;
 
 namespace TreasureGuide.Web.Services.SearchService.Teams
 {

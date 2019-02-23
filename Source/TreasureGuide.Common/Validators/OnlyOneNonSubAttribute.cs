@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using TreasureGuide.Entities.Interfaces;
+using NakamaNetwork.Entities.Interfaces;
 
 namespace TreasureGuide.Common.Validators
 {

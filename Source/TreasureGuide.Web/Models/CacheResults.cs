@@ -1,5 +1,5 @@
 ﻿using System;
-using TreasureGuide.Entities.Interfaces;
+using NakamaNetwork.Entities.Interfaces;
 
 namespace TreasureGuide.Web.Models
 {
