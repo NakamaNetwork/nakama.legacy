@@ -225,9 +225,10 @@ namespace TreasureGuide.Web.Controllers.API
             var result = await DbContext.TeamVotes
                 .Where(x => x.SubmittedDate > threshold)
                 .GroupBy(x => x.TeamId)
-                .Join(DbContext.Teams, x => x.Key, y => y.Id, (x, y) => new { score = x.Select(z => z.Value).DefaultIfEmpty().Sum(z => z), team = y })
-                .OrderByDescending(x => x.score)
-                .Select(x => x.team)
+                .Select(x => new { x.Key, Score = x.DefaultIfEmpty().Sum(y => y.Value) })
+                .Join(DbContext.Teams, x => x.Key, y => y.Id, (x, y) => new { Team = y, x.Score })
+                .OrderByDescending(x => x.Score)
+                .Select(x => x.Team)
                 .Where(x => !x.Deleted && !x.Draft)
                 .Take(5)
                 .ProjectTo<TeamStubModel>(AutoMapper.ConfigurationProvider)

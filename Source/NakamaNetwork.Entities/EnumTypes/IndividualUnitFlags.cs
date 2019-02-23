@@ -1,6 +1,6 @@
 namespace NakamaNetwork.Entities.EnumTypes
 {
-    public enum IndividualUnitFlags : int
+    public enum IndividualUnitFlags : short
     {
         Unknown = 0,
         Favorite = 32,

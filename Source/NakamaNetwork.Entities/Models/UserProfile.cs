@@ -19,7 +19,7 @@ namespace NakamaNetwork.Entities.Models
             TeamsEditedBy = new HashSet<Team>();
             TeamsSubmittedBy = new HashSet<Team>();
             UserPreferences = new HashSet<UserPreference>();
-            UserRoles = new HashSet<UserRole>();
+            UserRoles = new HashSet<UserRoleSummary>();
         }
 
         public string Id { get; set; }
@@ -42,6 +42,6 @@ namespace NakamaNetwork.Entities.Models
         public virtual ICollection<Team> TeamsEditedBy { get; set; }
         public virtual ICollection<Team> TeamsSubmittedBy { get; set; }
         public virtual ICollection<UserPreference> UserPreferences { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<UserRoleSummary> UserRoles { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NakamaNetwork.Entities.EnumTypes
 {
-    public enum NotificationEventType
+    public enum NotificationEventType : byte
     {
         Unknown = 0,
         TeamComment = 1,

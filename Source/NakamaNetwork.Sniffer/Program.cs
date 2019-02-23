@@ -64,30 +64,41 @@ namespace NakamaNetwork.Sniffer
 
             Task.Run(async () =>
                 {
-                    await PreRun(context);
-                    foreach (var parser in parsers)
+                    try
                     {
-                        var name = parser.GetType().Name;
-                        try
+                        await PreRun(context);
+                        foreach (var parser in parsers)
                         {
-                            Debug.WriteLine($"Running {name}.");
-                            await parser.Execute();
-                            Debug.WriteLine($"{name} Succeeded!");
+                            var name = parser.GetType().Name;
+                            try
+                            {
+                                Debug.WriteLine($"Running {name}.");
+                                await parser.Execute();
+                                Debug.WriteLine($"{name} Succeeded!");
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.WriteLine($"{name} Failed!");
+                                Debug.WriteLine(e);
+                            }
+                            finally
+                            {
+                                ParsersRunning--;
+                                Debug.WriteLine($"{ParsersRunning} Parser(s) Remain");
+                            }
+                            GC.Collect();
                         }
-                        catch (Exception e)
-                        {
-                            Debug.WriteLine($"{name} Failed!");
-                            Debug.WriteLine(e);
-                        }
-                        finally
-                        {
-                            ParsersRunning--;
-                            Debug.WriteLine($"{ParsersRunning} Parser(s) Remain");
-                        }
-                        GC.Collect();
+                        await PostRun(context);
                     }
-                    await PostRun(context);
-                    Running = false;
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("Pre/Post Run Failure");
+                        Debug.WriteLine(e);
+                    }
+                    finally
+                    {
+                        Running = false;
+                    }
                 });
         }
 

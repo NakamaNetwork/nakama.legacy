@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace NakamaNetwork.Entities.Models
 {
@@ -40,6 +41,7 @@ namespace NakamaNetwork.Entities.Models
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UserPreference> UserPreferences { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<UserRoleSummary> UserRoleSummaries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -63,6 +65,13 @@ namespace NakamaNetwork.Entities.Models
                     .WithMany(p => p.BoxUnits)
                     .HasForeignKey(d => d.UnitId)
                     .HasConstraintName("FK.dbo_BoxUnits_dbo.Units");
+
+                entity
+                .Property(d => d.Flags)
+                .HasConversion(
+                    v => (short)v,
+                    v => (IndividualUnitFlags?)v
+                 );
             });
 
             modelBuilder.Entity<Box>(entity =>
@@ -103,6 +112,20 @@ namespace NakamaNetwork.Entities.Models
 
                 entity.Property(e => e.UserId).HasMaxLength(450);
 
+                entity
+                .Property(d => d.State)
+                .HasConversion(
+                    v => (byte)v,
+                    v => (PaymentState)v
+                 );
+
+                entity
+                .Property(d => d.PaymentType)
+                .HasConversion(
+                    v => (byte)v,
+                    v => (PaymentType)v
+                 );
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Donations)
                     .HasForeignKey(d => d.UserId)
@@ -123,6 +146,13 @@ namespace NakamaNetwork.Entities.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK.dbo_Notifications_dbo.UserProfiles");
+
+                entity
+                .Property(d => d.EventType)
+                .HasConversion(
+                    v => (byte)v,
+                    v => (NotificationEventType)v
+                 );
             });
 
             modelBuilder.Entity<ScheduledEvent>(entity =>
@@ -167,6 +197,13 @@ namespace NakamaNetwork.Entities.Models
                     .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Name).HasMaxLength(128);
+
+                entity
+                .Property(d => d.Type)
+                .HasConversion(
+                    v => (byte)v,
+                    v => (StageType)v
+                 );
 
                 entity.HasOne(d => d.Unit)
                     .WithMany(p => p.Stages)
@@ -264,6 +301,13 @@ namespace NakamaNetwork.Entities.Models
                     .IsRequired()
                     .HasMaxLength(450);
 
+                entity
+                .Property(d => d.Type)
+                .HasConversion(
+                    v => (short)v,
+                    v => (TeamCreditType)v
+                 );
+
                 entity.HasOne(d => d.Team)
                     .WithOne(p => p.TeamCredits)
                     .HasForeignKey<TeamCredit>(d => d.TeamId)
@@ -274,6 +318,27 @@ namespace NakamaNetwork.Entities.Models
             {
                 entity.HasKey(e => new { e.TeamId, e.Position, e.Type, e.Class, e.Role })
                     .HasName("PK_dbo.TeamGenericSlots");
+
+                entity
+                .Property(d => d.Type)
+                .HasConversion(
+                    v => (short)v,
+                    v => (UnitType)v
+                 );
+
+                entity
+                .Property(d => d.Class)
+                .HasConversion(
+                    v => (short)v,
+                    v => (UnitClass)v
+                 );
+
+                entity
+                .Property(d => d.Role)
+                .HasConversion(
+                    v => (short)v,
+                    v => (UnitRole)v
+                 );
 
                 entity.HasOne(d => d.Team)
                     .WithMany(p => p.TeamGenericSlots)
@@ -300,6 +365,13 @@ namespace NakamaNetwork.Entities.Models
                 entity.HasKey(e => new { e.TeamId, e.SocketType })
                     .HasName("PK_dbo.TeamSockets");
 
+                entity
+                .Property(d => d.SocketType)
+                .HasConversion(
+                    v => (byte)v,
+                    v => (SocketType)v
+                 );
+
                 entity.HasOne(d => d.Team)
                     .WithMany(p => p.TeamSockets)
                     .HasForeignKey(d => d.TeamId)
@@ -316,6 +388,13 @@ namespace NakamaNetwork.Entities.Models
 
                 entity.HasIndex(e => new { e.TeamId, e.UnitId, e.Position, e.Sub, e.Flags })
                     .HasName("IX_dbo.TeamUnits");
+
+                entity
+                .Property(d => d.Flags)
+                .HasConversion(
+                    v => (short)v,
+                    v => (IndividualUnitFlags?)v
+                 );
 
                 entity.HasOne(d => d.Team)
                     .WithMany(p => p.TeamUnits)
@@ -476,6 +555,27 @@ namespace NakamaNetwork.Entities.Models
                 entity.Property(e => e.Name).HasMaxLength(128);
 
                 entity.Property(e => e.Stars).HasColumnType("decimal(2, 1)");
+
+                entity
+                .Property(d => d.Type)
+                .HasConversion(
+                    v => (short)v,
+                    v => (UnitType)v
+                 );
+
+                entity
+                .Property(d => d.Class)
+                .HasConversion(
+                    v => (short)v,
+                    v => (UnitClass)v
+                 );
+
+                entity
+                .Property(d => d.Flags)
+                .HasConversion(
+                    v => (short)v,
+                    v => (UnitFlag)v
+                 );
             });
 
             modelBuilder.Entity<UserPreference>(entity =>
@@ -516,9 +616,13 @@ namespace NakamaNetwork.Entities.Models
                 base.OnModelCreating(modelBuilder);
             });
 
-            modelBuilder.Entity<UserRole>(entity =>
+            modelBuilder.Entity<UserRoleSummary>(entity =>
             {
-                entity.Property(e => e.UserId).ValueGeneratedNever();
+                entity.HasKey(e => new { e.UserId, e.RoleName });
+
+                entity.HasOne(d => d.UserProfile)
+                .WithMany(p => p.UserRoles)
+                .HasForeignKey(d => d.UserId);
 
                 entity.Property(e => e.UserId)
                     .IsRequired()

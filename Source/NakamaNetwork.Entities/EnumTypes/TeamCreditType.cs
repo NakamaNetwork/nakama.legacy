@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NakamaNetwork.Entities.EnumTypes
 {
-    public enum TeamCreditType
+    public enum TeamCreditType : short
     {
         Unknown = 0,
         Reddit = 1,
