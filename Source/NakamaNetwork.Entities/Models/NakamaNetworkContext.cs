@@ -509,25 +509,6 @@ namespace NakamaNetwork.Entities.Models
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK.dbo_UserProfile_dbo.Units");
 
-                entity.HasMany(d => d.UserRoles)
-                    .WithOne(p => p.UserProfile)
-                    .HasForeignKey(d => d.UserId);
-
-                base.OnModelCreating(modelBuilder);
-            });
-
-            modelBuilder.Entity<UserRole>(entity =>
-            {
-                entity.Property(e => e.UserId).ValueGeneratedNever();
-
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.Property(e => e.RoleName)
-                    .IsRequired()
-                    .HasMaxLength(256);
-
                 base.OnModelCreating(modelBuilder);
             });
         }
