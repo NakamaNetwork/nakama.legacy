@@ -1,4 +1,4 @@
-﻿namespace TreasureGuide.Entities.Interfaces
+﻿namespace NakamaNetwork.Entities.Interfaces
 {
     public interface IIdItem<TKey>
     {

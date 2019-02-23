@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using NakamaNetwork.Entities.EnumTypes;
 
-namespace TreasureGuide.Entities.Helpers
+namespace NakamaNetwork.Entities.Helpers
 {
     public static class EnumerableHelper
     {

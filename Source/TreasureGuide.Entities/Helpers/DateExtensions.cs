@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TreasureGuide.Entities.Helpers
+namespace NakamaNetwork.Entities.Helpers
 {
     public static class DateExtensions
     {

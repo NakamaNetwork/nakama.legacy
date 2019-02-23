@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Models.BoxModels;
 using TreasureGuide.Common.Models.DonationModels;
@@ -11,8 +14,6 @@ using TreasureGuide.Common.Models.ShipModels;
 using TreasureGuide.Common.Models.StageModels;
 using TreasureGuide.Common.Models.TeamModels;
 using TreasureGuide.Common.Models.UnitModels;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
 
 namespace TreasureGuide.Common
 {
@@ -27,13 +28,10 @@ namespace TreasureGuide.Common
                 string userId = null;
                 bool? canEdit = null;
 
-                var gUnit = mapper.CreateMap<GCRUnit, GCRUnitEditModel>().ReverseMap();
-                var gStage = mapper.CreateMap<GCRStage, GCRStageEditModel>().ReverseMap();
-
                 var unit = mapper.CreateMap<Unit, UnitStubModel>();
                 unit.ForMember(x => x.Aliases, o => o.MapFrom(y => y.UnitAliases.Select(z => z.Name)));
-                unit.ForMember(x => x.EvolvesTo, o => o.MapFrom(y => y.EvolvesTo.Select(z => z.ToUnitId)));
-                unit.ForMember(x => x.EvolvesFrom, o => o.MapFrom(y => y.EvolvesFrom.Select(z => z.FromUnitId)));
+                unit.ForMember(x => x.EvolvesTo, o => o.MapFrom(y => y.UnitEvolutionsToUnit.Select(z => z.ToUnitId)));
+                unit.ForMember(x => x.EvolvesFrom, o => o.MapFrom(y => y.UnitEvolutionsFromUnit.Select(z => z.FromUnitId)));
 
                 var stage = mapper.CreateMap<Stage, StageStubModel>();
                 stage.ForMember(x => x.Aliases, o => o.MapFrom(y => y.StageAliases.Select(z => z.Name)));
@@ -47,18 +45,18 @@ namespace TreasureGuide.Common
                 var teamSocket = mapper.CreateControllerMapping<TeamSocket, TeamSocketDetailModel, TeamSocketStubModel, TeamSocketEditorModel>();
 
                 var teamVideo = mapper.CreateMap<TeamVideo, TeamVideoModel>();
-                teamVideo.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
-                teamVideo.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
-                teamVideo.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.UserProfile.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
+                teamVideo.ForMember(x => x.UserName, o => o.MapFrom(y => y.User.UserName));
+                teamVideo.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.User.UnitId));
+                teamVideo.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.User.UserRoles.Any(z => z == RoleConstants.Donor)));
 
                 var team = mapper.CreateControllerMapping<Team, TeamDetailModel, TeamStubModel, TeamEditorModel>();
                 team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
 
                 team.StubMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
-                team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
-                team.StubMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UnitId : null));
-                team.StubMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittingUser.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
-                team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamScore != null ? y.TeamScore.Value : 0));
+                team.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
+                team.StubMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UnitId : null));
+                team.StubMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z == RoleConstants.Donor)));
+                team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.DefaultIfEmpty().Sum(z => z.Value)));
                 team.StubMapping.ForMember(x => x.Reported, o => o.MapFrom(y => y.TeamReports.Any(z => !z.AcknowledgedDate.HasValue)));
                 team.StubMapping.ForMember(x => x.HasVideos, o => o.MapFrom(y => y.TeamVideos.Any(z => !z.Deleted)));
                 team.StubMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnits.All(z =>
@@ -79,11 +77,11 @@ namespace TreasureGuide.Common
                 team.StubMapping.ForMember(x => x.HasComments, o => o.MapFrom(y => y.TeamComments.Any(z => !z.Deleted)));
 
                 team.DetailMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
-                team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
-                team.DetailMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UnitId : null));
-                team.DetailMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittingUser.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
+                team.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
+                team.DetailMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UnitId : null));
+                team.DetailMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z == RoleConstants.Donor)));
 
-                team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamScore != null ? y.TeamScore.Value : 0));
+                team.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamVotes.DefaultIfEmpty().Sum(z => z.Value)));
                 team.DetailMapping.ForMember(x => x.Reported, o => o.MapFrom(y => y.TeamReports.Any(z => !z.AcknowledgedDate.HasValue)));
                 team.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.MyVote, o => o.Ignore()); // Handle this manually
@@ -101,24 +99,24 @@ namespace TreasureGuide.Common
                 team.DetailMapping.ForMember(x => x.Comments, o => o.MapFrom(y => y.TeamComments.Count(z => !z.Deleted)));
 
                 var comments = mapper.CreateControllerMapping<TeamComment, TeamCommentDetailModel, TeamCommentStubModel, TeamCommentEditorModel>();
-                comments.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentScore != null ? y.TeamCommentScore.Value : 0));
+                comments.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentVotes.DefaultIfEmpty().Sum(z => z.Value)));
                 comments.StubMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
                 comments.StubMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UnitId : null));
-                comments.StubMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
+                comments.StubMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z == RoleConstants.Donor)));
                 comments.StubMapping.ForMember(x => x.MyVote, o => o.MapFrom(y => y.TeamCommentVotes.Where(z => z.UserId == userId).Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
                 comments.StubMapping.ForMember(x => x.CanEdit, o => o.MapFrom(y => (canEdit ?? false) || y.SubmittedById == userId));
-                comments.StubMapping.ForMember(x => x.ChildCount, o => o.MapFrom(y => y.Children.Count(z => (canEdit ?? false) || !z.Deleted)));
-                comments.StubMapping.ForMember(x => x.Children, o => o.MapFrom(y => y.Children.Where(z => (canEdit ?? false) || !z.Deleted).OrderBy(z => z.Id).Take(10)));
+                comments.StubMapping.ForMember(x => x.ChildCount, o => o.MapFrom(y => y.InverseParent.Count(z => (canEdit ?? false) || !z.Deleted)));
+                comments.StubMapping.ForMember(x => x.Children, o => o.MapFrom(y => y.InverseParent.Where(z => (canEdit ?? false) || !z.Deleted).OrderBy(z => z.Id).Take(10)));
 
-                comments.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentScore != null ? y.TeamCommentScore.Value : 0));
+                comments.DetailMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamCommentVotes.DefaultIfEmpty().Sum(z => z.Value)));
                 comments.DetailMapping.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
                 comments.DetailMapping.ForMember(x => x.SubmittedByUnitId, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UnitId : null));
-                comments.DetailMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
+                comments.DetailMapping.ForMember(x => x.SubmittedByIsDonor, o => o.MapFrom(y => y.SubmittedBy.UserRoles.Any(z => z == RoleConstants.Donor)));
                 comments.DetailMapping.ForMember(x => x.MyVote, o => o.MapFrom(y => y.TeamCommentVotes.Where(z => z.UserId == userId).Select(z => z.Value).DefaultIfEmpty((short)0).Sum(x => x)));
                 comments.DetailMapping.ForMember(x => x.CanEdit, o => o.MapFrom(y => (canEdit ?? false) || y.SubmittedById == userId));
 
                 var wiki = mapper.CreateMap<Team, WikiSearchResultModel>();
-                wiki.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittingUser != null ? y.SubmittingUser.UserName : DefaultSubmitterName));
+                wiki.ForMember(x => x.SubmittedByName, o => o.MapFrom(y => y.SubmittedBy != null ? y.SubmittedBy.UserName : DefaultSubmitterName));
                 wiki.ForMember(x => x.StageName, o => o.MapFrom(y => y.Stage != null ? y.Stage.Name : null));
                 wiki.ForMember(x => x.InvasionName, o => o.MapFrom(y => y.Invasion != null ? y.Invasion.Name : null));
                 wiki.ForMember(x => x.ShipName, o => o.MapFrom(y => y.Ship != null ? y.Ship.Name : null));
@@ -132,17 +130,17 @@ namespace TreasureGuide.Common
                 user.EntityMapping.ForMember(x => x.UserRoles, o => o.Ignore()); // Handle this manually.
                 user.EntityMapping.ForMember(x => x.UserName, o => o.Ignore()); // Don't allow thise to be changed.
 
-                user.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.SubmittedTeams.Count(x => !x.Deleted && !x.Draft)));
+                user.StubMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.TeamsSubmittedBy.Count(x => !x.Deleted && !x.Draft)));
 
-                user.DetailMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.SubmittedTeams.Count(x => !x.Deleted && !x.Draft)));
-                user.DetailMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
+                user.DetailMapping.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.TeamsSubmittedBy.Count(x => !x.Deleted && !x.Draft)));
+                user.DetailMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles));
                 user.DetailMapping.ForMember(x => x.CanEdit, o => o.Ignore());
 
-                user.EditorMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
+                user.EditorMapping.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles));
 
                 var myUser = mapper.CreateMap<UserProfile, MyProfileModel>();
-                myUser.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.SubmittedTeams.Count(x => !x.Deleted && !x.Draft)));
-                myUser.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles.Select(z => z.Name)));
+                myUser.ForMember(x => x.TeamCount, o => o.MapFrom(y => y.TeamsSubmittedBy.Count(x => !x.Deleted && !x.Draft)));
+                myUser.ForMember(x => x.UserRoles, o => o.MapFrom(y => y.UserRoles));
                 myUser.ForMember(x => x.CanEdit, o => o.MapFrom(y => true));
                 myUser.ForMember(x => x.UserPreferences, o => o.MapFrom(y => y.UserPreferences.ToDictionary(z => z.Key, z => z.Value)));
                 myUser.ForMember(x => x.BoxCount, o => o.MapFrom(y => y.Boxes.Count()));
@@ -153,20 +151,20 @@ namespace TreasureGuide.Common
                 var boxUnit = mapper.CreateControllerMapping<BoxUnit, BoxUnitDetailModel, BoxUnitStubModel, BoxUnitEditorModel>();
 
                 var box = mapper.CreateControllerMapping<Box, BoxDetailModel, BoxStubModel, BoxEditorModel>();
-                box.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
-                box.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
-                box.DetailMapping.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.UserProfile.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
+                box.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.User.UserName));
+                box.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.User.UnitId));
+                box.DetailMapping.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.User.UserRoles.Any(z => z == RoleConstants.Donor)));
 
                 box.EntityMapping.ForMember(x => x.BoxUnits, o => o.Ignore());
 
                 var donation = mapper.CreateControllerMapping<Donation, DonationDetailModel, DonationStubModel, DonationEditorModel>();
-                donation.StubMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
-                donation.StubMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
-                donation.StubMapping.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.UserProfile.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
+                donation.StubMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.User.UserName));
+                donation.StubMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.User.UnitId));
+                donation.StubMapping.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.User.UserRoles.Any(z => z == RoleConstants.Donor)));
 
-                donation.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.UserProfile.UserName));
-                donation.DetailMapping.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.UserProfile.UserRoles.Any(z => z.Name == RoleConstants.Donor)));
-                donation.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.UserProfile.UnitId));
+                donation.DetailMapping.ForMember(x => x.UserName, o => o.MapFrom(y => y.User.UserName));
+                donation.DetailMapping.ForMember(x => x.UserIsDonor, o => o.MapFrom(y => y.User.UserRoles.Any(z => z == RoleConstants.Donor)));
+                donation.DetailMapping.ForMember(x => x.UserUnitId, o => o.MapFrom(y => y.User.UnitId));
 
                 var notification = mapper.CreateMap<Notification, NotificationModel>();
             });

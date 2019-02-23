@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.Models;
+using NakamaNetwork.Sniffer.Helpers;
 using Newtonsoft.Json;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Sniffer.Helpers;
 
-namespace TreasureGuide.Sniffer.DataParser
+namespace NakamaNetwork.Sniffer.DataParser
 {
     public class UnitParser : TreasureParser<IEnumerable<Unit>>
     {
         private static readonly Regex NumberRegex = new Regex("\\d+?");
         private const string OptcDbUnitData = "https://raw.githubusercontent.com/optc-db/optc-db.github.io/master/common/data/units.js";
 
-        public UnitParser(TreasureEntities context) : base(context, OptcDbUnitData)
+        public UnitParser(NakamaNetworkContext context) : base(context, OptcDbUnitData)
         {
         }
 
@@ -41,13 +42,13 @@ namespace TreasureGuide.Sniffer.DataParser
                     Combo = (line[5]?.ToString())?.ToByte(),
                     Sockets = (line[6]?.ToString())?.ToByte(),
                     MaxLevel = (line[7]?.ToString())?.ToByte(),
-                    EXPtoMax = (line[8]?.ToString())?.ToInt32(),
-                    MinHP = (line[9]?.ToString()).ToInt16(),
-                    MinATK = (line[10]?.ToString()).ToInt16(),
-                    MinRCV = (line[11]?.ToString()).ToInt16(),
-                    MaxHP = (line[12]?.ToString()).ToInt16(),
-                    MaxATK = (line[13]?.ToString()).ToInt16(),
-                    MaxRCV = (line[14]?.ToString()).ToInt16(),
+                    ExptoMax = (line[8]?.ToString())?.ToInt32(),
+                    MinHp = (line[9]?.ToString()).ToInt16(),
+                    MinAtk = (line[10]?.ToString()).ToInt16(),
+                    MinRcv = (line[11]?.ToString()).ToInt16(),
+                    MaxHp = (line[12]?.ToString()).ToInt16(),
+                    MaxAtk = (line[13]?.ToString()).ToInt16(),
+                    MaxRcv = (line[14]?.ToString()).ToInt16(),
                     GrowthRate = (line[15]?.ToString()).ToDecimal()
                 };
                 return unit;

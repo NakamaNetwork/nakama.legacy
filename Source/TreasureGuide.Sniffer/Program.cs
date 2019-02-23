@@ -4,18 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using TreasureGuide.Common;
-using TreasureGuide.Common.Models.ShipModels;
-using TreasureGuide.Common.Models.StageModels;
-using TreasureGuide.Common.Models.UnitModels;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Sniffer.DataParser;
-using TreasureGuide.Sniffer.Helpers;
+using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.Models;
+using NakamaNetwork.Sniffer.DataParser;
+using TreasureGuide.Sniffer;
 
-namespace TreasureGuide.Sniffer
+namespace NakamaNetwork.Sniffer
 {
     public static class Program
     {
@@ -24,17 +20,19 @@ namespace TreasureGuide.Sniffer
 
         public static void Main(string[] args)
         {
-            var builder = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile("redditthreads.json", optional: true, reloadOnChange: true);
+                .Build();
 
-            var configuration = builder.Build();
+            var dbOptions =
+                new DbContextOptionsBuilder<NakamaNetworkContext>()
+                    .UseSqlServer(configuration.GetConnectionString("NakamaNetworkContext"))
+                    .EnableSensitiveDataLogging();
 
-            var context = new TreasureEntities(configuration.GetConnectionString("TreasureEntities"));
-            var mapper = MapperConfig.Create();
+            var context = new NakamaNetworkContext(dbOptions.Options);
             AssureContextOpen(context);
-            RunParsers(context, mapper, configuration);
+            RunParsers(context, configuration);
             while (Running || ParsersRunning > 0)
             {
                 // ...
@@ -42,14 +40,14 @@ namespace TreasureGuide.Sniffer
             Debug.WriteLine("Seeya");
         }
 
-        private static void AssureContextOpen(TreasureEntities context)
+        private static void AssureContextOpen(NakamaNetworkContext context)
         {
             Debug.WriteLine("Checking if database is accessible.");
             Debug.WriteLine("There are " + context.Units.Count() + " unit(s) in the database right now.");
             Debug.WriteLine("Success!");
         }
 
-        private static void RunParsers(TreasureEntities context, IMapper mapper, IConfigurationRoot configuration)
+        private static void RunParsers(NakamaNetworkContext context, IConfigurationRoot configuration)
         {
             IEnumerable<IParser> parsers = new IParser[]
             {
@@ -61,7 +59,6 @@ namespace TreasureGuide.Sniffer
                 new StageParser(context),
                 new ScheduleParserCal(context)
             };
-            //  parsers = parsers.Concat(RedditImporter.GetThreads(configuration));
             Running = true;
             ParsersRunning = parsers.Count();
 
@@ -89,12 +86,12 @@ namespace TreasureGuide.Sniffer
                         }
                         GC.Collect();
                     }
-                    await PostRun(context, mapper);
+                    await PostRun(context);
                     Running = false;
                 });
         }
 
-        private static async Task PreRun(TreasureEntities context)
+        private static async Task PreRun(NakamaNetworkContext context)
         {
             context.Teams.Clear();
             context.TeamUnits.Clear();
@@ -105,17 +102,12 @@ namespace TreasureGuide.Sniffer
             context.UnitAliases.Clear();
             context.UnitEvolutions.Clear();
             context.Units.Clear();
-            context.CacheSets.Clear();
             await context.SaveChangesAsync();
         }
 
-        private static async Task PostRun(TreasureEntities context, IMapper mapper)
+        private static async Task PostRun(NakamaNetworkContext context)
         {
             await context.SaveChangesAsync();
-            var timestamp = DateTimeOffset.UtcNow;
-            await CacheBuilder.BuildCache<Unit, UnitStubModel>(context, mapper, CacheItemType.Unit, timestamp);
-            await CacheBuilder.BuildCache<Stage, StageStubModel>(context, mapper, CacheItemType.Stage, timestamp);
-            await CacheBuilder.BuildCache<Ship, ShipStubModel>(context, mapper, CacheItemType.Ship, timestamp);
         }
     }
 }

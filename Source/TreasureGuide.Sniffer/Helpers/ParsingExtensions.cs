@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using NakamaNetwork.Entities.EnumTypes;
 
-namespace TreasureGuide.Sniffer.Helpers
+namespace NakamaNetwork.Sniffer.Helpers
 {
     public static class ParsingExtensions
     {

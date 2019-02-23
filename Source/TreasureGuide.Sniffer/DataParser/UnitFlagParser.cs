@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Models;
+using NakamaNetwork.Sniffer.Helpers;
 using Newtonsoft.Json;
-using TreasureGuide.Entities;
-using TreasureGuide.Sniffer.Helpers;
 
-namespace TreasureGuide.Sniffer.DataParser
+namespace NakamaNetwork.Sniffer.DataParser
 {
     public class UnitFlagParser : TreasureParser<IEnumerable<UnitFlagModel>>
     {
         private const string OptcDbUnitFlagData = "https://raw.githubusercontent.com/optc-db/optc-db.github.io/master/common/data/flags.js";
 
-        public UnitFlagParser(TreasureEntities context) : base(context, OptcDbUnitFlagData)
+        public UnitFlagParser(NakamaNetworkContext context) : base(context, OptcDbUnitFlagData)
         {
         }
 

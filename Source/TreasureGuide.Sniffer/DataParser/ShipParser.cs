@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.Models;
+using NakamaNetwork.Sniffer.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Sniffer.Helpers;
 
-namespace TreasureGuide.Sniffer.DataParser
+namespace NakamaNetwork.Sniffer.DataParser
 {
     public class ShipParser : TreasureParser<IEnumerable<Ship>>
     {
         private const string OptcDbUnitData = "https://raw.githubusercontent.com/optc-db/optc-db.github.io/master/common/data/ships.js";
 
-        public ShipParser(TreasureEntities context) : base(context, OptcDbUnitData)
+        public ShipParser(NakamaNetworkContext context) : base(context, OptcDbUnitData)
         {
         }
 

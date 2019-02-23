@@ -1,33 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net461</TargetFramework>
-        <Platforms>x64</Platforms>
-    </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="6.1.1" />
-        <PackageReference Include="EntityFramework" Version="6.1.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="1.1.2" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
-        <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1000" />
-        <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-        <PackageReference Include="RedditSharp" Version="1.1.14" />
-        <PackageReference Include="Z.EntityFramework.Plus.EF6" Version="1.7.14" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\TreasureGuide.Common\TreasureGuide.Common.csproj" />
-      <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <None Update="appsettings.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

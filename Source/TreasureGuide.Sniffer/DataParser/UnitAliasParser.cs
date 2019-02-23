@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.Models;
+using NakamaNetwork.Sniffer.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Sniffer.Helpers;
 
-namespace TreasureGuide.Sniffer.DataParser
+namespace NakamaNetwork.Sniffer.DataParser
 {
     public class UnitAliasParser : TreasureParser<IEnumerable<UnitAlias>>
     {
         private const string OptcDbUnitData = "https://raw.githubusercontent.com/optc-db/optc-db.github.io/master/common/data/aliases.js";
 
-        public UnitAliasParser(TreasureEntities context) : base(context, OptcDbUnitData)
+        public UnitAliasParser(NakamaNetworkContext context) : base(context, OptcDbUnitData)
         {
         }
 

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Models;
+using NakamaNetwork.Sniffer.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Sniffer.Helpers;
 
-namespace TreasureGuide.Sniffer.DataParser
+namespace NakamaNetwork.Sniffer.DataParser
 {
     public class ScheduleParserCal : TreasureParser<IEnumerable<ScheduledEvent>>
     {
@@ -20,7 +20,7 @@ namespace TreasureGuide.Sniffer.DataParser
         private readonly string Treasure = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/tmEvents.js";
         private readonly string Special = "https://lukforce.bitbucket.io/optc-cal/app/calEvents/specialEvents.js";
 
-        public ScheduleParserCal(TreasureEntities context) : base(context, null)
+        public ScheduleParserCal(NakamaNetworkContext context) : base(context, null)
         {
         }
 

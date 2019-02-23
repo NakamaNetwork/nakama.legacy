@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TreasureGuide.Entities.Interfaces
+namespace NakamaNetwork.Entities.Interfaces
 {
     public interface IEditedDateItem
     {

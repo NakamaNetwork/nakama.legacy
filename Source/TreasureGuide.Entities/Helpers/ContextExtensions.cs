@@ -1,6 +1,6 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace TreasureGuide.Entities.Helpers
+namespace NakamaNetwork.Entities.Helpers
 {
     public static class ContextExtensions
     {

@@ -4,20 +4,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>TreasureGuide.DB</Name>
+    <Name>NakamaNetwork.DB</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{d7edb441-e679-412b-924c-303463a61847}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <ProjectGuid>{68d50d74-dece-4004-b19b-eb10af35903e}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>TreasureGuide.DB</RootNamespace>
-    <AssemblyName>TreasureGuide.DB</AssemblyName>
+    <RootNamespace>NakamaNetwork.DB</RootNamespace>
+    <AssemblyName>NakamaNetwork.DB</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -53,61 +53,25 @@
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <OutputPath>bin\Debug\</OutputPath>
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
   <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo" />
-    <Folder Include="PostDeploy" />
-    <Folder Include="dbo\Views" />
     <Folder Include="dbo\Tables" />
-    <Folder Include="dbo\Tables\Units" />
-    <Folder Include="dbo\Tables\Teams" />
-    <Folder Include="dbo\Tables\Stages" />
     <Folder Include="dbo\Tables\Accounts" />
-    <Folder Include="dbo\Functions" />
     <Folder Include="dbo\Tables\Boxes" />
     <Folder Include="dbo\Tables\Donations" />
-    <Folder Include="dbo\Tables\Schedule" />
-    <Folder Include="dbo\Tables\GlobalClearRates" />
-    <Folder Include="dbo\Views\GCR" />
     <Folder Include="dbo\Tables\Notifications" />
     <Folder Include="dbo\Tables\Notifications\Triggers" />
+    <Folder Include="dbo\Tables\Schedule" />
+    <Folder Include="dbo\Tables\Stages" />
+    <Folder Include="dbo\Tables\Teams" />
     <Folder Include="dbo\Tables\Teams\Summaries" />
+    <Folder Include="dbo\Tables\Units" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Units\Ships.sql" />
-    <Build Include="dbo\Tables\Units\Units.sql" />
-    <Build Include="dbo\Tables\Teams\Teams.sql" />
-    <Build Include="dbo\Tables\Teams\TeamSockets.sql" />
-    <Build Include="dbo\Tables\Teams\TeamUnits.sql" />
-    <Build Include="dbo\Tables\Teams\TeamVotes.sql" />
-    <Build Include="dbo\Tables\Stages\Stages.sql" />
     <Build Include="dbo\Tables\Accounts\AspNetRoleClaims.sql" />
     <Build Include="dbo\Tables\Accounts\AspNetRoles.sql" />
     <Build Include="dbo\Tables\Accounts\AspNetUserClaims.sql" />
@@ -115,58 +79,43 @@
     <Build Include="dbo\Tables\Accounts\AspNetUserRoles.sql" />
     <Build Include="dbo\Tables\Accounts\AspNetUsers.sql" />
     <Build Include="dbo\Tables\Accounts\AspNetUserTokens.sql" />
+    <Build Include="dbo\Tables\Accounts\UserPreferences.sql" />
     <Build Include="dbo\Tables\Accounts\UserProfiles.sql" />
-    <None Include="PostDeploy\dbo.Units.Table.sql" />
-    <None Include="PostDeploy\dbo.Ships.Table.sql" />
-    <None Include="PostDeploy\dbo.Stages.Table.sql" />
-    <None Include="PostDeploy\dbo.UnitAliases.Table.sql" />
     <Build Include="dbo\Tables\Boxes\Boxes.sql" />
     <Build Include="dbo\Tables\Boxes\BoxUnits.sql" />
-    <Build Include="dbo\Tables\Accounts\UserPreferences.sql" />
-    <Build Include="dbo\Tables\Stages\StageAliases.sql" />
-    <None Include="PostDeploy\dbo.StageAliases.Table.sql" />
-    <Build Include="dbo\Tables\Units\UnitEvolutions.sql" />
-    <None Include="PostDeploy\dbo.UnitEvolutions.Table.sql" />
     <Build Include="dbo\Tables\Donations\Donations.sql" />
+    <Build Include="dbo\Tables\Notifications\Notifications.sql" />
     <Build Include="dbo\Tables\Schedule\ScheduledEvents.sql" />
-    <Build Include="dbo\Tables\CacheSets.sql" />
-    <Build Include="dbo\Tables\GlobalClearRates\GCRUnits.sql" />
-    <Build Include="dbo\Tables\GlobalClearRates\GCRStages.sql" />
-    <Build Include="dbo\Views\GCR\GCRTable.sql" />
-    <Build Include="dbo\Views\GCR\GCRStageInfo.sql" />
-    <Build Include="dbo\Views\GCR\GCRUnitInfo.sql" />
-    <None Include="PostDeploy\dbo.GCRUnits.Table.sql" />
-    <None Include="PostDeploy\dbo.GCRStages.Table.sql" />
+    <Build Include="dbo\Tables\Stages\StageAliases.sql" />
+    <Build Include="dbo\Tables\Stages\Stages.sql" />
+    <Build Include="dbo\Tables\Teams\TeamBookmarks.sql" />
     <Build Include="dbo\Tables\Teams\TeamComments.sql" />
     <Build Include="dbo\Tables\Teams\TeamCommentVotes.sql" />
-    <Build Include="dbo\Tables\Notifications\Notifications.sql" />
-    <Build Include="dbo\Tables\Notifications\Triggers\TeamCommentTrigger.sql" />
-    <Build Include="dbo\Tables\Notifications\Triggers\CommentReplyTrigger.sql" />
-    <Build Include="dbo\Tables\Notifications\Triggers\TeamVideoTrigger.sql" />
-    <Build Include="dbo\Functions\UpdateTeamScores.sql" />
-    <Build Include="dbo\Functions\UpdateTeamCommentScores.sql" />
-    <Build Include="dbo\Tables\Teams\Summaries\TeamScores.sql" />
-    <Build Include="dbo\Tables\Teams\Summaries\TeamCommentScores.sql" />
-    <Build Include="dbo\Tables\Teams\Summaries\TeamMinis.sql" />
-    <Build Include="dbo\Functions\ResetSummaryItems.sql" />
-    <Build Include="dbo\Functions\UpdateTeamMinis.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="_local.publish.xml" />
-    <PostDeploy Include="PostDeploy.sql" />
-    <None Include="_staging.publish.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="TreasureGuide.DB.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
-    <Build Include="dbo\Views\UserRoles.sql" />
-    <Build Include="dbo\Tables\Teams\TeamReports.sql" />
-    <Build Include="dbo\Tables\Teams\TeamVideos.sql" />
-    <None Include="PostDeploy\AuthData.sql" />
     <Build Include="dbo\Tables\Teams\TeamCredits.sql" />
-    <Build Include="dbo\Tables\Units\UnitAliases.sql" />
     <Build Include="dbo\Tables\Teams\TeamGenericSlots.sql" />
-    <Build Include="dbo\Tables\Teams\TeamBookmarks.sql" />
+    <Build Include="dbo\Tables\Teams\TeamReports.sql" />
+    <Build Include="dbo\Tables\Teams\Teams.sql" />
+    <Build Include="dbo\Tables\Teams\TeamSockets.sql" />
+    <Build Include="dbo\Tables\Teams\TeamUnits.sql" />
+    <Build Include="dbo\Tables\Teams\TeamVideos.sql" />
+    <Build Include="dbo\Tables\Teams\TeamVotes.sql" />
+    <Build Include="dbo\Tables\Units\Ships.sql" />
+    <Build Include="dbo\Tables\Units\UnitAliases.sql" />
+    <Build Include="dbo\Tables\Units\UnitEvolutions.sql" />
+    <Build Include="dbo\Tables\Units\Units.sql" />
+    <Build Include="dbo\Views\UserRoles.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_staging.publish.xml" />
+    <None Include="_local.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj">
+      <Name>TreasureGuide.Entities</Name>
+      <Project>{a6a0c40e-0d3c-4ee3-ad52-b5b477c7f971}</Project>
+      <Private>True</Private>
+      <IsModelAware>True</IsModelAware>
+      <GenerateSqlClrDdl>True</GenerateSqlClrDdl>
+    </ProjectReference>
   </ItemGroup>
 </Project>

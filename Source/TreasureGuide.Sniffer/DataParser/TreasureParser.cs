@@ -2,10 +2,11 @@
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using NakamaNetwork.Entities.Models;
 using Newtonsoft.Json;
-using TreasureGuide.Entities;
+using TreasureGuide.Sniffer;
 
-namespace TreasureGuide.Sniffer.DataParser
+namespace NakamaNetwork.Sniffer.DataParser
 {
     public abstract class TreasureParser<T> : IParser
     {
@@ -14,9 +15,9 @@ namespace TreasureGuide.Sniffer.DataParser
         protected static readonly Regex MultiCommentRegex = new Regex("/\\*(.|\\r|\\n)+?\\*/");
 
         protected readonly string Endpoint;
-        protected readonly TreasureEntities Context;
+        protected readonly NakamaNetworkContext Context;
 
-        protected TreasureParser(TreasureEntities context, string endpoint)
+        protected TreasureParser(NakamaNetworkContext context, string endpoint)
         {
             Context = context;
             Endpoint = endpoint;

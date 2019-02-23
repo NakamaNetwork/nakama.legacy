@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.Models;
+using NakamaNetwork.Sniffer.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TreasureGuide.Entities;
-using TreasureGuide.Entities.Helpers;
-using TreasureGuide.Sniffer.Helpers;
 
-namespace TreasureGuide.Sniffer.DataParser
+namespace NakamaNetwork.Sniffer.DataParser
 {
     public class StageParser : TreasureParser<Tuple<List<Stage>, List<StageAlias>>>
     {
@@ -20,7 +19,7 @@ namespace TreasureGuide.Sniffer.DataParser
 
         private HashSet<int> _existing;
 
-        public StageParser(TreasureEntities context) : base(context, OptcDbStageData)
+        public StageParser(NakamaNetworkContext context) : base(context, OptcDbStageData)
         {
             _existing = new HashSet<int>();
         }
@@ -173,7 +172,7 @@ namespace TreasureGuide.Sniffer.DataParser
                     HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item2.MainId,
                         x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, x.Item1.Id, true)))
                 .Where(x => x.Item2 != null).ToList();
-            var aliases = colo.SelectMany(GetAliases).ToList();
+            var aliases = colo.SelectMany(GetAliases).GroupBy(x => String.Join(":::", x.StageId, x.Name)).Select(y => y.First()).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
             return Tuple.Create(stages, aliases);
         }
@@ -196,8 +195,8 @@ namespace TreasureGuide.Sniffer.DataParser
         private IEnumerable<StageAlias> GetAliases(Tuple<Unit, Stage> tuple)
         {
             var me = GetAliases(tuple.Item1.Name, new[] { tuple.Item1 }, tuple.Item2, true);
-            var to = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesTo.Select(x => x.EvolvesTo), tuple.Item2);
-            var from = GetAliases(tuple.Item1.Name, tuple.Item1.EvolvesFrom.Select(x => x.EvolvesFrom), tuple.Item2);
+            var to = GetAliases(tuple.Item1.Name, tuple.Item1.UnitEvolutionsToUnit.Select(x => x.ToUnit), tuple.Item2);
+            var from = GetAliases(tuple.Item1.Name, tuple.Item1.UnitEvolutionsFromUnit.Select(x => x.FromUnit), tuple.Item2);
             return to.Concat(from).Concat(me);
         }
 
