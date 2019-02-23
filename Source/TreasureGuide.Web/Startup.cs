@@ -21,7 +21,7 @@ using TreasureGuide.Common.Helpers;
 using TreasureGuide.Web.Configurations;
 using TreasureGuide.Web.Services;
 using TreasureGuide.Web.Services.Donations;
-using TreasureGuide.Web.Services.SearchService.Teams;
+using TreasureGuide.Web.Services.QueryService;
 
 namespace NakamaNetwork.Web
 {
@@ -103,7 +103,8 @@ namespace NakamaNetwork.Web
             services.AddScoped<IThrottleService, ThrottleService>();
             services.AddScoped<IMetadataService, MetadataService>();
             services.AddScoped<IDonationService, PaypalDonationService>();
-            services.AddScoped<TeamSearchService, TeamDbSearchService>();
+
+            services.AddScoped<ITeamDatabaseQueryService, TeamDatabaseQueryService>();
 
             services.AddSingleton(x => Configuration);
             services.AddSingleton(x => MapperConfig.Create());

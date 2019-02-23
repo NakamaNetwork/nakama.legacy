@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.TeamModels;
-using NakamaNetwork.Entities.Models;
-using NakamaNetwork.Entities.Helpers;
-using NakamaNetwork.Entities.EnumTypes;
 
-namespace TreasureGuide.Web.Services.SearchService.Teams
+namespace TreasureGuide.Web.Services.QueryService
 {
-    public class TeamDbSearchService : TeamSearchService
+    public interface ITeamDatabaseQueryService : ISearchableDatabaseQueryService<Team, TeamSearchModel>
     {
-        private readonly NakamaNetworkContext _entities;
+        IQueryable<Team> SearchWiki(TeamSearchModel model);
+        IQueryable<Team> GetTrending();
+        IQueryable<Team> GetLatest();
+    }
 
-        public TeamDbSearchService(NakamaNetworkContext entities)
+    public class TeamDatabaseQueryService : SearchableDatabaseQueryService<Team, TeamSearchModel>, ITeamDatabaseQueryService
+    {
+        public TeamDatabaseQueryService(NakamaNetworkContext dbContext) : base(dbContext)
         {
-            _entities = entities;
         }
 
-        public override async Task<IQueryable<Team>> Search(IQueryable<Team> results, TeamSearchModel model, ClaimsPrincipal user = null)
+        protected override IQueryable<Team> PerformSearch(TeamSearchModel model, IQueryable<Team> results, ClaimsPrincipal user)
         {
             results = SearchDeleted(results, model.Deleted, user);
             results = SearchDrafts(results, model.Draft, user);
@@ -39,6 +42,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             results = SearchBox(results, model.BoxId);
             return results;
         }
+
 
         private IQueryable<Team> SearchDeleted(IQueryable<Team> results, bool modelDeleted, ClaimsPrincipal user)
         {
@@ -188,9 +192,53 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             return results;
         }
 
-        public override async Task RebuildIndex(IQueryable<Team> input, bool clearAll = false)
+        protected override IQueryable<Team> PerformSort(TeamSearchModel model, IQueryable<Team> results)
         {
-            // Nothing to do.
+            switch (model.SortBy ?? "")
+            {
+                case SearchConstants.SortId:
+                    return results.OrderBy(x => x.Id, model.SortDesc);
+                case SearchConstants.SortName:
+                    return results.OrderBy(x => x.Name, model.SortDesc);
+                case SearchConstants.SortStage:
+                    return results.OrderBy(x => x.Stage != null ? x.Stage.Name : "", model.SortDesc);
+                case SearchConstants.SortLeader:
+                    return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault(), model.SortDesc);
+                case SearchConstants.SortScore:
+                    return results.OrderBy(x => x.TeamVotes.DefaultIfEmpty().Sum(y => y.Value), !model.SortDesc);
+                case SearchConstants.SortDate:
+                    return results.OrderBy(x => x.SubmittedDate, !model.SortDesc);
+                case SearchConstants.SortUser:
+                    return results.OrderBy(x => x.SubmittedBy.UserName, model.SortDesc);
+                default:
+                    return results.OrderBy(x => x.Id, true);
+            }
+        }
+
+        public IQueryable<Team> SearchWiki(TeamSearchModel model)
+        {
+            return Search(model);
+        }
+
+        public IQueryable<Team> GetTrending()
+        {
+            var recent = DateTimeOffset.Now.AddDays(-1.5);
+            return DbContext.TeamVotes
+                .Where(x => x.SubmittedDate > recent)
+                .GroupBy(x => x.Team)
+                .Select(x => new
+                {
+                    Team = x.Key,
+                    Score = x.DefaultIfEmpty().Sum(y => y.Value)
+                })
+                .OrderByDescending(x => x.Score)
+                .Select(x => x.Team)
+                .Take(10);
+        }
+
+        public IQueryable<Team> GetLatest()
+        {
+            return DbContext.Teams.OrderByDescending(x => x.Id).Take(5);
         }
     }
 }
