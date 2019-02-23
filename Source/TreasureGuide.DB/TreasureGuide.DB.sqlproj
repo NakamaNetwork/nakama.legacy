@@ -67,6 +67,7 @@
     <Folder Include="dbo\Tables\Stages" />
     <Folder Include="dbo\Tables\Teams" />
     <Folder Include="dbo\Tables\Units" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Accounts\AspNetRoleClaims.sql" />
@@ -100,18 +101,10 @@
     <Build Include="dbo\Tables\Units\UnitAliases.sql" />
     <Build Include="dbo\Tables\Units\UnitEvolutions.sql" />
     <Build Include="dbo\Tables\Units\Units.sql" />
+    <Build Include="dbo\Views\UserRoles.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_staging.publish.xml" />
     <None Include="_local.publish.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj">
-      <Name>TreasureGuide.Entities</Name>
-      <Project>{a6a0c40e-0d3c-4ee3-ad52-b5b477c7f971}</Project>
-      <Private>True</Private>
-      <IsModelAware>True</IsModelAware>
-      <GenerateSqlClrDdl>True</GenerateSqlClrDdl>
-    </ProjectReference>
   </ItemGroup>
 </Project>
