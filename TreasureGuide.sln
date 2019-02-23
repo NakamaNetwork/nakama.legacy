@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TreasureGuide.DB", "Source\TreasureGuide.DB\TreasureGuide.DB.sqlproj", "{68D50D74-DECE-4004-B19B-EB10AF35903E}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "NakamaNetwork.DB", "Source\NakamaNetwork.DB\NakamaNetwork.DB.sqlproj", "{68D50D74-DECE-4004-B19B-EB10AF35903E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreasureGuide.Entities", "Source\TreasureGuide.Entities\TreasureGuide.Entities.csproj", "{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NakamaNetwork.Entities", "Source\NakamaNetwork.Entities\NakamaNetwork.Entities.csproj", "{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreasureGuide.Web", "Source\TreasureGuide.Web\TreasureGuide.Web.csproj", "{A753C845-B465-4EEA-90D0-A0C38E098324}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreasureGuide.Sniffer", "Source\TreasureGuide.Sniffer\TreasureGuide.Sniffer.csproj", "{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NakamaNetwork.Sniffer", "Source\NakamaNetwork.Sniffer\NakamaNetwork.Sniffer.csproj", "{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreasureGuide.Common", "Source\TreasureGuide.Common\TreasureGuide.Common.csproj", "{9A1A6BC9-D8BE-4566-BC4D-B983C6469B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NakamaNetwork.Common", "Source\NakamaNetwork.Common\NakamaNetwork.Common.csproj", "{9A1A6BC9-D8BE-4566-BC4D-B983C6469B58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureGuide.Test", "Source\TreasureGuide.Test\TreasureGuide.Test.csproj", "{DB5C5630-7BA2-45AC-89DA-90134E51CEF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NakamaNetwork.Test", "Source\NakamaNetwork.Test\NakamaNetwork.Test.csproj", "{DB5C5630-7BA2-45AC-89DA-90134E51CEF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

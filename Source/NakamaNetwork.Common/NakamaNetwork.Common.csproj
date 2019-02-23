@@ -10,11 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="..\NakamaNetwork.Entities\NakamaNetwork.Entities.csproj" />
   </ItemGroup>
 
 </Project>

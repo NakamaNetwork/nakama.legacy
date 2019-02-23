@@ -56,27 +56,27 @@
         <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\TreasureGuide.Common\TreasureGuide.Common.csproj" />
-        <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj" />
+        <ProjectReference Include="..\NakamaNetwork.Common\NakamaNetwork.Common.csproj" />
+        <ProjectReference Include="..\NakamaNetwork.Entities\NakamaNetwork.Entities.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
       <None Update="src\models\generated\notification-event-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\EnumTypes\NotificationEventType.cs</CustomToolNamespace>
+        <CustomToolNamespace>..\NakamaNetwork.Entities\EnumTypes\NotificationEventType.cs</CustomToolNamespace>
       </None>
       <None Update="src\models\generated\notification-model.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Common\Models\NotificationModels\NotificationModel.cs</CustomToolNamespace>
+        <CustomToolNamespace>..\NakamaNetwork.Common\Models\NotificationModels\NotificationModel.cs</CustomToolNamespace>
       </None>
       <None Update="src\models\generated\team-credit-model.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamCreditModel.cs</CustomToolNamespace>
+        <CustomToolNamespace>..\NakamaNetwork.Common\Models\TeamModels\TeamCreditModel.cs</CustomToolNamespace>
       </None>
       <None Update="src\models\generated\team-credit-type.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Entities\EnumTypes\TeamCreditType.cs</CustomToolNamespace>
+        <CustomToolNamespace>..\NakamaNetwork.Entities\EnumTypes\TeamCreditType.cs</CustomToolNamespace>
       </None>
       <None Update="src\models\generated\team-import-model.tst.gen">
-        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamImportModel.cs</CustomToolNamespace>
+        <CustomToolNamespace>..\NakamaNetwork.Common\Models\TeamModels\TeamImportModel.cs</CustomToolNamespace>
       </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TreasureGuide.Common\TreasureGuide.Common.csproj" />
-    <ProjectReference Include="..\TreasureGuide.Entities\TreasureGuide.Entities.csproj" />
+    <ProjectReference Include="..\NakamaNetwork.Common\NakamaNetwork.Common.csproj" />
+    <ProjectReference Include="..\NakamaNetwork.Entities\NakamaNetwork.Entities.csproj" />
   </ItemGroup>
 
 </Project>
