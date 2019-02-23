@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Interfaces;
 using TreasureGuide.Common.Models;
 using System.Data.Entity;
@@ -17,7 +17,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         where TEditorModel : IIdItem<TKey>
         where TSearchModel : SearchModel, new()
     {
-        protected SearchableApiController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
+        protected SearchableApiController(NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
         }
 

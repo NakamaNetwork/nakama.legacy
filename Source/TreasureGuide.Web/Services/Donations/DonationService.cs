@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Models.DonationModels;
 
 namespace TreasureGuide.Web.Services.Donations
@@ -21,11 +21,11 @@ namespace TreasureGuide.Web.Services.Donations
     {
         protected IConfigurationRoot Config;
         protected bool IsTesting;
-        protected TreasureEntities Entities;
+        protected NakamaNetworkContext Entities;
         public string WebRoot { get; }
         public abstract PaymentType PaymentType { get; }
 
-        protected DonationService(IHostingEnvironment env, IConfigurationRoot config, TreasureEntities entities)
+        protected DonationService(IHostingEnvironment env, IConfigurationRoot config, NakamaNetworkContext entities)
         {
             IsTesting = env.IsDevelopment();
             Config = config;

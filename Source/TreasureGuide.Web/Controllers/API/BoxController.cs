@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Constants;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.BoxModels;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
-using Z.EntityFramework.Plus;
+using NakamaNetwork.Entities.EnumTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -22,7 +21,7 @@ namespace TreasureGuide.Web.Controllers.API
     {
         private readonly IPreferenceService _preferenceService;
 
-        public BoxController(IPreferenceService preferenceService, TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
+        public BoxController(IPreferenceService preferenceService, NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
             Throttled = true;
             _preferenceService = preferenceService;
@@ -158,11 +157,11 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 if (clear)
                 {
-                    await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && !model.Added.Contains(x.UnitId)).DeleteAsync();
+                    DbContext.BoxUnits.RemoveWhere(x => x.BoxId == model.Id && !model.Added.Contains(x.UnitId));
                 }
                 else if (model.Removed.Any())
                 {
-                    await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId)).DeleteAsync();
+                    DbContext.BoxUnits.RemoveWhere(x => x.BoxId == model.Id && model.Removed.Contains(x.UnitId));
                 }
                 if (model.Added.Any())
                 {
@@ -181,10 +180,8 @@ namespace TreasureGuide.Web.Controllers.API
                 }
                 if (model.Updated.Any())
                 {
-                    foreach (var item in model.Updated)
-                    {
-                        await DbContext.BoxUnits.Where(x => x.BoxId == model.Id && x.UnitId == item.Id).UpdateAsync(x => new BoxUnit { Flags = item.Flags });
-                    }
+                    var updates = model.Updated.Select(x => new BoxUnit { BoxId = model.Id, UnitId = x.Id, Flags = x.Flags });
+                    DbContext.BoxUnits.AttachRange(updates);
                 }
                 await DbContext.SaveChangesSafe();
             }

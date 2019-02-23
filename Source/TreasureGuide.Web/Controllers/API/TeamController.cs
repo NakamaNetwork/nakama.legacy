@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Constants;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
@@ -19,6 +18,7 @@ using TreasureGuide.Common.Models.TeamModels;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
 using TreasureGuide.Web.Services.SearchService.Teams;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -27,7 +27,7 @@ namespace TreasureGuide.Web.Controllers.API
     {
         private readonly TeamSearchService _searchService;
 
-        public TeamController(TeamSearchService searchService, TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
+        public TeamController(TeamSearchService searchService, NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
             _searchService = searchService;
         }
@@ -39,66 +39,6 @@ namespace TreasureGuide.Web.Controllers.API
         public async Task<SearchResult<WikiSearchResultModel>> Wiki(TeamSearchModel model)
         {
             return await Search<WikiSearchResultModel>(model);
-        }
-
-        protected override async Task<object> CreateOrUpdate(TeamEditorModel model, Team entity = null)
-        {
-            var result = await base.CreateOrUpdate(model, entity);
-            var id = (result as IdResponse<int>)?.Id;
-            if (id.HasValue)
-            {
-                await UpdateTeamMinis(id.Value);
-            }
-            return result;
-        }
-
-        private async Task UpdateTeamMinis(int idValue)
-        {
-            var teamData = await DbContext.Teams.Select(x => new
-            {
-                TeamId = x.Id,
-                Name = x.Name,
-                StageId = x.StageId,
-                StageName = x.Stage != null ? x.Stage.Name : "",
-                InvasionId = x.InvasionId,
-                InvasionName = x.Invasion != null ? x.Invasion.Name : "",
-                EventShip = x.Ship != null && x.Ship.EventShip,
-                SubmittedById = x.SubmittedById,
-                SubmittingUserName = x.SubmittingUser != null ? x.SubmittingUser.UserName : "",
-                Draft = x.Draft,
-                Deleted = x.Deleted,
-                HasReport = x.TeamReports.Any(y => y.AcknowledgedDate == null),
-                Units = x.TeamUnits.Where(y => !y.Sub).Select(y => new { Id = y.UnitId, Position = y.Position, Flags = y.Unit.Flags, Class = y.Unit.Class, Type = y.Unit.Type })
-            }).SingleOrDefaultAsync(x => x.TeamId == idValue);
-            if (teamData != null)
-            {
-                var mini = await DbContext.TeamMinis.SingleOrDefaultAsync(x => x.TeamId == idValue);
-                if (mini != null)
-                {
-                    mini.Name = teamData.Name;
-                    mini.StageId = teamData.StageId;
-                    mini.StageName = teamData.StageName;
-                    mini.InvasionId = teamData.InvasionId;
-                    mini.InvasionName = teamData.InvasionName;
-                    mini.EventShip = teamData.EventShip;
-                    mini.SubmittedById = teamData.SubmittedById;
-                    mini.SubmittingUserName = teamData.SubmittingUserName;
-                    mini.Draft = teamData.Draft;
-                    mini.Deleted = teamData.Deleted;
-                    mini.HasReport = teamData.HasReport;
-                    mini.HelperId = teamData.Units.SingleOrDefault(x => x.Position == 0)?.Id;
-                    mini.LeaderId = teamData.Units.SingleOrDefault(x => x.Position == 1)?.Id;
-                    mini.F2PC = !teamData.Units.Where(x => x.Position > 1)
-                        .Any(x => x.Flags.HasFlag(UnitFlag.RareRecruitExclusive) ||
-                                  x.Flags.HasFlag(UnitFlag.RareRecruitLimited));
-                    mini.F2P = mini.F2PC && !teamData.Units.Where(x => x.Position == 1)
-                                   .Any(x => x.Flags.HasFlag(UnitFlag.RareRecruitExclusive) ||
-                                             x.Flags.HasFlag(UnitFlag.RareRecruitLimited));
-                    mini.Type = teamData.Units.Select(x => x.Type).Aggregate((sum, current) => sum & current);
-                    mini.Class = teamData.Units.Select(x => x.Class).Aggregate((sum, current) => sum & current);
-                    await DbContext.SaveChangesSafe();
-                }
-            }
         }
 
         protected override async Task<Team> PostProcess(Team entity)
@@ -117,16 +57,6 @@ namespace TreasureGuide.Web.Controllers.API
                         UserId = userId,
                         Value = 1
                     }
-                };
-                entity.TeamScore = new TeamScore
-                {
-                    Value = 1
-                };
-                entity.TeamMini = new TeamMini
-                {
-                    Name = entity.Name,
-                    SubmittingUserName = entity.SubmittedById,
-                    SubmittedById = entity.SubmittedById
                 };
             }
             entity.EditedById = userId;
@@ -149,7 +79,7 @@ namespace TreasureGuide.Web.Controllers.API
                 {
                     var user = DbContext.UserProfiles.Where(x => x.Id == userId);
                     detail.MyVote = await user.SelectMany(x => x.TeamVotes.Where(y => y.TeamId == id).Select(y => y.Value)).SingleOrDefaultAsync();
-                    detail.MyBookmark = await user.SelectMany(x => x.BookmarkedTeams.Where(y => y.Id == id).Select(y => true)).SingleOrDefaultAsync();
+                    detail.MyBookmark = await user.SelectMany(x => x.TeamBookmarks.Where(y => y.TeamId == id).Select(y => true)).SingleOrDefaultAsync();
                 }
             }
             return await base.SingleGetTransform(single, id);
@@ -189,11 +119,11 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortLeader:
                     return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault(), model.SortDesc);
                 case SearchConstants.SortScore:
-                    return results.OrderBy(x => x.TeamScore != null ? x.TeamScore.Value : 0, !model.SortDesc);
+                    return results.OrderBy(x => x.TeamVotes.DefaultIfEmpty().Sum(y => y.Value), !model.SortDesc);
                 case SearchConstants.SortDate:
                     return results.OrderBy(x => x.SubmittedDate, !model.SortDesc);
                 case SearchConstants.SortUser:
-                    return results.OrderBy(x => x.SubmittingUser.UserName, model.SortDesc);
+                    return results.OrderBy(x => x.SubmittedBy.UserName, model.SortDesc);
                 default:
                     return results.OrderBy(x => x.Id, true);
             }
@@ -346,20 +276,8 @@ namespace TreasureGuide.Web.Controllers.API
             }
             vote.Value = (short)value;
             await DbContext.SaveChangesSafe();
-            await UpdateTeamScores(teamId);
-            var returnValue = (await DbContext.TeamScores.SingleOrDefaultAsync(x => x.TeamId == teamId))?.Value ?? 0;
+            var returnValue = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).DefaultIfEmpty().SumAsync(x => x.Value);
             return Ok(returnValue);
-        }
-
-        private async Task UpdateTeamScores(int teamId)
-        {
-            var set = await DbContext.TeamScores.SingleOrDefaultAsync(x => x.TeamId == teamId);
-            if (set != null)
-            {
-                var score = await DbContext.TeamVotes.Where(x => x.TeamId == teamId).Select(x => x.Value).DefaultIfEmpty().SumAsync(x => x);
-                set.Value = score;
-                await DbContext.SaveChangesSafe();
-            }
         }
 
         [HttpPost]
@@ -378,19 +296,18 @@ namespace TreasureGuide.Web.Controllers.API
                 return BadRequest("Could not find team.");
             }
             var userId = User.GetId();
-            var profile = await DbContext.UserProfiles.SingleOrDefaultAsync(x => x.Id == userId);
-            if (profile == null)
-            {
-                return Unauthorized();
-            }
-            var existed = team.BookmarkedUsers.Any(x => x.Id == userId);
+            var existed = team.TeamBookmarks.Any(x => x.UserId == userId);
             if (existed)
             {
-                team.BookmarkedUsers.Remove(profile);
+                team.TeamBookmarks.RemoveWhere(x => x.UserId == userId);
             }
             else
             {
-                team.BookmarkedUsers.Add(profile);
+                team.TeamBookmarks.Add(new TeamBookmark
+                {
+                    TeamId = id.Value,
+                    UserId = userId
+                });
             }
             await DbContext.SaveChangesSafe();
             return Ok(!existed);
@@ -548,22 +465,14 @@ namespace TreasureGuide.Web.Controllers.API
             var unitName = "";
             if (leader.HasValue)
             {
-                unitName = (await DbContext.GCRUnitInfoes.SingleOrDefaultAsync(x => x.UnitId == leader))?.Name;
-                if (String.IsNullOrWhiteSpace(unitName))
-                {
-                    unitName = (await DbContext.Units.SingleOrDefaultAsync(x => x.Id == leader))?.Name;
-                }
+                unitName = (await DbContext.Units.SingleOrDefaultAsync(x => x.Id == leader))?.Name;
             }
 
             var stage = team.StageId;
             var stageName = "";
             if (stage.HasValue)
             {
-                stageName = (await DbContext.GCRStageInfoes.SingleOrDefaultAsync(x => x.StageId == stage))?.Name;
-                if (String.IsNullOrWhiteSpace(stageName))
-                {
-                    stageName = (await DbContext.Stages.SingleOrDefaultAsync(x => x.Id == stage))?.Name;
-                }
+                stageName = (await DbContext.Stages.SingleOrDefaultAsync(x => x.Id == stage))?.Name;
             }
 
             var name = unitName;

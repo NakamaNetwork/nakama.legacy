@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Threading.Tasks;
-using NakamaNetwork.Entities;
+using Microsoft.EntityFrameworkCore;
+using NakamaNetwork.Entities.EnumTypes;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Web.Helpers;
 
 namespace TreasureGuide.Web.Services
@@ -14,9 +15,9 @@ namespace TreasureGuide.Web.Services
 
     public class PreferenceService : IPreferenceService
     {
-        private readonly TreasureEntities _entities;
+        private readonly NakamaNetworkContext _entities;
 
-        public PreferenceService(TreasureEntities entities)
+        public PreferenceService(NakamaNetworkContext entities)
         {
             _entities = entities;
         }

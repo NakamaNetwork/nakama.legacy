@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.TeamModels;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace TreasureGuide.Web.Services.SearchService.Teams
 {
     public class TeamDbSearchService : TeamSearchService
     {
-        private readonly TreasureEntities _entities;
+        private readonly NakamaNetworkContext _entities;
 
-        public TeamDbSearchService(TreasureEntities entities)
+        public TeamDbSearchService(NakamaNetworkContext entities)
         {
             _entities = entities;
         }
@@ -88,7 +89,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
                 var userId = user?.GetId();
                 if (!String.IsNullOrWhiteSpace(userId))
                 {
-                    results = results.Where(x => x.BookmarkedUsers.Any(y => y.Id == userId));
+                    results = results.Where(x => x.TeamBookmarks.Any(y => y.UserId == userId));
                 }
             }
             return results;
@@ -108,7 +109,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
         {
             if (!String.IsNullOrEmpty(term))
             {
-                teams = teams.Where(x => x.SubmittedById == term || x.SubmittingUser.UserName.Contains(term));
+                teams = teams.Where(x => x.SubmittedById == term || x.SubmittedBy.UserName.Contains(term));
             }
             return teams;
         }

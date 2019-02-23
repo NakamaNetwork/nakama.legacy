@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TreasureGuide.Common.Constants;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
 using NakamaNetwork.Entities.Interfaces;
 using TreasureGuide.Web.Controllers.API.Generic;
@@ -24,7 +24,7 @@ namespace TreasureGuide.Web.Controllers.API
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProfileContoller(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) : base(dbContext, autoMapper, throttlingService)
+        public ProfileContoller(NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) : base(dbContext, autoMapper, throttlingService)
         {
             _userManager = userManager;
         }

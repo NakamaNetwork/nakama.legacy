@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using TreasureGuide.Common;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Web.Data;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models;
@@ -35,7 +35,7 @@ namespace TreasureGuide.Web.Configurations
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("TreasureEntities"),
+                    configuration.GetConnectionString("NakamaNetworkContext"),
                     sqlServerOptions => sqlServerOptions.CommandTimeout(10).EnableRetryOnFailure(0)
                     ));
 
@@ -112,7 +112,7 @@ namespace TreasureGuide.Web.Configurations
             builder.PersistKeysToFileSystem(new DirectoryInfo(store));
             builder.SetApplicationName("NakamaNetwork");
 
-            services.AddScoped(x => new TreasureEntities(configuration.GetConnectionString("TreasureEntities")));
+            services.AddScoped(x => new NakamaNetworkContext(configuration.GetConnectionString("NakamaNetworkContext")));
             services.AddScoped<IAuthExportService, AuthExportService>();
             services.AddScoped<IPreferenceService, PreferenceService>();
             services.AddScoped<IEmailSender, EmailSender>();
@@ -120,7 +120,7 @@ namespace TreasureGuide.Web.Configurations
             services.AddScoped<IThrottleService, ThrottleService>();
             services.AddScoped<IMetadataService, MetadataService>();
             services.AddScoped<IDonationService, PaypalDonationService>();
-            services.AddScoped<TeamSearchService, TeamMiniDbSearchService>();
+            services.AddScoped<TeamSearchService, TeamDbSearchService>();
 
             services.AddSingleton(x => configuration);
             services.AddSingleton(x => MapperConfig.Create());

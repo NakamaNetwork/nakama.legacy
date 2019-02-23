@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using PayPal.Api;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Models.DonationModels;
 
 namespace TreasureGuide.Web.Services.Donations
@@ -14,7 +14,7 @@ namespace TreasureGuide.Web.Services.Donations
     {
         public override PaymentType PaymentType { get; } = PaymentType.Paypal;
 
-        public PaypalDonationService(IHostingEnvironment env, IConfigurationRoot config, TreasureEntities entities) : base(env, config, entities)
+        public PaypalDonationService(IHostingEnvironment env, IConfigurationRoot config, NakamaNetworkContext entities) : base(env, config, entities)
         {
         }
 

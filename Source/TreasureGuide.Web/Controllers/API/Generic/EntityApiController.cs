@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
 using NakamaNetwork.Entities.Interfaces;
 using TreasureGuide.Web.Services;
@@ -17,6 +15,7 @@ using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models;
 using TreasureGuide.Web.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
@@ -24,13 +23,13 @@ namespace TreasureGuide.Web.Controllers.API.Generic
         where TEntity : class, IIdItem<TEntityKey>
         where TEditorModel : IIdItem<TKey>
     {
-        protected readonly TreasureEntities DbContext;
+        protected readonly NakamaNetworkContext DbContext;
         protected readonly IMapper AutoMapper;
         protected readonly IThrottleService ThrottlingService;
 
         public bool Throttled { get; set; } = true;
 
-        public EntityApiController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService)
+        public EntityApiController(NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService)
         {
             DbContext = dbContext;
             AutoMapper = autoMapper;
@@ -182,7 +181,7 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             if (removed != null)
             {
                 await DbContext.SaveChangesSafe();
-                return removed.Id;
+                return removed.Property("Id");
             }
             return 1;
         }

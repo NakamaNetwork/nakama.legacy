@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Constants;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.TeamModels;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
@@ -23,7 +23,7 @@ namespace TreasureGuide.Web.Controllers.API
     {
         private const int COMMENT_TIMEOUT = 30;
 
-        public TeamCommentController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
+        public TeamCommentController(NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(dbContext, autoMapper, throttlingService)
         {
         }
 

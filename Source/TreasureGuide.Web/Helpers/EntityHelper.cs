@@ -1,35 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NakamaNetwork.Entities;
+using Microsoft.EntityFrameworkCore;
+using NakamaNetwork.Entities.Models;
 
 namespace TreasureGuide.Web.Helpers
 {
     public static class EntityHelper
     {
-        public static async Task SaveChangesSafe(this TreasureEntities entities)
+        private const int SqlServerViolationOfUniqueIndex = 2601;
+        private const int SqlServerViolationOfUniqueConstraint = 2627;
+
+        public static async Task SaveChangesSafe(this NakamaNetworkContext entities)
         {
             try
             {
                 await entities.SaveChangesAsync();
             }
-            catch (DbEntityValidationException dbEx)
+            catch (DbUpdateException dbEx)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        var message = $"{validationErrors.Entry.Entity}:{validationError.ErrorMessage}";
-                        // raise a new exception nesting
-                        // the current instance as InnerException
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                entities.Database.RollbackTransaction();
+                throw dbEx;
             }
+        }
+
+        public static void RemoveWhere<TEntity>(this ICollection<TEntity> entities, Func<TEntity, bool> predicate)
+            where TEntity : class
+        {
+            var found = entities.Where(predicate);
+            foreach (var item in found)
+            {
+                entities.Remove(item);
+            }
+        }
+
+        public static void RemoveWhere<TEntity>(this DbSet<TEntity> entities, Expression<Func<TEntity, bool>> predicate)
+            where TEntity : class
+        {
+            var found = entities.Where(predicate);
+            entities.RemoveRange(found);
         }
     }
 }

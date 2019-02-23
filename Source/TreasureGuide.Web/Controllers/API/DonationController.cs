@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Constants;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Helpers;
-using TreasureGuide.Common.Models;
 using TreasureGuide.Common.Models.DonationModels;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
 using TreasureGuide.Web.Services.Donations;
+using NakamaNetwork.Entities.EnumTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -28,7 +27,7 @@ namespace TreasureGuide.Web.Controllers.API
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDonationService _donationService;
 
-        public DonationController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService, UserManager<ApplicationUser> userManager, IDonationService donationService) : base(dbContext, autoMapper, throttlingService)
+        public DonationController(NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService, UserManager<ApplicationUser> userManager, IDonationService donationService) : base(dbContext, autoMapper, throttlingService)
         {
             _userManager = userManager;
             _donationService = donationService;
@@ -249,7 +248,7 @@ namespace TreasureGuide.Web.Controllers.API
         {
             if (!String.IsNullOrWhiteSpace(modelUser))
             {
-                return results.Where(x => x.UserId == modelUser || x.UserProfile.UserName.Contains(modelUser));
+                return results.Where(x => x.UserId == modelUser || x.User.UserName.Contains(modelUser));
             }
             return results;
         }
@@ -259,7 +258,7 @@ namespace TreasureGuide.Web.Controllers.API
             switch (model.SortBy)
             {
                 case SearchConstants.SortUser:
-                    return results.OrderBy(x => x.UserProfile.UserName, model.SortDesc);
+                    return results.OrderBy(x => x.User.UserName, model.SortDesc);
                 case SearchConstants.SortDate:
                     return results.OrderBy(x => x.Date, !model.SortDesc);
                 case SearchConstants.SortAmount:

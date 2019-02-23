@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Options;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
 using TreasureGuide.Web.Configurations;
 using TreasureGuide.Common.Helpers;
@@ -24,10 +24,10 @@ namespace TreasureGuide.Web.Services
     public class AuthExportService : IAuthExportService
     {
         private readonly JwtIssuerOptions _jwtOptions;
-        private readonly TreasureEntities _context;
+        private readonly NakamaNetworkContext _context;
         private readonly IMapper _mapper;
 
-        public AuthExportService(IOptions<JwtIssuerOptions> jwtOptions, TreasureEntities context, IMapper mapper)
+        public AuthExportService(IOptions<JwtIssuerOptions> jwtOptions, NakamaNetworkContext context, IMapper mapper)
         {
             _jwtOptions = jwtOptions.Value;
             _context = context;

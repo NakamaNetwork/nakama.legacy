@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NakamaNetwork.Sniffer", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NakamaNetwork.Common", "Source\NakamaNetwork.Common\NakamaNetwork.Common.csproj", "{9A1A6BC9-D8BE-4566-BC4D-B983C6469B58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NakamaNetwork.Test", "Source\NakamaNetwork.Test\NakamaNetwork.Test.csproj", "{DB5C5630-7BA2-45AC-89DA-90134E51CEF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NakamaNetwork.Test", "Source\NakamaNetwork.Test\NakamaNetwork.Test.csproj", "{DB5C5630-7BA2-45AC-89DA-90134E51CEF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,12 +43,14 @@ Global
 		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Release|x64.ActiveCfg = Release|Any CPU
 		{A6A0C40E-0D3C-4EE3-AD52-B5B477C7F971}.Release|x64.Build.0 = Release|Any CPU
-		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|x64.ActiveCfg = Debug|x64
-		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|x64.Build.0 = Debug|x64
-		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|Any CPU.ActiveCfg = Release|x64
-		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|x64.ActiveCfg = Release|x64
-		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|x64.Build.0 = Release|x64
+		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A753C845-B465-4EEA-90D0-A0C38E098324}.Debug|x64.Build.0 = Debug|Any CPU
+		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|x64.ActiveCfg = Release|Any CPU
+		{A753C845-B465-4EEA-90D0-A0C38E098324}.Release|x64.Build.0 = Release|Any CPU
 		{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{657C2AE4-057D-4E2C-9C2C-BBCE76E71B9D}.Debug|x64.ActiveCfg = Debug|Any CPU

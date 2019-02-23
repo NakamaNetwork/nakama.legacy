@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TreasureGuide.Common.Constants;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Models;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Models.AccountViewModels;
+using NakamaNetwork.Entities.Models;
 
 namespace TreasureGuide.Web.Controllers
 {
@@ -20,14 +21,14 @@ namespace TreasureGuide.Web.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
         private readonly string _externalCookieScheme;
-        private readonly TreasureEntities _entities;
+        private readonly NakamaNetworkContext _entities;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<IdentityCookieOptions> identityCookieOptions,
             ILoggerFactory loggerFactory,
-            TreasureEntities entities)
+            NakamaNetworkContext entities)
         {
             _userManager = userManager;
             _signInManager = signInManager;

@@ -1,94 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net452</TargetFramework>
-        <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <UserSecretsId>aspnet-NakamaNetwork.Site-5FAF3446-8D1B-46F2-BEDE-537051617E84</UserSecretsId>
+        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-        <Platforms>x64</Platforms>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <UserSecretsId>aspnet-TreasureGuide.Web-5f05675e-555e-48ff-bb51-5d655998ec83</UserSecretsId>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      <DefineConstants>DEBUG;TRACE</DefineConstants>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <DefineConstants>RELEASE</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="1.0.0-rc2-final" />
-        <PackageReference Include="AspNet.Security.OAuth.Reddit" Version="1.0.0-rc2-final" />
-        <PackageReference Include="AspNet.Security.OAuth.Twitch" Version="1.0.0-rc2-final" />
-        <PackageReference Include="AutoMapper" Version="6.1.1" />
-        <PackageReference Include="EntityFramework" Version="6.1.3" />
-        <PackageReference Include="Markdown" Version="2.2.1" />
-        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.0" />
-        <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="1.1.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="1.1.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="1.1.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Owin" Version="1.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="1.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="1.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.2" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.2" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.2" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
-        <PackageReference Include="PayPal" Version="1.9.1" />
-        <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
-        <PackageReference Include="Z.EntityFramework.Plus.EF6" Version="1.7.14" />
-    </ItemGroup>
-    <ItemGroup>
-        <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
-        <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
-        <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
+        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="2.0.1" />
+        <PackageReference Include="AspNet.Security.OAuth.Reddit" Version="2.0.1" />
+        <PackageReference Include="AspNet.Security.OAuth.Twitch" Version="2.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\NakamaNetwork.Common\NakamaNetwork.Common.csproj" />
         <ProjectReference Include="..\NakamaNetwork.Entities\NakamaNetwork.Entities.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="System.Web.Extensions" />
-    </ItemGroup>
-    <ItemGroup>
-      <None Update="src\models\generated\notification-event-type.tst.gen">
-        <CustomToolNamespace>..\NakamaNetwork.Entities\EnumTypes\NotificationEventType.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\notification-model.tst.gen">
-        <CustomToolNamespace>..\NakamaNetwork.Common\Models\NotificationModels\NotificationModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-credit-model.tst.gen">
-        <CustomToolNamespace>..\NakamaNetwork.Common\Models\TeamModels\TeamCreditModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-credit-type.tst.gen">
-        <CustomToolNamespace>..\NakamaNetwork.Entities\EnumTypes\TeamCreditType.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\generated\team-import-model.tst.gen">
-        <CustomToolNamespace>..\NakamaNetwork.Common\Models\TeamModels\TeamImportModel.cs</CustomToolNamespace>
-      </None>
-      <None Update="src\models\imported.ts">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>imported.tt</DependentUpon>
-      </None>
-      <None Update="src\models\imported.tt">
-        <Generator>TextTemplatingFileGenerator</Generator>
-        <LastGenOutput>imported.ts</LastGenOutput>
-      </None>
-    </ItemGroup>
-    <ItemGroup>
-      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+        <None Update="src\models\imported.ts">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>imported.tt</DependentUpon>
+        </None>
+        <None Update="src\models\imported.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>imported.ts</LastGenOutput>
+        </None>
     </ItemGroup>
 </Project>

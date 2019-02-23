@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Common.Models.ScheduleModels;
@@ -15,7 +15,7 @@ namespace TreasureGuide.Web.Controllers.API
     [Route("api/stage")]
     public class StageController : LocallyCachedController
     {
-        public StageController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(CacheItemType.Stage, dbContext, throttlingService)
+        public StageController(NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService) : base(CacheItemType.Stage, dbContext, throttlingService)
         {
         }
 

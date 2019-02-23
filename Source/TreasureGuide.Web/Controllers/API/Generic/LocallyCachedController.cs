@@ -1,12 +1,8 @@
-﻿using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
-using NakamaNetwork.Entities.Interfaces;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
 
@@ -15,13 +11,13 @@ namespace TreasureGuide.Web.Controllers.API.Generic
     public abstract class LocallyCachedController : Controller
     {
         private const double Timeout = 5;
-        protected readonly TreasureEntities DbContext;
+        protected readonly NakamaNetworkContext DbContext;
         protected readonly IThrottleService ThrottlingService;
         protected readonly CacheItemType Type;
 
         public bool Throttled { get; set; } = true;
 
-        public LocallyCachedController(CacheItemType type, TreasureEntities dbContext, IThrottleService throttlingService)
+        public LocallyCachedController(CacheItemType type, NakamaNetworkContext dbContext, IThrottleService throttlingService)
         {
             Type = type;
             DbContext = dbContext;

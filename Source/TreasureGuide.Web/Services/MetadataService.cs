@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HeyRed.MarkdownSharp;
-using NakamaNetwork.Entities;
+using Microsoft.EntityFrameworkCore;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Models;
 
 namespace TreasureGuide.Web.Services
@@ -23,9 +23,9 @@ namespace TreasureGuide.Web.Services
 
         private static readonly Regex TagRegex = new Regex("<[^>]*>");
 
-        private readonly TreasureEntities _dbContext;
+        private readonly NakamaNetworkContext _dbContext;
 
-        public MetadataService(TreasureEntities dbContext)
+        public MetadataService(NakamaNetworkContext dbContext)
         {
             _dbContext = dbContext;
         }

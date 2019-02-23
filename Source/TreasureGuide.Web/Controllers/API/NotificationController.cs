@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,9 +7,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.NotificationModels;
-using NakamaNetwork.Entities;
+using NakamaNetwork.Entities.Models;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -18,13 +18,13 @@ namespace TreasureGuide.Web.Controllers.API
     [Route("api/notifications")]
     public class NotificationController : Controller
     {
-        protected readonly TreasureEntities DbContext;
+        protected readonly NakamaNetworkContext DbContext;
         protected readonly IMapper AutoMapper;
         protected readonly IThrottleService ThrottlingService;
 
         public bool Throttled { get; set; } = true;
 
-        public NotificationController(TreasureEntities dbContext, IMapper autoMapper, IThrottleService throttlingService)
+        public NotificationController(NakamaNetworkContext dbContext, IMapper autoMapper, IThrottleService throttlingService)
         {
             DbContext = dbContext;
             AutoMapper = autoMapper;
