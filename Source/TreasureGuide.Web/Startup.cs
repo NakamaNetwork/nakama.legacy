@@ -1,13 +1,27 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using NakamaNetwork.Entities.Models;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.IO.Compression;
+using System.Text;
+using TreasureGuide.Common;
+using TreasureGuide.Common.Helpers;
+using TreasureGuide.Web.Configurations;
+using TreasureGuide.Web.Services;
+using TreasureGuide.Web.Services.Donations;
+using TreasureGuide.Web.Services.SearchService.Teams;
 
 namespace NakamaNetwork.Web
 {
@@ -32,12 +46,67 @@ namespace NakamaNetwork.Web
 
             services.AddDbContext<NakamaNetworkContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("NakamaNetworkContext")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<NakamaNetworkContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+                options.Filters.Add(new ExceptionLoggerAttribute());
+                options.Filters.Add(new ThrottlingAttribute());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("NakamaCORS", config => config.AllowAnyOrigin().WithMethods("GET"));
+            });
+            var defaultJson = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+            JsonConvert.DefaultSettings = () => defaultJson;
+
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
+            var secretKey = Configuration["Authentication:Jwt:Key"];
+            var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            // Configure JwtIssuerOptions
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.Subject = jwtAppSettingOptions[nameof(JwtIssuerOptions.Subject)];
+                options.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                options.ValidFor = TimeSpan.FromDays(3);
+            });
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+                options.EnableForHttps = true;
+            });
+
+            services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Fastest;
+            });
+
+            var builder = services.AddDataProtection();
+            var store = Directory.GetCurrentDirectory() + "/keys";
+            builder.PersistKeysToFileSystem(new DirectoryInfo(store));
+            builder.SetApplicationName("NakamaNetwork");
+
+            services.AddScoped<IAuthExportService, AuthExportService>();
+            services.AddScoped<IPreferenceService, PreferenceService>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<ISmsSender, SmsSender>();
+            services.AddScoped<IThrottleService, ThrottleService>();
+            services.AddScoped<IMetadataService, MetadataService>();
+            services.AddScoped<IDonationService, PaypalDonationService>();
+            services.AddScoped<TeamSearchService, TeamDbSearchService>();
+
+            services.AddSingleton(x => Configuration);
+            services.AddSingleton(x => MapperConfig.Create());
 
             services.AddAuthentication()
                 .AddGoogle(o =>
