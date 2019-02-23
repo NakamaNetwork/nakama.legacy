@@ -45,8 +45,10 @@ namespace NakamaNetwork.Web
             });
 
             services.AddDbContext<NakamaNetworkContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("NakamaNetworkContext")));
+            {
+                options.UseLazyLoadingProxies();
+                options.UseSqlServer(Configuration.GetConnectionString("NakamaNetworkContext"));
+            });
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<NakamaNetworkContext>();
@@ -96,6 +98,7 @@ namespace NakamaNetwork.Web
             builder.PersistKeysToFileSystem(new DirectoryInfo(store));
             builder.SetApplicationName("NakamaNetwork");
 
+            services.AddScoped<NakamaNetworkContext>();
             services.AddScoped<IAuthExportService, AuthExportService>();
             services.AddScoped<IPreferenceService, PreferenceService>();
             services.AddScoped<IEmailSender, EmailSender>();

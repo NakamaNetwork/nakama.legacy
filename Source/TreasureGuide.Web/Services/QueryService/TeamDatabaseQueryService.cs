@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using NakamaNetwork.Entities.EnumTypes;
 using NakamaNetwork.Entities.Helpers;
 using NakamaNetwork.Entities.Models;
@@ -225,6 +226,7 @@ namespace TreasureGuide.Web.Services.QueryService
             var recent = DateTimeOffset.Now.AddDays(-1.5);
             return DbContext.TeamVotes
                 .Where(x => x.SubmittedDate > recent)
+                .Include(x => x.Team)
                 .GroupBy(x => x.Team)
                 .Select(x => new
                 {

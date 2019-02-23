@@ -32,7 +32,7 @@ namespace TreasureGuide.Web.Controllers.API
         [EnableCors("NakamaCORS")]
         public async Task<IActionResult> Wiki(TeamSearchModel model)
         {
-            var results = QueryService.SearchWiki(model).ToListAsync();
+            var results = await QueryService.SearchWiki(model).ToListAsync();
             return Ok(results);
         }
 
@@ -41,7 +41,7 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Trending()
         {
-            var results = QueryService.GetTrending().ToListAsync();
+            var results = await QueryService.GetTrending().ToListAsync();
             return Ok(results);
         }
 
@@ -50,7 +50,7 @@ namespace TreasureGuide.Web.Controllers.API
         [Route("[action]")]
         public async Task<IActionResult> Latest()
         {
-            var results = QueryService.GetLatest().ToListAsync();
+            var results = await QueryService.GetLatest().ToListAsync();
             return Ok(results);
         }
     }
