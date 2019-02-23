@@ -5,21 +5,23 @@ using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Helpers;
 using TreasureGuide.Web.Models;
 using TreasureGuide.Web.Services;
+using NakamaNetwork.Entities.Interfaces;
+using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {
-    public abstract class LocallyCachedController : Controller
+    public abstract class LocallyCachedController<TEntity> : Controller
+        where TEntity : class
     {
         private const double Timeout = 5;
         protected readonly NakamaNetworkContext DbContext;
         protected readonly IThrottleService ThrottlingService;
-        protected readonly CacheItemType Type;
 
         public bool Throttled { get; set; } = true;
 
-        public LocallyCachedController(CacheItemType type, NakamaNetworkContext dbContext, IThrottleService throttlingService)
+        public LocallyCachedController(NakamaNetworkContext dbContext, IThrottleService throttlingService)
         {
-            Type = type;
             DbContext = dbContext;
             ThrottlingService = throttlingService;
         }
@@ -33,23 +35,22 @@ namespace TreasureGuide.Web.Controllers.API.Generic
             {
                 return StatusCode(429, ThrottleService.Message);
             }
-            var found = DbContext.CacheSets.Where(x => x.Type == Type);
+            var found = DbContext.Set<TEntity>().AsQueryable();
+            DateTimeOffset dateTime;
             if (date.HasValue)
             {
-                var dateTime = date.Value.FromUnixEpochDate();
-                found = found.Where(x => x.EditedDate > dateTime);
+                dateTime = date.Value.FromUnixEpochDate();
             }
-            var data = await found.SingleOrDefaultAsync();
-            if (data != null)
+            else
             {
-                var result = new CacheResults
-                {
-                    Timestamp = data.EditedDate,
-                    Items = data.JSON
-                };
-                return Ok(result);
+                dateTime = DateTimeOffset.Now;
             }
-            return Ok(null);
+            var result = new CacheResults
+            {
+                Timestamp = dateTime,
+                Items = await found.ToListAsync()
+            };
+            return Ok(result);
         }
     }
 }

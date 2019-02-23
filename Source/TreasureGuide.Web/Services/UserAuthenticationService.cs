@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -12,6 +11,7 @@ using TreasureGuide.Web.Configurations;
 using TreasureGuide.Common.Helpers;
 using TreasureGuide.Common.Models.ProfileModels;
 using TreasureGuide.Web.Models.ProfileModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Services
 {

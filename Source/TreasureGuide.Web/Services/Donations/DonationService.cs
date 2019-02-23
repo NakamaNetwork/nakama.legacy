@@ -1,9 +1,9 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NakamaNetwork.Entities.EnumTypes;
 using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Models.DonationModels;
 
@@ -78,7 +78,7 @@ namespace TreasureGuide.Web.Services.Donations
             {
                 Id = userId,
                 UserName = x.UserName,
-                Email = x.AspNetUser.Email
+                Email = x.UserName
             }).SingleOrDefaultAsync();
             return userInfo;
         }

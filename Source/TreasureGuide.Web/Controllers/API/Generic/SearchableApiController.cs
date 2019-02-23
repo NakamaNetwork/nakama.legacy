@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using NakamaNetwork.Entities.Models;
 using NakamaNetwork.Entities.Interfaces;
 using TreasureGuide.Common.Models;
-using System.Data.Entity;
 using TreasureGuide.Web.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Controllers.API.Generic
 {

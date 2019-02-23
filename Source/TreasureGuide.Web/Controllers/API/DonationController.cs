@@ -72,7 +72,7 @@ namespace TreasureGuide.Web.Controllers.API
             DbContext.Donations.Add(donation);
             await DbContext.SaveChangesSafe();
 
-            var payment = await _donationService.Prepare(model, donation.Id, userId, Request.GetUri().GetLeftPart(UriPartial.Authority));
+            var payment = await _donationService.Prepare(model, donation.Id, userId, Request.Host.Value);
             if (payment.HasError)
             {
                 donation.State = PaymentState.Failed;

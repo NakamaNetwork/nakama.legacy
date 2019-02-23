@@ -6,9 +6,9 @@ using TreasureGuide.Web.Services;
 namespace TreasureGuide.Web.Controllers.API
 {
     [Route("api/ship")]
-    public class ShipController : LocallyCachedController
+    public class ShipController : LocallyCachedController<Ship>
     {
-        public ShipController(NakamaNetworkContext dbContext, IThrottleService throttlingService) : base(CacheItemType.Ship, dbContext, throttlingService)
+        public ShipController(NakamaNetworkContext dbContext, IThrottleService throttlingService) : base(dbContext, throttlingService)
         {
         }
     }

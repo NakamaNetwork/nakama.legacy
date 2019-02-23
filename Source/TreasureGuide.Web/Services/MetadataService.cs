@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using HeyRed.MarkdownSharp;
+using MarkdownSharp;
 using Microsoft.EntityFrameworkCore;
 using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Models;

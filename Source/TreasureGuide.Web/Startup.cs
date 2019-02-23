@@ -1,164 +1,103 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Text;
-using AspNet.Security.OAuth.Discord;
-using AspNet.Security.OAuth.Reddit;
-using AspNet.Security.OAuth.Twitch;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using TreasureGuide.Web.Configurations;
-using TreasureGuide.Common.Helpers;
-using TreasureGuide.Common.Models;
+using NakamaNetwork.Entities.Models;
 
-namespace TreasureGuide.Web
+namespace NakamaNetwork.Web
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
-
-            if (env.IsDevelopment())
-            {
-                builder.AddUserSecrets<Startup>();
-            }
-
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
-
-            var secretKey = Configuration["Authentication:Jwt:Key"];
-            SigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
-        public SymmetricSecurityKey SigningKey { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ServiceConfig.Configure(services, Configuration, SigningKey);
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.AddDbContext<NakamaNetworkContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddEntityFrameworkStores<NakamaNetworkContext>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAuthentication()
+                .AddGoogle(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Google:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                })
+                .AddFacebook(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Facebook:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Facebook:ClientSecret"];
+                })
+                .AddTwitter(o =>
+                {
+                    o.ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"];
+                    o.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
+                    o.RetrieveUserDetails = true;
+                }).AddReddit(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Reddit:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Reddit:ClientSecret"];
+                }).AddTwitch(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Twitch:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Twitch:ClientSecret"];
+                }).AddDiscord(o =>
+                {
+                    o.ClientId = Configuration["Authentication:Discord:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Discord:ClientSecret"];
+                    o.Scope.Add("identity");
+                    o.Scope.Add("email");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddFile("logs/nakama-errors-{Date}.txt", LogLevel.Error);
-            loggerFactory.AddFile("logs/nakama-{Date}.txt", LogLevel.Warning);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                loggerFactory.AddDebug();
             }
             else
             {
-                app.UseStatusCodePages();
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
-            app.UseRewriter(new RewriteOptions()
-                .AddRedirectToHttpsPermanent()
-                .Add(new RedirectWwwRule()));
-
-            app.UseResponseCompression();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
-            app.UseIdentity();
+            app.UseAuthentication();
 
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
-
-                ValidateAudience = true,
-                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = SigningKey,
-
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
-
-                ClockSkew = TimeSpan.Zero
-            };
-
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
-            });
-
-            app.UseGoogleAuthentication(new GoogleOptions
-            {
-                ClientId = Configuration["Authentication:Google:ClientId"],
-                ClientSecret = Configuration["Authentication:Google:ClientSecret"]
-            });
-
-            app.UseFacebookAuthentication(new FacebookOptions
-            {
-                ClientId = Configuration["Authentication:Facebook:ClientId"],
-                ClientSecret = Configuration["Authentication:Facebook:ClientSecret"]
-            });
-
-            app.UseTwitterAuthentication(new TwitterOptions
-            {
-                ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"],
-                ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"],
-                RetrieveUserDetails = true
-            });
-
-            app.UseRedditAuthentication(new RedditAuthenticationOptions
-            {
-                ClientId = Configuration["Authentication:Reddit:ClientId"],
-                ClientSecret = Configuration["Authentication:Reddit:ClientSecret"]
-            });
-
-            app.UseTwitchAuthentication(new TwitchAuthenticationOptions
-            {
-                ClientId = Configuration["Authentication:Twitch:ClientId"],
-                ClientSecret = Configuration["Authentication:Twitch:ClientSecret"]
-            });
-
-            app.UseDiscordAuthentication(new DiscordAuthenticationOptions
-            {
-                ClientId = Configuration["Authentication:Discord:ClientId"],
-                ClientSecret = Configuration["Authentication:Discord:ClientSecret"],
-                Scope = { "identify", "email" }
-            });
-            
-            RoleConfig.Configure(roleManager);
-
-            app.Use(async (context, next) =>
-            {
-                await next();
-
-                if (context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api"))
-                {
-                    context.Items[MetaResultModel.StateKey] = context.Request.Path.Value;
-                    context.Request.Path = "/";
-                    context.Response.StatusCode = 200;
-                    await next();
-                }
-            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    "default",
-                    "{controller=Home}/{action=Index}/{id?}");
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

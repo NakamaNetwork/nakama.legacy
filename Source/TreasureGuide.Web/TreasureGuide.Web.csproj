@@ -11,14 +11,22 @@
         <PackageReference Include="AspNet.Security.OAuth.Discord" Version="2.0.1" />
         <PackageReference Include="AspNet.Security.OAuth.Reddit" Version="2.0.1" />
         <PackageReference Include="AspNet.Security.OAuth.Twitch" Version="2.0.1" />
+        <PackageReference Include="MarkdownSharp" Version="2.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+        <PackageReference Include="PayPal" Version="1.9.1" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\NakamaNetwork.Common\NakamaNetwork.Common.csproj" />
         <ProjectReference Include="..\NakamaNetwork.Entities\NakamaNetwork.Entities.csproj" />
     </ItemGroup>
     <ItemGroup>
+        <None Update="src\models\generated\error-view-model.tst.gen">
+          <CustomToolNamespace>Models\ErrorViewModel.cs</CustomToolNamespace>
+        </None>
+        <None Update="src\models\generated\notification-model.tst.gen">
+          <CustomToolNamespace>..\NakamaNetwork.Common\Models\NotificationModels\NotificationModel.cs</CustomToolNamespace>
+        </None>
         <None Update="src\models\imported.ts">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>

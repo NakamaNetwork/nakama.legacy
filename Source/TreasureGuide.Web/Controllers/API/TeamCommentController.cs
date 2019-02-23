@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,6 +14,7 @@ using NakamaNetwork.Entities.Helpers;
 using TreasureGuide.Web.Controllers.API.Generic;
 using TreasureGuide.Web.Helpers;
 using TreasureGuide.Web.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace TreasureGuide.Web.Controllers.API
 {
@@ -65,10 +65,6 @@ namespace TreasureGuide.Web.Controllers.API
                         UserId = userId,
                         Value = 1
                     }
-                };
-                entity.TeamCommentScore = new TeamCommentScore
-                {
-                    Value = 1
                 };
             }
             entity.EditedById = userId;
@@ -154,7 +150,7 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortDate:
                     return results.OrderBy(x => x.SubmittedDate, !model.SortDesc);
                 default:
-                    return results.OrderBy(x => x.TeamCommentScore != null ? x.TeamCommentScore.Value : 0, !model.SortDesc);
+                    return results.OrderBy(x => x.TeamCommentVotes.DefaultIfEmpty().Sum(y => y.Value), !model.SortDesc);
             }
         }
 
@@ -185,21 +181,10 @@ namespace TreasureGuide.Web.Controllers.API
             }
             vote.Value = (short)value;
             await DbContext.SaveChangesSafe();
-            await UpdateTeamCommentScores(commentId);
-            var returnValue = (await DbContext.TeamCommentScores.SingleOrDefaultAsync(x => x.TeamCommentId == commentId))?.Value ?? 0;
+            var returnValue = await DbContext.TeamCommentVotes.DefaultIfEmpty().SumAsync(x => x.Value);
             return Ok(returnValue);
         }
 
-        private async Task UpdateTeamCommentScores(int commentId)
-        {
-            var set = await DbContext.TeamCommentScores.SingleOrDefaultAsync(x => x.TeamCommentId == commentId);
-            if (set != null)
-            {
-                var score = await DbContext.TeamCommentVotes.Where(x => x.TeamCommentId == commentId).Select(x => x.Value).DefaultIfEmpty().SumAsync(x => x);
-                set.Value = score;
-                await DbContext.SaveChangesSafe();
-            }
-        }
 
         [HttpPost]
         [Authorize]

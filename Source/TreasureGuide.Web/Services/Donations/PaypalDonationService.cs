@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using PayPal.Api;
 using NakamaNetwork.Entities.Models;
 using TreasureGuide.Common.Models.DonationModels;
+using NakamaNetwork.Entities.EnumTypes;
 
 namespace TreasureGuide.Web.Services.Donations
 {

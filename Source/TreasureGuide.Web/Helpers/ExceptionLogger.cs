@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Data.Entity.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace TreasureGuide.Common.Helpers
 {
@@ -35,18 +34,6 @@ namespace TreasureGuide.Common.Helpers
 
         private void LogException(Exception contextException)
         {
-            var validation = contextException as DbEntityValidationException;
-            if (validation != null)
-            {
-                var errorMessages = validation.EntityValidationErrors
-                    .SelectMany(x => x.ValidationErrors)
-                    .Select(x => x.ErrorMessage);
-
-                var fullErrorMessage = string.Join("; ", errorMessages);
-
-                var exceptionMessage = String.Concat(validation.Message, " The validation errors are: ", fullErrorMessage);
-                contextException = new DbEntityValidationException(exceptionMessage, validation.EntityValidationErrors);
-            }
             _logger.LogError(contextException.ToString());
         }
     }
