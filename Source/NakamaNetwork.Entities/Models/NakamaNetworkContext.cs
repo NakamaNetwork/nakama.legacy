@@ -336,7 +336,7 @@ namespace NakamaNetwork.Entities.Models
                 entity
                 .Property(d => d.Role)
                 .HasConversion(
-                    v => (short)v,
+                    v => (int)v,
                     v => (UnitRole)v
                  );
 
