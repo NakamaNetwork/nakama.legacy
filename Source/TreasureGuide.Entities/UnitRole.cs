@@ -31,7 +31,7 @@ namespace TreasureGuide.Entities
         ParalysisReducer = 8192,
         DamageThresholdReducer = 16384,
         AffinityBooster = 32768,
-        ChainLocker = 65536,
+        ChainManipulator = 65536,
         BarrierReducer = 131072,
         SilenceReducer = 262144,
         BindReducer = 524288,
@@ -40,6 +40,7 @@ namespace TreasureGuide.Entities
         CooldownReducer = 4194304,
         OrbLocker = 8388608,
         AdditionalDamageDealer = 16777216,
-        EndOfTurnDamageReducer = 33554432
+        EndOfTurnDamageReducer = 33554432,
+        BurnReducer = 67108864
     }
 }

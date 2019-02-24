@@ -1970,7 +1970,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="ParalysisReducer" Value="8192" />
           <Member Name="DamageThresholdReducer" Value="16384" />
           <Member Name="AffinityBooster" Value="32768" />
-          <Member Name="ChainLocker" Value="65536" />
+          <Member Name="ChainManipulator" Value="65536" />
           <Member Name="BarrierReducer" Value="131072" />
           <Member Name="SilenceReducer" Value="262144" />
           <Member Name="BindReducer" Value="524288" />
@@ -1980,6 +1980,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="OrbLocker" Value="8388608" />
           <Member Name="AdditionalDamageDealer" Value="16777216" />
           <Member Name="EndOfTurnDamageReducer" Value="33554432" />
+          <Member Name="BurnReducer" Value="67108864" />
         </EnumType>
                 <Association Name="TeamBookmarks">
                     <End Type="tcdbModel.Team" Role="Team" Multiplicity="*" />
