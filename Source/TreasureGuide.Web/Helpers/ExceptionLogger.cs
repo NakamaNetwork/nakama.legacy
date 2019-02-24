@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -19,7 +21,7 @@ namespace TreasureGuide.Common.Helpers
         public bool IsReusable { get; } = true;
     }
 
-    public class ExceptionLoggerFilter : IExceptionFilter
+    public class ExceptionLoggerFilter : ExceptionFilterAttribute
     {
         private readonly ILogger _logger;
 
@@ -28,12 +30,19 @@ namespace TreasureGuide.Common.Helpers
             _logger = factory.CreateLogger<ExceptionLoggerFilter>();
         }
 
-        public void OnException(ExceptionContext context)
+        public override void OnException(ExceptionContext context)
         {
-            LogException(context.Exception);
+            var exceptionMessage = LogException(context.Exception);
+            var pathMessage = LogRequest(context.HttpContext.Request);
+            _logger.LogError(String.Join(" : ", pathMessage, exceptionMessage));
         }
 
-        private void LogException(Exception contextException)
+        private string LogRequest(HttpRequest request)
+        {
+            return $"[{request.Method}]{request.Path}{request.QueryString}";
+        }
+
+        private string LogException(Exception contextException)
         {
             var validation = contextException as DbEntityValidationException;
             if (validation != null)
@@ -47,7 +56,7 @@ namespace TreasureGuide.Common.Helpers
                 var exceptionMessage = String.Concat(validation.Message, " The validation errors are: ", fullErrorMessage);
                 contextException = new DbEntityValidationException(exceptionMessage, validation.EntityValidationErrors);
             }
-            _logger.LogError(contextException.ToString());
+            return contextException.Message;
         }
     }
 }
