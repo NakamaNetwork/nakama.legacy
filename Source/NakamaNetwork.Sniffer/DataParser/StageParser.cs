@@ -138,6 +138,11 @@ namespace NakamaNetwork.Sniffer.DataParser
             aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Lace Missions Fortnight Event" });
             aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Smoker Tashigi Missions Fortnight Event" });
             aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Double Character Introduction" });
+
+            var coop = HandleSingle("Co-operative Missions", 2161, true, StageType.Special);
+            stages.Add(coop);
+            aliases.Add(new StageAlias { StageId = coop.Id, Name = "coop missions" });
+            aliases.Add(new StageAlias { StageId = coop.Id, Name = "co-op missions" });
         }
 
         private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)

@@ -108,6 +108,7 @@ namespace NakamaNetwork.Sniffer.DataParser
                 .Replace("bb_", "")
                 .Replace("db_", "")
                 .Replace("se_", "")
+                .Replace("co_", "")
                 .Replace("cc_", "");
         }
 

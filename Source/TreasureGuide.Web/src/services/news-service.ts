@@ -7,11 +7,23 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '02/24/19',
+        lines: [
+            'Added several extra Generic Unit roles.',
+            'Now allowing up to two roles to be defined per generic unit.',
+            'Added additional logging in backend calls.'
+        ]
+    }, {
+        header: '02/02/19',
+        lines: [
+            'Rewrote Google authentication module in preparation for Google Plus deprecation this month.'
+        ]
+    }, {
         header: '01/14/19',
         lines: [
             'Revised one of the weekend\'s "significantly faster" database updates as it was causing things to go significantly not faster.'
         ]
-    },{
+    }, {
         header: '01/12/19',
         lines: [
             'Happy first anniversary, Nakama Network!',
