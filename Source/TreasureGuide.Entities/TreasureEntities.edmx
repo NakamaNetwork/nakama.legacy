@@ -197,7 +197,7 @@
           <Property Name="Position" Type="tinyint" Nullable="false" />
           <Property Name="Type" Type="smallint" Nullable="false" />
           <Property Name="Class" Type="smallint" Nullable="false" />
-          <Property Name="Role" Type="smallint" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
           <Property Name="Sub" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamMinis">
@@ -1952,8 +1952,8 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                         </Dependent>
                     </ReferentialConstraint>
                 </Association>
-                <EnumType Name="UnitRole" UnderlyingType="Int16" IsFlags="true">
-                    <Member Name="Unknown" Value="0" />
+                <EnumType Name="UnitRole" UnderlyingType="Int32" IsFlags="true">
+          <Member Name="Unknown" Value="0" />
           <Member Name="Beatstick" Value="1" />
           <Member Name="DamageReducer" Value="2" />
           <Member Name="DefenseReducer" Value="4" />
@@ -1966,6 +1966,20 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="Healer" Value="512" />
           <Member Name="Zombie" Value="1024" />
           <Member Name="Nuker" Value="2048" />
+          <Member Name="AttackDownReducer" Value="4096" />
+          <Member Name="ParalysisReducer" Value="8192" />
+          <Member Name="DamageThresholdReducer" Value="16384" />
+          <Member Name="AffinityBooster" Value="32768" />
+          <Member Name="ChainLocker" Value="65536" />
+          <Member Name="BarrierReducer" Value="131072" />
+          <Member Name="SilenceReducer" Value="262144" />
+          <Member Name="BindReducer" Value="524288" />
+          <Member Name="BlindReducer" Value="1048576" />
+          <Member Name="SkillLockReducer" Value="2097152" />
+          <Member Name="CooldownReducer" Value="4194304" />
+          <Member Name="OrbLocker" Value="8388608" />
+          <Member Name="AdditionalDamageDealer" Value="16777216" />
+          <Member Name="EndOfTurnDamageReducer" Value="33554432" />
         </EnumType>
                 <EntityType Name="TeamGenericSlot">
                     <Key>

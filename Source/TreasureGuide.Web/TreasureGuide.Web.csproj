@@ -63,6 +63,165 @@
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <ItemGroup>
+      <None Update="src\models\generated\access-token-model.tst.gen">
+        <CustomToolNamespace>Models\ProfileModels\AccessTokenModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\box-constants.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Constants\BoxConstants.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\box-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\BoxModels\BoxModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\box-search-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\BoxModels\BoxSearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\box-unit-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\BoxModels\BoxUnitModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\box-update-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\BoxModels\BoxUpdateModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\cache-item-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\CacheItemType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\donation-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\DonationModels\DonationModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\donation-result-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\DonationModels\DonationResultModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\donation-search-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\DonationModels\DonationSearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\donation-submission-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\DonationModels\DonationSubmissionModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\donation-verification-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\DonationModels\DonationVerificationModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\external-login-confirmation-view-model.tst.gen">
+        <CustomToolNamespace>Models\AccountViewModels\ExternalLoginConfirmationViewModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\g-c-r-result-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\GCRModels\GCRResultModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\individual-unit-flags.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\IndividualUnitFlags.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\meta-result-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\MetaResultModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\notification-event-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\NotificationEventType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\notification-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\NotificationModels\NotificationModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\payment-state.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\PaymentState.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\payment-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\PaymentType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\profile-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\ProfileModels\ProfileModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\role-constants.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Constants\RoleConstants.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\schedule-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\ScheduleModels\ScheduleModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\search-constants.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Constants\SearchConstants.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\search-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\SearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\ship-stub-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\ShipModels\ShipStubModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\socket-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\SocketType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\stage-search-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\StageModels\StageSearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\stage-stub-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\StageModels\StageStubModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\stage-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\StageType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-comment-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamCommentModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-comment-report-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamCommentReportModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-comment-search-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamCommentSearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-comment-vote-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamCommentVoteModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-credit-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamCreditModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-credit-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\TeamCreditType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-generic-slot-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamGenericSlotModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-import-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamImportModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-report-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamReportModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-search-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamSearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-socket-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamSocketModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-unit-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamUnitModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-video-models.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamVideoModels.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\team-vote-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\TeamVoteModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\unit-class.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\UnitClass.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\unit-flag.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\UnitFlag.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\unit-role.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\UnitRole.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\unit-search-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\UnitModels\UnitSearchModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\unit-stub-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\UnitModels\UnitStubModel.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\unit-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\UnitType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\user-preference-type.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Entities\UserPreferenceType.cs</CustomToolNamespace>
+      </None>
+      <None Update="src\models\generated\wiki-search-result-model.tst.gen">
+        <CustomToolNamespace>..\TreasureGuide.Common\Models\TeamModels\WikiSearchResultModel.cs</CustomToolNamespace>
+      </None>
       <None Update="src\models\imported.ts">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

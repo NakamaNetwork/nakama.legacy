@@ -4,11 +4,11 @@
         <button type="button" class="unit-button" class.bind="unitOwnerClass" click.delegate="clicked()" style.bind="backgroundStyle">
             <i class.bind="iconClass" if.bind="!model"></i>
             <div class="generic-container" if.bind="generic">
+                <div class="generic-roles" class.bind="countName">
+                    <img repeat.for="item of genericRoles" src="/content/roles/${item.id}.png" title="${item.name}" />
+                </div>
                 <div class="generic-types">
                     <img repeat.for="item of genericTypes" src="/content/types/${item.id}.png" title="${item.name}" />
-                </div>
-                <div class="generic-roles">
-                    <img repeat.for="item of genericRoles" src="/content/roles/${item.id}.png" title="${item.name}" />
                 </div>
                 <div class="generic-classes">
                     <img repeat.for="item of genericClasses" src="/content/classes/${item.id}.png" title="${item.name}" />

@@ -158,6 +158,7 @@ export class UnitDisplay {
         return 'fa fa-fw fa-2x fa-' + ((this.unit || this.generic) ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
     }
 
+
     @computedFrom('info', 'editable', 'unit')
     get link() {
         return (this.info && !this.editable && this.unit)
@@ -187,6 +188,11 @@ export class UnitDisplay {
             return NumberHelper.splitEnum(this.model.role, UnitRole, true);
         }
         return [];
+    }
+
+    @computedFrom('genericRoles')
+    get countName() {
+        return 'generic-' + this.genericRoles.length;
     }
 
     @computedFrom('unit', 'generic')

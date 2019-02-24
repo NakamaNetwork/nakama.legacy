@@ -726,7 +726,21 @@ export enum UnitRole {
     OrbShuffler = 256,
     Healer = 512,
     Zombie = 1024,
-    Nuker = 2048
+    Nuker = 2048,
+    AttackDownReducer = 4096,
+    ParalysisReducer = 8192,
+    DamageThresholdReducer = 16384,
+    AffinityBooster = 32768,
+    ChainLocker = 65536,
+    BarrierReducer = 131072,
+    SilenceReducer = 262144,
+    BindReducer = 524288,
+    BlindReducer = 1048576,
+    SkillLockReducer = 2097152,
+    CooldownReducer = 4194304,
+    OrbLocker = 8388608,
+    AdditionalDamageDealer = 16777216,
+    EndOfTurnDamageReducer = 33554432
 }
 
 
