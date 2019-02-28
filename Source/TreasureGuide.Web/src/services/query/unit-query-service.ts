@@ -21,6 +21,7 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
                 case '0742': return 'https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png';
                 case '2440': return '/content/units/2440.png';
                 case '2441': return '/content/units/2441.png';
+                case '2500': return '/content/units/2500.png';
                 case '2502': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5013.png';
                 case '2503': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5014.png';
                 case '2504': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5015.png';
@@ -31,6 +32,15 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
                 case '2511': return '/content/units/2511.png';
                 case '2512': return '/content/units/2512.png';
                 case '2513': return '/content/units/2513.png';
+                case '2514': return '/content/units/2514.png';
+                case '2515': return '/content/units/2515.png';
+                case '2516': return '/content/units/2516.png';
+                case '2517': return '/content/units/2517.png';
+                case '2518': return '/content/units/2518.png';
+                case '2519': return '/content/units/2519.png';
+                case '2520': return '/content/units/2520.png';
+                case '2521': return '/content/units/2521.png';
+                case '2522': return '/content/units/2522.png';
             }
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
         }

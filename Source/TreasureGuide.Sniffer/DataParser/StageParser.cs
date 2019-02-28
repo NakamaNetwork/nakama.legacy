@@ -140,10 +140,17 @@ namespace TreasureGuide.Sniffer.DataParser
             aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Smoker Tashigi Missions Fortnight Event" });
             aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Double Character Introduction" });
 
-            var coop = HandleSingle("Co-operative Missions", 2161, true, StageType.Special);
+            var coop = HandleSingle("Co-op Missions: Powerful Foes", 2161, true, StageType.Special);
             stages.Add(coop);
-            aliases.Add(new StageAlias { StageId = coop.Id, Name = "coop missions" });
             aliases.Add(new StageAlias { StageId = coop.Id, Name = "co-op missions" });
+            aliases.Add(new StageAlias { StageId = coop.Id, Name = "co-operative missions" });
+            aliases.Add(new StageAlias { StageId = coop.Id, Name = "cooperative missions" });
+
+            var coop2 = HandleSingle("Co-op Missions: Big Mom", 2234, true, StageType.Special);
+            stages.Add(coop2);
+            aliases.Add(new StageAlias { StageId = coop2.Id, Name = "co-op missions" });
+            aliases.Add(new StageAlias { StageId = coop2.Id, Name = "co-operative missions" });
+            aliases.Add(new StageAlias { StageId = coop2.Id, Name = "cooperative missions" });
         }
 
         private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)
