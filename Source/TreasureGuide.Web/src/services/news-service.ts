@@ -10,6 +10,7 @@ export class NewsService {
         header: '03/29/19',
         lines: [
             'Updated look-and-feel of comments section to be much more mobile-friendly.',
+            'Fixed a bug that prevented comment replies from being editable.',
             'Removed the forced redirect to the About page when first browsing to Nakama Network.',
             'Removed the big title box on the main page.'
         ]

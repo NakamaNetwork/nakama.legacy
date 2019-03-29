@@ -43,17 +43,16 @@ export class CommentCollection {
                     teamId = this.team.id;
                 }
                 var newComment = !model;
-                if (newComment) {
-                    model = { id: id, teamId: teamId, parentId: parentId }
-                };
-                model.text = <string>result.output;
-                this.teamCommentService.save(model).then(result => {
+                var saved = { id: id, teamId: teamId, parentId: parentId, text: result.output };
+                this.teamCommentService.save(saved).then(result => {
                     this.alertService.success('Thank you! Your comment has been submitted.');
                     if (newComment && parentId) {
                         var parent = this.comments.find(x => x.id == parentId);
                         if (parent) {
                             this.loadMore(parent);
                         }
+                    } else {
+                        model.text = saved.text;
                     }
                 }).catch(response => this.alertService.reportError(response));
             }

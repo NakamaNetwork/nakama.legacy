@@ -695,10 +695,6 @@ team-box {
 
 .comment-area {
     background-color: $background-color;
-    border: 1px solid $grey-color;
-    border-radius: 20px;
-    margin: 10px;
-    padding: 0 10px;
 
     p {
         margin-bottom: 0 !important;
@@ -711,7 +707,6 @@ team-box {
             background-color: $background-color;
             border: 1px solid $grey-color;
             border-radius: 20px;
-            margin: 10px;
             padding: 0 20px;
 
             &.deleted {
@@ -725,7 +720,12 @@ team-box {
         }
 
         .comment-collection {
-            padding-left: 25px;
+            .comment {
+                border: unset;
+                border-top: 1px solid $grey-color;
+                border-radius: unset;
+                padding: 0 10px;
+            }
         }
     }
 }
