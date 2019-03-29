@@ -61,7 +61,7 @@ export class UnitDisplay {
         return null;
     }
 
-    @computedFrom('tooltip', 'model', 'model.name', 'model.class', 'model.role', 'model.type')
+    @computedFrom('tooltip', 'model', 'model.name', 'model.class', 'model.role', 'model.type', 'unit')
     get name() {
         if (this.tooltip && this.model) {
             if (this.model.name) {
