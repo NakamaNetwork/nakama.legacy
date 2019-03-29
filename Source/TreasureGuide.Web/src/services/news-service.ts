@@ -7,6 +7,13 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '03/29/19',
+        lines: [
+            'Updated look-and-feel of comments section to be much more mobile-friendly.',
+            'Removed the forced redirect to the About page when first browsing to Nakama Network.',
+            'Removed the big title box on the main page.'
+        ]
+    },{
         header: '02/24/19',
         lines: [
             'Added several extra Generic Unit roles.',
