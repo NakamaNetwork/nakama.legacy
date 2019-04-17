@@ -1,11 +1,11 @@
 @inject TreasureGuide.Web.Services.IAuthExportService AuthExportService
 <script id="auth_token_setter" type="text/javascript">
     var token = @Json.Serialize(await AuthExportService.Get(User));
-    sessionStorage['access_token'] = token['token'] ?token['token'] : '';
-    sessionStorage['access_token_exp'] = token['expiration'] ? token['expiration'] : '';
+    localStorage['access_token'] = token['token'] ?token['token'] : '';
+    localStorage['access_token_exp'] = token['expiration'] ? token['expiration'] : '';
 
     var profile = @Json.Serialize(await AuthExportService.GetUserInfo(User));
-    sessionStorage['user_profile'] = profile ? JSON.stringify(profile) : '';
+    localStorage['user_profile'] = profile ? JSON.stringify(profile) : '';
 
     // SUICIDE
     var currentScript;

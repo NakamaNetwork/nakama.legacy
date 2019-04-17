@@ -26,7 +26,7 @@ export class AccountService {
     }
 
     private loadProfile() {
-        var info = sessionStorage['user_profile'];
+        var info = localStorage['user_profile'];
         if (info) {
             var deserialized = JSON.parse(info);
             this.userProfile = deserialized;
@@ -34,7 +34,7 @@ export class AccountService {
                 this.startHeartbeat();
                 this.doHeartbeat();
             }
-        } else if (sessionStorage['access_token']) {
+        } else if (localStorage['access_token']) {
             this.logout(true);
         }
     }
@@ -105,7 +105,7 @@ export class AccountService {
             lock: true
         }).whenClosed(result => {
             if (!result.wasCancelled) {
-                sessionStorage.clear();
+                localStorage.clear();
                 window.location.href = '/Account/Logout';
             } else {
                 this.startHeartbeat();

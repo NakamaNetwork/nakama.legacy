@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '04/16/19',
+        lines: [
+            'Updated access token storage mechanism to reduce the amount of unwanted logouts.',
+        ]
+    },{
         header: '03/29/19',
         lines: [
             'Updated look-and-feel of comments section to be much more mobile-friendly.',
