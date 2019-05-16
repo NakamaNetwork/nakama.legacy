@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '05/16/19',
+        lines: [
+            'Added new "Rainbowed" flag for Box Units.',
+        ]
+    },{
         header: '04/16/19',
         lines: [
             'Updated access token storage mechanism to reduce the amount of unwanted logouts.',

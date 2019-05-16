@@ -153,6 +153,13 @@ export interface IDonationVerificationModel {
 }
 
 
+export interface IErrorViewModel {
+    requestId: string;
+    showRequestId: boolean;
+    
+}
+
+
 export interface IExternalLoginConfirmationViewModel {
     userName: string;
     email: string;
@@ -217,7 +224,8 @@ export enum IndividualUnitFlags {
     SkillLevelMaxed = 2,
     SocketsMaxed = 4,
     CottonCandyMaxed = 8,
-    LimitBroken = 16
+    LimitBroken = 16,
+    Rainbowed = 64
 }
 
 
@@ -731,7 +739,7 @@ export enum UnitRole {
     ParalysisReducer = 8192,
     DamageThresholdReducer = 16384,
     AffinityBooster = 32768,
-    ChainLocker = 65536,
+    ChainManipulator = 65536,
     BarrierReducer = 131072,
     SilenceReducer = 262144,
     BindReducer = 524288,
@@ -740,7 +748,8 @@ export enum UnitRole {
     CooldownReducer = 4194304,
     OrbLocker = 8388608,
     AdditionalDamageDealer = 16777216,
-    EndOfTurnDamageReducer = 33554432
+    EndOfTurnDamageReducer = 33554432,
+    BurnReducer = 67108864
 }
 
 

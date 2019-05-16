@@ -2123,14 +2123,15 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     </ReferentialConstraint>
                 </Association>
                 <EnumType Name="IndividualUnitFlags">
-                    <Member Name="Unknown" Value="0" />
-                    <Member Name="Favorite" Value="32" />
-                    <Member Name="LevelMaxed" Value="1" />
-                    <Member Name="SkillLevelMaxed" Value="2" />
-                    <Member Name="SocketsMaxed" Value="4" />
-                    <Member Name="CottonCandyMaxed" Value="8" />
-                    <Member Name="LimitBroken" Value="16" />
-                </EnumType>
+          <Member Name="Unknown" Value="0" />
+          <Member Name="Favorite" Value="32" />
+          <Member Name="LevelMaxed" Value="1" />
+          <Member Name="SkillLevelMaxed" Value="2" />
+          <Member Name="SocketsMaxed" Value="4" />
+          <Member Name="CottonCandyMaxed" Value="8" />
+          <Member Name="LimitBroken" Value="16" />
+          <Member Name="Rainbowed" Value="64" />
+        </EnumType>
                 <EntityType Name="StageAlias">
                     <Key>
                         <PropertyRef Name="StageId" />
