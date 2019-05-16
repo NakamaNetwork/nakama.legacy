@@ -89,6 +89,7 @@ namespace TreasureGuide.Sniffer.DataParser
             trimmed = MultiCommentRegex.Replace(trimmed, "");
             trimmed = SingleCommentRegex.Replace(trimmed, "");
             return trimmed
+                .Replace("ambush: ywb_n", "ambush: 3354")
                 .Replace("ambush: ywb", "ambush: 1258")
                 .Replace("ambush: shanks", "ambush: 1380")
                 .Replace("ambush: cavendish", "ambush: 1530")
