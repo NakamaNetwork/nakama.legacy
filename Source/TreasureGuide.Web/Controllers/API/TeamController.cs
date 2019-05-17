@@ -495,31 +495,44 @@ namespace TreasureGuide.Web.Controllers.API
                    await DbContext.TeamVideos.AnyAsync(x => x.Id == videoId && x.UserId == userId);
         }
 
+        public class TeamMiniBuildModel
+        {
+            public int Low { get; set; }
+            public int High { get; set; }
+        }
+
         [HttpPost]
         [Authorize(Roles = RoleConstants.Administrator)]
-        [ActionName("UpdateAllMinis")]
+        [ActionName("UpdateMinis")]
         [Route("[action]")]
-        public async Task<IActionResult> UpdateAllMinis()
+        public async Task<IActionResult> UpdateMinis([FromBody] TeamMiniBuildModel model)
         {
-            int offset = 0;
-            int step = 50;
-            IQueryable<int> query;
-            IEnumerable<int> taken = Enumerable.Empty<int>();
-            do
+            var bad = "";
+            var total = 0;
+            var saved = false;
+            for (int i = model.Low; i <= model.High; i++)
             {
-                query = DbContext.Teams.Select(x=>x.Id).OrderBy(x => x).Skip(offset).Take(step);
-                taken = query.ToList();
-                if (taken.Any())
+                saved = false;
+                try
                 {
-                    foreach (var id in taken)
-                    {
-                        await UpdateTeamMinis(id);
-                    }
+                    await UpdateTeamMinis(i, false);
+                    total++;
                 }
-                offset += 50;
+                catch (Exception e)
+                {
+                    bad += i + ",";
+                }
+                if (i % 50 == 0)
+                {
+                    await DbContext.SaveChangesSafe();
+                    saved = true;
+                }
+            }
+            if (!saved)
+            {
                 await DbContext.SaveChangesSafe();
-            } while (taken.Any());
-            return Ok();
+            }
+            return Ok(new { Message = $"Updated {total}, with Bads: {bad}" });
         }
 
         public const string ImportId = "112cf4e4-cb26-4293-afa2-e663785fd276";
