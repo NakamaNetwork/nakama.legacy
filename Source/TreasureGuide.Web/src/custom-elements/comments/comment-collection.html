@@ -1,5 +1,5 @@
 <template>
-    <div repeat.for="comment of comments" class="row comment" class.bind="(comment.reported ? 'reported ' : '') + (comment.deleted ? 'deleted' : '')">
+    <div repeat.for="comment of comments" class="row comment" class.bind="(comment.reported ? 'reported ' : '') + (comment.deleted ? 'deleted' : '') + (comment.mine ? 'mine' : '')">
         <div class="row">
             <div class="col m8">
                 <a route-href="route: profile; params.bind: { id: submittedByName }">

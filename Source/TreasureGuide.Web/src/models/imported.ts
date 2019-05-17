@@ -409,6 +409,7 @@ export interface ITeamCommentStubModel {
     deleted: boolean;
     reported: boolean;
     canEdit: boolean;
+    mine: boolean;
     myVote: number;
     score: number;
     submittedById: string;
@@ -428,6 +429,7 @@ export interface ITeamCommentDetailModel {
     deleted: boolean;
     reported: boolean;
     canEdit: boolean;
+    mine: boolean;
     myVote: number;
     score: number;
     submittedById: string;

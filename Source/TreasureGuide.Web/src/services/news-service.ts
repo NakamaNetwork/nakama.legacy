@@ -10,6 +10,7 @@ export class NewsService {
         header: '05/16/19',
         lines: [
             'Added new "Rainbowed" flag for Box Units.',
+            'Your own comments will now be highlighted in the comments lists.',
             'Adjusted session logic to hopefully cut down on unexpected logouts.'
         ]
     },{

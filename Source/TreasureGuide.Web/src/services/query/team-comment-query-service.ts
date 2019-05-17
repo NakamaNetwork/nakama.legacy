@@ -67,6 +67,7 @@ export class TeamCommentStubModel implements ITeamCommentStubModel {
     public deleted: boolean;
     public reported: boolean;
     public canEdit: boolean;
+    public mine: boolean;
     public myVote: number;
     public score: number;
     public submittedById: string;

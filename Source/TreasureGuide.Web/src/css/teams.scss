@@ -717,6 +717,10 @@ team-box {
             &.reported {
                 background-color: lighten($warning-color, 50);
             }
+
+            &.mine {
+                background-color: lighten($info-color, 60);
+            }
         }
 
         .comment-collection {

@@ -14,6 +14,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool CanEdit { get; set; }
+        public bool Mine { get; set; }
 
         public int MyVote { get; set; }
         public int Score { get; set; }
@@ -38,6 +39,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool CanEdit { get; set; }
+        public bool Mine { get; set; }
 
         public int MyVote { get; set; }
         public int Score { get; set; }
