@@ -3,24 +3,17 @@ import { Router } from 'aurelia-router';
 import { IMyProfileModel, IProfileDetailModel, RoleConstants } from '../models/imported';
 import { DialogService } from 'aurelia-dialog';
 import { AlertDialog, AlertDialogViewModel } from '../custom-elements/dialogs/alert-dialog';
-import { HeartbeatQueryService } from './query/heartbeat-query-service';
 
 @autoinject
 export class AccountService {
     private router: Router;
     private dialog: DialogService;
-    private heartbeat: HeartbeatQueryService;
-
-    private heartbeatTimeout;
-    private heartbeatFailures = 0;
-    private heartbeatFailMax = 3;
-
+    
     public userProfile: IMyProfileModel;
 
-    constructor(router: Router, dialog: DialogService, heartbeat: HeartbeatQueryService) {
+    constructor(router: Router, dialog: DialogService) {
         this.router = router;
         this.dialog = dialog;
-        this.heartbeat = heartbeat;
 
         this.loadProfile();
     }
@@ -30,10 +23,6 @@ export class AccountService {
         if (info) {
             var deserialized = JSON.parse(info);
             this.userProfile = deserialized;
-            if (this.userProfile) {
-                this.startHeartbeat();
-                this.doHeartbeat();
-            }
         } else if (localStorage['access_token']) {
             this.logout(true);
         }
@@ -92,7 +81,6 @@ export class AccountService {
     }
 
     public logout(force?: boolean) {
-        this.stopHeartbeat();
         this.dialog.open({
             viewModel: AlertDialog,
             model: <AlertDialogViewModel>{
@@ -107,37 +95,10 @@ export class AccountService {
             if (!result.wasCancelled) {
                 localStorage.clear();
                 window.location.href = '/Account/Logout';
-            } else {
-                this.startHeartbeat();
             }
         });
     }
-
-    private startHeartbeat(): void {
-        this.stopHeartbeat();
-        this.heartbeatTimeout = setInterval(() => this.doHeartbeat(), this.heartbeatFailures === 0 ? 60000 : 10000);
-    }
-
-    private doHeartbeat(): void {
-        this.heartbeat.heartbeat().then(x => {
-            this.heartbeatFailures = 0;
-            this.startHeartbeat();
-        }).catch(x => {
-            this.heartbeatFailures++;
-            if (this.heartbeatFailures >= this.heartbeatFailMax) {
-                this.logout(true);
-            } else {
-                this.startHeartbeat();
-            }
-        });
-    }
-
-    private stopHeartbeat(): void {
-        if (this.heartbeatTimeout) {
-            clearInterval(this.heartbeatTimeout);
-        }
-    }
-
+    
     public static allRoles: string[] = [
         RoleConstants.Administrator,
         RoleConstants.Moderator,

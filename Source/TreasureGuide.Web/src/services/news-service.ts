@@ -10,6 +10,7 @@ export class NewsService {
         header: '05/16/19',
         lines: [
             'Added new "Rainbowed" flag for Box Units.',
+            'Adjusted session logic to hopefully cut down on unexpected logouts.'
         ]
     },{
         header: '04/16/19',

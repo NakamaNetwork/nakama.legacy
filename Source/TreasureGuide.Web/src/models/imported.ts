@@ -153,13 +153,6 @@ export interface IDonationVerificationModel {
 }
 
 
-export interface IErrorViewModel {
-    requestId: string;
-    showRequestId: boolean;
-    
-}
-
-
 export interface IExternalLoginConfirmationViewModel {
     userName: string;
     email: string;
