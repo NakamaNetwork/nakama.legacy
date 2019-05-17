@@ -33,7 +33,7 @@ namespace TreasureGuide.Sniffer.DataParser
                     EventShip = IsEventShip(name.ToLower())
                 };
                 return ship;
-            });
+            }).Where(x => !x.Name.Contains("ACTIVATED"));
             return models;
         }
 
