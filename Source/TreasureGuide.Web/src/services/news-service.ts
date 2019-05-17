@@ -10,9 +10,10 @@ export class NewsService {
         header: '05/16/19',
         lines: [
             'Added new "Rainbowed" flag for Box Units.',
+            'Unit name input field will now be highlighted when you open the unit menu so you can start typing immediately.',
             'Your own comments will now be highlighted in the comments lists.',
-            'Added 20 character minimum for team guides to encourage better submissions.',
             'Updated notification page to make notification dismissal much smoother.',
+            'Added 20 character minimum for team guides to encourage better submissions.',
             'Finally got around to removing duplicate "SPECIAL ACTIVATED" versions of ships.',
             'Adjusted session logic to hopefully cut down on unexpected logouts.'
         ]
