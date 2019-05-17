@@ -52,7 +52,7 @@ namespace TreasureGuide.Web.Controllers.API
             return result;
         }
 
-        private async Task UpdateTeamMinis(int idValue)
+        private async Task UpdateTeamMinis(int idValue, bool save = true)
         {
             var teamData = await DbContext.Teams.Select(x => new
             {
@@ -96,7 +96,10 @@ namespace TreasureGuide.Web.Controllers.API
                                              x.Flags.HasFlag(UnitFlag.RareRecruitLimited));
                     mini.Type = teamData.Units.Select(x => x.Type).Aggregate((sum, current) => sum & current);
                     mini.Class = teamData.Units.Select(x => x.Class).Aggregate((sum, current) => sum & current);
-                    await DbContext.SaveChangesSafe();
+                    if (save)
+                    {
+                        await DbContext.SaveChangesSafe();
+                    }
                 }
             }
         }
@@ -490,6 +493,33 @@ namespace TreasureGuide.Web.Controllers.API
             var userId = User.GetId();
             return userId != null && User.IsInAnyRole(RoleConstants.Moderator, RoleConstants.Administrator) ||
                    await DbContext.TeamVideos.AnyAsync(x => x.Id == videoId && x.UserId == userId);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.Administrator)]
+        [ActionName("UpdateAllMinis")]
+        [Route("[action]")]
+        public async Task<IActionResult> UpdateAllMinis()
+        {
+            int offset = 0;
+            int step = 50;
+            IQueryable<int> query;
+            IEnumerable<int> taken = Enumerable.Empty<int>();
+            do
+            {
+                query = DbContext.Teams.Select(x=>x.Id).OrderBy(x => x).Skip(offset).Take(step);
+                taken = query.ToList();
+                if (taken.Any())
+                {
+                    foreach (var id in taken)
+                    {
+                        await UpdateTeamMinis(id);
+                    }
+                }
+                offset += 50;
+                await DbContext.SaveChangesSafe();
+            } while (taken.Any());
+            return Ok();
         }
 
         public const string ImportId = "112cf4e4-cb26-4293-afa2-e663785fd276";
