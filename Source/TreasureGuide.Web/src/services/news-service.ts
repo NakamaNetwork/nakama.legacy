@@ -11,6 +11,7 @@ export class NewsService {
         lines: [
             'Added new "Rainbowed" flag for Box Units.',
             'Your own comments will now be highlighted in the comments lists.',
+            'Added 20 character minimum for team guides to encourage better submissions.',
             'Adjusted session logic to hopefully cut down on unexpected logouts.'
         ]
     },{
