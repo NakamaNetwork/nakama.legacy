@@ -45,7 +45,13 @@ export class NotificationsPage {
         }
         query.then(x => {
             this.alertService.success('Notification dismissed.');
-            this.refresh();
+            if (model) {
+                this.notifications = this.notifications.filter(y => {
+                    return y.id != model.id;
+                });
+            } else {
+                this.refresh();
+            }
         });
     }
 

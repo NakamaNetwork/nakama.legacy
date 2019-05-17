@@ -37,6 +37,10 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
                 case '3348': return '/content/units/3348.png';
                 case '3349': return '/content/units/3349.png';
                 case '3350': return '/content/units/3350.png';
+                case '3351': return '/content/units/3351.png';
+                case '3352': return '/content/units/3352.png';
+                case '3353': return '/content/units/3353.png';
+                case '3354': return '/content/units/3354.png';
             }
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
         }
