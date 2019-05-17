@@ -78,7 +78,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         [StringLength(2000)]
         public string Credits { get; set; }
 
-        [StringLength(40000, MinimumLength = 50)]
+        [StringLength(40000, MinimumLength = 20)]
         public string Guide { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
