@@ -333,7 +333,23 @@ team-display {
         }
 
         .team-supports {
+
             .unit-button {
+                &:before {
+                    content: "Support";
+                    position: absolute;
+                    left: 0;
+                    top: -0.6em;
+                    width: 94%;
+                    text-align: center;
+
+                    @media #{$medium-and-down} {
+                        content: "Sup";
+                    }
+                }
+
+                border-color: lighten($primary-color, 20%);
+                border-width: $medium-unit-margin;
                 height: $medium-unit-size;
                 width: $medium-unit-size;
                 margin: $medium-unit-margin;
