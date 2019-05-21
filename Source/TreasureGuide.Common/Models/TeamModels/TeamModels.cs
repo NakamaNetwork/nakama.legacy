@@ -91,11 +91,9 @@ namespace TreasureGuide.Common.Models.TeamModels
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
 
         [EnoughNonSubs(2)]
-        [OnlyOneNonSub]
         [NoDuplicateUnits]
         public IEnumerable<TeamUnitEditorModel> TeamUnits { get; set; }
 
-        [OnlyOneNonSub]
         [NoDuplicateGenerics]
         public IEnumerable<TeamGenericSlotEditorModel> TeamGenericSlots { get; set; }
     }
