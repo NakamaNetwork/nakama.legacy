@@ -7,7 +7,7 @@
                           info="true"
                           tooltip="true"
                           allow-generics="true"
-                          selected.delegate="unitAdded($event, false)"
+                          selected.delegate="unitAdded($event, false, false, false)"
                           show-box="true">
             </unit-display>
             <unit-display if.bind="!hasMain"
@@ -15,9 +15,30 @@
                           info="true"
                           tooltip="true"
                           allow-generics="true"
-                          selected.delegate="unitAdded($event, false)"
+                          selected.delegate="unitAdded($event, false, false, true)"
                           show-box="true">
             </unit-display>
+        </div>
+        <div class="team-supports">
+            <div class="team-unit" repeat.for="support of supports">
+                <unit-display model.bind="support"
+                              editable.bind="editable"
+                              info="true"
+                              tooltip="true"
+                              allow-generics="false"
+                              selected.delegate="unitAdded($event, false, true, false)"
+                              show-box="true">
+                </unit-display>
+            </div>
+            <div class="team-unit" if.bind="canAddSupports">
+                <unit-display editable="true"
+                              info="true"
+                              tooltip="true"
+                              allow-generics="true"
+                              selected.delegate="unitAdded($event, false, true, true)"
+                              show-box="true">
+                </unit-display>
+            </div>
         </div>
         <div class="team-subs">
             <div class="team-unit" repeat.for="sub of subs">
@@ -26,7 +47,7 @@
                               info="true"
                               tooltip="true"
                               allow-generics="true"
-                              selected.delegate="unitAdded($event, true)"
+                              selected.delegate="unitAdded($event, true, false, false)"
                               show-box="true">
                 </unit-display>
             </div>
@@ -35,7 +56,7 @@
                               info="true"
                               tooltip="true"
                               allow-generics="true"
-                              selected.delegate="unitAdded($event, true, true)"
+                              selected.delegate="unitAdded($event, true, false, true)"
                               show-box="true">
                 </unit-display>
             </div>

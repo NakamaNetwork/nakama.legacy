@@ -21,15 +21,20 @@ export class TeamSlot {
 
     @computedFrom('units.length')
     get main() {
-        return this.units.find(x => !x.sub);
+        return this.units.find(x => !x.sub && !x.support);
     }
 
     @computedFrom('units.length')
     get subs() {
-        return this.units.filter(x => x.sub);
+        return this.units.filter(x => x.sub && !x.support);
     }
 
-    @computedFrom('main', 'edtiable')
+    @computedFrom('units.length')
+    get supports() {
+        return this.units.filter(x => x.support);
+    }
+
+    @computedFrom('main', 'editable')
     get hasMain() {
         return this.main;
     }
@@ -39,7 +44,12 @@ export class TeamSlot {
         return this.editable && this.hasMain && this.subs.length < 4;
     }
 
-    unitAdded(event: CustomEvent, sub: boolean, newItem: boolean = false) {
+    @computedFrom('hasMain', 'editable', 'supports')
+    get canAddSupports() {
+        return this.editable && this.hasMain && this.supports.length < 1;
+    }
+
+    unitAdded(event: CustomEvent, sub: boolean, support: boolean, newItem: boolean = false) {
         var newValue = event.detail.newValue;
         var editorKey = event.detail.editorKey;
         var oldValue = this.units.find(x => x.editorKey === editorKey);
@@ -57,7 +67,8 @@ export class TeamSlot {
                 newValue = <ITeamUnitEditorModel>{
                     unitId: newValue.id,
                     position: this.index,
-                    sub: sub
+                    sub: sub,
+                    support: support
                 };
                 if (oldValue && oldValue.unitId) {
                     newValue = Object.assign(oldValue, newValue);
@@ -74,7 +85,8 @@ export class TeamSlot {
                     role: newValue.role,
                     type: newValue.type,
                     position: this.index,
-                    sub: sub
+                    sub: sub,
+                    support: false
                 };
                 if (!oldValue || oldValue.unitId) {
                     if (oldValue) {

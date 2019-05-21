@@ -286,7 +286,7 @@ team-display {
     team-slot {
         display: inline;
 
-        .team-slot-container, .team-subs, .team-unit {
+        .team-slot-container, .team-subs, .team-unit, .team-supports {
             display: inline-block;
         }
 
@@ -302,8 +302,8 @@ team-display {
             }
         }
 
-        .team-subs {
-            max-width: 60%;
+        .team-subs, .team-supports {
+            max-width: 50%;
             overflow-wrap: break-word;
             white-space: normal;
             vertical-align: bottom;
@@ -328,6 +328,26 @@ team-display {
                     height: $tiny-unit-size;
                     width: $tiny-unit-size;
                     margin: $tiny-unit-margin;
+                }
+            }
+        }
+
+        .team-supports {
+            .unit-button {
+                height: $medium-unit-size;
+                width: $medium-unit-size;
+                margin: $medium-unit-margin;
+
+                @media #{$medium-and-down} {
+                    height: $small-unit-size;
+                    width: $small-unit-size;
+                    margin: $small-unit-margin;
+                }
+
+                @media #{$small-and-down} {
+                    height: $xsmall-unit-size;
+                    width: $xsmall-unit-size;
+                    margin: $xsmall-unit-margin;
                 }
             }
         }

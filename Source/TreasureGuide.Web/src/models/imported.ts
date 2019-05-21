@@ -218,7 +218,8 @@ export enum IndividualUnitFlags {
     SocketsMaxed = 4,
     CottonCandyMaxed = 8,
     LimitBroken = 16,
-    Rainbowed = 64
+    Rainbowed = 64,
+    SupportMaxed = 128
 }
 
 
@@ -531,6 +532,7 @@ export interface ITeamStubModel {
     f2PC: boolean;
     hasVideos: boolean;
     hasComments: boolean;
+    hasSupports: boolean;
     shipId: number;
     stageId: number;
     invasionId: number;
@@ -568,6 +570,7 @@ export interface ITeamDetailModel {
     deleted: boolean;
     reported: boolean;
     draft: boolean;
+    hasSupports: boolean;
     comments: number;
     
 }
@@ -621,6 +624,7 @@ export interface ITeamSearchModel extends ISearchModel{
     reported: boolean;
     bookmark: boolean;
     excludeEventShips: boolean;
+    excludeSupports: boolean;
     
 }
 
@@ -659,12 +663,14 @@ export interface ITeamUnitStubModel {
 export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
     flags: IndividualUnitFlags;
     sub: boolean;
+    support: boolean;
     
 }
 
 export interface ITeamUnitEditorModel extends ITeamUnitStubModel{
     flags: IndividualUnitFlags;
     sub: boolean;
+    support: boolean;
     
 }
 

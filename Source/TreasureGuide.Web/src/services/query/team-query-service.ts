@@ -70,6 +70,7 @@ export class TeamSearchModel extends SearchModel implements ITeamSearchModel {
     boxId: number;
     blacklist: boolean;
     global: boolean;
+    excludeSupports: boolean;
     freeToPlay: FreeToPlayStatus;
     deleted: boolean;
     bookmark: boolean;
@@ -143,6 +144,7 @@ export class TeamEditorModel implements ITeamEditorModel {
                     position: NumberHelper.forceNumber(x.position),
                     flags: NumberHelper.forceNumber(x.flags),
                     sub: x.sub,
+                    support: x.support,
                     unitId: NumberHelper.forceNumber(x.unitId)
                 })
                 .filter(x => x.unitId),
