@@ -139,11 +139,11 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             return teams;
         }
 
-        private IQueryable<TeamMini> SearchSupports(IQueryable<TeamMini> teams, bool supports)
+        private IQueryable<TeamMini> SearchSupports(IQueryable<TeamMini> teams, bool excludeSupports)
         {
-            if (supports)
+            if (excludeSupports)
             {
-                teams = teams.Where(x => x.HasSupports);
+                teams = teams.Where(x => !x.HasSupports);
             }
             return teams;
         }
