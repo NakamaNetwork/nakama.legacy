@@ -30,6 +30,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             results = SearchTerm(results, model.Term);
             results = SearchSubmitter(results, model.SubmittedBy);
             results = SearchLead(results, model.LeaderId, model.NoHelp);
+            results = SearchSupports(results, model.ExcludeSupports);
             results = SearchGlobal(results, model.Global);
             results = SearchFreeToPlay(results, model.FreeToPlay, model.LeaderId);
             results = SearchTypes(results, model.Types);
@@ -134,6 +135,16 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             }
             return teams;
         }
+
+        private IQueryable<Team> SearchSupports(IQueryable<Team> teams, bool exclude)
+        {
+            if (exclude)
+            {
+                teams = teams.Where(x => !x.TeamUnits.Any(y => y.Support));
+            }
+            return teams;
+        }
+
 
         private IQueryable<Team> SearchGlobal(IQueryable<Team> teams, bool global)
         {

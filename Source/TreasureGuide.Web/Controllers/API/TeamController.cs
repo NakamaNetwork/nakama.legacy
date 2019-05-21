@@ -68,7 +68,8 @@ namespace TreasureGuide.Web.Controllers.API
                 Draft = x.Draft,
                 Deleted = x.Deleted,
                 HasReport = x.TeamReports.Any(y => y.AcknowledgedDate == null),
-                Units = x.TeamUnits.Where(y => !y.Sub).Select(y => new { Id = y.UnitId, Position = y.Position, Flags = y.Unit.Flags, Class = y.Unit.Class, Type = y.Unit.Type })
+                Units = x.TeamUnits.Where(y => !y.Sub && !y.Support).Select(y => new { Id = y.UnitId, Position = y.Position, Flags = y.Unit.Flags, Class = y.Unit.Class, Type = y.Unit.Type }),
+                HasSupports = x.TeamUnits.Any(y => y.Support)
             }).SingleOrDefaultAsync(x => x.TeamId == idValue);
             if (teamData != null)
             {
@@ -88,6 +89,7 @@ namespace TreasureGuide.Web.Controllers.API
                     mini.HasReport = teamData.HasReport;
                     mini.HelperId = teamData.Units.SingleOrDefault(x => x.Position == 0)?.Id;
                     mini.LeaderId = teamData.Units.SingleOrDefault(x => x.Position == 1)?.Id;
+                    mini.HasSupports = teamData.HasSupports;
                     mini.F2PC = !teamData.Units.Where(x => x.Position > 1)
                         .Any(x => x.Flags.HasFlag(UnitFlag.RareRecruitExclusive) ||
                                   x.Flags.HasFlag(UnitFlag.RareRecruitLimited));
@@ -190,7 +192,7 @@ namespace TreasureGuide.Web.Controllers.API
                 case SearchConstants.SortStage:
                     return results.OrderBy(x => x.Stage != null ? x.Stage.Name : "", model.SortDesc);
                 case SearchConstants.SortLeader:
-                    return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault(), model.SortDesc);
+                    return results.OrderBy(x => x.TeamUnits.Where(y => y.Position == 1 && !y.Sub && !y.Support).Select(y => y.Unit.Name).DefaultIfEmpty("").FirstOrDefault(), model.SortDesc);
                 case SearchConstants.SortScore:
                     return results.OrderBy(x => x.TeamScore != null ? x.TeamScore.Value : 0, !model.SortDesc);
                 case SearchConstants.SortDate:
@@ -262,7 +264,7 @@ namespace TreasureGuide.Web.Controllers.API
             {
                 x.Id,
                 x.ShipId,
-                Units = x.TeamUnits.Where(y => !y.Sub).Select(z => new { Id = z.UnitId, z.Position, z.Unit.MaxLevel })
+                Units = x.TeamUnits.Where(y => !y.Sub && !y.Support).Select(z => new { Id = z.UnitId, z.Position, z.Unit.MaxLevel })
             }).ToListAsync();
             var output = teams.ToDictionary(x => x.Id, x =>
             {
@@ -587,7 +589,7 @@ namespace TreasureGuide.Web.Controllers.API
 
         private async Task<Team> AutoGenName(Team team)
         {
-            var leader = team.TeamUnits.SingleOrDefault(x => x.Position == 1 && x.Sub == false)?.UnitId;
+            var leader = team.TeamUnits.SingleOrDefault(x => x.Position == 1 && x.Sub == false && x.Support == false)?.UnitId;
             var unitName = "";
             if (leader.HasValue)
             {
