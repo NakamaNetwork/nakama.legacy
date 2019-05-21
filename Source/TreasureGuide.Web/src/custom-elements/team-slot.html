@@ -19,46 +19,50 @@
                           show-box="true">
             </unit-display>
         </div>
-        <div class="team-supports">
-            <div class="team-unit" repeat.for="support of supports">
-                <unit-display model.bind="support"
-                              editable.bind="editable"
-                              info="true"
-                              tooltip="true"
-                              allow-generics="false"
-                              selected.delegate="unitAdded($event, false, true, false)"
-                              show-box="true">
-                </unit-display>
+        <div class="team-extras">
+            <div class="team-supports">
+                <div class="team-unit" repeat.for="support of supports">
+                    <unit-display model.bind="support"
+                    editable.bind="editable"
+                    info="true"
+                    tooltip="true"
+                    allow-generics="false"
+                    selected.delegate="unitAdded($event, false, true, false)"
+                    show-box="true"
+                    icon="fa-handshake-o">
+                    </unit-display>
+                </div>
+                <div class="team-unit" if.bind="canAddSupports">
+                    <unit-display editable="true"
+                                  info="true"
+                                  tooltip="true"
+                                  allow-generics="true"
+                                  selected.delegate="unitAdded($event, false, true, true)"
+                                  show-box="true"
+                                  icon="fa-handshake-o">
+                    </unit-display>
+                </div>
             </div>
-            <div class="team-unit" if.bind="canAddSupports">
-                <unit-display editable="true"
-                              info="true"
-                              tooltip="true"
-                              allow-generics="true"
-                              selected.delegate="unitAdded($event, false, true, true)"
-                              show-box="true">
-                </unit-display>
-            </div>
-        </div>
-        <div class="team-subs">
-            <div class="team-unit" repeat.for="sub of subs">
-                <unit-display model.bind="sub"
-                              editable.bind="editable"
-                              info="true"
-                              tooltip="true"
-                              allow-generics="true"
-                              selected.delegate="unitAdded($event, true, false, false)"
-                              show-box="true">
-                </unit-display>
-            </div>
-            <div class="team-unit" if.bind="canAddSubs">
-                <unit-display editable="true"
-                              info="true"
-                              tooltip="true"
-                              allow-generics="true"
-                              selected.delegate="unitAdded($event, true, false, true)"
-                              show-box="true">
-                </unit-display>
+            <div class="team-subs">
+                <div class="team-unit" repeat.for="sub of subs">
+                    <unit-display model.bind="sub"
+                                  editable.bind="editable"
+                                  info="true"
+                                  tooltip="true"
+                                  allow-generics="true"
+                                  selected.delegate="unitAdded($event, true, false, false)"
+                                  show-box="true">
+                    </unit-display>
+                </div>
+                <div class="team-unit" if.bind="canAddSubs">
+                    <unit-display editable="true"
+                                  info="true"
+                                  tooltip="true"
+                                  allow-generics="true"
+                                  selected.delegate="unitAdded($event, true, false, true)"
+                                  show-box="true">
+                    </unit-display>
+                </div>
             </div>
         </div>
     </div>

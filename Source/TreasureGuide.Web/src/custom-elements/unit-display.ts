@@ -31,6 +31,7 @@ export class UnitDisplay {
     @bindable showBoxFlags: boolean;
     @bindable box: BoxDetailModel;
     @bindable editorKey: string;
+    @bindable icon: string;
 
     inBox: boolean;
 
@@ -153,11 +154,16 @@ export class UnitDisplay {
         return (this.hasUnit ? 'In' : 'Not in') + ' box "' + boxName + '"';
     }
 
-    @computedFrom('unit', 'generic', 'editable')
+    @computedFrom('icon', 'unit', 'generic', 'editable')
     get iconClass() {
-        return 'fa fa-fw fa-2x fa-' + ((this.unit || this.generic) ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
+        var icon = '';
+        if (!this.icon) {
+            icon = 'fa-' + ((this.unit || this.generic) ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
+        } else {
+            icon = this.icon;
+        }
+        return 'fa fa-fw fa-2x ' + icon;
     }
-
 
     @computedFrom('info', 'editable', 'unit')
     get link() {

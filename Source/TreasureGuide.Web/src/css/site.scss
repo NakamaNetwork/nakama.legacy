@@ -12,6 +12,10 @@ body {
 .container {
     overflow-wrap: break-word;
     text-wrap: normal;
+
+    @media #{$medium-and-down} {
+        padding: 0 10px;
+    }
 }
 
 .scrollbar-measure {

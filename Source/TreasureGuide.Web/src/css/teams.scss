@@ -286,7 +286,7 @@ team-display {
     team-slot {
         display: inline;
 
-        .team-slot-container, .team-subs, .team-unit, .team-supports {
+        .team-slot-container, .team-extras, .team-unit {
             display: inline-block;
         }
 
@@ -302,7 +302,7 @@ team-display {
             }
         }
 
-        .team-subs, .team-supports {
+        .team-extras {
             max-width: 50%;
             overflow-wrap: break-word;
             white-space: normal;
@@ -312,7 +312,9 @@ team-display {
             @media #{$small-and-down} {
                 max-width: 40%;
             }
+        }
 
+        .team-subs, .team-supports {
             .unit-button {
                 height: $small-unit-size;
                 width: $small-unit-size;
@@ -333,21 +335,7 @@ team-display {
         }
 
         .team-supports {
-
             .unit-button {
-                &:before {
-                    content: "Support";
-                    position: absolute;
-                    left: 0;
-                    top: -0.6em;
-                    width: 94%;
-                    text-align: center;
-
-                    @media #{$medium-and-down} {
-                        content: "Sup";
-                    }
-                }
-
                 border-color: lighten($primary-color, 20%);
                 border-width: $medium-unit-margin;
                 height: $medium-unit-size;
