@@ -22,6 +22,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool Reported { get; set; }
         public bool Bookmark { get; set; }
         public bool ExcludeEventShips { get; set; }
+        public bool ExcludeSupports { get; set; }
     }
 
     public enum FreeToPlayStatus

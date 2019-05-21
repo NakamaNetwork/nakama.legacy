@@ -33,6 +33,7 @@ namespace TreasureGuide.Entities
         public UnitClass Class { get; set; }
         public Nullable<int> HelperId { get; set; }
         public Nullable<int> LeaderId { get; set; }
+        public bool HasSupports { get; set; }
     
         public virtual Stage Stage { get; set; }
         public virtual Stage Invasion { get; set; }

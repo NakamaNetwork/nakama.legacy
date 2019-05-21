@@ -4,6 +4,7 @@
     [UnitId] INT NOT NULL,
     [Position] TINYINT NOT NULL,
     [Flags] INT NULL,
+    [Support] BIT NOT NULL CONSTRAINT [DF_dbo.TeamUnits_Support] DEFAULT 0,
     [Sub] BIT NOT NULL CONSTRAINT [DF_dbo.TeamUnits_Sub] DEFAULT 0,
     CONSTRAINT [PK_dbo.TeamUnits] PRIMARY KEY CLUSTERED ([TeamId] ASC, [Position] ASC, [UnitId] ASC),
     CONSTRAINT [CK_dbo.TeamUnits_Position] CHECK ([Position] >= 0 AND [Position] < 6),
@@ -12,10 +13,10 @@
 )
 GO
 CREATE NONCLUSTERED INDEX [IX_dbo.TeamUnits]
-    ON [dbo].[TeamUnits] ([Position],[Sub],[Flags])
+    ON [dbo].[TeamUnits] ([Position],[Sub],[Support],[Flags])
         INCLUDE ([TeamId],[UnitId])
 GO
-CREATE NONCLUSTERED INDEX [IX_dbo.TeamUnits_Sub]
-    ON [dbo].[TeamUnits] ([Sub])
+CREATE NONCLUSTERED INDEX [IX_dbo.TeamUnits_SubSupport]
+    ON [dbo].[TeamUnits] ([Sub], [Support])
         INCLUDE ([TeamId],[UnitId])
 GO

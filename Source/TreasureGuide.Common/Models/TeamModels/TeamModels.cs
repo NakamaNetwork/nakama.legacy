@@ -21,6 +21,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool F2PC { get; set; }
         public bool HasVideos { get; set; }
         public bool HasComments { get; set; }
+        public bool HasSupports { get; set; }
 
         public int ShipId { get; set; }
         public int? StageId { get; set; }
@@ -58,6 +59,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool Draft { get; set; }
+        public bool HasSupports { get; set; }
         public int Comments { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }

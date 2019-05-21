@@ -61,6 +61,7 @@ namespace TreasureGuide.Common
                 team.StubMapping.ForMember(x => x.Score, o => o.MapFrom(y => y.TeamScore != null ? y.TeamScore.Value : 0));
                 team.StubMapping.ForMember(x => x.Reported, o => o.MapFrom(y => y.TeamReports.Any(z => !z.AcknowledgedDate.HasValue)));
                 team.StubMapping.ForMember(x => x.HasVideos, o => o.MapFrom(y => y.TeamVideos.Any(z => !z.Deleted)));
+                team.StubMapping.ForMember(x => x.HasSupports, o => o.MapFrom(y => y.TeamUnits.Any(z => z.Support)));
                 team.StubMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnits.All(z =>
                     z.Sub ||
                     z.Position == 0 ||
@@ -89,6 +90,7 @@ namespace TreasureGuide.Common
                 team.DetailMapping.ForMember(x => x.MyVote, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.MyBookmark, o => o.Ignore()); // Handle this manually
                 team.DetailMapping.ForMember(x => x.TeamSockets, o => o.MapFrom(y => y.TeamSockets.Where(z => z.Level > 0)));
+                team.DetailMapping.ForMember(x => x.HasSupports, o => o.MapFrom(y => y.TeamUnits.Any(z => z.Support)));
                 team.DetailMapping.ForMember(x => x.F2P, o => o.MapFrom(y => y.TeamUnits.All(z =>
                     z.Sub ||
                     z.Position == 0 ||

@@ -13,6 +13,7 @@
     [Deleted] BIT NOT NULL,
     [HasReport] BIT NOT NULL,
     [Global] BIT NOT NULL,
+    [HasSupports] BIT NOT NULL,
     [F2P] BIT NOT NULL,
     [F2PC] BIT NOT NULL,
     [Type] SMALLINT NOT NULL,

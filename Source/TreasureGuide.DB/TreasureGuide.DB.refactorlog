@@ -28,4 +28,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="FriendId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="53a914af-f8a4-4529-ad95-118347ffe2f3" ChangeDateTime="05/21/2019 00:21:31">
+    <Property Name="ElementName" Value="[dbo].[TeamMinis].[UsesSubs]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TeamMinis]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="HasSupports" />
+  </Operation>
 </Operations>
