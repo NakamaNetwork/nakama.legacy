@@ -20,6 +20,7 @@ namespace TreasureGuide.Entities
         SocketsMaxed = 4,
         CottonCandyMaxed = 8,
         LimitBroken = 16,
-        Rainbowed = 64
+        Rainbowed = 64,
+        SupportMaxed = 128
     }
 }
