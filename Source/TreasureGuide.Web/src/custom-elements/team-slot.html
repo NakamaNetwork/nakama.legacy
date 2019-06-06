@@ -20,7 +20,7 @@
             </unit-display>
         </div>
         <div class="team-extras">
-            <div class="team-supports">
+            <div if.bind="index != 0" class="team-supports">
                 <div class="team-unit" repeat.for="support of supports">
                     <unit-display model.bind="support"
                     editable.bind="editable"

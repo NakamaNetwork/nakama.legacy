@@ -76,7 +76,7 @@ namespace TreasureGuide.Common
                     z.Sub ||
                     z.Position < 2 || !EnumerableHelper.PayToPlay.Any(u => z.Unit.Flags.HasFlag(u))
                 )));
-                team.StubMapping.ForMember(x => x.TeamUnits, o => o.MapFrom(y => y.TeamUnits.Where(z => !z.Sub)));
+                team.StubMapping.ForMember(x => x.TeamUnits, o => o.MapFrom(y => y.TeamUnits.Where(z => !z.Sub && !z.Support)));
                 team.StubMapping.ForMember(x => x.HasComments, o => o.MapFrom(y => y.TeamComments.Any(z => !z.Deleted)));
 
                 team.DetailMapping.ForMember(x => x.Global, o => o.MapFrom(y => y.TeamUnits.All(z => z.Unit.Flags.HasFlag(UnitFlag.Global))));
