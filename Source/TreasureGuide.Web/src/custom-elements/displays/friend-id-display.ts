@@ -8,7 +8,8 @@ export class FriendIdDisplay {
     @computedFrom('friendId')
     get display() {
         if (this.friendId) {
-            var m = this.friendId.toString().match(/^(\d{3})(\d{3})(\d{3})$/);
+            var str = ("000000000" + this.friendId.toString()).slice(-9);
+            var m = str.match(/^(\d{3})(\d{3})(\d{3})$/);
             return (!m) ? null : m[1] + '-' + m[2] + '-' + m[3];
         }
         return '';

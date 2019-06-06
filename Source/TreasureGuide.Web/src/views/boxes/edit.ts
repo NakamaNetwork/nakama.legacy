@@ -51,6 +51,7 @@ export class BoxEditPage {
             this.loading = true;
             this.boxQueryService.editor(id).then(result => {
                 this.title = 'Edit Box';
+                result.friendId = ("000000000" + result.friendId).slice(-9);
                 this.box = Object.assign(this.box, result);
                 this.controller.validate();
                 this.loading = false;
