@@ -71,7 +71,7 @@ namespace TreasureGuide.Sniffer.DataParser
                             localAliases.Add(new StageAlias { Name = unit.Name + " " + stageType });
                         }
                     }
-                    var output = HandleSingle(name, thumb, global, stageType);
+                    var output = HandleSingle(name, thumb, global, stageType, localAliases);
                     if (output == null)
                     {
                         return Tuple.Create(new List<Stage>(), new List<StageAlias>());
@@ -90,7 +90,7 @@ namespace TreasureGuide.Sniffer.DataParser
             return Tuple.Create(stages, aliases);
         }
 
-        private Stage HandleSingle(string name, int? mainId, bool global, StageType stageType, int smallId = 0, int? thumb = null, bool bypassId = false)
+        private Stage HandleSingle(string name, int? mainId, bool global, StageType stageType, List<StageAlias> aliases = null, int smallId = 0, int? thumb = null, bool bypassId = false)
         {
             var id = CreateId(stageType, mainId, smallId, bypassId);
             if (id == null)
@@ -106,6 +106,19 @@ namespace TreasureGuide.Sniffer.DataParser
                     Debug.WriteLine($"Team {id} '{name}' thumbnail unit ({thumb}) was not found.");
                     thumb = null;
                 }
+            }
+            if (stageType == StageType.Special && (name.Contains("Ambush") || name.Contains("Invasion")))
+            {
+                aliases.Add(new StageAlias
+                {
+                    StageId = id.Value,
+                    Name = name.Replace("Invasion", "Ambush")
+                });
+                aliases.Add(new StageAlias
+                {
+                    StageId = id.Value,
+                    Name = name.Replace("Ambush", "Invasion")
+                });
             }
             var stage = new Stage
             {
@@ -179,7 +192,7 @@ namespace TreasureGuide.Sniffer.DataParser
             stages.Add(lecrap);
             aliases.Add(new StageAlias { StageId = lecrap.Id, Name = "Cotton Candy" });
             aliases.Add(new StageAlias { StageId = lecrap.Id, Name = "Forest le Crap" });
-            
+
             var haloCora = HandleSingle("Monster Party: Dead", 1325, true, StageType.Special);
             stages.Add(haloCora);
             aliases.Add(new StageAlias { StageId = haloCora.Id, Name = "Haloween Corazon" });
@@ -194,7 +207,7 @@ namespace TreasureGuide.Sniffer.DataParser
             stages.Add(haloKat);
             aliases.Add(new StageAlias { StageId = haloKat.Id, Name = "Haloween Katakuri" });
             aliases.Add(new StageAlias { StageId = haloKat.Id, Name = "Halloween Katakuri" });
-            
+
             var sweetPudding = HandleSingle("Sweet Heart Memory - Pudding", 1963, true, StageType.Special);
             stages.Add(sweetPudding);
             aliases.Add(new StageAlias { StageId = sweetPudding.Id, Name = "Sweetheart Pudding" });
@@ -232,7 +245,7 @@ namespace TreasureGuide.Sniffer.DataParser
             var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
                     HandleSingle($"{name}{x.Item2.Name}", x.Item2.MainId,
-                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, x.Item1.Id, true)))
+                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, null, x.Item2.SmallId, x.Item1.Id, true)))
                 .Where(x => x.Item2 != null).ToList();
             var aliases = colo.SelectMany(GetAliases).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
@@ -269,7 +282,7 @@ namespace TreasureGuide.Sniffer.DataParser
             var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
                     HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item2.MainId,
-                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, x.Item1.Id, true)))
+                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, null, x.Item2.SmallId, x.Item1.Id, true)))
                 .Where(x => x.Item2 != null).ToList();
             var aliases = colo.SelectMany(GetAliases).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
