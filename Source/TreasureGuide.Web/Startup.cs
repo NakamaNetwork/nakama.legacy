@@ -77,6 +77,8 @@ namespace TreasureGuide.Web
 
             app.UseIdentity();
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             var tokenValidationParameters = new TokenValidationParameters
             {
