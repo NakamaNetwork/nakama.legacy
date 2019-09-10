@@ -222,7 +222,7 @@ namespace TreasureGuide.Sniffer.DataParser
             var eIds = GetIds(child, "Exhibition").Concat(GetIds(child, "Exebition"));
             var uIds = GetIds(child, "Underground");
             var cIds = GetIds(child, "Chaos");
-            var nIds = GetIds(child, "Neo");
+            var nIds = new[] { GetIds(child, "Neo").Concat(GetIds(child, "All Difficulties")).DefaultIfEmpty(0).Max() };
 
             var unitIds = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().Join(Context.Units, x => x, y => y.Id, (id, unit) => id);
             var evos = GetBiggestEvos(unitIds);
@@ -241,7 +241,7 @@ namespace TreasureGuide.Sniffer.DataParser
                     Name = "",
                     SmallId = 1
                 }
-            });
+            }).Where(x => !nIds.Contains(x.ThumbId) || x.SmallId == 1);
             var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
                     HandleSingle($"{name}{x.Item2.Name}", x.Item2.MainId,
