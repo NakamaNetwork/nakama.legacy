@@ -259,7 +259,7 @@ namespace TreasureGuide.Sniffer.DataParser
             var eIds = GetIds(child, "Exhibition").Concat(GetIds(child, "Exebition"));
             var uIds = GetIds(child, "Underground");
             var cIds = GetIds(child, "Chaos");
-            var nIds = GetIds(child, "Neo");
+            var nIds = GetIds(child, "Neo").Concat(GetIds(child, "All Difficulties"));
 
             var unitIds = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Where(x => x > 0).Distinct().Join(Context.Units, x => x, y => y.Id, (id, unit) => id);
             var evos = GetBiggestEvos(unitIds);
