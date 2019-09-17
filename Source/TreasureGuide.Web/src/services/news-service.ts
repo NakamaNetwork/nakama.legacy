@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '09/16/19',
+        lines: [
+            'Increased the size of embedded videos on teams to make it easier to navigate on mobile.',
+        ]
+    },{
         header: '06/06/19',
         lines: [
             'Fixed issue in which support units would show up in team search results instead of the primary units.',
