@@ -97,8 +97,9 @@ namespace TreasureGuide.Web.Services
             }
             else
             {
-                model.Title = Trim(model.Title, 80);
-                model.Title += " | Nakama Network";
+                model.Title = "Nakama Network";
+                model.Title += " | ";
+                model.Title += Trim(model.Title, 80);
             }
             if (String.IsNullOrWhiteSpace(model.Description))
             {

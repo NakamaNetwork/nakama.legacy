@@ -91,6 +91,17 @@ namespace TreasureGuide.Web.Controllers.API
             return results;
         }
 
+        [HttpGet]
+        [ActionName("Export")]
+        [Route("[action]/{id?}")]
+        public async Task<IActionResult> Export(int? id)
+        {
+            var userId = User.GetId();
+            var boxUnits = await DbContext.Boxes.Where(x => x.Id == id && (x.Public == true || x.UserId == userId)).SelectMany(x => x.BoxUnits.Select(y => y.UnitId)).ToArrayAsync();
+            var str = String.Join(",", boxUnits);
+            return Ok(str);
+        }
+
         [HttpPost]
         [Authorize]
         [ActionName("Focus")]

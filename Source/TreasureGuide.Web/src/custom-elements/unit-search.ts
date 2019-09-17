@@ -13,6 +13,9 @@ export class UnitSearch {
     @bindable
     boxLocked: boolean;
 
+    @bindable
+    inputBox: HTMLInputElement;
+
     constructor(boxService: BoxService) {
         this.boxService = boxService;
     }
@@ -23,6 +26,12 @@ export class UnitSearch {
                 this.model.lockedFields.push('myBox');
                 this.model.lockedFields.push('limitTo');
             }
+        }
+    }
+
+    attached() {
+        if (this.inputBox) {
+            this.inputBox.setSelectionRange(0, this.inputBox.value.length);
         }
     }
 

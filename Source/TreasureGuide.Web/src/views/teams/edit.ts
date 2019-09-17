@@ -15,7 +15,7 @@ import { AccountService } from '../../services/account-service';
 export class TeamEditPage {
     public static nameMinLength = 10;
     public static nameMaxLength = 250;
-    public static guideMinLength = 50;
+    public static guideMinLength = 20;
     public static guideMaxLength = 40000;
     public static creditMaxLength = 2000;
 
@@ -173,21 +173,22 @@ ValidationRules
     .ensure((x: TeamEditorModel) => x.credits)
     .maxLength(TeamEditPage.creditMaxLength)
     .ensure((x: TeamEditorModel) => x.guide)
+    .required()
     .minLength(TeamEditPage.guideMinLength)
     .maxLength(TeamEditPage.guideMaxLength)
     .ensure((x: TeamEditorModel) => x.teamUnits)
     .required()
-    .satisfies((x: ITeamUnitEditorModel[], m: TeamEditorModel) => x.filter(y => !y.sub && y.unitId).length > 1)
-    .withMessage('Please include at least 2 non-generic and non-substitute units on your team!')
+    .satisfies((x: ITeamUnitEditorModel[], m: TeamEditorModel) => x.filter(y => !y.sub && !y.support && y.unitId).length > 1)
+    .withMessage('Please include at least two standard units on your team!')
     .satisfies((x: ITeamUnitEditorModel[], m: TeamEditorModel) => {
         var sets = x.filter(y => y.unitId).map(y => y.position + ':' + y.unitId);
         return sets.every((y, i) => sets.indexOf(y) === i);
     })
     .withMessage('You have two of the same unit in a single slot. Please check your substitutes.')
     .satisfies((x: ITeamUnitEditorModel[], m: TeamEditorModel) => {
-        return x.filter(y => !y.sub).length + m.teamGenericSlots.filter(y => !y.sub).length > 3;
+        return x.filter(y => !y.sub && !y.support).length + m.teamGenericSlots.filter(y => !y.sub).length > 3;
     })
-    .withMessage('You must have at least four non-substitute units on your team.')
+    .withMessage('You must have at least four primary units on your team.')
     .ensure((x: TeamEditorModel) => x.teamGenericSlots)
     .required()
     .satisfies((x: ITeamGenericSlotEditorModel[], m: TeamEditorModel) => {

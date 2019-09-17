@@ -113,7 +113,6 @@
     <Compile Include="Validators\NoDuplicateGenericsAttribute.cs" />
     <Compile Include="Validators\NoDuplicateUnitsAttribute.cs" />
     <Compile Include="Validators\NotTooManyUnitsAttribute.cs" />
-    <Compile Include="Validators\OnlyOneNonSubAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

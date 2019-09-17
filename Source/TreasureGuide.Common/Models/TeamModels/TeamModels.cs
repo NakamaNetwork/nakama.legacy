@@ -21,6 +21,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool F2PC { get; set; }
         public bool HasVideos { get; set; }
         public bool HasComments { get; set; }
+        public bool HasSupports { get; set; }
 
         public int ShipId { get; set; }
         public int? StageId { get; set; }
@@ -58,6 +59,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         public bool Deleted { get; set; }
         public bool Reported { get; set; }
         public bool Draft { get; set; }
+        public bool HasSupports { get; set; }
         public int Comments { get; set; }
 
         public IEnumerable<TeamUnitDetailModel> TeamUnits { get; set; }
@@ -78,7 +80,7 @@ namespace TreasureGuide.Common.Models.TeamModels
         [StringLength(2000)]
         public string Credits { get; set; }
 
-        [StringLength(40000, MinimumLength = 50)]
+        [StringLength(40000, MinimumLength = 20)]
         public string Guide { get; set; }
         public int ShipId { get; set; }
         public int? StageId { get; set; }
@@ -89,11 +91,9 @@ namespace TreasureGuide.Common.Models.TeamModels
         public IEnumerable<TeamSocketEditorModel> TeamSockets { get; set; }
 
         [EnoughNonSubs(2)]
-        [OnlyOneNonSub]
         [NoDuplicateUnits]
         public IEnumerable<TeamUnitEditorModel> TeamUnits { get; set; }
 
-        [OnlyOneNonSub]
         [NoDuplicateGenerics]
         public IEnumerable<TeamGenericSlotEditorModel> TeamGenericSlots { get; set; }
     }

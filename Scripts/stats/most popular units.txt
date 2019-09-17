@@ -1,0 +1,41 @@
+-- Most Popular Units
+SELECT U.[Id], U.[Name], (COUNT(*)-1) AS [Count] FROM [dbo].[Units] AS U
+	LEFT JOIN (
+		SELECT DISTINCT [TeamId], [UnitId] FROM [dbo].[TeamUnits] WHERE [Sub] = 0
+	) AS C
+	ON U.[Id] = C.[UnitId]
+GROUP BY U.[Id], U.[Name]
+ORDER BY [Count] DESC, [Name] ASC
+
+-- Most Popular Subs
+SELECT U.[Id], U.[Name], (COUNT(*)-1) AS [Count] FROM [dbo].[Units] AS U
+	LEFT JOIN (
+		SELECT DISTINCT [TeamId], [UnitId] FROM [dbo].[TeamUnits] WHERE [Sub] = 1
+	) AS C
+	ON U.[Id] = C.[UnitId]
+GROUP BY U.[Id], U.[Name]
+ORDER BY [Count] DESC, [Name] ASC
+
+-- Most Popular Leads
+SELECT U.[Id], U.[Name], (COUNT(*)-1) AS [Count] FROM [dbo].[Units] AS U
+	LEFT JOIN (
+		SELECT DISTINCT [TeamId], [UnitId] FROM [dbo].[TeamUnits] WHERE [Position] < 2 AND [Sub] = 0
+	) AS C
+	ON U.[Id] = C.[UnitId]
+GROUP BY U.[Id], U.[Name]
+ORDER BY [Count] DESC, [Name] ASC
+
+-- Most Boxed Units
+SELECT U.[Id], U.[Name], (COUNT(*)-1) AS [Count] FROM [dbo].[Units] AS U
+	LEFT JOIN (
+		SELECT DISTINCT [BoxId], [UnitId] FROM [dbo].[BoxUnits]
+	) AS C
+	ON U.[Id] = C.[UnitId]
+GROUP BY U.[Id], U.[Name]
+ORDER BY [Count] DESC, [Name] ASC
+
+-- Most Popular Stages
+SELECT S.[Id], S.[Name], (COUNT(*)-1) AS [Count] FROM [dbo].[Stages] AS S
+	LEFT JOIN [dbo].[Teams] AS T ON S.[Id] = T.[StageId]
+GROUP BY S.[Id], S.[Name]
+ORDER BY [Count] DESC, [Name] ASC

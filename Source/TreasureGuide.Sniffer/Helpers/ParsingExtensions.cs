@@ -88,6 +88,9 @@ namespace TreasureGuide.Sniffer.Helpers
                 case "raid":
                     return StageType.Raid;
                 case "special":
+                case "ambush":
+                case "invasion":
+                case "bond battle":
                     return StageType.Special;
                 case "coliseum":
                     return StageType.Coliseum;

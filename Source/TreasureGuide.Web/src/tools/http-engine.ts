@@ -37,7 +37,7 @@ export class HttpEngine {
 
     buildSecurityHeaders(accessToken?: string): Headers {
         var headers = new Headers();
-        accessToken = accessToken || sessionStorage['access_token'];
+        accessToken = accessToken || localStorage['access_token'];
         if (accessToken) {
             headers.append('Authorization', 'Bearer ' + accessToken);
         }

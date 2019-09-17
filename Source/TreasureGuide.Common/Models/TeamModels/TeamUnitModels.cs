@@ -13,11 +13,13 @@ namespace TreasureGuide.Common.Models.TeamModels
     {
         public IndividualUnitFlags? Flags { get; set; }
         public bool Sub { get; set; }
+        public bool Support { get; set; }
     }
 
     public class TeamUnitEditorModel : TeamUnitStubModel, ISubItem
     {
         public IndividualUnitFlags? Flags { get; set; }
         public bool Sub { get; set; }
+        public bool Support { get; set; }
     }
 }

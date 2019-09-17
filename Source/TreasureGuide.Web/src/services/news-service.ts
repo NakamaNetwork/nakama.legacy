@@ -7,6 +7,55 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '09/16/19',
+        lines: [
+            'Increased the size of embedded videos on teams to make it easier to navigate on mobile.',
+        ]
+    },{
+        header: '06/06/19',
+        lines: [
+            'Fixed issue in which support units would show up in team search results instead of the primary units.',
+            'Fixed an issue that would cause Friend Ids with leading zeroes to display incorrectly.',
+        ]
+    },{
+        header: '05/20/19',
+        lines: [
+            'Added support for Support Units in teams.',
+            'Added new "Support Maxed" flag for box units.',
+            'Added "Has Support Units" search filter and team overview flag.'
+        ]
+    }, {
+        header: '05/16/19',
+        lines: [
+            'Added new "Rainbowed" flag for Box Units.',
+            'Unit name input field will now be highlighted when you open the unit menu so you can start typing immediately.',
+            'Your own comments will now be highlighted in the comments lists.',
+            'Updated notification page to make notification dismissal much smoother.',
+            'Added 20 character minimum for team guides to encourage better submissions.',
+            'Finally got around to removing duplicate "SPECIAL ACTIVATED" versions of ships.',
+            'Adjusted session logic to hopefully cut down on unexpected logouts.'
+        ]
+    }, {
+        header: '04/16/19',
+        lines: [
+            'Updated access token storage mechanism to reduce the amount of unwanted logouts.',
+        ]
+    }, {
+        header: '03/29/19',
+        lines: [
+            'Updated look-and-feel of comments section to be much more mobile-friendly.',
+            'Fixed a bug that prevented comment replies from being editable.',
+            'Removed the forced redirect to the About page when first browsing to Nakama Network.',
+            'Removed the big title box on the main page.'
+        ]
+    }, {
+        header: '02/24/19',
+        lines: [
+            'Added several extra Generic Unit roles.',
+            'Now allowing up to two roles to be defined per generic unit.',
+            'Added additional logging in backend calls.'
+        ]
+    }, {
         header: '02/02/19',
         lines: [
             'Rewrote Google authentication module in preparation for Google Plus deprecation this month.'

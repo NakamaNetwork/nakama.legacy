@@ -31,6 +31,7 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             minis = SearchTerm(minis, model.Term);
             minis = SearchSubmitter(minis, model.SubmittedBy);
             minis = SearchLead(minis, model.LeaderId, model.NoHelp);
+            minis = SearchSupports(minis, model.ExcludeSupports);
             minis = SearchGlobal(minis, model.Global);
             minis = SearchFreeToPlay(minis, model.FreeToPlay, model.LeaderId);
             minis = SearchTypes(minis, model.Types);
@@ -134,6 +135,15 @@ namespace TreasureGuide.Web.Services.SearchService.Teams
             if (leaderId.HasValue)
             {
                 teams = teams.Where(x => x.LeaderId == leaderId || (!noHelper && x.HelperId == leaderId));
+            }
+            return teams;
+        }
+
+        private IQueryable<TeamMini> SearchSupports(IQueryable<TeamMini> teams, bool excludeSupports)
+        {
+            if (excludeSupports)
+            {
+                teams = teams.Where(x => !x.HasSupports);
             }
             return teams;
         }

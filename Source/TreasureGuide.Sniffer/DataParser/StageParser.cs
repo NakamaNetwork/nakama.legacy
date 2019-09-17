@@ -45,7 +45,14 @@ namespace TreasureGuide.Sniffer.DataParser
                     var name = child["name"]?.ToString() ?? "Unknown";
                     if (stageType == StageType.Coliseum)
                     {
-                        return HandleColiseum(child);
+                        if (name == "Coliseum")
+                        {
+                            return HandleColiseumLegacy(child);
+                        }
+                        else
+                        {
+                            return HandleColiseum(name, child);
+                        }
                     }
                     else if (stageType == StageType.TreasureMap)
                     {
@@ -64,7 +71,7 @@ namespace TreasureGuide.Sniffer.DataParser
                             localAliases.Add(new StageAlias { Name = unit.Name + " " + stageType });
                         }
                     }
-                    var output = HandleSingle(name, thumb, global, stageType);
+                    var output = HandleSingle(name, thumb, global, stageType, localAliases);
                     if (output == null)
                     {
                         return Tuple.Create(new List<Stage>(), new List<StageAlias>());
@@ -83,7 +90,7 @@ namespace TreasureGuide.Sniffer.DataParser
             return Tuple.Create(stages, aliases);
         }
 
-        private Stage HandleSingle(string name, int? mainId, bool global, StageType stageType, int smallId = 0, int? thumb = null, bool bypassId = false)
+        private Stage HandleSingle(string name, int? mainId, bool global, StageType stageType, List<StageAlias> aliases = null, int smallId = 0, int? thumb = null, bool bypassId = false)
         {
             var id = CreateId(stageType, mainId, smallId, bypassId);
             if (id == null)
@@ -99,6 +106,19 @@ namespace TreasureGuide.Sniffer.DataParser
                     Debug.WriteLine($"Team {id} '{name}' thumbnail unit ({thumb}) was not found.");
                     thumb = null;
                 }
+            }
+            if (stageType == StageType.Special && (name.Contains("Ambush") || name.Contains("Invasion")))
+            {
+                aliases.Add(new StageAlias
+                {
+                    StageId = id.Value,
+                    Name = name.Replace("Invasion", "Ambush")
+                });
+                aliases.Add(new StageAlias
+                {
+                    StageId = id.Value,
+                    Name = name.Replace("Ambush", "Invasion")
+                });
             }
             var stage = new Stage
             {
@@ -139,18 +159,109 @@ namespace TreasureGuide.Sniffer.DataParser
             aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Lace Missions Fortnight Event" });
             aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Smoker Tashigi Missions Fortnight Event" });
             aliases.Add(new StageAlias { StageId = doubles.Id, Name = "Double Character Introduction" });
+
+            var coop = HandleSingle("Co-op Missions: Powerful Foes", 2161, true, StageType.Special);
+            stages.Add(coop);
+            aliases.Add(new StageAlias { StageId = coop.Id, Name = "co-op missions" });
+            aliases.Add(new StageAlias { StageId = coop.Id, Name = "co-operative missions" });
+            aliases.Add(new StageAlias { StageId = coop.Id, Name = "cooperative missions" });
+
+            var coop2 = HandleSingle("Co-op Missions: Big Mom", 2234, true, StageType.Special);
+            stages.Add(coop2);
+            aliases.Add(new StageAlias { StageId = coop2.Id, Name = "co-op missions" });
+            aliases.Add(new StageAlias { StageId = coop2.Id, Name = "co-operative missions" });
+            aliases.Add(new StageAlias { StageId = coop2.Id, Name = "cooperative missions" });
+
+            var garp = HandleSingle("Garp Challenge!", 3340, true, StageType.Special);
+            stages.Add(garp);
+            aliases.Add(new StageAlias { StageId = garp.Id, Name = "Challenge from Garp!" });
+
+            var akainu = HandleSingle("3 Stamina Ranking! Vs Akainu", 1298, true, StageType.Special);
+            stages.Add(akainu);
+            aliases.Add(new StageAlias { StageId = akainu.Id, Name = "ranking akainu" });
+            aliases.Add(new StageAlias { StageId = akainu.Id, Name = "3 stam akainu" });
+            aliases.Add(new StageAlias { StageId = akainu.Id, Name = "challenge akainu" });
+
+            var sanji = HandleSingle("3 Stamina Ranking! Vs Sanji", 1451, true, StageType.Special);
+            stages.Add(sanji);
+            aliases.Add(new StageAlias { StageId = sanji.Id, Name = "ranking sanji" });
+            aliases.Add(new StageAlias { StageId = sanji.Id, Name = "3 stam sanji" });
+            aliases.Add(new StageAlias { StageId = sanji.Id, Name = "challenge sanji" });
+
+            var lecrap = HandleSingle("Restaraunt le Crap", 2150, true, StageType.Special);
+            stages.Add(lecrap);
+            aliases.Add(new StageAlias { StageId = lecrap.Id, Name = "Cotton Candy" });
+            aliases.Add(new StageAlias { StageId = lecrap.Id, Name = "Forest le Crap" });
+
+            var haloCora = HandleSingle("Monster Party: Dead", 1325, true, StageType.Special);
+            stages.Add(haloCora);
+            aliases.Add(new StageAlias { StageId = haloCora.Id, Name = "Haloween Corazon" });
+            aliases.Add(new StageAlias { StageId = haloCora.Id, Name = "Halloween Corazon" });
+
+            var haloSug = HandleSingle("Monster Party: Loli", 1305, true, StageType.Special);
+            stages.Add(haloSug);
+            aliases.Add(new StageAlias { StageId = haloSug.Id, Name = "Haloween Sugar" });
+            aliases.Add(new StageAlias { StageId = haloSug.Id, Name = "Halloween Sugar" });
+
+            var haloKat = HandleSingle("Sweet and Spooky Party: Bitter", 2293, true, StageType.Special);
+            stages.Add(haloKat);
+            aliases.Add(new StageAlias { StageId = haloKat.Id, Name = "Haloween Katakuri" });
+            aliases.Add(new StageAlias { StageId = haloKat.Id, Name = "Halloween Katakuri" });
+
+            var sweetPudding = HandleSingle("Sweet Heart Memory - Pudding", 1963, true, StageType.Special);
+            stages.Add(sweetPudding);
+            aliases.Add(new StageAlias { StageId = sweetPudding.Id, Name = "Sweetheart Pudding" });
+            aliases.Add(new StageAlias { StageId = sweetPudding.Id, Name = "Valentines Pudding" });
+            aliases.Add(new StageAlias { StageId = sweetPudding.Id, Name = "Wedding Pudding" });
         }
 
-        private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(JToken child)
+        private Tuple<List<Stage>, List<StageAlias>> HandleColiseum(string name, JToken child)
         {
             var stageType = StageType.Coliseum;
 
-            var eIds = GetIds(child, "Exhibition");
+            var eIds = GetIds(child, "Exhibition").Concat(GetIds(child, "Exebition"));
             var uIds = GetIds(child, "Underground");
             var cIds = GetIds(child, "Chaos");
-            var nIds = GetIds(child, "Neo");
+            var nIds = new[] { GetIds(child, "Neo").Concat(GetIds(child, "All Difficulties")).DefaultIfEmpty(0).Max() };
 
             var unitIds = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Distinct().Join(Context.Units, x => x, y => y.Id, (id, unit) => id);
+            var evos = GetBiggestEvos(unitIds);
+            var all = evos.SelectMany(x => new[] {
+                new StageCollectionDetail
+                {
+                    MainId = x.Item1,
+                    ThumbId = x.Item2,
+                    Name = " - Opening Stages",
+                    SmallId = 0
+                },
+                new StageCollectionDetail
+                {
+                    MainId = x.Item1,
+                    ThumbId = x.Item2,
+                    Name = "",
+                    SmallId = 1
+                }
+            }).Where(x => !nIds.Contains(x.ThumbId) || x.SmallId == 1);
+            var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
+            var colo = units.Select(x => Tuple.Create(x.Item1,
+                    HandleSingle($"{name}{x.Item2.Name}", x.Item2.MainId,
+                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, null, x.Item2.SmallId, x.Item1.Id, true)))
+                .Where(x => x.Item2 != null).ToList();
+            var aliases = colo.SelectMany(GetAliases).ToList();
+            var stages = colo.Select(x => x.Item2).ToList();
+            return Tuple.Create(stages, aliases);
+        }
+
+        private Tuple<List<Stage>, List<StageAlias>> HandleColiseumLegacy(JToken child)
+        {
+            var stageType = StageType.Coliseum;
+
+            var eIds = GetIds(child, "Exhibition").Concat(GetIds(child, "Exebition"));
+            var uIds = GetIds(child, "Underground");
+            var cIds = GetIds(child, "Chaos");
+            var nIds = GetIds(child, "Neo").Concat(GetIds(child, "All Difficulties"));
+
+            var unitIds = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Where(x => x > 0).Distinct().Join(Context.Units, x => x, y => y.Id, (id, unit) => id);
             var evos = GetBiggestEvos(unitIds);
             var all = evos.SelectMany(x => new[] {
                 new StageCollectionDetail
@@ -171,7 +282,7 @@ namespace TreasureGuide.Sniffer.DataParser
             var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
             var colo = units.Select(x => Tuple.Create(x.Item1,
                     HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item2.MainId,
-                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, x.Item2.SmallId, x.Item1.Id, true)))
+                        x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, null, x.Item2.SmallId, x.Item1.Id, true)))
                 .Where(x => x.Item2 != null).ToList();
             var aliases = colo.SelectMany(GetAliases).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
@@ -222,9 +333,13 @@ namespace TreasureGuide.Sniffer.DataParser
 
             Context.Stages.Clear();
 
-            await Context.LoopedAddSave(items.Item1);
+            var distinctA = items.Item1.GroupBy(x => x.Id).Select(y => y.Last()).ToList();
 
-            await Context.LoopedAddSave(items.Item2);
+            await Context.LoopedAddSave(distinctA);
+
+            var distinctB = items.Item2.GroupBy(x => $"{x.Stage}::::{x.Name}").Select(y => y.First()).ToList();
+
+            await Context.LoopedAddSave(distinctB);
         }
 
         private class StageCollectionDetail

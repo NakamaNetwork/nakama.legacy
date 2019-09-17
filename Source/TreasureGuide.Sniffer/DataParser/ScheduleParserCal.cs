@@ -89,10 +89,13 @@ namespace TreasureGuide.Sniffer.DataParser
             trimmed = MultiCommentRegex.Replace(trimmed, "");
             trimmed = SingleCommentRegex.Replace(trimmed, "");
             return trimmed
+                .Replace("ambush: ywb_n", "ambush: 3354")
                 .Replace("ambush: ywb", "ambush: 1258")
                 .Replace("ambush: shanks", "ambush: 1380")
                 .Replace("ambush: cavendish", "ambush: 1530")
                 .Replace("ambush: garp", "ambush: 1846")
+                .Replace("ambush: sengoku", "ambush: 2283")
+                .Replace("ambush: kid_bm", "ambush: 2381")
                 .Replace("id: 'sb_1023'", "id: 1023")
                 .Replace("id: 'tp_1463'", "id: 1463")
                 .Replace("id: 'tp_1465'", "id: 1463")
@@ -108,6 +111,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Replace("bb_", "")
                 .Replace("db_", "")
                 .Replace("se_", "")
+                .Replace("co_", "")
                 .Replace("cc_", "");
         }
 
@@ -204,10 +208,6 @@ namespace TreasureGuide.Sniffer.DataParser
         {
             switch (programIdentifier)
             {
-                // halloween
-                case 1306:
-                case 1326:
-                    return 6130000;
                 // summer
                 case 681:
                 case 685:
@@ -216,6 +216,8 @@ namespace TreasureGuide.Sniffer.DataParser
                 case 1201:
                 case 1709:
                 case 1711:
+                case 2215:
+                case 2217:
                     return 6068300;
                 // valentines
                 case 990:
@@ -247,10 +249,8 @@ namespace TreasureGuide.Sniffer.DataParser
                     return 2204400;
                 case 2144:
                     return 2214600;
-                case 1963: // Sanji/Pudding Wedding FN
-                    return 6196100;
                 case 9999: // Shanks and Mihawk
-                    return 4251300;
+                    return 4334200;
                 case 530: // 3rd anni champ challenge
                 case 562:
                 case 1045:
@@ -276,6 +276,9 @@ namespace TreasureGuide.Sniffer.DataParser
                 case 748:
                 case 2113:
                     return 6158800;
+                // special moria
+                case 2513:
+                    return 5251201;
             }
             return null;
         }

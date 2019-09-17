@@ -48,6 +48,12 @@ namespace TreasureGuide.Web.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ErrorTest()
+        {
+            throw new NotImplementedException();
+        }
+
         //
         // POST: /Account/Logout
         [HttpGet]

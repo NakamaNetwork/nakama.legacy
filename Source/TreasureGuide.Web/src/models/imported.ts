@@ -217,7 +217,9 @@ export enum IndividualUnitFlags {
     SkillLevelMaxed = 2,
     SocketsMaxed = 4,
     CottonCandyMaxed = 8,
-    LimitBroken = 16
+    LimitBroken = 16,
+    Rainbowed = 64,
+    SupportMaxed = 128
 }
 
 
@@ -408,6 +410,7 @@ export interface ITeamCommentStubModel {
     deleted: boolean;
     reported: boolean;
     canEdit: boolean;
+    mine: boolean;
     myVote: number;
     score: number;
     submittedById: string;
@@ -427,6 +430,7 @@ export interface ITeamCommentDetailModel {
     deleted: boolean;
     reported: boolean;
     canEdit: boolean;
+    mine: boolean;
     myVote: number;
     score: number;
     submittedById: string;
@@ -528,6 +532,7 @@ export interface ITeamStubModel {
     f2PC: boolean;
     hasVideos: boolean;
     hasComments: boolean;
+    hasSupports: boolean;
     shipId: number;
     stageId: number;
     invasionId: number;
@@ -565,6 +570,7 @@ export interface ITeamDetailModel {
     deleted: boolean;
     reported: boolean;
     draft: boolean;
+    hasSupports: boolean;
     comments: number;
     
 }
@@ -618,6 +624,7 @@ export interface ITeamSearchModel extends ISearchModel{
     reported: boolean;
     bookmark: boolean;
     excludeEventShips: boolean;
+    excludeSupports: boolean;
     
 }
 
@@ -656,12 +663,14 @@ export interface ITeamUnitStubModel {
 export interface ITeamUnitDetailModel extends ITeamUnitStubModel{
     flags: IndividualUnitFlags;
     sub: boolean;
+    support: boolean;
     
 }
 
 export interface ITeamUnitEditorModel extends ITeamUnitStubModel{
     flags: IndividualUnitFlags;
     sub: boolean;
+    support: boolean;
     
 }
 
@@ -726,7 +735,22 @@ export enum UnitRole {
     OrbShuffler = 256,
     Healer = 512,
     Zombie = 1024,
-    Nuker = 2048
+    Nuker = 2048,
+    AttackDownReducer = 4096,
+    ParalysisReducer = 8192,
+    DamageThresholdReducer = 16384,
+    AffinityBooster = 32768,
+    ChainManipulator = 65536,
+    BarrierReducer = 131072,
+    SilenceReducer = 262144,
+    BindReducer = 524288,
+    BlindReducer = 1048576,
+    SkillLockReducer = 2097152,
+    CooldownReducer = 4194304,
+    OrbLocker = 8388608,
+    AdditionalDamageDealer = 16777216,
+    EndOfTurnDamageReducer = 33554432,
+    BurnReducer = 67108864
 }
 
 

@@ -31,6 +31,7 @@ export class UnitDisplay {
     @bindable showBoxFlags: boolean;
     @bindable box: BoxDetailModel;
     @bindable editorKey: string;
+    @bindable icon: string;
 
     inBox: boolean;
 
@@ -61,7 +62,7 @@ export class UnitDisplay {
         return null;
     }
 
-    @computedFrom('tooltip', 'model', 'model.name', 'model.class', 'model.role', 'model.type')
+    @computedFrom('tooltip', 'model', 'model.name', 'model.class', 'model.role', 'model.type', 'unit')
     get name() {
         if (this.tooltip && this.model) {
             if (this.model.name) {
@@ -153,9 +154,15 @@ export class UnitDisplay {
         return (this.hasUnit ? 'In' : 'Not in') + ' box "' + boxName + '"';
     }
 
-    @computedFrom('unit', 'generic', 'editable')
+    @computedFrom('icon', 'unit', 'generic', 'editable')
     get iconClass() {
-        return 'fa fa-fw fa-2x fa-' + ((this.unit || this.generic) ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
+        var icon = '';
+        if (!this.icon) {
+            icon = 'fa-' + ((this.unit || this.generic) ? 'user' : (this.editable ? 'user-plus' : 'user-o'));
+        } else {
+            icon = this.icon;
+        }
+        return 'fa fa-fw fa-2x ' + icon;
     }
 
     @computedFrom('info', 'editable', 'unit')
@@ -187,6 +194,11 @@ export class UnitDisplay {
             return NumberHelper.splitEnum(this.model.role, UnitRole, true);
         }
         return [];
+    }
+
+    @computedFrom('genericRoles')
+    get countName() {
+        return 'generic-' + this.genericRoles.length;
     }
 
     @computedFrom('unit', 'generic')

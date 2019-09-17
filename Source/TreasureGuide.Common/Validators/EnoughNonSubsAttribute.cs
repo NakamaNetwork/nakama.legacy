@@ -22,7 +22,7 @@ namespace TreasureGuide.Common.Validators
         public override bool IsValid(object value)
         {
             var team = value as IEnumerable<TeamUnitEditorModel>;
-            return team?.Count(x => !x.Sub) >= _minimum;
+            return team?.Count(x => !x.Sub && !x.Support) >= _minimum;
         }
 
         public override string FormatErrorMessage(string name)

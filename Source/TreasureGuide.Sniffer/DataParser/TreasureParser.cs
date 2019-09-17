@@ -55,6 +55,7 @@ namespace TreasureGuide.Sniffer.DataParser
 
         protected virtual string CleanData(string input)
         {
+            input = input.Replace("\\s", "\\'s");
             input = FunctionRegex.Replace(input, "\"function\"");
             input = MultiCommentRegex.Replace(input, "");
             input = SingleCommentRegex.Replace(input, "");

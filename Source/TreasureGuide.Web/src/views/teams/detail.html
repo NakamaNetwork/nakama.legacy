@@ -78,14 +78,14 @@
             </div>
             <div class="row _alignCenter" if.bind="ownerVideos.length > 0">
                 <div>
-                    <div class="col m4" repeat.for="video of ownerVideos">
+                    <div class="col m12" repeat.for="video of ownerVideos">
                         <video-display video.bind="video"></video-display>
                     </div>
                 </div>
             </div>
             <div class="row _alignCenter" if.bind="otherVideos.length > 0">
                 <div>
-                    <div class="col m3" repeat.for="video of otherVideos">
+                    <div class="col m12" repeat.for="video of otherVideos">
                         <video-display video.bind="video"></video-display>
                     </div>
                 </div>

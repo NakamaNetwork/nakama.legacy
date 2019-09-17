@@ -12,7 +12,7 @@ export class TeamDisplay {
         var slots = [];
         for (var i = 0; i < 6; i++) {
             var slot =
-                this.team.teamUnits.find(x => x.position === i && !x.sub) ||
+                this.team.teamUnits.find(x => x.position === i && !x.sub && !x.support) ||
                 this.team.teamGenericSlots.find(x => x.position === i && !x.sub);
             slots.push(slot);
         }

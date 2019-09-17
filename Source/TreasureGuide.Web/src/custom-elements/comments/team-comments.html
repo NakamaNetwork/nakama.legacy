@@ -19,7 +19,7 @@
             <div class="row">
                 <search-pager search-model.bind="searchModel" empty-message="No comments yet." error.bind="error"></search-pager>
             </div>
-            <div class="row comment-collection" if.bind="comments.length > 0">
+            <div class="row comment-collection top" if.bind="comments.length > 0">
                 <comment-collection comments.bind="comments" team.bind="team"></comment-collection>
             </div>
         </div>

@@ -37,7 +37,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<TeamVideo> TeamVideos { get; set; }
         public virtual DbSet<TeamCredit> TeamCredits { get; set; }
         public virtual DbSet<UnitAlias> UnitAliases { get; set; }
-        public virtual DbSet<TeamGenericSlot> TeamGenericSlots { get; set; }
         public virtual DbSet<Box> Boxes { get; set; }
         public virtual DbSet<UserPreference> UserPreferences { get; set; }
         public virtual DbSet<TeamUnit> TeamUnits { get; set; }
@@ -60,5 +59,6 @@ namespace TreasureGuide.Entities
         public virtual DbSet<TeamScore> TeamScores { get; set; }
         public virtual DbSet<TeamCommentScore> TeamCommentScores { get; set; }
         public virtual DbSet<TeamMini> TeamMinis { get; set; }
+        public virtual DbSet<TeamGenericSlot> TeamGenericSlots { get; set; }
     }
 }

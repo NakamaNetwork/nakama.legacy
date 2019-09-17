@@ -19,6 +19,8 @@ namespace TreasureGuide.Entities
         SkillLevelMaxed = 2,
         SocketsMaxed = 4,
         CottonCandyMaxed = 8,
-        LimitBroken = 16
+        LimitBroken = 16,
+        Rainbowed = 64,
+        SupportMaxed = 128
     }
 }
