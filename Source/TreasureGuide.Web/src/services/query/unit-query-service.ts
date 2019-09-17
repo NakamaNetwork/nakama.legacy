@@ -22,25 +22,12 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
                 case '3333': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5013.png';
                 case '3334': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5014.png';
                 case '3335': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5015.png';
-                case '3336': return '/content/units/3336.png';
-                case '3337': return '/content/units/3337.png';
-                case '3338': return '/content/units/3338.png';
-                case '3339': return '/content/units/3339.png';
-                case '3340': return '/content/units/3340.png';
-                case '3341': return '/content/units/3341.png';
-                case '3342': return '/content/units/3342.png';
-                case '3343': return '/content/units/3343.png';
-                case '3344': return '/content/units/3344.png';
                 case '3345': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5025.png';
                 case '3346': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5026.png';
-                case '3347': return '/content/units/3347.png';
-                case '3348': return '/content/units/3348.png';
-                case '3349': return '/content/units/3349.png';
-                case '3350': return '/content/units/3350.png';
-                case '3351': return '/content/units/3351.png';
-                case '3352': return '/content/units/3352.png';
-                case '3353': return '/content/units/3353.png';
-                case '3354': return '/content/units/3354.png';
+                case '3355': return 'https://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5037.png';
+            }
+            if (unitId > 3333) {
+                return `/content/units/${id}.png`;
             }
             return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
         }
