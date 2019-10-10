@@ -1544,16 +1544,17 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
                     <Member Name="PSY" Value="16" />
                 </EnumType>
                 <EnumType Name="StageType" UnderlyingType="Byte">
-                    <Member Name="Unknown" />
-                    <Member Name="Story" />
-                    <Member Name="Fortnight" />
-                    <Member Name="Weekly" />
-                    <Member Name="Raid" />
-                    <Member Name="Coliseum" />
-                    <Member Name="Special" />
-                    <Member Name="TrainingForest" />
-                    <Member Name="TreasureMap" />
-                </EnumType>
+          <Member Name="Unknown" />
+          <Member Name="Story" />
+          <Member Name="Fortnight" />
+          <Member Name="Weekly" />
+          <Member Name="Raid" />
+          <Member Name="Coliseum" />
+          <Member Name="Special" />
+          <Member Name="TrainingForest" />
+          <Member Name="TreasureMap" />
+          <Member Name="KisunaClash" />
+        </EnumType>
                 <EnumType Name="UnitFlag" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
                     <Member Name="Global" Value="1" />

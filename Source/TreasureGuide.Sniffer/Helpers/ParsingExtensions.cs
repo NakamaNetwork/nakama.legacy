@@ -90,7 +90,6 @@ namespace TreasureGuide.Sniffer.Helpers
                 case "special":
                 case "ambush":
                 case "invasion":
-                case "bond battle":
                     return StageType.Special;
                 case "coliseum":
                     return StageType.Coliseum;
@@ -98,6 +97,10 @@ namespace TreasureGuide.Sniffer.Helpers
                     return StageType.TrainingForest;
                 case "treasure map":
                     return StageType.TreasureMap;
+                case "bond battle":
+                case "kizuna clash":
+                case "kisuna clash":
+                    return StageType.KisunaClash;
                 default:
                     return StageType.Unknown;
             }

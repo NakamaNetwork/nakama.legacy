@@ -21,6 +21,7 @@ namespace TreasureGuide.Entities
         Coliseum = 5,
         Special = 6,
         TrainingForest = 7,
-        TreasureMap = 8
+        TreasureMap = 8,
+        KisunaClash = 9
     }
 }

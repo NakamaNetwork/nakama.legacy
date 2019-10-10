@@ -58,6 +58,10 @@ namespace TreasureGuide.Sniffer.DataParser
                     {
                         name = "Treasure Map: " + name;
                     }
+                    else if (stageType == StageType.KisunaClash)
+                    {
+                        name = "Kisuna Clash: " + name;
+                    }
                     var localAliases = new List<StageAlias>();
                     var global = child["global"]?.ToString().ToBoolean() ?? false;
                     int? thumb = null;

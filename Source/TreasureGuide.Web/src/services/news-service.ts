@@ -7,17 +7,22 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '10/10/19',
+        lines: [
+            'Added Kisuna Clash stage support.',
+        ]
+    }, {
         header: '09/16/19',
         lines: [
             'Increased the size of embedded videos on teams to make it easier to navigate on mobile.',
         ]
-    },{
+    }, {
         header: '06/06/19',
         lines: [
             'Fixed issue in which support units would show up in team search results instead of the primary units.',
             'Fixed an issue that would cause Friend Ids with leading zeroes to display incorrectly.',
         ]
-    },{
+    }, {
         header: '05/20/19',
         lines: [
             'Added support for Support Units in teams.',
