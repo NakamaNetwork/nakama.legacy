@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
 using TreasureGuide.Sniffer.Helpers;
@@ -43,6 +41,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 var datas = datum.Value.Select(child =>
                 {
                     var name = child["name"]?.ToString() ?? "Unknown";
+                    var localAliases = new List<StageAlias>();
                     if (stageType == StageType.Coliseum)
                     {
                         if (name == "Coliseum")
@@ -58,11 +57,10 @@ namespace TreasureGuide.Sniffer.DataParser
                     {
                         name = "Treasure Map: " + name;
                     }
-                    else if (stageType == StageType.KisunaClash)
+                    else if (stageType == StageType.KizunaClash)
                     {
-                        name = "Kisuna Clash: " + name;
+                        return HandleKizuna(name, child);
                     }
-                    var localAliases = new List<StageAlias>();
                     var global = child["global"]?.ToString().ToBoolean() ?? false;
                     int? thumb = null;
                     int thumbParse;
@@ -286,6 +284,47 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Where(x => x.Item2 != null).ToList();
             var aliases = colo.SelectMany(GetAliases).ToList();
             var stages = colo.Select(x => x.Item2).ToList();
+            return Tuple.Create(stages, aliases);
+        }
+
+        private Tuple<List<Stage>, List<StageAlias>> HandleKizuna(string name, JToken child)
+        {
+            var stages = new List<Stage>();
+            var aliases = new List<StageAlias>();
+
+            for (var n = 0; n < 100; n++)
+            {
+                var id = GetIds(child, "Round " + n).DefaultIfEmpty(0).Max();
+                id = GetBiggestEvos(new[] { id }).Select(x => x.Item2).Max();
+                if (id != 0)
+                {
+                    var madeName = "Kizuna Clash: " + name + " - Round " + n;
+                    var stage = HandleSingle(madeName, id, true, StageType.KizunaClash, new List<StageAlias>{
+                        new StageAlias { Name = madeName.Replace("Kizuna","Kisuna") },
+                        new StageAlias { Name = madeName.Replace("Clash", "Kessan") },
+                        new StageAlias { Name = madeName.Replace("Clash", "Kessen") },
+                        new StageAlias { Name = madeName.Replace("Kizuna Clash", "Bond Battle") }
+                    }, n - 1, id, false);
+                    stages.Add(stage);
+                }
+            }
+            if (!stages.Any())
+            {
+                var madeName = "Kizuna Clash: " + name;
+                int id;
+                if (Int32.TryParse(child["thumb"]?.ToString() ?? "", out id))
+                {
+                    id = GetBiggestEvos(new[] { id }).Select(x => x.Item2).Max();
+                    var stage = HandleSingle(madeName, id, true, StageType.KizunaClash, new List<StageAlias>{
+                        new StageAlias { Name = madeName.Replace("Kizuna","Kisuna") },
+                        new StageAlias { Name = madeName.Replace("Clash", "Kessan") },
+                        new StageAlias { Name = madeName.Replace("Clash", "Kessen") },
+                        new StageAlias { Name = madeName.Replace("Kizuna Clash", "Bond Battle") }
+                    });
+                    stages.Add(stage);
+                }
+            }
+
             return Tuple.Create(stages, aliases);
         }
 

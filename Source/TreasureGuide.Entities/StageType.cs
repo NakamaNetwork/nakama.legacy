@@ -22,6 +22,6 @@ namespace TreasureGuide.Entities
         Special = 6,
         TrainingForest = 7,
         TreasureMap = 8,
-        KisunaClash = 9
+        KizunaClash = 9
     }
 }

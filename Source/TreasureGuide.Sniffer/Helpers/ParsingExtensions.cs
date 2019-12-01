@@ -100,7 +100,7 @@ namespace TreasureGuide.Sniffer.Helpers
                 case "bond battle":
                 case "kizuna clash":
                 case "kisuna clash":
-                    return StageType.KisunaClash;
+                    return StageType.KizunaClash;
                 default:
                     return StageType.Unknown;
             }

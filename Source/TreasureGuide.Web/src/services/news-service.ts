@@ -7,9 +7,15 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '11/30/19',
+        lines: [
+            'Increased support for Kizuna Clash.',
+            'Note I said "Kizuna" and not "Kisuna"',
+        ]
+    },{
         header: '10/10/19',
         lines: [
-            'Added Kisuna Clash stage support.',
+            'Added Kizuna Clash stage support.',
         ]
     }, {
         header: '09/16/19',

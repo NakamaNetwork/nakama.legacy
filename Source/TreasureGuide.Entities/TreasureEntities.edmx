@@ -1553,7 +1553,7 @@ warning 6002: The table/view 'tcdb.dbo.UserRoles' does not have a primary key de
           <Member Name="Special" />
           <Member Name="TrainingForest" />
           <Member Name="TreasureMap" />
-          <Member Name="KisunaClash" />
+          <Member Name="KizunaClash" />
         </EnumType>
                 <EnumType Name="UnitFlag" UnderlyingType="Int16" IsFlags="true">
                     <Member Name="Unknown" Value="0" />
