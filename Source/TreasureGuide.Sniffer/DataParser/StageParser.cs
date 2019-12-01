@@ -176,10 +176,6 @@ namespace TreasureGuide.Sniffer.DataParser
             aliases.Add(new StageAlias { StageId = coop2.Id, Name = "co-operative missions" });
             aliases.Add(new StageAlias { StageId = coop2.Id, Name = "cooperative missions" });
 
-            var garp = HandleSingle("Garp Challenge!", 3340, true, StageType.Special);
-            stages.Add(garp);
-            aliases.Add(new StageAlias { StageId = garp.Id, Name = "Challenge from Garp!" });
-
             var akainu = HandleSingle("3 Stamina Ranking! Vs Akainu", 1298, true, StageType.Special);
             stages.Add(akainu);
             aliases.Add(new StageAlias { StageId = akainu.Id, Name = "ranking akainu" });
