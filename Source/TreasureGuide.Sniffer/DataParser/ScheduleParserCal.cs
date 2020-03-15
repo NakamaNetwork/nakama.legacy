@@ -96,6 +96,7 @@ namespace TreasureGuide.Sniffer.DataParser
                 .Replace("ambush: garp", "ambush: 1846")
                 .Replace("ambush: sengoku", "ambush: 2283")
                 .Replace("ambush: kid_bm", "ambush: 2381")
+                .Replace("ambush: xmas_cavendish", "ambush: 1889")
                 .Replace("id: 'sb_1023'", "id: 1023")
                 .Replace("id: 'tp_1463'", "id: 1463")
                 .Replace("id: 'tp_1465'", "id: 1463")
