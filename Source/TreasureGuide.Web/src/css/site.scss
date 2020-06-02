@@ -92,6 +92,7 @@ ux-dialog-container {
     }
 
     ux-dialog {
+        background-color: $background-color;
         width: 100%;
 
         &.small {

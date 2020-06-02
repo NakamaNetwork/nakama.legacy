@@ -6,7 +6,12 @@ export class NewsService {
     static seenKey: string = 'LatestNewsSeen';
     static cap: number = 5;
 
-    static news: NewsEntry[] = [{
+  static news: NewsEntry[] = [{
+        header: '06/02/20',
+        lines: [
+          'Today we\'re going dark in solidarity with our Nakama in the United States.'
+        ]
+    },{
         header: '11/30/19',
         lines: [
             'Increased support for Kizuna Clash.',

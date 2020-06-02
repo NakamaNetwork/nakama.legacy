@@ -441,9 +441,9 @@ team-box {
     }
 
     a {
+        @extend ._whiteText;
         margin-left: 10px;
         text-decoration: none;
-        color: initial;
     }
 
     .col {
@@ -488,6 +488,7 @@ team-box {
 
     .flags {
         @extend ._floatLeft;
+        @extend ._blackText;
         position: absolute;
         top: 2em;
         left: -3px;
@@ -532,11 +533,11 @@ team-box {
     }
 
     a {
-        @extend ._blackText;
+        @extend ._whiteText;
     }
 
     a:hover {
-        @extend ._blackText;
+        @extend ._whiteText;
     }
 }
 
@@ -734,16 +735,16 @@ team-box {
             padding: 0 20px;
 
             &.deleted {
-                background-color: lighten($danger-color, 50) !important;
+                background-color: darken($danger-color, 50) !important;
                 opacity: 0.4;
             }
 
             &.reported {
-                background-color: lighten($warning-color, 50);
+                background-color: darken($warning-color, 50);
             }
 
             &.mine {
-                background-color: lighten($info-color, 60);
+                background-color: darken($info-color, 60);
             }
         }
 
