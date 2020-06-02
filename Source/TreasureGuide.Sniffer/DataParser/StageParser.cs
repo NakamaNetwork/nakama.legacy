@@ -237,6 +237,15 @@ namespace TreasureGuide.Sniffer.DataParser
       stages.Add(wanoClashLZ);
       aliases.Add(new StageAlias { StageId = wanoClashLZ.Id, Name = "Wano Blitz" });
 
+      var wapolThing = HandleSingle("Wapol's Assault", 2799, true, StageType.Special, aliases, 0);
+      stages.Add(wapolThing);
+      aliases.Add(new StageAlias { StageId = wapolThing.Id, Name = "Wapol Christmas Xmas Thing" });
+
+      var hawkins = HandleSingle("Ranking! Vs Hawkins", 2982, true, StageType.Special, aliases);
+      stages.Add(hawkins);
+      aliases.Add(new StageAlias { StageId = hawkins.Id, Name = "ranking hawkins" });
+      aliases.Add(new StageAlias { StageId = hawkins.Id, Name = "3 stam hawkins" });
+      aliases.Add(new StageAlias { StageId = hawkins.Id, Name = "challenge hawkins" });
 
       var garpIcons = new[] { 1318, 1317, 1281, 3339, 1846, 3340 };
       for (var i = 0; i < 6; i++)
