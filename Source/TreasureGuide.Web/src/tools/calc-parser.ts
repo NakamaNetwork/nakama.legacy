@@ -49,7 +49,7 @@ export class CalcParser {
         var prefix = 'http://optc-db.github.io/damage/#/transfer/D';
         var characters = '';
         for (var i = 0; i < 6; i++) {
-            var unit = team.teamUnits.find(x => x.position === i && !x.sub);
+            var unit = team.teamUnits.find(x => x.position === i && !x.sub && !x.support);
             if (unit) {
                 characters += unit.unitId + ':' + (unit.level || 1);
             } else {
