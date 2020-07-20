@@ -247,10 +247,19 @@ namespace TreasureGuide.Sniffer.DataParser
       aliases.Add(new StageAlias { StageId = hawkins.Id, Name = "3 stam hawkins" });
       aliases.Add(new StageAlias { StageId = hawkins.Id, Name = "challenge hawkins" });
 
-      var garpIcons = new[] { 1318, 1317, 1281, 3339, 1846, 3340 };
-      for (var i = 0; i < 6; i++)
+      var garpIcons = new[] {
+        Tuple.Create(1318, "#1"),
+        Tuple.Create(1317, "#2"),
+        Tuple.Create(1281, "#3"),
+        Tuple.Create(3339, "#4"),
+        Tuple.Create(1846, "#5"),
+        Tuple.Create(3340, "#6"),
+        Tuple.Create(870, "vs. Doflamingo"),
+        Tuple.Create(2561, "vs. The Revolutionary Army")
+      };
+      for (var i = 0; i < garpIcons.Length; i++)
       {
-        var garp = HandleSingle($"Garp Challenge #{i + 1}", 1318, true, StageType.Special, aliases, i, garpIcons[i], true);
+        var garp = HandleSingle($"Garp Challenge {garpIcons[i].Item2}", 1318, true, StageType.Special, aliases, i, garpIcons[i].Item1, true);
         stages.Add(garp);
       }
     }
