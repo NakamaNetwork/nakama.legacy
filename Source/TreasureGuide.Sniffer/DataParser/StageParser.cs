@@ -247,6 +247,16 @@ namespace TreasureGuide.Sniffer.DataParser
       aliases.Add(new StageAlias { StageId = hawkins.Id, Name = "3 stam hawkins" });
       aliases.Add(new StageAlias { StageId = hawkins.Id, Name = "challenge hawkins" });
 
+      var monster = HandleSingle("Escape from Loguetown", 3007, true, StageType.Special, aliases);
+      stages.Add(monster);
+      aliases.Add(new StageAlias { StageId = monster.Id, Name = "Roguetown" });
+      aliases.Add(new StageAlias { StageId = monster.Id, Name = "French 5th Anniversary Event" });
+
+      var buggyTreasure = HandleSingle("Big Find! Unexplored Treasure Island!", 2867, true, StageType.Special, aliases);
+      stages.Add(buggyTreasure);
+      aliases.Add(new StageAlias { StageId = buggyTreasure.Id, Name = "Buggy Pirates Island" });
+      aliases.Add(new StageAlias { StageId = buggyTreasure.Id, Name = "French 5th Anniversary Event" });
+
       var garpIcons = new[] {
         Tuple.Create(1318, "#1"),
         Tuple.Create(1317, "#2"),
