@@ -122,6 +122,8 @@ button,
 input[type='submit'],
 input[type='reset'],
 input[type='button'] {
+    border-color: $white-color;
+    color: $white-color;
     margin-bottom: inherit;
 
     &._unclickable {
@@ -331,4 +333,22 @@ iframe {
     100% {
         color: $donorStart-color;
     }
+}
+
+tr {
+    &:hover {
+        background-color: lighten($background-color, 25%);
+    }
+
+    &:nth-child(even) {
+        background-color: lighten($background-color, 10%);
+
+        &:hover {
+            background-color: lighten($background-color, 25%);
+        }
+    }
+}
+
+.tab {
+    background-color: lighten($background-color, 25%);
 }
