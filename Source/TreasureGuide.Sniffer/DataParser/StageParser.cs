@@ -257,6 +257,13 @@ namespace TreasureGuide.Sniffer.DataParser
       aliases.Add(new StageAlias { StageId = buggyTreasure.Id, Name = "Buggy Pirates Island" });
       aliases.Add(new StageAlias { StageId = buggyTreasure.Id, Name = "French 5th Anniversary Event" });
 
+      var odenEvent = HandleSingle("Oden's Great Adventure", 3175, true, StageType.Special, aliases);
+      stages.Add(odenEvent);
+
+      var rogerEvent = HandleSingle("Roger's Great Adventure", 3177, true, StageType.Special, aliases);
+      aliases.Add(new StageAlias { StageId = rogerEvent.Id, Name = "Rodger's Great Eventure" });
+      stages.Add(rogerEvent);
+
       var garpIcons = new[] {
         Tuple.Create(1318, "#1"),
         Tuple.Create(1317, "#2"),
@@ -265,7 +272,8 @@ namespace TreasureGuide.Sniffer.DataParser
         Tuple.Create(1846, "#5"),
         Tuple.Create(3340, "#6"),
         Tuple.Create(870, "vs. Doflamingo"),
-        Tuple.Create(2561, "vs. The Revolutionary Army")
+        Tuple.Create(2561, "vs. The Revolutionary Army"),
+        Tuple.Create(2685, "vs. Whitebeard")
       };
       for (var i = 0; i < garpIcons.Length; i++)
       {
