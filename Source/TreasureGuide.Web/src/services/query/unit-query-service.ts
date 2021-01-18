@@ -16,20 +16,8 @@ export class UnitQueryService extends LocallySearchedQueryService<number, IUnitS
 
     static getIcon(unitId: number) {
         if (unitId) {
-            var id = ('0000' + unitId).slice(-4).replace(/(057[54])/, '0$1'); // missing aokiji image
-            switch (id) {
-                case '0742': return 'https://onepiece-treasurecruise.com/wp-content/uploads/f0742-2.png';
-                case '3333': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5013.png';
-                case '3334': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5014.png';
-                case '3335': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5015.png';
-                case '3345': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5025.png';
-                case '3346': return 'http://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5026.png';
-                case '3355': return 'https://onepiece-treasurecruise.com/en/wp-content/uploads/sites/2/f5037.png';
-            }
-            if (unitId > 3333) {
-                return `/content/units/${id}.png`;
-            }
-            return 'https://onepiece-treasurecruise.com/wp-content/uploads/f' + id + '.png';
+            var id = ('0000' + unitId).slice(-4);
+            return 'https://assets.nakama.network/assets/images/thumbs/thumb-' + id + '.png';
         }
         return null;
     }

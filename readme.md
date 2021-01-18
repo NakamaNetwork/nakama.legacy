@@ -1,8 +1,10 @@
+Follow development on the new Nakama rebuild here: https://github.com/NakamaNetwork/nakama.network
+
 # Prerequisites
 
 * [Node.JS](https://nodejs.org/en/)
 * Visual Studio capable of compiling ASP.NET Core applications (2017 recommended)
-* [Typewriter extension for Visual Studio](https://github.com/frhagn/Typewriter)
+* [Typewriter extension for Visual Studio](https://github.com/frhagn/moTypewriter)
 
 # Building the Web App
 
