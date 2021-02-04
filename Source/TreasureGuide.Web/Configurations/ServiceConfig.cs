@@ -43,7 +43,13 @@ namespace TreasureGuide.Web.Configurations
                 {
                     options.User.RequireUniqueEmail = false;
                     options.User.AllowedUserNameCharacters += " ";
+
+                    options.Cookies.ExternalCookie.ExpireTimeSpan = TimeSpan.FromDays(7);
+                    options.Cookies.ExternalCookie.SlidingExpiration = true;
+
                     options.Cookies.ApplicationCookie.AutomaticChallenge = false;
+                    options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(7);
+                    options.Cookies.ApplicationCookie.SlidingExpiration = true;
                     options.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
                     {
                         OnRedirectToLogin = (ctx) =>

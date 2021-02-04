@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '02/03/21',
+        lines: [
+            'Updated cookie configurations to allow for longer sign-in sessions.'
+        ]
+    }, {
         header: '01/18/21',
         lines: [
             'Populated missing unit icons.',
