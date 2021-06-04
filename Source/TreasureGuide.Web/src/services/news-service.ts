@@ -7,6 +7,16 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '04/07/21',
+        lines: [
+            'Added proper support for Arena stages and Rookie Missions.'
+        ]
+    },{
+        header: '02/25/21',
+        lines: [
+            'Reduced the timeout on rate limiting so hopefully nobody will experience it via normal site usage.'
+        ]
+    },{
         header: '02/03/21',
         lines: [
             'Updated cookie configurations to allow for longer sign-in sessions.'
