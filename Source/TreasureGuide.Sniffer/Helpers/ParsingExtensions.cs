@@ -101,6 +101,10 @@ namespace TreasureGuide.Sniffer.Helpers
                 case "kizuna clash":
                 case "kisuna clash":
                     return StageType.KizunaClash;
+                case "arena":
+                    return StageType.Arena;
+                case "rookie mission":
+                    return StageType.RookieMission;
                 default:
                     return StageType.Unknown;
             }

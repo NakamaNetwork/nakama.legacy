@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Jurassic;
 using Newtonsoft.Json;
 using TreasureGuide.Entities;
 using TreasureGuide.Entities.Helpers;
@@ -17,6 +18,16 @@ namespace TreasureGuide.Sniffer.DataParser
 
         public UnitParser(TreasureEntities context) : base(context, OptcDbUnitData)
         {
+        }
+
+        protected override string TrimData(string input)
+        {
+            input = input.Replace("window.", "");
+            var engine = new ScriptEngine();
+            engine.Evaluate(input);
+            engine.Evaluate("jsonUnits = JSON.stringify(units);");
+            var json = engine.GetGlobalValue<string>("jsonUnits");
+            return json;
         }
 
         protected override IEnumerable<Unit> ConvertData(string trimmed)
