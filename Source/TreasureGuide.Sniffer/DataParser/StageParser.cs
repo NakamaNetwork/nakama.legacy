@@ -273,7 +273,9 @@ namespace TreasureGuide.Sniffer.DataParser
         Tuple.Create(3340, "#6"),
         Tuple.Create(870, "vs. Doflamingo"),
         Tuple.Create(2561, "vs. The Revolutionary Army"),
-        Tuple.Create(2685, "vs. Whitebeard")
+        Tuple.Create(2685, "vs. Whitebeard"),
+        Tuple.Create(2232, "vs. Eneru"),
+        Tuple.Create(2975, "vs. Navy")
       };
       for (var i = 0; i < garpIcons.Length; i++)
       {
