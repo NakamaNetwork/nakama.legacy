@@ -18,7 +18,7 @@
     "aurelia-validation": "^1.0.0",
     "bluebird": "^3.4.1",
     "fixed-table-js": "^1.5.3",
-    "marked": "^0.3.12",
+    "marked": "^4.0.10",
     "moment": "^2.20.1",
     "requirejs": "^2.3.2",
     "text": "github:requirejs/text#latest",
