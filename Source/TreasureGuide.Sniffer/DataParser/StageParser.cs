@@ -35,6 +35,7 @@ namespace TreasureGuide.Sniffer.DataParser
       var data = JsonConvert.DeserializeObject<JObject>(trimmed);
       var stages = new List<Stage>();
       var aliases = new List<StageAlias>();
+      data["Grand Voyage"] = data["Story Island"];
       foreach (var datum in data)
       {
         var stageType = datum.Key.ToStageType();
@@ -44,14 +45,7 @@ namespace TreasureGuide.Sniffer.DataParser
           var localAliases = new List<StageAlias>();
           if (stageType == StageType.Coliseum)
           {
-            if (name == "Coliseum")
-            {
-              return HandleColiseumLegacy(child);
-            }
-            else
-            {
-              return HandleColiseum(name, child);
-            }
+            return HandleColiseum(name, child);
           }
           else if (stageType == StageType.TreasureMap)
           {
@@ -76,8 +70,16 @@ namespace TreasureGuide.Sniffer.DataParser
               thumb = thumbParse;
               localAliases.Add(new StageAlias { Name = unit.Name + " " + stageType });
             }
-          }
-          var output = HandleSingle(name, thumb, global, stageType, localAliases);
+            }
+            if (stageType == StageType.Story)
+            {
+                name = "Story " + name;
+            }
+            else if (stageType == StageType.GrandVoyage)
+            {
+                name = "Grand Voyage " + name;
+            }
+            var output = HandleSingle(name, thumb, global, stageType, localAliases);
           if (output == null)
           {
             return Tuple.Create(new List<Stage>(), new List<StageAlias>());
@@ -316,43 +318,6 @@ namespace TreasureGuide.Sniffer.DataParser
       var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
       var colo = units.Select(x => Tuple.Create(x.Item1,
               HandleSingle($"{name}{x.Item2.Name}", x.Item2.MainId,
-                  x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, null, x.Item2.SmallId, x.Item1.Id, true)))
-          .Where(x => x.Item2 != null).ToList();
-      var aliases = colo.SelectMany(GetAliases).ToList();
-      var stages = colo.Select(x => x.Item2).ToList();
-      return Tuple.Create(stages, aliases);
-    }
-
-    private Tuple<List<Stage>, List<StageAlias>> HandleColiseumLegacy(JToken child)
-    {
-      var stageType = StageType.Coliseum;
-
-      var eIds = GetIds(child, "Exhibition").Concat(GetIds(child, "Exebition"));
-      var uIds = GetIds(child, "Underground");
-      var cIds = GetIds(child, "Chaos");
-      var nIds = GetIds(child, "Neo").Concat(GetIds(child, "All Difficulties"));
-
-      var unitIds = eIds.Concat(uIds).Concat(cIds).Concat(nIds).Where(x => x > 0).Distinct().Join(Context.Units, x => x, y => y.Id, (id, unit) => id);
-      var evos = GetBiggestEvos(unitIds);
-      var all = evos.SelectMany(x => new[] {
-                new StageCollectionDetail
-                {
-                    MainId = x.Item1,
-                    ThumbId = x.Item2,
-                    Name = " - Opening Stages",
-                    SmallId = 0
-                },
-                new StageCollectionDetail
-                {
-                    MainId = x.Item1,
-                    ThumbId = x.Item2,
-                    Name = " - Final Stage",
-                    SmallId = 1
-                }
-            });
-      var units = all.Join(Context.Units, x => x.ThumbId, y => y.Id, (stage, unit) => Tuple.Create(unit, stage));
-      var colo = units.Select(x => Tuple.Create(x.Item1,
-              HandleSingle($"Coliseum: {x.Item1.Name}{x.Item2.Name}", x.Item2.MainId,
                   x.Item1.Flags.HasFlag(UnitFlag.Global), stageType, null, x.Item2.SmallId, x.Item1.Id, true)))
           .Where(x => x.Item2 != null).ToList();
       var aliases = colo.SelectMany(GetAliases).ToList();

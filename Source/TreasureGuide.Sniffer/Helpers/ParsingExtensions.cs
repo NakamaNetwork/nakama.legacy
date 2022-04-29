@@ -105,6 +105,8 @@ namespace TreasureGuide.Sniffer.Helpers
                     return StageType.Arena;
                 case "rookie mission":
                     return StageType.RookieMission;
+                case "grand voyage":
+                    return StageType.GrandVoyage;
                 default:
                     return StageType.Unknown;
             }
