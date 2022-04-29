@@ -7,6 +7,11 @@ export class NewsService {
     static cap: number = 5;
 
     static news: NewsEntry[] = [{
+        header: '04/28/22',
+        lines: [
+            'Added new category for Grand Voyage missions.'
+        ]
+    },{
         header: '04/07/21',
         lines: [
             'Added proper support for Arena stages and Rookie Missions.'

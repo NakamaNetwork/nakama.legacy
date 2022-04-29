@@ -35,6 +35,7 @@ namespace TreasureGuide.Sniffer.DataParser
       var data = JsonConvert.DeserializeObject<JObject>(trimmed);
       var stages = new List<Stage>();
       var aliases = new List<StageAlias>();
+      data["Grand Voyage"] = data["Story Island"];
       foreach (var datum in data)
       {
         var stageType = datum.Key.ToStageType();
@@ -69,8 +70,16 @@ namespace TreasureGuide.Sniffer.DataParser
               thumb = thumbParse;
               localAliases.Add(new StageAlias { Name = unit.Name + " " + stageType });
             }
-          }
-          var output = HandleSingle(name, thumb, global, stageType, localAliases);
+            }
+            if (stageType == StageType.Story)
+            {
+                name = "Story " + name;
+            }
+            else if (stageType == StageType.GrandVoyage)
+            {
+                name = "Grand Voyage " + name;
+            }
+            var output = HandleSingle(name, thumb, global, stageType, localAliases);
           if (output == null)
           {
             return Tuple.Create(new List<Stage>(), new List<StageAlias>());
