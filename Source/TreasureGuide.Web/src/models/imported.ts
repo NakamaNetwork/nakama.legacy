@@ -401,7 +401,8 @@ export enum StageType {
     TreasureMap = 8,
     KizunaClash = 9,
     Arena = 10,
-    RookieMission = 11
+    RookieMission = 11,
+    GrandVoyage = 12
 }
 
 
